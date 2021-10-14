@@ -2,6 +2,8 @@
 
 API-first, event driven, microservices based and cloud native headless commerce platform.
 
+Based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/reference/store/).
+
 ## Concepts
 
 1. Long tail eCommerce solution;
@@ -13,8 +15,6 @@ API-first, event driven, microservices based and cloud native headless commerce 
 7. Perfect for [Jamstack](https://jamstack.org/).
 
 ## System design
-
-Based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/reference/store/):
 
 - REST API on edge functions with [Cloudflare Workers](https://developers.cloudflare.com/workers/) 🚀
 - Documents on [Firestore](https://cloud.google.com/firestore) (multi-region recommended) ⛰️
