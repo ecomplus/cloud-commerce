@@ -2,7 +2,7 @@
 
 API-first, event driven, microservices based and cloud native headless commerce platform.
 
-Based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/reference/store/).
+Progressively based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/reference/store/).
 
 ## Concepts
 
