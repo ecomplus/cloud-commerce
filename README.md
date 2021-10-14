@@ -1,4 +1,4 @@
-# Cloud Headless Commerce
+# Open Cloud Commerce
 
 API-first, event driven, microservices based and cloud native headless commerce platform.
 
