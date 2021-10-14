@@ -8,7 +8,7 @@ API-first, event driven, microservices based and cloud native headless commerce 
 2. Truly flexible, modular and extensible;
 3. Quick and cheap (as possible) serverless setup;
 4. Horizontal autoscale with high availability and performance by default;
-5. Modern tech stack and dev experience;
+5. Modern tech stack and first-class dev experience;
 6. Easy third-party integrations;
 7. Perfect for [Jamstack](https://jamstack.org/).
 
