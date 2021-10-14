@@ -4,11 +4,12 @@ API-first, event driven, microservices based and cloud native headless commerce 
 
 ## Concepts
 
-1. Truly flexible, modular and extensible;
-2. Quick and cheap (as possible) serverless setup;
-3. Horizontal autoscale with high availability and performance by default;
-4. Modern tech stack and dev experience;
-5. Easy third-party integrations;
+1. Long tail eCommerce solution;
+2. Truly flexible, modular and extensible;
+3. Quick and cheap (as possible) serverless setup;
+4. Horizontal autoscale with high availability and performance by default;
+5. Modern tech stack and dev experience;
+6. Easy third-party integrations;
 7. Perfect for [Jamstack](https://jamstack.org/).
 
 ## System design
