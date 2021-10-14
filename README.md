@@ -12,7 +12,7 @@ Based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/ref
 4. Horizontal autoscale with high availability and performance by default;
 5. Modern tech stack and first-class dev experience;
 6. Easy third-party integrations;
-7. Perfect for [Jamstack](https://jamstack.org/).
+7. Perfect for edge-rendering and [Jamstack](https://jamstack.org/).
 
 ## System design
 
