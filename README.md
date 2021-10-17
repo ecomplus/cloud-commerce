@@ -8,11 +8,12 @@ Progressively based on [E-Com Plus Store API reference](https://developers.e-com
 
 1. Long tail eCommerce solution;
 2. Truly flexible, modular and extensible;
-3. Quick and cheap (as possible) serverless setup;
-4. Horizontal autoscale with high availability and performance by default;
-5. Modern tech stack and first-class dev experience;
-6. Easy third-party integrations;
-7. Perfect for edge-rendering and [Jamstack](https://jamstack.org/).
+3. Multi-store and i18n ready;
+4. Quick and cheap (as possible) serverless setup;
+5. Horizontal autoscale with high availability and performance by default;
+6. Modern tech stack and first-class dev experience;
+7. Easy third-party integrations;
+8. Perfect for edge-rendering and [Jamstack](https://jamstack.org/).
 
 ## System design
 
