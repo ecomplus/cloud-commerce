@@ -1,4 +1,4 @@
-# Open Cloud Commerce
+# Cloud Commerce
 
 API-first, event driven, microservices based and cloud native headless commerce platform.
 
@@ -22,3 +22,7 @@ _Progressively_ based on [E-Com Plus Store API reference](https://developers.e-c
 - Webhooks and internal API events with [Pub/Sub](https://cloud.google.com/pubsub) 🔄
 
 > WIP 🚧
+
+## License
+
+[Fair-code](http://faircode.io) distributed under [**Apache 2.0 with Commons Clause**](https://github.com/ecomplus/cloud-commerce/blob/main/LICENSE.md) license.
