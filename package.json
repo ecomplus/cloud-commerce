@@ -1,0 +1,11 @@
+{
+  "name": "@ecomplus/cloud-commerce",
+  "version": "0.0.1-monorepo",
+  "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
+  "private": true,
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
