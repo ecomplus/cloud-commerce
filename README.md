@@ -1,6 +1,6 @@
 # E-Com Plus Open Cloud Commerce
 
-API-first, event driven, microservices based and cloud native headless commerce platform.
+Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native.
 
 _Progressively_ based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/reference/store/).
 
