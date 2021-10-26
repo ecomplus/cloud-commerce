@@ -18,7 +18,7 @@ _Progressively_ based on [E-Com Plus Store API reference](https://developers.e-c
 ## System design
 
 - REST API on edge functions with [Cloudflare Workers](https://developers.cloudflare.com/workers/) and CDN cache 🚀
-- Documents on [Firestore](https://cloud.google.com/firestore) (multi-region recommended) ⛰️
+- Documents on [Firestore](https://cloud.google.com/firestore) (Datastore mode, multi-region recommended) ⛰️ 
 - Webhooks and internal API events with [Pub/Sub](https://cloud.google.com/pubsub) 🔄
 
 > WIP 🚧
