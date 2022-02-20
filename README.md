@@ -1,8 +1,6 @@
 # E-Com Plus Open Cloud Commerce
 
-Open fair-code ecommerce platform on top of E-Com Plus headless commerce APIs: microservices based, event driven and cloud native.
-
-_Progressively_ based on [E-Com Plus Store API reference](https://developers.e-com.plus/docs/reference/store/).
+Open fair-code ecommerce platform and storefront on top of E-Com Plus headless commerce APIs.
 
 ## Concepts
 
@@ -13,7 +11,6 @@ _Progressively_ based on [E-Com Plus Store API reference](https://developers.e-c
 5. Horizontal autoscale with high availability and performance by default;
 6. Modern tech stack and first-class dev experience;
 7. Easy third-party integrations;
-8. Perfect for edge-rendering and [Jamstack](https://jamstack.org/).
 
 > WIP 🚧
 
