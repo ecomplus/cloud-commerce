@@ -1,8 +1,9 @@
 packages
 !packages/**/dist
 !packages/**/lib/**.js
-docs
-tests
+/docs
+/scripts
+/tests
 
 .turbo
 .cache
