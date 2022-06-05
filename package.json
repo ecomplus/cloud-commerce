@@ -12,6 +12,7 @@
   "scripts": {
     "postinstall": "husky install",
     "build": "turbo run build",
+    "version": "changeset version",
     "release": "pnpm build && changeset publish"
   },
   "devDependencies": {

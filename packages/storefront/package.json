@@ -16,5 +16,8 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/storefront#readme",
   "scripts": {
     "build": "echo '@ecomplus/storefront'"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

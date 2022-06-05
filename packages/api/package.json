@@ -16,5 +16,8 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/api#readme",
   "scripts": {
     "build": "echo '@ecomplus/api'"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

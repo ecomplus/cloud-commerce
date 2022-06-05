@@ -16,5 +16,8 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/apps/discounts#readme",
   "scripts": {
     "build": "echo '@ecomplus/app-discounts'"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
