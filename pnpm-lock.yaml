@@ -34,6 +34,18 @@ importers:
       turbo: 1.2.16
       typescript: 4.7.3
 
+  packages/apps/discounts:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+
+  packages/storefront:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../api
+
 packages:
 
   /@babel/code-frame/7.16.7:
