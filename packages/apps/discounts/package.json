@@ -1,0 +1,20 @@
+{
+  "name": "@ecomplus/app-discounts",
+  "version": "1.0.0-alpha",
+  "description": "E-Com Plus Cloud Commerce app for complex discount rules",
+  "main": "functions/dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/discounts"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/apps/discounts#readme",
+  "scripts": {
+    "build": "echo '@ecomplus/app-discounts'"
+  }
+}
