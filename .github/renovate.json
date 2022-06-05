@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:base",
+    "group:allNonMajor",
+    "schedule:earlyMondays"
+  ],
+  "rangeStrategy": "bump",
+  "labels": [
+    "dependencies"
+  ],
+  "dependencyDashboard": false
+}
