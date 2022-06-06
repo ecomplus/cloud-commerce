@@ -34,6 +34,9 @@ importers:
       turbo: 1.2.16
       typescript: 4.7.3
 
+  packages/api:
+    specifiers: {}
+
   packages/apps/discounts:
     specifiers:
       '@cloudcommerce/api': workspace:*
