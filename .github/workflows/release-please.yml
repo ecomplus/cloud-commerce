@@ -30,5 +30,5 @@ jobs:
       - if: ${{ steps.release.outputs.releases_created }}
         run: npx zx ./scripts/publish.cjs
         env:
-          RELEASE_PLEASE_OUTPUT: ${{ steps.release.outputs }}
+          RELEASE_PLEASE_OUTPUT: ${{ toJson(steps.release.outputs) }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
