@@ -7,7 +7,6 @@ package-lock.json
 yarn.lock
 node_modules
 
-.npmrc
 .env
 .env.test
 
