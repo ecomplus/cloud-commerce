@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const rulesChecks = require('@commitlint/rules').default;
 
 const forceTypeCase = (field, parsed) => {
@@ -25,18 +26,15 @@ module.exports = {
   plugins: [
     {
       rules: {
-        'bytype-scope-case': (parsed) => forceTypeCase('scope', parsed),
         'bytype-subject-case': (parsed) => forceTypeCase('subject', parsed),
         'bytype-body-case': (parsed) => forceTypeCase('subject', parsed),
       },
     },
   ],
   rules: {
-    'scope-empty': [1, 'never'],
-    'scope-case': [0],
+    'scope-case': [1, 'always', 'lower-case'],
     'subject-case': [0],
     'body-case': [0],
-    'bytype-scope-case': [2, 'always'],
     'bytype-subject-case': [2, 'always'],
     'bytype-body-case': [2, 'always'],
     'body-max-line-length': [2, 'always', 400],
