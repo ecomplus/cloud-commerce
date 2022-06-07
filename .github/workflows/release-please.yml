@@ -12,9 +12,10 @@ jobs:
       - uses: GoogleCloudPlatform/release-please-action@v3
         id: release
         with:
-          token: ${{ secrets.ORIGAMI_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           command: manifest
           monorepo-tags: true
+          default-branch: develop
 
       - if: ${{ steps.release.outputs.releases_created }}
         uses: actions/checkout@v3
@@ -27,10 +28,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - if: ${{ steps.release.outputs.releases_created }}
-        run: npm ci
-
-      - run: npx zx ./scripts/publish.cjs
+        run: npx zx ./scripts/publish.cjs
         env:
           RELEASE_PLEASE_OUTPUT: ${{ steps.release.outputs }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: ${{ steps.release.outputs.releases_created }}
