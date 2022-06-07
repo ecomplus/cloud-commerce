@@ -1,6 +1,14 @@
 {
   "packages": {
-    "packages/api": {},
+    "packages/api": {
+      "releaseType": "node",
+      "draft": false,
+      "prerelease": false,
+      "bumpMinorPreMajor": false,
+      "bumpPatchForMinorPreMajor": false,
+      "changelogPath": "CHANGELOG.md",
+      "versioning": "default"
+    },
     "packages/storefront": {},
     "packages/apps/discounts": {}
   }
