@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "astro-build.astro-vscode",
+    "Vue.volar"
+  ]
+}
