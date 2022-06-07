@@ -2,6 +2,15 @@
   "packages": {
     "packages/api": {},
     "packages/storefront": {},
-    "packages/apps/discounts": {}
+    "packages/apps/discounts": {},
+    "undefined": {
+      "releaseType": "node",
+      "draft": false,
+      "prerelease": false,
+      "bumpMinorPreMajor": false,
+      "bumpPatchForMinorPreMajor": false,
+      "changelogPath": "CHANGELOG.md",
+      "versioning": "default"
+    }
   }
 }
