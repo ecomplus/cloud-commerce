@@ -1,6 +1,6 @@
 {
   "name": "cloudcommerce",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "src/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",

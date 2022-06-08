@@ -1,6 +1,6 @@
 {
   "name": "@cloudcommerce/app-discounts",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "E-Com Plus Cloud Commerce app for complex discount rules",
   "main": "functions/dist/index.js",
   "repository": {
