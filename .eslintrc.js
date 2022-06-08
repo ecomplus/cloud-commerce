@@ -9,7 +9,7 @@ module.exports = {
     'airbnb-base',
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 12,
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
@@ -17,6 +17,47 @@ module.exports = {
     'vue',
     '@typescript-eslint',
   ],
+  ignorePatterns: [
+    '**/dist',
+  ],
   rules: {
+    'no-underscore-dangle': 'off',
+    'no-continue': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      { js: 'ignorePackages', ts: 'never' },
+    ],
+    'padded-blocks': [
+      'error',
+      'never',
+    ],
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: ['directive', 'import', 'export'], next: '*' },
+      { blankLine: 'always', prev: '*', next: ['directive', 'export'] },
+      { blankLine: 'never', prev: 'directive', next: 'directive' },
+      { blankLine: 'never', prev: 'import', next: 'import' },
+    ],
+    'arrow-body-style': 'off',
+    'import/order': [
+      'error',
+      { groups: ['type', 'builtin', 'external', 'parent', 'sibling', 'index'] },
+    ],
+    'no-plusplus': [
+      'error',
+      { allowForLoopAfterthoughts: true },
+    ],
+    'no-multi-spaces': [
+      'error',
+      { ignoreEOLComments: true },
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+    },
   },
 };
