@@ -12,11 +12,12 @@
   "scripts": {
     "postinstall": "husky install",
     "build": "turbo run build",
-    "release": "pnpm build && standard-version --commit-all --prerelease alpha"
+    "release": "pnpm build && standard-version --commit-all --prerelease alpha",
+    "postpublish": "zx scripts/release.mjs --publish"
   },
   "standard-version": {
     "scripts": {
-      "precommit": "zx scripts/version.mjs && git add **/package.json"
+      "precommit": "zx scripts/release.mjs && git add **/package.json"
     }
   },
   "devDependencies": {

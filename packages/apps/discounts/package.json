@@ -17,9 +17,6 @@
   "scripts": {
     "build": "echo '@ecomplus/app-discounts'"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
   }

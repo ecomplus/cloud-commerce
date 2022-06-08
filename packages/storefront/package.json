@@ -17,9 +17,6 @@
   "scripts": {
     "build": "echo '@ecomplus/storefront'"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
   }

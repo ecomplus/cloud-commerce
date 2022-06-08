@@ -16,8 +16,5 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/api#readme",
   "scripts": {
     "build": "tsc --build"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
