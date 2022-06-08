@@ -28,6 +28,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - if: ${{ steps.release.outputs.releases_created }}
+        run: npm ci
+
+      - if: ${{ steps.release.outputs.releases_created }}
         run: npx zx ./scripts/publish.cjs
         env:
           RELEASE_PLEASE_OUTPUT: ${{ toJson(steps.release.outputs) }}
