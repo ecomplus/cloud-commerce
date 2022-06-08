@@ -14,5 +14,6 @@ Object.keys(outputs).forEach((key) => {
     return;
   }
   const workspace = match[1];
+  await $`npm run build`;
   await $`npm publish -w ${workspace} --access public`;
 });
