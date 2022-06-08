@@ -1,9 +1,9 @@
 #!/usr/bin/env zx
 /* eslint-disable no-console, no-await-in-loop */
-/* global $, fs, globby, argv */
+/* global $, quiet, fs, globby, argv */
 
 // await $`npx standard-version`;
-const pwd = (await $`pwd`).stdout.trim();
+const pwd = (await quiet($`pwd`)).stdout.trim();
 const { version } = JSON.parse(fs.readFileSync('package.json'));
 const packages = await globby(['packages/**/package.json', '!**/node_modules']);
 
