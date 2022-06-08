@@ -11,9 +11,7 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "build": "turbo run build",
-    "version": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "build": "turbo run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
