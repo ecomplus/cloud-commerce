@@ -1,6 +1,6 @@
 {
   "name": "cloudcommerce",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "src/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -12,11 +12,11 @@
   "scripts": {
     "postinstall": "husky install",
     "build": "turbo run build",
-    "release": "pnpm build && standard-version --prerelease alpha"
+    "release": "pnpm build && standard-version --commit-all --prerelease alpha"
   },
   "standard-version": {
     "scripts": {
-      "precommit": "zx scripts/version.mjs && git add packages/**/package.json"
+      "precommit": "zx scripts/version.mjs && git add **/package.json"
     }
   },
   "devDependencies": {
