@@ -1,7 +1,0 @@
-{
-  "packages": {
-    "packages/api": {},
-    "packages/storefront": {},
-    "packages/apps/discounts": {}
-  }
-}
