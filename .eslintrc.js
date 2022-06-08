@@ -21,6 +21,8 @@ module.exports = {
     '**/dist',
   ],
   rules: {
+    'no-param-reassign': 'warn',
+    'no-await-in-loop': 'warn',
     'no-underscore-dangle': 'off',
     'no-continue': 'off',
     'import/extensions': [
