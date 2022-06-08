@@ -1,6 +1,6 @@
 {
   "name": "@cloudcommerce/api",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
   "main": "dist/index.js",
   "repository": {
