@@ -10,6 +10,8 @@ packages.forEach(async (pkgPath) => {
   pkg.version = version;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
   if (argv.publish) {
-    await $`npm publish ${pkgPath.replace('/package.json', '')} --access public`;
+    const { stdout } = await $`pwd`;
+    await $`cd ${pkgPath.replace('/package.json', '')} && npm publish --access public`;
+    await $`cd ${stdout}`;
   }
 });
