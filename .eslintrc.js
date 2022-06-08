@@ -23,7 +23,8 @@ module.exports = {
   rules: {
     'no-param-reassign': 'warn',
     'no-await-in-loop': 'warn',
-    'no-underscore-dangle': 'off',
+    'no-shadow': 'warn',
+    'no-underscore-dangle': 'warn',
     'no-continue': 'off',
     'import/extensions': [
       'error',
