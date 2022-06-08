@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/apps/discounts#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/discounts#readme",
   "scripts": {
     "build": "echo '@ecomplus/app-discounts'"
   },
