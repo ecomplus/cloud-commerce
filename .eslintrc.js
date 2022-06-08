@@ -9,7 +9,7 @@ module.exports = {
     'airbnb-base',
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 12,
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
