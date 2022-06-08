@@ -33,8 +33,8 @@ module.exports = {
   ],
   rules: {
     'scope-case': [1, 'always', 'lower-case'],
-    'subject-case': [0],
-    'body-case': [0],
+    'subject-case': [1, 'always', 'sentence-case'],
+    'body-case': [1, 'always', 'sentence-case'],
     'bytype-subject-case': [2, 'always'],
     'bytype-body-case': [2, 'always'],
     'body-max-line-length': [2, 'always', 400],
