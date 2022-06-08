@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/api",
   "version": "1.0.0-alpha",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/develop/packages/api#readme",
   "scripts": {
-    "build": "echo '@ecomplus/api'"
+    "build": "tsc --build"
   },
   "publishConfig": {
     "access": "public"
