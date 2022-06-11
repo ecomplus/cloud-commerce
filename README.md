@@ -1,11 +1,11 @@
 # E-Com Plus Open Cloud Commerce
 
 Open fair-code eCommerce platform to use on top of headless commerce APIs, it includes:
-- High performant Astro PWA & Jamstack storefront;
+- High performant [Astro](https://astro.build/) + [Vue](https://vuejs.org/) PWA & Jamstack storefront;
 - Storefront CMS and page builder;
 - Integrations for payments, shipping, ERPs, CRMs and others.
 
-Easy deployment on Firebase, plug & play with [E-Com Plus APIs](https://developers.e-com.plus/).
+Easy deployment on [Firebase](https://firebase.google.com/), plug & play with **[E-Com Plus APIs](https://developers.e-com.plus/)**.
 
 ## Concepts
 
