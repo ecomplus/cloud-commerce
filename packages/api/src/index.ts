@@ -21,6 +21,7 @@ type ReqOptions = {
   endpoint: Endpoint,
   params?: Record<string, string | number>,
   headers?: Record<string, string>,
+  timeout?: number,
 };
 
 // @ts-ignore
@@ -59,10 +60,27 @@ const setMiddleware = (middleware: typeof def.middleware) => {
   def.middleware = middleware;
 };
 
-const callApi = (options: ReqOptions) => {
+const callApi = async (options: ReqOptions) => {
   const url = def.middleware(options);
-  const { method, headers } = options;
-  return fetch(url, { method, headers });
+  const { method, headers, timeout = 20000 } = options;
+  const abortController = new AbortController();
+  const timer = setTimeout(() => abortController.abort(), timeout);
+  const response = await fetch(url, {
+    method,
+    headers,
+    signal: abortController.signal,
+  });
+  clearTimeout(timer);
+  if (response.ok) {
+    return {
+      ...response.headers,
+      data: await response.json(),
+    };
+  }
+  const error: any = new Error(response.statusText);
+  error.reqOptions = options;
+  error.response = response;
+  throw error;
 };
 
 const get = (endpoint: Endpoint, options: Exclude<ReqOptions, 'method'>) => callApi({
