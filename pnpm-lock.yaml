@@ -14,12 +14,12 @@ importers:
       eslint: ^8.17.0
       eslint-config-airbnb-base: ^15.0.0
       eslint-plugin-import: ^2.26.0
-      eslint-plugin-vue: ^9.1.0
+      eslint-plugin-vue: ^9.1.1
       husky: ^8.0.1
       standard-version: ^9.5.0
       turbo: ^1.2.16
       typescript: ^4.7.3
-      zx: ^6.2.4
+      zx: ^6.2.5
     devDependencies:
       '@commitlint/cli': 17.0.2
       '@commitlint/config-conventional': 17.0.2
@@ -31,12 +31,27 @@ importers:
       eslint: 8.17.0
       eslint-config-airbnb-base: 15.0.0_3yxiwxzsqipdmy4jwrlv6vgfmy
       eslint-plugin-import: 2.26.0_pv5w3e62ssxduf5aiwxbc3knra
-      eslint-plugin-vue: 9.1.0_eslint@8.17.0
+      eslint-plugin-vue: 9.1.1_eslint@8.17.0
       husky: 8.0.1
       standard-version: 9.5.0
       turbo: 1.2.16
       typescript: 4.7.3
-      zx: 6.2.4
+      zx: 6.2.5
+
+  packages/api:
+    specifiers: {}
+
+  packages/apps/discounts:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+
+  packages/storefront:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../api
 
 packages:
 
@@ -1422,8 +1437,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-vue/9.1.0_eslint@8.17.0:
-    resolution: {integrity: sha512-EPCeInPicQ/YyfOWJDr1yfEeSNoFCMzUus107lZyYi37xejdOolNzS5MXGXp8+9bkoKZMdv/1AcZzQebME6r+g==}
+  /eslint-plugin-vue/9.1.1_eslint@8.17.0:
+    resolution: {integrity: sha512-W9n5PB1X2jzC7CK6riG0oAcxjmKrjTF6+keL1rni8n57DZeilx/Fulz+IRJK3lYseLNAygN0I62L7DvioW40Tw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
@@ -3286,7 +3301,7 @@ packages:
     dev: true
 
   /util-deprecate/1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
   /v8-compile-cache-lib/3.0.1:
@@ -3442,8 +3457,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zx/6.2.4:
-    resolution: {integrity: sha512-wBDObcY5tKDOIOuGrg3XwrhCa6V6eeZLQDVbbpgN9pdhiyOJA/So9R9i5vKN7cGGWkcKKHy29i8kJtx02j+kSg==}
+  /zx/6.2.5:
+    resolution: {integrity: sha512-aTEZSL8sp1IhMUhxlXRTPH6MwzcuTBA3G4LLuH68NIj8kENfcaVGV7cn8LQXXHwG1M9LDI6ST6Qcw0EOrhRAVA==}
     engines: {node: '>= 16.0.0'}
     hasBin: true
     dependencies:
