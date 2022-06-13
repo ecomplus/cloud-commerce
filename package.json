@@ -6,8 +6,8 @@
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "engines": {
-    "node": ">=v16.15.1",
-    "pnpm": ">=7.2.1"
+    "node": ">=16",
+    "pnpm": ">=7"
   },
   "scripts": {
     "postinstall": "husky install",
