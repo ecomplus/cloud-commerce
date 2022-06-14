@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -15,6 +16,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
   "scripts": {
-    "build": "tsc --build"
+    "build": "zx scripts/build.mjs",
+    "test": "tsc --noEmit --noImplicitAny"
   }
 }
