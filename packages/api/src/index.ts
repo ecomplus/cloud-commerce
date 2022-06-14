@@ -1,28 +1,4 @@
-type Resource = 'products'
-  | 'categories'
-  | 'brands'
-  | 'collections'
-  | 'grids'
-  | 'carts'
-  | 'orders'
-  | 'customers'
-  | 'stores'
-  | 'applications';
-
-type Endpoint = Resource | `${Resource}/${string}`;
-
-type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
-
-type Config = {
-  baseUrl?: string,
-  storeId?: number,
-  lang?: string,
-  method: Method,
-  endpoint: Endpoint,
-  params?: Record<string, string | number>,
-  headers?: Record<string, string>,
-  timeout?: number,
-};
+import type { Endpoint, Config, ResponseBody } from './types';
 
 // @ts-ignore
 const env: { [key: string]: string } = (typeof window === 'object' && window)
@@ -60,7 +36,10 @@ const setMiddleware = (middleware: typeof def.middleware) => {
   def.middleware = middleware;
 };
 
-const callApi = async (config: Config) => {
+const callApi = async <T extends Config>(config: T): Promise<Response & {
+  config: Config,
+  data: ResponseBody<T>,
+}> => {
   const url = def.middleware(config);
   const { method, headers, timeout = 20000 } = config;
   const abortController = new AbortController();
@@ -130,11 +109,4 @@ export {
   put,
   patch,
   del,
-};
-
-export type {
-  Resource,
-  Endpoint,
-  Method,
-  Config,
 };
