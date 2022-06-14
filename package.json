@@ -12,6 +12,7 @@
   "scripts": {
     "postinstall": "husky install",
     "build": "turbo run build",
+    "test": "turbo run test",
     "release": "pnpm build && standard-version --commit-all",
     "postpublish": "zx scripts/release.mjs --publish"
   },
