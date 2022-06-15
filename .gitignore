@@ -1,4 +1,6 @@
 dist
+packages/*/lib
+packages/apps/*/lib
 
 .turbo
 .cache

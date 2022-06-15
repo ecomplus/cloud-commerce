@@ -1,7 +1,7 @@
 packages
 !packages/**/dist
-!packages/**/lib/**.mjs
-!packages/**/lib/**.cjs
+!packages/*/lib
+!packages/apps/*/lib
 /docs
 /scripts
 /tests
