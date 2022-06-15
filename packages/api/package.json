@@ -17,6 +17,6 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
   "scripts": {
     "build": "zx scripts/build.mjs",
-    "test": "tsc --noEmit --noImplicitAny"
+    "test": "zx scripts/test.mjs"
   }
 }
