@@ -1,14 +1,18 @@
-/* eslint-disable no-console */
-import './fetch-polyfill';
-import callApi from '../src/index';
+/* eslint-disable no-console, import/no-extraneous-dependencies */
 
-callApi({
-  storeId: 1056,
-  method: 'get',
-  endpoint: 'products/618041aa239b7206d3fc06de',
-}).then(({ data }) => {
-  if (data.sku === 'string') {
+import { test, expect } from 'vitest';
+import './fetch-polyfill';
+import api from '../src/index';
+
+const productId = '618041aa239b7206d3fc06de';
+test('Read product and typecheck SKU', async () => {
+  const { data } = await api({
+    storeId: 1056,
+    endpoint: `products/${productId}`,
+  });
+  if (data.sku === '123') {
     console.log('\\o/');
   }
-  console.info(`✓ Read product ${data.sku} and checked SKU type string`);
+  expect(data.sku).toBeTypeOf('string');
+  expect(data._id).toBe(productId);
 });
