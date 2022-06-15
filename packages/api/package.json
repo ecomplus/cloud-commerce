@@ -2,8 +2,8 @@
   "name": "@cloudcommerce/api",
   "version": "0.0.4",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
   "scripts": {
-    "build": "zx scripts/build.mjs",
-    "test": "zx scripts/test.mjs"
+    "build": "sh scripts/build.sh",
+    "test": "tsc -p ../../tsconfig.test.json && vitest run"
   }
 }
