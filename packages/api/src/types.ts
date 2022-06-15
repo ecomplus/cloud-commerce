@@ -32,26 +32,28 @@ type Config = {
   baseUrl?: string,
   storeId?: number,
   lang?: string,
-  method: Method,
+  method?: Method,
   endpoint: Endpoint,
   params?: Record<string, string | number>,
   headers?: Record<string, string>,
   timeout?: number,
 };
 
+type ReadConfig<endpoint> = Config & { method?: 'get', endpoint: endpoint };
+
 type ResponseBody<T> =
   T extends Config & { method: 'post' } ? { _id: ResourceId } :
   T extends Config & { method: 'put' | 'patch' | 'delete' } ? null :
-  T extends Config & { method: 'get', endpoint: `products/${ResourceId}` } ? Products :
-  T extends Config & { method: 'get', endpoint: `categories/${ResourceId}` } ? Categories :
-  T extends Config & { method: 'get', endpoint: `brands/${ResourceId}` } ? Brands :
-  T extends Config & { method: 'get', endpoint: `collections/${ResourceId}` } ? Collections :
-  T extends Config & { method: 'get', endpoint: `grids/${ResourceId}` } ? Grids :
-  T extends Config & { method: 'get', endpoint: `carts/${ResourceId}` } ? Carts :
-  T extends Config & { method: 'get', endpoint: `orders/${ResourceId}` } ? Orders :
-  T extends Config & { method: 'get', endpoint: `customers/${ResourceId}` } ? Customers :
-  T extends Config & { method: 'get', endpoint: `stores/${ResourceId}` } ? Stores :
-  T extends Config & { method: 'get', endpoint: `applications/${ResourceId}` } ? Applications :
+  T extends ReadConfig<`products/${ResourceId}`> ? Products :
+  T extends ReadConfig<`categories/${ResourceId}`> ? Categories :
+  T extends ReadConfig<`brands/${ResourceId}`> ? Brands :
+  T extends ReadConfig<`collections/${ResourceId}`> ? Collections :
+  T extends ReadConfig<`grids/${ResourceId}`> ? Grids :
+  T extends ReadConfig<`carts/${ResourceId}`> ? Carts :
+  T extends ReadConfig<`orders/${ResourceId}`> ? Orders :
+  T extends ReadConfig<`customers/${ResourceId}`> ? Customers :
+  T extends ReadConfig<`stores/${ResourceId}`> ? Stores :
+  T extends ReadConfig<`applications/${ResourceId}`> ? Applications :
   any
 
 export type {
