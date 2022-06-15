@@ -34,7 +34,7 @@ const setMiddleware = (middleware: typeof def.middleware) => {
   def.middleware = middleware;
 };
 
-const callApi = async <T extends Config>(config: T): Promise<Response & {
+const api = async <T extends Config>(config: T): Promise<Response & {
   config: Config,
   data: ResponseBody<T>,
 }> => {
@@ -61,44 +61,44 @@ const callApi = async <T extends Config>(config: T): Promise<Response & {
   throw error;
 };
 
-const get = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => callApi({
+const get = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
   ...config,
   method: 'get',
   endpoint,
 });
 
-const post = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => callApi({
+const post = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
   ...config,
   method: 'post',
   endpoint,
 });
 
-const put = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => callApi({
+const put = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
   ...config,
   method: 'put',
   endpoint,
 });
 
-const patch = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => callApi({
+const patch = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
   ...config,
   method: 'patch',
   endpoint,
 });
 
-const del = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => callApi({
+const del = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
   ...config,
   method: 'delete',
   endpoint,
 });
 
-callApi.get = get;
-callApi.post = post;
-callApi.put = put;
-callApi.patch = patch;
-callApi.del = del;
-callApi.delete = del;
+api.get = get;
+api.post = post;
+api.put = put;
+api.patch = patch;
+api.del = del;
+api.delete = del;
 
-export default callApi;
+export default api;
 
 export {
   setMiddleware,
