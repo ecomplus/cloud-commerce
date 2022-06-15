@@ -8,16 +8,14 @@ const env: { [key: string]: string } = (typeof window === 'object' && window)
 const def = {
   middleware(config: Config) {
     let url = config.baseUrl || env.API_BASE_URL || 'https://ecomplus.io/v2';
-    if (!url) {
-      const storeId = config.storeId || env.ECOM_STORE_ID;
-      if (!storeId) {
-        throw new Error('`storeId` must be set in config or `ECOM_STORE_ID` env var');
-      }
-      url += `/:${storeId}`;
-      const lang = config.lang || env.ECOM_LANG;
-      if (lang) {
-        url += `,lang:${lang}`;
-      }
+    const storeId = config.storeId || env.ECOM_STORE_ID;
+    if (!storeId) {
+      throw new Error('`storeId` must be set in config or `ECOM_STORE_ID` env var');
+    }
+    url += `/:${storeId}`;
+    const lang = config.lang || env.ECOM_LANG;
+    if (lang) {
+      url += `,lang:${lang}`;
     }
     if (config.params) {
       if (typeof config.params === 'string') {
