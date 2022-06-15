@@ -13,5 +13,10 @@
     "test": {
       "outputs": []
     }
-  }
+  },
+  "globalDependencies": [
+    ".env",
+    "tsconfig.json",
+    "vite.config.ts"
+  ]
 }
