@@ -16,3 +16,15 @@ test('Read product and typecheck SKU', async () => {
   expect(data.sku).toBeTypeOf('string');
   expect(data._id).toBe(productId);
 });
+
+test('404 with different Store ID from env', async () => {
+  process.env.ECOM_STORE_ID = '1011';
+  try {
+    const { data } = await api.get(`products/${productId}`);
+    console.log(data);
+    throw new Error('Should have thrown not found');
+  } catch (error: any) {
+    expect(error.statusCode).toBe(404);
+    expect(error.response?.status).toBe(404);
+  }
+});
