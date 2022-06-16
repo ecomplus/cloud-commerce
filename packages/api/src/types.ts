@@ -37,6 +37,7 @@ type Config = {
   params?: Record<string, string | number>,
   headers?: Record<string, string>,
   timeout?: number,
+  maxRetries?: number,
 };
 
 type ReadConfig<endpoint> = Config & { method?: 'get', endpoint: endpoint };

@@ -34,12 +34,17 @@ const setMiddleware = (middleware: typeof def.middleware) => {
   def.middleware = middleware;
 };
 
-const api = async <T extends Config>(config: T): Promise<Response & {
+const api = async <T extends Config>(config: T, retries = 0): Promise<Response & {
   config: Config,
   data: ResponseBody<T>,
 }> => {
   const url = def.middleware(config);
-  const { method, headers, timeout = 20000 } = config;
+  const {
+    method,
+    headers,
+    timeout = 20000,
+    maxRetries = 3,
+  } = config;
   const abortController = new AbortController();
   const timer = setTimeout(() => abortController.abort(), timeout);
   const response = await fetch(url, {
@@ -55,10 +60,19 @@ const api = async <T extends Config>(config: T): Promise<Response & {
       data: await response.json(),
     };
   }
+  const { status } = response;
+  if (maxRetries < retries && (status === 429 || status >= 500)) {
+    const retryAfter = response.headers.get('retry-after');
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        api(config, retries + 1).then(resolve).catch(reject);
+      }, (retryAfter && parseInt(retryAfter, 10)) || 5000);
+    });
+  }
   const error: any = new Error(response.statusText);
   error.config = config;
   error.response = response;
-  error.statusCode = response.status;
+  error.statusCode = status;
   throw error;
 };
 
