@@ -61,31 +61,35 @@ const api = async <T extends Config>(config: T): Promise<Response & {
   throw error;
 };
 
-const get = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
-  ...config,
-  method: 'get',
-  endpoint,
-});
+type AbstractedConfig = Omit<Config, 'endpoint' | 'method'>;
 
-const post = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
+const get = <E extends Endpoint, C extends AbstractedConfig>(
+  endpoint: E,
+  config?: C,
+): Promise<Response & {
+  config: Config,
+  data: ResponseBody<{ endpoint: E }>,
+}> => api({ ...config, endpoint });
+
+const post = (endpoint: Endpoint, config?: AbstractedConfig) => api({
   ...config,
   method: 'post',
   endpoint,
 });
 
-const put = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
+const put = (endpoint: Endpoint, config?: AbstractedConfig) => api({
   ...config,
   method: 'put',
   endpoint,
 });
 
-const patch = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
+const patch = (endpoint: Endpoint, config?: AbstractedConfig) => api({
   ...config,
   method: 'patch',
   endpoint,
 });
 
-const del = (endpoint: Endpoint, config: Exclude<Config, 'method'>) => api({
+const del = (endpoint: Endpoint, config?: AbstractedConfig) => api({
   ...config,
   method: 'delete',
   endpoint,
