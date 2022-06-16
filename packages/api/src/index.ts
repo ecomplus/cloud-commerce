@@ -58,6 +58,7 @@ const api = async <T extends Config>(config: T): Promise<Response & {
   const error: any = new Error(response.statusText);
   error.config = config;
   error.response = response;
+  error.statusCode = response.status;
   throw error;
 };
 
