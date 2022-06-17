@@ -2,7 +2,7 @@
 
 import { test, expect } from 'vitest';
 import './fetch-polyfill';
-import api from '../src/index';
+import api, { ApiError } from '../src/index';
 
 const productId = '618041aa239b7206d3fc06de';
 test('Read product and typecheck SKU', async () => {
@@ -23,7 +23,8 @@ test('404 with different Store ID from env', async () => {
     const { data } = await api.get(`products/${productId}`);
     console.log(data);
     throw new Error('Should have thrown not found');
-  } catch (error: any) {
+  } catch (err: any) {
+    const error = err as ApiError;
     expect(error.statusCode).toBe(404);
     expect(error.response?.status).toBe(404);
   }

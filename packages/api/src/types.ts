@@ -55,7 +55,7 @@ type ResponseBody<T> =
   T extends ReadConfig<`customers/${ResourceId}`> ? Customers :
   T extends ReadConfig<`stores/${ResourceId}`> ? Stores :
   T extends ReadConfig<`applications/${ResourceId}`> ? Applications :
-  any
+  any;
 
 export type {
   Products,
