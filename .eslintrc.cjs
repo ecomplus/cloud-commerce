@@ -26,6 +26,8 @@ module.exports = {
     'no-param-reassign': 'warn',
     'no-underscore-dangle': 'off',
     'no-continue': 'off',
+    'lines-between-class-members': 'off',
+    'arrow-body-style': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -42,7 +44,6 @@ module.exports = {
       { blankLine: 'never', prev: 'directive', next: 'directive' },
       { blankLine: 'never', prev: 'import', next: 'import' },
     ],
-    'arrow-body-style': 'off',
     'import/order': [
       'error',
       { groups: ['type', 'builtin', 'external', 'parent', 'sibling', 'index'] },
