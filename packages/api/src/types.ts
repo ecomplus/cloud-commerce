@@ -40,21 +40,47 @@ type Config = {
   maxRetries?: number,
 };
 
-type ReadConfig<endpoint> = Config & { method?: 'get', endpoint: endpoint };
+type ListResult<TResource extends Resource> = {
+  result:
+    TResource extends 'products' ? Products[] :
+    TResource extends 'categories' ? Categories[] :
+    TResource extends 'brands' ? Brands[] :
+    TResource extends 'collections' ? Collections[] :
+    TResource extends 'grids' ? Grids[] :
+    TResource extends 'carts' ? Carts[] :
+    TResource extends 'orders' ? Orders[] :
+    TResource extends 'customers' ? Customers[] :
+    TResource extends 'stores' ? Stores[] :
+    TResource extends 'applications' ? Applications[] :
+    never,
+  meta: {
+    offset: number,
+    limit: number,
+    count?: number,
+    sort: Array<{
+      field: string,
+      order: 1 | -1,
+    }>,
+    query: { [key: string]: any },
+    fields: Array<string>,
+  },
+};
 
-type ResponseBody<T> =
-  T extends Config & { method: 'post' } ? { _id: ResourceId } :
-  T extends Config & { method: 'put' | 'patch' | 'delete' } ? null :
-  T extends ReadConfig<`products/${ResourceId}`> ? Products :
-  T extends ReadConfig<`categories/${ResourceId}`> ? Categories :
-  T extends ReadConfig<`brands/${ResourceId}`> ? Brands :
-  T extends ReadConfig<`collections/${ResourceId}`> ? Collections :
-  T extends ReadConfig<`grids/${ResourceId}`> ? Grids :
-  T extends ReadConfig<`carts/${ResourceId}`> ? Carts :
-  T extends ReadConfig<`orders/${ResourceId}`> ? Orders :
-  T extends ReadConfig<`customers/${ResourceId}`> ? Customers :
-  T extends ReadConfig<`stores/${ResourceId}`> ? Stores :
-  T extends ReadConfig<`applications/${ResourceId}`> ? Applications :
+type ResponseBody<TConfig extends Config> =
+  TConfig['method'] extends 'post' ? { _id: ResourceId } :
+  TConfig['method'] extends 'put' | 'patch' | 'delete' ? null :
+  // method?: 'get'
+  TConfig['endpoint'] extends `products/${ResourceId}` ? Products :
+  TConfig['endpoint'] extends `categories/${ResourceId}` ? Categories :
+  TConfig['endpoint'] extends `brands/${ResourceId}` ? Brands :
+  TConfig['endpoint'] extends `collections/${ResourceId}` ? Collections :
+  TConfig['endpoint'] extends `grids/${ResourceId}` ? Grids :
+  TConfig['endpoint'] extends `carts/${ResourceId}` ? Carts :
+  TConfig['endpoint'] extends `orders/${ResourceId}` ? Orders :
+  TConfig['endpoint'] extends `customers/${ResourceId}` ? Customers :
+  TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
+  TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
+  TConfig['endpoint'] extends Resource ? ListResult<TConfig['endpoint']> :
   any;
 
 export type {
