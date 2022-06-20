@@ -29,3 +29,13 @@ test('404 with different Store ID from env', async () => {
     expect(error.response?.status).toBe(404);
   }
 });
+
+test('List categories and typecheck result', async () => {
+  const { data } = await api.get('categories');
+  if (data.result === []) {
+    console.log('Any category found');
+  }
+  expect(Array.isArray(data.result)).toBe(true);
+  expect(data.meta).toBeTypeOf('object');
+  expect(data.meta.offset).toBeTypeOf('number');
+});
