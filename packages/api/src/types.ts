@@ -53,6 +53,7 @@ type Config = {
   headers?: Record<string, string>,
   timeout?: number,
   maxRetries?: number,
+  fetch?: typeof fetch,
 };
 
 type BaseListResultMeta = {

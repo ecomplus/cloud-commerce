@@ -66,7 +66,7 @@ const api = async <T extends Config>(config: T, retries = 0): Promise<Response &
   }, timeout);
   let response: Response | undefined;
   try {
-    response = await fetch(url, {
+    response = await (config.fetch || fetch)(url, {
       method,
       headers,
       signal: abortController.signal,
