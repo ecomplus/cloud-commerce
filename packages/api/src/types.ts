@@ -24,7 +24,22 @@ type ResourceId = string & { length: 24 };
 
 type ResourceAndId = `${Resource}/${ResourceId}`;
 
-type Endpoint = Resource | ResourceAndId | `${ResourceAndId}/${string}`;
+type EventsEndpoint = `events/${Resource}`
+  | `events/${ResourceAndId}`
+  | 'events/me';
+
+type Endpoint = Resource
+  | ResourceAndId
+  | `${ResourceAndId}/${string}`
+  | `slugs/${string}`
+  | 'search/v1'
+  | EventsEndpoint
+  | 'login'
+  | 'authenticate'
+  | 'ask-auth-callback'
+  | 'check-username'
+  | `$aggregate/${Exclude<Resource, 'stores' | 'applications'>}`
+  | `schemas/${Resource}`;
 
 type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
@@ -40,7 +55,13 @@ type Config = {
   maxRetries?: number,
 };
 
-type ListResult<TResource extends Resource> = {
+type BaseListResultMeta = {
+  offset: number,
+  limit: number,
+  fields: Array<string>,
+};
+
+type ResourceListResult<TResource extends Resource> = {
   result:
     TResource extends 'products' ? Products[] :
     TResource extends 'categories' ? Categories[] :
@@ -53,17 +74,45 @@ type ListResult<TResource extends Resource> = {
     TResource extends 'stores' ? Stores[] :
     TResource extends 'applications' ? Applications[] :
     never,
-  meta: {
-    offset: number,
-    limit: number,
+  meta: BaseListResultMeta & {
     count?: number,
     sort: Array<{
       field: string,
       order: 1 | -1,
     }>,
     query: { [key: string]: any },
-    fields: Array<string>,
   },
+};
+
+type EventFieldsByEndpoint<TEndpoint extends EventsEndpoint> =
+  TEndpoint extends `events/${Resource}` ? {
+    resource_id: ResourceId,
+    authentication_id: ResourceId | null,
+  } :
+  TEndpoint extends `events/${ResourceAndId}` ? {
+    authentication_id: ResourceId | null,
+  } :
+  TEndpoint extends 'events/me' ? {
+    resource: Resource,
+    resource_id: ResourceId,
+  } :
+  never;
+
+type EventsResult<TEndpoint extends EventsEndpoint> = {
+  result: Array<{
+    timestamp: Date,
+    store_id?: number,
+    resource?: string,
+    authentication_id?: ResourceId | null,
+    resource_id?: ResourceId,
+    action: string,
+    modified_fields: string[],
+    method?: number | undefined,
+    endpoint?: string,
+    body?: any,
+    ip?: string,
+  } & EventFieldsByEndpoint<TEndpoint>>,
+  meta: BaseListResultMeta,
 };
 
 type ResponseBody<TConfig extends Config> =
@@ -80,7 +129,8 @@ type ResponseBody<TConfig extends Config> =
   TConfig['endpoint'] extends `customers/${ResourceId}` ? Customers :
   TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
   TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
-  TConfig['endpoint'] extends Resource ? ListResult<TConfig['endpoint']> :
+  TConfig['endpoint'] extends Resource ? ResourceListResult<TConfig['endpoint']> :
+  TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
 export type {
