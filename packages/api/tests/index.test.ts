@@ -39,3 +39,16 @@ test('List categories and typecheck result', async () => {
   expect(data.meta).toBeTypeOf('object');
   expect(data.meta.offset).toBeTypeOf('number');
 });
+
+test('401 trying to list API events', async () => {
+  try {
+    const { data } = await api.get('events/orders');
+    console.log(data);
+    console.log(data.result[0].modified_fields);
+    throw new Error('Should have thrown unauthorized');
+  } catch (err: any) {
+    const error = err as ApiError;
+    expect(error.statusCode).toBe(401);
+    expect(error.response?.status).toBe(401);
+  }
+});
