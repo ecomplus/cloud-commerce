@@ -100,7 +100,7 @@ type EventFieldsByEndpoint<TEndpoint extends EventsEndpoint> =
 
 type EventsResult<TEndpoint extends EventsEndpoint> = {
   result: Array<{
-    timestamp: Date,
+    timestamp: string,
     store_id?: number,
     resource?: string,
     authentication_id?: ResourceId | null,
