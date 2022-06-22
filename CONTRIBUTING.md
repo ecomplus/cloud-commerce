@@ -29,7 +29,7 @@ You can skip the last three if you're willing to work with Storefront only, and 
 
 If you want to deploy to a new Firebase project:
 
-1. Start creating a [Firebase project](https://console.firebase.google.com/):
+1. Start creating new project on [Firebase console](https://console.firebase.google.com/):
     - Analytics is not needed;
     - Set a nice project name (ID) and remember it;
 
