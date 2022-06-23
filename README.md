@@ -3,6 +3,7 @@
 Open fair-code eCommerce platform to use on top of headless commerce APIs, it includes:
 - High performant [Astro](https://astro.build/) + [Vue](https://vuejs.org/) PWA & Jamstack storefront;
 - Storefront CMS and page builder;
+- Analytics and A/B testing;
 - Integrations for payments, shipping, ERPs, CRMs and others.
 
 Easy deployment on [Firebase](https://firebase.google.com/), plug & play with **[E-Com Plus APIs](https://developers.e-com.plus/)**.
