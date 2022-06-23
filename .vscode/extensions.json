@@ -2,6 +2,7 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "astro-build.astro-vscode",
-    "Vue.volar"
+    "vue.volar",
+    "florianthievent.rules"
   ]
 }
