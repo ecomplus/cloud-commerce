@@ -2,6 +2,7 @@ packages
 !packages/**/dist
 !packages/*/lib
 !packages/apps/*/lib
+/store
 /docs
 /scripts
 /tests
