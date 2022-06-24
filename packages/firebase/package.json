@@ -1,0 +1,24 @@
+{
+  "name": "@cloudcommerce/firebase",
+  "type": "module",
+  "version": "0.0.8",
+  "description": "E-Com Plus Cloud Commerce on Firebase",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/firebase"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/firebase#readme",
+  "scripts": {
+    "build": "echo '@ecomplus/firebase'"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*"
+  }
+}
