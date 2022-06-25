@@ -15,11 +15,12 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "release": "pnpm build && pnpm test && standard-version --commit-all",
-    "postpublish": "zx scripts/release.mjs --publish"
+    "publish:all": "pnpm publish -r --access public --no-git-checks"
   },
   "standard-version": {
     "scripts": {
-      "precommit": "zx scripts/release.mjs && git add **/package.json"
+      "precommit": "zx scripts/release.mjs && git add **/package.json",
+      "posttag": "git push --follow-tags origin main && pnpm publish:all"
     }
   },
   "devDependencies": {
