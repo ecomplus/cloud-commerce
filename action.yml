@@ -1,0 +1,49 @@
+name: 'Deploy Cloud Commerce to Firebase'
+description: 'A GitHub Action to deploy https://github.com/ecomplus/cloud-commerce store to Firebase'
+
+inputs:
+  github-token:
+    description: 'The `GITHUB_TOKEN` secret'
+    required: true
+  firebase-service-account:
+    description: 'Firebase service account JSON'
+    required: true
+
+outputs: {}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get current branch
+      id: get-branch
+      env:
+        GITHUB_REF: ${{ github.ref }}
+        run: echo "::set-output name=name::${GITHUB_REF#refs/heads/}"
+
+    - if: steps.get-branch.outputs.name == main
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+        # cache-dependency-path: ${{ github.action_path }}/scripts/store/package-lock.json
+
+    - if: steps.get-branch.outputs.name == main
+      shell: bash
+      run: npm i -g firebase-tools
+
+    - if: steps.get-branch.outputs.name == main
+      name: Deploy to Firebase live
+      shell: bash
+      env:
+        FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
+      run: |
+        export GAC_FILENAME=".gac-$RANDOM.json";
+        echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME;
+        GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npx firebase deploy;
+    
+    - if: steps.get-branch.outputs.name != main
+      name: Deploy Firebase Hosting PR preview
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: ${{ inputs.github-token }}
+        firebaseServiceAccount: ${{ inputs.firebase-service-account }}
