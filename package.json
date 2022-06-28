@@ -12,6 +12,7 @@
   },
   "scripts": {
     "postinstall": "husky install",
+    "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build",
     "test": "turbo run test",
     "release": "pnpm build && pnpm test && standard-version --commit-all"
