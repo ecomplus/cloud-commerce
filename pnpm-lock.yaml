@@ -44,6 +44,12 @@ importers:
       vitest: 0.15.2
       zx: 7.0.3
 
+  packages/__skeleton:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../api
+
   packages/api:
     specifiers: {}
 
@@ -52,6 +58,12 @@ importers:
       '@cloudcommerce/api': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../../api
+
+  packages/cli:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../api
 
   packages/firebase:
     specifiers:
