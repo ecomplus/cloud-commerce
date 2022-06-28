@@ -1,3 +1,0 @@
-[submodule "store"]
-	path = store
-	url = git@github.com:ecomplus/store.git
