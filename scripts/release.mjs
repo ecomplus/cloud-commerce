@@ -9,6 +9,9 @@ const packages = await globby(['packages/**/package.json', '!**/node_modules']);
 
 for (let i = 0; i < packages.length; i++) {
   const pkgPath = packages[i];
+  if (/\/(__|\.)[^/]+\/package\.json$/.test(pkgPath)) {
+    continue;
+  }
   const pkg = JSON.parse(fs.readFileSync(pkgPath));
   pkg.version = version;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
