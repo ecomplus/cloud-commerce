@@ -14,13 +14,12 @@
     "postinstall": "husky install",
     "build": "turbo run build",
     "test": "turbo run test",
-    "release": "pnpm build && pnpm test && standard-version --commit-all",
-    "publish:all": "zx scripts/release.mjs --publish"
+    "release": "pnpm build && pnpm test && standard-version --commit-all"
   },
   "standard-version": {
     "scripts": {
       "precommit": "zx scripts/release.mjs && git add **/package.json",
-      "posttag": "git push --follow-tags origin main && pnpm publish:all"
+      "posttag": "zx scripts/release.mjs --publish"
     }
   },
   "devDependencies": {

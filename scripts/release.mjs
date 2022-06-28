@@ -20,7 +20,10 @@ for (let i = 0; i < packages.length; i++) {
       await spinner('give npm registry a time...', () => $`sleep 5`);
       await $`npm i --save ${firebasePkg} && npm update`;
       await $`git pull && git add package* && git commit -m 'Update to \`${firebasePkg}\`'`;
-      return $`git push`;
+      await $`git push`;
+      await $`cd ../.. && git submodule update --remote --merge`;
+      await $`git add store && git commit -m 'chore: Update store submodule post-release'`;
+      return $`git push --follow-tags origin main`;
     });
   }
 }
