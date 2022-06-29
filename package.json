@@ -19,7 +19,7 @@
   },
   "standard-version": {
     "scripts": {
-      "precommit": "zx scripts/release.mjs && git add packages/**/package.json",
+      "precommit": "zx scripts/release.mjs && sleep 1 && git add packages/**/package.json",
       "posttag": "zx scripts/release.mjs --publish"
     }
   },
