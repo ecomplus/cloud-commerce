@@ -23,9 +23,11 @@ for (let i = 0; i < packages.length; i++) {
     await spinner('give npm registry a time...', () => $`sleep 30`);
     await $`rm -rf node_modules package-lock.json`;
     await $`npm i --save @cloudcommerce/firebase@${version}`;
+    await $`rm -rf node_modules`;
     cd(`${pwd}/store`);
     await $`rm -rf node_modules package-lock.json`;
     await $`npm i --save @cloudcommerce/cli@${version}`;
+    await $`rm -rf node_modules`;
     await $`git add package* functions/package*`;
     await $`git commit -m 'Update to v${version}' \
       -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
