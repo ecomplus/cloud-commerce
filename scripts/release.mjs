@@ -1,7 +1,7 @@
 #!/usr/bin/env zx
 /* eslint-disable no-console, no-await-in-loop, import/no-unresolved */
 /* global $, quiet, fs, cd, globby, argv */
-import { spinner } from 'zx/experimental';
+import { retry, spinner } from 'zx/experimental';
 
 // await $`npx standard-version`;
 const pwd = (await quiet($`pwd`)).stdout.trim();
@@ -17,24 +17,31 @@ for (let i = 0; i < packages.length; i++) {
   pkg.version = version;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
   if (argv.publish) {
-    await $`pnpm publish -r --access public --no-git-checks`;
-    await $`git submodule update --remote --merge`;
-    cd(`${pwd}/store/functions`);
-    await spinner('give npm registry a time...', () => $`sleep 30`);
-    await $`rm -rf node_modules package-lock.json`;
-    await $`npm i --save @cloudcommerce/firebase@${version}`;
-    await $`rm -rf node_modules`;
-    cd(`${pwd}/store`);
-    await $`rm -rf node_modules package-lock.json`;
-    await $`npm i --save @cloudcommerce/cli@${version}`;
-    await $`rm -rf node_modules`;
-    await $`git add package* functions/package*`;
-    await $`git commit -m 'Update to v${version}' \
-      -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
-    await $`git push`;
-    cd(pwd);
-    await $`pnpm i`;
-    await $`git add store && git commit -m 'chore: Update store submodule post-release'`;
-    await $`git push --follow-tags origin main`;
+    const { stdout } = await $`pnpm publish -r --access public --no-git-checks`;
+    if (!stdout.trim().startsWith('There are no new packages') || argv.force) {
+      await $`git submodule update --remote --merge`;
+      await retry(10, '1s', async () => {
+        cd(`${pwd}/store/functions`);
+        await spinner('give npm registry a time...', () => $`sleep 9`);
+        await $`rm -rf node_modules package-lock.json`;
+        await $`npm i --save @cloudcommerce/firebase@${version}`;
+        await $`rm -rf node_modules`;
+        cd(`${pwd}/store`);
+        await $`rm -rf node_modules package-lock.json`;
+        await $`npm i --save @cloudcommerce/cli@${version}`;
+        await $`rm -rf node_modules`;
+        await $`git add package* functions/package*`;
+        await $`git commit -m 'Update to v${version}' \
+          -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
+        await $`git push`;
+        return cd(pwd);
+      });
+      await $`pnpm i`;
+      await $`git add store pnpm-lock.yaml`;
+      await $`git commit -m 'chore: Update store submodule post-release'`;
+      await $`git push --follow-tags origin main`;
+    } else {
+      await $`exit 0`;
+    }
   }
 }
