@@ -2,8 +2,10 @@
   "name": "@cloudcommerce/cli",
   "type": "module",
   "version": "0.0.14",
-  "description": "E-Com Plus Cloud Commerce",
-  "main": "src/index.js",
+  "description": "E-Com Plus Cloud Commerce CLI tools",
+  "bin": {
+    "cloudcommerce": "./bin/run.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -15,10 +17,7 @@
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/cli#readme",
-  "scripts": {
-    "build": "echo '@ecomplus/cli'"
-  },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "zx": "^7.0.3"
   }
 }
