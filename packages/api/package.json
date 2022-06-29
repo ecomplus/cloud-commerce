@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
   "scripts": {
-    "build": "sh scripts/build.sh",
+    "build": "sh ../../scripts/build-lib.sh && cp -r src/types lib/",
     "test": "tsc -p ../../tsconfig.test.json && vitest run"
   }
 }
