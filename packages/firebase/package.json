@@ -19,6 +19,11 @@
     "build": "echo '@ecomplus/firebase'"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "@cloudcommerce/api": "workspace:*",
+    "firebase-admin": "^10.3.0",
+    "firebase-functions": "^3.21.2"
+  },
+  "devDependencies": {
+    "@firebase/app-types": "^0.7.0"
   }
 }
