@@ -2,6 +2,7 @@ dist
 packages/*/lib
 packages/apps/*/lib
 
+.cloudcommerce
 .turbo
 .cache
 
