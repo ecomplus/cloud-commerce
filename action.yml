@@ -14,16 +14,22 @@ outputs: {}
 runs:
   using: "composite"
   steps:
-    - if: github.event_name == 'push'
-      uses: actions/setup-node@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'npm'
 
     - if: github.event_name == 'push'
       shell: bash
-      run: npm i --location=global firebase-tools@^11.2.1 && npm ci
-    
+      run: npm i --location=global firebase-tools@^11.2.1
+
+    - shell: bash
+      run: npm ci --only=production
+
+    - shell: bash
+      working-directory: functions
+      run: npm ci --only=production --no-optional
+
     - shell: bash
       run: npm run build
 
@@ -36,7 +42,7 @@ runs:
         export GAC_FILENAME=".gac-$RANDOM.json";
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME;
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy;
-    
+
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview
       uses: FirebaseExtended/action-hosting-deploy@v0
