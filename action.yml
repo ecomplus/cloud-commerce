@@ -25,11 +25,13 @@ runs:
       with:
         node-version: 16
         cache: 'npm'
-        # cache-dependency-path: ${{ github.action_path }}/scripts/store/package-lock.json
 
     - if: steps.get-branch.outputs.name == main
       shell: bash
-      run: npm i -g firebase-tools
+      run: npm i -g firebase-tools && npm ci
+    
+    - shell: bash
+      run: npm run build
 
     - if: steps.get-branch.outputs.name == main
       name: Deploy to Firebase live
@@ -39,7 +41,7 @@ runs:
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json";
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME;
-        GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npx firebase deploy;
+        GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy;
     
     - if: steps.get-branch.outputs.name != main
       name: Deploy Firebase Hosting PR preview
