@@ -27,7 +27,7 @@ You can skip the last three if you're willing to work with Storefront only, and 
 
 #### Creating a Firebase project
 
-If you want to deploy to a new Firebase project:
+If you want to deploy to a new Firebase project (needed for larger changes):
 
 1. Start creating new project on [Firebase console](https://console.firebase.google.com/):
     - Set a nice project name (ID) and remember it;
@@ -39,4 +39,6 @@ If you want to deploy to a new Firebase project:
 
 3. Firebase free plan doesn't support sending external HTTP requests, so you'll need to upgrade to _Blaze_ (on demand) plan;
 
-4. Then run `firebase login && firebase init` and select the created project;
+4. Go to `/store` folder and edit `.firebaserc` setting your project ID (don't commit this file);
+
+5. Deploy with `firebase login && npm run deploy`;

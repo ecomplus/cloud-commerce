@@ -15,7 +15,8 @@
     "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build",
     "test": "turbo run test",
-    "release": "bash scripts/version-and-release.sh"
+    "release": "bash scripts/version-and-release.sh",
+    "deploy": "cd store && npm run deploy"
   },
   "standard-version": {
     "scripts": {
