@@ -15,7 +15,7 @@ export default async () => {
     }
     return opts;
   }, '');
-  const $firebase = async (cmd: string) => $`npx firebase-tools ${cmd}${options}`;
+  const $firebase = async (cmd: string) => $`firebase ${cmd}${options}`;
 
   if (argv._.includes('serve')) {
     return $firebase('emulators:start');
