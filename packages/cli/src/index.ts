@@ -2,8 +2,33 @@ import url from 'url';
 import path from 'path';
 import { $, argv, fs } from 'zx';
 
+const {
+  FIREBASE_PROJECT_ID,
+  GOOGLE_APPLICATION_CREDENTIALS,
+} = process.env;
+
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const pwd = process.cwd();
+
+let projectId = FIREBASE_PROJECT_ID;
+if (!projectId) {
+  if (GOOGLE_APPLICATION_CREDENTIALS) {
+    try {
+      const gac = fs.readJSONSync(path.join(pwd, GOOGLE_APPLICATION_CREDENTIALS));
+      projectId = gac.project_id;
+    } catch (e) {
+      //
+    }
+  }
+  if (!projectId) {
+    try {
+      const firebaserc = fs.readJSONSync(path.join(pwd, '.firebaserc'));
+      projectId = firebaserc.projects.default;
+    } catch (e) {
+      projectId = 'ecom2-hello';
+    }
+  }
+}
 
 export default async () => {
   fs.copySync(path.join(__dirname, '..', 'config'), pwd);
@@ -15,7 +40,9 @@ export default async () => {
     }
     return opts;
   }, '');
-  const $firebase = async (cmd: string) => $`firebase ${cmd}${options}`;
+  const $firebase = async (cmd: string) => {
+    return $`firebase --project=${projectId} ${cmd}${options}`;
+  };
 
   if (argv._.includes('serve')) {
     return $firebase('emulators:start');
