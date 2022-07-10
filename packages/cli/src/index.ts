@@ -11,7 +11,14 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const pwd = process.cwd();
 
 let projectId = FIREBASE_PROJECT_ID;
-if (!projectId) {
+if (projectId) {
+  if (!fs.existsSync(path.join(pwd, '.firebaserc'))) {
+    fs.writeFileSync(
+      path.join(pwd, '.firebaserc'),
+      JSON.stringify({ projects: { default: projectId } }, null, 2),
+    );
+  }
+} else {
   if (GOOGLE_APPLICATION_CREDENTIALS) {
     try {
       const gac = fs.readJSONSync(path.join(pwd, GOOGLE_APPLICATION_CREDENTIALS));
