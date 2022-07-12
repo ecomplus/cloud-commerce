@@ -37,6 +37,8 @@ export interface Grids {
   grid_id?: string;
   /**
    * Pre-defined options for this grid, used in specifications, customization and variations
+   *
+   * @maxItems 3000
    */
   options?: {
     /**
@@ -82,6 +84,8 @@ export interface Grids {
     };
     /**
      * Option color palette (if the grid involves colors), starting by main color
+     *
+     * @maxItems 6
      */
     colors?: string[];
     /**
@@ -121,6 +125,8 @@ export interface Grids {
   };
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -140,6 +146,8 @@ export interface Grids {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

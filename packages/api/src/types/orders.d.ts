@@ -136,6 +136,8 @@ export interface Orders {
       | 'unknown';
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   };
@@ -164,6 +166,8 @@ export interface Orders {
       | 'returned';
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   };
@@ -218,6 +222,8 @@ export interface Orders {
   shipping_method_label?: string;
   /**
    * List of order customers
+   *
+   * @maxItems 20
    */
   buyers?: {
     /**
@@ -234,6 +240,8 @@ export interface Orders {
     main_email?: string;
     /**
      * List of customer email addresses
+     *
+     * @maxItems 20
      */
     emails?: {
       /**
@@ -276,6 +284,8 @@ export interface Orders {
     pronoun?: 'he' | 'she';
     /**
      * List of customer phone numbers
+     *
+     * @maxItems 20
      */
     phones?: {
       /**
@@ -322,160 +332,16 @@ export interface Orders {
   budget_only?: boolean;
   /**
    * List of shipping methods and address for this order
+   *
+   * @maxItems 100
    */
   shipping_lines?: {
     /**
      * Shipping line ID (ObjectID) [auto]
      */
     _id?: string;
-    /**
-     * Sender's address
-     */
-    from: {
-      /**
-       * ZIP (CEP, postal...) code
-       */
-      zip: string;
-      /**
-       * Street or public place name
-       */
-      street?: string;
-      /**
-       * House or building street number
-       */
-      number?: number;
-      /**
-       * Address complement or second line, such as apartment number
-       */
-      complement?: string;
-      /**
-       * Borough name
-       */
-      borough?: string;
-      /**
-       * Some optional other reference for this address
-       */
-      near_to?: string;
-      /**
-       * Full in line mailing address, should include street, number and borough
-       */
-      line_address?: string;
-      /**
-       * City name
-       */
-      city?: string;
-      /**
-       * Country name
-       */
-      country?: string;
-      /**
-       * An ISO 3166-2 country code
-       */
-      country_code?: string;
-      /**
-       * Province or state name
-       */
-      province?: string;
-      /**
-       * The two-letter code for the province or state
-       */
-      province_code?: string;
-      /**
-       * The name of recipient, generally is the customer's name
-       */
-      name?: string;
-      /**
-       * The recipient's last name
-       */
-      last_name?: string;
-      /**
-       * Customer phone number for this mailing address
-       */
-      phone?: {
-        /**
-         * Country calling code (without +), defined by standards E.123 and E.164
-         */
-        country_code?: number;
-        /**
-         * The actual phone number, digits only
-         */
-        number: string;
-      };
-    };
-    /**
-     * Shipping address (recipient)
-     */
-    to: {
-      /**
-       * ZIP (CEP, postal...) code
-       */
-      zip: string;
-      /**
-       * Street or public place name
-       */
-      street?: string;
-      /**
-       * House or building street number
-       */
-      number?: number;
-      /**
-       * Address complement or second line, such as apartment number
-       */
-      complement?: string;
-      /**
-       * Borough name
-       */
-      borough?: string;
-      /**
-       * Some optional other reference for this address
-       */
-      near_to?: string;
-      /**
-       * Full in line mailing address, should include street, number and borough
-       */
-      line_address?: string;
-      /**
-       * City name
-       */
-      city?: string;
-      /**
-       * Country name
-       */
-      country?: string;
-      /**
-       * An ISO 3166-2 country code
-       */
-      country_code?: string;
-      /**
-       * Province or state name
-       */
-      province?: string;
-      /**
-       * The two-letter code for the province or state
-       */
-      province_code?: string;
-      /**
-       * The name of recipient, generally is the customer's name
-       */
-      name?: string;
-      /**
-       * The recipient's last name
-       */
-      last_name?: string;
-      /**
-       * Customer phone number for this mailing address
-       */
-      phone?: {
-        /**
-         * Country calling code (without +), defined by standards E.123 and E.164
-         */
-        country_code?: number;
-        /**
-         * The actual phone number, digits only
-         */
-        number: string;
-      };
-    };
+    from: Address;
+    to: Address1;
     /**
      * Shipping object information
      */
@@ -590,6 +456,8 @@ export interface Orders {
     receipt_price?: number;
     /**
      * List of other additional services for this shipping line
+     *
+     * @maxItems 30
      */
     other_additionals?: {
       /**
@@ -607,6 +475,8 @@ export interface Orders {
     }[];
     /**
      * List of taxes or other additional services for this shipping line
+     *
+     * @maxItems 30
      */
     taxes?: {
       /**
@@ -682,6 +552,8 @@ export interface Orders {
     delivery_instructions?: string;
     /**
      * List of codes for delivery status follow-up
+     *
+     * @maxItems 30
      */
     tracking_codes?: {
       /**
@@ -699,6 +571,8 @@ export interface Orders {
     }[];
     /**
      * List of invoices
+     *
+     * @maxItems 30
      */
     invoices?: {
       /**
@@ -775,14 +649,20 @@ export interface Orders {
     warehouse_code?: string;
     /**
      * List of order items related with this shipping line, use only if items are divided
+     *
+     * @maxItems 3000
      */
     items?: string[];
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
     /**
      * List of custom fields
+     *
+     * @maxItems 10
      */
     custom_fields?: {
       /**
@@ -801,6 +681,8 @@ export interface Orders {
   }[];
   /**
    * List of payment transactions for this order
+   *
+   * @maxItems 100
    */
   transactions?: {
     /**
@@ -899,80 +781,7 @@ export interface Orders {
        */
       doc_number?: string;
     };
-    /**
-     * The mailing address associated with the payment method
-     */
-    billing_address?: {
-      /**
-       * ZIP (CEP, postal...) code
-       */
-      zip: string;
-      /**
-       * Street or public place name
-       */
-      street?: string;
-      /**
-       * House or building street number
-       */
-      number?: number;
-      /**
-       * Address complement or second line, such as apartment number
-       */
-      complement?: string;
-      /**
-       * Borough name
-       */
-      borough?: string;
-      /**
-       * Some optional other reference for this address
-       */
-      near_to?: string;
-      /**
-       * Full in line mailing address, should include street, number and borough
-       */
-      line_address?: string;
-      /**
-       * City name
-       */
-      city?: string;
-      /**
-       * Country name
-       */
-      country?: string;
-      /**
-       * An ISO 3166-2 country code
-       */
-      country_code?: string;
-      /**
-       * Province or state name
-       */
-      province?: string;
-      /**
-       * The two-letter code for the province or state
-       */
-      province_code?: string;
-      /**
-       * The name of recipient, generally is the customer's name
-       */
-      name?: string;
-      /**
-       * The recipient's last name
-       */
-      last_name?: string;
-      /**
-       * Customer phone number for this mailing address
-       */
-      phone?: {
-        /**
-         * Country calling code (without +), defined by standards E.123 and E.164
-         */
-        country_code?: number;
-        /**
-         * The actual phone number, digits only
-         */
-        number: string;
-      };
-    };
+    billing_address?: Address2;
     /**
      * Payment method (by application) chosen by customer
      */
@@ -1108,6 +917,8 @@ export interface Orders {
       valid_thru?: string;
       /**
        * Text lines on ticket
+       *
+       * @maxItems 5
        */
       text_lines?: string[];
       /**
@@ -1197,14 +1008,20 @@ export interface Orders {
     };
     /**
      * List of order items related with this transaction, use only if items are divided
+     *
+     * @maxItems 3000
      */
     items?: string[];
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
     /**
      * List of custom fields
+     *
+     * @maxItems 10
      */
     custom_fields?: {
       /**
@@ -1223,6 +1040,8 @@ export interface Orders {
   }[];
   /**
    * Historical of payments and financial status changes
+   *
+   * @maxItems 3000
    */
   payments_history?: {
     /**
@@ -1260,11 +1079,15 @@ export interface Orders {
     customer_notified?: boolean;
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   }[];
   /**
    * Fulfillment and tracking events
+   *
+   * @maxItems 3000
    */
   fulfillments?: {
     /**
@@ -1302,11 +1125,15 @@ export interface Orders {
     customer_notified?: boolean;
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   }[];
   /**
    * Products composing the order
+   *
+   * @maxItems 3000
    */
   items?: {
     /**
@@ -1356,6 +1183,8 @@ export interface Orders {
     };
     /**
      * Item customization fields
+     *
+     * @maxItems 100
      */
     customizations?: {
       /**
@@ -1415,6 +1244,8 @@ export interface Orders {
       price?: number;
       /**
        * Current kit composition
+       *
+       * @maxItems 100
        */
       composition?: {
         /**
@@ -1466,6 +1297,8 @@ export interface Orders {
     final_price?: number;
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   }[];
@@ -1500,6 +1333,8 @@ export interface Orders {
     };
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   };
@@ -1518,6 +1353,8 @@ export interface Orders {
   };
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -1537,6 +1374,8 @@ export interface Orders {
   }[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   hidden_metafields?: {
     /**
@@ -1556,6 +1395,8 @@ export interface Orders {
   }[];
   /**
    * List of custom attributes, hidden by default, visible for the order buyers
+   *
+   * @maxItems 100
    */
   private_metafields?: {
     /**
@@ -1575,6 +1416,8 @@ export interface Orders {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**
@@ -1585,4 +1428,226 @@ export interface Orders {
    * Description and notes about this order, available only for shop administrators
    */
   staff_notes?: string;
+}
+/**
+ * Sender's address
+ */
+export interface Address {
+  /**
+   * ZIP (CEP, postal...) code
+   */
+  zip: string;
+  /**
+   * Street or public place name
+   */
+  street?: string;
+  /**
+   * House or building street number
+   */
+  number?: number;
+  /**
+   * Address complement or second line, such as apartment number
+   */
+  complement?: string;
+  /**
+   * Borough name
+   */
+  borough?: string;
+  /**
+   * Some optional other reference for this address
+   */
+  near_to?: string;
+  /**
+   * Full in line mailing address, should include street, number and borough
+   */
+  line_address?: string;
+  /**
+   * City name
+   */
+  city?: string;
+  /**
+   * Country name
+   */
+  country?: string;
+  /**
+   * An ISO 3166-2 country code
+   */
+  country_code?: string;
+  /**
+   * Province or state name
+   */
+  province?: string;
+  /**
+   * The two-letter code for the province or state
+   */
+  province_code?: string;
+  /**
+   * The name of recipient, generally is the customer's name
+   */
+  name?: string;
+  /**
+   * The recipient's last name
+   */
+  last_name?: string;
+  /**
+   * Customer phone number for this mailing address
+   */
+  phone?: {
+    /**
+     * Country calling code (without +), defined by standards E.123 and E.164
+     */
+    country_code?: number;
+    /**
+     * The actual phone number, digits only
+     */
+    number: string;
+  };
+}
+/**
+ * Shipping address (recipient)
+ */
+export interface Address1 {
+  /**
+   * ZIP (CEP, postal...) code
+   */
+  zip: string;
+  /**
+   * Street or public place name
+   */
+  street?: string;
+  /**
+   * House or building street number
+   */
+  number?: number;
+  /**
+   * Address complement or second line, such as apartment number
+   */
+  complement?: string;
+  /**
+   * Borough name
+   */
+  borough?: string;
+  /**
+   * Some optional other reference for this address
+   */
+  near_to?: string;
+  /**
+   * Full in line mailing address, should include street, number and borough
+   */
+  line_address?: string;
+  /**
+   * City name
+   */
+  city?: string;
+  /**
+   * Country name
+   */
+  country?: string;
+  /**
+   * An ISO 3166-2 country code
+   */
+  country_code?: string;
+  /**
+   * Province or state name
+   */
+  province?: string;
+  /**
+   * The two-letter code for the province or state
+   */
+  province_code?: string;
+  /**
+   * The name of recipient, generally is the customer's name
+   */
+  name?: string;
+  /**
+   * The recipient's last name
+   */
+  last_name?: string;
+  /**
+   * Customer phone number for this mailing address
+   */
+  phone?: {
+    /**
+     * Country calling code (without +), defined by standards E.123 and E.164
+     */
+    country_code?: number;
+    /**
+     * The actual phone number, digits only
+     */
+    number: string;
+  };
+}
+/**
+ * The mailing address associated with the payment method
+ */
+export interface Address2 {
+  /**
+   * ZIP (CEP, postal...) code
+   */
+  zip: string;
+  /**
+   * Street or public place name
+   */
+  street?: string;
+  /**
+   * House or building street number
+   */
+  number?: number;
+  /**
+   * Address complement or second line, such as apartment number
+   */
+  complement?: string;
+  /**
+   * Borough name
+   */
+  borough?: string;
+  /**
+   * Some optional other reference for this address
+   */
+  near_to?: string;
+  /**
+   * Full in line mailing address, should include street, number and borough
+   */
+  line_address?: string;
+  /**
+   * City name
+   */
+  city?: string;
+  /**
+   * Country name
+   */
+  country?: string;
+  /**
+   * An ISO 3166-2 country code
+   */
+  country_code?: string;
+  /**
+   * Province or state name
+   */
+  province?: string;
+  /**
+   * The two-letter code for the province or state
+   */
+  province_code?: string;
+  /**
+   * The name of recipient, generally is the customer's name
+   */
+  name?: string;
+  /**
+   * The recipient's last name
+   */
+  last_name?: string;
+  /**
+   * Customer phone number for this mailing address
+   */
+  phone?: {
+    /**
+     * Country calling code (without +), defined by standards E.123 and E.164
+     */
+    country_code?: number;
+    /**
+     * The actual phone number, digits only
+     */
+    number: string;
+  };
 }

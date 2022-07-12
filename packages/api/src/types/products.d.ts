@@ -10,6 +10,9 @@ export interface Products {
   created_at: string;
   updated_at: string;
   store_id: number;
+  /**
+   * @maxItems 10
+   */
   channel_ids?: string[];
   /**
    * Product unique reference code
@@ -102,6 +105,8 @@ export interface Products {
   };
   /**
    * Tags related with product for internal search
+   *
+   * @maxItems 200
    */
   keywords?: string[];
   /**
@@ -268,6 +273,8 @@ export interface Products {
   warranty?: string;
   /**
    * List of product brands
+   *
+   * @maxItems 100
    */
   brands?: {
     /**
@@ -319,6 +326,8 @@ export interface Products {
   }[];
   /**
    * List of product categories
+   *
+   * @maxItems 100
    */
   categories?: {
     /**
@@ -407,6 +416,8 @@ export interface Products {
   google_product_category_id?: number;
   /**
    * Grids for specifications and variations
+   *
+   * @maxItems 200
    */
   grids?: {
     /**
@@ -445,6 +456,8 @@ export interface Products {
   specifications?: {
     /**
      * Attribute to tell users the energy efficiency class of your product
+     *
+     * @maxItems 1
      */
     energy_efficiency_class?: {
       /**
@@ -476,6 +489,8 @@ export interface Products {
     }[];
     /**
      * Attribute to set the demographic that your product is designed for
+     *
+     * @maxItems 1
      */
     age_group?: {
       /**
@@ -507,6 +522,8 @@ export interface Products {
     }[];
     /**
      * Specify for what gender your product is designed
+     *
+     * @maxItems 1
      */
     gender?: {
       /**
@@ -538,6 +555,8 @@ export interface Products {
     }[];
     /**
      * Attribute to describe the main fabric or material that your product is made of
+     *
+     * @maxItems 1
      */
     material?: {
       /**
@@ -569,6 +588,8 @@ export interface Products {
     }[];
     /**
      * Attribute to describe the pattern or graphic printed on your product
+     *
+     * @maxItems 1
      */
     pattern?: {
       /**
@@ -600,6 +621,8 @@ export interface Products {
     }[];
     /**
      * Attribute to describe the standardized size of your product
+     *
+     * @maxItems 1
      */
     size?: {
       /**
@@ -631,6 +654,8 @@ export interface Products {
     }[];
     /**
      * Attribute to describe the cut of your product
+     *
+     * @maxItems 1
      */
     size_type?: {
       /**
@@ -662,6 +687,8 @@ export interface Products {
     }[];
     /**
      * Which country's sizing system your product uses
+     *
+     * @maxItems 1
      */
     size_system?: {
       /**
@@ -724,6 +751,9 @@ export interface Products {
     /**
      * Custom product attributes, grid as property name (such as 'Model' and 'Voltage')
      *
+     * @minItems 1
+     * @maxItems 30
+     *
      * This interface was referenced by `undefined`'s JSON-Schema definition
      * via the `patternProperty` "^.{2,70}$".
      */
@@ -769,6 +799,8 @@ export interface Products {
   };
   /**
    * List of product images
+   *
+   * @maxItems 50
    */
   pictures?: (
     | {
@@ -783,6 +815,8 @@ export interface Products {
   )[];
   /**
    * List of videos related to your product
+   *
+   * @maxItems 30
    */
   videos?: {
     /**
@@ -796,6 +830,8 @@ export interface Products {
   }[];
   /**
    * List of product customization fields
+   *
+   * @maxItems 100
    */
   customizations?: (
     | {
@@ -807,6 +843,8 @@ export interface Products {
   )[];
   /**
    * Product variations list
+   *
+   * @maxItems 3000
    */
   variations?: {
     /**
@@ -848,6 +886,8 @@ export interface Products {
     mpn?: string;
     /**
      * List of product NCM codes
+     *
+     * @maxItems 10
      */
     ncm?: string[];
     /**
@@ -943,6 +983,8 @@ export interface Products {
     specifications: {
       /**
        * Attribute to describe the main fabric or material that your product is made of
+       *
+       * @maxItems 1
        */
       material?: {
         /**
@@ -974,6 +1016,8 @@ export interface Products {
       }[];
       /**
        * Attribute to describe the pattern or graphic printed on your product
+       *
+       * @maxItems 1
        */
       pattern?: {
         /**
@@ -1005,6 +1049,8 @@ export interface Products {
       }[];
       /**
        * Attribute to describe the standardized size of your product
+       *
+       * @maxItems 1
        */
       size?: {
         /**
@@ -1067,6 +1113,9 @@ export interface Products {
       /**
        * Custom variation attributes, grid as property name (such as 'Model' and 'Voltage')
        *
+       * @minItems 1
+       * @maxItems 6
+       *
        * This interface was referenced by `undefined`'s JSON-Schema definition
        * via the `patternProperty` "^.{2,70}$".
        */
@@ -1116,11 +1165,15 @@ export interface Products {
     picture_id?: string;
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   }[];
   /**
    * If this product is a kit, set its composition
+   *
+   * @maxItems 100
    */
   kit_composition?: {
     /**
@@ -1167,6 +1220,8 @@ export interface Products {
   parent_item_id?: string;
   /**
    * Lists of related products
+   *
+   * @maxItems 30
    */
   related_products?: {
     /**
@@ -1179,6 +1234,8 @@ export interface Products {
     relation_type?: 'common_characteristics' | 'common_orders' | 'manual' | 'other';
     /**
      * List of products
+     *
+     * @maxItems 100
      */
     product_ids: string[];
     /**
@@ -1204,14 +1261,20 @@ export interface Products {
   total_sold?: number;
   /**
    * List of product GTIN codes
+   *
+   * @maxItems 10
    */
   gtin?: string[];
   /**
    * List of product MPN codes
+   *
+   * @maxItems 10
    */
   mpn?: string[];
   /**
    * List of product NCM codes
+   *
+   * @maxItems 10
    */
   ncm?: string[];
   /**
@@ -1237,6 +1300,8 @@ export interface Products {
   };
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -1256,6 +1321,8 @@ export interface Products {
   }[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   hidden_metafields?: {
     /**
@@ -1275,6 +1342,8 @@ export interface Products {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

@@ -10,6 +10,9 @@ export interface Categories {
   created_at: string;
   updated_at: string;
   store_id: number;
+  /**
+   * @maxItems 10
+   */
   channel_ids?: string[];
   /**
    * Category full name
@@ -129,6 +132,8 @@ export interface Categories {
   };
   /**
    * List of category images
+   *
+   * @maxItems 50
    */
   pictures?: {
     /**
@@ -162,6 +167,8 @@ export interface Categories {
   google_product_category_id?: number;
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -181,6 +188,8 @@ export interface Categories {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

@@ -68,6 +68,8 @@ export interface Carts {
   affiliate_code?: string;
   /**
    * List of customers associated with this cart
+   *
+   * @maxItems 3000
    */
   customers?: string[];
   /**
@@ -76,6 +78,8 @@ export interface Carts {
   other_customers?: boolean;
   /**
    * Products composing the cart
+   *
+   * @maxItems 3000
    */
   items: {
     /**
@@ -125,6 +129,8 @@ export interface Carts {
     };
     /**
      * Item customization fields
+     *
+     * @maxItems 100
      */
     customizations?: {
       /**
@@ -184,6 +190,8 @@ export interface Carts {
       price?: number;
       /**
        * Current kit composition
+       *
+       * @maxItems 100
        */
       composition?: {
         /**
@@ -251,6 +259,8 @@ export interface Carts {
     final_price?: number;
     /**
      * Flags to associate additional info
+     *
+     * @maxItems 10
      */
     flags?: string[];
   }[];
@@ -260,10 +270,14 @@ export interface Carts {
   subtotal?: number;
   /**
    * List of orders completed with this cart
+   *
+   * @maxItems 3000
    */
   orders?: string[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -283,6 +297,8 @@ export interface Carts {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

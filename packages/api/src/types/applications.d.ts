@@ -46,97 +46,13 @@ export interface Applications {
    * Modules handled by this app
    */
   modules?: {
-    /**
-     * Triggered after each term searched on storefront
-     */
-    term_searched?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
-    /**
-     * Triggered after each cart saves on storefront, just before checkout
-     */
-    cart_confirmed?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
-    /**
-     * Triggered to calculate shipping options, must return calculated values and times
-     */
-    calculate_shipping?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
-    /**
-     * Triggered when listing payments, must return available methods
-     */
-    list_payments?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
-    /**
-     * Triggered to validate and apply discout value, must return discount and conditions
-     */
-    apply_discount?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
-    /**
-     * Triggered when order is being closed, must create payment transaction and return info
-     */
-    create_transaction?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
-    /**
-     * Triggered after each order created from storefront, could return custom fields
-     */
-    checkout_done?: {
-      /**
-       * Whether current app is enabled to handle the module requests
-       */
-      enabled: boolean;
-      /**
-       * URL to receive POST request of respective module
-       */
-      endpoint: string;
-    };
+    term_searched?: Module;
+    cart_confirmed?: Module1;
+    calculate_shipping?: Module2;
+    list_payments?: Module3;
+    apply_discount?: Module4;
+    create_transaction?: Module5;
+    checkout_done?: Module6;
   };
   /**
    * Configuration options for staff on admin dashboard, saved on app data
@@ -199,10 +115,103 @@ export interface Applications {
   };
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**
    * Optional notes with additional info about this user
    */
   notes?: string;
+}
+/**
+ * Triggered after each term searched on storefront
+ */
+export interface Module {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
+}
+/**
+ * Triggered after each cart saves on storefront, just before checkout
+ */
+export interface Module1 {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
+}
+/**
+ * Triggered to calculate shipping options, must return calculated values and times
+ */
+export interface Module2 {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
+}
+/**
+ * Triggered when listing payments, must return available methods
+ */
+export interface Module3 {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
+}
+/**
+ * Triggered to validate and apply discout value, must return discount and conditions
+ */
+export interface Module4 {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
+}
+/**
+ * Triggered when order is being closed, must create payment transaction and return info
+ */
+export interface Module5 {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
+}
+/**
+ * Triggered after each order created from storefront, could return custom fields
+ */
+export interface Module6 {
+  /**
+   * Whether current app is enabled to handle the module requests
+   */
+  enabled: boolean;
+  /**
+   * URL to receive POST request of respective module
+   */
+  endpoint: string;
 }

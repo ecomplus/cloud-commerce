@@ -19,6 +19,7 @@ module.exports = {
   ],
   ignorePatterns: [
     '**/dist',
+    '**/types/*.d.ts',
   ],
   rules: {
     'no-await-in-loop': 'warn',

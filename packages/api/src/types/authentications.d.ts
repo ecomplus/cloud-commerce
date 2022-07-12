@@ -9,6 +9,9 @@ export interface Authentications {
   _id: string;
   created_at: string;
   updated_at: string;
+  /**
+   * @maxItems 500
+   */
   store_ids: number[];
   /**
    * Simple username for identification, only numbers and lowercase letters
@@ -52,6 +55,8 @@ export interface Authentications {
   };
   /**
    * List of dashboard cards chosen by user
+   *
+   * @maxItems 40
    */
   panel_cards?: {
     /**
@@ -76,6 +81,9 @@ export interface Authentications {
       resource: 'products' | 'categories' | 'brands' | 'collections' | 'grids' | 'customers' | 'carts' | 'orders';
       /**
        * Aggregation pipeline
+       *
+       * @minItems 1
+       * @maxItems 50
        */
       pipeline: {
         [k: string]: unknown;
@@ -88,6 +96,8 @@ export interface Authentications {
   edit_storefront?: boolean;
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

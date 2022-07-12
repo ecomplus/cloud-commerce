@@ -112,6 +112,9 @@ export interface Stores {
    * Secondary public contact phone, commonly a cell phone number
    */
   contact_cellphone?: string;
+  /**
+   * @maxItems 30
+   */
   sales_channels?: {
     channel_id: string;
     type?: 'ecommerce' | 'mobile' | 'pos' | 'button' | 'social' | 'chatbot' | 'live';

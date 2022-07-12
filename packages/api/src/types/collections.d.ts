@@ -77,6 +77,8 @@ export interface Collections {
   };
   /**
    * List of collection products
+   *
+   * @maxItems 3000
    */
   products?: string[];
   /**
@@ -98,6 +100,8 @@ export interface Collections {
   };
   /**
    * List of collection images
+   *
+   * @maxItems 50
    */
   pictures?: {
     /**
@@ -123,6 +127,8 @@ export interface Collections {
   }[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -142,6 +148,8 @@ export interface Collections {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

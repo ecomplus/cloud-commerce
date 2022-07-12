@@ -64,6 +64,8 @@ export interface Customers {
   };
   /**
    * Providers for OAuth authentication
+   *
+   * @maxItems 20
    */
   oauth_providers?: {
     /**
@@ -85,6 +87,8 @@ export interface Customers {
   main_email: string;
   /**
    * Customer email addresses list
+   *
+   * @maxItems 20
    */
   emails?: {
     /**
@@ -148,10 +152,14 @@ export interface Customers {
   pronoun?: 'he' | 'she';
   /**
    * User profile pictures
+   *
+   * @maxItems 20
    */
   photos?: string[];
   /**
    * List of customer phone numbers
+   *
+   * @maxItems 20
    */
   phones?: {
     /**
@@ -193,6 +201,8 @@ export interface Customers {
   corporate_name?: string;
   /**
    * List of customer shipping addresses
+   *
+   * @maxItems 40
    */
   addresses?: {
     /**
@@ -271,14 +281,20 @@ export interface Customers {
   }[];
   /**
    * Products marked as favorites
+   *
+   * @maxItems 3000
    */
   favorites?: string[];
   /**
    * Last products visited by the customer
+   *
+   * @maxItems 100
    */
   last_visited_products?: string[];
   /**
    * Last terms searched on shop by the customer
+   *
+   * @maxItems 100
    */
   last_searched_terms?: string[];
   /**
@@ -299,6 +315,8 @@ export interface Customers {
   orders_total_value?: number;
   /**
    * List of customer accumulated loyalty points by program and expiration
+   *
+   * @maxItems 1000
    */
   loyalty_points_entries?: {
     /**
@@ -340,6 +358,8 @@ export interface Customers {
   total_cancelled?: number;
   /**
    * List of customer orders
+   *
+   * @maxItems 1000
    */
   orders?: {
     /**
@@ -406,6 +426,8 @@ export interface Customers {
   }[];
   /**
    * List of customer saved credit cards
+   *
+   * @maxItems 40
    */
   credit_cards?: {
     /**
@@ -444,6 +466,8 @@ export interface Customers {
   }[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -463,6 +487,8 @@ export interface Customers {
   }[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   hidden_metafields?: {
     /**
@@ -482,6 +508,8 @@ export interface Customers {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**

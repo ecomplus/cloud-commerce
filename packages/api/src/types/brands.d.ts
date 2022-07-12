@@ -10,6 +10,9 @@ export interface Brands {
   created_at: string;
   updated_at: string;
   store_id: number;
+  /**
+   * @maxItems 10
+   */
   channel_ids?: string[];
   /**
    * Brand full name
@@ -95,6 +98,8 @@ export interface Brands {
   };
   /**
    * List of brand images
+   *
+   * @maxItems 50
    */
   pictures?: {
     /**
@@ -120,6 +125,8 @@ export interface Brands {
   }[];
   /**
    * List of custom attributes
+   *
+   * @maxItems 100
    */
   metafields?: {
     /**
@@ -139,6 +146,8 @@ export interface Brands {
   }[];
   /**
    * Flags to associate additional info
+   *
+   * @maxItems 10
    */
   flags?: string[];
   /**
