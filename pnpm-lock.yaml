@@ -86,6 +86,18 @@ importers:
       '@cloudcommerce/api': link:../api
       astro: 1.0.0-beta.64
 
+  store:
+    specifiers:
+      '@cloudcommerce/cli': ^0.0.24
+    dependencies:
+      '@cloudcommerce/cli': link:../packages/cli
+
+  store/functions:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.24
+    dependencies:
+      '@cloudcommerce/firebase': link:../../packages/firebase
+
 packages:
 
   /@ampproject/remapping/2.2.0:
