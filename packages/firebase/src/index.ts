@@ -1,20 +1,26 @@
 import 'source-map-support/register.js';
-import * as functions from 'firebase-functions';
+import { logger } from 'firebase-functions';
+// eslint-disable-next-line import/no-unresolved
+import { onRequest } from 'firebase-functions/v2/https';
 import config from './config';
 
-export const hello = functions.https.onRequest((request, response) => {
-  functions.logger.info('Hello logs!', {
-    structuredData: true,
-  });
-  response.send(config.get().hello);
-});
+const options = {
+  region: process.env.DEPLOY_REGION || 'us-east1',
+};
 
-export const info = functions.https.onRequest((request, response) => {
+export const z = onRequest(options, (request, response) => {
+  if (request.url === '/hello') {
+    logger.info('Hello logs!', {
+      structuredData: true,
+    });
+    response.send(config.get().hello);
+    return;
+  }
   response.send({
     config: config.get(),
   });
 });
 
-export const ssr = functions.https.onRequest((request, response) => {
+export const ssr = onRequest(options, (request, response) => {
   response.send('<h1>Hello SSR!</h1>');
 });
