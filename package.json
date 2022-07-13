@@ -16,7 +16,10 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "release": "bash scripts/version-and-release.sh",
-    "deploy": "cd store && npm run deploy"
+    "store:run": "pnpm build && npm --prefix \"store\" run",
+    "start": "pnpm store:run start",
+    "serve": "pnpm store:run serve",
+    "deploy": "pnpm store:run deploy"
   },
   "standard-version": {
     "scripts": {
