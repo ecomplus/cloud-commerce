@@ -8,12 +8,18 @@ const options = {
   region: process.env.DEPLOY_REGION || 'us-east1',
 };
 
-export const z = onRequest(options, (request, response) => {
-  if (request.url === '/hello') {
+const processId = String(Date.now());
+
+export const z = onRequest(options, ({ url }, response) => {
+  if (url === '/hello') {
     logger.info('Hello logs!', {
       structuredData: true,
     });
     response.send(config.get().hello);
+    return;
+  }
+  if (url === '/pid') {
+    response.send(processId);
     return;
   }
   response.send({
