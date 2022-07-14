@@ -11,6 +11,7 @@ npm i -g pnpm firebase-tools
 Clone this repo to your local machine and install the dependencies:
 
 ```console
+git clone --recurse-submodules git@github.com:ecomplus/cloud-commerce.git
 pnpm install
 ```
 
