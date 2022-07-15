@@ -18,7 +18,8 @@ type Resource = 'products'
   | 'orders'
   | 'customers'
   | 'stores'
-  | 'applications';
+  | 'applications'
+  | 'authentications';
 
 type ResourceId = string & { length: 24 };
 
