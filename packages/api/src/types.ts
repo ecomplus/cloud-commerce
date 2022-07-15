@@ -8,6 +8,7 @@ import type { Orders } from './types/orders';
 import type { Customers } from './types/customers';
 import type { Stores } from './types/stores';
 import type { Applications } from './types/applications';
+import type { Authentications } from './types/authentications';
 
 type Resource = 'products'
   | 'categories'
@@ -39,7 +40,7 @@ type Endpoint = Resource
   | 'authenticate'
   | 'ask-auth-callback'
   | 'check-username'
-  | `$aggregate/${Exclude<Resource, 'stores' | 'applications'>}`
+  | `$aggregate/${Exclude<Resource, 'stores' | 'applications' | 'authentications'>}`
   | `schemas/${Resource}`;
 
 type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
@@ -75,6 +76,7 @@ type ResourceListResult<TResource extends Resource> = {
     TResource extends 'customers' ? Customers[] :
     TResource extends 'stores' ? Stores[] :
     TResource extends 'applications' ? Applications[] :
+    TResource extends 'authentications' ? Authentications[] :
     never,
   meta: BaseListResultMeta & {
     count?: number,
@@ -131,6 +133,7 @@ type ResponseBody<TConfig extends Config> =
   TConfig['endpoint'] extends `customers/${ResourceId}` ? Customers :
   TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
   TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
+  TConfig['endpoint'] extends `authentications/${ResourceId}` ? Authentications :
   TConfig['endpoint'] extends Resource ? ResourceListResult<TConfig['endpoint']> :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
