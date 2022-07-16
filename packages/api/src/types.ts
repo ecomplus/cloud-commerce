@@ -26,11 +26,13 @@ type ResourceId = string & { length: 24 };
 
 type ResourceAndId = `${Resource}/${ResourceId}`;
 
+type ResourceOpQuery = Resource | `${Resource}?${string}`;
+
 type EventsEndpoint = `events/${Resource}`
   | `events/${ResourceAndId}`
   | 'events/me';
 
-type Endpoint = Resource
+type Endpoint = ResourceOpQuery
   | ResourceAndId
   | `${ResourceAndId}/${string}`
   | `slugs/${string}`
@@ -64,19 +66,21 @@ type BaseListResultMeta = {
   fields: Array<string>,
 };
 
-type ResourceListResult<TResource extends Resource> = {
+type ListEndpoint<TResource extends Resource> = TResource | `${TResource}?${string}`;
+
+type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
   result:
-    TResource extends 'products' ? Products[] :
-    TResource extends 'categories' ? Categories[] :
-    TResource extends 'brands' ? Brands[] :
-    TResource extends 'collections' ? Collections[] :
-    TResource extends 'grids' ? Grids[] :
-    TResource extends 'carts' ? Carts[] :
-    TResource extends 'orders' ? Orders[] :
-    TResource extends 'customers' ? Customers[] :
-    TResource extends 'stores' ? Stores[] :
-    TResource extends 'applications' ? Applications[] :
-    TResource extends 'authentications' ? Authentications[] :
+    TEndpoint extends ListEndpoint<'products'> ? Products[] :
+    TEndpoint extends ListEndpoint<'categories'> ? Categories[] :
+    TEndpoint extends ListEndpoint<'brands'> ? Brands[] :
+    TEndpoint extends ListEndpoint<'collections'> ? Collections[] :
+    TEndpoint extends ListEndpoint<'grids'> ? Grids[] :
+    TEndpoint extends ListEndpoint<'carts'> ? Carts[] :
+    TEndpoint extends ListEndpoint<'orders'> ? Orders[] :
+    TEndpoint extends ListEndpoint<'customers'> ? Customers[] :
+    TEndpoint extends ListEndpoint<'stores'> ? Stores[] :
+    TEndpoint extends ListEndpoint<'applications'> ? Applications[] :
+    TEndpoint extends ListEndpoint<'authentications'> ? Authentications[] :
     never,
   meta: BaseListResultMeta & {
     count?: number,
@@ -134,7 +138,7 @@ type ResponseBody<TConfig extends Config> =
   TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
   TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
   TConfig['endpoint'] extends `authentications/${ResourceId}` ? Authentications :
-  TConfig['endpoint'] extends Resource ? ResourceListResult<TConfig['endpoint']> :
+  TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint']> :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
