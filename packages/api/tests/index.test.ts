@@ -57,6 +57,8 @@ test('401 to create category and body typecheck', async () => {
   try {
     const { data } = await api.post('categories', {
       name: 'Test category',
+    }, {
+      accessToken: 'invalid',
     });
     console.log(data._id);
     throw new Error('Should have thrown unauthorized');

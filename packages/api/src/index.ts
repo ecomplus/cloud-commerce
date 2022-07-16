@@ -45,6 +45,22 @@ const def = {
         url += `?${new URLSearchParams(config.params as Record<string, string>)}`;
       }
     }
+    /* eslint-disable no-param-reassign, dot-notation */
+    if (config.accessToken) {
+      if (!config.headers) {
+        config.headers = {};
+      }
+      config.headers['Authorization'] = `Bearer ${config.accessToken}`;
+    } else if (config.authenticationId && config.apiKey) {
+      if (!config.headers) {
+        config.headers = {};
+      }
+      const rawAuth = `${config.authenticationId}:${config.apiKey}`;
+      const base64Auth = typeof Buffer === 'function'
+        ? Buffer.from(rawAuth).toString('base64') : btoa(rawAuth);
+      config.headers['Authorization'] = `Basic ${base64Auth}`;
+    }
+    /* eslint-enable */
     return `${url}/${config.endpoint}`;
   },
 };
@@ -72,6 +88,7 @@ Promise<Response & {
     headers['Content-Type'] = 'application/json';
     headers['Content-Length'] = body.length.toString();
   }
+
   const abortController = new AbortController();
   let isTimeout = false;
   const timer = setTimeout(() => {
@@ -90,6 +107,7 @@ Promise<Response & {
     throw new ApiError(config, response, err.message, isTimeout);
   }
   clearTimeout(timer);
+
   if (response) {
     if (response.ok) {
       return {
@@ -112,6 +130,8 @@ Promise<Response & {
 };
 
 type AbstractedConfig = Omit<Config, 'endpoint' | 'method'>;
+type AbstractedAuthConfig = AbstractedConfig & { accessToken: string }
+  | AbstractedConfig & { authenticationId: string, apiKey: string };
 
 const get = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,
@@ -121,10 +141,10 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
   data: ResponseBody<{ endpoint: E }>,
 }> => api({ ...config, endpoint });
 
-const post = <E extends Endpoint, C extends AbstractedConfig>(
+const post = <E extends Endpoint, C extends AbstractedAuthConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'post' }>,
-  config?: C,
+  config: C,
 ) => api({
     ...config,
     method: 'post',
@@ -132,10 +152,10 @@ const post = <E extends Endpoint, C extends AbstractedConfig>(
     body,
   });
 
-const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedConfig>(
+const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedAuthConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'put' }>,
-  config?: C,
+  config: C,
 ) => api({
     ...config,
     method: 'put',
@@ -143,14 +163,14 @@ const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedC
     body,
   });
 
-const patch = (endpoint: Endpoint, body: any, config?: AbstractedConfig) => api({
+const patch = (endpoint: Endpoint, body: any, config: AbstractedAuthConfig) => api({
   ...config,
   method: 'patch',
   endpoint,
   body,
 });
 
-const del = (endpoint: Endpoint, config?: AbstractedConfig) => api({
+const del = (endpoint: Endpoint, config: AbstractedAuthConfig) => api({
   ...config,
   method: 'delete',
   endpoint,
