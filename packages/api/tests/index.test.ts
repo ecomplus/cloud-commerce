@@ -52,3 +52,17 @@ test('401 trying to list API events', async () => {
     expect(error.response?.status).toBe(401);
   }
 });
+
+test('401 to create category and body typecheck', async () => {
+  try {
+    const { data } = await api.post('categories', {
+      name: 'Test category',
+    });
+    console.log(data._id);
+    throw new Error('Should have thrown unauthorized');
+  } catch (err: any) {
+    const error = err as ApiError;
+    expect(error.statusCode).toBe(401);
+    expect(error.response?.status).toBe(401);
+  }
+});

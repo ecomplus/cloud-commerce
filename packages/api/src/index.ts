@@ -1,4 +1,10 @@
-import type { Endpoint, Config, ResponseBody } from './types';
+import type {
+  ResourceOpQuery,
+  Endpoint,
+  Config,
+  ResponseBody,
+  RequestBody,
+} from './types';
 
 // @ts-ignore
 const env: { [key: string]: string } = (typeof window === 'object' && window)
@@ -47,17 +53,25 @@ const setMiddleware = (middleware: typeof def.middleware) => {
   def.middleware = middleware;
 };
 
-const api = async <T extends Config>(config: T, retries = 0): Promise<Response & {
+const api = async <T extends Config & { body?: any, data?: any }>(config: T, retries = 0):
+Promise<Response & {
   config: Config,
   data: ResponseBody<T>,
 }> => {
   const url = def.middleware(config);
   const {
     method,
-    headers,
+    headers = {},
     timeout = 20000,
     maxRetries = 3,
   } = config;
+  const bodyObject = config.body || config.data;
+  let body: string | undefined;
+  if (bodyObject) {
+    body = JSON.stringify(bodyObject);
+    headers['Content-Type'] = 'application/json';
+    headers['Content-Length'] = body.length.toString();
+  }
   const abortController = new AbortController();
   let isTimeout = false;
   const timer = setTimeout(() => {
@@ -69,6 +83,7 @@ const api = async <T extends Config>(config: T, retries = 0): Promise<Response &
     response = await (config.fetch || fetch)(url, {
       method,
       headers,
+      body,
       signal: abortController.signal,
     });
   } catch (err: any) {
@@ -106,22 +121,33 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
   data: ResponseBody<{ endpoint: E }>,
 }> => api({ ...config, endpoint });
 
-const post = (endpoint: Endpoint, config?: AbstractedConfig) => api({
-  ...config,
-  method: 'post',
-  endpoint,
-});
+const post = <E extends Endpoint, C extends AbstractedConfig>(
+  endpoint: E,
+  body: RequestBody<{ endpoint: E, method: 'post' }>,
+  config?: C,
+) => api({
+    ...config,
+    method: 'post',
+    endpoint,
+    body,
+  });
 
-const put = (endpoint: Endpoint, config?: AbstractedConfig) => api({
-  ...config,
-  method: 'put',
-  endpoint,
-});
+const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedConfig>(
+  endpoint: E,
+  body: RequestBody<{ endpoint: E, method: 'put' }>,
+  config?: C,
+) => api({
+    ...config,
+    method: 'put',
+    endpoint,
+    body,
+  });
 
-const patch = (endpoint: Endpoint, config?: AbstractedConfig) => api({
+const patch = (endpoint: Endpoint, body: any, config?: AbstractedConfig) => api({
   ...config,
   method: 'patch',
   endpoint,
+  body,
 });
 
 const del = (endpoint: Endpoint, config?: AbstractedConfig) => api({

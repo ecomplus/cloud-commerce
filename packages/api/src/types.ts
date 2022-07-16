@@ -54,7 +54,7 @@ type Config = {
   method?: Method,
   endpoint: Endpoint,
   params?: Record<string, string | number>,
-  headers?: Record<string, string>,
+  headers?: Headers,
   timeout?: number,
   maxRetries?: number,
   fetch?: typeof fetch,
@@ -142,6 +142,28 @@ type ResponseBody<TConfig extends Config> =
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
+type DocSchema<Document extends any> =
+  Omit<Document, '_id' | 'store_id' | 'store_ids' | 'created_at' | 'updated_at'>;
+
+type SetDocEndpoint<TResource extends Resource> = TResource | `${TResource}/${ResourceId}`;
+
+type RequestBody<TConfig extends Config> =
+  TConfig['method'] extends undefined | 'get' | 'delete' ? undefined :
+  TConfig['method'] extends 'patch' ? any : // TODO: partial body
+  // method: 'post' | 'put'
+  TConfig['endpoint'] extends SetDocEndpoint<'products'> ? DocSchema<Products> :
+  TConfig['endpoint'] extends SetDocEndpoint<'categories'> ? DocSchema<Categories> :
+  TConfig['endpoint'] extends SetDocEndpoint<'brands'> ? DocSchema<Brands> :
+  TConfig['endpoint'] extends SetDocEndpoint<'collections'> ? DocSchema<Collections> :
+  TConfig['endpoint'] extends SetDocEndpoint<'grids'> ? DocSchema<Grids> :
+  TConfig['endpoint'] extends SetDocEndpoint<'carts'> ? DocSchema<Carts> :
+  TConfig['endpoint'] extends SetDocEndpoint<'orders'> ? DocSchema<Orders> :
+  TConfig['endpoint'] extends SetDocEndpoint<'customers'> ? DocSchema<Customers> :
+  TConfig['endpoint'] extends SetDocEndpoint<'stores'> ? DocSchema<Stores> :
+  TConfig['endpoint'] extends SetDocEndpoint<'applications'> ? DocSchema<Applications> :
+  TConfig['endpoint'] extends SetDocEndpoint<'authentications'> ? DocSchema<Authentications> :
+  any;
+
 export type {
   Products,
   Categories,
@@ -155,8 +177,10 @@ export type {
   Applications,
   Resource,
   ResourceAndId,
+  ResourceOpQuery,
   Endpoint,
   Method,
   Config,
   ResponseBody,
+  RequestBody,
 };
