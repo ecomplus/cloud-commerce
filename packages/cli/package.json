@@ -7,6 +7,10 @@
     "cloudcommerce": "./bin/run.mjs"
   },
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./create-auth": "./create-auth.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -22,6 +26,8 @@
     "build": "sh ../../scripts/build-lib.sh"
   },
   "dependencies": {
+    "@cloudcommerce/api": "workspace:^0.0.27",
+    "md5": "^2.3.0",
     "zx": "^7.0.7"
   }
 }
