@@ -27,24 +27,6 @@ class ApiError extends Error {
 
 const def = {
   middleware(config: Config) {
-    let url = config.baseUrl || env.API_BASE_URL || 'https://ecomplus.io/v2';
-    const storeId = config.storeId || env.ECOM_STORE_ID;
-    if (!storeId) {
-      throw new Error('`storeId` must be set in config or `ECOM_STORE_ID` env var');
-    }
-    url += `/:${storeId}`;
-    const lang = config.lang || env.ECOM_LANG;
-    if (lang) {
-      url += `,lang:${lang}`;
-    }
-    if (config.params) {
-      if (typeof config.params === 'string') {
-        url += `?${config.params}`;
-      } else {
-        // https://github.com/microsoft/TypeScript/issues/32951
-        url += `?${new URLSearchParams(config.params as Record<string, string>)}`;
-      }
-    }
     /* eslint-disable no-param-reassign, dot-notation */
     if (config.accessToken) {
       if (!config.headers) {
@@ -61,7 +43,34 @@ const def = {
       config.headers['Authorization'] = `Basic ${base64Auth}`;
     }
     /* eslint-enable */
-    return `${url}/${config.endpoint}`;
+    let url = config.baseUrl || env.API_BASE_URL || 'https://ecomplus.io/v2';
+    const { endpoint, params } = config;
+    if (
+      endpoint !== 'login'
+      && endpoint !== 'authenticate'
+      && endpoint !== 'ask-auth-callback'
+      && endpoint !== 'check-username'
+    ) {
+      const storeId = config.storeId || env.ECOM_STORE_ID;
+      if (!storeId) {
+        throw new Error('`storeId` must be set in config or `ECOM_STORE_ID` env var');
+      }
+      url += `/:${storeId}`;
+      const lang = config.lang || env.ECOM_LANG;
+      if (lang) {
+        url += `,lang:${lang}`;
+      }
+    }
+    url += `/${endpoint}`;
+    if (params) {
+      if (typeof params === 'string') {
+        url += `?${params}`;
+      } else {
+        // https://github.com/microsoft/TypeScript/issues/32951
+        url += `?${new URLSearchParams(params as Record<string, string>)}`;
+      }
+    }
+    return url;
   },
 };
 
