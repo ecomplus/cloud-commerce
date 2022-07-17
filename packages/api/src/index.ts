@@ -27,22 +27,17 @@ class ApiError extends Error {
 
 const def = {
   middleware(config: Config) {
-    /* eslint-disable no-param-reassign, dot-notation */
+    const headers: Headers | Record<string, string> = { ...config.headers };
     if (config.accessToken) {
-      if (!config.headers) {
-        config.headers = {};
-      }
-      config.headers['Authorization'] = `Bearer ${config.accessToken}`;
+      // eslint-disable-next-line dot-notation
+      headers['Authorization'] = `Bearer ${config.accessToken}`;
     } else if (config.authenticationId && config.apiKey) {
-      if (!config.headers) {
-        config.headers = {};
-      }
       const rawAuth = `${config.authenticationId}:${config.apiKey}`;
       const base64Auth = typeof Buffer === 'function'
         ? Buffer.from(rawAuth).toString('base64') : btoa(rawAuth);
-      config.headers['Authorization'] = `Basic ${base64Auth}`;
+      // eslint-disable-next-line dot-notation
+      headers['Authorization'] = `Basic ${base64Auth}`;
     }
-    /* eslint-enable */
     let url = config.baseUrl || env.API_BASE_URL || 'https://ecomplus.io/v2';
     const { endpoint, params } = config;
     if (
@@ -70,7 +65,7 @@ const def = {
         url += `?${new URLSearchParams(params as Record<string, string>)}`;
       }
     }
-    return url;
+    return { url, headers };
   },
 };
 
@@ -83,10 +78,9 @@ Promise<Response & {
   config: Config,
   data: ResponseBody<T>,
 }> => {
-  const url = def.middleware(config);
+  const { url, headers } = def.middleware(config);
   const {
     method,
-    headers = {},
     timeout = 20000,
     maxRetries = 3,
   } = config;
