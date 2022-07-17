@@ -26,7 +26,7 @@
     "build": "sh ../../scripts/build-lib.sh"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:^0.0.27",
+    "@cloudcommerce/api": "workspace:*",
     "md5": "^2.3.0",
     "zx": "^7.0.7"
   }
