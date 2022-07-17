@@ -61,7 +61,7 @@ importers:
 
   packages/cli:
     specifiers:
-      '@cloudcommerce/api': workspace:^0.0.27
+      '@cloudcommerce/api': workspace:*
       md5: ^2.3.0
       zx: ^7.0.7
     dependencies:
@@ -96,13 +96,13 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.27
+      '@cloudcommerce/cli': ^0.0.29
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.27
+      '@cloudcommerce/firebase': ^0.0.29
     dependencies:
       '@cloudcommerce/firebase': link:../../packages/firebase
 
