@@ -1,6 +1,13 @@
 import url from 'url';
 import path from 'path';
-import { $, argv, fs } from 'zx';
+import {
+  $,
+  argv,
+  fs,
+  echo,
+  chalk,
+} from 'zx';
+import login from './login';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -41,7 +48,7 @@ export default async () => {
   fs.copySync(path.join(__dirname, '..', 'config'), pwd);
 
   const options = Object.keys(argv).reduce((opts, key) => {
-    if (key !== '_') {
+    if (key !== '_' && key !== 'deploy' && key !== 'commit') {
       // eslint-disable-next-line no-param-reassign
       opts += ` --${key} ${argv[key]}`;
     }
@@ -63,5 +70,48 @@ export default async () => {
   if (argv._.includes('deploy')) {
     return $firebase('deploy');
   }
+
+  if (argv._.includes('login')) {
+    await $firebase('login');
+    return login();
+  }
+
+  if (argv._.includes('setup')) {
+    const { storeId, authenticationId, apiKey } = await login();
+    fs.writeFileSync(
+      path.join(pwd, 'functions', 'config.json'),
+      JSON.stringify({ storeId }, null, 2),
+    );
+    fs.writeFileSync(
+      path.join(pwd, 'functions', '.env'),
+      `ECOM_AUTHENTICATION_ID=${authenticationId}\nECOM_API_KEY=${apiKey}\n`,
+    );
+    if (argv.deploy !== false) {
+      await $firebase('deploy');
+    }
+    if (argv.commit !== false) {
+      try {
+        await $`git add .firebaserc functions/config.json`;
+        await $`git commit -m "Setup store [skip ci]"`;
+        await $`git push`;
+      } catch (e) {
+        //
+      }
+    }
+    return echo`
+    ****
+
+Finish by saving the following secrets to your GitHub repository:
+
+  ${chalk.bold('ECOM_AUTHENTICATION_ID')} = ${chalk.bgMagenta(authenticationId)}
+
+  ${chalk.bold('ECOM_API_KEY')} = ${chalk.bgMagenta(apiKey)}
+
+  ${chalk.bold('FIREBASE_SERVICE_ACCOUNT')} = {YOUR_SERVICE_ACCOUNT_JSON}
+
+-- More info at https://github.com/ecomplus/store#getting-started
+`;
+  }
+
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
