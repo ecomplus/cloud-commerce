@@ -6,7 +6,7 @@
  */
 
 export interface Brands {
-  _id: string;
+  _id: string & { length: 24 };
   created_at: string;
   updated_at: string;
   store_id: number;

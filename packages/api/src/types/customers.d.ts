@@ -9,7 +9,7 @@
  * Customer object model
  */
 export interface Customers {
-  _id: string;
+  _id: string & { length: 24 };
   created_at: string;
   updated_at: string;
   store_id: number;
@@ -365,7 +365,7 @@ export interface Customers {
     /**
      * Order ID (ObjectID)
      */
-    _id: string;
+    _id: string & { length: 24 };
     /**
      * When order was saved, date and time in ISO 8601 standard representation
      */

@@ -9,7 +9,7 @@
  * Order object model
  */
 export interface Orders {
-  _id: string;
+  _id: string & { length: 24 };
   created_at: string;
   updated_at: string;
   store_id: number;
@@ -229,7 +229,7 @@ export interface Orders {
     /**
      * Customer ID (ObjectID)
      */
-    _id: string;
+    _id: string & { length: 24 };
     /**
      * Customer language two letter code, sometimes with region, e.g. 'pt_br', 'fr', 'en_us'
      */
@@ -1229,7 +1229,7 @@ export interface Orders {
       /**
        * Kit product ID (ObjectID)
        */
-      _id: string;
+      _id: string & { length: 24 };
       /**
        * Kit product full name
        */
@@ -1251,7 +1251,7 @@ export interface Orders {
         /**
          * Product ID (ObjectID)
          */
-        _id: string;
+        _id: string & { length: 24 };
         /**
          * Selected variation ID (ObjectID) if any
          */
@@ -1345,7 +1345,7 @@ export interface Orders {
     /**
      * Subscription order ID (ObjectID)
      */
-    _id: string;
+    _id: string & { length: 24 };
     /**
      * Subscription order number
      */

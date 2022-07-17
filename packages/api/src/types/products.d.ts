@@ -6,7 +6,7 @@
  */
 
 export interface Products {
-  _id: string;
+  _id: string & { length: 24 };
   created_at: string;
   updated_at: string;
   store_id: number;
@@ -1179,7 +1179,7 @@ export interface Products {
     /**
      * Product ID (ObjectID)
      */
-    _id: string;
+    _id: string & { length: 24 };
     /**
      * Product quantity
      */
