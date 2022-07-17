@@ -127,9 +127,13 @@ type EventsResult<TEndpoint extends EventsEndpoint> = {
 };
 
 type ResponseBody<TConfig extends Config> =
-  TConfig['method'] extends 'post' ? { _id: ResourceId } :
+  TConfig['method'] extends 'post' ?
+    TConfig['endpoint'] extends 'login' ? { _id: ResourceId, store_id: number, api_key: string } :
+    TConfig['endpoint'] extends 'authenticate' ? { my_id: string, access_token: string, expires: string } :
+    { _id: ResourceId } :
   TConfig['method'] extends 'put' | 'patch' | 'delete' ? null :
   // method?: 'get'
+  TConfig['endpoint'] extends `${string}/${ResourceId}/${string}` ? any :
   TConfig['endpoint'] extends `products/${ResourceId}` ? Products :
   TConfig['endpoint'] extends `categories/${ResourceId}` ? Categories :
   TConfig['endpoint'] extends `brands/${ResourceId}` ? Brands :

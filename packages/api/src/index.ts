@@ -144,7 +144,7 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
 const post = <E extends Endpoint, C extends AbstractedAuthConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'post' }>,
-  config: C,
+  config: E extends 'login' | 'authenticate' ? AbstractedConfig : C,
 ) => api({
     ...config,
     method: 'post',
