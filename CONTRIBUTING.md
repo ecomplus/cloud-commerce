@@ -45,13 +45,16 @@ If you want to deploy to a new Firebase project (needed for larger changes):
 
 5. Deploy with `firebase login && npm run deploy`;
 
-## Development 
+## Development
 
-To emulate Firebase and serve starter Store locally, run the following command on the monorepo root:
+To emulate Firebase and serve all starter Store services locally, run the following commands on the monorepo root:
 
 ```console
+pnpm run setup
 pnpm serve
 ```
+
+`run setup` is only needed for the first time, it'll get your store credentials and put them in `functions/.env`.
 
 To run tests for all packages:
 

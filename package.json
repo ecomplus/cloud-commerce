@@ -19,7 +19,8 @@
     "store:run": "pnpm build && npm --prefix \"store\" run",
     "start": "pnpm store:run start",
     "serve": "pnpm store:run serve",
-    "deploy": "pnpm store:run deploy"
+    "deploy": "pnpm store:run deploy",
+    "setup": "pnpm store:run setup:quiet"
   },
   "standard-version": {
     "scripts": {
