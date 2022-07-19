@@ -47,8 +47,14 @@ If you want to deploy to a new Firebase project (needed for larger changes):
 
 ## Development 
 
-To emulate Firebase and serve starter `store` locally, run the following command on the monorepo root:
+To emulate Firebase and serve starter Store locally, run the following command on the monorepo root:
 
-```bash
+```console
 pnpm serve
+```
+
+To run tests for all packages:
+
+```console
+pnpm test
 ```
