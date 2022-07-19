@@ -79,17 +79,20 @@ export default async () => {
   if (argv._.includes('setup')) {
     const { storeId, authenticationId, apiKey } = await login();
     fs.writeFileSync(
-      path.join(pwd, 'functions', 'config.json'),
-      JSON.stringify({ storeId }, null, 2),
-    );
-    fs.writeFileSync(
       path.join(pwd, 'functions', '.env'),
-      `ECOM_AUTHENTICATION_ID=${authenticationId}\nECOM_API_KEY=${apiKey}\n`,
+      `ECOM_AUTHENTICATION_ID=${authenticationId}
+ECOM_API_KEY=${apiKey}
+ECOM_STORE_ID=${storeId}
+`,
     );
     if (argv.deploy !== false) {
       await $firebase('deploy');
     }
     if (argv.commit !== false) {
+      fs.writeFileSync(
+        path.join(pwd, 'functions', 'config.json'),
+        JSON.stringify({ storeId }, null, 2),
+      );
       try {
         await $`git add .firebaserc functions/config.json`;
         await $`git commit -m "Setup store [skip ci]"`;
