@@ -12,6 +12,7 @@ Clone this repo to your local machine and install the dependencies:
 
 ```console
 git clone --recurse-submodules git@github.com:ecomplus/cloud-commerce.git
+cd cloud-commerce
 pnpm install
 ```
 
@@ -43,3 +44,11 @@ If you want to deploy to a new Firebase project (needed for larger changes):
 4. Go to `/store` folder and edit `.firebaserc` setting your project ID (don't commit this file);
 
 5. Deploy with `firebase login && npm run deploy`;
+
+## Development 
+
+To emulate Firebase and serve starter `store` locally, run the following command on the monorepo root:
+
+```bash
+pnpm serve
+```
