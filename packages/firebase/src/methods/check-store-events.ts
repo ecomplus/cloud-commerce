@@ -1,8 +1,9 @@
-import type { Env } from '../types';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
+import getEnv from '../env';
 
-export default async ({ authenticationId, apiKey }: Env) => {
+export default async () => {
+  const { authenticationId, apiKey } = getEnv();
   [
     'orders',
     'products',
@@ -15,4 +16,5 @@ export default async ({ authenticationId, apiKey }: Env) => {
     });
     logger.info(`${resource} events: `, result);
   });
+  return true;
 };
