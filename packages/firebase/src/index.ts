@@ -1,13 +1,14 @@
 import 'source-map-support/register.js';
 import '@cloudcommerce/api/fetch-polyfill.js';
+import { initializeApp } from 'firebase-admin';
 import { pubsub, logger } from 'firebase-functions';
 // eslint-disable-next-line import/no-unresolved
 import { onRequest } from 'firebase-functions/v2/https';
 import config from './config';
-import checkStoreEvents from './methods/check-store-events';
+import checkStoreEvents from './handlers/check-store-events';
 
+initializeApp();
 const processId = String(Date.now());
-
 const options = {
   region: process.env.DEPLOY_REGION || 'us-east1',
 };
