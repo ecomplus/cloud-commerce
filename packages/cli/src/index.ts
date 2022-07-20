@@ -54,13 +54,23 @@ export default async () => {
     }
     return opts;
   }, '');
-  const $firebase = async (cmd: string) => {
+  const $firebase = (cmd: string) => {
     return $`firebase --project=${projectId} ${cmd}${options}`;
   };
 
   if (argv._.includes('serve')) {
-    return $firebase('emulators:start');
+    return $firebase('emulators:start').catch(async (err: any) => {
+      await echo`
+Try killing open emulators with: 
+${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
+`;
+      if (err.stdout.includes('port taken')) {
+        return process.exit(1);
+      }
+      throw err;
+    });
   }
+
   if (argv._.find((cmd) => /^(\w+:)?(shell|start)$/.test(cmd))) {
     return $firebase('functions:shell');
   }
@@ -70,7 +80,6 @@ export default async () => {
   if (argv._.includes('deploy')) {
     return $firebase('deploy');
   }
-
   if (argv._.includes('login')) {
     await $firebase('login');
     return login();
