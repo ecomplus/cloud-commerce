@@ -98,13 +98,13 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.32
+      '@cloudcommerce/cli': ^0.0.33
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.32
+      '@cloudcommerce/firebase': ^0.0.33
     dependencies:
       '@cloudcommerce/firebase': link:../../packages/firebase
 
