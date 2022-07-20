@@ -8,6 +8,12 @@ inputs:
   firebase-service-account:
     description: 'Firebase service account JSON'
     required: true
+  ecom-authentication-id:
+    description: 'E-Com Plus store authentication ID'
+    required: true
+  ecom-api-key:
+    description: 'E-Com Plus store API key'
+    required: true
 
 outputs: {}
 
@@ -37,10 +43,10 @@ runs:
       name: Deploy to Firebase live
       shell: bash
       env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
-        ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+        ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
+        ECOM_API_KEY: ${{ inputs.ecom-api-key }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
