@@ -14,6 +14,8 @@ inputs:
   ecom-api-key:
     description: 'E-Com Plus store API key'
     required: true
+  ecom-store-id:
+    description: 'Store ID if defined in config.json'
 
 outputs: {}
 
@@ -47,11 +49,13 @@ runs:
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
+        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
         printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
         ECOM_API_KEY=$ECOM_API_KEY
+        ECOM_STORE_ID=$ECOM_STORE_ID
         GITHUB_TOKEN=$GITHUB_TOKEN
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
