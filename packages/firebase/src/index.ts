@@ -1,14 +1,30 @@
+import type { Env } from './types';
 import 'source-map-support/register.js';
-import { logger } from 'firebase-functions';
+import { pubsub, logger } from 'firebase-functions';
 // eslint-disable-next-line import/no-unresolved
 import { onRequest } from 'firebase-functions/v2/https';
 import config from './config';
+import checkStoreEvents from './methods/check-store-events';
+
+const {
+  AUTHENTICATION_ID,
+  API_KEY,
+  GITHUB_TOKEN,
+} = process.env;
+if (!AUTHENTICATION_ID || !API_KEY || !GITHUB_TOKEN) {
+  throw new Error('Missing environment variables');
+}
+const processId = String(Date.now());
+const env: Env = {
+  processId,
+  authenticationId: AUTHENTICATION_ID,
+  apiKey: API_KEY,
+  githubToken: GITHUB_TOKEN,
+};
 
 const options = {
   region: process.env.DEPLOY_REGION || 'us-east1',
 };
-
-const processId = String(Date.now());
 
 export const z = onRequest(options, ({ url }, response) => {
   if (url === '/hello') {
@@ -29,4 +45,8 @@ export const z = onRequest(options, ({ url }, response) => {
 
 export const ssr = onRequest(options, (request, response) => {
   response.send('<h1>Hello SSR!</h1>');
+});
+
+export const cronStoreEvents = pubsub.schedule('* * * * *').onRun(() => {
+  return checkStoreEvents(env);
 });
