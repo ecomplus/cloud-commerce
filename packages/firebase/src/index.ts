@@ -1,4 +1,5 @@
 import 'source-map-support/register.js';
+import '@cloudcommerce/api/fetch-polyfill.js';
 import { pubsub, logger } from 'firebase-functions';
 // eslint-disable-next-line import/no-unresolved
 import { onRequest } from 'firebase-functions/v2/https';
