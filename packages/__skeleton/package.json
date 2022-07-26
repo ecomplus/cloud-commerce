@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "description": "E-Com Plus Cloud Commerce",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
