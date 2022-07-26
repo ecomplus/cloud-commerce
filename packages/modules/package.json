@@ -1,0 +1,24 @@
+{
+  "name": "@cloudcommerce/modules",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce modules definitions",
+  "main": "lib/index.cjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/modules"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/modules#readme",
+  "scripts": {
+    "build:types": "sh scripts/build-types.sh"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^11.0.1"
+  }
+}
