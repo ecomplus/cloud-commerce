@@ -4,9 +4,6 @@ function build_schema {
   cjs_filepath=$1
   noext_file=${cjs_filepath/.cjs/}
   output_path=${noext_file/\/schemas/\/schemas\/types}
-  json_filepath=$base_output_file.json
-  schema_filepath=$base_output_file.schema.json
-  ts_filepath=$base_output_file.d.ts
 
   echo $noext_file
   node -p "const { params, response } = require('$cjs_filepath'); \
