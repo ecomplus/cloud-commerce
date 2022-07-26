@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/types#readme",
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/modules": "workspace:*"
   }
 }
