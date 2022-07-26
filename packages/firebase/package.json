@@ -31,6 +31,7 @@
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
+    "@cloudcommerce/types": "workspace:^0.0.0",
     "@firebase/app-types": "^0.7.0"
   }
 }

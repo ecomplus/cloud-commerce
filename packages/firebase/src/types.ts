@@ -1,17 +1,8 @@
 /* eslint-disable import/prefer-default-export */
+import type { AppEventsTopic } from '@cloudcommerce/types';
 
 type EventSub = {
-  event: 'orders-new'
-    | 'orders-setAnyStatus'
-    | 'orders-paid'
-    | 'orders-readyForShipping'
-    | 'orders-delivered'
-    | 'orders-cancelled'
-    | 'products-new'
-    | 'products-setQuantity'
-    | 'products-setPrice'
-    | 'carts-new'
-    | 'carts-setCustomer'
+  event: AppEventsTopic,
   appId: number,
 };
 

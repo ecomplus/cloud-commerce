@@ -1,27 +1,21 @@
 {
-  "name": "@cloudcommerce/__skeleton",
+  "name": "@cloudcommerce/types",
   "type": "module",
   "version": "0.0.0",
-  "description": "E-Com Plus Cloud Commerce",
-  "main": "lib/index.js",
+  "description": "E-Com Plus Cloud Commerce reusable type definitions",
+  "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/__skeleton"
+    "directory": "packages/types"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/__skeleton#readme",
-  "scripts": {
-    "build": "echo '@ecomplus/__skeleton'"
-  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/types#readme",
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
-  },
-  "devDependencies": {
-    "@cloudcommerce/types": "workspace:*"
   }
 }
