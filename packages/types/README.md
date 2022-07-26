@@ -1,1 +1,0 @@
-# `@cloudcommerce/types`
