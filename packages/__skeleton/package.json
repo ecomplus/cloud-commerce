@@ -20,5 +20,8 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
   }
 }
