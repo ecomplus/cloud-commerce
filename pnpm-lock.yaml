@@ -118,7 +118,7 @@ importers:
   packages/passport:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/firebase': workspace:^0.0.36
+      '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       firebase-admin: ^11.0.0
@@ -171,13 +171,13 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.36
+      '@cloudcommerce/cli': ^0.0.37
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.36
+      '@cloudcommerce/firebase': ^0.0.37
     dependencies:
       '@cloudcommerce/firebase': link:../../packages/firebase
 
