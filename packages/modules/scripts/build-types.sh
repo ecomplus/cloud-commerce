@@ -3,7 +3,7 @@
 function build_schema {
   cjs_filepath=$1
   noext_file=${cjs_filepath/.cjs/}
-  output_path=${noext_file/\/schemas/\/schemas\/types}
+  output_path=${noext_file/\/schemas/\/..\/types\/modules}
 
   echo $noext_file
   node -p "const { params, response } = require('$cjs_filepath'); \
