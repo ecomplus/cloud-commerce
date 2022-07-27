@@ -1,39 +1,14 @@
+/* eslint-disable import/prefer-default-export */
+
 import 'source-map-support/register.js';
 import '@cloudcommerce/api/fetch-polyfill.js';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
 // eslint-disable-next-line import/no-unresolved
 import { initializeApp } from 'firebase-admin/app';
-// eslint-disable-next-line import/no-unresolved
-import { onRequest } from 'firebase-functions/v2/https';
-import { pubsub, logger } from 'firebase-functions';
-import config from './config';
+import { pubsub } from 'firebase-functions';
 import checkStoreEvents from './handlers/check-store-events';
 
 initializeApp();
-const processId = String(Date.now());
-const options = config.get().httpsFunctionOptions;
-
-export const z = onRequest(options, ({ url }, response) => {
-  process.env.ECOM_API_KEY = '***';
-  if (url === '/hello') {
-    logger.info('Hello logs!', {
-      structuredData: true,
-    });
-    response.send(config.get().hello);
-    return;
-  }
-  if (url === '/pid') {
-    response.send(processId);
-    return;
-  }
-  response.send({
-    config: config.get(),
-  });
-});
-
-export const ssr = onRequest(options, (request, response) => {
-  response.send('<h1>Hello SSR!</h1>');
-});
 
 export const cronStoreEvents = pubsub.schedule('* * * * *').onRun(() => {
   return checkStoreEvents();
