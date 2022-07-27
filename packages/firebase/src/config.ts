@@ -16,6 +16,9 @@ const self = {
     currencySymbol: process.env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL,
     countryCode: process.env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
     storeId: Number(process.env.ECOM_STORE_ID),
+    httpsFunctionOptions: {
+      region: process.env.DEPLOY_REGION || 'us-east1',
+    },
   },
 };
 

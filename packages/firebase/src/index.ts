@@ -9,9 +9,7 @@ import checkStoreEvents from './handlers/check-store-events';
 
 initializeApp();
 const processId = String(Date.now());
-const options = {
-  region: process.env.DEPLOY_REGION || 'us-east1',
-};
+const options = config.get().httpsFunctionOptions;
 
 export const z = onRequest(options, ({ url }, response) => {
   process.env.ECOM_API_KEY = '***';
