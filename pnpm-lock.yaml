@@ -47,7 +47,7 @@ importers:
   packages/__skeleton:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/types': workspace:^0.0.0
+      '@cloudcommerce/types': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../api
     devDependencies:
@@ -59,7 +59,7 @@ importers:
   packages/apps/discounts:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/types': workspace:^0.0.0
+      '@cloudcommerce/types': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../../api
     devDependencies:
@@ -78,7 +78,6 @@ importers:
   packages/firebase:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/modules': workspace:^0.0.0
       '@cloudcommerce/types': workspace:*
       '@fastify/deepmerge': ^1.1.0
       '@firebase/app-types': ^0.7.0
@@ -88,7 +87,6 @@ importers:
       source-map-support: ^0.5.21
     dependencies:
       '@cloudcommerce/api': link:../api
-      '@cloudcommerce/modules': link:../modules
       '@fastify/deepmerge': 1.1.0
       firebase-admin: 11.0.0_@firebase+app-types@0.7.0
       firebase-functions: 3.22.0_firebase-admin@11.0.0
@@ -100,8 +98,21 @@ importers:
 
   packages/modules:
     specifiers:
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.7.0
+      firebase-admin: ^11.0.0
+      firebase-functions: ^3.22.0
       json-schema-to-typescript: ^11.0.1
+      source-map-support: ^0.5.21
+    dependencies:
+      '@cloudcommerce/firebase': link:../firebase
+      firebase-admin: 11.0.0_@firebase+app-types@0.7.0
+      firebase-functions: 3.22.0_firebase-admin@11.0.0
+      source-map-support: 0.5.21
     devDependencies:
+      '@cloudcommerce/types': link:../types
+      '@firebase/app-types': 0.7.0
       json-schema-to-typescript: 11.0.1
 
   packages/storefront:
@@ -115,20 +126,18 @@ importers:
   packages/types:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/modules': workspace:^0.0.0
     dependencies:
       '@cloudcommerce/api': link:../api
-      '@cloudcommerce/modules': link:../modules
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.33
+      '@cloudcommerce/cli': ^0.0.35
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.33
+      '@cloudcommerce/firebase': ^0.0.35
     dependencies:
       '@cloudcommerce/firebase': link:../../packages/firebase
 
