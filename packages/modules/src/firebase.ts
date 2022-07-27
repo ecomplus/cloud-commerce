@@ -10,7 +10,7 @@ import config from '@cloudcommerce/firebase/lib/config';
 initializeApp();
 const options = config.get().httpsFunctionOptions;
 
-export const modApplyDiscount = onRequest(options, (request, response) => {
+export const modulesApi = onRequest(options, (request, response) => {
   process.env.ECOM_API_KEY = '***';
   response.send('Hello modules!');
 });
