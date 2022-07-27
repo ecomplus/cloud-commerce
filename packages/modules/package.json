@@ -16,7 +16,12 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/modules#readme",
   "scripts": {
+    "build": "sh ../../scripts/build-lib.sh",
     "build:types": "sh scripts/build-types.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/firebase": "workspace:*",
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "json-schema-to-typescript": "^11.0.1"
