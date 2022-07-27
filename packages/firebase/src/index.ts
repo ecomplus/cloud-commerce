@@ -1,9 +1,11 @@
 import 'source-map-support/register.js';
 import '@cloudcommerce/api/fetch-polyfill.js';
-import { initializeApp } from 'firebase-admin';
-import { pubsub, logger } from 'firebase-functions';
+// https://github.com/import-js/eslint-plugin-import/issues/1810
+// eslint-disable-next-line import/no-unresolved
+import { initializeApp } from 'firebase-admin/app';
 // eslint-disable-next-line import/no-unresolved
 import { onRequest } from 'firebase-functions/v2/https';
+import { pubsub, logger } from 'firebase-functions';
 import config from './config';
 import checkStoreEvents from './handlers/check-store-events';
 

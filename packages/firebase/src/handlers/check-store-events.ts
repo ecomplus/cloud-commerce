@@ -1,12 +1,13 @@
 import type { EventSub } from '../types';
-import { firestore } from 'firebase-admin';
+// eslint-disable-next-line import/no-unresolved
+import { getFirestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import getEnv from '../env';
 
 export default async () => {
   const { authenticationId, apiKey } = getEnv();
-  const eventsSubs = await firestore().collection('eventsSubs').get();
+  const eventsSubs = await getFirestore().collection('eventsSubs').get();
   const listenedEvents: EventSub['event'][] = [];
   eventsSubs.forEach((doc) => {
     const eventSub = doc.data() as EventSub;
