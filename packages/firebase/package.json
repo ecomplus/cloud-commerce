@@ -7,7 +7,7 @@
   "types": "lib/index.d.ts",
   "exports": {
     ".": "./lib/index.js",
-    "./config": "./config.js"
+    "./config": "./lib/config.js"
   },
   "repository": {
     "type": "git",
