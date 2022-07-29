@@ -21,16 +21,21 @@ for (let i = 0; i < packages.length; i++) {
     if (!stdout.trim().startsWith('There are no new packages') || argv.force) {
       await $`git submodule update --remote --merge`;
       await retry(10, '1s', async () => {
-        cd(`${pwd}/store/functions`);
         await spinner('give npm registry a time...', () => $`sleep 9`);
-        await $`rm -rf node_modules package-lock.json`;
-        await $`npm i --save @cloudcommerce/firebase@${version}`;
-        await $`rm -rf node_modules`;
+        const functions = ['core', 'modules', 'passport', 'ssr'];
+        for (let ii = 0; ii < functions.length; ii++) {
+          const codebase = functions[ii];
+          cd(`${pwd}/store/functions/${codebase}`);
+          await $`rm -rf node_modules package-lock.json`;
+          await $`npm i --save @cloudcommerce/firebase@${version} \
+            @cloudcommerce/${codebase}@${version}`;
+          await $`rm -rf node_modules`;
+        }
         cd(`${pwd}/store`);
         await $`rm -rf node_modules package-lock.json`;
         await $`npm i --save @cloudcommerce/cli@${version}`;
         await $`rm -rf node_modules`;
-        await $`git add package* functions/package*`;
+        await $`git add package* functions/*/package*`;
         await $`git commit -m 'Update to v${version}' \
           -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
         await $`git push`;
