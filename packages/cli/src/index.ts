@@ -8,6 +8,7 @@ import {
   chalk,
 } from 'zx';
 import login from './login';
+import build from './build';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -45,7 +46,7 @@ if (projectId) {
 }
 
 export default async () => {
-  fs.copySync(path.join(__dirname, '..', 'config'), pwd);
+  await fs.copy(path.join(__dirname, '..', 'config'), pwd);
 
   const options = Object.keys(argv).reduce((opts, key) => {
     if (key !== '_' && key !== 'deploy' && key !== 'commit') {
@@ -59,6 +60,7 @@ export default async () => {
   };
 
   if (argv._.includes('serve')) {
+    await build();
     return $firebase('emulators:start').catch(async (err: any) => {
       await echo`
 Try killing open emulators with: 
@@ -77,6 +79,9 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
   if (argv._.find((cmd) => /^(\w+:)?logs?$/.test(cmd))) {
     return $firebase('functions:log');
   }
+  if (argv._.includes('build')) {
+    return build();
+  }
   if (argv._.includes('deploy')) {
     return $firebase('deploy');
   }
@@ -87,7 +92,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
 
   if (argv._.includes('setup')) {
     const { storeId, authenticationId, apiKey } = await login();
-    fs.writeFileSync(
+    await fs.writeFile(
       path.join(pwd, 'functions', '.env'),
       `ECOM_AUTHENTICATION_ID=${authenticationId}
 ECOM_API_KEY=${apiKey}
@@ -98,10 +103,11 @@ ECOM_STORE_ID=${storeId}
       await $firebase('deploy');
     }
     if (argv.commit !== false) {
-      fs.writeFileSync(
+      await fs.writeFile(
         path.join(pwd, 'functions', 'config.json'),
         JSON.stringify({ storeId }, null, 2),
       );
+      await build();
       try {
         await $`git add .firebaserc functions/config.json`;
         await $`git commit -m "Setup store [skip ci]"`;
