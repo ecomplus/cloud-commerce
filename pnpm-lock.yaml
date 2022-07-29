@@ -175,12 +175,6 @@ importers:
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
-  store/functions:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.0.38
-    dependencies:
-      '@cloudcommerce/firebase': link:../../packages/firebase
-
   store/functions/core:
     specifiers:
       '@cloudcommerce/firebase': ^0.0.38
