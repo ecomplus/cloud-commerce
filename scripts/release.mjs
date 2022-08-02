@@ -27,11 +27,10 @@ for (let i = 0; i < packages.length; i++) {
           const codebase = functions[ii];
           cd(`${pwd}/store/functions/${codebase}`);
           await $`rm -rf node_modules package-lock.json`;
-          let pkgs = `@cloudcommerce/firebase@${version}`;
+          await $`npm i --save @cloudcommerce/firebase@${version}`;
           if (codebase !== 'core') {
-            pkgs += ` @cloudcommerce/${codebase}@${version}`;
+            await $`npm i --save @cloudcommerce/${codebase}@${version}`;
           }
-          await $`npm i --save ${pkgs}`;
           await $`rm -rf node_modules`;
         }
         cd(`${pwd}/store`);
