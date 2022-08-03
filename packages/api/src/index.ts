@@ -197,3 +197,7 @@ export {
   del,
   ApiError,
 };
+
+export type ApiEndpoint = Endpoint;
+
+export type ApiConfig = Config;
