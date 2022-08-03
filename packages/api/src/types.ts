@@ -56,7 +56,7 @@ type Config = {
   lang?: string,
   method?: Method,
   endpoint: Endpoint,
-  params?: Record<string, string | number>,
+  params?: Record<string, string | number | boolean>,
   headers?: Headers | Record<string, string>,
   timeout?: number,
   maxRetries?: number,
