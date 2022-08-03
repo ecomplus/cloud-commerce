@@ -171,6 +171,17 @@ type RequestBody<TConfig extends Config> =
   TConfig['endpoint'] extends SetDocEndpoint<'authentications'> ? DocSchema<Authentications> :
   any;
 
+type ErrorBody = {
+  status: number,
+  error_code: number,
+  message: string,
+  user_message?: {
+    en_us: string,
+    pt_br: string,
+  },
+  more_info?: string,
+};
+
 export type {
   Products,
   Categories,
@@ -194,4 +205,5 @@ export type {
   EventsResult,
   ResponseBody,
   RequestBody,
+  ErrorBody,
 };

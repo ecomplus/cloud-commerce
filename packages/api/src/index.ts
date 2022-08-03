@@ -4,6 +4,7 @@ import type {
   Config,
   ResponseBody,
   RequestBody,
+  ErrorBody,
 } from './types';
 
 // @ts-ignore
@@ -13,14 +14,25 @@ const env: { [key: string]: string } = (typeof window === 'object' && window)
 
 class ApiError extends Error {
   config: Config;
-  response?: Response;
+  response?: Response & { data?: ErrorBody };
   statusCode?: number;
+  data?: ErrorBody;
   isTimeout: boolean;
-  constructor(config: Config, response?: Response, msg?: string, isTimeout: boolean = false) {
-    super(response?.statusText || msg || 'Request error');
+  constructor(
+    config: Config,
+    response?: ApiError['response'],
+    msg?: string,
+    isTimeout: boolean = false,
+  ) {
+    if (response) {
+      super(response.statusText);
+      this.data = response.data;
+      this.statusCode = response.status;
+    } else {
+      super(msg || 'Request error');
+    }
     this.config = config;
     this.response = response;
-    this.statusCode = response?.status;
     this.isTimeout = isTimeout;
   }
 }
@@ -98,7 +110,7 @@ Promise<Response & {
     abortController.abort();
     isTimeout = true;
   }, timeout);
-  let response: Response | undefined;
+  let response: Response & { data?: any } | undefined;
   try {
     response = await (config.fetch || fetch)(url, {
       method,
@@ -128,6 +140,11 @@ Promise<Response & {
         }, (retryAfter && parseInt(retryAfter, 10)) || 5000);
       });
     }
+  }
+  try {
+    response.data = await response?.json() as ErrorBody;
+  } catch (e) {
+    //
   }
   throw new ApiError(config, response);
 };
@@ -201,3 +218,5 @@ export {
 export type ApiEndpoint = Endpoint;
 
 export type ApiConfig = Config;
+
+export type ApiErrorBody = ErrorBody;
