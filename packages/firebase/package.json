@@ -8,7 +8,8 @@
   "exports": {
     ".": "./lib/index.js",
     "./config": "./config.js",
-    "./lib/config": "./lib/config.js"
+    "./lib/config": "./lib/config.js",
+    "./lib/env": "./lib/env.js"
   },
   "repository": {
     "type": "git",
