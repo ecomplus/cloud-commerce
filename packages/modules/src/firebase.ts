@@ -6,11 +6,18 @@ import { initializeApp } from 'firebase-admin/app';
 // eslint-disable-next-line import/no-unresolved
 import { onRequest } from 'firebase-functions/v2/https';
 import config from '@cloudcommerce/firebase/lib/config';
+import getEnv from '@cloudcommerce/firebase/lib/env';
+import serveModulesApi from './firebase/serve-modules-api';
 
 initializeApp();
-const options = config.get().httpsFunctionOptions;
+const { httpsFunctionOptions } = config.get();
 
-export const modulesApi = onRequest(options, (request, response) => {
+export const modulesApi = onRequest(httpsFunctionOptions, (req, res) => {
+  const { authenticationId, apiKey } = getEnv();
+  // Hide API key for security
   process.env.ECOM_API_KEY = '***';
-  response.send('Hello modules!');
+  serveModulesApi(req, res, {
+    authenticationId,
+    apiKey,
+  });
 });
