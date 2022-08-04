@@ -24,7 +24,10 @@
     "build:types": "sh scripts/build-types.sh"
   },
   "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "ajv": "^8.11.0",
+    "axios": "^0.27.2",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.22.0",
     "source-map-support": "^0.5.21"
