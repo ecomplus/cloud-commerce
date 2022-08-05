@@ -19,6 +19,11 @@ const self = {
     httpsFunctionOptions: {
       region: process.env.DEPLOY_REGION || 'us-east1',
     },
+    apps: {
+      discounts: {
+        appId: 912000,
+      },
+    },
   },
 };
 
