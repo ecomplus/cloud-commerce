@@ -12,8 +12,7 @@ import serveModulesApi from './firebase/serve-modules-api';
 initializeApp();
 const { httpsFunctionOptions } = config.get();
 
-// eslint-disable-next-line camelcase
-export const modules_api = onRequest(httpsFunctionOptions, (req, res) => {
+export const modules = onRequest(httpsFunctionOptions, (req, res) => {
   const { authenticationId, apiKey } = getEnv();
   // Hide API key for security
   process.env.ECOM_API_KEY = '***';

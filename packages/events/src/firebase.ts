@@ -4,16 +4,18 @@ import type { AppEventsTopic } from '@cloudcommerce/types';
 import 'source-map-support/register.js';
 // eslint-disable-next-line import/no-unresolved
 import { initializeApp } from 'firebase-admin/app';
-// eslint-disable-next-line import/no-unresolved
-import { runWith, logger } from 'firebase-functions';
+import functions from 'firebase-functions';
+import config from '@cloudcommerce/firebase/lib/config';
 
+const { logger } = functions;
 initializeApp();
 
 const eventMaxAgeMs = 60000;
 const newOrderTopic: AppEventsTopic = 'orders-new';
+const { httpsFunctionOptions: { region } } = config.get();
 
-// eslint-disable-next-line camelcase
-export const on_new_order = runWith({ failurePolicy: true })
+export const onNewOrder = functions.region(region)
+  .runWith({ failurePolicy: true })
   .pubsub.topic(newOrderTopic).onPublish((message, context) => {
     const eventAgeMs = Date.now() - Date.parse(context.timestamp);
     if (eventAgeMs > eventMaxAgeMs) {
