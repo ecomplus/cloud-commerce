@@ -36,10 +36,11 @@ runs:
 
     - shell: bash
       working-directory: functions
-      run: npm ci --only=production --no-optional
-
-    - shell: bash
-      run: npm run build
+      run: |
+        for d in */ ; do
+          cd "$d"
+          npm ci --only=production --no-optional
+        done
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
