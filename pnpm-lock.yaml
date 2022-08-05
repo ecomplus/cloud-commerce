@@ -78,7 +78,7 @@ importers:
   packages/events:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/firebase': workspace:^0.0.43
+      '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       firebase-admin: ^11.0.1
@@ -118,7 +118,7 @@ importers:
   packages/modules:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/app-discounts': workspace:^0.0.43
+      '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
@@ -198,36 +198,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.43
+      '@cloudcommerce/cli': ^0.0.44
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.43
+      '@cloudcommerce/firebase': ^0.0.44
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.43
-      '@cloudcommerce/modules': ^0.0.43
+      '@cloudcommerce/firebase': ^0.0.44
+      '@cloudcommerce/modules': ^0.0.44
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.43
-      '@cloudcommerce/passport': ^0.0.43
+      '@cloudcommerce/firebase': ^0.0.44
+      '@cloudcommerce/passport': ^0.0.44
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.43
-      '@cloudcommerce/ssr': ^0.0.43
+      '@cloudcommerce/firebase': ^0.0.44
+      '@cloudcommerce/ssr': ^0.0.44
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
