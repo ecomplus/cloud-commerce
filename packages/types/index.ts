@@ -26,16 +26,16 @@ import type { CreateTransactionResponse } from './modules/create_transaction:res
 import type { CheckoutBody } from './modules/@checkout:params';
 
 type AppEventsTopic = 'orders-new'
-  | 'orders-setAnyStatus'
+  | 'orders-anyStatusSet'
   | 'orders-paid'
   | 'orders-readyForShipping'
   | 'orders-delivered'
   | 'orders-cancelled'
   | 'products-new'
-  | 'products-setQuantity'
-  | 'products-setPrice'
+  | 'products-quantitySet'
+  | 'products-priceSet'
   | 'carts-new'
-  | 'carts-setCustomer';
+  | 'carts-customerSet';
 
 export type {
   Products,
