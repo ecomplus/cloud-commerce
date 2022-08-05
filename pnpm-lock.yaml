@@ -75,6 +75,25 @@ importers:
       md5: 2.3.0
       zx: 7.0.7
 
+  packages/events:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:^0.0.43
+      '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.7.0
+      firebase-admin: ^11.0.1
+      firebase-functions: ^3.22.0
+      source-map-support: ^0.5.21
+    dependencies:
+      '@cloudcommerce/api': link:../api
+      '@cloudcommerce/firebase': link:../firebase
+      firebase-admin: 11.0.1_@firebase+app-types@0.7.0
+      firebase-functions: 3.22.0_firebase-admin@11.0.1
+      source-map-support: 0.5.21
+    devDependencies:
+      '@cloudcommerce/types': link:../types
+      '@firebase/app-types': 0.7.0
+
   packages/firebase:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -99,6 +118,7 @@ importers:
   packages/modules:
     specifiers:
       '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/app-discounts': workspace:^0.0.43
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
@@ -110,6 +130,7 @@ importers:
       source-map-support: ^0.5.21
     dependencies:
       '@cloudcommerce/api': link:../api
+      '@cloudcommerce/app-discounts': link:../apps/discounts
       '@cloudcommerce/firebase': link:../firebase
       ajv: 8.11.0
       axios: 0.27.2
