@@ -1,5 +1,5 @@
 import type { Request, Response } from 'firebase-functions';
-import type { Applications } from '@cloudcommerce/types';
+import type { Applications, AppModuleName } from '@cloudcommerce/types';
 import { logger } from 'firebase-functions';
 import Ajv, { ValidateFunction } from 'ajv';
 import api, { ApiError, ApiConfig } from '@cloudcommerce/api';
@@ -115,7 +115,13 @@ async function runModule(
         let response: any;
         let isError = false;
         let errorMessage: string | null = null;
-        callAppModule(appModuleUrl, appModuleBody, isBigTimeout)
+        callAppModule(
+          appId,
+          modName as AppModuleName,
+          appModuleUrl,
+          appModuleBody,
+          isBigTimeout,
+        )
           .then((appResponse) => {
             response = appResponse;
           })

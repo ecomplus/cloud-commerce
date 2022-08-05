@@ -1,3 +1,4 @@
+import type { AppModuleName } from '@cloudcommerce/types';
 import { logger } from 'firebase-functions';
 import axios, { AxiosResponse } from 'axios';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -5,13 +6,19 @@ import config from '@cloudcommerce/firebase/lib/config';
 // Blacklist urls to prevent consecultive errors
 const blacklist = {};
 
-export default async (url: string, data: any, isBigTimeout: boolean) => {
+export default async (
+  appId: number,
+  modName: AppModuleName,
+  url: string,
+  data: any,
+  isBigTimeout: boolean,
+) => {
   if (blacklist[url] > 2) {
     logger.log(`> Skipping blacklisted ${url}`);
     const err = new Error('Blacklited endpoint URL');
     return Promise.reject(err);
   }
-  const { storeId } = config.get();
+  const { storeId, apps } = config.get();
 
   const debug = (response: AxiosResponse) => {
     const status = response ? response.status : 0;
@@ -39,6 +46,13 @@ export default async (url: string, data: any, isBigTimeout: boolean) => {
       }
     }
   };
+
+  if (modName === 'apply_discount') {
+    if (appId === apps.discounts.appId) {
+      return import('@cloudcommerce/app-discounts')
+        .then(({ applyDiscount }) => applyDiscount());
+    }
+  }
 
   return axios({
     method: 'POST',
