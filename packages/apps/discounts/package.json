@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.43",
   "description": "E-Com Plus Cloud Commerce app for complex discount rules",
-  "main": "functions/dist/index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/discounts#readme",
   "scripts": {
-    "build": "echo '@ecomplus/app-discounts'"
+    "build": "sh ../../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
