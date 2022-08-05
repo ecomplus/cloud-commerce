@@ -19,9 +19,12 @@
     "build": "sh ../../../scripts/build-lib.sh"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "@cloudcommerce/api": "workspace:*",
+    "firebase-admin": "^11.0.1",
+    "firebase-functions": "^3.22.0"
   },
   "devDependencies": {
-    "@cloudcommerce/types": "workspace:*"
+    "@cloudcommerce/types": "workspace:*",
+    "@firebase/app-types": "^0.7.0"
   }
 }
