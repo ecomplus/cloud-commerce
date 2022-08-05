@@ -37,6 +37,11 @@ type AppEventsTopic = 'orders-new'
   | 'carts-new'
   | 'carts-customerSet';
 
+type AppModuleName = 'apply_discount'
+  | 'calculate_shipping'
+  | 'list_payments'
+  | 'create_transaction';
+
 export type {
   Products,
   Categories,
@@ -54,6 +59,7 @@ export type {
   ResourceListResult,
   EventsResult,
   AppEventsTopic,
+  AppModuleName,
   ApplyDiscountParams,
   ApplyDiscountResponse,
   CalculateShippingParams,
