@@ -10,7 +10,8 @@ import config from '@cloudcommerce/firebase/lib/config';
 initializeApp();
 const options = config.get().httpsFunctionOptions;
 
-export const passportApi = onRequest(options, (request, response) => {
+// eslint-disable-next-line camelcase
+export const passport_api = onRequest(options, (request, response) => {
   process.env.ECOM_API_KEY = '***';
   response.send('Hello passport!');
 });

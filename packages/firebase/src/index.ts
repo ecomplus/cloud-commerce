@@ -10,6 +10,7 @@ import checkStoreEvents from './handlers/check-store-events';
 
 initializeApp();
 
-export const cronStoreEvents = pubsub.schedule('* * * * *').onRun(() => {
+// eslint-disable-next-line camelcase
+export const cron_store_events = pubsub.schedule('* * * * *').onRun(() => {
   return checkStoreEvents();
 });

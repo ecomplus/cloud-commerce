@@ -12,7 +12,8 @@ initializeApp();
 const eventMaxAgeMs = 60000;
 const newOrderTopic: AppEventsTopic = 'orders-new';
 
-export const onNewOrder = runWith({ failurePolicy: true })
+// eslint-disable-next-line camelcase
+export const on_new_order = runWith({ failurePolicy: true })
   .pubsub.topic(newOrderTopic).onPublish((message, context) => {
     const eventAgeMs = Date.now() - Date.parse(context.timestamp);
     if (eventAgeMs > eventMaxAgeMs) {
