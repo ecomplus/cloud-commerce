@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/api",
   "type": "module",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

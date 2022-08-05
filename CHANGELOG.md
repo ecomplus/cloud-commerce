@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.46](https://github.com/ecomplus/cloud-commerce/compare/v0.0.45...v0.0.46) (2022-08-05)
+
+
+### Bug Fixes
+
+* Set Firebase Functions v2 names with one word at all ([23d5f17](https://github.com/ecomplus/cloud-commerce/commit/23d5f17bbeca0bccc14047c6a5fa4a92753ae9b8))
+
 ### [0.0.45](https://github.com/ecomplus/cloud-commerce/compare/v0.0.44...v0.0.45) (2022-08-05)
 
 
