@@ -1,6 +1,8 @@
 type Env = {
-  authenticationId: string;
-  apiKey: string;
+  apiAuth: {
+    authenticationId: string;
+    apiKey: string;
+  },
   githubToken?: string;
 };
 
@@ -20,8 +22,10 @@ export default () => {
   const apiKey = ECOM_API_KEY;
   const githubToken = GITHUB_TOKEN;
   const env: Env = {
-    authenticationId,
-    apiKey,
+    apiAuth: {
+      authenticationId,
+      apiKey,
+    },
     githubToken,
   };
   return env;
