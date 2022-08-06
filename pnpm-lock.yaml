@@ -60,10 +60,16 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.7.0
+      firebase-admin: ^11.0.1
+      firebase-functions: ^3.22.0
     dependencies:
       '@cloudcommerce/api': link:../../api
+      firebase-admin: 11.0.1_@firebase+app-types@0.7.0
+      firebase-functions: 3.22.0_firebase-admin@11.0.1
     devDependencies:
       '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.7.0
 
   packages/cli:
     specifiers:
@@ -206,6 +212,14 @@ importers:
     specifiers:
       '@cloudcommerce/firebase': ^0.0.46
     dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.0.46
+      '@cloudcommerce/firebase': ^0.0.46
+    dependencies:
+      '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
