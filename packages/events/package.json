@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/events#readme",
   "scripts": {
-    "build": "echo '@ecomplus/events'"
+    "build": "sh ../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
