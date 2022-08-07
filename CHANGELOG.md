@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.49](https://github.com/ecomplus/cloud-commerce/compare/v0.0.48...v0.0.49) (2022-08-07)
+
+
+### Features
+
+* Add events functions codebase to default Firebase config ([60e224c](https://github.com/ecomplus/cloud-commerce/commit/60e224c600b873e674960c347bc70bb5ae3a46cd))
+
 ### [0.0.48](https://github.com/ecomplus/cloud-commerce/compare/v0.0.47...v0.0.48) (2022-08-07)
 
 ### [0.0.47](https://github.com/ecomplus/cloud-commerce/compare/v0.0.46...v0.0.47) (2022-08-07)
