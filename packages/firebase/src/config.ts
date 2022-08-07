@@ -33,5 +33,8 @@ export default {
   },
   set(config) {
     self.__config = deepmerge(self.__config, config);
+    if (config.storeId) {
+      process.env.ECOM_STORE_ID = config.storeId;
+    }
   },
 };
