@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "astro": "1.0.0-rc.3"
+    "astro": "1.0.0-rc.7"
   }
 }
