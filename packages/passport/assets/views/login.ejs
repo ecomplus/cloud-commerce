@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      background: #f8f9fa;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #343a40;
+      font-size: 17px;
+      font-weight: 400;
+      padding: 15px;
+      margin: 0;
+    }
+
+    a {
+      -webkit-transition: 0.7s;
+      transition: 0.7s;
+    }
+
+    body>* {
+      max-width: 100%;
+      width: 300px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    body>p {
+      margin: 10px auto 0 auto;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    body>p a {
+      text-decoration: none;
+      color: #e83e8c;
+    }
+
+    body>p a:hover {
+      color: #c11a69;
+    }
+
+    body>p .fa-lock {
+      font-size: 18px;
+      color: #28a745;
+    }
+
+    #box {
+      padding: 20px;
+      margin-bottom: 15px;
+      background: #fff;
+      border-radius: 3px;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    #box>div {
+      width: 100%;
+    }
+
+    #box>div>div,
+    #box>div>img {
+      margin-bottom: 20px;
+    }
+
+    #box>div>img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #box>div>a {
+      display: block;
+      padding: 14px;
+      margin-bottom: 7px;
+      white-space: nowrap;
+      border-radius: 3px;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+      text-transform: none;
+      text-decoration: none;
+      border-width: 1px;
+      border-style: solid;
+      color: #fff;
+    }
+
+    #box>div>a>span {
+      display: inline-block;
+      width: 27px;
+      text-align: center;
+      margin-right: 5px;
+    }
+
+    #box>a {
+      text-decoration: none;
+      margin-top: 17px;
+      font-size: 15px;
+      display: block;
+      text-align: center;
+      color: #6c757d;
+    }
+
+    #box>a:hover {
+      color: #555;
+    }
+
+    #box>div>p {
+      font-size: 15px;
+      text-align: center;
+      margin: 15px 0;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js?useEmulator=true"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-app-compat.js?useEmulator=true"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.9.1/firebase-auth-compat.js?useEmulator=true"></script>
+  
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
+</head>
+
+<body>
+  <script type="module">
+    const configApp = { //TO DO: get config
+      }
+    try {
+      firebase.initializeApp(configApp);
+      const store =  <%-JSON.stringify(store)%>
+      const storeId = store.store_id
+      const providerOptions = <%-JSON.stringify(providerOptions)%>
+      const baseUri =  <%-JSON.stringify(baseUri)%>
+
+      let signInOptions = []
+      providerOptions.forEach(provider => {
+        signInOptions.push(firebase.auth[`${provider}AuthProvider`].PROVIDER_ID)
+      });
+      const app = firebase.app()
+      const auth = firebase.auth();
+
+      // auth.useEmulator("http://localhost:9099"); // TO DO: remove prodution
+      let ui = new firebaseui.auth.AuthUI(auth);
+
+      const getUser = async function () {
+        const user = auth.currentUser;
+        if (user !== null) {
+          const authToken = await user.getIdToken()
+          // console.log('storeId ', storeId, ' Auth ', authToken)
+          fetch(`${baseUri}/${storeId}/identify`, { method:'POST',  headers: { authToken } })
+        }else {
+          // error
+        }
+      }
+
+      const configUi = {
+        callbacks:{
+          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+            getUser()
+            return false;
+          }
+        },
+        signInOptions,
+      }
+      ui.start('#firebaseui-auth-container', configUi );
+    } catch (e) {
+      console.error(e);
+    }
+
+  </script>
+
+  <div id="box">
+    <div>
+      <% if (store.logo) { %>
+        <img src="<%= store.logo %>" />
+        <% } else { %>
+          <div>
+            <%= store.name %>
+          </div>
+          <% } %>
+            <p>
+              Por favor identifique-se para continuar
+            </p>
+    </div>
+    <div id="firebaseui-auth-container"> </div>
+  </div>
+  <p>
+    Usamos login social para <b>sua segurança e conveniência</b>,
+    <a href="/site/" target="_blank">saiba mais</a>
+  </p>
+  <p>
+    <i class="fas fa-lock"></i>
+  </p>
+</body>
+
+</html>
