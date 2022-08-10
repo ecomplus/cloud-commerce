@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.50](https://github.com/ecomplus/cloud-commerce/compare/v0.0.49...v0.0.50) (2022-08-07)
+
+### [0.0.49](https://github.com/ecomplus/cloud-commerce/compare/v0.0.48...v0.0.49) (2022-08-07)
+
+
+### Features
+
+* Add events functions codebase to default Firebase config ([60e224c](https://github.com/ecomplus/cloud-commerce/commit/60e224c600b873e674960c347bc70bb5ae3a46cd))
+
+### [0.0.48](https://github.com/ecomplus/cloud-commerce/compare/v0.0.47...v0.0.48) (2022-08-07)
+
+### [0.0.47](https://github.com/ecomplus/cloud-commerce/compare/v0.0.46...v0.0.47) (2022-08-07)
+
+
+### Features
+
+* Setup app auth callback function to handle installation callback ([12d5780](https://github.com/ecomplus/cloud-commerce/commit/12d57808a8d742b4a29ac2ce3ea1ae3a5af836dc))
+
+
+### Bug Fixes
+
+* **events:** Add root `firebase.js` as complement to pkg named export ([178fd8c](https://github.com/ecomplus/cloud-commerce/commit/178fd8c128ed55b098a28abe70e6c5385043ec89))
+* Set `ECOM_STORE_ID` env from `config.storeId` ([65e806e](https://github.com/ecomplus/cloud-commerce/commit/65e806ee2228392cfa3c9c6a58537e6248d1f862))
+
 ### [0.0.46](https://github.com/ecomplus/cloud-commerce/compare/v0.0.45...v0.0.46) (2022-08-05)
 
 

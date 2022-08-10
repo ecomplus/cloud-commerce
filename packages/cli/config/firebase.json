@@ -10,6 +10,11 @@
       "codebase": "core"
     },
     {
+      "predeploy": "npm run build -- --codebase events --dir \"$RESOURCE_DIR\"",
+      "source": "functions/events",
+      "codebase": "events"
+    },
+    {
       "predeploy": "npm run build -- --codebase modules --dir \"$RESOURCE_DIR\"",
       "source": "functions/modules",
       "codebase": "modules"

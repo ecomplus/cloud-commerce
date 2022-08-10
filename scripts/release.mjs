@@ -22,7 +22,9 @@ for (let i = 0; i < packages.length; i++) {
       await $`git submodule update --remote --merge`;
       await retry(10, '1s', async () => {
         await spinner('give npm registry a time...', () => $`sleep 9`);
-        const functions = ['core', 'modules', 'passport', 'ssr'];
+        const functions = (await fs.readdir(`${pwd}/store/functions`, { withFileTypes: true }))
+          .filter((d) => d.isDirectory() && d.name.charAt(0) !== '.')
+          .map((dirent) => dirent.name);
         for (let ii = 0; ii < functions.length; ii++) {
           const codebase = functions[ii];
           cd(`${pwd}/store/functions/${codebase}`);

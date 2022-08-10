@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.0.46",
+  "version": "0.0.50",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "main": "src/index.js",
   "repository": {
@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "astro": "1.0.0-rc.3"
+    "astro": "1.0.0-rc.7"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/cli",
   "type": "module",
-  "version": "0.0.46",
+  "version": "0.0.50",
   "description": "E-Com Plus Cloud Commerce CLI tools",
   "bin": {
     "cloudcommerce": "./bin/run.mjs"
@@ -28,6 +28,6 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "md5": "^2.3.0",
-    "zx": "^7.0.7"
+    "zx": "^7.0.8"
   }
 }

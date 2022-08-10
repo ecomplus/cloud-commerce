@@ -83,7 +83,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
     return build();
   }
   if (argv._.includes('deploy')) {
-    return $firebase('deploy');
+    return $firebase('deploy --force');
   }
   if (argv._.includes('login')) {
     await $firebase('login');
@@ -100,7 +100,7 @@ ECOM_STORE_ID=${storeId}
 `,
     );
     if (argv.deploy !== false) {
-      await $firebase('deploy');
+      await $firebase('deploy --force');
     }
     if (argv.commit !== false) {
       await fs.writeFile(

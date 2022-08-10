@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "0.0.46",
+  "version": "0.0.50",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -34,7 +34,7 @@
     "@types/node": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",
-    "esbuild": "^0.14.51",
+    "esbuild": "^0.14.54",
     "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -42,10 +42,10 @@
     "husky": "^8.0.1",
     "node-fetch": "^3.2.10",
     "standard-version": "^9.5.0",
-    "turbo": "^1.4.0",
+    "turbo": "^1.4.2",
     "typescript": "^4.7.4",
     "vite": "3",
-    "vitest": "^0.20.2",
-    "zx": "^7.0.7"
+    "vitest": "^0.21.0",
+    "zx": "^7.0.8"
   }
 }

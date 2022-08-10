@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/modules",
   "type": "module",
-  "version": "0.0.46",
+  "version": "0.0.50",
   "description": "E-Com Plus Cloud Commerce modules API",
   "main": "lib/index.cjs",
   "exports": {
@@ -36,6 +36,6 @@
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.7.0",
-    "json-schema-to-typescript": "^11.0.1"
+    "json-schema-to-typescript": "^11.0.2"
   }
 }

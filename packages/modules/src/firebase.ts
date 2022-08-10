@@ -13,11 +13,8 @@ initializeApp();
 const { httpsFunctionOptions } = config.get();
 
 export const modules = onRequest(httpsFunctionOptions, (req, res) => {
-  const { authenticationId, apiKey } = getEnv();
+  const { apiAuth } = getEnv();
   // Hide API key for security
   process.env.ECOM_API_KEY = '***';
-  serveModulesApi(req, res, {
-    authenticationId,
-    apiKey,
-  });
+  serveModulesApi(req, res, apiAuth);
 });
