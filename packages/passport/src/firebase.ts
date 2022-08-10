@@ -1,5 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
 import { Endpoint } from '@cloudcommerce/api/src/types';
+import { logger } from 'firebase-functions';
 import 'source-map-support/register.js';
 // eslint-disable-next-line import/no-unresolved
 import { initializeApp } from 'firebase-admin/app';
@@ -30,14 +31,16 @@ const firestore = getFirestore();
 const options = config.get().httpsFunctionOptions;
 
 const app = express();
+// using front-end
 const projectId = process.env.FIREBASE_PROJECT_ID || 'ecom2-hello'; // TODO: Get project Id in firebase
-const baseUri = `/${projectId}/${options.region}/passport`; // using front-end
+const baseUri = `/${projectId}/${options.region}/passport`;
 const providerOptions = [
   'Email',
   'Google',
   'Facebook',
   'Github',
 ];
+//
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -71,16 +74,21 @@ app.post('/:store/identify', async (req: Request, res: Response) => {
   } else if (storeId < 100) {
     sendError(res, 'Invalid store');
   } else {
-    const authCustomerApi = await getAuthCustomerApi(
-      firestore,
-      apiAuth,
-      authtoken,
-      authFirebase,
-    );
-    if (authCustomerApi !== null) {
-      res.send(authCustomerApi);
-    } else {
-      sendError(res, 'Invalid token, unauthorized', 401);
+    try {
+      const authCustomerApi = await getAuthCustomerApi(
+        firestore,
+        apiAuth,
+        authtoken,
+        authFirebase,
+      );
+      if (authCustomerApi !== null) {
+        res.send(authCustomerApi);
+      } else {
+        sendError(res, 'Invalid token, unauthorized', 401);
+      }
+    } catch (e) {
+      logger.error(e);
+      sendError(res);
     }
   }
 });
@@ -97,14 +105,24 @@ app.use('/api/:resource([^/]+)(/:id)?(/:path)?', async (req: Request, res: Respo
   if (!firestore) {
     sendError(res, 'Firestore not found', 500);
   } else {
-    const authCustomerApi = await getAuthCustomerApi(firestore, apiAuth, authtoken, authFirebase);
+    const authCustomerApi = await getAuthCustomerApi(
+      firestore,
+      apiAuth,
+      authtoken,
+      authFirebase,
+    );
     if (authCustomerApi !== null) {
-      const { data } = await callApi(
-        endpoint,
-        req,
-        { authenticationId: authCustomerApi.customer_id, apiKey: authCustomerApi.access_token },
-      );
-      res.send(data);
+      try {
+        const { data } = await callApi(
+          endpoint,
+          req,
+          { authenticationId: authCustomerApi.customer_id, apiKey: authCustomerApi.access_token },
+        );
+        res.send(data);
+      } catch (e) {
+        logger.error(e);
+        sendError(res);
+      }
     } else {
       sendError(res, 'Invalid token, unauthorized', 401);
     }
