@@ -80,7 +80,7 @@ app.post('/:store/identify', async (req: Request, res: Response) => {
     if (authCustomerApi !== null) {
       res.send(authCustomerApi);
     } else {
-      sendError(res, 'Invalid token, unauthorized', 403);
+      sendError(res, 'Invalid token, unauthorized', 401);
     }
   }
 });
@@ -106,7 +106,7 @@ app.use('/api/:resource([^/]+)(/:id)?(/:path)?', async (req: Request, res: Respo
       );
       res.send(data);
     } else {
-      sendError(res, 'Invalid token, unauthorized', 403);
+      sendError(res, 'Invalid token, unauthorized', 401);
     }
   }
 });
