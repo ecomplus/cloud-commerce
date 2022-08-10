@@ -123,8 +123,10 @@
 
 <body>
   <script type="module">
-    const configApp = { //TO DO: get config
-      }
+    // https://firebase.google.com/docs/auth/web/firebaseui
+    const configApp = { 
+      //TO DO: get config
+    }
     try {
       firebase.initializeApp(configApp);
       const store =  <%-JSON.stringify(store)%>
@@ -139,17 +141,15 @@
       const app = firebase.app()
       const auth = firebase.auth();
 
-      // auth.useEmulator("http://localhost:9099"); // TO DO: remove prodution
+      // auth.useEmulator("http://localhost:9099"); // using in tests local
       let ui = new firebaseui.auth.AuthUI(auth);
 
       const getUser = async function () {
         const user = auth.currentUser;
         if (user !== null) {
           const authToken = await user.getIdToken()
-          // console.log('storeId ', storeId, ' Auth ', authToken)
+          // Auth user in Store API
           fetch(`${baseUri}/${storeId}/identify`, { method:'POST',  headers: { authToken } })
-        }else {
-          // error
         }
       }
 
