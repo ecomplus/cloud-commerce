@@ -2,7 +2,6 @@ import type { Response } from 'firebase-functions';
 import type { Customers } from '@cloudcommerce/types';
 import type { Firestore, DocumentReference } from 'firebase-admin/firestore';
 // eslint-disable-next-line import/no-unresolved
-// eslint-disable-next-line import/no-unresolved
 import { Auth } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions';
 import config from '@cloudcommerce/firebase/lib/config';
