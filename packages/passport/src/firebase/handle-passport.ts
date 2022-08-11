@@ -1,7 +1,6 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Response } from 'firebase-functions';
 import type { Customers } from '@cloudcommerce/types';
 import type { Firestore, DocumentReference } from 'firebase-admin/firestore';
-import { Endpoint } from '@cloudcommerce/api/src/types';
 // eslint-disable-next-line import/no-unresolved
 // eslint-disable-next-line import/no-unresolved
 import { Auth } from 'firebase-admin/auth';
@@ -54,7 +53,7 @@ const findCustomerByEmail = async (
   }
 };
 
-const checkAuthFirebase = async (
+const checkFirebaseAuth = async (
   auth: Auth,
   authToken: string | undefined | string [],
 ) => {
@@ -88,7 +87,7 @@ const sendError = (
   }
 };
 
-const handleAuthCustomerApi = async (
+const gerateAcessTokenCustomerApi = async (
   documentRef: DocumentReference,
   customerId: string,
   apiAuth: { authenticationId: string, apiKey: string },
@@ -117,7 +116,7 @@ const handleAuthCustomerApi = async (
   }
 };
 
-const checkAcessTokenApi = async (
+const checkAcessTokenCustomerApi = async (
   firestore:Firestore,
   customerId: string,
   apiAuth: { authenticationId: string, apiKey: string },
@@ -131,7 +130,7 @@ const checkAcessTokenApi = async (
       && (Date.now() <= (new Date(expires).getTime() - 10 * 60 * 1000))) {
       return doc.data();
     }
-    return handleAuthCustomerApi(docRef, customerId, apiAuth);
+    return gerateAcessTokenCustomerApi(docRef, customerId, apiAuth);
   }
   return null;
 };
@@ -165,16 +164,16 @@ const checkAuthCustomerApi = async (
   customerId: string,
   apiAuth: { authenticationId: string, apiKey: string },
 ) => {
-  const authCustomerApi = await checkAcessTokenApi(
+  const customerAuthApi = await checkAcessTokenCustomerApi(
     firestore,
     customerId,
     apiAuth,
   );
-  if (authCustomerApi) {
-    authCustomerApi.customer_id = customerId;
-    delete authCustomerApi.expires;
-    delete authCustomerApi.my_id;
-    return authCustomerApi;
+  if (customerAuthApi) {
+    customerAuthApi.customer_id = customerId;
+    delete customerAuthApi.expires;
+    delete customerAuthApi.my_id;
+    return customerAuthApi;
   }
   logger.error(new Error('Acess token api not found'));
   return null;
@@ -186,10 +185,10 @@ const getAuthCustomerApi = async (
   authtoken: string | string[] | undefined,
   authFirebase: Auth,
 ) => {
-  const customerAuth = await checkAuthFirebase(authFirebase, authtoken);
-  if (customerAuth !== null) {
+  const customerFirebaseAuth = await checkFirebaseAuth(authFirebase, authtoken);
+  if (customerFirebaseAuth !== null && customerFirebaseAuth.email) {
     const customer = await findCustomerByEmail(
-      customerAuth.email,
+      customerFirebaseAuth.email,
       apiAuth,
     );
     if (customer != null) {
@@ -199,60 +198,28 @@ const getAuthCustomerApi = async (
     // account not found
     // create customer in API, checke authentication in api,
     // return custummer_id and acess token
-    const profile = {
-      display_name: customerAuth.name || '',
-      main_email: customerAuth.email,
+    const newCustomer = {
+      display_name: customerFirebaseAuth.name || '',
+      main_email: customerFirebaseAuth.email,
       emails: [{
-        address: customerAuth.email,
-        verified: customerAuth.email_verified,
+        address: customerFirebaseAuth.email,
+        verified: customerFirebaseAuth.email_verified,
       }],
       oauth_providers: [{
-        provider: customerAuth.firebase.sign_in_provider,
-        user_id: customerAuth.user_id,
+        provider: customerFirebaseAuth.firebase.sign_in_provider,
+        user_id: customerFirebaseAuth.user_id,
       }],
     } as Customers;
-    const customerId = await createCustomer(profile, apiAuth);
+    const customerId = await createCustomer(newCustomer, apiAuth);
     if (customerId) {
       return checkAuthCustomerApi(firestore, customerId, apiAuth);
     }
-    return null;
   }
   return null;
-};
-
-const callApi = (
-  endpoint:Endpoint,
-  req: Request,
-  apiAuthCustumer: { authenticationId: string, apiKey: string },
-) => {
-  const { method, body } = req;
-  const headers = {
-    'X-Store-ID': `${storeId}`,
-  };
-
-  if (method === 'GET') {
-    return api.get(
-      `${endpoint}`,
-      {
-        ...apiAuthCustumer,
-        headers,
-      },
-    );
-  } if (method === 'DELETE') {
-    return api.delete(`${endpoint}`, {
-      ...apiAuthCustumer,
-      headers,
-    });
-  }
-  return api[`${method}`](endpoint, body, {
-    ...apiAuthCustumer,
-    headers,
-  });
 };
 
 export {
   readStore,
   sendError,
   getAuthCustomerApi,
-  callApi,
 };
