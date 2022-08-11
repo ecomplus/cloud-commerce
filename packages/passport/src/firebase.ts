@@ -30,8 +30,6 @@ const options = {
 export const passport = onRequest(options, (req, res) => {
   const { apiAuth } = getEnv();
   const { storeId } = config.get();
-  // Hide API key for security
-  process.env.ECOM_API_KEY = '***';
   servePassportApi(
     req,
     res,

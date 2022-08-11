@@ -159,7 +159,7 @@ const createCustomer = async (
   }
 };
 
-const checkAuthCustomerApi = async (
+const gerateAuthCustomerApi = async (
   firestore: Firestore,
   customerId: string,
   apiAuth: { authenticationId: string, apiKey: string },
@@ -193,7 +193,7 @@ const getAuthCustomerApi = async (
     );
     if (customer != null) {
       // check acess token and return custumer _id and acess token
-      return checkAuthCustomerApi(firestore, customer._id, apiAuth);
+      return gerateAuthCustomerApi(firestore, customer._id, apiAuth);
     }
     // account not found
     // create customer in API, checke authentication in api,
@@ -212,9 +212,10 @@ const getAuthCustomerApi = async (
     } as Customers;
     const customerId = await createCustomer(newCustomer, apiAuth);
     if (customerId) {
-      return checkAuthCustomerApi(firestore, customerId, apiAuth);
+      return gerateAuthCustomerApi(firestore, customerId, apiAuth);
     }
   }
+  // TODO: find customer by phone number, if find gerateAuthCustumerApi, otherwise not authorized
   return null;
 };
 
