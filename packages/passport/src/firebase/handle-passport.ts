@@ -171,7 +171,6 @@ const gerateAuthCustomerApi = async (
   );
   if (customerAuthApi) {
     customerAuthApi.customer_id = customerId;
-    delete customerAuthApi.expires;
     delete customerAuthApi.my_id;
     return customerAuthApi;
   }
