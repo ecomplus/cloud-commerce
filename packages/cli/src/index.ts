@@ -56,6 +56,9 @@ export default async () => {
     return opts;
   }, '');
   const $firebase = (cmd: string) => {
+    if (cmd === 'deploy') {
+      return $`firebase --project=${projectId} ${cmd}${options} --force`;
+    }
     return $`firebase --project=${projectId} ${cmd}${options}`;
   };
 
@@ -83,7 +86,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
     return build();
   }
   if (argv._.includes('deploy')) {
-    return $firebase('deploy --force');
+    return $firebase('deploy');
   }
   if (argv._.includes('login')) {
     await $firebase('login');
@@ -100,7 +103,7 @@ ECOM_STORE_ID=${storeId}
 `,
     );
     if (argv.deploy !== false) {
-      await $firebase('deploy --force');
+      await $firebase('deploy');
     }
     if (argv.commit !== false) {
       await fs.writeFile(
