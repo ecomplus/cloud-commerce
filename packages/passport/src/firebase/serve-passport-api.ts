@@ -1,6 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
 // eslint-disable-next-line import/no-unresolved
-import { Auth } from 'firebase-admin/auth';
+import type { Auth } from 'firebase-admin/auth';
 // eslint-disable-next-line import/no-unresolved
 import { Firestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
