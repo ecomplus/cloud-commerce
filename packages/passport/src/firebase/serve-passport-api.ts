@@ -5,7 +5,8 @@ import { Auth } from 'firebase-admin/auth';
 import { Firestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import {
-  sendError, getAuthCustomerApi,
+  sendError,
+  getAuthCustomerApi,
 } from './handle-passport';
 
 export default async (
