@@ -32,9 +32,9 @@ export default async (
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
-  const modName = url.split('/')[1];
+  const endpoint = url.split('/')[1];
   // endpoint /token
-  if (modName === 'token' && method === 'POST') {
+  if (endpoint === 'token' && method === 'POST') {
     const { authtoken } = req.body;
     if (!firestore) {
       return sendError(res, 'Firestore not found', 500);
