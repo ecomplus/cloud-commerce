@@ -19,16 +19,16 @@
     "build": "echo '@ecomplus/storefront'"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.8.2",
+    "@astrojs/mdx": "^0.9.0",
     "@astrojs/node": "^1.0.0",
     "@astrojs/partytown": "^1.0.0",
-    "@astrojs/prefetch": "^0.0.6",
+    "@astrojs/prefetch": "^0.0.7",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/tailwind": "^1.0.0",
     "@astrojs/vue": "^1.0.0",
     "@cloudcommerce/api": "workspace:*",
-    "astro": "^1.0.2",
-    "rollup": "^2.77.2",
+    "astro": "^1.0.5",
+    "rollup": "^2.78.0",
     "vue": "^3.2.37"
   }
 }
