@@ -9,6 +9,7 @@ import {
 } from 'zx';
 import login from './login';
 import build from './build';
+import siginGcloudAndSetIAM from './config-gcloud';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -132,6 +133,10 @@ Finish by saving the following secrets to your GitHub repository:
 
 -- More info at https://github.com/ecomplus/store#getting-started
 `;
+  }
+  if (argv._.includes('predeploy')) {
+    const resp = await siginGcloudAndSetIAM(projectId, pwd);
+    return resp;
   }
 
   return $`echo 'Hello from @cloudcommerce/cli'`;
