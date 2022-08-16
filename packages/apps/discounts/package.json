@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.50",
   "description": "E-Com Plus Cloud Commerce app for complex discount rules",
-  "main": "lib/index.js",
+  "main": "lib/discounts.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.22.0"
   },
