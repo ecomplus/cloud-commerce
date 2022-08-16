@@ -6,18 +6,23 @@ import {
   DEFAULT_COUNTRY_CODE,
 } from './defaults';
 
+// @ts-ignore
+const env: { [key: string]: string } = (typeof process === 'object' && process?.env)
+  || (typeof window === 'object' && window)
+  || {};
+
 const deepmerge = Deepmerge();
 
 const self = {
   __config: {
     hello: 'from @cloudcommerce/firebase',
-    lang: process.env.ECOM_LANG || DEFAULT_LANG,
-    currency: process.env.ECOM_CURRENCY || DEFAULT_CURRENCY,
-    currencySymbol: process.env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL,
-    countryCode: process.env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
-    storeId: Number(process.env.ECOM_STORE_ID),
+    lang: env.ECOM_LANG || DEFAULT_LANG,
+    currency: env.ECOM_CURRENCY || DEFAULT_CURRENCY,
+    currencySymbol: env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL,
+    countryCode: env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
+    storeId: Number(env.ECOM_STORE_ID),
     httpsFunctionOptions: {
-      region: process.env.DEPLOY_REGION || 'us-east1',
+      region: env.DEPLOY_REGION || 'us-east1',
     },
     apps: {
       discounts: {
@@ -34,7 +39,7 @@ export default {
   set(config) {
     self.__config = deepmerge(self.__config, config);
     if (config.storeId) {
-      process.env.ECOM_STORE_ID = config.storeId;
+      env.ECOM_STORE_ID = config.storeId;
     }
   },
 };
