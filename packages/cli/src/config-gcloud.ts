@@ -56,7 +56,24 @@ const siginGcloudAndSetIAM = async (projectId: string | undefined, pwd: string) 
     await $`gcloud projects set-iam-policy ${projectId} ${pathPolicyIAM}`;
     return $`echo 'Success create account service Cloud Commerce GH Actions'`;
   }
-  return $`echo '${projectId} Not found'`;
+  return $`echo 'PROJECT_ID not found'`;
+};
+
+const createKeyServiceAccount = async (projectId: string | undefined, pwd: string) => {
+  if (projectId && projectId !== 'ecom2-hello') {
+    const pathFileKey = path.join(pwd, 'service-account-file.json');
+    await $`gcloud iam service-accounts keys create ${pathFileKey} \
+      --iam-account=cloud-commerce-gh-actions@${projectId}.iam.gserviceaccount.com`;
+
+    const keyServiceAccount = JSON.stringify(fs.readJSONSync(pathFileKey));
+
+    await $`export FIREBASE_SERVICE_ACCOUNT=${keyServiceAccount}`;
+  }
+  return $`echo 'PROJECT_ID not found'`;
 };
 
 export default siginGcloudAndSetIAM;
+
+export {
+  createKeyServiceAccount,
+};

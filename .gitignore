@@ -2,6 +2,11 @@ dist
 packages/*/lib
 packages/apps/*/lib
 
+
+packages/cli/policyIAM.json
+packages/cli/config/policyIAM.json
+packages/cli/service-account-file.json
+
 .cloudcommerce
 .turbo
 .cache

@@ -9,7 +9,7 @@ import {
 } from 'zx';
 import login from './login';
 import build from './build';
-import siginGcloudAndSetIAM from './config-gcloud';
+import siginGcloudAndSetIAM, { createKeyServiceAccount } from './config-gcloud';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -135,8 +135,13 @@ Finish by saving the following secrets to your GitHub repository:
 `;
   }
   if (argv._.includes('predeploy')) {
-    const resp = await siginGcloudAndSetIAM(projectId, pwd);
-    return resp;
+    try {
+      await siginGcloudAndSetIAM(projectId, pwd);
+      await createKeyServiceAccount(projectId, pwd);
+      return $`echo 'Sucess create key service account'`;
+    } catch (e) {
+      return $`echo 'Erro create key service account'`;
+    }
   }
 
   return $`echo 'Hello from @cloudcommerce/cli'`;
