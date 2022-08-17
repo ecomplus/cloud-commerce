@@ -27,6 +27,7 @@
     "@astrojs/tailwind": "^1.0.0",
     "@astrojs/vue": "^1.0.0",
     "@cloudcommerce/api": "workspace:*",
+    "@picocss/pico": "^1.5.3",
     "astro": "^1.0.5",
     "rollup": "^2.78.0",
     "vue": "^3.2.37"
