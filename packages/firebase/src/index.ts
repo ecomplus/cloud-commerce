@@ -8,7 +8,6 @@ import { initializeApp } from 'firebase-admin/app';
 import functions from 'firebase-functions';
 import config from './config';
 import checkStoreEvents from './handlers/check-store-events';
-import handleAuthCallback from './handlers/auth-callback';
 
 initializeApp();
 
@@ -26,6 +25,3 @@ export const cronStoreEvents = functionBuilder.pubsub
   .onRun(() => {
     return checkStoreEvents();
   });
-
-export const appAuthCallback = functionBuilder.https
-  .onRequest(handleAuthCallback);
