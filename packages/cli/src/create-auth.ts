@@ -27,15 +27,15 @@ export default async (storeId: number, accessToken: string) => {
       username: `cloudcomm${Date.now()}`,
       permissions: {
         applications: ['all'],
-        brands: ['GET'],
-        carts: ['all'],
-        categories: ['GET'],
-        collections: ['GET'],
+        brands: ['all'],
+        categories: ['all'],
+        collections: ['all'],
+        grids: ['all'],
+        products: ['all'],
         customers: ['all'],
-        grids: ['GET'],
+        carts: ['all'],
         orders: ['GET', 'POST', 'PATCH'],
-        products: ['GET', 'PATCH'],
-        stores: ['GET'],
+        stores: ['GET', 'PATCH'],
       },
     }, apiConfig);
     authenticationId = _id;
