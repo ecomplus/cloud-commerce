@@ -19,9 +19,6 @@ export default () => {
         enabled: true,
       },
     },
-    auth_scope: {
-      orders: ['GET'],
-    },
     admin_settings: {
     },
   };
