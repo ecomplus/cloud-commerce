@@ -1,9 +1,5 @@
 import path from 'path';
-import {
-  $,
-  echo,
-  fs,
-} from 'zx';
+import { $, echo, fs } from 'zx';
 
 const serviceAccountId = 'cloud-commerce-gh-actions';
 const serviceAccountEmail = (projectId: string) => {
@@ -80,7 +76,7 @@ const siginGcloudAndSetIAM = async (
 
 const createKeyServiceAccount = async (projectId: string, pwd: string) => {
   try {
-    const pathFileKey = path.join(pwd, 'serviceAccountFile.json');
+    const pathFileKey = path.join(pwd, 'serviceAccountKey.json');
     await $`gcloud iam service-accounts keys create ${pathFileKey} \
       --iam-account=${serviceAccountEmail(projectId)}`;
     return JSON.stringify(fs.readJSONSync(pathFileKey));
@@ -92,5 +88,6 @@ const createKeyServiceAccount = async (projectId: string, pwd: string) => {
 export default siginGcloudAndSetIAM;
 
 export {
+  siginGcloudAndSetIAM,
   createKeyServiceAccount,
 };

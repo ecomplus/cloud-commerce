@@ -9,7 +9,7 @@ import {
 } from 'zx';
 import login from './login';
 import build from './build';
-import siginGcloudAndSetIAM, { createKeyServiceAccount } from './config-gcloud';
+import { siginGcloudAndSetIAM, createKeyServiceAccount } from './config-gcloud';
 
 const {
   FIREBASE_PROJECT_ID,

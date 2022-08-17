@@ -7,6 +7,10 @@ packages
 /scripts
 /tests
 
+policyIAM.json
+serviceAccountKey.json
+
+.cloudcommerce
 .turbo
 .cache
 
@@ -54,6 +58,3 @@ coverage
 
 # Yarn Integrity file
 .yarn-integrity
-
-# Gcloud Service Account private key
-serviceAccountFile.json

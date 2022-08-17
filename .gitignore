@@ -2,9 +2,8 @@ dist
 packages/*/lib
 packages/apps/*/lib
 
-
 policyIAM.json
-serviceAccountFile.json
+serviceAccountKey.json
 
 .cloudcommerce
 .turbo
