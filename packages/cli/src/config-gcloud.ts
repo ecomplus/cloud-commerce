@@ -5,10 +5,14 @@ import {
   fs,
 } from 'zx';
 
+const serviceAccountId = 'cloud-commerce-gh-actions';
+const serviceAccountEmail = (projectId: string) => {
+  return `${serviceAccountId}@${projectId}.iam.gserviceaccount.com`;
+};
+
 const checkServiceAccountExists = async (projectId: string) => {
   try {
-    const descibeAccount = await $`gcloud iam service-accounts describe cloud-commerce-gh-actions@${projectId}.iam.gserviceaccount.com`;
-    return descibeAccount;
+    return $`gcloud iam service-accounts describe ${serviceAccountEmail(projectId)}`;
   } catch (e) {
     return null;
   }
@@ -33,7 +37,7 @@ const siginGcloudAndSetIAM = async (
   ];
   const serviceAccount = await checkServiceAccountExists(projectId);
   if (!serviceAccount) {
-    await $`gcloud iam service-accounts create cloud-commerce-gh-actions \
+    await $`gcloud iam service-accounts create ${serviceAccountId} \
         --description="A service account with permission to deploy Cloud Commerce from the GitHub repository to Firebase" \
         --display-name="Cloud Commerce GH Actions"`;
   }
@@ -47,7 +51,7 @@ const siginGcloudAndSetIAM = async (
     const roleFound = bindings.find(
       (binding: { [key: string]: string | string[] }) => binding.role === role,
     );
-    const memberServiceAccount = `serviceAccount:cloud-commerce-gh-actions@${projectId}.iam.gserviceaccount.com`;
+    const memberServiceAccount = `serviceAccount:${serviceAccountEmail(projectId)}`;
     if (!roleFound) {
       const newBinding = {
         members: [
@@ -76,9 +80,9 @@ const siginGcloudAndSetIAM = async (
 
 const createKeyServiceAccount = async (projectId: string, pwd: string) => {
   try {
-    const pathFileKey = path.join(pwd, 'service-account-file.json');
+    const pathFileKey = path.join(pwd, 'serviceAccountFile.json');
     await $`gcloud iam service-accounts keys create ${pathFileKey} \
-      --iam-account=cloud-commerce-gh-actions@${projectId}.iam.gserviceaccount.com`;
+      --iam-account=${serviceAccountEmail(projectId)}`;
     return JSON.stringify(fs.readJSONSync(pathFileKey));
   } catch (e) {
     return null;

@@ -120,9 +120,13 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
-
-    await siginGcloudAndSetIAM(projectId as string, pwd);
-    const serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
+    let serviceAccountJSON : string | null = null;
+    try {
+      await siginGcloudAndSetIAM(projectId as string, pwd);
+      serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
+    } catch (e) {
+      //
+    }
 
     return echo`
     ****
