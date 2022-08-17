@@ -46,13 +46,11 @@ export interface Applications {
    * Modules handled by this app
    */
   modules?: {
-    term_searched?: Module;
-    cart_confirmed?: Module1;
-    calculate_shipping?: Module2;
-    list_payments?: Module3;
-    apply_discount?: Module4;
-    create_transaction?: Module5;
-    checkout_done?: Module6;
+    calculate_shipping?: Module;
+    list_payments?: Module1;
+    apply_discount?: Module2;
+    create_transaction?: Module3;
+    checkout_done?: Module4;
   };
   /**
    * Configuration options for staff on admin dashboard, saved on app data
@@ -78,30 +76,6 @@ export interface Applications {
     };
   };
   /**
-   * Link to client side script (JS) to load on storefront
-   */
-  storefront_script_uri?: string;
-  /**
-   * Endpoint that receives POST back with authentication credentials, must be HTTPS
-   */
-  auth_callback_uri?: string;
-  /**
-   * If this app uses authentication, list the needed permissions
-   */
-  auth_scope?: {
-    /**
-     * Special scope to read authentications
-     */
-    authentications?: 'GET'[];
-    /**
-     * Requested resource, cannot be 'applications', 'authentications' or '$update' here
-     *
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^([$]?(?!app|aut|upd)([a-z][a-z0-9/_]{1,60}[^/]))$".
-     */
-    [k: string]: ('all' | 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE')[];
-  };
-  /**
    * Application object data, schema free
    */
   data?: {
@@ -125,7 +99,7 @@ export interface Applications {
   notes?: string;
 }
 /**
- * Triggered after each term searched on storefront
+ * Triggered to calculate shipping options, must return calculated values and times
  */
 export interface Module {
   /**
@@ -138,7 +112,7 @@ export interface Module {
   endpoint: string;
 }
 /**
- * Triggered after each cart saves on storefront, just before checkout
+ * Triggered when listing payments, must return available methods
  */
 export interface Module1 {
   /**
@@ -151,7 +125,7 @@ export interface Module1 {
   endpoint: string;
 }
 /**
- * Triggered to calculate shipping options, must return calculated values and times
+ * Triggered to validate and apply discout value, must return discount and conditions
  */
 export interface Module2 {
   /**
@@ -164,7 +138,7 @@ export interface Module2 {
   endpoint: string;
 }
 /**
- * Triggered when listing payments, must return available methods
+ * Triggered when order is being closed, must create payment transaction and return info
  */
 export interface Module3 {
   /**
@@ -177,35 +151,9 @@ export interface Module3 {
   endpoint: string;
 }
 /**
- * Triggered to validate and apply discout value, must return discount and conditions
- */
-export interface Module4 {
-  /**
-   * Whether current app is enabled to handle the module requests
-   */
-  enabled: boolean;
-  /**
-   * URL to receive POST request of respective module
-   */
-  endpoint: string;
-}
-/**
- * Triggered when order is being closed, must create payment transaction and return info
- */
-export interface Module5 {
-  /**
-   * Whether current app is enabled to handle the module requests
-   */
-  enabled: boolean;
-  /**
-   * URL to receive POST request of respective module
-   */
-  endpoint: string;
-}
-/**
  * Triggered after each order created from storefront, could return custom fields
  */
-export interface Module6 {
+export interface Module4 {
   /**
    * Whether current app is enabled to handle the module requests
    */
