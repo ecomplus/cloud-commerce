@@ -9,6 +9,7 @@ import {
 } from 'zx';
 import login from './login';
 import build from './build';
+import siginGcloudAndSetIAM, { createKeyServiceAccount } from './config-gcloud';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -119,6 +120,14 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
+    let serviceAccountJSON : string | null = null;
+    try {
+      await siginGcloudAndSetIAM(projectId as string, pwd);
+      serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
+    } catch (e) {
+      //
+    }
+
     return echo`
     ****
 
@@ -128,11 +137,10 @@ Finish by saving the following secrets to your GitHub repository:
 
   ${chalk.bold('ECOM_API_KEY')} = ${chalk.bgMagenta(apiKey)}
 
-  ${chalk.bold('FIREBASE_SERVICE_ACCOUNT')} = {YOUR_SERVICE_ACCOUNT_JSON}
+  ${chalk.bold('FIREBASE_SERVICE_ACCOUNT')} = ${chalk.bgMagenta(serviceAccountJSON || '{YOUR_SERVICE_ACCOUNT_JSON}')}
 
 -- More info at https://github.com/ecomplus/store#getting-started
 `;
   }
-
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
