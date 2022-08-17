@@ -42,6 +42,14 @@ type AppModuleName = 'apply_discount'
   | 'list_payments'
   | 'create_transaction';
 
+type AppModuleBody = {
+  module: AppModuleName,
+  params: {
+    [key: string]: any,
+  },
+  application: Applications,
+};
+
 export type {
   Products,
   Categories,
@@ -60,6 +68,7 @@ export type {
   EventsResult,
   AppEventsTopic,
   AppModuleName,
+  AppModuleBody,
   ApplyDiscountParams,
   ApplyDiscountResponse,
   CalculateShippingParams,
