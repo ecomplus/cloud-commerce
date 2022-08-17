@@ -26,7 +26,7 @@ const self = {
     },
     apps: {
       discounts: {
-        appId: 912000,
+        appId: 1252,
       },
     },
   },
