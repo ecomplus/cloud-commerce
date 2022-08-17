@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.51](https://github.com/ecomplus/cloud-commerce/compare/v0.0.50...v0.0.51) (2022-08-17)
+
+
+### Features
+
+* **cli:** Create Google Cloud IAM account and key on setup ([#40](https://github.com/ecomplus/cloud-commerce/issues/40)) ([f532888](https://github.com/ecomplus/cloud-commerce/commit/f532888957c45ea6cfb6511840f33861ec53ed42))
+* **passport:** Setup Passport API token endpoint handling Firebase Auth ([#38](https://github.com/ecomplus/cloud-commerce/issues/38)) ([bd7863d](https://github.com/ecomplus/cloud-commerce/commit/bd7863df4a8d6511ff7297987ff23a81993c70ad))
+* **types:** Add `AppModuleBody` object definition ([b4a1fbd](https://github.com/ecomplus/cloud-commerce/commit/b4a1fbdf2b2b034408cab83a555c5b7bbcc4c3f8))
+
+
+### Bug Fixes
+
+* **api:** Update applications schema interface ([af7e152](https://github.com/ecomplus/cloud-commerce/commit/af7e152932a9ee9343cf4e7cc10ec886d47cd2b7))
+* **cli:** Must deploy with `--force` option for functions failure police ([384d28a](https://github.com/ecomplus/cloud-commerce/commit/384d28a7406130058112b2f31ece4a81aa6ccfe7))
+* **cli:** Properly run deploy with `--force` option ([d4d8f18](https://github.com/ecomplus/cloud-commerce/commit/d4d8f18cfbabbc61abc360d4649d7db03671da09))
+* **cli:** Setup authentication with almost all permissions ([6f0ccb6](https://github.com/ecomplus/cloud-commerce/commit/6f0ccb6e7852f5c4542f02550ee84d02bd308115))
+* Config getter/setter to work on browser and node ([fedc4c8](https://github.com/ecomplus/cloud-commerce/commit/fedc4c88e2d71a02df0ca87ceade856e489b2a2e))
+* **deps:** Bump astro stable v1 ([8f4d3cb](https://github.com/ecomplus/cloud-commerce/commit/8f4d3cbf43dff334e53150a93df1c0f40c1b9580))
+* **deps:** Update all non-major dependencies ([#37](https://github.com/ecomplus/cloud-commerce/issues/37)) ([5f5bb37](https://github.com/ecomplus/cloud-commerce/commit/5f5bb37a8f2e4477a0a76e564fcdf207df08cada))
+* **deps:** Update all non-major dependencies ([#39](https://github.com/ecomplus/cloud-commerce/issues/39)) ([56e684d](https://github.com/ecomplus/cloud-commerce/commit/56e684d3eaddc8f00b789ca8d429330b69bc26c7))
+* Keep old (discounts) apps IDs for backport compatibility ([28833af](https://github.com/ecomplus/cloud-commerce/commit/28833af45137a1ffd074900d5caf6946dfb4b49a)), closes [#L2](https://github.com/ecomplus/cloud-commerce/issues/L2)
+* **modules:** Must call insternal apps passing module body (data) ([42d6d1d](https://github.com/ecomplus/cloud-commerce/commit/42d6d1d2464ee7fcd7d81e79ac777dc11eb85889))
+* **passport:** Consider valid tokens stored with at least 2 min to expire ([ac2b0b8](https://github.com/ecomplus/cloud-commerce/commit/ac2b0b88645b45dfa2c2d3dda49832b15537e711))
+* Stop hiding cloud commerce default API key ([f4389f7](https://github.com/ecomplus/cloud-commerce/commit/f4389f7b3d82960305f1ef34bdb3c5e83c4ce11a))
+
 ### [0.0.50](https://github.com/ecomplus/cloud-commerce/compare/v0.0.49...v0.0.50) (2022-08-07)
 
 ### [0.0.49](https://github.com/ecomplus/cloud-commerce/compare/v0.0.48...v0.0.49) (2022-08-07)
