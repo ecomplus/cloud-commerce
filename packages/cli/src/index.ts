@@ -120,6 +120,10 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
+
+    await siginGcloudAndSetIAM(projectId as string, pwd);
+    const serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
+
     return echo`
     ****
 
@@ -129,20 +133,10 @@ Finish by saving the following secrets to your GitHub repository:
 
   ${chalk.bold('ECOM_API_KEY')} = ${chalk.bgMagenta(apiKey)}
 
-  ${chalk.bold('FIREBASE_SERVICE_ACCOUNT')} = {YOUR_SERVICE_ACCOUNT_JSON}
+  ${chalk.bold('FIREBASE_SERVICE_ACCOUNT')} = ${chalk.bgMagenta(serviceAccountJSON || '{YOUR_SERVICE_ACCOUNT_JSON}')}
 
 -- More info at https://github.com/ecomplus/store#getting-started
 `;
   }
-  if (argv._.includes('predeploy')) {
-    try {
-      await siginGcloudAndSetIAM(projectId, pwd);
-      await createKeyServiceAccount(projectId, pwd);
-      return $`echo 'Sucess create key service account'`;
-    } catch (e) {
-      return $`echo 'Erro create key service account'`;
-    }
-  }
-
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
