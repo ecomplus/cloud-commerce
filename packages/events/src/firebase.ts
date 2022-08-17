@@ -22,8 +22,6 @@ export const onNewOrder = functions.region(region)
       logger.warn(`Dropping event ${context.eventId} with age[ms]: ${eventAgeMs}`);
       return;
     }
-    // Hide API key for security
-    process.env.ECOM_API_KEY = '***';
     const { json } = message;
     logger.info({
       topic: newOrderTopic,
