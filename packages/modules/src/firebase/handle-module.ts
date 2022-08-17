@@ -1,5 +1,5 @@
 import type { Request, Response } from 'firebase-functions';
-import type { Applications, AppModuleName } from '@cloudcommerce/types';
+import type { Applications, AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import { logger } from 'firebase-functions';
 import Ajv, { ValidateFunction } from 'ajv';
 import api, { ApiError, ApiConfig } from '@cloudcommerce/api';
@@ -104,8 +104,8 @@ async function runModule(
       const appModuleUrl = application.modules[modName].endpoint as string;
       // Handle request with big timeout if proxying one app (by ID) only
       const isBigTimeout = !!(appId);
-      const appModuleBody = {
-        module: modName,
+      const appModuleBody: AppModuleBody = {
+        module: modName as AppModuleName,
         params,
         application,
       };

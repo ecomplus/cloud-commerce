@@ -50,7 +50,7 @@ export default async (
   if (modName === 'apply_discount') {
     if (appId === apps.discounts.appId) {
       return import('@cloudcommerce/app-discounts')
-        .then(({ applyDiscount }) => applyDiscount());
+        .then(({ applyDiscount }) => applyDiscount(data));
     }
   }
 
