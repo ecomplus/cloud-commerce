@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.52](https://github.com/ecomplus/cloud-commerce/compare/v0.0.51...v0.0.52) (2022-08-18)
+
+
+### Features
+
+* **cli:** Add `--no-gcloud` option to setup command to skip GCloud IAM ([bbe5ce2](https://github.com/ecomplus/cloud-commerce/commit/bbe5ce2813c4276783d86fdd577e746fa5ecda1d))
+* Properly config Firebase Hosting to call modules/passport/ssr Cloud Functions ([b6e6540](https://github.com/ecomplus/cloud-commerce/commit/b6e6540d29895287e4149a4b3c160e118144074a))
+
+
+### Bug Fixes
+
+* **cli:** Fix GCloud IAM roles and properly check if service account already exists ([bb23dd0](https://github.com/ecomplus/cloud-commerce/commit/bb23dd049d992223285e8f51bc053d9fda775d10))
+
 ### [0.0.51](https://github.com/ecomplus/cloud-commerce/compare/v0.0.50...v0.0.51) (2022-08-17)
 
 
