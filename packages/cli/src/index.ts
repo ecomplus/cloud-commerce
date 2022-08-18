@@ -50,7 +50,7 @@ export default async () => {
   await fs.copy(path.join(__dirname, '..', 'config'), pwd);
 
   const options = Object.keys(argv).reduce((opts, key) => {
-    if (key !== '_' && key !== 'deploy' && key !== 'commit') {
+    if (key !== '_' && argv[key] !== false) {
       // eslint-disable-next-line no-param-reassign
       opts += ` --${key} ${argv[key]}`;
     }
@@ -121,11 +121,13 @@ ECOM_STORE_ID=${storeId}
       }
     }
     let serviceAccountJSON : string | null = null;
-    try {
-      await siginGcloudAndSetIAM(projectId as string, pwd);
-      serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
-    } catch (e) {
-      //
+    if (argv.gcloud !== false) {
+      try {
+        await siginGcloudAndSetIAM(projectId as string, pwd);
+        serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
+      } catch (e) {
+        //
+      }
     }
 
     return echo`
