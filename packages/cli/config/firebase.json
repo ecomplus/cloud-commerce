@@ -36,7 +36,22 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "rewrites": [
+      {
+        "source": "/api/modules/**",
+        "function": "modules"
+      },
+      {
+        "source": "/api/passport/**",
+        "function": "passport"
+      },
+      {
+        "source": "**/!(*(*.)js|*(*.)css|*(*.)ico|*(*.)png|*(*.)gif|*(*.)jpg|*(*.)jpeg|*(*.)webp|*(*.)avif|*(*.)svg|*(*.)woff|*(*.)woff2|*(*.)otf|*(*.)ttf|*(*.)eot)",
+        "function": "ssr"
+      }
+    ],
+    "cleanUrls": true
   },
   "storage": {
     "rules": "storage.rules"
