@@ -10,10 +10,12 @@ import {
 import login from './login';
 import build from './build';
 import { siginGcloudAndSetIAM, createKeyServiceAccount } from './config-gcloud';
+import createSecretsCloudCommerceGH from './api-gh';
 
 const {
   FIREBASE_PROJECT_ID,
   GOOGLE_APPLICATION_CREDENTIALS,
+  GITHUB_TOKEN,
 } = process.env;
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -95,6 +97,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
   }
 
   if (argv._.includes('setup')) {
+    /*
     const { storeId, authenticationId, apiKey } = await login();
     await fs.writeFile(
       path.join(pwd, 'functions', '.env'),
@@ -103,6 +106,7 @@ ECOM_API_KEY=${apiKey}
 ECOM_STORE_ID=${storeId}
 `,
     );
+
     if (argv.deploy !== false) {
       await $firebase('deploy');
     }
@@ -111,6 +115,7 @@ ECOM_STORE_ID=${storeId}
         path.join(pwd, 'functions', 'config.json'),
         JSON.stringify({ storeId }, null, 2),
       );
+
       await build();
       try {
         await $`git add .firebaserc functions/config.json`;
@@ -120,6 +125,7 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
+    */
     let serviceAccountJSON : string | null = null;
     try {
       await siginGcloudAndSetIAM(projectId as string, pwd);
@@ -128,6 +134,27 @@ ECOM_STORE_ID=${storeId}
       //
     }
 
+    const storeId = 1173;
+    const apiKey = 'test';
+    const authenticationId = 'test';
+
+    let createAllSecrets = false;
+    if (GITHUB_TOKEN) {
+      try {
+        createAllSecrets = await createSecretsCloudCommerceGH(
+          storeId,
+          apiKey,
+          authenticationId,
+          serviceAccountJSON,
+          GITHUB_TOKEN,
+        );
+      } catch (e) {
+        //
+      }
+    }
+    if (createAllSecrets) {
+      return echo`CloudCommerce setup finish successfully`;
+    }
     return echo`
     ****
 

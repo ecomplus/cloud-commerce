@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@devtomio/sodium": "^0.3.0",
     "md5": "^2.3.0",
     "zx": "^7.0.8"
   }
