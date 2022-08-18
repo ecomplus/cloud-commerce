@@ -41,7 +41,7 @@ if (projectId) {
       const firebaserc = fs.readJSONSync(path.join(pwd, '.firebaserc'));
       projectId = firebaserc.projects.default;
     } catch (e) {
-      projectId = 'ecom2-hello';
+      projectId = 'ecom2-001';
     }
   }
 }
