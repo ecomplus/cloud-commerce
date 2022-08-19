@@ -1,4 +1,4 @@
-import type { AppModuleName } from '@cloudcommerce/types';
+import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import { logger } from 'firebase-functions';
 import axios, { AxiosResponse } from 'axios';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -47,12 +47,13 @@ export default async (
     }
   };
 
-  let internalModuleFn: undefined | (() => Promise<any>);
+  // eslint-disable-next-line no-unused-vars
+  let internalModuleFn: undefined | ((_data?: AppModuleBody) => Promise<any>);
   if (modName === 'apply_discount') {
     if (appId === apps.discounts.appId) {
-      internalModuleFn = async () => {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-discounts')
-          .then(({ applyDiscount }) => applyDiscount(data));
+          .then(({ applyDiscount }) => applyDiscount(_data));
       };
     }
   }
@@ -65,14 +66,26 @@ export default async (
       if (data.params.x === 'sample') {
         return {};
       }
-      return next();
+      return next(data);
     };
     */
     const middleware = global[`app${appId}_${modName}_middleware`];
-    if (typeof middleware === 'function') {
-      return middleware(data, internalModuleFn);
+    try {
+      if (typeof middleware === 'function') {
+        return await middleware(data, internalModuleFn);
+      }
+      return await internalModuleFn(data);
+    } catch (err) {
+      logger.error(err);
+      let message = 'Failed to execute module function';
+      if (typeof middleware === 'function') {
+        message += ' (has middleware)';
+      }
+      return {
+        error: 'INTERNAL_MODULE_ERROR',
+        message,
+      };
     }
-    return internalModuleFn();
   }
 
   return axios({

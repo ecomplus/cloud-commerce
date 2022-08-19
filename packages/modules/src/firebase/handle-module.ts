@@ -105,6 +105,7 @@ async function runModule(
       // Handle request with big timeout if proxying one app (by ID) only
       const isBigTimeout = !!(appId);
       const appModuleBody: AppModuleBody = {
+        storeId,
         module: modName as AppModuleName,
         params,
         application,
@@ -124,6 +125,10 @@ async function runModule(
         )
           .then((appResponse) => {
             response = appResponse;
+            if (appResponse?.error) {
+              isError = true;
+              errorMessage = appResponse.message || String(appResponse.error);
+            }
           })
           .catch((err: any) => {
             response = null;
@@ -142,7 +147,7 @@ async function runModule(
               error_message: errorMessage,
               response,
             };
-            if (typeof response === 'object' && response !== null) {
+            if (!isError && typeof response === 'object' && response !== null) {
               result.validated = responseValidate(response);
               if (!result.validated) {
                 // @ts-ignore
