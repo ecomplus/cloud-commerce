@@ -1,5 +1,5 @@
 import { fetch, $ } from 'zx';
-import * as sodium from '@devtomio/sodium';
+import libsodium from 'libsodium-wrappers';
 
 export default async (
   storeId: number,
@@ -47,20 +47,20 @@ export default async (
   };
 
   const publicKeyGH = await getRepositoryPublicKeyGH();
+  await libsodium.ready;
 
   const createSecretsGH = async (
     secretName: string,
     secretValue: string,
   ) => {
-    // https://docs.github.com/pt/rest/actions/secrets#create-or-update-a-repository-secret
-    // Encryption example: https://github.com/devtomio/sodium/blob/main/tests/box.test.ts
-    const encryptedSodiun = sodium.crypto_box_seal(
+    //  https://docs.github.com/pt/rest/actions/secrets#example-encrypting-a-secret-using-nodejs
+    // Encryption example: https://github.com/github/tweetsodium
+    const encryptedBytes = libsodium.crypto_box_seal(
       Buffer.from(secretValue),
-      Buffer.from(publicKeyGH.key),
+      Buffer.from(publicKeyGH.key, 'base64'),
     );
-    const encryptedValue = Buffer.from(encryptedSodiun).toString('hex');
     const body = {
-      encrypted_value: encryptedValue,
+      encrypted_value: Buffer.from(encryptedBytes).toString('base64'),
       key_id: publicKeyGH.key_id,
     };
     return fetchApiGh(`/${secretName}`, 'PUT', JSON.stringify(body));
@@ -80,7 +80,6 @@ export default async (
         await createSecretsGH('ECOM_API_KEY', secrets.ecomApiKey);
       } catch (e) {
         allCreate = false;
-        //
       }
     }
     if (secrets.ecomAuthentication) {
@@ -88,7 +87,6 @@ export default async (
         await createSecretsGH('ECOM_AUTHENTICATION_ID', secrets.ecomAuthentication);
       } catch (e) {
         allCreate = false;
-        //
       }
     }
     if (secrets.firebaseServiceAccount) {
@@ -96,7 +94,6 @@ export default async (
         await createSecretsGH('FIREBASE_SERVICE_ACCOUNT', secrets.firebaseServiceAccount);
       } catch (e) {
         allCreate = false;
-        //
       }
     }
     if (secrets.storeId) {
@@ -104,14 +101,12 @@ export default async (
         await createSecretsGH('ECOM_STORE_ID', `${secrets.storeId}`);
       } catch (e) {
         allCreate = false;
-        //
       }
     }
     try {
       await createSecretsGH('GH_TOKEN', ghToken);
     } catch (e) {
       allCreate = false;
-      //
     }
 
     return allCreate;
