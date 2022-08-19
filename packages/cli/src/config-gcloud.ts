@@ -32,6 +32,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     'roles/iam.serviceAccountUser',
     'roles/run.viewer',
     'roles/serviceusage.apiKeysViewer',
+    'roles/serviceusage.serviceUsageAdmin',
   ];
   const serviceAccount = await checkServiceAccountExists(projectId);
   if (!serviceAccount) {
@@ -47,17 +48,23 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
 
   let mustUpdatePolicy = false;
   roles.forEach((role) => {
-    const roleFound = bindings.find(
-      (binding: { [key: string]: string | string[] }) => binding.role === role,
-    );
+    const roleFound = bindings.find((binding) => binding.role === role);
     const memberServiceAccount = `serviceAccount:${getAccountEmail(projectId)}`;
     if (!roleFound) {
-      const newBinding = {
+      const newBinding: { [key: string]: any } = {
         members: [
           memberServiceAccount,
         ],
         role,
       };
+      if (role === 'roles/serviceusage.serviceUsageAdmin') {
+        const roleExpiration = Date.now() + 1000 * 60 * 60 * 12;
+        newBinding.condition = {
+          expression: `request.time < timestamp("${new Date(roleExpiration).toISOString()}")`,
+          title: 'Enable APIs on first deploy',
+          description: null,
+        };
+      }
       bindings.push(newBinding);
       mustUpdatePolicy = true;
     } else {
