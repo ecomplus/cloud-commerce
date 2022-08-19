@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.53](https://github.com/ecomplus/cloud-commerce/compare/v0.0.52...v0.0.53) (2022-08-19)
+
+
+### Bug Fixes
+
+* **cli:** Fix GCloud IAM roles with temporary `serviceUsageAdmin` for first deploy ([3481f0c](https://github.com/ecomplus/cloud-commerce/commit/3481f0c2dc47fd5b25c321bf28d12ed1b6e5ffde))
+
 ### [0.0.52](https://github.com/ecomplus/cloud-commerce/compare/v0.0.51...v0.0.52) (2022-08-18)
 
 
