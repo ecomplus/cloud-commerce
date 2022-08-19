@@ -43,6 +43,7 @@ type AppModuleName = 'apply_discount'
   | 'create_transaction';
 
 type AppModuleBody = {
+  storeId: number,
   module: AppModuleName,
   params: {
     [key: string]: any,
