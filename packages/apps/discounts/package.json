@@ -21,6 +21,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "@ecomplus/utils": "^1.4.1",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.22.0"
   },
