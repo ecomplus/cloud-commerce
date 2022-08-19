@@ -47,11 +47,32 @@ export default async (
     }
   };
 
+  let internalModuleFn: undefined | (() => Promise<any>);
   if (modName === 'apply_discount') {
     if (appId === apps.discounts.appId) {
-      return import('@cloudcommerce/app-discounts')
-        .then(({ applyDiscount }) => applyDiscount(data));
+      internalModuleFn = async () => {
+        return import('@cloudcommerce/app-discounts')
+          .then(({ applyDiscount }) => applyDiscount(data));
+      };
     }
+  }
+  if (internalModuleFn) {
+    /*
+    global.app1_apply_discount_middleware = async (
+      data: any,
+      next: () => Promise<any>,
+    ) => {
+      if (data.params.x === 'sample') {
+        return {};
+      }
+      return next();
+    };
+    */
+    const middleware = global[`app${appId}_${modName}_middleware`];
+    if (typeof middleware === 'function') {
+      return middleware(data, internalModuleFn);
+    }
+    return internalModuleFn();
   }
 
   return axios({
