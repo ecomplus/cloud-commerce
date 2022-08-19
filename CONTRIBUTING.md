@@ -35,9 +35,9 @@ If you want to deploy to a new Firebase project (needed for larger changes):
     - Set a nice project name (ID) and remember it;
     - You may enable Firebase Analytics for enhanced remote config options and A/B testing;
 
-2. Go to _Firestore Database_ page (on sidebar) and _create database_:
+2. Go to _Creation > Firestore Database_ page (on sidebar) and _create database_:
     - Just bypass with default production mode and rules;
-    - Select region `us-east1` (recommended);
+    - Select region `nam5 (us-central)` (recommended);
 
 3. Firebase free plan doesn't support sending external HTTP requests, so you'll need to upgrade to _Blaze_ (on demand) plan;
 
