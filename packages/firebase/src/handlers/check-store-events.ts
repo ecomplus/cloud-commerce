@@ -20,9 +20,25 @@ export default async () => {
     'orders',
     'products',
     'carts',
+    'customers',
   ].forEach(async (resource) => {
-    const { data: { result } } = await api
+    let { data: { result } } = await api
       .get(`events/${resource as 'orders'}`, apiAuth);
+    /*
+    global.api_events_middleware = async (
+      resource: string,
+      result: EventsResult,
+    }) => {
+      if (resource === 'orders') {
+        await axios.port(url, result);
+      }
+      return result;
+    };
+    */
+    const middleware = global.api_events_middleware;
+    if (typeof middleware === 'function') {
+      result = await middleware(resource, result);
+    }
     logger.info(`${resource} events: `, result);
   });
   return true;
