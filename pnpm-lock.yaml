@@ -61,12 +61,14 @@ importers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
+      '@ecomplus/utils': ^1.4.1
       '@firebase/app-types': ^0.7.0
       firebase-admin: ^11.0.1
       firebase-functions: ^3.22.0
     dependencies:
       '@cloudcommerce/api': link:../../api
       '@cloudcommerce/firebase': link:../../firebase
+      '@ecomplus/utils': 1.4.1
       firebase-admin: 11.0.1_@firebase+app-types@0.7.0
       firebase-functions: 3.22.0_firebase-admin@11.0.1
     devDependencies:
@@ -852,6 +854,12 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@ecomplus/utils/1.4.1:
+    resolution: {integrity: sha512-siIMZu5qjwwtvFTqt/F29i/SkzZcIFrb/6WcmUJToh4HiBoJVx8H/id2WQRQf7EzcL9c0uYMWX6DNIN/DymvcA==}
+    optionalDependencies:
+      core-js: 3.24.1
+    dev: false
 
   /@emmetio/abbreviation/2.2.3:
     resolution: {integrity: sha512-87pltuCPt99aL+y9xS6GPZ+Wmmyhll2WXH73gG/xpGcQ84DRnptBsI2r0BeIQ0EB/SQTOe2ANPqFqj3Rj5FOGA==}
@@ -2656,6 +2664,12 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
     dev: false
+
+  /core-js/3.24.1:
+    resolution: {integrity: sha512-0QTBSYSUZ6Gq21utGzkfITDylE8jWC9Ne1D2MrhvlsZBI1x39OdDIVbzSqtgMndIy6BlHxBXpMGqzZmnztg2rg==}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
