@@ -72,9 +72,20 @@ const def = {
     if (params) {
       if (typeof params === 'string') {
         url += `?${params}`;
-      } else {
-        // https://github.com/microsoft/TypeScript/issues/32951
-        url += `?${new URLSearchParams(params as Record<string, string>)}`;
+      } else if (typeof params === 'object') {
+        const searchParams = new URLSearchParams();
+        Object.keys(params).forEach((key) => {
+          const values = params[key];
+          if (Array.isArray(values)) {
+            values.forEach((value: string | number) => {
+              // https://github.com/microsoft/TypeScript/issues/32951
+              searchParams.append(key, value as string);
+            });
+          } else {
+            searchParams.append(key, values as string);
+          }
+        });
+        url += `?${searchParams.toString()}`;
       }
     }
     return { url, headers };
