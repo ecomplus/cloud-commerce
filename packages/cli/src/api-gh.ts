@@ -24,7 +24,8 @@ const hasCreatedAllSecretsCloudCommerceGH = async (
   ghToken: string,
   ghOwnerRepo?: string,
 ) => {
-  const baseUrl = `https://api.github.com/repos/${ghOwnerRepo || await getOwnerAndRepoGH()}/actions/secrets`;
+  const baseUrl = `https://api.github.com/repos/${(ghOwnerRepo
+  || await getOwnerAndRepoGH())}/actions/secrets`;
 
   const fetchApiGh = async (resource: string, method: string, body?: string) => {
     const url = `${baseUrl}${resource}`;
