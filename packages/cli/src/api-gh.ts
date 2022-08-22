@@ -1,26 +1,30 @@
 import { fetch, $ } from 'zx';
 import libsodium from 'libsodium-wrappers';
 
-export default async (
-  storeId: number,
+type PublicKeyGhSecrets = {
+  'key_id': string,
+  'key': string
+}
+
+const getOwnerAndRepoGH = async () => {
+  try {
+    return (await $`git config --get remote.origin.url`).stdout
+      .replace('https://github.com/', '')
+      .replace('.git', '')
+      .replace('\n', '');
+  } catch (e) {
+    return null;
+  }
+};
+
+const hasCreatedAllSecretsCloudCommerceGH = async (
   ecomApiKey: string,
   ecomAuthentication: string,
   firebaseServiceAccount: string | null,
   ghToken: string,
+  ghOwnerRepo?: string,
 ) => {
-  const getOwnerAndRepo = async () => {
-    try {
-      return (await $`git config --get remote.origin.url`)
-        .toString()
-        .replace('https://github.com/', '')
-        .replace('.git', '')
-        .replace('\n', '');
-    } catch (e) {
-      return null;
-    }
-  };
-
-  const baseUrl = `https://api.github.com/repos/${await getOwnerAndRepo()}/actions/secrets`;
+  const baseUrl = `https://api.github.com/repos/${ghOwnerRepo || await getOwnerAndRepoGH()}/actions/secrets`;
 
   const fetchApiGh = async (resource: string, method: string, body?: string) => {
     const url = `${baseUrl}${resource}`;
@@ -34,11 +38,6 @@ export default async (
       body,
     });
   };
-
-  type PublicKeyGhSecrets = {
-    'key_id': string,
-    'key': string
-  }
 
   const getRepositoryPublicKeyGH = async (): Promise<PublicKeyGhSecrets> => {
     // https:// docs.github.com/pt/rest/actions/secrets#get-a-repository-public-key
@@ -66,53 +65,41 @@ export default async (
     return fetchApiGh(`/${secretName}`, 'PUT', JSON.stringify(body));
   };
 
-  const createAllSecretsCloudCommerceGH = async (
-    secrets: {
-      storeId: number,
-      ecomApiKey: string,
-      ecomAuthentication: string,
-      firebaseServiceAccount: string | null
-    },
-  ) => {
-    let allCreate = true;
-    if (secrets.ecomApiKey) {
-      try {
-        await createSecretsGH('ECOM_API_KEY', secrets.ecomApiKey);
-      } catch (e) {
-        allCreate = false;
-      }
-    }
-    if (secrets.ecomAuthentication) {
-      try {
-        await createSecretsGH('ECOM_AUTHENTICATION_ID', secrets.ecomAuthentication);
-      } catch (e) {
-        allCreate = false;
-      }
-    }
-    if (secrets.firebaseServiceAccount) {
-      try {
-        await createSecretsGH('FIREBASE_SERVICE_ACCOUNT', secrets.firebaseServiceAccount);
-      } catch (e) {
-        allCreate = false;
-      }
-    }
-    if (secrets.storeId) {
-      try {
-        await createSecretsGH('ECOM_STORE_ID', `${secrets.storeId}`);
-      } catch (e) {
-        allCreate = false;
-      }
-    }
+  let hasCreatedAll = true;
+  try {
+    await createSecretsGH('ECOM_API_KEY', ecomApiKey);
+  } catch (e) {
+    hasCreatedAll = false;
+  }
+
+  try {
+    await createSecretsGH('ECOM_AUTHENTICATION_ID', ecomAuthentication);
+  } catch (e) {
+    hasCreatedAll = false;
+  }
+
+  try {
+    await createSecretsGH('GH_TOKEN', ghToken);
+  } catch (e) {
+    hasCreatedAll = false;
+  }
+
+  if (firebaseServiceAccount) {
     try {
-      await createSecretsGH('GH_TOKEN', ghToken);
+      await createSecretsGH('FIREBASE_SERVICE_ACCOUNT', firebaseServiceAccount);
     } catch (e) {
-      allCreate = false;
+      hasCreatedAll = false;
     }
+  } else {
+    hasCreatedAll = false;
+  }
 
-    return allCreate;
-  };
+  return hasCreatedAll;
+};
 
-  return createAllSecretsCloudCommerceGH({
-    storeId, ecomApiKey, ecomAuthentication, firebaseServiceAccount,
-  });
+export default hasCreatedAllSecretsCloudCommerceGH;
+
+export {
+  hasCreatedAllSecretsCloudCommerceGH,
+  getOwnerAndRepoGH,
 };

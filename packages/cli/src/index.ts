@@ -10,7 +10,7 @@ import {
 import login from './login';
 import build from './build';
 import { siginGcloudAndSetIAM, createKeyServiceAccount } from './config-gcloud';
-import createSecretsCloudCommerceGH from './api-gh';
+import hasCreatedSecretsCloudCommerceGH from './api-gh';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -134,11 +134,10 @@ ECOM_STORE_ID=${storeId}
       }
     }
 
-    let createAllSecrets = false;
-    if (GITHUB_TOKEN) {
+    let hasCreatedAllSecrets = false;
+    if (GITHUB_TOKEN && argv.github !== false) {
       try {
-        createAllSecrets = await createSecretsCloudCommerceGH(
-          storeId,
+        hasCreatedAllSecrets = await hasCreatedSecretsCloudCommerceGH(
           apiKey,
           authenticationId,
           serviceAccountJSON,
@@ -148,7 +147,7 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
-    if (createAllSecrets) {
+    if (hasCreatedAllSecrets) {
       return echo`CloudCommerce setup finish successfully`;
     }
     return echo`
