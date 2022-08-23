@@ -9,8 +9,8 @@ import {
 } from 'zx';
 import login from './login';
 import build from './build';
-import { siginGcloudAndSetIAM, createKeyServiceAccount } from './config-gcloud';
-import createGitHubSecrets from './api-gh';
+import { siginGcloudAndSetIAM, createServiceAccountKey } from './config-gcloud';
+import createGhSecrets from './api-gh';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -128,16 +128,15 @@ ECOM_STORE_ID=${storeId}
     if (argv.gcloud !== false) {
       try {
         await siginGcloudAndSetIAM(projectId as string, pwd);
-        serviceAccountJSON = await createKeyServiceAccount(projectId as string, pwd);
+        serviceAccountJSON = await createServiceAccountKey(projectId as string, pwd);
       } catch (e) {
         //
       }
     }
-
     let hasCreatedAllSecrets = false;
     if (GITHUB_TOKEN && argv.github !== false) {
       try {
-        hasCreatedAllSecrets = await createGitHubSecrets(
+        hasCreatedAllSecrets = await createGhSecrets(
           apiKey,
           authenticationId,
           serviceAccountJSON,
@@ -147,8 +146,16 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
+
     if (hasCreatedAllSecrets) {
-      return echo`CloudCommerce setup finish successfully`;
+      return echo`
+      ****
+
+CloudCommerce setup completed successfully.
+Your store repository on GitHub is ready, the first deploy will automatically start with GH Actions.
+
+-- More info at https://github.com/ecomplus/store#getting-started
+`;
     }
     return echo`
     ****

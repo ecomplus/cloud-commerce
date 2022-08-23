@@ -1,12 +1,7 @@
 import { fetch, $ } from 'zx';
 import libsodium from 'libsodium-wrappers';
 
-type PublicKeyGhSecrets = {
-  key_id: string,
-  key: string
-}
-
-const getOwnerAndRepoGH = async () => {
+const getRemoteRepo = async () => {
   try {
     return (await $`git config --get remote.origin.url`).stdout
       .replace(/.*github.com[/:]/, '')
@@ -17,17 +12,24 @@ const getOwnerAndRepoGH = async () => {
   }
 };
 
-const createAllSecretsCloudCommerceGH = async (
+const createGhSecrets = async (
   ecomApiKey: string,
   ecomAuthentication: string,
   firebaseServiceAccount: string | null,
   ghToken: string,
-  ghOwnerRepo?: string,
+  ghRepo?: string,
 ) => {
-  const baseUrl = `https://api.github.com/repos/${(ghOwnerRepo
-    || await getOwnerAndRepoGH())}/actions/secrets`;
+  const remoteRepo = ghRepo || await getRemoteRepo();
+  if (!remoteRepo) {
+    throw new Error("Can't define remote Git repository");
+  }
+  const baseUrl = `https://api.github.com/repos/${remoteRepo}/actions/secrets`;
 
-  const fetchApiGh = async (resource: string, method: string, body?: string) => {
+  const fetchGhSecrets = async (
+    resource: string,
+    body?: string,
+    method: string = 'GET',
+  ) => {
     const url = `${baseUrl}${resource}`;
     const headers = {
       Accept: 'application/vnd.github+json',
@@ -40,67 +42,41 @@ const createAllSecretsCloudCommerceGH = async (
     });
   };
 
-  const getRepositoryPublicKeyGH = async (): Promise<PublicKeyGhSecrets> => {
-    // https:// docs.github.com/pt/rest/actions/secrets#get-a-repository-public-key
-    const publicKey = await (await fetchApiGh('/public-key', 'GET')).json();
-    return publicKey as PublicKeyGhSecrets;
+  // https:// docs.github.com/pt/rest/actions/secrets#get-a-repository-public-key
+  const ghPublicKey = await (await fetchGhSecrets('/public-key')).json() as {
+    key_id: string,
+    key: string,
   };
-
-  const publicKeyGH = await getRepositoryPublicKeyGH();
   await libsodium.ready;
 
-  const createSecretsGH = async (
+  const createGhSecret = async (
     secretName: string,
     secretValue: string,
   ) => {
-    //  https://docs.github.com/pt/rest/actions/secrets#example-encrypting-a-secret-using-nodejs
+    // https://docs.github.com/pt/rest/actions/secrets#example-encrypting-a-secret-using-nodejs
     // Encryption example: https://github.com/github/tweetsodium
     const encryptedBytes = libsodium.crypto_box_seal(
       Buffer.from(secretValue),
-      Buffer.from(publicKeyGH.key, 'base64'),
+      Buffer.from(ghPublicKey.key, 'base64'),
     );
     const body = {
       encrypted_value: Buffer.from(encryptedBytes).toString('base64'),
-      key_id: publicKeyGH.key_id,
+      key_id: ghPublicKey.key_id,
     };
-    return fetchApiGh(`/${secretName}`, 'PUT', JSON.stringify(body));
+    return fetchGhSecrets(`/${secretName}`, JSON.stringify(body), 'PUT');
   };
 
-  let hasCreatedAll = true;
   try {
-    await createSecretsGH('ECOM_API_KEY', ecomApiKey);
-  } catch (e) {
-    hasCreatedAll = false;
-  }
-
-  try {
-    await createSecretsGH('ECOM_AUTHENTICATION_ID', ecomAuthentication);
-  } catch (e) {
-    hasCreatedAll = false;
-  }
-
-  try {
-    await createSecretsGH('GH_TOKEN', ghToken);
-  } catch (e) {
-    hasCreatedAll = false;
-  }
-
-  if (firebaseServiceAccount) {
-    try {
-      await createSecretsGH('FIREBASE_SERVICE_ACCOUNT', firebaseServiceAccount);
-    } catch (e) {
-      hasCreatedAll = false;
+    await createGhSecret('ECOM_API_KEY', ecomApiKey);
+    await createGhSecret('ECOM_AUTHENTICATION_ID', ecomAuthentication);
+    if (firebaseServiceAccount) {
+      await createGhSecret('FIREBASE_SERVICE_ACCOUNT', firebaseServiceAccount);
+      return true;
     }
-  } else {
-    hasCreatedAll = false;
+  } catch (e) {
+    //
   }
-
-  return hasCreatedAll;
+  return false;
 };
 
-export default createAllSecretsCloudCommerceGH;
-
-export {
-  createAllSecretsCloudCommerceGH,
-  getOwnerAndRepoGH,
-};
+export default createGhSecrets;

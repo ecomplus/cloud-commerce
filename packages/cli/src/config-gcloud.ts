@@ -84,7 +84,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
   return null;
 };
 
-const createKeyServiceAccount = async (projectId: string, pwd: string) => {
+const createServiceAccountKey = async (projectId: string, pwd: string) => {
   try {
     const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
     await $`gcloud iam service-accounts keys create ${pathFileKey} \
@@ -99,5 +99,5 @@ export default siginGcloudAndSetIAM;
 
 export {
   siginGcloudAndSetIAM,
-  createKeyServiceAccount,
+  createServiceAccountKey,
 };
