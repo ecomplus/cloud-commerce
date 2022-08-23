@@ -9,8 +9,8 @@ import {
 } from 'zx';
 import login from './login';
 import build from './build';
-import { siginGcloudAndSetIAM, createServiceAccountKey } from './config-gcloud';
-import createGhSecrets from './api-gh';
+import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
+import createGhSecrets from './setup-gh';
 
 const {
   FIREBASE_PROJECT_ID,

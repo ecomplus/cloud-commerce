@@ -47,6 +47,7 @@ const createGhSecrets = async (
     key_id: string,
     key: string,
   };
+  const ghKeyBuffer = Buffer.from(ghPublicKey.key, 'base64');
   await libsodium.ready;
 
   const createGhSecret = async (
@@ -57,7 +58,7 @@ const createGhSecrets = async (
     // Encryption example: https://github.com/github/tweetsodium
     const encryptedBytes = libsodium.crypto_box_seal(
       Buffer.from(secretValue),
-      Buffer.from(ghPublicKey.key, 'base64'),
+      ghKeyBuffer,
     );
     const body = {
       encrypted_value: Buffer.from(encryptedBytes).toString('base64'),
