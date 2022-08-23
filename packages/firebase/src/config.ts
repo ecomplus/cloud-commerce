@@ -1,3 +1,4 @@
+import type { AppEventsTopic } from '@cloudcommerce/types';
 import Deepmerge from '@fastify/deepmerge';
 import {
   DEFAULT_LANG,
@@ -27,6 +28,14 @@ const self = {
     apps: {
       discounts: {
         appId: 1252,
+      },
+      tinyErp: {
+        appId: 105922,
+        events: [
+          'orders-anyStatusSet',
+          'products-new',
+          'products-priceSet',
+        ] as AppEventsTopic[],
       },
     },
   },
