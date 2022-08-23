@@ -29,13 +29,15 @@ type AppEventsTopic = 'orders-new'
   | 'orders-anyStatusSet'
   | 'orders-paid'
   | 'orders-readyForShipping'
+  | 'orders-shipped'
   | 'orders-delivered'
   | 'orders-cancelled'
   | 'products-new'
   | 'products-quantitySet'
   | 'products-priceSet'
   | 'carts-new'
-  | 'carts-customerSet';
+  | 'carts-customerSet'
+  | 'customers-new';
 
 type AppModuleName = 'apply_discount'
   | 'calculate_shipping'
