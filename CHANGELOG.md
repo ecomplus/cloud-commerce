@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.55](https://github.com/ecomplus/cloud-commerce/compare/v0.0.54...v0.0.55) (2022-08-23)
+
+
+### Features
+
+* Also fetch customers resource events on Store API ([15fb1ec](https://github.com/ecomplus/cloud-commerce/commit/15fb1ec63641d768f7275f91269c99be6812bcea))
+* **api:** Properly handle params fields as array of strings or numbers ([b66f688](https://github.com/ecomplus/cloud-commerce/commit/b66f6884baa0d26b0a3859a35eee41697a90ff64))
+* **discounts:** Move discounts app handlers from https://github.com/ecomplus/discounts ([12f5aa3](https://github.com/ecomplus/cloud-commerce/commit/12f5aa3ef29a0faa787f4af55634cf15097d9c11))
+* **events:** Start parsing events topics and checking active subscribers apps ([7a3aff1](https://github.com/ecomplus/cloud-commerce/commit/7a3aff17bc2d19c171d95fd3a1c5704927081376))
+* **modules:** Check middleware functions on global scope for internal modules [[#29](https://github.com/ecomplus/cloud-commerce/issues/29)] ([8324659](https://github.com/ecomplus/cloud-commerce/commit/83246597059bedc74efafc3949d66430d383e58b))
+* **types:** Enum new events topics ([9e154d7](https://github.com/ecomplus/cloud-commerce/commit/9e154d7154ef86b952d29ba661cf15a0345f82c6))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#44](https://github.com/ecomplus/cloud-commerce/issues/44)) ([23a0c07](https://github.com/ecomplus/cloud-commerce/commit/23a0c07fb8fc0961a53f6319cf76f9a6657f88ff))
+* **modules:** Catch internal module functions (or midd) errors ([b162d8d](https://github.com/ecomplus/cloud-commerce/commit/b162d8d190b8616a190e6d9db0f7cdb309dfa7a2))
+
 ### [0.0.54](https://github.com/ecomplus/cloud-commerce/compare/v0.0.53...v0.0.54) (2022-08-19)
 
 ### [0.0.53](https://github.com/ecomplus/cloud-commerce/compare/v0.0.52...v0.0.53) (2022-08-19)

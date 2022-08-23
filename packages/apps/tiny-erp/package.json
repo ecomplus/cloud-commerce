@@ -1,23 +1,27 @@
 {
-  "name": "@cloudcommerce/api",
+  "name": "@cloudcommerce/app-tiny-erp",
   "type": "module",
   "version": "0.0.55",
-  "description": "E-Com Plus Cloud Commerce APIs client/adapter",
+  "description": "E-Com Plus Cloud Commerce",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/api"
+    "directory": "packages/tiny"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/tiny#readme",
   "scripts": {
-    "build": "sh ../../scripts/build-lib.sh && cp -r src/types lib/",
-    "test": "tsc -p ../../tsconfig.test.json && vitest run"
+    "build": "echo '@ecomplus/tiny-erp'"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
   }
 }
