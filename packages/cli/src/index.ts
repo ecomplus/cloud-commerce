@@ -10,7 +10,7 @@ import {
 import login from './login';
 import build from './build';
 import { siginGcloudAndSetIAM, createKeyServiceAccount } from './config-gcloud';
-import hasCreatedSecretsCloudCommerceGH from './api-gh';
+import createGitHubSecrets from './api-gh';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -137,7 +137,7 @@ ECOM_STORE_ID=${storeId}
     let hasCreatedAllSecrets = false;
     if (GITHUB_TOKEN && argv.github !== false) {
       try {
-        hasCreatedAllSecrets = await hasCreatedSecretsCloudCommerceGH(
+        hasCreatedAllSecrets = await createGitHubSecrets(
           apiKey,
           authenticationId,
           serviceAccountJSON,

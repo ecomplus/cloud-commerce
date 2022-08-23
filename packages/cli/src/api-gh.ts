@@ -2,14 +2,14 @@ import { fetch, $ } from 'zx';
 import libsodium from 'libsodium-wrappers';
 
 type PublicKeyGhSecrets = {
-  'key_id': string,
-  'key': string
+  key_id: string,
+  key: string
 }
 
 const getOwnerAndRepoGH = async () => {
   try {
     return (await $`git config --get remote.origin.url`).stdout
-      .replace('https://github.com/', '')
+      .replace(/.*github.com[/:]/, '')
       .replace('.git', '')
       .replace('\n', '');
   } catch (e) {
@@ -17,7 +17,7 @@ const getOwnerAndRepoGH = async () => {
   }
 };
 
-const hasCreatedAllSecretsCloudCommerceGH = async (
+const createAllSecretsCloudCommerceGH = async (
   ecomApiKey: string,
   ecomAuthentication: string,
   firebaseServiceAccount: string | null,
@@ -25,7 +25,7 @@ const hasCreatedAllSecretsCloudCommerceGH = async (
   ghOwnerRepo?: string,
 ) => {
   const baseUrl = `https://api.github.com/repos/${(ghOwnerRepo
-  || await getOwnerAndRepoGH())}/actions/secrets`;
+    || await getOwnerAndRepoGH())}/actions/secrets`;
 
   const fetchApiGh = async (resource: string, method: string, body?: string) => {
     const url = `${baseUrl}${resource}`;
@@ -98,9 +98,9 @@ const hasCreatedAllSecretsCloudCommerceGH = async (
   return hasCreatedAll;
 };
 
-export default hasCreatedAllSecretsCloudCommerceGH;
+export default createAllSecretsCloudCommerceGH;
 
 export {
-  hasCreatedAllSecretsCloudCommerceGH,
+  createAllSecretsCloudCommerceGH,
   getOwnerAndRepoGH,
 };
