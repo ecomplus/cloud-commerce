@@ -10,10 +10,12 @@ import {
 import login from './login';
 import build from './build';
 import { siginGcloudAndSetIAM, createKeyServiceAccount } from './config-gcloud';
+import createGitHubSecrets from './api-gh';
 
 const {
   FIREBASE_PROJECT_ID,
   GOOGLE_APPLICATION_CREDENTIALS,
+  GITHUB_TOKEN,
 } = process.env;
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -103,6 +105,7 @@ ECOM_API_KEY=${apiKey}
 ECOM_STORE_ID=${storeId}
 `,
     );
+
     if (argv.deploy !== false) {
       await $firebase('deploy');
     }
@@ -111,6 +114,7 @@ ECOM_STORE_ID=${storeId}
         path.join(pwd, 'functions', 'config.json'),
         JSON.stringify({ storeId }, null, 2),
       );
+
       await build();
       try {
         await $`git add .firebaserc functions/config.json`;
@@ -130,6 +134,22 @@ ECOM_STORE_ID=${storeId}
       }
     }
 
+    let hasCreatedAllSecrets = false;
+    if (GITHUB_TOKEN && argv.github !== false) {
+      try {
+        hasCreatedAllSecrets = await createGitHubSecrets(
+          apiKey,
+          authenticationId,
+          serviceAccountJSON,
+          GITHUB_TOKEN,
+        );
+      } catch (e) {
+        //
+      }
+    }
+    if (hasCreatedAllSecrets) {
+      return echo`CloudCommerce setup finish successfully`;
+    }
     return echo`
     ****
 
