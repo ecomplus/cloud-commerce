@@ -1,13 +1,20 @@
 import type { Resource, AppEventsTopic } from '@cloudcommerce/types';
 import logger from 'firebase-functions/lib/logger';
+import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import getEnv from '../env';
 import config from '../config';
 
+const dateLastRun = new Date();
+dateLastRun.setMinutes(dateLastRun.getMinutes() - 1);
+const baseApiEventsFilter = {
+  'timestamp<': dateLastRun.toISOString(),
+};
+
 const parseEventsTopic = (eventsTopic: AppEventsTopic) => {
   const [resource, eventName] = eventsTopic.split('-');
   const params: ApiConfig['params'] = {};
-  const bodySet: { [key: string]: any } = {};
+  const bodySet: { [key: string]: any } = { ...baseApiEventsFilter };
   if (eventName === 'new') {
     params.action = 'create';
   } else {
@@ -55,6 +62,25 @@ const parseEventsTopic = (eventsTopic: AppEventsTopic) => {
   };
 };
 
+const pubSubClient = new PubSub();
+const tryPubSubPublish = (
+  topicName: string,
+  messageObj: { messageId: string, json: any },
+  retries = 0,
+) => {
+  pubSubClient.topic(topicName).publishMessage(messageObj)
+    .catch((err) => {
+      // eslint-disable-next-line no-param-reassign
+      err.retries = retries;
+      logger.error(err);
+      if (retries <= 3) {
+        setTimeout(() => {
+          tryPubSubPublish(topicName, messageObj, retries + 1);
+        }, 1000 * (2 ** retries));
+      }
+    });
+};
+
 export default async () => {
   const { apps } = config.get();
   const { apiAuth } = getEnv();
@@ -65,19 +91,21 @@ export default async () => {
       subscribersApps.push(appObj);
     }
   });
-  const activeSubscribersApps = (await api.get('applications', {
+  const activeAppsIds = (await api.get('applications', {
     params: {
       state: 'active',
       app_id: subscribersApps.map(({ appId }) => appId),
       fields: 'app_id',
     },
-  })).data.result;
-  logger.info({ activeSubscribersApps });
+  })).data.result.map((app) => app.app_id);
+  logger.info({ activeAppsIds });
   const listenedEvents: AppEventsTopic[] = [];
   subscribersApps.forEach(({ appId, events }) => {
-    if (activeSubscribersApps.find((app) => app.app_id === appId)) {
+    if (activeAppsIds.includes(appId)) {
       events.forEach((eventsTopic) => {
-        listenedEvents.push(eventsTopic);
+        if (!listenedEvents.includes(eventsTopic)) {
+          listenedEvents.push(eventsTopic);
+        }
       });
     }
   });
@@ -104,6 +132,18 @@ export default async () => {
       result = await middleware(resource, result);
     }
     logger.info(`> '${eventsTopic}' events: `, result);
+    result.forEach((apiEvent) => {
+      subscribersApps.forEach(({ appId, events }) => {
+        if (events.includes(eventsTopic) && activeAppsIds.includes(appId)) {
+          const topicName = `app${appId}_${eventsTopic}`;
+          const messageObj = {
+            messageId: `${eventsTopic}_${apiEvent.timestamp}`,
+            json: apiEvent,
+          };
+          tryPubSubPublish(topicName, messageObj);
+        }
+      });
+    });
   });
   return true;
 };
