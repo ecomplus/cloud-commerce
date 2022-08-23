@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-tiny-erp",
   "type": "module",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "E-Com Plus Cloud Commerce",
   "main": "lib/index.js",
   "repository": {
