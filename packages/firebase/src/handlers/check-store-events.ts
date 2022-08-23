@@ -1,17 +1,16 @@
 import type { Resource, AppEventsTopic } from '@cloudcommerce/types';
+// eslint-disable-next-line import/no-unresolved
+import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/lib/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import getEnv from '../env';
 import config from '../config';
 
-const dateLastRun = new Date();
-dateLastRun.setMinutes(dateLastRun.getMinutes() - 1);
-const baseApiEventsFilter = {
-  'timestamp<': dateLastRun.toISOString(),
-};
-
-const parseEventsTopic = (eventsTopic: AppEventsTopic) => {
+const parseEventsTopic = (
+  eventsTopic: AppEventsTopic,
+  baseApiEventsFilter: Record<string, string>,
+) => {
   const [resource, eventName] = eventsTopic.split('-');
   const params: ApiConfig['params'] = {};
   const bodySet: { [key: string]: any } = { ...baseApiEventsFilter };
@@ -82,6 +81,14 @@ const tryPubSubPublish = (
 };
 
 export default async () => {
+  const timestamp = Date.now();
+  const documentRef = getFirestore().doc('storeEvents/last');
+  const lastRunTimestamp: number = (await documentRef.get()).get('timestamp')
+    || Date.now() - 1000 * 60 * 5;
+  const baseApiEventsFilter = {
+    'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
+    'timestamp<': new Date(timestamp).toISOString(),
+  };
   const { apps } = config.get();
   const { apiAuth } = getEnv();
   const subscribersApps: Array<{ appId: number, events: AppEventsTopic[] }> = [];
@@ -98,7 +105,6 @@ export default async () => {
       fields: 'app_id',
     },
   })).data.result.map((app) => app.app_id);
-  logger.info({ activeAppsIds });
   const listenedEvents: AppEventsTopic[] = [];
   subscribersApps.forEach(({ appId, events }) => {
     if (activeAppsIds.includes(appId)) {
@@ -109,9 +115,8 @@ export default async () => {
       });
     }
   });
-  logger.info({ listenedEvents });
   listenedEvents.forEach(async (eventsTopic) => {
-    const { resource, params } = parseEventsTopic(eventsTopic);
+    const { resource, params } = parseEventsTopic(eventsTopic, baseApiEventsFilter);
     let { data: { result } } = await api.get(`events/${resource}`, {
       ...apiAuth,
       params,
@@ -131,7 +136,6 @@ export default async () => {
     if (typeof middleware === 'function') {
       result = await middleware(resource, result);
     }
-    logger.info(`> '${eventsTopic}' events: `, result);
     result.forEach((apiEvent) => {
       subscribersApps.forEach(({ appId, events }) => {
         if (events.includes(eventsTopic) && activeAppsIds.includes(appId)) {
@@ -144,6 +148,11 @@ export default async () => {
         }
       });
     });
+    logger.info(`> '${eventsTopic}' events: `, result);
   });
-  return true;
+  return documentRef.set({
+    timestamp,
+    activeAppsIds,
+    listenedEvents,
+  });
 };
