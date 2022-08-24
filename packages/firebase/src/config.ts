@@ -23,7 +23,7 @@ const self = {
     countryCode: env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
     storeId: Number(env.ECOM_STORE_ID),
     httpsFunctionOptions: {
-      region: env.DEPLOY_REGION || 'us-central1',
+      region: env.DEPLOY_REGION || 'southamerica-east1',
     },
     apps: {
       discounts: {

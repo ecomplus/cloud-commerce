@@ -40,15 +40,18 @@
     "rewrites": [
       {
         "source": "/api/modules/**",
-        "function": "modules"
+        "function": "modules",
+        "region": "southamerica-east1"
       },
       {
         "source": "/api/passport/**",
-        "function": "passport"
+        "function": "passport",
+        "region": "southamerica-east1"
       },
       {
         "source": "**/!(*(*.)js|*(*.)css|*(*.)ico|*(*.)png|*(*.)gif|*(*.)jpg|*(*.)jpeg|*(*.)webp|*(*.)avif|*(*.)svg|*(*.)woff|*(*.)woff2|*(*.)otf|*(*.)ttf|*(*.)eot)",
-        "function": "ssr"
+        "function": "ssr",
+        "region": "southamerica-east1"
       }
     ],
     "cleanUrls": true
