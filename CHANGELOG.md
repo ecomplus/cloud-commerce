@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.59](https://github.com/ecomplus/cloud-commerce/compare/v0.0.58...v0.0.59) (2022-08-24)
+
+
+### Features
+
+* **cli:** Use `GITHUB_TOKEN` env to auto set secrets on setup ([#43](https://github.com/ecomplus/cloud-commerce/issues/43)) ([8949070](https://github.com/ecomplus/cloud-commerce/commit/89490703cba52affdbb69c63d8b459cb609f5130))
+* **events:** Start publishing PubSub messages for each topic/app/event [[#29](https://github.com/ecomplus/cloud-commerce/issues/29)] ([9575d25](https://github.com/ecomplus/cloud-commerce/commit/9575d25d4ca27fcc19acbd0118b0140f8b484316))
+
+
+### Bug Fixes
+
+* **cli:** Do not create `GH_TOKEN` secret (set by default) ([8e50e37](https://github.com/ecomplus/cloud-commerce/commit/8e50e371477bdf67ec0cef380f2c6488d3d588a5))
+* **deps:** Add `@google-cloud/pubsub` to core `@cloudcommerce/firebase` dependencies ([0b35b0e](https://github.com/ecomplus/cloud-commerce/commit/0b35b0edb560329a21869e8b6a75abaed9c4cd34))
+* **events:** Save last run state and timestamp to Firestore ([7183a55](https://github.com/ecomplus/cloud-commerce/commit/7183a55694ca0e5cc6968be9ca4e965772937e2a))
+* Set default GCloud region to `southamerica-east1` (São Paulo) ([212d04d](https://github.com/ecomplus/cloud-commerce/commit/212d04d72ace4cffe54489dae5b74c2dbfa4e0d0))
+
 ### [0.0.58](https://github.com/ecomplus/cloud-commerce/compare/v0.0.57...v0.0.58) (2022-08-23)
 
 ### [0.0.57](https://github.com/ecomplus/cloud-commerce/compare/v0.0.56...v0.0.57) (2022-08-23)

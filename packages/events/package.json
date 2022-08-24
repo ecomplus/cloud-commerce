@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/events",
   "type": "module",
-  "version": "0.0.58",
+  "version": "0.0.59",
   "description": "E-Com Plus Cloud Commerce app events",
   "main": "lib/index.js",
   "exports": {
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.22.0",
