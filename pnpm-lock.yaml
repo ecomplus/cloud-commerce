@@ -245,46 +245,49 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.58
+      '@cloudcommerce/cli': ^0.0.59
       '@cloudcommerce/firebase': ^0.0.58
+      '@firebase/app-types': ^0.7.0
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
-      '@cloudcommerce/firebase': link:../packages/firebase
+      '@cloudcommerce/firebase': 0.0.58_@firebase+app-types@0.7.0
+    devDependencies:
+      '@firebase/app-types': 0.7.0
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.58
+      '@cloudcommerce/firebase': ^0.0.59
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.58
-      '@cloudcommerce/firebase': ^0.0.58
+      '@cloudcommerce/events': ^0.0.59
+      '@cloudcommerce/firebase': ^0.0.59
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.58
-      '@cloudcommerce/modules': ^0.0.58
+      '@cloudcommerce/firebase': ^0.0.59
+      '@cloudcommerce/modules': ^0.0.59
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.58
-      '@cloudcommerce/passport': ^0.0.58
+      '@cloudcommerce/firebase': ^0.0.59
+      '@cloudcommerce/passport': ^0.0.59
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.58
-      '@cloudcommerce/ssr': ^0.0.58
+      '@cloudcommerce/firebase': ^0.0.59
+      '@cloudcommerce/ssr': ^0.0.59
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -704,6 +707,25 @@ packages:
   /@builder.io/partytown/0.4.5:
     resolution: {integrity: sha512-HcHlmMYSpOxfJ0lFVxgZrvgIjz1Q8knlGuWkBpvjIp68j+xVWg969+sn7BCfyKhcGaYlnVOY/CEBHapQBcl0jw==}
     hasBin: true
+    dev: false
+
+  /@cloudcommerce/api/0.0.58:
+    resolution: {integrity: sha512-YlDH8PEAtFKW/k6/Tb8H58rrKCDYFuK6LvQx+hOfXqv23++rlcDl1Sy3lIDsgcv0gP5FxWQTKJw5cX+XCUylQg==}
+    dev: false
+
+  /@cloudcommerce/firebase/0.0.58_@firebase+app-types@0.7.0:
+    resolution: {integrity: sha512-v7Xsv09WzLYgOxWoTGblRS4qCDuI7CVxS7e7RKPZsGfoFngGglfMhpMp/XsA7l5PO4M5dTJM3vMJJ6ZeZhWUUQ==}
+    dependencies:
+      '@cloudcommerce/api': 0.0.58
+      '@fastify/deepmerge': 1.1.0
+      firebase-admin: 11.0.1_@firebase+app-types@0.7.0
+      firebase-functions: 3.22.0_firebase-admin@11.0.1
+      node-fetch: 3.2.10
+      source-map-support: 0.5.21
+    transitivePeerDependencies:
+      - '@firebase/app-types'
+      - encoding
+      - supports-color
     dev: false
 
   /@commitlint/cli/17.0.3:
