@@ -1,20 +1,21 @@
-import type { AppEventsTopic } from '@cloudcommerce/types';
+import type { EventsResult, AppEventsTopic } from '@cloudcommerce/types';
 import functions from 'firebase-functions';
 import config from '../config';
 
 const { logger } = functions;
 
 /* eslint-disable no-unused-vars */
-type PubSubCallback = (
-  json: any,
+type PubSubHandler<TMessage> = (
+  json: TMessage,
   context: functions.EventContext,
   message: functions.pubsub.Message,
 ) => void;
+type ApiEventHandler = PubSubHandler<EventsResult<'events/orders'>['result'][0]>;
 /* eslint-enable no-unused-vars */
 
 const createPubSubFunction = (
   pubSubTopic: string,
-  fn: PubSubCallback,
+  fn: PubSubHandler<any>,
   eventMaxAgeMs = 60000,
 ) => {
   const { httpsFunctionOptions: { region } } = config.get();
@@ -32,7 +33,7 @@ const createPubSubFunction = (
 const createAppPubSubFunction = (
   eventsTopic: AppEventsTopic,
   appNameOrId: string | number,
-  fn: PubSubCallback,
+  fn: ApiEventHandler,
   eventMaxAgeMs = 60000,
 ) => {
   let appId: number;
@@ -48,4 +49,4 @@ export default createPubSubFunction;
 
 export { createPubSubFunction, createAppPubSubFunction };
 
-export type { PubSubCallback };
+export type { PubSubHandler, ApiEventHandler };
