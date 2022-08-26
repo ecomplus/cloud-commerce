@@ -37,7 +37,13 @@ type AppEventsTopic = 'orders-new'
   | 'products-priceSet'
   | 'carts-new'
   | 'carts-customerSet'
-  | 'customers-new';
+  | 'customers-new'
+  | 'applications-dataSet';
+
+type AppEventsPayload = {
+  apiEvent: EventsResult<'events/orders'>['result'][0],
+  apiDoc: Record<string, any> | null,
+};
 
 type AppModuleName = 'apply_discount'
   | 'calculate_shipping'
@@ -70,6 +76,7 @@ export type {
   ResourceListResult,
   EventsResult,
   AppEventsTopic,
+  AppEventsPayload,
   AppModuleName,
   AppModuleBody,
   ApplyDiscountParams,

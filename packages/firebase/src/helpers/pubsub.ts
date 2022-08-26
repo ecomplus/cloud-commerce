@@ -1,4 +1,4 @@
-import type { EventsResult, AppEventsTopic } from '@cloudcommerce/types';
+import type { AppEventsTopic, AppEventsPayload } from '@cloudcommerce/types';
 import functions from 'firebase-functions';
 import config from '../config';
 
@@ -10,7 +10,7 @@ type PubSubHandler<TMessage> = (
   context: functions.EventContext,
   message: functions.pubsub.Message,
 ) => void;
-type ApiEventHandler = PubSubHandler<EventsResult<'events/orders'>['result'][0]>;
+type ApiEventHandler = PubSubHandler<AppEventsPayload>;
 /* eslint-enable no-unused-vars */
 
 const createPubSubFunction = (

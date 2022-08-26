@@ -14,6 +14,13 @@ const env: { [key: string]: string } = (typeof process === 'object' && process?.
 
 const deepmerge = Deepmerge();
 
+const tinyErpEvents: AppEventsTopic[] = [
+  'orders-anyStatusSet',
+  'products-new',
+  'products-priceSet',
+  'applications-dataSet',
+];
+
 const self = {
   __config: {
     hello: 'from @cloudcommerce/firebase',
@@ -31,11 +38,7 @@ const self = {
       },
       tinyErp: {
         appId: 105922,
-        events: [
-          'orders-anyStatusSet',
-          'products-new',
-          'products-priceSet',
-        ] as AppEventsTopic[],
+        events: tinyErpEvents,
       },
     },
   },

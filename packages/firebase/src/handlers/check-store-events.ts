@@ -1,4 +1,4 @@
-import type { Resource, AppEventsTopic } from '@cloudcommerce/types';
+import type { Resource, AppEventsTopic, AppEventsPayload } from '@cloudcommerce/types';
 // eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/lib/logger';
@@ -49,15 +49,19 @@ const parseEventsTopic = (
       case 'carts':
         params.modified_fields = ['customers']; // customerSet
         break;
+      case 'applications':
+        params.modified_fields = ['data', 'hidden_data']; // dataSet
+        break;
       default:
     }
   }
   Object.keys(bodySet).forEach((field) => {
     params[`body.${field}`] = bodySet[field];
   });
-  return { resource, params } as {
-    resource: Resource;
-    params: ApiConfig['params'];
+  return { resource, eventName, params } as {
+    resource: Resource,
+    eventName: string,
+    params: ApiConfig['params'],
   };
 };
 
@@ -99,6 +103,7 @@ export default async () => {
     }
   });
   const activeAppsIds = (await api.get('applications', {
+    ...apiAuth,
     params: {
       state: 'active',
       app_id: subscribersApps.map(({ appId }) => appId),
@@ -116,7 +121,15 @@ export default async () => {
     }
   });
   listenedEvents.forEach(async (eventsTopic) => {
-    const { resource, params } = parseEventsTopic(eventsTopic, baseApiEventsFilter);
+    const {
+      resource,
+      eventName,
+      params,
+    } = parseEventsTopic(eventsTopic, baseApiEventsFilter);
+    if (resource !== 'orders' && resource !== 'carts' && new Date().getMinutes() % 5) {
+      // Other resource events are not listened to every minute
+      return;
+    }
     let { data: { result } } = await api.get(`events/${resource}`, {
       ...apiAuth,
       params,
@@ -136,13 +149,17 @@ export default async () => {
     if (typeof middleware === 'function') {
       result = await middleware(resource, result);
     }
-    result.forEach((apiEvent) => {
+    result.forEach(async (apiEvent) => {
+      const apiDoc = eventName !== 'new'
+        ? (await api.get(`${resource}/${apiEvent.resource_id}`, apiAuth)).data
+        : null;
       subscribersApps.forEach(({ appId, events }) => {
         if (events.includes(eventsTopic) && activeAppsIds.includes(appId)) {
           const topicName = `app${appId}_${eventsTopic}`;
+          const json: AppEventsPayload = { apiEvent, apiDoc };
           const messageObj = {
-            messageId: `${eventsTopic}_${apiEvent.timestamp}`,
-            json: apiEvent,
+            messageId: `${apiEvent.resource_id}_${apiEvent.timestamp}`,
+            json,
           };
           tryPubSubPublish(topicName, messageObj);
         }
