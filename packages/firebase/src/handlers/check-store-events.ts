@@ -149,16 +149,22 @@ export default async () => {
     if (typeof middleware === 'function') {
       result = await middleware(resource, result);
     }
+    const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
+      const resourceId = apiEvent.resource_id;
+      if (resourceIdsRead.includes(resourceId)) {
+        return;
+      }
+      resourceIdsRead.push(resourceId);
       const apiDoc = eventName !== 'new'
-        ? (await api.get(`${resource}/${apiEvent.resource_id}`, apiAuth)).data
+        ? (await api.get(`${resource}/${resourceId}`, apiAuth)).data
         : null;
       subscribersApps.forEach(({ appId, events }) => {
         if (events.includes(eventsTopic) && activeAppsIds.includes(appId)) {
           const topicName = `app${appId}_${eventsTopic}`;
           const json: AppEventsPayload = { apiEvent, apiDoc };
           const messageObj = {
-            messageId: `${apiEvent.resource_id}_${apiEvent.timestamp}`,
+            messageId: `${resourceId}_${apiEvent.timestamp}`,
             json,
           };
           tryPubSubPublish(topicName, messageObj);
