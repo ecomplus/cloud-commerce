@@ -1,4 +1,4 @@
-import type { AppEventsTopic, AppEventsPayload } from '@cloudcommerce/types';
+import type { AppEventsPayload } from '@cloudcommerce/types';
 import functions from 'firebase-functions';
 import config from '../config';
 
@@ -30,8 +30,7 @@ const createPubSubFunction = (
     });
 };
 
-const createAppPubSubFunction = (
-  eventsTopic: AppEventsTopic,
+const createAppEventsFunction = (
   appNameOrId: string | number,
   fn: ApiEventHandler,
   eventMaxAgeMs = 60000,
@@ -42,11 +41,11 @@ const createAppPubSubFunction = (
   } else {
     appId = appNameOrId;
   }
-  return createPubSubFunction(`app${appId}_${eventsTopic}`, fn, eventMaxAgeMs);
+  return createPubSubFunction(`app${appId}_api_events`, fn, eventMaxAgeMs);
 };
 
 export default createPubSubFunction;
 
-export { createPubSubFunction, createAppPubSubFunction };
+export { createPubSubFunction, createAppEventsFunction };
 
 export type { PubSubHandler, ApiEventHandler };

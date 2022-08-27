@@ -161,7 +161,7 @@ export default async () => {
         : null;
       subscribersApps.forEach(({ appId, events }) => {
         if (events.includes(eventsTopic) && activeAppsIds.includes(appId)) {
-          const topicName = `app${appId}_${eventsTopic}`;
+          const topicName = `app${appId}_api_events`;
           const json: AppEventsPayload = { apiEvent, apiDoc };
           const messageObj = {
             messageId: `${resourceId}_${apiEvent.timestamp}`,
