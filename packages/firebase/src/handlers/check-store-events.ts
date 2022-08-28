@@ -6,13 +6,16 @@ import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import getEnv from '../env';
 import config from '../config';
+import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
 const parseEventsTopic = (
   eventsTopic: AppEventsTopic,
   baseApiEventsFilter: Record<string, string>,
 ) => {
   const [resource, eventName] = eventsTopic.split('-');
-  const params: ApiConfig['params'] = {};
+  const params: ApiConfig['params'] = {
+    'flag!': EVENT_SKIP_FLAG,
+  };
   const bodySet: { [key: string]: any } = { ...baseApiEventsFilter };
   if (eventName === 'new') {
     params.action = 'create';
@@ -102,17 +105,17 @@ export default async () => {
       subscribersApps.push(appObj);
     }
   });
-  const activeAppsIds = (await api.get('applications', {
+  const activeApps = (await api.get('applications', {
     ...apiAuth,
     params: {
       state: 'active',
       app_id: subscribersApps.map(({ appId }) => appId),
-      fields: 'app_id',
+      fields: '_id,app_id,data,hidden_data',
     },
-  })).data.result.map((app) => app.app_id);
+  })).data.result as Array<AppEventsPayload['app']>;
   const listenedEvents: AppEventsTopic[] = [];
   subscribersApps.forEach(({ appId, events }) => {
-    if (activeAppsIds.includes(appId)) {
+    if (activeApps.find((app) => app.app_id === appId)) {
       events.forEach((eventsTopic) => {
         if (!listenedEvents.includes(eventsTopic)) {
           listenedEvents.push(eventsTopic);
@@ -120,12 +123,12 @@ export default async () => {
       });
     }
   });
-  listenedEvents.forEach(async (eventsTopic) => {
+  listenedEvents.forEach(async (listenedEventsTopic) => {
     const {
       resource,
       eventName,
       params,
-    } = parseEventsTopic(eventsTopic, baseApiEventsFilter);
+    } = parseEventsTopic(listenedEventsTopic, baseApiEventsFilter);
     if (resource !== 'orders' && resource !== 'carts' && new Date().getMinutes() % 5) {
       // Other resource events are not listened to every minute
       return;
@@ -159,10 +162,11 @@ export default async () => {
       const apiDoc = eventName !== 'new'
         ? (await api.get(`${resource}/${resourceId}`, apiAuth)).data
         : null;
-      subscribersApps.forEach(({ appId, events }) => {
-        if (events.includes(eventsTopic) && activeAppsIds.includes(appId)) {
-          const topicName = `app${appId}_api_events`;
-          const json: AppEventsPayload = { apiEvent, apiDoc };
+      activeApps.forEach((app) => {
+        const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
+        if (appConfig?.events.includes(listenedEventsTopic)) {
+          const topicName = GET_PUBSUB_TOPIC(app.app_id);
+          const json: AppEventsPayload = { apiEvent, apiDoc, app };
           const messageObj = {
             messageId: `${resourceId}_${apiEvent.timestamp}`,
             json,
@@ -171,11 +175,11 @@ export default async () => {
         }
       });
     });
-    logger.info(`> '${eventsTopic}' events: `, result);
+    logger.info(`> '${listenedEventsTopic}' events: `, result);
   });
   return documentRef.set({
     timestamp,
-    activeAppsIds,
+    activeApps,
     listenedEvents,
   });
 };

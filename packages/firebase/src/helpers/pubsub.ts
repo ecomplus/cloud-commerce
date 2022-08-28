@@ -1,6 +1,7 @@
 import type { AppEventsPayload } from '@cloudcommerce/types';
 import functions from 'firebase-functions';
 import config from '../config';
+import { GET_PUBSUB_TOPIC } from '../const';
 
 const { logger } = functions;
 
@@ -41,7 +42,7 @@ const createAppEventsFunction = (
   } else {
     appId = appNameOrId;
   }
-  return createPubSubFunction(`app${appId}_api_events`, fn, eventMaxAgeMs);
+  return createPubSubFunction(GET_PUBSUB_TOPIC(appId), fn, eventMaxAgeMs);
 };
 
 export default createPubSubFunction;
