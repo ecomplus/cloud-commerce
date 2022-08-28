@@ -1,4 +1,4 @@
-import type { Resource, AppEventsTopic, AppEventsPayload } from '@cloudcommerce/types';
+import type { Resource, ApiEventName, AppEventsPayload } from '@cloudcommerce/types';
 // eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/lib/logger';
@@ -8,21 +8,21 @@ import getEnv from '../env';
 import config from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
-const parseEventsTopic = (
-  eventsTopic: AppEventsTopic,
+const parseEventName = (
+  evName: ApiEventName,
   baseApiEventsFilter: Record<string, string>,
 ) => {
-  const [resource, eventName] = eventsTopic.split('-');
+  const [resource, actionName] = evName.split('-');
   const params: ApiConfig['params'] = {
     'flag!': EVENT_SKIP_FLAG,
   };
   const bodySet: { [key: string]: any } = { ...baseApiEventsFilter };
-  if (eventName === 'new') {
+  if (actionName === 'new') {
     params.action = 'create';
   } else {
     switch (resource) {
       case 'orders':
-        switch (eventName) {
+        switch (actionName) {
           case 'paid':
             bodySet['financial_status.current'] = 'paid';
             break;
@@ -31,7 +31,7 @@ const parseEventsTopic = (
             break;
           case 'shipped':
           case 'delivered':
-            bodySet['fulfillment_status.current'] = eventName;
+            bodySet['fulfillment_status.current'] = actionName;
             break;
           case 'cancelled':
             bodySet.status = 'cancelled';
@@ -45,7 +45,7 @@ const parseEventsTopic = (
         }
         break;
       case 'products':
-        params.modified_fields = eventName === 'priceSet'
+        params.modified_fields = actionName === 'priceSet'
           ? ['price', 'variations.price']
           : ['quantity']; // quantitySet
         break;
@@ -97,7 +97,7 @@ export default async () => {
   };
   const { apps } = config.get();
   const { apiAuth } = getEnv();
-  const subscribersApps: Array<{ appId: number, events: AppEventsTopic[] }> = [];
+  const subscribersApps: Array<{ appId: number, events: ApiEventName[] }> = [];
   Object.keys(apps).forEach((appName) => {
     const appObj = apps[appName];
     if (appObj.events && appObj.events.length) {
@@ -112,18 +112,18 @@ export default async () => {
       fields: '_id,app_id,data,hidden_data',
     },
   })).data.result as Array<AppEventsPayload['app']>;
-  const listenedEvents: AppEventsTopic[] = [];
+  const listenedEvents: ApiEventName[] = [];
   subscribersApps.forEach(({ appId, events }) => {
     if (activeApps.find((app) => app.app_id === appId)) {
-      events.forEach((eventsTopic) => {
-        if (!listenedEvents.includes(eventsTopic)) {
-          listenedEvents.push(eventsTopic);
+      events.forEach((evName) => {
+        if (!listenedEvents.includes(evName)) {
+          listenedEvents.push(evName);
         }
       });
     }
   });
-  listenedEvents.forEach(async (listenedEventsTopic) => {
-    const { resource, params } = parseEventsTopic(listenedEventsTopic, baseApiEventsFilter);
+  listenedEvents.forEach(async (listenedEventName) => {
+    const { resource, params } = parseEventName(listenedEventName, baseApiEventsFilter);
     if (resource !== 'orders' && resource !== 'carts' && new Date().getMinutes() % 5) {
       // Other resource events are not listened to every minute
       return;
@@ -157,9 +157,14 @@ export default async () => {
       const apiDoc = (await api.get(`${resource}/${resourceId}`, apiAuth)).data;
       activeApps.forEach((app) => {
         const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
-        if (appConfig?.events.includes(listenedEventsTopic)) {
+        if (appConfig?.events.includes(listenedEventName)) {
           const topicName = GET_PUBSUB_TOPIC(app.app_id);
-          const json: AppEventsPayload = { apiEvent, apiDoc, app };
+          const json: AppEventsPayload = {
+            evName: listenedEventName,
+            apiEvent,
+            apiDoc,
+            app,
+          };
           const messageObj = {
             messageId: `${resourceId}_${apiEvent.timestamp}`,
             json,
@@ -168,7 +173,7 @@ export default async () => {
         }
       });
     });
-    logger.info(`> '${listenedEventsTopic}' events: `, result);
+    logger.info(`> '${listenedEventName}' events: `, result);
   });
   return documentRef.set({
     timestamp,

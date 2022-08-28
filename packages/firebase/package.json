@@ -10,7 +10,8 @@
     "./config": "./config.js",
     "./lib/config": "./lib/config.js",
     "./lib/env": "./lib/env.js",
-    "./lib/helpers/pubsub": "./lib/helpers/pubsub.js"
+    "./lib/helpers/pubsub": "./lib/helpers/pubsub.js",
+    "./lib/helpers/update-app-data": "./lib/helpers/update-app-data.js"
   },
   "repository": {
     "type": "git",

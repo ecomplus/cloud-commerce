@@ -25,7 +25,7 @@ import type { CreateTransactionParams } from './modules/create_transaction:param
 import type { CreateTransactionResponse } from './modules/create_transaction:response';
 import type { CheckoutBody } from './modules/@checkout:params';
 
-type AppEventsTopic = 'orders-new'
+type ApiEventName = 'orders-new'
   | 'orders-anyStatusSet'
   | 'orders-paid'
   | 'orders-readyForShipping'
@@ -41,8 +41,16 @@ type AppEventsTopic = 'orders-new'
   | 'applications-dataSet';
 
 type AppEventsPayload = {
+  evName: ApiEventName,
   apiEvent: EventsResult<'events/orders'>['result'][0],
   apiDoc: Record<string, any> | null,
+  app: {
+    _id: Applications['_id'],
+    app_id: Applications['app_id'],
+    data: Applications['data'],
+    hidden_data: Applications['hidden_data'],
+  },
+  isInternal?: boolean,
 };
 
 type AppModuleName = 'apply_discount'
@@ -75,7 +83,7 @@ export type {
   ResourceId,
   ResourceListResult,
   EventsResult,
-  AppEventsTopic,
+  ApiEventName,
   AppEventsPayload,
   AppModuleName,
   AppModuleBody,

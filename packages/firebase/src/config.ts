@@ -1,4 +1,4 @@
-import type { AppEventsTopic } from '@cloudcommerce/types';
+import type { ApiEventName } from '@cloudcommerce/types';
 import Deepmerge from '@fastify/deepmerge';
 import {
   DEFAULT_LANG,
@@ -14,7 +14,7 @@ const env: { [key: string]: string } = (typeof process === 'object' && process?.
 
 const deepmerge = Deepmerge();
 
-const tinyErpEvents: AppEventsTopic[] = [
+const tinyErpEvents: ApiEventName[] = [
   'orders-anyStatusSet',
   'products-new',
   'products-priceSet',
