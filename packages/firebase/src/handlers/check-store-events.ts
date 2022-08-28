@@ -61,9 +61,8 @@ const parseEventsTopic = (
   Object.keys(bodySet).forEach((field) => {
     params[`body.${field}`] = bodySet[field];
   });
-  return { resource, eventName, params } as {
+  return { resource, params } as {
     resource: Resource,
-    eventName: string,
     params: ApiConfig['params'],
   };
 };
@@ -124,11 +123,7 @@ export default async () => {
     }
   });
   listenedEvents.forEach(async (listenedEventsTopic) => {
-    const {
-      resource,
-      eventName,
-      params,
-    } = parseEventsTopic(listenedEventsTopic, baseApiEventsFilter);
+    const { resource, params } = parseEventsTopic(listenedEventsTopic, baseApiEventsFilter);
     if (resource !== 'orders' && resource !== 'carts' && new Date().getMinutes() % 5) {
       // Other resource events are not listened to every minute
       return;
@@ -159,9 +154,7 @@ export default async () => {
         return;
       }
       resourceIdsRead.push(resourceId);
-      const apiDoc = eventName !== 'new'
-        ? (await api.get(`${resource}/${resourceId}`, apiAuth)).data
-        : null;
+      const apiDoc = (await api.get(`${resource}/${resourceId}`, apiAuth)).data;
       activeApps.forEach((app) => {
         const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
         if (appConfig?.events.includes(listenedEventsTopic)) {
