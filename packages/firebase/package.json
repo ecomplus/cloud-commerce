@@ -8,6 +8,7 @@
   "exports": {
     ".": "./lib/index.js",
     "./config": "./config.js",
+    "./lib/init": "./lib/init.js",
     "./lib/config": "./lib/config.js",
     "./lib/env": "./lib/env.js",
     "./lib/helpers/pubsub": "./lib/helpers/pubsub.js",

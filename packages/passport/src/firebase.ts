@@ -1,6 +1,4 @@
-import 'source-map-support/register.js';
-// eslint-disable-next-line import/no-unresolved
-import { initializeApp } from 'firebase-admin/app';
+import '@cloudcommerce/firebase/lib/init';
 // eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
 // eslint-disable-next-line import/no-unresolved
@@ -17,7 +15,6 @@ import servePassportApi from './firebase/serve-passport-api';
 // https://www.geeksforgeeks.org/firebase-sign-in-with-google-authentication-in-node-js-using-firebase-ui-and-cookie-sessions/
 // https://firebase.google.com/docs/reference/rest/auth
 
-initializeApp();
 const authFirebase = getAuth();
 const firestore = getFirestore();
 
