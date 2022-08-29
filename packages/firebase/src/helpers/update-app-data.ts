@@ -8,7 +8,7 @@ import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 export default async (
   application: Applications | Applications['_id'],
   data: Record<string, any>,
-  { isHiddenData = false, canSendPubSub = true },
+  { isHiddenData = false, canSendPubSub = true } = {},
 ) => {
   const applicationId = typeof application === 'string'
     ? application : application._id;
