@@ -22,6 +22,7 @@ module.exports = {
     '**/types/*.d.ts',
   ],
   rules: {
+    'prefer-template': 'warn',
     'no-await-in-loop': 'warn',
     'no-shadow': 'warn',
     'no-param-reassign': 'warn',
