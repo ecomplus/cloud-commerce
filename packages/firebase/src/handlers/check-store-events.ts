@@ -154,7 +154,9 @@ export default async () => {
         return;
       }
       resourceIdsRead.push(resourceId);
-      const apiDoc = (await api.get(`${resource}/${resourceId}`, apiAuth)).data;
+      const apiDoc = resource !== 'applications'
+        ? (await api.get(`${resource}/${resourceId}`, apiAuth)).data
+        : null;
       activeApps.forEach((app) => {
         const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
         if (appConfig?.events.includes(listenedEventName)) {
@@ -162,7 +164,7 @@ export default async () => {
           const json: AppEventsPayload = {
             evName: listenedEventName,
             apiEvent,
-            apiDoc,
+            apiDoc: apiDoc || app,
             app,
           };
           const messageObj = {
