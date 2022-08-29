@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import type { AppModuleBody } from '@cloudcommerce/types';
-import * as handleApplyDiscount from '../lib-cjs/apply-discount.cjs';
+import handleApplyDiscount from '../lib-mjs/apply-discount.mjs';
 
 export const applyDiscount = async (modBody: AppModuleBody) => {
   return handleApplyDiscount(modBody);

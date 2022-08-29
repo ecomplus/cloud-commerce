@@ -1,17 +1,16 @@
-const ecomUtils = require('@ecomplus/utils');
-const api = require('@cloudcommerce/api');
-const getEnv = require('@cloudcommerce/firebase/lib/env');
-
-const {
+import ecomUtils from '@ecomplus/utils';
+import api from '@cloudcommerce/api';
+import getEnv from '@cloudcommerce/firebase/lib/env';
+import {
   validateDateRange,
   validateCustomerId,
   checkOpenPromotion,
   getValidDiscountRules,
   matchDiscountRule,
   checkCampaignProducts,
-} = require('./helpers.cjs');
+} from './helpers.mjs';
 
-module.exports = async ({ params, application }) => {
+export default async ({ params, application }) => {
   // app configured options
   const config = {
     ...application.data,

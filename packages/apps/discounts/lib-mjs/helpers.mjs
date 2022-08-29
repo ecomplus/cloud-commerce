@@ -1,4 +1,4 @@
-const ecomUtils = require('@ecomplus/utils');
+import ecomUtils from '@ecomplus/utils';
 
 const validateDateRange = (rule) => {
   // filter campaings by date
@@ -157,7 +157,7 @@ const checkCampaignProducts = (campaignProducts, params) => {
   return true;
 };
 
-module.exports = {
+export {
   validateDateRange,
   validateCustomerId,
   checkOpenPromotion,
