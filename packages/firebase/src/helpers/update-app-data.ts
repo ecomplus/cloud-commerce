@@ -6,14 +6,16 @@ import getEnv from '../env';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
 export default async (
-  applicationId: Applications['_id'],
+  application: Applications | Applications['_id'],
   data: Record<string, any>,
-  application?: Applications,
   isHiddenData = false,
+  canSendPubSub = true,
 ) => {
+  const applicationId = typeof application === 'string'
+    ? application : application._id;
   const { apiAuth } = getEnv();
   const subresource = isHiddenData ? 'hidden_data' : 'data';
-  if (application) {
+  if (application && typeof application === 'object' && canSendPubSub) {
     // eslint-disable-next-line no-param-reassign
     application[subresource] = data;
     const json: AppEventsPayload = {
