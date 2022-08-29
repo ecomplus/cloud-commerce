@@ -43,7 +43,7 @@ type ApiEventName = 'orders-new'
 type AppEventsPayload = {
   evName: ApiEventName,
   apiEvent: EventsResult<'events/orders'>['result'][0],
-  apiDoc: Record<string, any> | null,
+  apiDoc: Record<string, any>,
   app: {
     _id: Applications['_id'],
     app_id: Applications['app_id'],
