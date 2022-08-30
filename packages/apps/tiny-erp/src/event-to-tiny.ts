@@ -37,9 +37,16 @@ const handleApiEvent: ApiEventHandler = async ({
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
-  const tinyToken = appData.tiny_api_token;
-  if (typeof tinyToken === 'string' && tinyToken) {
-    process.env.TINY_ERP_TOKEN = tinyToken;
+  if (!process.env.TINY_ERP_TOKEN) {
+    const tinyToken = appData.tiny_api_token;
+    if (typeof tinyToken === 'string' && tinyToken) {
+      process.env.TINY_ERP_TOKEN = tinyToken;
+    } else {
+      logger.warn('Missing Tiny API token');
+    }
+  }
+
+  if (process.env.TINY_ERP_TOKEN) {
     let integrationConfig;
     let canCreateNew = false;
     if (evName === 'applications-dataSet') {
