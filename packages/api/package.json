@@ -3,8 +3,8 @@
   "type": "module",
   "version": "0.0.59",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/api.js",
+  "types": "lib/api.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

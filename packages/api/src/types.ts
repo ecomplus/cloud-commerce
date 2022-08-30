@@ -53,6 +53,7 @@ type Config = {
   accessToken?: string,
   authenticationId?: string,
   apiKey?: string,
+  isNoAuth?: boolean,
   lang?: string,
   method?: Method,
   endpoint: Endpoint,

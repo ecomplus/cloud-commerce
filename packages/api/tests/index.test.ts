@@ -2,7 +2,7 @@
 
 import { test, expect } from 'vitest';
 import '../fetch-polyfill';
-import api, { ApiError } from '../src/index';
+import api, { ApiError } from '../src/api';
 
 const productId = '618041aa239b7206d3fc06de';
 test('Read product and typecheck SKU', async () => {
@@ -32,7 +32,7 @@ test('404 with different Store ID from env', async () => {
 
 test('List categories and typecheck result', async () => {
   const { data } = await api.get('categories');
-  if (data.result === []) {
+  if (!data.result.length) {
     console.log('Any category found');
   }
   expect(Array.isArray(data.result)).toBe(true);

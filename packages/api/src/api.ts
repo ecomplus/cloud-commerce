@@ -40,15 +40,21 @@ class ApiError extends Error {
 const def = {
   middleware(config: Config) {
     const headers: Headers | Record<string, string> = { ...config.headers };
-    if (config.accessToken) {
-      // eslint-disable-next-line dot-notation
-      headers['Authorization'] = `Bearer ${config.accessToken}`;
-    } else if (config.authenticationId && config.apiKey) {
-      const rawAuth = `${config.authenticationId}:${config.apiKey}`;
-      const base64Auth = typeof Buffer === 'function'
-        ? Buffer.from(rawAuth).toString('base64') : btoa(rawAuth);
-      // eslint-disable-next-line dot-notation
-      headers['Authorization'] = `Basic ${base64Auth}`;
+    if (!config.isNoAuth) {
+      if (config.accessToken) {
+        // eslint-disable-next-line dot-notation
+        headers['Authorization'] = `Bearer ${config.accessToken}`;
+      } else {
+        const authenticationId = config.authenticationId || env.ECOM_AUTHENTICATION_ID;
+        const apiKey = config.apiKey || env.ECOM_API_KEY;
+        if (authenticationId && apiKey) {
+          const rawAuth = `${authenticationId}:${apiKey}`;
+          const base64Auth = typeof Buffer === 'function'
+            ? Buffer.from(rawAuth).toString('base64') : btoa(rawAuth);
+          // eslint-disable-next-line dot-notation
+          headers['Authorization'] = `Basic ${base64Auth}`;
+        }
+      }
     }
     let url = config.baseUrl || env.API_BASE_URL || 'https://ecomplus.io/v2';
     const { endpoint, params } = config;
