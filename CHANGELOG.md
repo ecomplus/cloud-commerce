@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.60](https://github.com/ecomplus/cloud-commerce/compare/v0.0.59...v0.0.60) (2022-08-30)
+
+
+### Features
+
+* **api:** Check auth from env vars `ECOM_AUTHENTICATION_ID` and `ECOM_API_KEY` ([0dce4e0](https://github.com/ecomplus/cloud-commerce/commit/0dce4e051e178d192e09130279071d6bd5c60e84))
+* **events:** Get app data on events list (scheduled) and send on PubSub message [[#29](https://github.com/ecomplus/cloud-commerce/issues/29)] ([bcdeec1](https://github.com/ecomplus/cloud-commerce/commit/bcdeec173fc3b2ad747014d7e948c907b66f9030))
+* **events:** Read API doc of respective event and send on Pub/Sub message [[#29](https://github.com/ecomplus/cloud-commerce/issues/29)] ([f8702e9](https://github.com/ecomplus/cloud-commerce/commit/f8702e9ac04c586420804da59afbe33c056be5f7))
+* **firebase:** Create helpers to setup Pub/Sub on publish functions ([8e240c6](https://github.com/ecomplus/cloud-commerce/commit/8e240c6d9cb83ad2de4c2a980f9e8478ee32f842))
+* Helper method to update app data on Store API and publish internal PubSub message [[#29](https://github.com/ecomplus/cloud-commerce/issues/29)] ([be7ab47](https://github.com/ecomplus/cloud-commerce/commit/be7ab47b8f5882a0a00da635dd9d2c034ee4ff6e))
+* **tiny-erp:** Refactor Tiny ERP handlers from https://github.com/ecomplus/app-tiny-erp ([6530533](https://github.com/ecomplus/cloud-commerce/commit/6530533643dc055a4aad07e77dc1877aa75eaaf2))
+
+
+### Bug Fixes
+
+* **api:** Fix typedefs for authenticated methods (may use env vars) ([f4c51aa](https://github.com/ecomplus/cloud-commerce/commit/f4c51aa9bbcfd805cadfda106913c4b77e69ab28))
+* **api:** Fix typedefs for authenticated methods with optional config ([c1938ae](https://github.com/ecomplus/cloud-commerce/commit/c1938aed2009f39165cd05c693dab949d3362d69))
+* **deps:** Update all non-major dependencies ([#45](https://github.com/ecomplus/cloud-commerce/issues/45)) ([5fef410](https://github.com/ecomplus/cloud-commerce/commit/5fef410e87c8e8a30b728372b0745b623b4a00b9))
+* **events:** Must read full `apiDoc` even on new document events ([b8cbac6](https://github.com/ecomplus/cloud-commerce/commit/b8cbac6258bd16ac867f23cd536817ffdb4ef807))
+* **events:** Prevent handling multiple API events for same ID&topic at once ([f7e3ba3](https://github.com/ecomplus/cloud-commerce/commit/f7e3ba3177ec392b5d1103ca13a3b01046ad3f14))
+* **events:** Remove generic `onNewOrder` function [[#29](https://github.com/ecomplus/cloud-commerce/issues/29)] ([3da6a26](https://github.com/ecomplus/cloud-commerce/commit/3da6a2649e3e92a561464a7d9ab68d7651be6344))
+* **firebase:** Ensure fetch polyfill and Firebase app initialization before any function logic ([09f8ad2](https://github.com/ecomplus/cloud-commerce/commit/09f8ad21d4af03325f297485a0ceb6ecf3ec1126))
+
 ### [0.0.59](https://github.com/ecomplus/cloud-commerce/compare/v0.0.58...v0.0.59) (2022-08-24)
 
 
