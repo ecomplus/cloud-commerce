@@ -15,7 +15,9 @@ inputs:
     description: 'E-Com Plus store API key'
     required: true
   ecom-store-id:
-    description: 'Store ID if defined in config.json'
+    description: 'Store ID if not defined in config.json'
+  tiny-erp-token:
+    description: 'App: Tiny ERP API token'
 
 outputs: {}
 
@@ -52,6 +54,7 @@ runs:
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
         ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
+        TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -59,6 +62,7 @@ runs:
         ECOM_API_KEY=$ECOM_API_KEY
         ECOM_STORE_ID=$ECOM_STORE_ID
         GITHUB_TOKEN=$GITHUB_TOKEN
+        TINY_ERP_TOKEN=$TINY_ERP_TOKEN
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
 
