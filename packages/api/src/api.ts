@@ -179,7 +179,7 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
 const post = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'post' }>,
-  config: E extends 'login' | 'authenticate' ? AbstractedConfig : C,
+  config?: E extends 'login' | 'authenticate' ? AbstractedConfig : C,
 ) => api({
     ...config,
     method: 'post',
@@ -190,7 +190,7 @@ const post = <E extends Endpoint, C extends AbstractedConfig>(
 const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'put' }>,
-  config: C,
+  config?: C,
 ) => api({
     ...config,
     method: 'put',
@@ -198,14 +198,14 @@ const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedC
     body,
   });
 
-const patch = (endpoint: Endpoint, body: any, config: AbstractedConfig) => api({
+const patch = (endpoint: Endpoint, body: any, config?: AbstractedConfig) => api({
   ...config,
   method: 'patch',
   endpoint,
   body,
 });
 
-const del = (endpoint: Endpoint, config: AbstractedConfig) => api({
+const del = (endpoint: Endpoint, config?: AbstractedConfig) => api({
   ...config,
   method: 'delete',
   endpoint,
