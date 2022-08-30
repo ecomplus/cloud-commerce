@@ -5,13 +5,11 @@ import type { Firestore } from 'firebase-admin/firestore';
 import { Auth } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
+import getEnv from '@cloudcommerce/firebase/lib/env';
 
-const findCustomerByEmail = async (
-  email: string | undefined,
-  apiAuth: { authenticationId: string, apiKey: string },
-) => {
+const findCustomerByEmail = async (email: string | undefined) => {
   try {
-    const { data } = await api.get(`customers?main_email=${email}`, apiAuth);
+    const { data } = await api.get(`customers?main_email=${email}`);
     if (data.result.length) {
       return data.result[0];
     }
@@ -38,12 +36,9 @@ const checkFirebaseAuth = async (
   }
 };
 
-const createCustomer = async (
-  customer: Customers,
-  apiAuth: { authenticationId: string, apiKey: string },
-) => {
+const createCustomer = async (customer: Customers) => {
   try {
-    const { data } = await api.post('customers', customer, apiAuth);
+    const { data } = await api.post('customers', customer);
     return data._id;
   } catch (e) {
     logger.error(e);
@@ -54,12 +49,12 @@ const createCustomer = async (
 const generateAccessToken = async (
   firestore: Firestore,
   customerId: string,
-  apiAuth: { authenticationId: string, apiKey: string },
 ): Promise<null | {
   customer_id: string,
   access_token: string,
   expires: string,
 }> => {
+  const { apiAuth } = getEnv();
   const docRef = firestore.doc(`customerTokens/${customerId}`);
   const doc = await docRef.get();
   const expires: string | undefined = doc.data()?.expires;
@@ -91,18 +86,14 @@ const generateAccessToken = async (
 
 const getAuthCustomerApi = async (
   firestore: Firestore,
-  apiAuth: { authenticationId: string, apiKey: string },
   authtoken: string | string[] | undefined,
   authFirebase: Auth,
 ) => {
   const customerFirebaseAuth = await checkFirebaseAuth(authFirebase, authtoken);
   if (customerFirebaseAuth !== null && customerFirebaseAuth.email) {
-    const customer = await findCustomerByEmail(
-      customerFirebaseAuth.email,
-      apiAuth,
-    );
+    const customer = await findCustomerByEmail(customerFirebaseAuth.email);
     if (customer !== null) {
-      return generateAccessToken(firestore, customer._id, apiAuth);
+      return generateAccessToken(firestore, customer._id);
     }
     const newCustomer = {
       display_name: customerFirebaseAuth.name || '',
@@ -116,9 +107,9 @@ const getAuthCustomerApi = async (
         user_id: customerFirebaseAuth.user_id,
       }],
     } as Customers;
-    const customerId = await createCustomer(newCustomer, apiAuth);
+    const customerId = await createCustomer(newCustomer);
     if (customerId) {
-      return generateAccessToken(firestore, customerId, apiAuth);
+      return generateAccessToken(firestore, customerId);
     }
   }
   // TODO: Find customer by phone number, generate token if found, otherwise unauthorize

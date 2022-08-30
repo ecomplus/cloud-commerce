@@ -6,7 +6,6 @@ import { getAuth } from 'firebase-admin/auth';
 // eslint-disable-next-line import/no-unresolved
 import { HttpsOptions, onRequest } from 'firebase-functions/v2/https';
 import config from '@cloudcommerce/firebase/lib/config';
-import getEnv from '@cloudcommerce/firebase/lib/env';
 import servePassportApi from './firebase/serve-passport-api';
 
 // References:
@@ -25,12 +24,10 @@ const options = {
 
 // eslint-disable-next-line import/prefer-default-export
 export const passport = onRequest(options, (req, res) => {
-  const { apiAuth } = getEnv();
   const { storeId } = config.get();
   servePassportApi(
     req,
     res,
-    apiAuth,
     firestore,
     authFirebase,
     storeId,

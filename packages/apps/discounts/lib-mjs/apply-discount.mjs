@@ -1,6 +1,5 @@
 import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
-import getEnv from '@cloudcommerce/firebase/lib/env';
 import {
   validateDateRange,
   validateCustomerId,
@@ -294,14 +293,14 @@ export default async ({ params, application }) => {
               query: '',
               max: discountRule.total_usage_limit,
             }];
-            const { apiAuth } = getEnv();
             for (let i = 0; i < usageLimits.length; i++) {
               const { query, max } = usageLimits[i];
               if (max) {
                 let countOrders;
                 try {
                   // send Store API request to list orders with filters
-                  const { data } = await api.get(`${endpoint}${query}`, { apiAuth });
+                  // eslint-disable-next-line no-await-in-loop
+                  const { data } = await api.get(`${endpoint}${query}`);
                   countOrders = data.result.length;
                 } catch (e) {
                   countOrders = max;

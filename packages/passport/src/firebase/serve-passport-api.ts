@@ -12,7 +12,6 @@ import {
 export default async (
   req: Request,
   res: Response,
-  apiAuth: { authenticationId: string, apiKey: string },
   firestore: Firestore,
   authFirebase: Auth,
   storeId: number,
@@ -44,7 +43,6 @@ export default async (
     try {
       const authCustomerApi = await getAuthCustomerApi(
         firestore,
-        apiAuth,
         authtoken,
         authFirebase,
       );

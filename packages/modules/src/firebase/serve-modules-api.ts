@@ -2,11 +2,7 @@ import type { Request, Response } from 'firebase-functions';
 import { schemas } from '../index';
 import handleModule from './handle-module';
 
-export default (
-  req: Request,
-  res: Response,
-  apiAuth: { authenticationId: string, apiKey: string },
-) => {
+export default (req: Request, res: Response) => {
   const { method } = req;
   if (method !== 'POST' && method !== 'GET') {
     return res.sendStatus(405);
@@ -59,7 +55,7 @@ export default (
       return sendSchema(true);
     }
     if (url === `/${modName}`) {
-      return handleModule(modName, schema, responseSchema, req, res, apiAuth);
+      return handleModule(modName, schema, responseSchema, req, res);
     }
   }
   return res.sendStatus(404);

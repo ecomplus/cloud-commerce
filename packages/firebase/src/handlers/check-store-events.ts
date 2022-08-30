@@ -4,7 +4,6 @@ import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/lib/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
-import getEnv from '../env';
 import config from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
@@ -96,7 +95,6 @@ export default async () => {
     'timestamp<': new Date(timestamp).toISOString(),
   };
   const { apps } = config.get();
-  const { apiAuth } = getEnv();
   const subscribersApps: Array<{ appId: number, events: ApiEventName[] }> = [];
   Object.keys(apps).forEach((appName) => {
     const appObj = apps[appName];
@@ -105,7 +103,6 @@ export default async () => {
     }
   });
   const activeApps = (await api.get('applications', {
-    ...apiAuth,
     params: {
       state: 'active',
       app_id: subscribersApps.map(({ appId }) => appId),
@@ -129,7 +126,6 @@ export default async () => {
       return;
     }
     let { data: { result } } = await api.get(`events/${resource}`, {
-      ...apiAuth,
       params,
     });
     /*
@@ -155,7 +151,7 @@ export default async () => {
       }
       resourceIdsRead.push(resourceId);
       const apiDoc = resource !== 'applications'
-        ? (await api.get(`${resource}/${resourceId}`, apiAuth)).data
+        ? (await api.get(`${resource}/${resourceId}`)).data
         : null;
       activeApps.forEach((app) => {
         const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);

@@ -2,7 +2,6 @@ import type { Applications, AppEventsPayload } from '@cloudcommerce/types';
 import { PubSub } from '@google-cloud/pubsub';
 import logger from 'firebase-functions/lib/logger';
 import api from '@cloudcommerce/api';
-import getEnv from '../env';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
 export default async (
@@ -12,7 +11,6 @@ export default async (
 ) => {
   const applicationId = typeof application === 'string'
     ? application : application._id;
-  const { apiAuth } = getEnv();
   const subresource = isHiddenData ? 'hidden_data' : 'data';
   if (application && typeof application === 'object' && canSendPubSub) {
     // eslint-disable-next-line no-param-reassign
@@ -44,7 +42,6 @@ export default async (
     }
   }
   return api.patch(`applications/${applicationId}/${subresource}`, data, {
-    ...apiAuth,
     headers: {
       'X-Event-Flag': EVENT_SKIP_FLAG,
     },

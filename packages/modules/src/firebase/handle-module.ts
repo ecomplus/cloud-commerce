@@ -19,7 +19,6 @@ const appsCache = {};
 const resultsCache = {};
 
 async function runModule(
-  apiAuth: { authenticationId: string, apiKey: string },
   params: { [key: string]: any },
   res: Response,
   modName: string,
@@ -65,7 +64,6 @@ async function runModule(
   } else {
     try {
       const { data } = await api.get('applications', {
-        ...apiAuth,
         params: listAppsParams,
       });
       appsList = data.result;
@@ -187,16 +185,15 @@ export default (
   responseSchema: { [key: string]: any },
   req: Request,
   res: Response,
-  apiAuth: { authenticationId: string, apiKey: string },
 ) => {
   const validate = ajv.compile(schema);
   const responseValidate = ajvAppsResponse.compile(responseSchema);
   return {
     GET() {
-      runModule(apiAuth, req.query, res, modName, validate, responseValidate);
+      runModule(req.query, res, modName, validate, responseValidate);
     },
     POST() {
-      runModule(apiAuth, req.body, res, modName, validate, responseValidate, req.query.app_id);
+      runModule(req.body, res, modName, validate, responseValidate, req.query.app_id);
     },
   };
 };
