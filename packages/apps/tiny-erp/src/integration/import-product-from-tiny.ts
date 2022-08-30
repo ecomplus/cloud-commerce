@@ -88,11 +88,11 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
             data: product,
           });
 
-          if (
-            Array.isArray(produto.variacoes)
-            && produto.variacoes.length
-            && queueEntry.app
-          ) {
+          if (Array.isArray(produto.variacoes) && produto.variacoes.length) {
+            if (!queueEntry.app) {
+              logger.warn('Variations cannot be queued without `queueEntry.app`');
+              return promise;
+            }
             promise.then((response) => {
               let skus = appData.__importation && appData.__importation.skus;
               if (!Array.isArray(skus)) {
