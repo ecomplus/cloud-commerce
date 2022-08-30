@@ -1,6 +1,5 @@
 import type { Request, Response } from 'firebase-functions';
 import type { Applications } from '@cloudcommerce/types';
-import { firestore } from 'firebase-admin';
 import logger from 'firebase-functions/lib/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -58,7 +57,6 @@ export default async (req: Request, res: Response) => {
             codigo: dados.sku,
             ...dados,
           },
-          updatedAt: firestore.Timestamp.fromDate(new Date()),
         };
         logger.info(`> Tiny webhook: ${nextId} => ${tinyStockUpdate.produto.saldo}`);
         const queueEntry = {

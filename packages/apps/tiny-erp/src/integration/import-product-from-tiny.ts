@@ -1,6 +1,4 @@
 import type { Products } from '@cloudcommerce/types';
-// eslint-disable-next-line import/no-unresolved
-import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/lib/logger';
 import api from '@cloudcommerce/api';
 import updateAppData from '@cloudcommerce/firebase/lib/helpers/update-app-data';
@@ -9,21 +7,6 @@ import parseProduct from './parsers/product-from-tiny';
 
 export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) => {
   const [sku, productId] = String(queueEntry.nextId).split(';:');
-  let { tinyStockUpdate } = queueEntry;
-  if (!tinyStockUpdate) {
-    const querySnapshot = await getFirestore().collection('tinyErpStockUpdates')
-      .where('ref', '==', `${sku}`).get();
-    let lastUpdateTime;
-    querySnapshot.forEach((documentSnapshot) => {
-      const updateTime = documentSnapshot.updateTime.toDate().getTime();
-      if (!lastUpdateTime || updateTime > lastUpdateTime) {
-        lastUpdateTime = updateTime;
-        tinyStockUpdate = documentSnapshot.data();
-      }
-      documentSnapshot.ref.delete().catch(logger.error);
-    });
-  }
-
   let product: Products | null = null;
   try {
     product = (await api.get(`products/${(productId || `sku:${sku}`)}`)).data;
@@ -151,6 +134,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
     hasVariations,
     variationId,
   }));
+  const { tinyStockUpdate } = queueEntry;
   if (tinyStockUpdate && isHiddenQueue && productId) {
     return handleTinyStock(tinyStockUpdate as any);
   }
