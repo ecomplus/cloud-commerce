@@ -167,8 +167,6 @@ Promise<Response & {
 };
 
 type AbstractedConfig = Omit<Config, 'endpoint' | 'method'>;
-type AbstractedAuthConfig = AbstractedConfig & { accessToken: string }
-  | AbstractedConfig & { authenticationId: string, apiKey: string };
 
 const get = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,
@@ -178,7 +176,7 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
   data: ResponseBody<{ endpoint: E }>,
 }> => api({ ...config, endpoint });
 
-const post = <E extends Endpoint, C extends AbstractedAuthConfig>(
+const post = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'post' }>,
   config: E extends 'login' | 'authenticate' ? AbstractedConfig : C,
@@ -189,7 +187,7 @@ const post = <E extends Endpoint, C extends AbstractedAuthConfig>(
     body,
   });
 
-const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedAuthConfig>(
+const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'put' }>,
   config: C,
@@ -200,14 +198,14 @@ const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedA
     body,
   });
 
-const patch = (endpoint: Endpoint, body: any, config: AbstractedAuthConfig) => api({
+const patch = (endpoint: Endpoint, body: any, config: AbstractedConfig) => api({
   ...config,
   method: 'patch',
   endpoint,
   body,
 });
 
-const del = (endpoint: Endpoint, config: AbstractedAuthConfig) => api({
+const del = (endpoint: Endpoint, config: AbstractedConfig) => api({
   ...config,
   method: 'delete',
   endpoint,
