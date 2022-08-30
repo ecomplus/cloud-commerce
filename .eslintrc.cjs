@@ -23,6 +23,7 @@ module.exports = {
   ],
   rules: {
     'prefer-template': 'warn',
+    'no-nested-ternary': 'warn',
     'no-await-in-loop': 'warn',
     'no-shadow': 'warn',
     'no-param-reassign': 'warn',
