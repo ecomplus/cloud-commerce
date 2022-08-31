@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.61](https://github.com/ecomplus/cloud-commerce/compare/v0.0.60...v0.0.61) (2022-08-31)
+
+
+### Features
+
+* Add optional `tiny-erp-token` input to GH Action to improve Tiny webhooks performance ([0444f65](https://github.com/ecomplus/cloud-commerce/commit/0444f655b0a358979b14cee8ab85f0f018d08df3))
+
+
+### Bug Fixes
+
+* **tiny-erp:** Properly set and reuse `process.env.TINY_ERP_TOKEN` on webhooks ([4aee43a](https://github.com/ecomplus/cloud-commerce/commit/4aee43a3f067eb430c0c183eada27dca1b331fd3))
+
 ### [0.0.60](https://github.com/ecomplus/cloud-commerce/compare/v0.0.59...v0.0.60) (2022-08-30)
 
 
