@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.63](https://github.com/ecomplus/cloud-commerce/compare/v0.0.62...v0.0.63) (2022-08-31)
+
+
+### Bug Fixes
+
+* Group app (Tiny ERP) functions and fix name for CLoud Functions v2 limits ([a059056](https://github.com/ecomplus/cloud-commerce/commit/a0590564ce8e376c000ba02ccb3b2a94d31e3c0d))
+
 ### [0.0.62](https://github.com/ecomplus/cloud-commerce/compare/v0.0.61...v0.0.62) (2022-08-31)
 
 
