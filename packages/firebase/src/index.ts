@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-
 import './init';
 import functions from 'firebase-functions';
 import config from './config';

@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-
 import '@cloudcommerce/firebase/lib/init';
 // eslint-disable-next-line import/no-unresolved
 import { onRequest } from 'firebase-functions/v2/https';
