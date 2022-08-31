@@ -26,7 +26,7 @@ module.exports = {
     'no-nested-ternary': 'warn',
     'no-await-in-loop': 'warn',
     'no-shadow': 'warn',
-    'no-param-reassign': 'warn',
+    'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'no-continue': 'off',
     'lines-between-class-members': 'off',
