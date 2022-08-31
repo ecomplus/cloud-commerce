@@ -28,6 +28,7 @@ runs:
       with:
         node-version: 16
         cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
 
     - if: github.event_name == 'push'
       shell: bash
