@@ -13,11 +13,13 @@ import handleTinyWebhook from './tiny-webhook';
 
 const { httpsFunctionOptions } = config.get();
 
-export const tinyErpOnApiEvent = createAppEventsFunction(
-  'tinyErp',
-  handleApiEvent as ApiEventHandler,
-);
+export const tinyerp = {
+  onStoreEvent: createAppEventsFunction(
+    'tinyErp',
+    handleApiEvent as ApiEventHandler,
+  ),
 
-export const tinyErpWebhook = onRequest(httpsFunctionOptions, (req, res) => {
-  handleTinyWebhook(req, res);
-});
+  webhook: onRequest(httpsFunctionOptions, (req, res) => {
+    handleTinyWebhook(req, res);
+  }),
+};
