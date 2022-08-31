@@ -1,5 +1,6 @@
 import type { Orders } from '@cloudcommerce/types';
-import { firestore } from 'firebase-admin';
+// eslint-disable-next-line import/no-unresolved
+import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/lib/logger';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
@@ -30,7 +31,7 @@ export default async (apiDoc, queueEntry) => {
     const orderNumber = pedido.numero_ecommerce;
     logger.info(`Import order n${orderNumber} ${tinyOrderId} => ${situacao}`);
 
-    const documentRef = firestore().doc(`tinyErpOrders/${tinyOrderId}`);
+    const documentRef = getFirestore().doc(`tinyErpOrders/${tinyOrderId}`);
     const documentSnapshot = await documentRef.get();
     if (
       documentSnapshot.exists
@@ -78,10 +79,7 @@ export default async (apiDoc, queueEntry) => {
 
     return Promise.all(promises)
       .then(([firstResult]) => {
-        documentRef.set({
-          situacao,
-          updatedAt: firestore.Timestamp.fromDate(new Date()),
-        }).catch(logger.error);
+        documentRef.set({ situacao }).catch(logger.error);
         return (firstResult && firstResult.response) || firstResult;
       });
   };
