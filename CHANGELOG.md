@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.62](https://github.com/ecomplus/cloud-commerce/compare/v0.0.61...v0.0.62) (2022-08-31)
+
+
+### Bug Fixes
+
+* Properly import `firebase-admin/firestore` ([5754bb0](https://github.com/ecomplus/cloud-commerce/commit/5754bb0f7378106b15f9f683597f78afeb92ba74))
+
 ### [0.0.61](https://github.com/ecomplus/cloud-commerce/compare/v0.0.60...v0.0.61) (2022-08-31)
 
 
