@@ -79,13 +79,13 @@ export interface Applications {
    * Application object data, schema free
    */
   data?: {
-    [k: string]: unknown;
+    [k: string]: any;
   };
   /**
    * Application private data, available only with authentication
    */
   hidden_data?: {
-    [k: string]: unknown;
+    [k: string]: any;
   };
   /**
    * Flags to associate additional info
