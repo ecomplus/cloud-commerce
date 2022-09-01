@@ -91,7 +91,6 @@ const handleApiEvent: ApiEventHandler = async ({
             const ids = actionQueues[queue];
             if (Array.isArray(ids) && ids.length) {
               const isHiddenQueue = action.charAt(0) === '_';
-              const mustUpdateAppQueue = evName === 'applications-dataSet';
               const handlerName = action.replace(/^_+/, '');
               const handler = integrationHandlers[handlerName][queue.toLowerCase()];
               const nextId = ids[0];
@@ -108,7 +107,6 @@ const handleApiEvent: ApiEventHandler = async ({
                   queue,
                   nextId,
                   key,
-                  mustUpdateAppQueue,
                   app,
                 };
                 return handler(
