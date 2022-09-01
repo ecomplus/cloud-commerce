@@ -20,7 +20,16 @@ export default async (
   }
   const { storeId, apps } = config.get();
 
-  const debug = (response: AxiosResponse) => {
+  const checkErrorResponse = (logHead: string, resData: any) => {
+    if (typeof resData === 'object' && resData !== null) {
+      const { error, message } = resData;
+      if (typeof error === 'string' && error.length && typeof message === 'string') {
+        logger.warn(logHead, JSON.stringify({ error, message }));
+      }
+    }
+  };
+
+  const debugAndBlacklist = (response: AxiosResponse) => {
     const status = response ? response.status : 0;
     if (!blacklist[url]) {
       blacklist[url] = 1;
@@ -34,16 +43,11 @@ export default async (
         delete blacklist[url];
       }
     }, !status ? 180000 : 6000);
-
-    logger.info(`${url} : ${status}`);
+    const logHead = `${url} : ${status}`;
     if (status >= 400 && status < 500) {
-      const { data: resData } = response;
-      if (typeof resData === 'object' && resData !== null) {
-        const { error, message } = resData;
-        if (typeof error === 'string' && error.length && typeof message === 'string') {
-          logger.warn(JSON.stringify({ error, message }));
-        }
-      }
+      checkErrorResponse(logHead, response.data);
+    } else {
+      logger.info(logHead);
     }
   };
 
@@ -71,10 +75,14 @@ export default async (
     */
     const middleware = global[`app${appId}_${modName}_middleware`];
     try {
+      let appResponse: any;
       if (typeof middleware === 'function') {
-        return await middleware(data, internalModuleFn);
+        appResponse = await middleware(data, internalModuleFn);
+      } else {
+        appResponse = await internalModuleFn(data);
       }
-      return await internalModuleFn(data);
+      checkErrorResponse(`${appId}_${modName}`, appResponse);
+      return appResponse;
     } catch (err) {
       logger.error(err);
       let message = 'Failed to execute module function';
@@ -102,12 +110,12 @@ export default async (
     timeout: isBigTimeout ? 30000 : 10000,
   })
     .then((response) => {
-      debug(response);
+      debugAndBlacklist(response);
       return response.data;
     })
     .catch((err) => {
       const { response } = err;
-      debug(response);
+      debugAndBlacklist(response);
       if (err.message || err.code) {
         let msg = `Axios error ${err.code}: ${err.message}`;
         if (data) {
