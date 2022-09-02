@@ -36,6 +36,9 @@ const self = {
       discounts: {
         appId: 1252,
       },
+      correios: {
+        appId: 1248,
+      },
       tinyErp: {
         appId: 105922,
         events: tinyErpEvents,

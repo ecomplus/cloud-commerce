@@ -60,6 +60,13 @@ export default async (
           .then(({ applyDiscount }) => applyDiscount(_data));
       };
     }
+  } else if (modName === 'calculate_shipping') {
+    if (appId === apps.correios.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-correios')
+          .then(({ calculateShipping }) => calculateShipping(_data));
+      };
+    }
   }
   if (internalModuleFn) {
     /*

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "ajv": "^8.11.0",
