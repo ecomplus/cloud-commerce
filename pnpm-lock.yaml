@@ -164,7 +164,7 @@ importers:
   packages/modules:
     specifiers:
       '@cloudcommerce/api': workspace:*
-      '@cloudcommerce/app-correios': workspace:^0.0.0
+      '@cloudcommerce/app-correios': workspace:*
       '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
@@ -268,44 +268,44 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.63
+      '@cloudcommerce/cli': ^0.0.64
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.63
+      '@cloudcommerce/firebase': ^0.0.64
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.63
-      '@cloudcommerce/firebase': ^0.0.63
+      '@cloudcommerce/events': ^0.0.64
+      '@cloudcommerce/firebase': ^0.0.64
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.63
-      '@cloudcommerce/modules': ^0.0.63
+      '@cloudcommerce/firebase': ^0.0.64
+      '@cloudcommerce/modules': ^0.0.64
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.63
-      '@cloudcommerce/passport': ^0.0.63
+      '@cloudcommerce/firebase': ^0.0.64
+      '@cloudcommerce/passport': ^0.0.64
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.63
-      '@cloudcommerce/ssr': ^0.0.63
+      '@cloudcommerce/firebase': ^0.0.64
+      '@cloudcommerce/ssr': ^0.0.64
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
