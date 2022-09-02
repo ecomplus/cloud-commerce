@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.64](https://github.com/ecomplus/cloud-commerce/compare/v0.0.63...v0.0.64) (2022-09-02)
+
+
+### Features
+
+* **correios:** Setup Correios app from https://github.com/ecomplus/app-correios ([aa18bed](https://github.com/ecomplus/cloud-commerce/commit/aa18bed5193bfbcf7075614c5b41b7e84497efca))
+* **modules:** Handle Correios calculate shipping with internal package ([88e6f7f](https://github.com/ecomplus/cloud-commerce/commit/88e6f7f30cedf35c9a05f0f4d24637946c21b3cf))
+
+
+### Bug Fixes
+
+* **api:** Update applications interface with `data?: { [k: string]: any }` instead of unknow ([a44a6c9](https://github.com/ecomplus/cloud-commerce/commit/a44a6c9d93a5550843115cad3cbcb2a231691b1b))
+* **modules:** Also debug internal modules error responses ([9c89962](https://github.com/ecomplus/cloud-commerce/commit/9c89962924984b48cd52f308bc173c18a4a90939))
+
 ### [0.0.63](https://github.com/ecomplus/cloud-commerce/compare/v0.0.62...v0.0.63) (2022-08-31)
 
 
