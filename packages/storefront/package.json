@@ -16,7 +16,11 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/storefront#readme",
   "scripts": {
-    "build": "echo '@ecomplus/storefront'"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/node": "^1.0.0",

@@ -174,7 +174,7 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/app-correios': workspace:*
-      '@cloudcommerce/app-custom-shipping': workspace:^0.0.0
+      '@cloudcommerce/app-custom-shipping': workspace:*
       '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
