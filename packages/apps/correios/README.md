@@ -1,1 +1,1 @@
-# `@cloudcommerce/correios`
+# `@cloudcommerce/app-correios`

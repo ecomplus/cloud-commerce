@@ -1,1 +1,1 @@
-# `@cloudcommerce/tiny-erp`
+# `@cloudcommerce/app-tiny-erp`
