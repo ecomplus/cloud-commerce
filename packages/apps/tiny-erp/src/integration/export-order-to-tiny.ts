@@ -75,12 +75,15 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
     });
   }
 
-  logger.info(`${orderId} found with tiny status ${tinyStatus}`);
-  if (tinyStatus) {
-    return postTiny('/pedido.alterar.situacao', {
-      id: originalTinyOrder.id,
-      situacao: tinyStatus,
-    });
+  if (originalTinyOrder) {
+    const { id, situacao } = originalTinyOrder;
+    logger.info(`${orderId} found with tiny status ${situacao} => ${tinyStatus}`);
+    if (tinyStatus && tinyStatus !== situacao) {
+      return postTiny('/pedido.alterar.situacao', {
+        id,
+        situacao: tinyStatus,
+      });
+    }
   }
   return null;
 };
