@@ -66,6 +66,11 @@ export default async (
         return import('@cloudcommerce/app-correios')
           .then(({ calculateShipping }) => calculateShipping(_data));
       };
+    } else if (appId === apps.customShipping.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-custom-shipping')
+          .then(({ calculateShipping }) => calculateShipping(_data));
+      };
     }
   }
   if (internalModuleFn) {

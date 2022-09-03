@@ -71,6 +71,15 @@ importers:
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
+  packages/apps/custom-shipping:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+
   packages/apps/discounts:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -165,6 +174,7 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/app-correios': workspace:*
+      '@cloudcommerce/app-custom-shipping': workspace:^0.0.0
       '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
@@ -178,6 +188,7 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/app-correios': link:../apps/correios
+      '@cloudcommerce/app-custom-shipping': link:../apps/custom-shipping
       '@cloudcommerce/app-discounts': link:../apps/discounts
       '@cloudcommerce/firebase': link:../firebase
       ajv: 8.11.0

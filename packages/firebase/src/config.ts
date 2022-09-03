@@ -39,6 +39,9 @@ const self = {
       correios: {
         appId: 1248,
       },
+      customShipping: {
+        appId: 1253,
+      },
       tinyErp: {
         appId: 105922,
         events: tinyErpEvents,
