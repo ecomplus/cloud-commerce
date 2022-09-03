@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.65](https://github.com/ecomplus/cloud-commerce/compare/v0.0.64...v0.0.65) (2022-09-03)
+
+
+### Features
+
+* **custom-shipping:** Setup custom shipping app from github.com/ecomplus/app-custom-shipping/ ([78818ea](https://github.com/ecomplus/cloud-commerce/commit/78818ead244741bea2a2c02becb465863b087461))
+* **modules:** Handle custom shipping calculation with internal package ([b555a12](https://github.com/ecomplus/cloud-commerce/commit/b555a12dc8e2d7b6b11a5993d0ba846e645ced9e))
+
+
+### Bug Fixes
+
+* **tiny-erp:** Prevent exporting order with same Tiny status ([8b22e1b](https://github.com/ecomplus/cloud-commerce/commit/8b22e1b18a6b0494c794bd21f4bf38dcf9f92dc4))
+
 ### [0.0.64](https://github.com/ecomplus/cloud-commerce/compare/v0.0.63...v0.0.64) (2022-09-02)
 
 
