@@ -193,9 +193,9 @@ export default async ({ params, application }) => {
         }
       }
       if (!config.free_no_weight_shipping || physicalWeight > 0) {
-        const finalWeight = cubicWeight < 5 || physicalWeight > cubicWeight
+        const unitWeight = cubicWeight < 5 || physicalWeight > cubicWeight
           ? physicalWeight : cubicWeight;
-        nVlPeso += (quantity * finalWeight);
+        nVlPeso += (quantity * unitWeight);
       }
     });
 
