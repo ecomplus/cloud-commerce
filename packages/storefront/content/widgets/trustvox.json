@@ -1,0 +1,15 @@
+{
+  "pkg": "@ecomplus/widget-trustvox",
+  "active": false,
+  "desktopOnly": false,
+  "enableCheckout": false,
+  "disablePages": true,
+  "options": {
+    "trustvoxStoreId": ""
+  },
+  "bodyAppend": "src/append/body",
+  "productDescriptionAppend": "src/append/product-block",
+  "productCardSlots": "src/append/product-card-slots",
+  "productSlots": "src/append/product-slots",
+  "stampsAppend": "src/append/stamps"
+}

@@ -1,0 +1,8 @@
+{
+  "pkg": "@ecomplus/widget-search-engine",
+  "active": true,
+  "desktopOnly": false,
+  "options": {
+    "pagination": false
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "meta_title": "",
+  "meta_description": "",
+  "sections": [
+    {
+      "type": "banner-slider",
+      "autoplay": 9000,
+      "full_width": false,
+      "slides": [
+        {
+          "img": "/img/uploads/rect89.webp",
+          "link": "/headset",
+          "alt": "Headset banner",
+          "start": "",
+          "end": "",
+          "mobile_img": "/img/uploads/headphone.webp"
+        },
+        {
+          "start": "",
+          "end": "",
+          "img": "/img/uploads/banner2.webp"
+        }
+      ]
+    },
+    {
+      "type": "info-bar",
+      "enabled": true
+    },
+    {
+      "type": "collection-shelf",
+      "shuffle": false,
+      "collection_id": null,
+      "sort": "offers",
+      "title": "",
+      "headless": false,
+      "limit": 12,
+      "page": 1
+    },
+    {
+      "type": "page-title",
+      "title": "Loja demo da E-Com Plus",
+      "description": "Loja de demonstração e testes da plataforma E-Com Plus e Storefront. Todos os produtos, preços e informações são meramente ilustrativos."
+    }
+  ]
+}

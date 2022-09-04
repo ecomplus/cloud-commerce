@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "type": "breadcrumbs",
+      "enabled": true
+    },
+    {
+      "type": "page-title"
+    },
+    {
+      "type": "document-banner",
+      "enabled": true
+    },
+    {
+      "type": "category-retail",
+      "enabled": true,
+      "sort": "sales"
+    },
+    {
+      "type": "document-description",
+      "enabled": true
+    }
+  ]
+}
