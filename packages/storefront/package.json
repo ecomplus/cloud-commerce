@@ -23,18 +23,18 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^1.0.0",
+    "@astrojs/node": "^1.0.1",
     "@astrojs/partytown": "^1.0.0",
     "@astrojs/prefetch": "^0.0.7",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/vue": "^1.0.0",
     "@cloudcommerce/api": "workspace:*",
     "@picocss/pico": "^1.5.3",
-    "astro": "^1.1.1",
-    "rollup": "^2.78.1",
-    "unocss": "^0.45.13",
-    "vite": "^3.0.9",
+    "astro": "^1.1.5",
+    "rollup": "^2.79.0",
+    "unocss": "^0.45.15",
+    "vite": "^3.1.0",
     "vite-plugin-pwa": "^0.12.6",
-    "vue": "^3.2.37"
+    "vue": "^3.2.38"
   }
 }
