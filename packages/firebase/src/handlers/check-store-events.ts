@@ -12,10 +12,7 @@ const parseEventName = (
   baseApiEventsFilter: Record<string, string>,
 ) => {
   const [resource, actionName] = evName.split('-');
-  const params: ApiConfig['params'] = {
-    'flag!': EVENT_SKIP_FLAG,
-    ...baseApiEventsFilter,
-  };
+  const params: ApiConfig['params'] = { ...baseApiEventsFilter };
   const bodySet: { [key: string]: any } = {};
   if (actionName === 'new') {
     params.action = 'create';
@@ -94,6 +91,7 @@ export default async () => {
     || Date.now() - 1000 * 60 * 5;
   const lastNonOrdersTimestamp = documentSnapshot.get('nonOrdersTimestamp');
   const baseApiEventsFilter = {
+    'flag!': EVENT_SKIP_FLAG,
     'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
     'timestamp<': new Date(timestamp).toISOString(),
   };
