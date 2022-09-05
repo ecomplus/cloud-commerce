@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.67](https://github.com/ecomplus/cloud-commerce/compare/v0.0.66...v0.0.67) (2022-09-05)
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#46](https://github.com/ecomplus/cloud-commerce/issues/46)) ([e70233d](https://github.com/ecomplus/cloud-commerce/commit/e70233d3d31c7e90cf5cc14b52dfd0d717a1d664))
+* **events:** Fix handling events timestamp by resource and last run ([f34fe3c](https://github.com/ecomplus/cloud-commerce/commit/f34fe3cde3d0ea8d52ac89b370e9e77b0432177e))
+* **events:** Properly filter by last non-orders check timestamp ([0d81267](https://github.com/ecomplus/cloud-commerce/commit/0d812675d9eea009c05afa89ec115ce24efa8911))
+
 ### [0.0.66](https://github.com/ecomplus/cloud-commerce/compare/v0.0.65...v0.0.66) (2022-09-05)
 
 
