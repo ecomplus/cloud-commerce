@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.66](https://github.com/ecomplus/cloud-commerce/compare/v0.0.65...v0.0.66) (2022-09-05)
+
+
+### Features
+
+* **config:** New reusable/isolated `@cloudcoommerce/config` package ([64b482f](https://github.com/ecomplus/cloud-commerce/commit/64b482fff9f8087a38890b52ff0c6bb7c40f85f9))
+
+
+### Bug Fixes
+
+* **config:** Fix type defs for `@cloudcommerce/firebase` config ([f567851](https://github.com/ecomplus/cloud-commerce/commit/f567851e24d48162062e50cab77676c70b13e546))
+
 ### [0.0.65](https://github.com/ecomplus/cloud-commerce/compare/v0.0.64...v0.0.65) (2022-09-03)
 
 
