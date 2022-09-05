@@ -126,8 +126,8 @@ export default async () => {
   const isOrdersOnly = Boolean(new Date().getMinutes() % 5);
   listenedEvents.forEach(async (listenedEventName) => {
     const { resource, params } = parseEventName(listenedEventName, baseApiEventsFilter);
-    if (isOrdersOnly) {
-      if (resource !== 'orders') {
+    if (resource !== 'orders') {
+      if (isOrdersOnly) {
         return;
       }
       if (lastNonOrdersTimestamp) {
