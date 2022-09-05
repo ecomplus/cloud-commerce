@@ -14,8 +14,9 @@ const parseEventName = (
   const [resource, actionName] = evName.split('-');
   const params: ApiConfig['params'] = {
     'flag!': EVENT_SKIP_FLAG,
+    ...baseApiEventsFilter,
   };
-  const bodySet: { [key: string]: any } = { ...baseApiEventsFilter };
+  const bodySet: { [key: string]: any } = {};
   if (actionName === 'new') {
     params.action = 'create';
   } else {
@@ -62,7 +63,7 @@ const parseEventName = (
   });
   return { resource, params } as {
     resource: Resource,
-    params: ApiConfig['params'],
+    params: Exclude<ApiConfig['params'], undefined>,
   };
 };
 
@@ -88,8 +89,10 @@ const tryPubSubPublish = (
 export default async () => {
   const timestamp = Date.now();
   const documentRef = getFirestore().doc('storeEvents/last');
-  const lastRunTimestamp: number = (await documentRef.get()).get('timestamp')
+  const documentSnapshot = await documentRef.get();
+  const lastRunTimestamp: number = documentSnapshot.get('timestamp')
     || Date.now() - 1000 * 60 * 5;
+  const lastNonOrdersTimestamp = documentSnapshot.get('nonOrdersTimestamp');
   const baseApiEventsFilter = {
     'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
     'timestamp<': new Date(timestamp).toISOString(),
@@ -119,11 +122,17 @@ export default async () => {
       });
     }
   });
+  // Some resource events are not listened to every minute
+  const isOrdersOnly = Boolean(new Date().getMinutes() % 5);
   listenedEvents.forEach(async (listenedEventName) => {
     const { resource, params } = parseEventName(listenedEventName, baseApiEventsFilter);
-    if (resource !== 'orders' && resource !== 'carts' && new Date().getMinutes() % 5) {
-      // Other resource events are not listened to every minute
-      return;
+    if (isOrdersOnly) {
+      if (resource !== 'orders') {
+        return;
+      }
+      if (lastNonOrdersTimestamp) {
+        params['timestamp>'] = new Date(lastNonOrdersTimestamp).toISOString();
+      }
     }
     let { data: { result } } = await api.get(`events/${resource}`, {
       params,
@@ -175,6 +184,7 @@ export default async () => {
   });
   return documentRef.set({
     timestamp,
+    nonOrdersTimestamp: isOrdersOnly ? lastNonOrdersTimestamp : timestamp,
     activeApps,
     listenedEvents,
   });
