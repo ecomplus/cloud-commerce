@@ -89,7 +89,8 @@ export default async () => {
   const documentSnapshot = await documentRef.get();
   const lastRunTimestamp: number = documentSnapshot.get('timestamp')
     || Date.now() - 1000 * 60 * 5;
-  const lastNonOrdersTimestamp = documentSnapshot.get('nonOrdersTimestamp');
+  const lastNonOrdersTimestamp: number = documentSnapshot.get('nonOrdersTimestamp')
+    || 0;
   const baseApiEventsFilter = {
     'flag!': EVENT_SKIP_FLAG,
     'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
