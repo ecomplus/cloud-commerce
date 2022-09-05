@@ -31,6 +31,8 @@ const mergeConfig = {
 };
 config.set(mergeConfig);
 
-export default config as typeof config & {
+export default config as {
   get(): BaseConfig & typeof mergeConfig;
+  // eslint-disable-next-line
+  set(config: any): void;
 };
