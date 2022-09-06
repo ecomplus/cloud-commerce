@@ -1,0 +1,28 @@
+{
+  "name": "@cloudcommerce/app-frenet",
+  "type": "module",
+  "version": "0.0.67",
+  "description": "E-Com Plus Cloud Commerce",
+  "main": "lib/frenet.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/frenet"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/packages/apps/frenet#readme",
+  "scripts": {
+    "build": "sh ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}
