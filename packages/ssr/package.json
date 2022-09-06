@@ -25,7 +25,6 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "@cloudcommerce/storefront": "workspace:*",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.23.0",
     "source-map-support": "^0.5.21"
