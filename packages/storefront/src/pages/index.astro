@@ -1,9 +1,9 @@
 ---
+import api from '@cloudcommerce/api';
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
-const fetchingProducts = await fetch('https://ecomplus.io/v2/:1056/products');
-const products = (await fetchingProducts.json()).result;
+const products = (await api.get('products')).data.result;
 ---
 
 <Layout title="Welcome to Astro.">
