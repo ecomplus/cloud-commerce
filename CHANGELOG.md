@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.69](https://github.com/ecomplus/cloud-commerce/compare/v0.0.68...v0.0.69) (2022-09-07)
+
+
+### Bug Fixes
+
+* **storefront:** Use `getConfig` function to properly handle env vars on `storefront.config.mjs` ([5bfdaea](https://github.com/ecomplus/cloud-commerce/commit/5bfdaea8454d8e2bdbd64bfbc49d6fbf798c2d9d))
+
 ### [0.0.68](https://github.com/ecomplus/cloud-commerce/compare/v0.0.67...v0.0.68) (2022-09-07)
 
 
