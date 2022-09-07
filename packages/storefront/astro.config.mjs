@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
 /* eslint-disable import/no-unresolved */
 import { defineConfig } from 'astro/config';
@@ -6,7 +7,9 @@ import vue from '@astrojs/vue';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
-import { domain } from './storefront.config.mjs';
+import getConfig from './storefront.config.mjs';
+
+dotenv.config();
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,5 +21,5 @@ export default defineConfig({
     prefetch(),
     sitemap(),
   ],
-  site: `https://${domain}`,
+  site: `https://${getConfig().domain}`,
 });
