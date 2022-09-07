@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.68](https://github.com/ecomplus/cloud-commerce/compare/v0.0.67...v0.0.68) (2022-09-07)
+
+
+### Features
+
+* **ssr:** Setup SSR handler from `@ecomplus/storefron-renderer` ([0370347](https://github.com/ecomplus/cloud-commerce/commit/0370347fad1e03e0f5cb2bf9067dd8f438d8dd45))
+* **storefront:** Load CMS content from Store dir ([1ad443c](https://github.com/ecomplus/cloud-commerce/commit/1ad443cbbf03bc3da7cee27ae085c751239eda12))
+
+
+### Bug Fixes
+
+* **cli:** Update Hosting public dir to Astro build default client output ([900de0d](https://github.com/ecomplus/cloud-commerce/commit/900de0d95517ac06ee101812d1b5330bca534ae8))
+* **cli:** Update SSR function predeploy to also run `astro build` ([547e698](https://github.com/ecomplus/cloud-commerce/commit/547e698af86f69099d5f5bf37d52af394cc80838))
+* **env:** Test `import.meta.env` to support Astro/Vite env variables ([bbfef3d](https://github.com/ecomplus/cloud-commerce/commit/bbfef3d92ed2bf8073279461613270709b3e76f5))
+
 ### [0.0.67](https://github.com/ecomplus/cloud-commerce/compare/v0.0.66...v0.0.67) (2022-09-05)
 
 
