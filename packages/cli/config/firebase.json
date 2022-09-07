@@ -31,7 +31,7 @@
     }
   ],
   "hosting": {
-    "public": "public",
+    "public": "functions/ssr/dist/client",
     "ignore": [
       "firebase.json",
       "**/.*",
