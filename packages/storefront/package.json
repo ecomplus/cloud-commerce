@@ -21,8 +21,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepack": "rm content && cp -r ../../store/functions/ssr/content ./",
-    "postpack": "rm -rf content && ln -s ../../store/functions/ssr/content content"
+    "prerelease": "rm content && cp -r ../../store/functions/ssr/content ./",
+    "postrelease": "rm -rf content && ln -s ../../store/functions/ssr/content content"
   },
   "dependencies": {
     "@astrojs/node": "^1.0.1",

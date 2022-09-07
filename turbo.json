@@ -12,6 +12,12 @@
     },
     "test": {
       "outputs": []
+    },
+    "prerelease": {
+      "outputs": []
+    },
+    "postrelease": {
+      "outputs": []
     }
   },
   "globalDependencies": [
