@@ -38,6 +38,9 @@ if (argv.publish) {
       await $`npm i --save @cloudcommerce/firebase@${version}`;
       if (codebase !== 'core') {
         await $`npm i --save @cloudcommerce/${codebase}@${version}`;
+        if (codebase === 'ssr') {
+          await $`npm i --save @cloudcommerce/storefront@${version}`;
+        }
       }
       await $`rm -rf node_modules`;
     }
