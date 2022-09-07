@@ -20,7 +20,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepack": "rm content && cp -r ../../store/functions/ssr/content ./",
+    "postpack": "rm -rf content && ln -s ../../store/functions/ssr/content content"
   },
   "dependencies": {
     "@astrojs/node": "^1.0.1",
@@ -33,6 +35,7 @@
     "@nanostores/vue": "^0.6.0",
     "@picocss/pico": "^1.5.3",
     "astro": "^1.1.5",
+    "dotenv": "^16.0.2",
     "nanostores": "^0.6.0",
     "rollup": "^2.79.0",
     "unocss": "^0.45.15",
