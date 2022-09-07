@@ -8,9 +8,9 @@ import type {
 } from './types';
 
 // @ts-ignore
-const env: { [key: string]: string } = (typeof window === 'object' && window)
-  || (typeof process === 'object' && process && process.env)
-  || {};
+const _env: Record<string, string> = import.meta.env
+  || (typeof process === 'object' && process?.env)
+  || globalThis;
 
 class ApiError extends Error {
   config: Config;
@@ -45,8 +45,8 @@ const def = {
         // eslint-disable-next-line dot-notation
         headers['Authorization'] = `Bearer ${config.accessToken}`;
       } else {
-        const authenticationId = config.authenticationId || env.ECOM_AUTHENTICATION_ID;
-        const apiKey = config.apiKey || env.ECOM_API_KEY;
+        const authenticationId = config.authenticationId || _env.ECOM_AUTHENTICATION_ID;
+        const apiKey = config.apiKey || _env.ECOM_API_KEY;
         if (authenticationId && apiKey) {
           const rawAuth = `${authenticationId}:${apiKey}`;
           const base64Auth = typeof Buffer === 'function'
@@ -56,7 +56,7 @@ const def = {
         }
       }
     }
-    let url = config.baseUrl || env.API_BASE_URL || 'https://ecomplus.io/v2';
+    let url = config.baseUrl || _env.API_BASE_URL || 'https://ecomplus.io/v2';
     const { endpoint, params } = config;
     if (
       endpoint !== 'login'
@@ -64,12 +64,12 @@ const def = {
       && endpoint !== 'ask-auth-callback'
       && endpoint !== 'check-username'
     ) {
-      const storeId = config.storeId || env.ECOM_STORE_ID;
+      const storeId = config.storeId || _env.ECOM_STORE_ID;
       if (!storeId) {
         throw new Error('`storeId` must be set in config or `ECOM_STORE_ID` env var');
       }
       url += `/:${storeId}`;
-      const lang = config.lang || env.ECOM_LANG;
+      const lang = config.lang || _env.ECOM_LANG;
       if (lang) {
         url += `,lang:${lang}`;
       }

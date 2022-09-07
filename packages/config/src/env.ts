@@ -7,7 +7,10 @@ type Env = {
   githubToken?: string;
 };
 
-const _env: Record<string, any> = (typeof process === 'object' && process?.env) || globalThis;
+// @ts-ignore
+const _env: Record<string, any> = import.meta.env
+  || (typeof process === 'object' && process?.env)
+  || globalThis;
 
 export default () => {
   const {

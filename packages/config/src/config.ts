@@ -6,9 +6,6 @@ import {
   DEFAULT_COUNTRY_CODE,
 } from './defaults';
 
-const _env: Record<string, any> = (typeof process === 'object' && process?.env) || globalThis;
-const deepmerge = Deepmerge();
-
 type BaseConfig = {
   lang: string,
   currency: string,
@@ -16,6 +13,13 @@ type BaseConfig = {
   countryCode: string,
   storeId: number,
 };
+
+// @ts-ignore
+const _env: Record<string, any> = import.meta.env
+  || (typeof process === 'object' && process?.env)
+  || globalThis;
+
+const deepmerge = Deepmerge();
 
 const self: { config: BaseConfig } = globalThis.__cloudCommerce || {
   config: {
