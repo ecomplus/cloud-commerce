@@ -262,6 +262,7 @@ importers:
       '@nanostores/vue': ^0.6.0
       '@picocss/pico': ^1.5.3
       astro: ^1.1.5
+      dotenv: ^16.0.2
       nanostores: ^0.6.0
       rollup: ^2.79.0
       unocss: ^0.45.15
@@ -279,6 +280,7 @@ importers:
       '@nanostores/vue': 0.6.0_hrhe7dwrqggo2uvopeal6pzqzi
       '@picocss/pico': 1.5.3
       astro: 1.1.5
+      dotenv: 16.0.2
       nanostores: 0.6.0
       rollup: 2.79.0
       unocss: 0.45.15_vite@3.1.0
@@ -294,45 +296,45 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.68
+      '@cloudcommerce/cli': ^0.0.69
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.68
+      '@cloudcommerce/firebase': ^0.0.69
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.68
-      '@cloudcommerce/firebase': ^0.0.68
+      '@cloudcommerce/events': ^0.0.69
+      '@cloudcommerce/firebase': ^0.0.69
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.68
-      '@cloudcommerce/modules': ^0.0.68
+      '@cloudcommerce/firebase': ^0.0.69
+      '@cloudcommerce/modules': ^0.0.69
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.68
-      '@cloudcommerce/passport': ^0.0.68
+      '@cloudcommerce/firebase': ^0.0.69
+      '@cloudcommerce/passport': ^0.0.69
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.68
-      '@cloudcommerce/ssr': ^0.0.68
-      '@cloudcommerce/storefront': ^0.0.68
+      '@cloudcommerce/firebase': ^0.0.69
+      '@cloudcommerce/ssr': ^0.0.69
+      '@cloudcommerce/storefront': ^0.0.69
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -4247,6 +4249,11 @@ packages:
     dependencies:
       is-obj: 2.0.0
     dev: true
+
+  /dotenv/16.0.2:
+    resolution: {integrity: sha512-JvpYKUmzQhYoIFgK2MOnF3bciIZoItIIoryihy0rIA+H4Jy0FmgyKYAHCTN98P5ybGSJcIFbh6QKeJdtZd1qhA==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dotgitignore/2.1.0:
     resolution: {integrity: sha512-sCm11ak2oY6DglEPpCB8TixLjWAxd3kJTs6UIcSasNYxXdFPV+YKlye92c8H4kKFqV5qYMIh7d+cYecEg0dIkA==}
