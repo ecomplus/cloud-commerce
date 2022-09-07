@@ -235,7 +235,6 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/firebase': workspace:*
-      '@cloudcommerce/storefront': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       firebase-admin: ^11.0.1
@@ -244,7 +243,6 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/firebase': link:../firebase
-      '@cloudcommerce/storefront': link:../storefront
       firebase-admin: 11.0.1_@firebase+app-types@0.7.0
       firebase-functions: 3.23.0_firebase-admin@11.0.1
       source-map-support: 0.5.21
@@ -260,8 +258,11 @@ importers:
       '@astrojs/sitemap': ^1.0.0
       '@astrojs/vue': ^1.0.0
       '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/config': workspace:*
+      '@nanostores/vue': ^0.6.0
       '@picocss/pico': ^1.5.3
       astro: ^1.1.5
+      nanostores: ^0.6.0
       rollup: ^2.79.0
       unocss: ^0.45.15
       vite: ^3.1.0
@@ -274,8 +275,11 @@ importers:
       '@astrojs/sitemap': 1.0.0
       '@astrojs/vue': 1.0.0_vue@3.2.38
       '@cloudcommerce/api': link:../api
+      '@cloudcommerce/config': link:../config
+      '@nanostores/vue': 0.6.0_hrhe7dwrqggo2uvopeal6pzqzi
       '@picocss/pico': 1.5.3
       astro: 1.1.5
+      nanostores: 0.6.0
       rollup: 2.79.0
       unocss: 0.45.15_vite@3.1.0
       vite: 3.1.0
@@ -328,9 +332,11 @@ importers:
     specifiers:
       '@cloudcommerce/firebase': ^0.0.67
       '@cloudcommerce/ssr': ^0.0.67
+      '@cloudcommerce/storefront': workspace:^0.0.67
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
+      '@cloudcommerce/storefront': link:../../../packages/storefront
 
 packages:
 
@@ -2209,6 +2215,21 @@ packages:
 
   /@ljharb/has-package-exports-patterns/0.0.2:
     resolution: {integrity: sha512-4/RWEeXDO6bocPONheFe6gX/oQdP/bEpv0oL4HqjPP5DCenBSt0mHgahppY49N0CpsaqffdwPq+TlX9CYOq2Dw==}
+    dev: false
+
+  /@nanostores/vue/0.6.0_hrhe7dwrqggo2uvopeal6pzqzi:
+    resolution: {integrity: sha512-Co53bCDAA2hkBqpeYN975kchX/cTHMdS9qt6inqPGm8QAoB+wCoecxjmde8GSo/Arc6/JmQC5AFJGALYz0QMhw==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      '@vue/devtools-api': '>=6.1.4'
+      nanostores: '>=0.6.0'
+      vue: '>=3.2.30'
+    peerDependenciesMeta:
+      '@vue/devtools-api':
+        optional: true
+    dependencies:
+      nanostores: 0.6.0
+      vue: 3.2.38
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -7511,6 +7532,11 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanostores/0.6.0:
+    resolution: {integrity: sha512-CQpKE8wtaJAr66hbg32t0MOAeybzLywU6UsLAX18kyQL/bME+xwhjWpmrvJRBp5kueFy6hs2oHlt3HFpNP+JaA==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    dev: false
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
