@@ -6,6 +6,7 @@ import vue from '@astrojs/vue';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
+import { domain } from './storefront.config.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,4 +18,5 @@ export default defineConfig({
     prefetch(),
     sitemap(),
   ],
+  site: `https://${domain}`,
 });
