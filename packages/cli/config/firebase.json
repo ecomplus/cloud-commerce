@@ -5,27 +5,27 @@
   },
   "functions": [
     {
-      "predeploy": "npm run build -- --codebase core --dir \"$RESOURCE_DIR\"",
+      "predeploy": "npm run build -- --codebase core",
       "source": "functions/core",
       "codebase": "core"
     },
     {
-      "predeploy": "npm run build -- --codebase events --dir \"$RESOURCE_DIR\"",
+      "predeploy": "npm run build -- --codebase events",
       "source": "functions/events",
       "codebase": "events"
     },
     {
-      "predeploy": "npm run build -- --codebase modules --dir \"$RESOURCE_DIR\"",
+      "predeploy": "npm run build -- --codebase modules",
       "source": "functions/modules",
       "codebase": "modules"
     },
     {
-      "predeploy": "npm run build -- --codebase passport --dir \"$RESOURCE_DIR\"",
+      "predeploy": "npm run build -- --codebase passport",
       "source": "functions/passport",
       "codebase": "passport"
     },
     {
-      "predeploy": "npm run build -- --codebase ssr --dir \"$RESOURCE_DIR\"",
+      "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build && npm run build -- --codebase ssr",
       "source": "functions/ssr",
       "codebase": "ssr"
     }
