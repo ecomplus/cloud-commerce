@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.70](https://github.com/ecomplus/cloud-commerce/compare/v0.0.69...v0.0.70) (2022-09-07)
+
+
+### Bug Fixes
+
+* **storefront:** Replace pre/post pack scripts with pre/post release on `package.json` ([a9b28a9](https://github.com/ecomplus/cloud-commerce/commit/a9b28a96c41223c81c2b6979c9feffeb9879b8c8))
+
 ### [0.0.69](https://github.com/ecomplus/cloud-commerce/compare/v0.0.68...v0.0.69) (2022-09-07)
 
 
