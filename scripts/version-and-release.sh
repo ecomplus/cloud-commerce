@@ -2,7 +2,7 @@
 
 pnpm build
 pnpm test
-npx turbo run prerelease
+pnpm run -r prerelease
 npx standard-version --commit-all
 npx zx scripts/release.mjs --publish
-npx turbo run postrelease
+pnpm run -r postrelease
