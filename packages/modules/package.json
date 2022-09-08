@@ -28,6 +28,7 @@
     "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-custom-shipping": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
+    "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "ajv": "^8.11.0",
     "axios": "^0.27.2",
