@@ -31,6 +31,7 @@ module.exports = {
     'no-continue': 'off',
     'lines-between-class-members': 'off',
     'arrow-body-style': 'off',
+    'vue/no-multiple-template-root': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
