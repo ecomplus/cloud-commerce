@@ -9,14 +9,6 @@ export default () => {
     VITE_ECOM_STORE_ID,
   } = import.meta.env || process.env;
 
-  const {
-    storeId,
-    lang,
-    countryCode,
-    currency,
-    currencySymbol,
-  } = config.get();
-
   let baseDir;
   if (STOREFRONT_BASE_DIR) {
     const currentDir = fileURLToPath(new URL('.', import.meta.url));
@@ -29,9 +21,17 @@ export default () => {
     config.set({ storeId: Number(VITE_ECOM_STORE_ID) });
   }
 
+  const {
+    storeId,
+    lang,
+    countryCode,
+    currency,
+    currencySymbol,
+  } = config.get();
+
   const cms = (filename) => {
-    const dirColl = resolvePath(dirContent, filename);
-    if (fs.existsSync(dirColl) && fs.lstatSync(dirColl).isDirectory()) {
+    if (filename.endsWith('/')) {
+      const dirColl = resolvePath(dirContent, filename);
       return fs.readdirSync(dirColl).map((_filename) => _filename.replace('.json', ''));
     }
     const filepath = resolvePath(dirContent, `${filename}.json`);
