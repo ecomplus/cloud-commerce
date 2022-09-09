@@ -91,6 +91,17 @@ importers:
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
+  packages/apps/frenet:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
+      axios: ^0.27.2
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      axios: 0.27.2
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+
   packages/apps/tiny-erp:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -187,6 +198,7 @@ importers:
       '@cloudcommerce/app-correios': workspace:*
       '@cloudcommerce/app-custom-shipping': workspace:*
       '@cloudcommerce/app-discounts': workspace:*
+      '@cloudcommerce/app-frenet': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
@@ -201,6 +213,7 @@ importers:
       '@cloudcommerce/app-correios': link:../apps/correios
       '@cloudcommerce/app-custom-shipping': link:../apps/custom-shipping
       '@cloudcommerce/app-discounts': link:../apps/discounts
+      '@cloudcommerce/app-frenet': link:../apps/frenet
       '@cloudcommerce/firebase': link:../firebase
       ajv: 8.11.0
       axios: 0.27.2
@@ -296,45 +309,45 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.71
+      '@cloudcommerce/cli': ^0.0.72
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.71
+      '@cloudcommerce/firebase': ^0.0.72
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.71
-      '@cloudcommerce/firebase': ^0.0.71
+      '@cloudcommerce/events': ^0.0.72
+      '@cloudcommerce/firebase': ^0.0.72
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.71
-      '@cloudcommerce/modules': ^0.0.71
+      '@cloudcommerce/firebase': ^0.0.72
+      '@cloudcommerce/modules': ^0.0.72
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.71
-      '@cloudcommerce/passport': ^0.0.71
+      '@cloudcommerce/firebase': ^0.0.72
+      '@cloudcommerce/passport': ^0.0.72
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.71
-      '@cloudcommerce/ssr': ^0.0.71
-      '@cloudcommerce/storefront': ^0.0.71
+      '@cloudcommerce/firebase': ^0.0.72
+      '@cloudcommerce/ssr': ^0.0.72
+      '@cloudcommerce/storefront': ^0.0.72
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
