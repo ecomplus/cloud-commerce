@@ -1,5 +1,6 @@
 import type { Response } from 'firebase-functions';
 import Ajv, { Options, ErrorObject } from 'ajv';
+import addFormats from 'ajv-formats';
 
 const ajvOptions: Options = {
   coerceTypes: false,
@@ -10,7 +11,7 @@ const ajvOptions: Options = {
   multipleOfPrecision: 5,
   allowMatchingProperties: true,
 };
-const ajv = new Ajv(ajvOptions);
+const ajv = addFormats(new Ajv(ajvOptions));
 
 const parseAjvErrors = (errors?: ErrorObject[] | null, ajvInstance = ajv) => {
   return ajvInstance.errorsText(errors, { separator: '\n' });

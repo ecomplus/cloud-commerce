@@ -25,6 +25,8 @@ export default (req: Request, res: Response) => {
       .send(schemas[modName][isResponseSchema ? 'response' : 'params']);
   };
 
+  console.log('>> ', modName);
+
   if (modName === '@checkout') {
     if (url === '/@checkout') {
       return res.status(200).send({
@@ -41,11 +43,13 @@ export default (req: Request, res: Response) => {
   if (schemas[modName]) {
     const { params: schema, response: responseSchema } = schemas[modName];
     if (!schema.$schema) {
-      schema.$schema = 'http://json-schema.org/draft-06/schema#';
+      schema.$schema = 'http://json-schema.org/draft-07/schema#';
+      schema.$id = `${modName}-params`;
       schema.title = `Module \`${modName}\`: Params model`;
     }
     if (!responseSchema.$schema) {
-      responseSchema.$schema = 'http://json-schema.org/draft-06/schema#';
+      responseSchema.$schema = 'http://json-schema.org/draft-07/schema#';
+      schema.$id = `${modName}-response`;
       responseSchema.title = `Module \`${modName}\`: App response model`;
     }
     if (url === `/${modName}/schema`) {

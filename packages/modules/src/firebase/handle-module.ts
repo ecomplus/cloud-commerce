@@ -2,6 +2,7 @@ import type { Request, Response } from 'firebase-functions';
 import type { Applications, AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import { logger } from 'firebase-functions';
 import Ajv, { ValidateFunction } from 'ajv';
+import addFormats from 'ajv-formats';
 import api, { ApiError, ApiConfig } from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 import {
@@ -12,7 +13,7 @@ import {
 } from './ajv';
 import callAppModule from './call-app-module';
 
-const ajvAppsResponse = new Ajv({ ...ajvOptions, allErrors: true });
+const ajvAppsResponse = addFormats(new Ajv({ ...ajvOptions, allErrors: true }));
 
 // Cache apps list and no params modules results
 const appsCache = {};

@@ -250,8 +250,8 @@ const schema = {
             'properties': {
               'country_code': {
                 'type': 'integer',
-                'min': 1,
-                'max': 999,
+                'minimum': 1,
+                'maximum': 999,
                 'description': 'Country calling code (without +), defined by standards E.123 and E.164'
               },
               'number': {
@@ -328,8 +328,8 @@ const schema = {
               },
               'number': {
                 'type': 'integer',
-                'min': 1,
-                'max': 9999999,
+                'minimum': 1,
+                'maximum': 9999999,
                 'description': 'House or building street number'
               },
               'complement': {
@@ -398,8 +398,8 @@ const schema = {
                 'properties': {
                   'country_code': {
                     'type': 'integer',
-                    'min': 1,
-                    'max': 999,
+                    'minimum': 1,
+                    'maximum': 999,
                     'description': 'Country calling code (without +), defined by standards E.123 and E.164'
                   },
                   'number': {

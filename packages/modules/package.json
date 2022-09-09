@@ -30,6 +30,7 @@
     "@cloudcommerce/app-discounts": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "axios": "^0.27.2",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.23.0",
