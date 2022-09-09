@@ -29,11 +29,13 @@ if (!globalThis.api_prefetch_endpoints) {
 
 type ApiPrefetchEndpoints = Array<ApiEndpoint>;
 
-const loadPageContext = async (
-  Astro: AstroGlobal,
-  cmsCollection?: string,
-  apiPrefetchEndpoints: ApiPrefetchEndpoints = globalThis.api_prefetch_endpoints,
-) => {
+const loadPageContext = async (Astro: AstroGlobal, {
+  cmsCollection,
+  apiPrefetchEndpoints = globalThis.api_prefetch_endpoints,
+}: {
+  cmsCollection?: string;
+  apiPrefetchEndpoints?: ApiPrefetchEndpoints;
+} = {}) => {
   const { slug } = Astro.params;
   const config = getConfig();
   let cmsContent: Record<string, any> | undefined;
