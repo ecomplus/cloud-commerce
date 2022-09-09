@@ -1,5 +1,5 @@
 ---
-import ViewWildcard from '../lib/views/[...slug].astro';
+import View500 from '../lib/views/500.astro';
 import loadPageContext, { PageContext } from '../lib/ssr-context';
 
 let pageContext: PageContext;
@@ -10,4 +10,4 @@ try {
 }
 ---
 
-<ViewWildcard pageContext={pageContext} />
+<View500 pageContext={pageContext} />
