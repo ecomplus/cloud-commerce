@@ -21,20 +21,21 @@ const _env: Record<string, any> = import.meta.env
 
 const deepmerge = Deepmerge();
 
-const self: { config: BaseConfig } = globalThis.__cloudCommerce || {
-  config: {
-    lang: _env.ECOM_LANG || DEFAULT_LANG,
-    currency: _env.ECOM_CURRENCY || DEFAULT_CURRENCY,
-    currencySymbol: _env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL,
-    countryCode: _env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
-    storeId: Number(_env.ECOM_STORE_ID),
-  },
+const self = globalThis.__cloudCommerce || {
+  config: {},
 };
 globalThis.__cloudCommerce = self;
 
 export default {
-  get() {
-    return self.config;
+  get(): BaseConfig {
+    return {
+      lang: _env.ECOM_LANG || DEFAULT_LANG,
+      currency: _env.ECOM_CURRENCY || DEFAULT_CURRENCY,
+      currencySymbol: _env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL,
+      countryCode: _env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
+      storeId: Number(_env.ECOM_STORE_ID),
+      ...self.config,
+    };
   },
   set(config) {
     self.config = deepmerge(self.config, config);
