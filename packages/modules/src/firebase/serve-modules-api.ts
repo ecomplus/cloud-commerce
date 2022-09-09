@@ -42,12 +42,10 @@ export default (req: Request, res: Response) => {
     const { params: schema, response: responseSchema } = schemas[modName];
     if (!schema.$schema) {
       schema.$schema = 'http://json-schema.org/draft-07/schema#';
-      schema.$id = `${modName}-params`;
       schema.title = `Module \`${modName}\`: Params model`;
     }
     if (!responseSchema.$schema) {
       responseSchema.$schema = 'http://json-schema.org/draft-07/schema#';
-      schema.$id = `${modName}-response`;
       responseSchema.title = `Module \`${modName}\`: App response model`;
     }
     if (url === `/${modName}/schema`) {
