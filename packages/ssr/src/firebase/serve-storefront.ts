@@ -38,15 +38,16 @@ export default (req: Request, res: Response) => {
   };
 
   const fallback = (status = 404) => {
-    if (url.slice(-1) === '/') {
+    const is404 = status === 404;
+    if (is404 && url.slice(-1) === '/') {
       redirect(url.slice(0, -1));
-    } else if (url !== '/404' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
+    } else if (url !== `/${status}` && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
       setStatusAndCache(status, `public, max-age=${(isLongCache ? 120 : 30)}`)
         .send('<html><head>'
-          + `<meta http-equiv="refresh" content="0; url=/404?url=${encodeURIComponent(url)}"/>`
+          + `<meta http-equiv="refresh" content="0; url=/${status}?url=${encodeURIComponent(url)}"/>`
           + '</head><body></body></html>');
     } else {
-      setStatusAndCache(status, isLongCache
+      setStatusAndCache(status, isLongCache && is404
         ? 'public, max-age=60, s-maxage=86400'
         : 'public, max-age=60, s-maxage=300')
         .end();
@@ -60,7 +61,7 @@ export default (req: Request, res: Response) => {
   */
   global.ssr_handler(req, res, async (err: any) => {
     if (err) {
-      res.set('X-SSR-ERROR', err.stack);
+      res.set('X-SSR-Error', err.stack);
       fallback(500);
       return;
     }
