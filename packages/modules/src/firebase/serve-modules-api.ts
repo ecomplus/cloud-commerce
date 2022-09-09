@@ -25,8 +25,6 @@ export default (req: Request, res: Response) => {
       .send(schemas[modName][isResponseSchema ? 'response' : 'params']);
   };
 
-  console.log('>> ', modName);
-
   if (modName === '@checkout') {
     if (url === '/@checkout') {
       return res.status(200).send({
