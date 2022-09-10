@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.73](https://github.com/ecomplus/cloud-commerce/compare/v0.0.72...v0.0.73) (2022-09-10)
+
+
+### Bug Fixes
+
+* **ssr:** Fix fallback and errors and skip cache/redirect handled by Astro SSR ([abe19ae](https://github.com/ecomplus/cloud-commerce/commit/abe19ae585698c7621aa3bc6cf26bbf8f816824a))
+* **storefront:** Must prefetch defined API endpoints also for non-slug pages (home) ([c55f201](https://github.com/ecomplus/cloud-commerce/commit/c55f201c76b96c19c334c460df35baa5715ac5b1))
+* **storefront:** Send `X-SSR-Error` with error message only ([7fafde1](https://github.com/ecomplus/cloud-commerce/commit/7fafde110ee9b6d9139b2ad0f7959826c1b08e74))
+
 ### [0.0.72](https://github.com/ecomplus/cloud-commerce/compare/v0.0.71...v0.0.72) (2022-09-09)
 
 

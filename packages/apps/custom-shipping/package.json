@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-custom-shipping",
   "type": "module",
-  "version": "0.0.72",
+  "version": "0.0.73",
   "description": "E-Com Plus Cloud Commerce app for custom shipping methods",
   "main": "lib/custom-shipping.js",
   "repository": {
