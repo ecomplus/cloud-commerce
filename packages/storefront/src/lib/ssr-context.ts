@@ -90,7 +90,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
     } else {
       console.error(error);
       setResponseCache(Astro, 30);
-      Astro.response.headers.set('X-SSR-Error', error.stack);
+      Astro.response.headers.set('X-SSR-Error', error.message);
     }
     Astro.response.status = status;
     err.responseHTML = `<html><head>
