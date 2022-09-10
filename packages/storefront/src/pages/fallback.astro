@@ -1,5 +1,5 @@
 ---
-import View404 from '../lib/views/404.astro';
+import ViewFallback from '../lib/views/fallback.astro';
 import loadPageContext, { PageContext } from '../lib/ssr-context';
 
 let pageContext: PageContext;
@@ -10,4 +10,4 @@ try {
 }
 ---
 
-<View404 pageContext={pageContext} />
+<ViewFallback pageContext={pageContext} />

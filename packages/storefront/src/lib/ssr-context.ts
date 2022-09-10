@@ -29,6 +29,15 @@ if (!globalThis.api_prefetch_endpoints) {
 
 type ApiPrefetchEndpoints = Array<ApiEndpoint>;
 
+const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
+  const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
+  let cacheControl = `public, max-age=${maxAge}`;
+  if (sMaxAge) {
+    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=86400`;
+  }
+  Astro.response.headers.set(headerName, cacheControl);
+};
+
 const loadPageContext = async (Astro: AstroGlobal, {
   cmsCollection,
   apiPrefetchEndpoints = globalThis.api_prefetch_endpoints,
@@ -36,50 +45,65 @@ const loadPageContext = async (Astro: AstroGlobal, {
   cmsCollection?: string;
   apiPrefetchEndpoints?: ApiPrefetchEndpoints;
 } = {}) => {
+  const urlPath = Astro.url.pathname;
   const { slug } = Astro.params;
   const config = getConfig();
   let cmsContent: Record<string, any> | undefined;
   let apiResource: string | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: { [k: string]: Record<string, any> } = {};
+  const apiOptions = {
+    fetch,
+    isNoAuth: true,
+  };
+  const apiFetchings = [
+    null, // fetch by slug
+    ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint, apiOptions)),
+  ];
   if (slug) {
     if (cmsCollection) {
       cmsContent = config.cms(`${cmsCollection}/${slug}`);
     } else {
-      const apiOptions = {
-        fetch,
-        isNoAuth: true,
-      };
-      const apiFetchings = [
-        api.get(`slugs/${slug}`, apiOptions),
-        ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint, apiOptions)),
-      ];
-      try {
-        const [slugResponse, ...prefetchResponses] = await Promise.all(apiFetchings);
-        apiResource = slugResponse.data.resource;
-        apiDoc = slugResponse.data.doc;
-        apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
-        prefetchResponses.forEach(({ config: { endpoint }, data }) => {
-          apiState[endpoint] = data;
-        });
-      } catch (e: any) {
-        const error: ApiError = e;
-        let toUrl: string;
-        if (error.statusCode === 404) {
-          toUrl = '/404';
-          Astro.response.headers.set('Cache-Control', 'public, max-age=120');
-        } else {
-          console.error(error);
-          toUrl = '/500';
-          Astro.response.headers.set('X-SSR-Error', error.stack);
-        }
-        const err: any = new Error(`Load page context failed: ${error.message}`);
-        err.originalError = error;
-        err.redirectUrl = `${toUrl}?url=${encodeURIComponent(Astro.url.pathname)}`;
+      apiFetchings[0] = api.get(`slugs/${slug}`, apiOptions);
+    }
+  }
+  try {
+    const [slugResponse, ...prefetchResponses] = await Promise.all(apiFetchings);
+    if (slugResponse) {
+      apiResource = slugResponse.data.resource;
+      apiDoc = slugResponse.data.doc;
+      apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
+    }
+    prefetchResponses.forEach(({ config: { endpoint }, data }) => {
+      apiState[endpoint] = data;
+    });
+  } catch (err: any) {
+    const error: ApiError = err;
+    const status = error.statusCode || 500;
+    if (status === 404) {
+      if (urlPath.endsWith('/')) {
+        err.redirectUrl = urlPath.slice(0, -1);
         err.astroResponse = Astro.redirect(err.redirectUrl);
         throw err;
       }
+      setResponseCache(Astro, 120, 300);
+    } else {
+      console.error(error);
+      setResponseCache(Astro, 30);
+      Astro.response.headers.set('X-SSR-Error', error.stack);
     }
+    Astro.response.status = status;
+    err.responseHTML = `<html><head>
+      <meta http-equiv="refresh" content="0;
+        url=/fallback?status=${status}&url=${encodeURIComponent(urlPath)}"/>
+      </head>
+      <body></body></html>`;
+    throw err;
+  }
+  if (urlPath === '/fallback') {
+    setResponseCache(Astro, 3600, 86400);
+  } else {
+    setResponseCache(Astro, 120, 600);
   }
   return {
     ...config,
