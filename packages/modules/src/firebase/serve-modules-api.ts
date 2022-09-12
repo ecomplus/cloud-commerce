@@ -18,7 +18,9 @@ export default (req: Request, res: Response) => {
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
+  [url] = url.split('?');
   const modName = url.split('/')[1];
+
   const sendSchema = (isResponseSchema = false) => {
     return res.status(200)
       .setHeader('Cache-Control', 'public, max-age=3600')
@@ -41,11 +43,11 @@ export default (req: Request, res: Response) => {
   if (schemas[modName]) {
     const { params: schema, response: responseSchema } = schemas[modName];
     if (!schema.$schema) {
-      schema.$schema = 'http://json-schema.org/draft-06/schema#';
+      schema.$schema = 'http://json-schema.org/draft-07/schema#';
       schema.title = `Module \`${modName}\`: Params model`;
     }
     if (!responseSchema.$schema) {
-      responseSchema.$schema = 'http://json-schema.org/draft-06/schema#';
+      responseSchema.$schema = 'http://json-schema.org/draft-07/schema#';
       responseSchema.title = `Module \`${modName}\`: App response model`;
     }
     if (url === `/${modName}/schema`) {
@@ -55,7 +57,7 @@ export default (req: Request, res: Response) => {
       return sendSchema(true);
     }
     if (url === `/${modName}`) {
-      return handleModule(modName, schema, responseSchema, req, res);
+      return handleModule(modName, schema, responseSchema, req, res)[method]();
     }
   }
   return res.sendStatus(404);

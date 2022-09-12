@@ -25,8 +25,8 @@ exports.params = {
         },
         'number': {
           'type': 'integer',
-          'min': 1,
-          'max': 9999999,
+          'minimum': 1,
+          'maximum': 9999999,
           'description': 'House or building street number'
         },
         'complement': {
@@ -95,8 +95,8 @@ exports.params = {
           'properties': {
             'country_code': {
               'type': 'integer',
-              'min': 1,
-              'max': 999,
+              'minimum': 1,
+              'maximum': 999,
               'description': 'Country calling code (without +), defined by standards E.123 and E.164'
             },
             'number': {
@@ -230,20 +230,20 @@ exports.params = {
               'properties': {
                 'day': {
                   'type': 'integer',
-                  'min': 1,
-                  'max': 31,
+                  'minimum': 1,
+                  'maximum': 31,
                   'description': 'Day of birth'
                 },
                 'month': {
                   'type': 'integer',
-                  'min': 1,
-                  'max': 12,
+                  'minimum': 1,
+                  'maximum': 12,
                   'description': 'Number of month of birth'
                 },
                 'year': {
                   'type': 'integer',
-                  'min': 1800,
-                  'max': 2200,
+                  'minimum': 1800,
+                  'maximum': 2200,
                   'description': 'Year of birth'
                 }
               },
@@ -256,8 +256,8 @@ exports.params = {
               'properties': {
                 'country_code': {
                   'type': 'integer',
-                  'min': 1,
-                  'max': 999,
+                  'minimum': 1,
+                  'maximum': 999,
                   'description': 'Country calling code (without +), defined by standards E.123 and E.164'
                 },
                 'number': {
@@ -320,20 +320,20 @@ exports.params = {
               'properties': {
                 'day': {
                   'type': 'integer',
-                  'min': 1,
-                  'max': 31,
+                  'minimum': 1,
+                  'maximum': 31,
                   'description': 'Day of birth'
                 },
                 'month': {
                   'type': 'integer',
-                  'min': 1,
-                  'max': 12,
+                  'minimum': 1,
+                  'maximum': 12,
                   'description': 'Number of month of birth'
                 },
                 'year': {
                   'type': 'integer',
-                  'min': 1800,
-                  'max': 2200,
+                  'minimum': 1800,
+                  'maximum': 2200,
                   'description': 'Year of birth'
                 }
               },
@@ -346,8 +346,8 @@ exports.params = {
               'properties': {
                 'country_code': {
                   'type': 'integer',
-                  'min': 1,
-                  'max': 999,
+                  'minimum': 1,
+                  'maximum': 999,
                   'description': 'Country calling code (without +), defined by standards E.123 and E.164'
                 },
                 'number': {
@@ -409,8 +409,8 @@ exports.params = {
             },
             'bin': {
               'type': 'integer',
-              'min': 1,
-              'max': 9999999,
+              'minimum': 1,
+              'maximum': 9999999,
               'description': 'Issuer identification number (IIN), known as bank identification number (BIN)'
             },
             'company': {
@@ -431,8 +431,8 @@ exports.params = {
             },
             'cvv': {
               'type': 'integer',
-              'min': 99,
-              'max': 99999,
+              'minimum': 99,
+              'maximum': 99999,
               'description': 'Credit card CVV number (Card Verification Value)'
             },
             'hash': {
@@ -829,8 +829,8 @@ exports.params = {
     },
     'channel_id': {
       'type': 'integer',
-      'min': 10000,
-      'max': 4294967295,
+      'minimum': 10000,
+      'maximum': 4294967295,
       'description': 'Channel unique identificator'
     },
     'channel_type': {
@@ -955,8 +955,8 @@ exports.params = {
             'properties': {
               'country_code': {
                 'type': 'integer',
-                'min': 1,
-                'max': 999,
+                'minimum': 1,
+                'maximum': 999,
                 'description': 'Country calling code (without +), defined by standards E.123 and E.164'
               },
               'number': {

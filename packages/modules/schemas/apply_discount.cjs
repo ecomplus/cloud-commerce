@@ -179,8 +179,8 @@ const schema = {
     },
     'channel_id': {
       'type': 'integer',
-      'min': 10000,
-      'max': 4294967295,
+      'minimum': 10000,
+      'maximum': 4294967295,
       'description': 'Channel unique identificator'
     },
     'channel_type': {

@@ -23,8 +23,8 @@ const schema = {
         },
         'number': {
           'type': 'integer',
-          'min': 1,
-          'max': 9999999,
+          'minimum': 1,
+          'maximum': 9999999,
           'description': 'House or building street number'
         },
         'complement': {
@@ -93,8 +93,8 @@ const schema = {
           'properties': {
             'country_code': {
               'type': 'integer',
-              'min': 1,
-              'max': 999,
+              'minimum': 1,
+              'maximum': 999,
               'description': 'Country calling code (without +), defined by standards E.123 and E.164'
             },
             'number': {
@@ -306,20 +306,20 @@ const schema = {
           'properties': {
             'day': {
               'type': 'integer',
-              'min': 1,
-              'max': 31,
+              'minimum': 1,
+              'maximum': 31,
               'description': 'Day of birth'
             },
             'month': {
               'type': 'integer',
-              'min': 1,
-              'max': 12,
+              'minimum': 1,
+              'maximum': 12,
               'description': 'Number of month of birth'
             },
             'year': {
               'type': 'integer',
-              'min': 1800,
-              'max': 2200,
+              'minimum': 1800,
+              'maximum': 2200,
               'description': 'Year of birth'
             }
           },
@@ -332,8 +332,8 @@ const schema = {
           'properties': {
             'country_code': {
               'type': 'integer',
-              'min': 1,
-              'max': 999,
+              'minimum': 1,
+              'maximum': 999,
               'description': 'Country calling code (without +), defined by standards E.123 and E.164'
             },
             'number': {
@@ -396,20 +396,20 @@ const schema = {
           'properties': {
             'day': {
               'type': 'integer',
-              'min': 1,
-              'max': 31,
+              'minimum': 1,
+              'maximum': 31,
               'description': 'Day of birth'
             },
             'month': {
               'type': 'integer',
-              'min': 1,
-              'max': 12,
+              'minimum': 1,
+              'maximum': 12,
               'description': 'Number of month of birth'
             },
             'year': {
               'type': 'integer',
-              'min': 1800,
-              'max': 2200,
+              'minimum': 1800,
+              'maximum': 2200,
               'description': 'Year of birth'
             }
           },
@@ -422,8 +422,8 @@ const schema = {
           'properties': {
             'country_code': {
               'type': 'integer',
-              'min': 1,
-              'max': 999,
+              'minimum': 1,
+              'maximum': 999,
               'description': 'Country calling code (without +), defined by standards E.123 and E.164'
             },
             'number': {
@@ -485,8 +485,8 @@ const schema = {
         },
         'bin': {
           'type': 'integer',
-          'min': 1,
-          'max': 9999999,
+          'minimum': 1,
+          'maximum': 9999999,
           'description': 'Issuer identification number (IIN), known as bank identification number (BIN)'
         },
         'company': {
@@ -507,8 +507,8 @@ const schema = {
         },
         'cvv': {
           'type': 'integer',
-          'min': 99,
-          'max': 99999,
+          'minimum': 99,
+          'maximum': 99999,
           'description': 'Credit card CVV number (Card Verification Value)'
         },
         'hash': {
@@ -552,8 +552,8 @@ const schema = {
     },
     'order_number': {
       'type': 'integer',
-      'min': 1,
-      'max': 999999999,
+      'minimum': 1,
+      'maximum': 999999999,
       'description': 'Number of created order'
     },
     'open_payment_id': {
@@ -605,8 +605,8 @@ const schema = {
     },
     'channel_id': {
       'type': 'integer',
-      'min': 10000,
-      'max': 4294967295,
+      'minimum': 10000,
+      'maximum': 4294967295,
       'description': 'Channel unique identificator'
     },
     'channel_type': {
@@ -723,8 +723,8 @@ exports.response = {
             },
             'bin': {
               'type': 'integer',
-              'min': 1,
-              'max': 9999999,
+              'minimum': 1,
+              'maximum': 9999999,
               'description': 'Issuer identification number (IIN), known as bank identification number (BIN)'
             },
             'company': {
