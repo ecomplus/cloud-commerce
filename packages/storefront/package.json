@@ -25,6 +25,7 @@
     "prerelease": "rm content && cp -r ../../store/functions/ssr/content ./"
   },
   "dependencies": {
+    "@astrojs/image": "^0.7.0",
     "@astrojs/node": "^1.0.1",
     "@astrojs/partytown": "^1.0.0",
     "@astrojs/prefetch": "^0.0.7",

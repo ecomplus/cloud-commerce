@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
+import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
@@ -17,6 +18,7 @@ export default defineConfig({
   adapter: node(),
   integrations: [
     vue(),
+    image(),
     partytown(),
     prefetch(),
     sitemap(),
