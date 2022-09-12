@@ -47,6 +47,7 @@ async function runModule(
     appId
     && (typeof appId === 'number' || (typeof appId === 'string' && /^\d+$/.test(appId)))
   ) {
+    appId = typeof appId === 'string' ? parseInt(appId,10) : appId
     canCache = false;
     listAppsParams.app_id = appId;
     listAppsParams.limit = 1;

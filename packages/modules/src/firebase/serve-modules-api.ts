@@ -18,8 +18,9 @@ export default (req: Request, res: Response) => {
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
-  const modNameAndQuery = url.split('/')[1].split('?');
-  const modName = modNameAndQuery[0];
+  // eslint-disable-next-line prefer-destructuring
+  url = url.split('?')[0];
+  const modName = url.split('/')[1];
 
   const sendSchema = (isResponseSchema = false) => {
     return res.status(200)
@@ -56,8 +57,8 @@ export default (req: Request, res: Response) => {
     if (url === `/${modName}/response_schema`) {
       return sendSchema(true);
     }
-    if (url === `/${modName}` || url === `/${modName}?${modNameAndQuery[1]}`) {
-      return handleModule(modName, schema, responseSchema, req, res);
+    if (url === `/${modName}`) {
+      return handleModule(modName, schema, responseSchema, req, res)[method]();
     }
   }
   return res.sendStatus(404);
