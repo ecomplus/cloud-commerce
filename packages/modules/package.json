@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/modules",
   "type": "module",
-  "version": "0.0.71",
+  "version": "0.0.73",
   "description": "E-Com Plus Cloud Commerce modules API",
   "main": "lib/index.cjs",
   "exports": {
@@ -28,6 +28,7 @@
     "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-custom-shipping": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
+    "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",

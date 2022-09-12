@@ -23,6 +23,9 @@ const mergeConfig = {
     customShipping: {
       appId: 1253,
     },
+    frenet: {
+      appId: 1244,
+    },
     tinyErp: {
       appId: 105922,
       events: tinyErpEvents,

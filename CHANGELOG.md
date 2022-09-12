@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.73](https://github.com/ecomplus/cloud-commerce/compare/v0.0.72...v0.0.73) (2022-09-10)
+
+
+### Bug Fixes
+
+* **ssr:** Fix fallback and errors and skip cache/redirect handled by Astro SSR ([abe19ae](https://github.com/ecomplus/cloud-commerce/commit/abe19ae585698c7621aa3bc6cf26bbf8f816824a))
+* **storefront:** Must prefetch defined API endpoints also for non-slug pages (home) ([c55f201](https://github.com/ecomplus/cloud-commerce/commit/c55f201c76b96c19c334c460df35baa5715ac5b1))
+* **storefront:** Send `X-SSR-Error` with error message only ([7fafde1](https://github.com/ecomplus/cloud-commerce/commit/7fafde110ee9b6d9139b2ad0f7959826c1b08e74))
+
+### [0.0.72](https://github.com/ecomplus/cloud-commerce/compare/v0.0.71...v0.0.72) (2022-09-09)
+
+
+### Features
+
+* **frenet:** Setup  Frenet app from https://github.com/ecomplus/app-frenet ([#47](https://github.com/ecomplus/cloud-commerce/issues/47)) ([465a8c8](https://github.com/ecomplus/cloud-commerce/commit/465a8c8232a2cfb1e46b2c0b176a0b3ec04e213c))
+* **storefront:** Setup `loadPageContext` function and pages base SSR :tada: ([a7127be](https://github.com/ecomplus/cloud-commerce/commit/a7127be516eb87a7ac3f6221b717d9708f174d8a))
+
+
+### Bug Fixes
+
+* **config:** Check env and defaults on `get()` ([f466f3b](https://github.com/ecomplus/cloud-commerce/commit/f466f3be32edeefbb85a71699d884e629041c0cf))
+* Remove `content` symlink to prevent clone error ([f35bd83](https://github.com/ecomplus/cloud-commerce/commit/f35bd835f3089d655dfee2b629dd1cda82ae3986))
+* **ssr:** Fix handling SSR fallback for 5xx error ([fa280ea](https://github.com/ecomplus/cloud-commerce/commit/fa280ea5947946cb2820f8ca4a5c81ced20e25cc))
+* **storefront:** Update `cms` function to consider folder collection if filename with / ([2d90a0a](https://github.com/ecomplus/cloud-commerce/commit/2d90a0a359e0cec617269c96274df289988d06d6))
+
 ### [0.0.71](https://github.com/ecomplus/cloud-commerce/compare/v0.0.70...v0.0.71) (2022-09-08)
 
 ### [0.0.70](https://github.com/ecomplus/cloud-commerce/compare/v0.0.69...v0.0.70) (2022-09-07)

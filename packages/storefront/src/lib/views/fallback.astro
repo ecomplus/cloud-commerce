@@ -1,11 +1,16 @@
 ---
+import type { PageContext } from '../ssr-context';
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+
+export interface Props {
+  pageContext: PageContext;
+}
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
-    <h1>404</h1>
+    <h1>Error :/</h1>
     <p class="instructions">
       Check out the <code>src/pages</code> directory to get started.<br/>
       <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.

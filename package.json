@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "0.0.71",
+  "version": "0.0.73",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -11,7 +11,7 @@
     "pnpm": ">=7"
   },
   "scripts": {
-    "postinstall": "husky install",
+    "postinstall": "husky install && pnpm run -r prepare-monorepo",
     "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build",
     "test": "turbo run test",

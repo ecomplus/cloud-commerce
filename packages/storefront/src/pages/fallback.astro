@@ -1,0 +1,13 @@
+---
+import ViewFallback from '../lib/views/fallback.astro';
+import loadPageContext, { PageContext } from '../lib/ssr-context';
+
+let pageContext: PageContext;
+try {
+  pageContext = await loadPageContext(Astro);
+} catch (err) {
+  return err.astroResponse;
+}
+---
+
+<ViewFallback pageContext={pageContext} />

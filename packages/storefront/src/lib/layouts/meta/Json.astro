@@ -1,0 +1,34 @@
+---
+import { getConfig } from '../../ssr-context';
+
+const {
+  storeId,
+  lang,
+  countryCode,
+  currency,
+  currencySymbol,
+  domain,
+  settings,
+} = getConfig();
+
+const inlineClientJS = `
+window._settings = ${JSON.stringify({
+  ...settings,
+  store_id: storeId,
+  lang,
+  country_code: countryCode,
+  currency,
+  currency_symbol: currencySymbol,
+})};`;
+
+const inlineJSONLd = JSON.stringify({
+  '@context': 'http://schema.org',
+  '@type': 'Organization',
+  name: settings.name,
+  url: `https://${domain}/`,
+  logo: `https://${domain}${settings.logo}`,
+});
+---
+
+<script is:inline set:html={inlineClientJS} />
+<script type="application/ld+json" set:html={inlineJSONLd} />

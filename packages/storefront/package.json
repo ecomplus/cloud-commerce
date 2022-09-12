@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.0.71",
+  "version": "0.0.73",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "main": "src/index.js",
   "repository": {
@@ -21,8 +21,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prerelease": "rm content && cp -r ../../store/functions/ssr/content ./",
-    "postrelease": "rm -rf content && ln -s ../../store/functions/ssr/content content"
+    "prepare-monorepo": "rm -rf content && ln -s ../../store/functions/ssr/content content",
+    "prerelease": "rm content && cp -r ../../store/functions/ssr/content ./"
   },
   "dependencies": {
     "@astrojs/node": "^1.0.1",
