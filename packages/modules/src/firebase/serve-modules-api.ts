@@ -18,8 +18,7 @@ export default (req: Request, res: Response) => {
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
-  // eslint-disable-next-line prefer-destructuring
-  url = url.split('?')[0];
+  [url] = url.split('?');
   const modName = url.split('/')[1];
 
   const sendSchema = (isResponseSchema = false) => {
