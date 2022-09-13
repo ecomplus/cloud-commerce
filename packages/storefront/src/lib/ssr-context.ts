@@ -18,7 +18,8 @@ type StorefrontConfig = {
   settings: CmsSettings,
   dirContent: string,
   // eslint-disable-next-line no-unused-vars
-  cms: (filename: string) => Record<string, any> | Array<string>,
+  cms: <T extends string>(filename: T) => T extends `${string}/`
+    ? Array<string> : Record<string, any>,
 };
 
 const getConfig: () => StorefrontConfig = _getConfig;
