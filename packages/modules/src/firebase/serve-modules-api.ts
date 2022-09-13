@@ -1,6 +1,7 @@
 import type { Request, Response } from 'firebase-functions';
 import { schemas } from '../index';
 import handleModule from './handle-module';
+import checkout from './checkout';
 
 export default (req: Request, res: Response) => {
   const { method } = req;
@@ -29,10 +30,7 @@ export default (req: Request, res: Response) => {
 
   if (modName === '@checkout') {
     if (url === '/@checkout') {
-      return res.status(200).send({
-        status: 200,
-        message: 'CHECKOUT',
-      });
+      return checkout(schemas[modName].params, req, res)[method]();
     }
     if (url === '/@checkout/schema') {
       return sendSchema();

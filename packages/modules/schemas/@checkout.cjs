@@ -1,7 +1,7 @@
 /* eslint-disable quote-props, comma-dangle, array-bracket-spacing */
 
 exports.params = {
-  '$schema': 'http://json-schema.org/draft-06/schema#',
+  '$schema': 'http://json-schema.org/draft-07/schema#',
   'title': 'Checkout body',
   'description': 'Triggered to handle checkout with billing and shipping and create new order',
   'type': 'object',
