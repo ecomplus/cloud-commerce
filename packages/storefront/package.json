@@ -37,6 +37,7 @@
     "@picocss/pico": "^1.5.4",
     "astro": "^1.2.2",
     "dotenv": "^16.0.2",
+    "firebase": "^9.9.4",
     "nanostores": "^0.6.0",
     "rollup": "^2.79.0",
     "unocss": "^0.45.21",

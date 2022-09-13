@@ -2,6 +2,7 @@
 import { getConfig } from '../ssr-context';
 import MetaHead from './meta/Head.astro';
 import MetaJson from './meta/Json.astro';
+import LoginModal from '../components/LoginModal.vue';
 
 export interface Props {
 	title: string;
@@ -18,8 +19,31 @@ const { title } = Astro.props as Props;
   <title>{title}</title>
 </head>
 <body>
+  <LoginModal client:idle />
 	<slot />
   <MetaJson />
+  <slot name="firebase-init">
+    <script>
+      // Import Firebase in compat version for Auth UI
+      // https://github.com/firebase/firebaseui-web#starting-the-sign-in-flow
+      import firebase from "firebase/compat/app";
+      import { getAnalytics } from "firebase/analytics";
+      // @ts-ignore
+      const firebaseConfig = window.firebaseConfig || {
+        apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
+        authDomain: "ecom2-002.firebaseapp.com",
+        projectId: "ecom2-002",
+        storageBucket: "ecom2-002.appspot.com",
+        messagingSenderId: "402807248219",
+        appId: "1:402807248219:web:cf7d57759751e74776367e",
+        measurementId: "G-SC592CE0GB"
+      };
+      // @ts-ignore
+      window.firebase = firebase;
+      const app = firebase.initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+  </slot>
 </body>
 </html>
 
