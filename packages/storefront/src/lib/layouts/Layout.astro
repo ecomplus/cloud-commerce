@@ -1,33 +1,38 @@
 ---
-import { getConfig } from '../ssr-context';
+import type { PageContext } from '../ssr-context';
 import MetaHead from './meta/Head.astro';
 import MetaJson from './meta/Json.astro';
-import LoginModal from '../components/LoginModal.vue';
+import '@picocss/pico/css/pico.min.css';
 
 export interface Props {
-	title: string;
+  pageContext: PageContext;
+  title?: string;
 }
 
-const { lang } = getConfig();
-const { title } = Astro.props as Props;
+const { pageContext, title } = Astro.props as Props;
+const {
+  lang,
+  primaryColor,
+  secondaryColor,
+  cms,
+} = pageContext;
+const cmsCustomCode = cms('code') as typeof import('../../../content/code.json');
 ---
 
 <!DOCTYPE html>
-<html lang={lang.replace('_', '-')}>
+<html lang={lang.replace('_', '-')} data-theme="light">
 <head>
-  <MetaHead />
-  <title>{title}</title>
+  <MetaHead pageContext={pageContext} title={title} />
+  {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
+  {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
 </head>
 <body>
-  <LoginModal client:idle />
 	<slot />
-  <MetaJson />
+  <MetaJson pageContext={pageContext} />
   <slot name="firebase-init">
     <script>
-      // Import Firebase in compat version for Auth UI
-      // https://github.com/firebase/firebaseui-web#starting-the-sign-in-flow
-      import firebase from "firebase/compat/app";
-      import { getAnalytics } from "firebase/analytics";
+      import { initializeApp } from 'firebase/app';
+      import { getAnalytics } from 'firebase/analytics';
       // @ts-ignore
       const firebaseConfig = window.firebaseConfig || {
         apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
@@ -38,16 +43,15 @@ const { title } = Astro.props as Props;
         appId: "1:402807248219:web:cf7d57759751e74776367e",
         measurementId: "G-SC592CE0GB"
       };
-      // @ts-ignore
-      window.firebase = firebase;
-      const app = firebase.initializeApp(firebaseConfig);
+      const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
     </script>
   </slot>
+  {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
 </body>
 </html>
 
-<style>
+<style is:global define:vars={{ primary: primaryColor, secondary: secondaryColor }}>
   :root {
     --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
 		--font-size-lg: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem); 
@@ -69,15 +73,15 @@ const { title } = Astro.props as Props;
     margin: 0;
   }
 
-  :global(h1) {
+  h1 {
     font-size: var(--font-size-xl);
   }
 
-  :global(h2) {
+  h2 {
     font-size: var(--font-size-lg);
   }
 
-  :global(code) {
+  code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 			Bitstream Vera Sans Mono, Courier New, monospace;
   }

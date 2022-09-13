@@ -6,9 +6,11 @@ import Card from '../components/Card.astro';
 export interface Props {
   pageContext: PageContext;
 }
+
+const { pageContext } = Astro.props as Props;
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout pageContext={pageContext}>
   <main>
     <h1>Error :/</h1>
     <p class="instructions">

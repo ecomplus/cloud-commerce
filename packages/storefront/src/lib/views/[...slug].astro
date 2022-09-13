@@ -10,7 +10,7 @@ const { pageContext } = Astro.props;
 const { apiResource, apiDoc } = pageContext;
 ---
 
-<Layout title={apiDoc.name}>
+<Layout pageContext={pageContext}>
   <main>
     <h1>Hello <span class="text-gradient">{apiDoc.name}</span></h1>
     <hr>

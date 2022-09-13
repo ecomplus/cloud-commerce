@@ -8,10 +8,11 @@ export interface Props {
 	pageContext: PageContext;
 }
 
+const { pageContext } = Astro.props as Props;
 const products = (await api.get('products')).data.result;
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout pageContext={pageContext} title="">
 	<main>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
 		<p class="instructions">
