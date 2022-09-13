@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.74](https://github.com/ecomplus/cloud-commerce/compare/v0.0.73...v0.0.74) (2022-09-13)
+
+
+### Features
+
+* **cli:** Update default `firbase.json` config with cache headers ([d9e3e99](https://github.com/ecomplus/cloud-commerce/commit/d9e3e995e26ce75c8d19748313fa31d0982629e5))
+* **storefront:** Initialize Firebase app with Analytics ([2a5fe36](https://github.com/ecomplus/cloud-commerce/commit/2a5fe36dea7d3c1b0bfeeb66dc4866e5c6c13cd0))
+
+
+### Bug Fixes
+
+* **modules:** Fix schemas to draft-07 and properly call module handler  ([#48](https://github.com/ecomplus/cloud-commerce/issues/48)) ([bd1fd5b](https://github.com/ecomplus/cloud-commerce/commit/bd1fd5b8e3f1b4c7f35ad66570f542738d388ac6))
+
 ### [0.0.73](https://github.com/ecomplus/cloud-commerce/compare/v0.0.72...v0.0.73) (2022-09-10)
 
 
