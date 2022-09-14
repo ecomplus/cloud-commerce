@@ -137,4 +137,6 @@ const sendError = (
 export {
   sendError,
   getAuthCustomerApi,
+  findCustomerByEmail,
+  generateAccessToken,
 };
