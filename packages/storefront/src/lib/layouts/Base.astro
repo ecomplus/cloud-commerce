@@ -59,6 +59,7 @@ Object.keys(brandColors).forEach((colorName) => {
 <html lang={lang.replace('_', '-')}>
 <head>
   <MetaHead pageContext={pageContext} title={title} />
+  <MetaJson pageContext={pageContext} />
   <slot name="before-head-end">
     {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
     {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
@@ -67,7 +68,6 @@ Object.keys(brandColors).forEach((colorName) => {
 
 <body>
   <slot />
-  <MetaJson pageContext={pageContext} />
   <script>
     import { initializeApp } from 'firebase/app';
     import { getAnalytics } from 'firebase/analytics';
