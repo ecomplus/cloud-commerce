@@ -1,5 +1,6 @@
 ---
 import type { PageContext } from '../ssr-context';
+import Color from 'color';
 import MetaHead from './meta/Head.astro';
 import MetaJson from './meta/Json.astro';
 import '@picocss/pico/css/pico.min.css';
@@ -17,72 +18,112 @@ const {
   cms,
 } = pageContext;
 const cmsCustomCode = cms('code') as typeof import('../../../content/code.json');
+
+const brandColors = {
+  primary: primaryColor,
+  secondary: secondaryColor,
+  ...globalThis.storefront_brand_colors,
+};
+const colorVariations = {
+  whiter: -0.75,
+  white: -0.5,
+  lightest: -0.33,
+  lighter: -0.21,
+  light: -0.1,
+  lighten: -0.07,
+  base: 0,
+  darken: 0.08,
+  dark: 0.1,
+  darker: 0.13,
+  darkest: 0.16,
+  black: 0.5,
+  ...globalThis.storefront_color_variations,
+};
+const colorCSSVars: Record<string, string> = {};
+Object.keys(brandColors).forEach((colorName) => {
+  const color = Color(brandColors[colorName]);
+  Object.keys(colorVariations).forEach((colorVariation) => {
+    const colorShift = colorVariations[colorVariation];
+    const colorLabel = `${colorName}-${colorVariation}`;
+    colorCSSVars[colorLabel] = color.darken(colorShift).hex();
+    if (!colorLabel.includes('white') && !colorLabel.includes('black')) {
+      colorCSSVars[`${colorLabel}-yiq`] = color.isLight()
+        ? 'var(--yiq-text-dark)' : 'var(--yiq-text-light)';
+      colorCSSVars[`${colorLabel}-rgb`] = `${color.red()}, ${color.green()}, ${color.blue()}`;
+    }
+  });
+});
 ---
 
 <!DOCTYPE html>
-<html lang={lang.replace('_', '-')} data-theme="light">
+<html lang={lang.replace('_', '-')}>
 <head>
   <MetaHead pageContext={pageContext} title={title} />
-  {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
-  {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
+  <slot name="before-head-end">
+    {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
+    {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
+  </slot>
 </head>
 <body>
+  <slot name="header"></slot>
 	<slot />
   <MetaJson pageContext={pageContext} />
-  <slot name="firebase-init">
-    <script>
-      import { initializeApp } from 'firebase/app';
-      import { getAnalytics } from 'firebase/analytics';
-      // @ts-ignore
-      const firebaseConfig = window.firebaseConfig || {
-        apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
-        authDomain: "ecom2-002.firebaseapp.com",
-        projectId: "ecom2-002",
-        storageBucket: "ecom2-002.appspot.com",
-        messagingSenderId: "402807248219",
-        appId: "1:402807248219:web:cf7d57759751e74776367e",
-        measurementId: "G-SC592CE0GB"
-      };
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-    </script>
+  <script>
+    import { initializeApp } from 'firebase/app';
+    import { getAnalytics } from 'firebase/analytics';
+    // @ts-ignore
+    const firebaseConfig = window.firebaseConfig || {
+      apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
+      authDomain: "ecom2-002.firebaseapp.com",
+      projectId: "ecom2-002",
+      storageBucket: "ecom2-002.appspot.com",
+      messagingSenderId: "402807248219",
+      appId: "1:402807248219:web:cf7d57759751e74776367e",
+      measurementId: "G-SC592CE0GB"
+    };
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+  </script>
+  <slot name="before-body-end">
+    {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
   </slot>
-  {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
 </body>
 </html>
 
-<style is:global define:vars={{ primary: primaryColor, secondary: secondaryColor }}>
+<style is:global define:vars={colorCSSVars}>
   :root {
-    --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
-		--font-size-lg: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem); 
-    --font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
-
-    --color-text: hsl(12, 5%, 4%);
-    --color-bg: hsl(10, 21%, 95%);
-		--color-border: hsl(17, 24%, 90%);
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --yiq-text-light: var(--white);
+    --yiq-text-dark: var(--gray-dark);
   }
 
-  html {
-    font-family: system-ui, sans-serif;
-    font-size: var(--font-size-base);
-    color: var(--color-text);
-    background-color: var(--color-bg);
+  body,
+  body [data-theme=light],
+  body [data-theme=dark] {
+    --primary: var(--primary-base);
+    --primary-hover: var(--primary-darkest);
+    --primary-focus: var(--primary-whiter);
+    --primary-inverse: var(--primary-yiq);
+    --secondary: var(--secondary-base);
+    --secondary-hover: var(--secondary-darkest);
+    --secondary-focus: var(--secondary-whiter);
+    --secondary-inverse: var(--secondary-yiq);
   }
 
-  body {
-    margin: 0;
+  @media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme=light]) a {
+      --color: var(--primary-lightest);
+    }
+    :root:not([data-theme=light]) a:is([aria-current], :hover, :active, :focus) {
+      --color: var(--primary-light);
+    }
   }
-
-  h1 {
-    font-size: var(--font-size-xl);
+  [data-theme=light] a {
+    --color: var(--primary) !important;
   }
-
-  h2 {
-    font-size: var(--font-size-lg);
-  }
-
-  code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
+  [data-theme=light] a:is([aria-current], :hover, :active, :focus) {
+    --color: var(--primary-hover) !important;
   }
 </style>
