@@ -30,6 +30,7 @@
     "@cloudcommerce/app-discounts": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "@cloudcommerce/passport": "workspace:*",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "axios": "^0.27.2",
