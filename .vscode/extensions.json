@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "astro-build.astro-vscode",
     "vue.volar",
-    "florianthievent.rules"
+    "florianthievent.rules",
+    "antfu.unocss"
   ]
 }
