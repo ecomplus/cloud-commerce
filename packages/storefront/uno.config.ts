@@ -36,13 +36,10 @@ const genUnoCSSConfig = ({
 } = {}): UserConfig => ({
   shortcuts: [
     ...brandShortcuts.map((brand) => {
-      return { [`i-${brand}`]: `i-${brandIcons}-${brand}` };
+      return { [`i-${brand}`]: `i-${brandIcons}:${brand}` };
     }),
-    { 'i-shopping-cart': `i-${generalIcons}-${shoppingCartIcon}` },
-    [
-      new RegExp(`^i-(((?!${generalIcons}|${brandShortcuts.join('|')}).)*)$`),
-      ([, icon]) => `i-${generalIcons}-${icon}`,
-    ],
+    { 'i-shopping-cart': `i-${generalIcons}:${shoppingCartIcon}` },
+    [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
   ],
   transformers: [
     transformerDirectives(),
