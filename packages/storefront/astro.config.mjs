@@ -8,12 +8,12 @@ import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
+import UnoCSS from 'unocss/astro';
 import getConfig from './storefront.config.mjs';
 
 dotenv.config();
 
-// https://astro.build/config
-export default defineConfig({
+const astroConfig = {
   output: 'server',
   adapter: node(),
   integrations: [
@@ -22,6 +22,12 @@ export default defineConfig({
     partytown(),
     prefetch(),
     sitemap(),
+    UnoCSS(),
   ],
   site: `https://${getConfig().domain}`,
-});
+};
+
+// https://astro.build/config
+export default defineConfig(astroConfig);
+
+export { astroConfig };
