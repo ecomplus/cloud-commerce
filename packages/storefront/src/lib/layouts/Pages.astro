@@ -14,6 +14,12 @@ const { pageContext, title } = Astro.props as Props;
   <Fragment slot="before-head-end">
     <slot name="before-head-end" />
   </Fragment>
+  <slot name="header">
+    <div class="i-shopping-cart" text="sky-500" />
+    <div class="i-google-pay w-32" />
+    <div class="i-logos:apple bg-light-500" />
+    <div class="i-heroicons:user" />
+  </slot>
   <slot />
   <Fragment slot="before-body-end">
     <slot name="before-body-end" />
