@@ -275,8 +275,12 @@ importers:
       '@astrojs/vue': ^1.0.2
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/config': workspace:*
+      '@iconify-json/heroicons': ^1.1.4
+      '@iconify-json/logos': ^1.1.16
       '@nanostores/vue': ^0.6.0
       '@picocss/pico': ^1.5.4
+      '@unocss/preset-attributify': ^0.45.21
+      '@unocss/preset-icons': ^0.45.21
       astro: ^1.2.2
       color: ^4.2.3
       dotenv: ^16.0.2
@@ -296,8 +300,12 @@ importers:
       '@astrojs/vue': 1.0.2_vue@3.2.39
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/config': link:../config
+      '@iconify-json/heroicons': 1.1.4
+      '@iconify-json/logos': 1.1.16
       '@nanostores/vue': 0.6.0_wn7xrio7tbrvqlls66emozpdau
       '@picocss/pico': 1.5.4
+      '@unocss/preset-attributify': 0.45.21
+      '@unocss/preset-icons': 0.45.21
       astro: 1.2.2
       color: 4.2.3
       dotenv: 16.0.2
@@ -2642,6 +2650,18 @@ packages:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
     dev: true
+
+  /@iconify-json/heroicons/1.1.4:
+    resolution: {integrity: sha512-6UonUR+IG3/mWi4PNQJOQkaOiQjmCbZV4d33QOvUI0Nt4AoMByvIJ1EmQX3rjNx4B5Cv4APW3DM5z3gMCQGueQ==}
+    dependencies:
+      '@iconify/types': 1.1.0
+    dev: false
+
+  /@iconify-json/logos/1.1.16:
+    resolution: {integrity: sha512-ka6Irz4qNuk+RNDDVZEMTw3ceUk43FpBxReikswTrUXPlis6LgLZNyh9SV00SFeuBdT+A5gF45kJ124IxtOL5g==}
+    dependencies:
+      '@iconify/types': 1.1.0
+    dev: false
 
   /@iconify/types/1.1.0:
     resolution: {integrity: sha512-Jh0llaK2LRXQoYsorIH8maClebsnzTcve+7U3rQUSnC11X4jtPnFuyatqFLvMxZ8MLG8dB4zfHsbPfuvxluONw==}
