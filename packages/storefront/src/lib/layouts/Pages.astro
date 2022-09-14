@@ -1,0 +1,21 @@
+---
+import type { PageContext } from '../ssr-context';
+import Base from './Base.astro';
+
+export interface Props {
+  pageContext: PageContext;
+  title?: string;
+}
+
+const { pageContext, title } = Astro.props as Props;
+---
+
+<Base pageContext={pageContext} title={title}>
+  <Fragment slot="before-head-end">
+    <slot name="before-head-end" />
+  </Fragment>
+  <slot />
+  <Fragment slot="before-body-end">
+    <slot name="before-body-end" />
+  </Fragment>
+</Base>

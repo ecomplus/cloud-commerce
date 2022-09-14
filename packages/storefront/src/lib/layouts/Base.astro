@@ -64,9 +64,9 @@ Object.keys(brandColors).forEach((colorName) => {
     {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
   </slot>
 </head>
+
 <body>
-  <slot name="header"></slot>
-	<slot />
+  <slot />
   <MetaJson pageContext={pageContext} />
   <script>
     import { initializeApp } from 'firebase/app';

@@ -1,7 +1,7 @@
 ---
 import type { PageContext } from '../ssr-context';
 import api from '@cloudcommerce/api';
-import Layout from '../layouts/Layout.astro';
+import PagesLayout from '../layouts/Pages.astro';
 import Card from '../components/Card.astro';
 
 export interface Props {
@@ -12,7 +12,7 @@ const { pageContext } = Astro.props as Props;
 const products = (await api.get('products')).data.result;
 ---
 
-<Layout pageContext={pageContext} title="">
+<PagesLayout pageContext={pageContext} title="">
 	<main>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
 		<p class="instructions">
@@ -31,7 +31,7 @@ const products = (await api.get('products')).data.result;
 			</li>)}
 		</ul>
 	</main>
-</Layout>
+</PagesLayout>
 
 <style>
 	:root {

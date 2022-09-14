@@ -1,6 +1,6 @@
 ---
 import type { PageContext } from '../ssr-context';
-import Layout from '../layouts/Layout.astro';
+import PagesLayout from '../layouts/Pages.astro';
 
 export interface Props {
   pageContext: PageContext;
@@ -10,7 +10,7 @@ const { pageContext } = Astro.props;
 const { apiResource, apiDoc } = pageContext;
 ---
 
-<Layout pageContext={pageContext}>
+<PagesLayout pageContext={pageContext}>
   <main>
     <h1>Hello <span class="text-gradient">{apiDoc.name}</span></h1>
     <hr>
@@ -20,7 +20,7 @@ const { apiResource, apiDoc } = pageContext;
       <em>Lorem ipsum dolor sit amet</em>
     </div>
   </main>
-</Layout>
+</PagesLayout>
 
 <style>
   :root {
