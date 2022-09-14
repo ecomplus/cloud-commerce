@@ -278,6 +278,7 @@ importers:
       '@nanostores/vue': ^0.6.0
       '@picocss/pico': ^1.5.4
       astro: ^1.2.2
+      color: ^4.2.3
       dotenv: ^16.0.2
       firebase: ^9.9.4
       nanostores: ^0.6.0
@@ -298,6 +299,7 @@ importers:
       '@nanostores/vue': 0.6.0_wn7xrio7tbrvqlls66emozpdau
       '@picocss/pico': 1.5.4
       astro: 1.2.2
+      color: 4.2.3
       dotenv: 16.0.2
       firebase: 9.9.4
       nanostores: 0.6.0
