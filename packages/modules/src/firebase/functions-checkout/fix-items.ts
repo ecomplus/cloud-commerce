@@ -1,12 +1,11 @@
 import type { Products, Carts } from '@cloudcommerce/types';
-import api/* , { ApiError, ApiConfig } */ from '@cloudcommerce/api';
-// import config from '@cloudcommerce/firebase/lib/config';
-import getEnv from '@cloudcommerce/firebase/lib/env';
+import api from '@cloudcommerce/api';
+
+type Items = Carts['items']
 
 export default async (
-  items: Exclude<Carts['items'], undefined>,
-) => {
-  const { apiAuth } = getEnv();
+  items: Items,
+): Promise<Items> => {
   // get each cart item
   // count done processes
   let itemsDone = 0;
@@ -16,9 +15,6 @@ export default async (
     // after each item
     itemsDone += 1;
     if (itemsDone === itemsTodo) {
-      // logger.log('all items done')
-      // logger.log(JSON.stringify(items, null, 2))
-      // all items done
       return items;
     }
   };
@@ -41,7 +37,6 @@ export default async (
 
     const proceedItem = () => {
       // additions to final price
-
       if (Array.isArray(item.customizations)) {
         item.customizations.forEach((customization) => {
           if (item.final_price) {
@@ -197,24 +192,20 @@ export default async (
       // GET public kit product object
       const kitProductId = item.kit_product._id;
       // eslint-disable-next-line no-await-in-loop
-      const kitProduct = await api.get(
+      const kitProduct = (await api.get(
         `products/${kitProductId}`,
-      ) as unknown as Products;
+      )).data;
       if (kitProduct) {
         checkKitProduct(kitProduct, kitProductId);
       } else {
         removeItem();
       }
     } else {
-    // GET public product object
-    // eslint-disable-next-line no-await-in-loop
-      const product = await api.get(
+      // GET public product object
+      // eslint-disable-next-line no-await-in-loop
+      const product = (await api.get(
         `products/${item.product_id}`,
-        {
-          authenticationId: apiAuth.authenticationId,
-          apiKey: apiAuth.apiKey,
-        },
-      ) as unknown as Products;
+      )).data;
 
       if (product) {
         checkItem(product);
@@ -224,4 +215,5 @@ export default async (
       }
     }
   }
+  return items;
 };
