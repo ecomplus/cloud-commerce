@@ -7,6 +7,26 @@ import {
 import presetAttributify from '@unocss/preset-attributify';
 import presetIcons from '@unocss/preset-icons';
 
+const brandColorVariations = [
+  'whiter',
+  'white',
+  'lightest',
+  'lighter',
+  'light',
+  'lighten',
+  'base',
+  'darken',
+  'dark',
+  'darker',
+  'darkest',
+  'black',
+];
+if (global.storefront_color_variations) {
+  Object.keys(global.storefront_color_variations).forEach((variation) => {
+    brandColorVariations.push(variation);
+  });
+}
+
 const genUnoCSSConfig = ({
   brandIcons = 'logos',
   generalIcons = 'heroicons',
@@ -41,6 +61,21 @@ const genUnoCSSConfig = ({
     { 'i-shopping-cart': `i-${generalIcons}:${shoppingCartIcon}` },
     [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
   ],
+  theme: {
+    colors: ['primary', 'secondary', 'contrast'].reduce((colors, color) => {
+      const colorVariations = ['hover', 'focus', 'inverse'];
+      if (color !== 'contrast') {
+        colorVariations.push(...brandColorVariations);
+      }
+      colors[color] = colorVariations.reduce((colorPalette, variation) => {
+        colorPalette[variation] = `var(--${color}-${variation})`;
+        return colorPalette;
+      }, {
+        DEFAULT: `var(--${color})`,
+      });
+      return colors;
+    }, {}),
+  },
   transformers: [
     transformerDirectives(),
   ],
