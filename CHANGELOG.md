@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.77](https://github.com/ecomplus/cloud-commerce/compare/v0.0.76...v0.0.77) (2022-09-15)
+
+
+### Bug Fixes
+
+* **modules:** Set `concurrency: 6` for Modules API function by default ([70e8f70](https://github.com/ecomplus/cloud-commerce/commit/70e8f70a25c650eca2c404b9b039416e0db52cee))
+* **ssr:** Try SSR function with 30s timeout and 128mb by default ([fd339e1](https://github.com/ecomplus/cloud-commerce/commit/fd339e1e21f54b1bbc20b90ed95f97faaf89c10e))
+* **storefront:** Add `@ecomplus/utils` to direct dependencies ([c769252](https://github.com/ecomplus/cloud-commerce/commit/c76925272391eccdc4ee0c67003c347a7032c326))
+
 ### [0.0.76](https://github.com/ecomplus/cloud-commerce/compare/v0.0.75...v0.0.76) (2022-09-15)
 
 
