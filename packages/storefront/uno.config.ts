@@ -6,28 +6,10 @@ import {
 } from 'unocss';
 import presetAttributify from '@unocss/preset-attributify';
 import presetIcons from '@unocss/preset-icons';
-
-const brandColorVariations = [
-  'whiter',
-  'white',
-  'lightest',
-  'lighter',
-  'light',
-  'lighten',
-  'base',
-  'darken',
-  'dark',
-  'darker',
-  'darkest',
-  'black',
-];
-if (global.storefront_color_variations) {
-  Object.keys(global.storefront_color_variations).forEach((variation) => {
-    brandColorVariations.push(variation);
-  });
-}
+import { genTailwindConfig } from './tailwind.config';
 
 const genUnoCSSConfig = ({
+  colorVariants,
   brandIcons = 'logos',
   generalIcons = 'heroicons',
   brandShortcuts = [
@@ -53,6 +35,12 @@ const genUnoCSSConfig = ({
     'dinersclub',
   ],
   shoppingCartIcon = 'shopping-bag',
+}: {
+  colorVariants?: string[],
+  brandIcons?: string,
+  generalIcons?: string,
+  brandShortcuts?: string[],
+  shoppingCartIcon?: string,
 } = {}): UserConfig => ({
   shortcuts: [
     ...brandShortcuts.map((brand) => {
@@ -62,19 +50,7 @@ const genUnoCSSConfig = ({
     [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
   ],
   theme: {
-    colors: ['primary', 'secondary', 'contrast'].reduce((colors, color) => {
-      const colorVariations = ['hover', 'focus', 'inverse'];
-      if (color !== 'contrast') {
-        colorVariations.push(...brandColorVariations);
-      }
-      colors[color] = colorVariations.reduce((colorPalette, variation) => {
-        colorPalette[variation] = `var(--${color}-${variation})`;
-        return colorPalette;
-      }, {
-        DEFAULT: `var(--${color})`,
-      });
-      return colors;
-    }, {}),
+    colors: genTailwindConfig({ colorVariants }).theme.extend.colors,
   },
   transformers: [
     transformerDirectives(),
