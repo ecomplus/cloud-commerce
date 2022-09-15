@@ -24,29 +24,27 @@ const brandColors = {
   secondary: secondaryColor,
   ...globalThis.storefront_brand_colors,
 };
-const colorVariations = {
-  whiter: -0.75,
-  white: -0.5,
-  lightest: -0.33,
-  lighter: -0.21,
-  light: -0.1,
-  lighten: -0.07,
-  base: 0,
-  darken: 0.08,
-  dark: 0.1,
-  darker: 0.13,
-  darkest: 0.16,
-  black: 0.5,
-  ...globalThis.storefront_color_variations,
+const colorVariants = {
+  '50':  -0.75, // whiter
+  '100': -0.5,  // white
+  '200': -0.33, // lightest
+  '300': -0.21, // lighter
+  '400': -0.1,  // light
+  '500': 0,
+  '600': 0.1,   // dark
+  '700': 0.16,  // darker
+  '800': 0.22,  // darkest
+  '900': 0.5,   // black
+  ...globalThis.storefront_color_variants,
 };
 const colorCSSVars: Record<string, string> = {};
 Object.keys(brandColors).forEach((colorName) => {
   const color = Color(brandColors[colorName]);
-  Object.keys(colorVariations).forEach((colorVariation) => {
-    const colorShift = colorVariations[colorVariation];
-    const colorLabel = `${colorName}-${colorVariation}`;
+  Object.keys(colorVariants).forEach((colorVariant) => {
+    const colorShift = colorVariants[colorVariant];
+    const colorLabel = `${colorName}-${colorVariant}`;
     colorCSSVars[colorLabel] = color.darken(colorShift).hex();
-    if (!colorLabel.includes('white') && !colorLabel.includes('black')) {
+    if (Number(colorLabel) > 100 && Number(colorLabel) < 900) {
       colorCSSVars[`${colorLabel}-yiq`] = color.isLight()
         ? 'var(--yiq-text-dark)' : 'var(--yiq-text-light)';
       colorCSSVars[`${colorLabel}-rgb`] = `${color.red()}, ${color.green()}, ${color.blue()}`;
@@ -102,22 +100,22 @@ Object.keys(brandColors).forEach((colorName) => {
   body,
   body [data-theme=light],
   body [data-theme=dark] {
-    --primary: var(--primary-base);
-    --primary-hover: var(--primary-darkest);
-    --primary-focus: var(--primary-whiter);
-    --primary-inverse: var(--primary-yiq);
-    --secondary: var(--secondary-base);
-    --secondary-hover: var(--secondary-darkest);
-    --secondary-focus: var(--secondary-whiter);
-    --secondary-inverse: var(--secondary-yiq);
+    --primary: var(--primary-500);
+    --primary-hover: var(--primary-700);
+    --primary-focus: var(--primary-50);
+    --primary-inverse: var(--primary-500-yiq);
+    --secondary: var(--secondary-500);
+    --secondary-hover: var(--secondary-700);
+    --secondary-focus: var(--secondary-50);
+    --secondary-inverse: var(--secondary-500-yiq);
   }
 
   @media only screen and (prefers-color-scheme: dark) {
     :root:not([data-theme=light]) a {
-      --color: var(--primary-lightest);
+      --color: var(--primary-200);
     }
     :root:not([data-theme=light]) a:is([aria-current], :hover, :active, :focus) {
-      --color: var(--primary-light);
+      --color: var(--primary-400);
     }
   }
   [data-theme=light] a {
