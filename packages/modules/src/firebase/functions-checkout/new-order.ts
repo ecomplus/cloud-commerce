@@ -14,7 +14,7 @@ export default async (
       orderBody,
       {
         headers: {
-          Authentication: `Bearer ${acessToken}`,
+          Authorization: acessToken,
         },
       },
     )).data._id;
@@ -26,7 +26,7 @@ export default async (
             `orders/${orderId}`,
             {
               headers: {
-                Authentication: `Bearer ${acessToken}`,
+                Authorization: acessToken,
               },
             },
           )).data;

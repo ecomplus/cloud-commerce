@@ -7,7 +7,7 @@ import {
   sendRequestError,
 } from './ajv';
 import fixItems from './functions-checkout/fix-items';
-import getCustomerAndAuth from './functions-checkout/get-custumer-auth';
+import getCustomerId from './functions-checkout/get-custumerId';
 import createOrder from './functions-checkout/new-order';
 
 type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' >
@@ -15,13 +15,14 @@ type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' >
 const sendError = (
   res:Response,
   status: number,
-  errorCode: string,
+  errorCode: string | number,
   message: string,
   userMessage?: {[key:string]:string},
   moreInfo?:string,
 ) => {
   return res.status(status)
     .send({
+      status,
       error_code: errorCode,
       message,
       user_message: userMessage,
@@ -31,6 +32,7 @@ const sendError = (
 
 const runCheckout = async (
   body: { [key: string]: any },
+  accessToken:string,
   res:Response,
   validate: ValidateFunction,
 ) => {
@@ -40,8 +42,8 @@ const runCheckout = async (
   const countCheckoutItems = body.items.length;
   const items = await fixItems(body.items);
   const { customer } = body;
-  const customerAndAuth = await getCustomerAndAuth(customer);
-  if (customerAndAuth) {
+  const customerId = await getCustomerId(customer);
+  if (customerId) {
     if (items.length) {
       body.items = items;
       // start mounting order body
@@ -121,14 +123,14 @@ const runCheckout = async (
 
       const transactions = Array.isArray(body.transaction) ? body.transaction : [body.transaction];
       // add customer ID to order and transaction
-      customer._id = customerAndAuth._id;
+      customer._id = customerId;
       transactions.forEach(({ buyer }) => {
         if (buyer) {
-          buyer.customer_id = customerAndAuth._id;
+          buyer.customer_id = customerId;
         }
       });
 
-      const order = await createOrder(orderBody, customerAndAuth.access_token);
+      const order = await createOrder(orderBody, accessToken);
       if (order) {
         // TODO: continue code from here
         return res.status(200).send({
@@ -150,7 +152,16 @@ const runCheckout = async (
     }
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
   }
-  return sendError(res, 400, 'CKT702', 'There was an error authenticating the customer');
+  return sendError(
+    res,
+    404,
+    -404,
+    'Not found',
+    {
+      en_us: 'No customers found with ID or email provided',
+      pt_br: 'Nenhum cliente encontrado com ID ou e-mail fornecido',
+    },
+  );
 };
 
 export default (
@@ -163,5 +174,18 @@ export default (
   if (!req.body.browser_ip && ip) {
     req.body.browser_ip = ip;
   }
-  return runCheckout(req.body, res, validate);
+  const acessToken = req.headers.authorization;
+  if (acessToken) {
+    return runCheckout(req.body, acessToken, res, validate);
+  }
+  return sendError(
+    res,
+    401,
+    109,
+    "Token is required on 'Authorization'",
+    {
+      en_us: 'No authorization for the requested method and resource',
+      pt_br: 'Sem autorização para o método e recurso solicitado',
+    },
+  );
 };
