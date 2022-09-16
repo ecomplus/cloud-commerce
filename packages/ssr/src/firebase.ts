@@ -8,7 +8,7 @@ import serveStorefront from './firebase/serve-storefront';
 const { httpsFunctionOptions } = config.get();
 
 export const ssr = onRequest({
-  timeoutSeconds: 30,
+  timeoutSeconds: 15,
   // minInstances: 1,
   ...httpsFunctionOptions,
 }, (req, res) => {
