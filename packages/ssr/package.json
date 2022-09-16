@@ -25,6 +25,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "compression": "^1.7.4",
     "firebase-admin": "^11.0.1",
     "firebase-functions": "^3.23.0",
     "source-map-support": "^0.5.21"
