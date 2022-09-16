@@ -68,7 +68,6 @@ Object.keys(brandColors).forEach((colorName) => {
   <slot />
   <script>
     import { initializeApp } from 'firebase/app';
-    import { getAnalytics } from 'firebase/analytics';
     // @ts-ignore
     const firebaseConfig = window.firebaseConfig || {
       apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
@@ -79,8 +78,7 @@ Object.keys(brandColors).forEach((colorName) => {
       appId: "1:402807248219:web:cf7d57759751e74776367e",
       measurementId: "G-SC592CE0GB"
     };
-    const app = initializeApp(firebaseConfig);
-    getAnalytics(app);
+    initializeApp(firebaseConfig);
   </script>
   <slot name="before-body-end">
     {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
@@ -96,7 +94,6 @@ Object.keys(brandColors).forEach((colorName) => {
     --yiq-text-light: var(--white);
     --yiq-text-dark: var(--gray-dark);
   }
-
   body,
   body [data-theme=light],
   body [data-theme=dark] {
@@ -109,7 +106,6 @@ Object.keys(brandColors).forEach((colorName) => {
     --secondary-focus: var(--secondary-50);
     --secondary-inverse: var(--secondary-500-yiq);
   }
-
   @media only screen and (prefers-color-scheme: dark) {
     :root:not([data-theme=light]) a {
       --color: var(--primary-200);
