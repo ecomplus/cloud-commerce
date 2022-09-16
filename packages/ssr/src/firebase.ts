@@ -9,7 +9,6 @@ const { httpsFunctionOptions } = config.get();
 
 export const ssr = onRequest({
   timeoutSeconds: 30,
-  memory: '128MiB',
   // minInstances: 1,
   ...httpsFunctionOptions,
 }, (req, res) => {
