@@ -1,22 +1,28 @@
 import type { Request, Response } from 'firebase-functions';
-import { join as joinPath } from 'path';
-import { readFile } from 'fs/promises';
+import type { OutgoingHttpHeaders, OutgoingHttpHeader } from 'node:http';
+import { join as joinPath } from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { gzip } from 'node:zlib';
+import logger from 'firebase-functions/lib/logger';
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
 
-export default (req: Request, res: Response) => {
+type InterceptedResponse = Response & {
+  WRITEHEAD?: Response['writeHead'],
+  WRITE?: Response['write'],
+};
+
+export default (req: Request, res: InterceptedResponse) => {
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, defaultCache: string) => {
-    return res.status(status)
-      .set('X-SSR-ID', `v1/${Math.random()}`)
-      .set(
-        'Cache-Control',
-        (typeof global.cache_control === 'function' && global.cache_control(status))
-          || defaultCache,
-      );
+    return res.status(status).set(
+      'Cache-Control',
+      (typeof global.cache_control === 'function' && global.cache_control(status))
+        || defaultCache,
+    );
   };
 
   const fallback = (err: any, status = 500) => {
@@ -30,6 +36,35 @@ export default (req: Request, res: Response) => {
       setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
         .send(err.toString());
     }
+  };
+
+  res.WRITEHEAD = res.writeHead;
+  res.writeHead = (
+    statusCode: number,
+    headers?: string | OutgoingHttpHeaders | OutgoingHttpHeader[],
+  ) => {
+    if (headers && typeof headers === 'object' && !Array.isArray(headers)) {
+      delete headers['transfer-encoding'];
+      headers['Transfer-Encoding'] = 'gzip, chunked';
+      headers['X-SSR-ID'] = `v1/${Date.now()}`;
+    }
+    return (res.WRITEHEAD as Response['writeHead'])(
+      statusCode,
+      headers as OutgoingHttpHeaders,
+    );
+  };
+
+  res.WRITE = res.write;
+  res.write = (chunk: any) => {
+    gzip(chunk, (err, data) => {
+      if (err) {
+        logger.error(err);
+        fallback(err);
+      } else {
+        (res.WRITE as Response['write'])(data);
+      }
+    });
+    return true;
   };
 
   /*
