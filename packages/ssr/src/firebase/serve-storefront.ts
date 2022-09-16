@@ -1,8 +1,8 @@
 import type { Request, Response } from 'firebase-functions';
-import type { OutgoingHttpHeaders, OutgoingHttpHeader } from 'node:http';
-import { join as joinPath } from 'node:path';
-import { readFile } from 'node:fs/promises';
-import { gzip } from 'node:zlib';
+import type { OutgoingHttpHeaders, OutgoingHttpHeader } from 'http';
+import { join as joinPath } from 'path';
+import { readFile } from 'fs/promises';
+import { gzip } from 'zlib';
 import logger from 'firebase-functions/lib/logger';
 
 const { STOREFRONT_BASE_DIR } = process.env;
@@ -15,6 +15,7 @@ type InterceptedResponse = Response & {
 };
 
 export default (req: Request, res: InterceptedResponse) => {
+  logger.info('Serving storefront');
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, defaultCache: string) => {
