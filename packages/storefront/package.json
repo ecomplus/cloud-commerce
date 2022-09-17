@@ -21,8 +21,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare-monorepo": "rm -rf content && ln -s ../../store/functions/ssr/content content",
-    "prerelease": "rm content && cp -r ../../store/functions/ssr/content ./"
+    "prepare-monorepo": "sh scripts/prepare-monorepo.sh",
+    "prerelease": "sh scripts/prerelease.sh"
   },
   "dependencies": {
     "@astrojs/image": "^0.7.0",
