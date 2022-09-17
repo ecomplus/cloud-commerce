@@ -18,7 +18,6 @@ import config from '@cloudcommerce/config';
 
 const setupFirebaseUi = async () => {
   const { lang } = config.get();
-  import('../../assets/firebaseui.css');
 
   await Promise.all([
     import('firebase/compat/auth'),
