@@ -9,6 +9,7 @@ import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
 import UnoCSS from 'unocss/astro';
+import { VitePWA } from 'vite-plugin-pwa';
 import getConfig from './storefront.config.mjs';
 
 dotenv.config();
@@ -24,6 +25,9 @@ const astroConfig = {
     sitemap(),
     UnoCSS(),
   ],
+  vite: {
+    plugins: [VitePWA()],
+  },
   site: `https://${getConfig().domain}`,
 };
 
