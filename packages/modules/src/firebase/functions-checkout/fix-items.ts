@@ -1,11 +1,11 @@
-import type { Products, Carts } from '@cloudcommerce/types';
+import type { Products, CheckoutBody } from '@cloudcommerce/types';
+import type { Items } from '../../types';
 import api from '@cloudcommerce/api';
 
-type Items = Carts['items']
-
 export default async (
-  items: Items,
+  checkoutItems: CheckoutBody['items'],
 ): Promise<Items> => {
+  const items = [...checkoutItems] as Items;
   // get each cart item
   // count done processes
   let itemsDone = 0;
@@ -22,7 +22,7 @@ export default async (
   // run item by item
   for (let i = 0; i < items.length; i++) {
     // i, item scoped
-    const item = items[i];
+    const item = items[i] as Items[number];
     const removeItem = () => {
       // remove invalid item from list
       items.splice(i, 1);

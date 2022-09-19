@@ -1,6 +1,13 @@
 import type { Request, Response } from 'firebase-functions';
 import type { ValidateFunction } from 'ajv';
-import type { Orders } from '@cloudcommerce/types';
+import type { CheckoutBody } from '@cloudcommerce/types';
+import type {
+  CheckoutBodyWithItems,
+  BodyOrder,
+  Amount,
+  Item,
+  BodyPayment,
+} from '../types/index';
 // import logger from 'firebase-functions/lib/logger';
 import {
   ajv,
@@ -8,9 +15,15 @@ import {
 } from './ajv';
 import fixItems from './functions-checkout/fix-items';
 import getCustomerId from './functions-checkout/get-custumerId';
-import createOrder from './functions-checkout/new-order';
-
-type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' >
+import requestModule from './functions-checkout/request-to-module';
+import {
+  fixAmount,
+  getValidResults,
+  handleShippingServices,
+  handleApplyDiscount,
+  handleListPayments,
+} from './functions-checkout/utils';
+// import createOrder from './functions-checkout/new-order';
 
 const sendError = (
   res:Response,
@@ -31,29 +44,47 @@ const sendError = (
 };
 
 const runCheckout = async (
-  body: { [key: string]: any },
+  checkoutBody: CheckoutBody,
   accessToken:string,
   res:Response,
   validate: ValidateFunction,
+  hostname: string,
 ) => {
-  if (!validate(body)) {
+  if (!validate(checkoutBody)) {
     return sendRequestError(res, '@checkout', validate.errors);
   }
+  const { items, ...newBody } = checkoutBody;
+  const newItems = await fixItems(items);
+  const amount: Amount = {
+    subtotal: 0,
+    discount: 0,
+    freight: 0,
+    total: 0,
+  };
+  const body: CheckoutBodyWithItems = {
+    ...newBody,
+    items: [...newItems],
+    subtotal: 0,
+    amount,
+  };
+
   const countCheckoutItems = body.items.length;
-  const items = await fixItems(body.items);
   const { customer } = body;
   const customerId = await getCustomerId(customer);
-  if (customerId) {
-    if (items.length) {
-      body.items = items;
+  if (customerId && customer) {
+    if (newItems.length) {
+      const { _id, ...newCustomer } = customer;
       // start mounting order body
       // https://developers.e-com.plus/docs/api/#/store/orders/orders
       const dateTime = new Date().toISOString();
       const orderBody: BodyOrder = {
         opened_at: dateTime,
         buyers: [
-        // received customer info
-          customer,
+          // received customer info
+          {
+            _id: customerId,
+            ...newCustomer,
+          },
         ],
         items: [],
         amount: {
@@ -87,39 +118,21 @@ const runCheckout = async (
 
       // count subtotal value
       let subtotal = 0;
-      items.forEach((item) => {
-        subtotal += (item.final_price || item.price * item.quantity);
-        // pass each item to prevent object overwrite
-        if (orderBody.items) {
-          orderBody.items.push({ ...item });
-        }
-      });
+      newItems.forEach(
+        (item:Item) => {
+          subtotal += (item.final_price || item.price * item.quantity);
+          // pass each item to prevent object overwrite
+          if (orderBody.items) {
+            orderBody.items.push({ ...item });
+          }
+        },
+      );
       if (subtotal <= 0 && items.length < countCheckoutItems) {
         return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
       }
-      const amount = {
-        subtotal,
-        discount: 0,
-        freight: 0,
-        total: 0,
-      };
-      const fixAmount = () => {
-        Object.keys(amount).forEach((field) => {
-          if (amount[field] > 0 && field !== 'total') {
-            amount[field] = Math.round(amount[field] * 100) / 100;
-          }
-        });
-
-        amount.total = Math.round((amount.subtotal + amount.freight - amount.discount) * 100) / 100;
-        if (amount.total < 0) {
-          amount.total = 0;
-        }
-        // also save amount to checkout and order body objects
-        body.amount = amount;
-        orderBody.amount = amount;
-      };
-      fixAmount();
+      amount.subtotal = subtotal;
       body.subtotal = subtotal;
+      fixAmount(amount, body, orderBody);
 
       const transactions = Array.isArray(body.transaction) ? body.transaction : [body.transaction];
       // add customer ID to order and transaction
@@ -130,15 +143,71 @@ const runCheckout = async (
         }
       });
 
-      const order = await createOrder(orderBody, accessToken);
-      if (order) {
-        // TODO: continue code from here
-        return res.status(200).send({
-          status: 200,
-          message: 'CHECKOUT',
-          order,
-        });
+      let listShipping = await requestModule(body, hostname, 'shipping');
+      if (listShipping) {
+        listShipping = getValidResults(listShipping, 'shipping_services');
+        handleShippingServices(body, listShipping, amount, orderBody);
+      } else {
+      // problem with shipping response object
+        return sendError(
+          res,
+          400,
+          'CKT901',
+          'Any valid shipping service from /calculate_shipping module',
+          {
+            en_us: 'Shipping method not available, please choose another',
+            pt_br: 'Forma de envio indisponível, por favor escolha outra',
+          },
+        );
       }
+
+      let discounts = await requestModule(body, hostname, 'discount');
+      if (discounts) {
+        discounts = getValidResults(discounts);
+        handleApplyDiscount(body, discounts, amount, orderBody);
+      }
+
+      const { transaction, ...bodyPayment } = body;
+      let paymentsBody: BodyPayment;
+      if (Array.isArray(transaction)) {
+        paymentsBody = {
+          ...bodyPayment,
+          transaction: transaction[0],
+        };
+      } else {
+        paymentsBody = {
+          ...bodyPayment,
+          transaction,
+        };
+      }
+
+      let listPaymentGateways = await requestModule(paymentsBody, hostname, 'payment');
+
+      if (listPaymentGateways) {
+        listPaymentGateways = getValidResults(listPaymentGateways, 'payment_gateways');
+        handleListPayments(body, listPaymentGateways, paymentsBody, amount, orderBody);
+      } else {
+        return sendError(
+          res,
+          409,
+          'CKT902',
+          'Any valid payment gateway from /list_payments module',
+          {
+            en_us: 'Payment method not available, please choose another',
+            pt_br: 'Forma de pagamento indisponível, por favor escolha outra',
+          },
+        );
+      }
+
+      return res.status(200).send({
+        status: 200,
+        message: 'CHECKOUT',
+        orderBody,
+        body,
+      });
+
+      /*
+      TODO: Handle Create New Order
       return sendError(
         res,
         409,
@@ -149,6 +218,7 @@ const runCheckout = async (
           pt_br: 'Houve um problema ao salvar o pedido, por favor tente novamente mais tarde',
         },
       );
+      */
     }
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
   }
@@ -165,9 +235,10 @@ const runCheckout = async (
 };
 
 export default (
-  schema: { [key: string]: any },
+  schema: {[key:string] : any},
   req: Request,
   res:Response,
+  hostname: string,
 ) => {
   const validate = ajv.compile(schema);
   const ip = req.headers['x-real-ip'];
@@ -176,7 +247,7 @@ export default (
   }
   const acessToken = req.headers.authorization;
   if (acessToken) {
-    return runCheckout(req.body, acessToken, res, validate);
+    return runCheckout(req.body, acessToken, res, validate, hostname);
   }
   return sendError(
     res,

@@ -1,11 +1,6 @@
+import type { CustomerCheckout } from '../../types/index';
 import api from '@cloudcommerce/api';
 import { logger } from 'firebase-functions';
-// eslint-disable-next-line import/no-unresolved
-
-type CustomerCheckout = {
-  _id?: string,
-  main_email: string
-}
 
 const findCustomerByEmail = async (email: string | undefined) => {
   try {
@@ -20,13 +15,17 @@ const findCustomerByEmail = async (email: string | undefined) => {
   }
 };
 
-export default (customer: CustomerCheckout) => {
-  if (!customer._id) {
+export default (customer?: CustomerCheckout) => {
+  if (customer) {
+    if (!customer._id) {
     // try to find customer by e-mail
     // GET customer object
-    return findCustomerByEmail(customer.main_email);
+      return findCustomerByEmail(customer.main_email);
     // use first resulted customer ID
+    } if (customer._id && (typeof customer._id === 'string') && customer._id.length === 24) {
+      // customer ID already defined
+      return customer._id as string & { length: 24; };
+    }
   }
-  // customer ID already defined
-  return customer._id;
+  return null;
 };
