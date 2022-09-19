@@ -14,7 +14,92 @@ import getConfig from './storefront.config.mjs';
 
 dotenv.config();
 
-const astroConfig = {
+const _vitePWAOptions = {
+  registerType: 'autoUpdate',
+  workbox: {
+    navigateFallback: null,
+    globDirectory: 'dist/client',
+    globPatterns: [
+      '**/!(cms*|admin*).{js,css}',
+      '**/logo.?????*.{webp,avif,svg}', // `@astrojs/image` optimized logo if any
+    ],
+    ignoreURLParametersMatching: [/.*/],
+    runtimeCaching: [{
+      urlPattern: /^\/$/,
+      handler: 'NetworkFirst',
+    }, {
+      urlPattern: /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'logo',
+      },
+    }, {
+      urlPattern: /\/((?!(?:admin|assets|img)(\/|$))[^.]+)(\.(?!js|css|xml|txt|png|jpg|jpeg|webp|avif|svg|gif)[^.]+)*$/,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'pages',
+        expiration: {
+          maxEntries: 50,
+          purgeOnQuotaError: true,
+        },
+      },
+    }, {
+      urlPattern: /^\/assets\//,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'assets',
+      },
+    }, {
+      urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'cms-images',
+        expiration: {
+          maxEntries: 20,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          purgeOnQuotaError: true,
+        },
+      },
+    }, {
+      urlPattern: /^https:\/\/ecomplus\.io/,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'store-api',
+        expiration: {
+          maxEntries: 50,
+          purgeOnQuotaError: true,
+        },
+      },
+    }, {
+      urlPattern: /^https:\/\/(((\w+\.)?ecoms\d)|(ecom[\w-]+(\.\w+)*\.digitaloceanspaces))\.com.*\/imgs\/normal\//,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'product-thumbnails',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          purgeOnQuotaError: true,
+        },
+      },
+    }, {
+      urlPattern: /^https:\/\/(((\w+\.)?ecoms\d)|(ecom[\w-]+(\.\w+)*\.digitaloceanspaces))\.com.*\/imgs\/big\//,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'product-pictures',
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+          purgeOnQuotaError: true,
+        },
+      },
+    }],
+  },
+};
+
+const genAstroConfig = ({
+  site = `https://${getConfig().domain}`,
+  vitePWAOptions = _vitePWAOptions,
+} = {}) => ({
   output: 'server',
   adapter: node(),
   integrations: [
@@ -25,13 +110,19 @@ const astroConfig = {
     sitemap(),
     UnoCSS(),
   ],
+  site,
   vite: {
-    plugins: [VitePWA()],
+    plugins: [
+      VitePWA(vitePWAOptions),
+    ],
   },
-  site: `https://${getConfig().domain}`,
-};
+});
+
+const astroConfig = genAstroConfig();
 
 // https://astro.build/config
 export default defineConfig(astroConfig);
 
-export { astroConfig };
+export { genAstroConfig, astroConfig };
+
+export const vitePWAOptions = _vitePWAOptions;
