@@ -37,7 +37,7 @@ export default (req: Request, res: Response) => {
             message: 'GET is acceptable only to JSON schema, at /@checkout/schema',
           });
       }
-      return checkout(schemas[modName].params, req, res);
+      return checkout(schemas[modName].params, req, res, req.hostname);
     }
     if (url === '/@checkout/schema') {
       return sendSchema();
