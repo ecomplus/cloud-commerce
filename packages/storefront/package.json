@@ -44,11 +44,11 @@
     "color": "^4.2.3",
     "dotenv": "^16.0.2",
     "firebase": "^9.10.0",
-    "nanostores": "^0.6.0",
+    "nanostores": "^0.7.0",
     "rollup": "^2.79.0",
     "unocss": "^0.45.21",
-    "vite": "^3.1.1",
-    "vite-plugin-pwa": "^0.12.7",
+    "vite": "^3.1.3",
+    "vite-plugin-pwa": "^0.12.8",
     "vue": "^3.2.39"
   }
 }
