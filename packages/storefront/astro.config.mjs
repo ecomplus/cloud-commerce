@@ -14,7 +14,31 @@ import getConfig from './storefront.config.mjs';
 
 dotenv.config();
 
+const { domain, primaryColor, settings } = getConfig();
+
 const _vitePWAOptions = {
+  manifest: {
+    name: settings.name || 'My Shop',
+    short_name: settings.short_name || settings.name || 'MyShop',
+    description: settings.description || 'My PWA Shop',
+    background_color: settings.bg_color || '#ffffff',
+    theme_color: primaryColor,
+    crossorigin: 'use-credentials',
+    icons: [{
+      src: settings.icon || '/img/icon.png',
+      sizes: '192x192',
+      type: 'image/png',
+    }, {
+      src: settings.large_icon || '/img/large-icon.png',
+      sizes: '512x512',
+      type: 'image/png',
+    }, {
+      src: settings.large_icon || '/img/large-icon.png',
+      sizes: '512x512',
+      type: 'image/png',
+      purpose: 'any maskable',
+    }],
+  },
   registerType: 'autoUpdate',
   workbox: {
     navigateFallback: null,
@@ -28,7 +52,9 @@ const _vitePWAOptions = {
       urlPattern: /^\/$/,
       handler: 'NetworkFirst',
     }, {
-      urlPattern: /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
+      urlPattern: settings.logo
+        ? new RegExp(`^${(settings.mini_logo ? `(?:${settings.mini_logo}|${settings.logo})` : settings.logo)}$`)
+        : /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'logo',
@@ -97,7 +123,7 @@ const _vitePWAOptions = {
 };
 
 const genAstroConfig = ({
-  site = `https://${getConfig().domain}`,
+  site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => ({
   output: 'server',

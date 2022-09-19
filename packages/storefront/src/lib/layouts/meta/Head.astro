@@ -43,6 +43,7 @@ if (!ogImage) {
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content={primaryColor}>
 <link rel="icon" href={settings.favicon || '/favicon.ico'} />
+{import.meta.env.PROD && <link rel="manifest" href="/manifest.webmanifest" />}
 <title>{title}</title>
 <meta name="description" content={description}>
 <meta name="author" content={settings.name}>

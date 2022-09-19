@@ -67,9 +67,9 @@ Object.keys(brandColors).forEach((colorName) => {
 <body>
   <slot />
   <script>
-    import { initializeApp } from 'firebase/app';
     import { registerSW } from 'virtual:pwa-register';
-    // @ts-ignore
+    import { initializeApp } from 'firebase/app';
+    registerSW();
     const firebaseConfig = window.firebaseConfig || {
       apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
       authDomain: "ecom2-002.firebaseapp.com",
@@ -80,13 +80,6 @@ Object.keys(brandColors).forEach((colorName) => {
       measurementId: "G-SC592CE0GB"
     };
     initializeApp(firebaseConfig);
-    const updateSW = registerSW({
-      onNeedRefresh() {},
-      onOfflineReady() {
-        console.log('Offline ready');
-      },
-    });
-    updateSW();
   </script>
   <slot name="before-body-end">
     {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
