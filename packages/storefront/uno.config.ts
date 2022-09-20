@@ -10,9 +10,8 @@ import { genTailwindConfig } from './tailwind.config';
 
 const genUnoCSSConfig = ({
   colorVariants,
-  brandIcons = 'logos',
-  generalIcons = 'heroicons',
-  brandShortcuts = [
+  brandIcons = 'bxl',
+  brandIconsShortcuts = [
     'facebook',
     'twitter',
     'instagram',
@@ -24,6 +23,9 @@ const genUnoCSSConfig = ({
     'telegram',
     'whatsapp',
     'messenger',
+  ],
+  brandLogos = 'logos',
+  brandLogosShortcuts = [
     'visa',
     'mastercard',
     'paypal',
@@ -34,17 +36,27 @@ const genUnoCSSConfig = ({
     'hipercard',
     'dinersclub',
   ],
+  generalIcons = 'heroicons',
   shoppingCartIcon = 'shopping-bag',
 }: {
   colorVariants?: string[],
   brandIcons?: string,
+  brandIconsShortcuts?: Array<string | [string, string]>,
+  brandLogos?: string,
+  brandLogosShortcuts?: Array<string | [string, string]>,
   generalIcons?: string,
-  brandShortcuts?: string[],
   shoppingCartIcon?: string,
 } = {}): UserConfig => ({
   shortcuts: [
-    ...brandShortcuts.map((brand) => {
-      return { [`i-${brand}`]: `i-${brandIcons}:${brand}` };
+    ...brandIconsShortcuts.map((brand) => {
+      return typeof brand === 'string'
+        ? { [`i-${brand}`]: `i-${brandIcons}:${brand}` }
+        : { [`i-${brand[0]}`]: `i-${brandIcons}:${brand[1]}` };
+    }),
+    ...brandLogosShortcuts.map((brand) => {
+      return typeof brand === 'string'
+        ? { [`i-${brand}`]: `i-${brandLogos}:${brand}` }
+        : { [`i-${brand[0]}`]: `i-${brandLogos}:${brand[1]}` };
     }),
     { 'i-shopping-cart': `i-${generalIcons}:${shoppingCartIcon}` },
     [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
