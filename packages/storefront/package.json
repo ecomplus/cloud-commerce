@@ -34,6 +34,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@ecomplus/utils": "^1.4.1",
+    "@iconify-json/bxl": "^1.1.4",
     "@iconify-json/heroicons": "^1.1.4",
     "@iconify-json/logos": "^1.1.16",
     "@nanostores/vue": "^0.6.0",

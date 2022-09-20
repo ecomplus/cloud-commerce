@@ -278,6 +278,7 @@ importers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/config': workspace:*
       '@ecomplus/utils': ^1.4.1
+      '@iconify-json/bxl': ^1.1.4
       '@iconify-json/heroicons': ^1.1.4
       '@iconify-json/logos': ^1.1.16
       '@nanostores/vue': ^0.6.0
@@ -304,6 +305,7 @@ importers:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/config': link:../config
       '@ecomplus/utils': 1.4.1
+      '@iconify-json/bxl': 1.1.4
       '@iconify-json/heroicons': 1.1.4
       '@iconify-json/logos': 1.1.16
       '@nanostores/vue': 0.6.0_hswlafrnslvidkmp33e2xqqycm
@@ -2656,6 +2658,12 @@ packages:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
     dev: true
+
+  /@iconify-json/bxl/1.1.4:
+    resolution: {integrity: sha512-x7ZEqUXdHhzkDoIrzt5XfXJJbQ6QC6/vfaN2FU+LMvCeankoXWLTNDtO4bGbESRlnz6pUvTcUDhaW+QkuhQxZQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
 
   /@iconify-json/heroicons/1.1.4:
     resolution: {integrity: sha512-6UonUR+IG3/mWi4PNQJOQkaOiQjmCbZV4d33QOvUI0Nt4AoMByvIJ1EmQX3rjNx4B5Cv4APW3DM5z3gMCQGueQ==}
