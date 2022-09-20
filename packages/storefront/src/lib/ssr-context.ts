@@ -1,10 +1,8 @@
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
+import type CmsSettings from '../types/cms-settings';
 import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
-import settings from '../../content/settings.json';
-
-type CmsSettings = typeof settings;
 
 type StorefrontConfig = {
   storeId: BaseConfig['storeId'],
@@ -76,7 +74,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
       apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
     }
     prefetchResponses.forEach(({ config: { endpoint }, data }) => {
-      apiState[endpoint] = data;
+      apiState[endpoint] = data.result || data;
     });
   } catch (err: any) {
     const error: ApiError = err;
