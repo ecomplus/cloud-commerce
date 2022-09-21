@@ -1,25 +1,64 @@
 ---
-import { getConfig } from '../../ssr-context';
+import type { PageContext } from '../../ssr-context';
+import ecomUtils from '@ecomplus/utils';
 
+export interface Props {
+  pageContext: PageContext;
+}
+
+const { pageContext } = Astro.props as Props;
 const {
   storeId,
+  apiResource,
+  apiDoc,
   lang,
   countryCode,
   currency,
   currencySymbol,
   domain,
   settings,
-} = getConfig();
+} = pageContext;
 
-const inlineClientJS = `
-window._settings = ${JSON.stringify({
-  ...settings,
-  store_id: storeId,
-  lang,
-  country_code: countryCode,
-  currency,
-  currency_symbol: currencySymbol,
+let inlineClientJS = `
+window.storefront = ${JSON.stringify({
+  settings: {
+    ...settings,
+    store_id: storeId,
+    lang,
+    country_code: countryCode,
+    currency,
+    currency_symbol: currencySymbol,
+  },
 })};`;
+if (apiDoc) {
+  if (typeof apiDoc.price === 'number') {
+    apiDoc.price = ecomUtils.price(apiDoc);
+  }
+  const slimDocRegex = globalThis.storefront_slim_doc_regex
+    || /body|meta|records|description|i18n/;
+  const minifyApiDoc = (nestedDoc: any) => {
+    if (typeof nestedDoc === 'object' && nestedDoc) {
+      if (Array.isArray(nestedDoc)) {
+        nestedDoc.forEach((item) => minifyApiDoc(item));
+      } else {
+        Object.keys(nestedDoc).forEach((field) => {
+          if (slimDocRegex.test(field)) {
+            delete nestedDoc[field];
+          } else {
+            minifyApiDoc(nestedDoc[field]);
+          }
+        });
+      }
+    }
+    return nestedDoc;
+  };
+  inlineClientJS += `
+window.storefront.context = ${JSON.stringify({
+  resource: apiResource,
+  doc: minifyApiDoc({ ...apiDoc }),
+  timestamp: Date.now(),
+})};`;
+}
 
 const inlineJSONLd = JSON.stringify({
   '@context': 'http://schema.org',

@@ -1,6 +1,7 @@
 ---
-import ViewHome from '../lib/views/index.astro';
 import loadPageContext, { PageContext } from '../lib/ssr-context';
+import PagesLayout from '../lib/layouts/Pages.astro';
+import HomeMain from '../lib/main/Home.astro';
 
 let pageContext: PageContext;
 let loadError: any;
@@ -14,5 +15,9 @@ try {
 }
 ---
 
-{pageContext && <ViewHome pageContext={pageContext} />}
+{pageContext &&
+  <PagesLayout pageContext={pageContext}>
+    <HomeMain pageContext={pageContext} />
+  </PagesLayout>
+}
 {loadError && <Fragment set:html={loadError.responseHTML} />}

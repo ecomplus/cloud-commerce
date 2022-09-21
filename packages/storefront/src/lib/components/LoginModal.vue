@@ -2,7 +2,9 @@
   <div class="counter">
     <button @click="subtract()">-</button>
     <pre>{{ count }}</pre>
-    <button @click="add()">+</button>
+    <button @click="add()">
+      <div class="i-plus" text="cool-gray-100"></div>
+    </button>
   </div>
   <div class="counter-message">
     <slot />
@@ -10,13 +12,12 @@
   <div id="firebaseui-auth-container"></div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
 import config from '@cloudcommerce/config';
 
 const setupFirebaseUi = async () => {
   const { lang } = config.get();
-  import('../../assets/firebaseui.css');
 
   await Promise.all([
     import('firebase/compat/auth'),
@@ -29,6 +30,7 @@ const setupFirebaseUi = async () => {
       document.body.appendChild(script);
     }),
   ]);
+  // @ts-ignore
   const { firebase, firebaseui }: { firebase: any, firebaseui: any } = window;
   const ui = new firebaseui.auth.AuthUI(firebase.auth());
   console.log(firebase.auth);
@@ -54,24 +56,15 @@ const setupFirebaseUi = async () => {
   ui.start('#firebaseui-auth-container', uiConfig);
 };
 
-export default {
-  setup() {
-    if (!import.meta.env.SSR) {
-      setupFirebaseUi();
-    }
-    const count = ref(0);
-    const add = () => {
-      count.value += 1;
-    };
-    const subtract = () => {
-      count.value -= 1;
-    };
-    return {
-      count,
-      add,
-      subtract,
-    };
-  },
+if (!import.meta.env.SSR) {
+  setupFirebaseUi();
+}
+const count = ref(0);
+const add = () => {
+  count.value += 1;
+};
+const subtract = () => {
+  count.value -= 1;
 };
 </script>
 

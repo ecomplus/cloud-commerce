@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.0.75",
+  "version": "0.0.83",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "main": "src/index.js",
   "repository": {
@@ -21,8 +21,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare-monorepo": "rm -rf content && ln -s ../../store/functions/ssr/content content",
-    "prerelease": "rm content && cp -r ../../store/functions/ssr/content ./"
+    "prepare-monorepo": "sh scripts/prepare-monorepo.sh",
+    "prerelease": "sh scripts/prerelease.sh"
   },
   "dependencies": {
     "@astrojs/image": "^0.7.0",
@@ -33,16 +33,23 @@
     "@astrojs/vue": "^1.0.2",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
+    "@ecomplus/utils": "^1.4.1",
+    "@iconify-json/bxl": "^1.1.4",
+    "@iconify-json/heroicons": "^1.1.4",
+    "@iconify-json/logos": "^1.1.16",
     "@nanostores/vue": "^0.6.0",
-    "@picocss/pico": "^1.5.4",
-    "astro": "^1.2.2",
+    "@picocss/pico": "^1.5.5",
+    "@unocss/preset-attributify": "^0.45.21",
+    "@unocss/preset-icons": "^0.45.21",
+    "astro": "^1.2.6",
+    "color": "^4.2.3",
     "dotenv": "^16.0.2",
-    "firebase": "^9.9.4",
-    "nanostores": "^0.6.0",
+    "firebase": "^9.10.0",
+    "nanostores": "^0.7.0",
     "rollup": "^2.79.0",
     "unocss": "^0.45.21",
-    "vite": "^3.1.0",
-    "vite-plugin-pwa": "^0.12.7",
+    "vite": "^3.1.3",
+    "vite-plugin-pwa": "^0.12.8",
     "vue": "^3.2.39"
   }
 }

@@ -1,0 +1,124 @@
+---
+import type { PageContext } from '../ssr-context';
+import Color from 'color';
+import MetaHead from './meta/Head.astro';
+import MetaJson from './meta/Json.astro';
+import '@picocss/pico/css/pico.min.css';
+
+export interface Props {
+  pageContext: PageContext;
+  title?: string;
+}
+
+const { pageContext, title } = Astro.props as Props;
+const {
+  lang,
+  primaryColor,
+  secondaryColor,
+  cms,
+} = pageContext;
+const cmsCustomCode = cms('code') as typeof import('../../../content/code.json');
+
+const brandColors = {
+  primary: primaryColor,
+  secondary: secondaryColor,
+  ...globalThis.storefront_brand_colors,
+};
+const colorVariants = {
+  '50':  -0.75, // whiter
+  '100': -0.5,  // white
+  '200': -0.33, // lightest
+  '300': -0.21, // lighter
+  '400': -0.1,  // light
+  '500': 0,
+  '600': 0.1,   // dark
+  '700': 0.16,  // darker
+  '800': 0.22,  // darkest
+  '900': 0.5,   // black
+  ...globalThis.storefront_color_variants,
+};
+const colorCSSVars: Record<string, string> = {};
+Object.keys(brandColors).forEach((colorName) => {
+  const color = Color(brandColors[colorName]);
+  Object.keys(colorVariants).forEach((colorVariant) => {
+    const colorShift = colorVariants[colorVariant];
+    const colorLabel = `${colorName}-${colorVariant}`;
+    colorCSSVars[colorLabel] = color.darken(colorShift).hex();
+    if (Number(colorLabel) > 100 && Number(colorLabel) < 900) {
+      colorCSSVars[`${colorLabel}-yiq`] = color.isLight()
+        ? 'var(--yiq-text-dark)' : 'var(--yiq-text-light)';
+      colorCSSVars[`${colorLabel}-rgb`] = `${color.red()}, ${color.green()}, ${color.blue()}`;
+    }
+  });
+});
+---
+
+<!DOCTYPE html>
+<html lang={lang.replace('_', '-')}>
+<head>
+  <MetaHead pageContext={pageContext} title={title} />
+  <MetaJson pageContext={pageContext} />
+  <slot name="before-head-end">
+    {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
+    {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
+  </slot>
+</head>
+
+<body>
+  <slot />
+  <script>
+    import { registerSW } from 'virtual:pwa-register';
+    import { initializeApp } from 'firebase/app';
+    registerSW();
+    const firebaseConfig = window.firebaseConfig || {
+      apiKey: "AIzaSyCrVzemDgpyp9i6ni7Yc5ZuEVfXYwl-4J0",
+      authDomain: "ecom2-002.firebaseapp.com",
+      projectId: "ecom2-002",
+      storageBucket: "ecom2-002.appspot.com",
+      messagingSenderId: "402807248219",
+      appId: "1:402807248219:web:cf7d57759751e74776367e",
+      measurementId: "G-SC592CE0GB"
+    };
+    initializeApp(firebaseConfig);
+  </script>
+  <slot name="before-body-end">
+    {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
+  </slot>
+</body>
+</html>
+
+<style is:global define:vars={colorCSSVars}>
+  :root {
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --yiq-text-light: var(--white);
+    --yiq-text-dark: var(--gray-dark);
+  }
+  body,
+  body [data-theme=light],
+  body [data-theme=dark] {
+    --primary: var(--primary-500);
+    --primary-hover: var(--primary-700);
+    --primary-focus: var(--primary-50);
+    --primary-inverse: var(--primary-500-yiq);
+    --secondary: var(--secondary-500);
+    --secondary-hover: var(--secondary-700);
+    --secondary-focus: var(--secondary-50);
+    --secondary-inverse: var(--secondary-500-yiq);
+  }
+  @media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme=light]) a {
+      --color: var(--primary-200);
+    }
+    :root:not([data-theme=light]) a:is([aria-current], :hover, :active, :focus) {
+      --color: var(--primary-400);
+    }
+  }
+  [data-theme=light] a {
+    --color: var(--primary) !important;
+  }
+  [data-theme=light] a:is([aria-current], :hover, :active, :focus) {
+    --color: var(--primary-hover) !important;
+  }
+</style>

@@ -1,10 +1,8 @@
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
+import type CmsSettings from '../types/cms-settings';
 import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
-import settings from '../../content/settings.json';
-
-type CmsSettings = typeof settings;
 
 type StorefrontConfig = {
   storeId: BaseConfig['storeId'],
@@ -18,7 +16,8 @@ type StorefrontConfig = {
   settings: CmsSettings,
   dirContent: string,
   // eslint-disable-next-line no-unused-vars
-  cms: (filename: string) => Record<string, any> | Array<string>,
+  cms: <T extends string>(filename: T) => T extends `${string}/`
+    ? Array<string> : Record<string, any>,
 };
 
 const getConfig: () => StorefrontConfig = _getConfig;
@@ -31,7 +30,7 @@ type ApiPrefetchEndpoints = Array<ApiEndpoint>;
 
 const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
-  let cacheControl = `public, max-age=${maxAge}`;
+  let cacheControl = `public, max-age=${maxAge}, must-revalidate`;
   if (sMaxAge) {
     cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=86400`;
   }
@@ -75,7 +74,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
       apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
     }
     prefetchResponses.forEach(({ config: { endpoint }, data }) => {
-      apiState[endpoint] = data;
+      apiState[endpoint] = data.result || data;
     });
   } catch (err: any) {
     const error: ApiError = err;

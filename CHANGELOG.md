@@ -2,6 +2,81 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.83](https://github.com/ecomplus/cloud-commerce/compare/v0.0.82...v0.0.83) (2022-09-19)
+
+
+### Features
+
+* **storefront:** Advanced SW cache strategies based on current `@ecomplus/storefront-framework` ([3b6b6ae](https://github.com/ecomplus/cloud-commerce/commit/3b6b6ae35e449ccf29ad07b67b74dbfaf409f16a))
+* **storefront:** Properly setup web manifest for PWA ([b2c3f1e](https://github.com/ecomplus/cloud-commerce/commit/b2c3f1e56fe3acfebd5990e0fce73007786da6d4)), closes [#L262-L282](https://github.com/ecomplus/cloud-commerce/issues/L262-L282)
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#50](https://github.com/ecomplus/cloud-commerce/issues/50)) ([f14b07c](https://github.com/ecomplus/cloud-commerce/commit/f14b07c3c35dc62d52a1c102b001611f85e51080))
+
+### [0.0.82](https://github.com/ecomplus/cloud-commerce/compare/v0.0.81...v0.0.82) (2022-09-17)
+
+
+### Features
+
+* **storefront:** Trying basic PWA setup with `vite-plugin-pwa` ([5ddab09](https://github.com/ecomplus/cloud-commerce/commit/5ddab09679d979e4cd52fc0ba1c8e9845178e521))
+
+
+### Bug Fixes
+
+* **storefront:** Add `must-revalidate` cache control to prevent browsers using stale ([bdaca35](https://github.com/ecomplus/cloud-commerce/commit/bdaca3548a8709590368565735c4cf02e20b2d5c))
+
+### [0.0.81](https://github.com/ecomplus/cloud-commerce/compare/v0.0.80...v0.0.81) (2022-09-16)
+
+
+### Bug Fixes
+
+* **ssr:** Use `compression` pkg (middleware) to gzip ([714c8b3](https://github.com/ecomplus/cloud-commerce/commit/714c8b3f502082a6a395b40e7a792540cd9af861))
+
+### [0.0.80](https://github.com/ecomplus/cloud-commerce/compare/v0.0.79...v0.0.80) (2022-09-16)
+
+### [0.0.79](https://github.com/ecomplus/cloud-commerce/compare/v0.0.78...v0.0.79) (2022-09-16)
+
+
+### Bug Fixes
+
+* **ssr:** Hardset default function memory 256MiB ([ae250d8](https://github.com/ecomplus/cloud-commerce/commit/ae250d8532987f33ddd6320a60b2c02331dbc2c3))
+* **storefront:** Update Astro, Vite and other non-major dependencies ([7ee3936](https://github.com/ecomplus/cloud-commerce/commit/7ee393694173a3c10c7fdaba1e069342845e90cd))
+
+### [0.0.78](https://github.com/ecomplus/cloud-commerce/compare/v0.0.77...v0.0.78) (2022-09-15)
+
+
+### Bug Fixes
+
+* **storefront:** Cant use named imports from `@ecomplus/utils` yet ([d35a839](https://github.com/ecomplus/cloud-commerce/commit/d35a839cf7a881f8f7bdf71b64ce51154bd1be24))
+
+### [0.0.77](https://github.com/ecomplus/cloud-commerce/compare/v0.0.76...v0.0.77) (2022-09-15)
+
+
+### Bug Fixes
+
+* **modules:** Set `concurrency: 6` for Modules API function by default ([70e8f70](https://github.com/ecomplus/cloud-commerce/commit/70e8f70a25c650eca2c404b9b039416e0db52cee))
+* **ssr:** Try SSR function with 30s timeout and 128mb by default ([fd339e1](https://github.com/ecomplus/cloud-commerce/commit/fd339e1e21f54b1bbc20b90ed95f97faaf89c10e))
+* **storefront:** Add `@ecomplus/utils` to direct dependencies ([c769252](https://github.com/ecomplus/cloud-commerce/commit/c76925272391eccdc4ee0c67003c347a7032c326))
+
+### [0.0.76](https://github.com/ecomplus/cloud-commerce/compare/v0.0.75...v0.0.76) (2022-09-15)
+
+
+### Features
+
+* **storefront:** Add brand colors and variations to UnoCSS config (utils) ([6698930](https://github.com/ecomplus/cloud-commerce/commit/669893079f4f43a04a6a9518a074240b0a30c9eb))
+* **storefront:** Add UnoCSS to Astro with attributify and icons preset ([7726a41](https://github.com/ecomplus/cloud-commerce/commit/7726a41155ec051942048c2e1b2535aaf4db9615))
+* **storefront:** Finish porting meta tags and start theming ([379c9e6](https://github.com/ecomplus/cloud-commerce/commit/379c9e6448f6754e59879866ea8ccfd8ada015e4))
+* **storefront:** Parse brand colors to CSS vars and add new layout slots ([bec435c](https://github.com/ecomplus/cloud-commerce/commit/bec435c88400732da64327497587a0c5c1190d09))
+* **storefront:** Setup `window.storefront.context` with resource and minified doc ([8b7292d](https://github.com/ecomplus/cloud-commerce/commit/8b7292dcc0217a44479d7972a0428b66dfbf9a37))
+
+
+### Bug Fixes
+
+* **cli:** Update Firebase Hosting config to redirect /index to home by default ([dbc976d](https://github.com/ecomplus/cloud-commerce/commit/dbc976d5a9c9a29fd85bf345d480cc934dd7f6bc))
+* **storefront:** Update UnoCSS config icons shortcuts ([26f2d35](https://github.com/ecomplus/cloud-commerce/commit/26f2d35266acc2ab259e0930e79c6d1e93d51c76))
+
 ### [0.0.75](https://github.com/ecomplus/cloud-commerce/compare/v0.0.74...v0.0.75) (2022-09-13)
 
 ### [0.0.74](https://github.com/ecomplus/cloud-commerce/compare/v0.0.73...v0.0.74) (2022-09-13)

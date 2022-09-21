@@ -14,7 +14,7 @@ import type {
   ResourceId,
   ResourceListResult,
   EventsResult,
-} from '@cloudcommerce/api/src/types';
+} from '@cloudcommerce/api/types';
 import type { ApplyDiscountParams } from './modules/apply_discount:params';
 import type { ApplyDiscountResponse } from './modules/apply_discount:response';
 import type { CalculateShippingParams } from './modules/calculate_shipping:params';
