@@ -283,7 +283,6 @@ importers:
       '@iconify-json/logos': ^1.1.16
       '@nanostores/vue': ^0.6.0
       '@picocss/pico': ^1.5.5
-      '@unocss/preset-attributify': ^0.45.21
       '@unocss/preset-icons': ^0.45.21
       astro: ^1.2.6
       color: ^4.2.3
@@ -310,7 +309,6 @@ importers:
       '@iconify-json/logos': 1.1.16
       '@nanostores/vue': 0.6.0_hswlafrnslvidkmp33e2xqqycm
       '@picocss/pico': 1.5.5
-      '@unocss/preset-attributify': 0.45.21
       '@unocss/preset-icons': 0.45.21
       astro: 1.2.6
       color: 4.2.3

@@ -4,7 +4,6 @@ import {
   transformerDirectives,
   UserConfig,
 } from 'unocss';
-import presetAttributify from '@unocss/preset-attributify';
 import presetIcons from '@unocss/preset-icons';
 import { genTailwindConfig } from './tailwind.config';
 
@@ -69,7 +68,6 @@ const genUnoCSSConfig = ({
   ],
   presets: [
     presetUno(),
-    presetAttributify(),
     presetIcons({
       extraProperties: {
         display: 'inline-block',
