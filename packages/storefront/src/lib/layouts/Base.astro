@@ -1,8 +1,9 @@
 ---
+import type CmsCode from '../../types/cms-code';
 import type { PageContext } from '../ssr-context';
 import Color from 'color';
-import MetaHead from './meta/Head.astro';
-import MetaJson from './meta/Json.astro';
+import BaseHead from './BaseHead.astro';
+import BaseStateJson from './BaseStateJson.astro';
 import '@picocss/pico/css/pico.min.css';
 
 export interface Props {
@@ -17,7 +18,7 @@ const {
   secondaryColor,
   cms,
 } = pageContext;
-const cmsCustomCode = cms('code') as typeof import('../../../content/code.json');
+const cmsCustomCode = cms('code') as CmsCode;
 
 const brandColors = {
   primary: primaryColor,
@@ -56,8 +57,8 @@ Object.keys(brandColors).forEach((colorName) => {
 <!DOCTYPE html>
 <html lang={lang.replace('_', '-')}>
 <head>
-  <MetaHead pageContext={pageContext} title={title} />
-  <MetaJson pageContext={pageContext} />
+  <BaseHead pageContext={pageContext} title={title} />
+  <BaseStateJson pageContext={pageContext} />
   <slot name="before-head-end">
     {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
     {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
@@ -90,10 +91,15 @@ Object.keys(brandColors).forEach((colorName) => {
 <style is:global define:vars={colorCSSVars}>
   :root {
     --white: #fff;
-    --gray: #6c757d;
-    --gray-dark: #343a40;
+    --gray-50: #f9fafb;
+    --gray-200: #e5e7eb;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --surface-color: var(--gray-50);
+    --surface-border-color: var(--gray-200);
     --yiq-text-light: var(--white);
-    --yiq-text-dark: var(--gray-dark);
+    --yiq-text-dark: var(--gray-900);
   }
   body,
   body [data-theme=light],
@@ -108,17 +114,15 @@ Object.keys(brandColors).forEach((colorName) => {
     --secondary-inverse: var(--secondary-500-yiq);
   }
   @media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme=light]) {
+      --surface-color: var(--gray-800);
+      --surface-border-color: var(--gray-700);
+    }
     :root:not([data-theme=light]) a {
       --color: var(--primary-200);
     }
     :root:not([data-theme=light]) a:is([aria-current], :hover, :active, :focus) {
       --color: var(--primary-400);
     }
-  }
-  [data-theme=light] a {
-    --color: var(--primary) !important;
-  }
-  [data-theme=light] a:is([aria-current], :hover, :active, :focus) {
-    --color: var(--primary-hover) !important;
   }
 </style>
