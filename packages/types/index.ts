@@ -23,7 +23,7 @@ import type { ListPaymentsParams } from './modules/list_payments:params';
 import type { ListPaymentsResponse } from './modules/list_payments:response';
 import type { CreateTransactionParams } from './modules/create_transaction:params';
 import type { CreateTransactionResponse } from './modules/create_transaction:response';
-import type { CheckoutBody, Transaction } from './modules/@checkout:params';
+import type { CheckoutBody } from './modules/@checkout:params';
 
 type ApiEventName = 'orders-new'
   | 'orders-anyStatusSet'
@@ -67,7 +67,6 @@ type AppModuleBody = {
   application: Applications,
 };
 
-type CheckoutTransaction = Transaction
 
 export type {
   Products,
@@ -98,5 +97,4 @@ export type {
   CreateTransactionParams,
   CreateTransactionResponse,
   CheckoutBody,
-  CheckoutTransaction,
 };

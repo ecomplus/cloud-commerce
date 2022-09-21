@@ -2,10 +2,11 @@ import type {
   CheckoutBody, 
   Carts, 
   Orders, 
-  CheckoutTransaction,
+  // CheckoutTransaction,
   CalculateShippingResponse,
   ListPaymentsResponse
 } from '@cloudcommerce/types';
+import { Transaction } from '@cloudcommerce/types/modules/@checkout:params';
 
 type Items = Carts['items']
 type Item = Items[number]
@@ -19,14 +20,21 @@ type CheckoutBodyWithItems = Omit<CheckoutBody, 'items'> & {
 }
 
 type CustomerCheckout = Exclude<CheckoutBody['customer'], undefined>
-type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' | 'items' > &
-  { items : Item[]}
+type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' | 'items' > & { 
+  items : Item[]
+}
+
+type CheckoutTransaction = Exclude<CheckoutBody['transaction'], Transaction[]>
 
 type BodyPayment = Omit<CheckoutBodyItems, 'transaction'> & {
   transaction: CheckoutTransaction
 }
 
-type ShippingSerive = CalculateShippingResponse['shipping_services'][number]
+type CheckoutShippingService = CalculateShippingResponse['shipping_services'][number]
+type ShippingLine = CheckoutShippingSerive['shipping_line']
+type ShippingSerive = Omit<CheckoutShippingService, 'shipping_line'> & {
+  shipping_line?: ShippingLine
+}
 
 type PaymentGateways = ListPaymentsResponse['payment_gateways']
 type PaymentMethod = Pick<PaymentGateways[number]['payment_method'], 'code' | 'name'>
@@ -41,5 +49,6 @@ export {
   PaymentMethod,
   Amount,
   ShippingSerive,
+  ShippingLine,
   PaymentGateways,
 };
