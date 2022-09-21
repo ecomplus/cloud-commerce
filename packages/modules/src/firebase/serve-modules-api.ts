@@ -31,7 +31,7 @@ export default (req: Request, res: Response) => {
   if (modName === '@checkout') {
     if (url === '/@checkout') {
       if (method === 'GET') {
-        return res.status(406)
+        return res.status(405)
           .send({
             error_code: 'CKT101',
             message: 'GET is acceptable only to JSON schema, at /@checkout/schema',

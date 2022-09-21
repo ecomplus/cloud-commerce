@@ -193,8 +193,9 @@ export default async (
       const kitProductId = item.kit_product._id;
       // eslint-disable-next-line no-await-in-loop
       const kitProduct = (await api.get(
-        `products/${kitProductId}`,
-      )).data;
+        `products/${kitProductId}`,{
+          isNoAuth: true,
+      })).data;
       if (kitProduct) {
         checkKitProduct(kitProduct, kitProductId);
       } else {
@@ -204,8 +205,9 @@ export default async (
       // GET public product object
       // eslint-disable-next-line no-await-in-loop
       const product = (await api.get(
-        `products/${item.product_id}`,
-      )).data;
+        `products/${item.product_id}`,{
+          isNoAuth: true,
+      })).data;
 
       if (product) {
         checkItem(product);

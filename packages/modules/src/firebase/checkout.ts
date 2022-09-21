@@ -245,8 +245,9 @@ export default (
   if (!req.body.browser_ip && ip) {
     req.body.browser_ip = ip;
   }
-  const acessToken = req.headers.authorization;
+  let acessToken = req.headers.authorization;
   if (acessToken) {
+    acessToken = acessToken.replace(/Bearer /i, '')
     return runCheckout(req.body, acessToken, res, validate, hostname);
   }
   return sendError(

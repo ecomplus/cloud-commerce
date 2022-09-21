@@ -6,16 +6,14 @@ type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' >
 
 export default async (
   orderBody:BodyOrder,
-  acessToken:string,
+  accessToken:string,
 ) => {
   try {
     const orderId = (await api.post(
       'orders',
       orderBody,
       {
-        headers: {
-          Authorization: acessToken,
-        },
+        accessToken,
       },
     )).data._id;
 
@@ -25,9 +23,7 @@ export default async (
           const order = (await api.get(
             `orders/${orderId}`,
             {
-              headers: {
-                Authorization: acessToken,
-              },
+             accessToken
             },
           )).data;
           resolve(order);
