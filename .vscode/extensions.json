@@ -4,6 +4,6 @@
     "astro-build.astro-vscode",
     "vue.volar",
     "florianthievent.rules",
-    "voorjaar.windicss-intellisense"
+    "bradlc.vscode-tailwindcss"
   ]
 }
