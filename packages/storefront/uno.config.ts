@@ -5,7 +5,7 @@ import {
   UserConfig,
 } from 'unocss';
 import presetIcons from '@unocss/preset-icons';
-import { genTailwindConfig } from './tailwind.config';
+import { genTailwindConfig } from './tailwind.config.cjs';
 
 const genUnoCSSConfig = ({
   colorVariants,
