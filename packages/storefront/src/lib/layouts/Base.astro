@@ -45,7 +45,7 @@ Object.keys(brandColors).forEach((colorName) => {
     const colorShift = colorVariants[colorVariant];
     const colorLabel = `${colorName}-${colorVariant}`;
     colorCSSVars[colorLabel] = color.darken(colorShift).hex();
-    if (Number(colorLabel) > 100 && Number(colorLabel) < 900) {
+    if (Number(colorVariant) > 100 && Number(colorVariant) < 900) {
       colorCSSVars[`${colorLabel}-yiq`] = color.isLight()
         ? 'var(--yiq-text-dark)' : 'var(--yiq-text-light)';
       colorCSSVars[`${colorLabel}-rgb`] = `${color.red()}, ${color.green()}, ${color.blue()}`;
@@ -106,11 +106,11 @@ Object.keys(brandColors).forEach((colorName) => {
   body [data-theme=dark] {
     --primary: var(--primary-500);
     --primary-hover: var(--primary-700);
-    --primary-focus: var(--primary-50);
+    --primary-focus: rgba(var(--primary-200-rgb), 0.2);
     --primary-inverse: var(--primary-500-yiq);
     --secondary: var(--secondary-500);
     --secondary-hover: var(--secondary-700);
-    --secondary-focus: var(--secondary-50);
+    --secondary-focus: rgba(var(--secondary-200-rgb), 0.2);
     --secondary-inverse: var(--secondary-500-yiq);
   }
   @media only screen and (prefers-color-scheme: dark) {
