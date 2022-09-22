@@ -1,6 +1,7 @@
 ---
 import type { PageContext } from '../ssr-context';
 import Base from './Base.astro';
+import Header from './PagesHeader.astro';
 
 export interface Props {
   pageContext: PageContext;
@@ -15,13 +16,7 @@ const { pageContext, title } = Astro.props as Props;
     <slot name="before-head-end" />
   </Fragment>
   <slot name="header">
-    <div class="i-shopping-cart" text="sky-400" />
-    <div class="i-google-pay w-32" />
-    <div class="i-logos:apple bg-primary" />
-    <div class="i-heroicons:user bg-primary-300" />
-    <div class="i-user bg-primary-700" />
-    <div class="i-user bg-secondary-hover" />
-    <div class="i-user bg-contrast" />
+    <Header pageContext={pageContext} />
   </slot>
   <slot />
   <Fragment slot="before-body-end">
