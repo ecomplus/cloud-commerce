@@ -30,6 +30,38 @@ const genTailwindConfig = ({
       },
     },
   },
+  plugins: [
+    ({ addUtilities }) => {
+      addUtilities({
+        ...['primary', 'secondary', 'contrast'].reduce((utilities, color) => ({
+          ...utilities,
+          [`.${color}`]: {
+            '--background-color': `var(--${color})`,
+            'background-color': 'var(--background-color)',
+            color: `var(--${color}-inverse)`,
+          },
+        }), {}),
+        ...['primary', 'secondary'].reduce((utilities, color) => {
+          colorVariants.forEach((variant) => {
+            const colorLabel = `${color}-${variant}`;
+            let textColor;
+            if (Number(variant) <= 100) {
+              textColor = 'var(--yiq-text-dark)';
+            } else if (Number(variant) >= 900) {
+              textColor = 'var(--yiq-text-light)';
+            } else {
+              textColor = `var(--${colorLabel}-yiq)`;
+            }
+            utilities[`.${colorLabel}`] = {
+              'background-color': `var(--${colorLabel})`,
+              color: textColor,
+            };
+          });
+          return utilities;
+        }, {}),
+      });
+    },
+  ],
 });
 
 const tailwindConfig = genTailwindConfig();
