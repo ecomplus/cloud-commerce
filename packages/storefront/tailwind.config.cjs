@@ -7,6 +7,7 @@ const genTailwindConfig = ({
   theme: {
     extend: {
       colors: {
+        // Color vars from Base.astro styles
         ...['primary', 'secondary', 'contrast'].reduce((colors, color) => {
           const colorVariations = ['hover', 'focus', 'inverse'];
           if (color !== 'contrast') {
@@ -33,6 +34,11 @@ const genTailwindConfig = ({
   plugins: [
     ({ addUtilities }) => {
       addUtilities({
+        // https://picocss.com/docs/containers.html
+        '.container-fluid': {
+          'max-width': 'var(--content-max-width)',
+        },
+        // https://picocss.com/docs/buttons.html
         ...['primary', 'secondary', 'contrast'].reduce((utilities, color) => ({
           ...utilities,
           [`.${color}`]: {
