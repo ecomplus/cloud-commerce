@@ -1,3 +1,4 @@
+import type { Response } from 'firebase-functions';
 import type {
   CheckoutBodyWithItems,
   BodyOrder,
@@ -7,9 +8,28 @@ import type {
   Amount,
   Item,
   ShippingSerive,
+  ShippingLine,
 } from '../../types/index';
 
 type BodyResouce = {[key:string]:any}
+
+const sendError = (
+  res:Response,
+  status: number,
+  errorCode: string | number,
+  message: string,
+  userMessage?: {[key:string]:string},
+  moreInfo?:string,
+) => {
+  return res.status(status)
+    .send({
+      status,
+      error_code: errorCode,
+      message,
+      user_message: userMessage,
+      more_info: moreInfo,
+    });
+};
 
 const fixAmount = (
   amount: Amount,
@@ -149,7 +169,7 @@ const handleShippingServices = (
 
       for (let index = 0; index < response.shipping_services.length; index++) {
         const shippingService: ShippingSerive = response.shipping_services[index];
-        const shippingLine: ShippingSerive['shipping_line'] = shippingService.shipping_line;
+        const shippingLine: ShippingLine = shippingService.shipping_line;
         if (shippingLine && (!shippingCode || shippingCode === shippingService.service_code)) {
           // update amount freight and total
           const priceFreight = (typeof shippingLine.price === 'number'
@@ -169,8 +189,7 @@ const handleShippingServices = (
             app: { _id: result._id, ...shippingService },
           };
           // remove shipping line property
-          // TODO: 'delete' precisa ser opcional
-          // delete shippingApp.app.shipping_line;
+          delete shippingApp.app.shipping_line;
 
           // sum production time to posting deadline
           let maxProductionDays = 0;
@@ -266,9 +285,8 @@ const handleApplyDiscount = (
   // proceed to list payments
 };
 
-export default fixAmount;
-
 export {
+  sendError,
   fixAmount,
   getValidResults,
   handleShippingServices,

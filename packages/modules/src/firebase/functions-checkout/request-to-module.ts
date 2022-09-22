@@ -47,11 +47,26 @@ export default async (
       is_checkout_confirmation: true,
     };
     try {
+      console.log('> ', JSON.stringify({ url, body }));
       const resp = (await axios.post(
         url,
         body,
       )).data;
-      return resp.result as {[key:string]:any}[];
+      if (Array.isArray(resp.result)) {
+        let countAppErro = 0;
+        for (let i = 0; i < resp.result.length; i++) {
+          const result = resp.result[i];
+          if (!result.validated || result.error) {
+            countAppErro += 1;
+            console.error(result.response);
+            logger.error(result.response);
+          }
+        }
+        if (resp.result.length === countAppErro) {
+          return null;
+        }
+      }
+      return resp.result;
     } catch (e) {
       logger.error('>>erro: ', e);
       return null;

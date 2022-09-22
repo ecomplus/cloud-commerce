@@ -17,31 +17,14 @@ import fixItems from './functions-checkout/fix-items';
 import getCustomerId from './functions-checkout/get-custumerId';
 import requestModule from './functions-checkout/request-to-module';
 import {
+  sendError,
   fixAmount,
   getValidResults,
   handleShippingServices,
   handleApplyDiscount,
   handleListPayments,
 } from './functions-checkout/utils';
-// import createOrder from './functions-checkout/new-order';
-
-const sendError = (
-  res:Response,
-  status: number,
-  errorCode: string | number,
-  message: string,
-  userMessage?: {[key:string]:string},
-  moreInfo?:string,
-) => {
-  return res.status(status)
-    .send({
-      status,
-      error_code: errorCode,
-      message,
-      user_message: userMessage,
-      more_info: moreInfo,
-    });
-};
+import createOrder from './functions-checkout/new-order';
 
 const runCheckout = async (
   checkoutBody: CheckoutBody,
@@ -199,26 +182,16 @@ const runCheckout = async (
         );
       }
 
-      return res.status(200).send({
-        status: 200,
-        message: 'CHECKOUT',
-        orderBody,
-        body,
-      });
-
-      /*
-      TODO: Handle Create New Order
-      return sendError(
+      return createOrder(
         res,
-        409,
-        'CKT701',
-        'There was a problem saving your order, please try again later',
-        {
-          en_us: 'There was a problem saving your order, please try again later',
-          pt_br: 'Houve um problema ao salvar o pedido, por favor tente novamente mais tarde',
-        },
+        accessToken,
+        hostname,
+        amount,
+        checkoutBody,
+        orderBody,
+        transactions,
+        dateTime,
       );
-      */
     }
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
   }
@@ -247,7 +220,7 @@ export default (
   }
   let acessToken = req.headers.authorization;
   if (acessToken) {
-    acessToken = acessToken.replace(/Bearer /i, '')
+    acessToken = acessToken.replace(/Bearer /i, '');
     return runCheckout(req.body, acessToken, res, validate, hostname);
   }
   return sendError(
