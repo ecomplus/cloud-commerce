@@ -70,7 +70,7 @@ globalThis.TopBarProps = {
   hasPhoneLinks: header.contacts_stripe.phone_wpp,
   hasNetworkLinks: header.contacts_stripe.socials,
   contacts,
-  ...Astro.props.topBarProps,
+  ...topBarProps,
 };
 
 const logoWebpAttrs = await getImage({

@@ -96,11 +96,11 @@ const loadPageContext = async (Astro: AstroGlobal, {
       Astro.response.headers.set('X-SSR-Error', error.message);
     }
     Astro.response.status = status;
-    err.responseHTML = `<html><head>
+    err.responseHTML = `<head>
       <meta http-equiv="refresh" content="0;
         url=/fallback?status=${status}&url=${encodeURIComponent(urlPath)}"/>
       </head>
-      <body></body></html>`;
+      <body></body>`;
     throw err;
   }
   if (urlPath === '/fallback') {

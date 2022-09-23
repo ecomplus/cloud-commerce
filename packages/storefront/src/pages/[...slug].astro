@@ -1,6 +1,7 @@
 ---
-import ViewWildcard from '../lib/views/[...slug].astro';
 import loadPageContext, { PageContext } from '../lib/ssr-context';
+import PagesLayout from '../lib/layouts/Pages.astro';
+import WildcardMain from '../lib/main/Wildcard.astro';
 
 if (String(Astro.params.slug).endsWith('.css.map')) {
   return new Response(null, { status: 404 });
@@ -18,5 +19,12 @@ try {
 }
 ---
 
-{pageContext && <ViewWildcard pageContext={pageContext} />}
+<!DOCTYPE html>
+<html lang={pageContext?.lang.replace('_', '-')}>
+{pageContext &&
+  <PagesLayout pageContext={pageContext}>
+    <WildcardMain pageContext={pageContext} />
+  </PagesLayout>
+}
 {loadError && <Fragment set:html={loadError.responseHTML} />}
+</html>

@@ -1,0 +1,21 @@
+---
+import type { PageContext } from '../ssr-context';
+
+export interface Props {
+  pageContext: PageContext;
+}
+
+const {
+  pageContext: { apiResource, apiDoc },
+} = Astro.props as Props;
+---
+
+<main>
+  <h1>Hello <span class="text-gradient">{apiDoc.name}</span></h1>
+  <hr>
+  <div class="mt-3">
+    <mark>{apiDoc._id}</mark> from <i>{apiResource}</i>
+    <p>{Math.random()}</p>
+    <em>Lorem ipsum dolor sit amet</em>
+  </div>
+</main>

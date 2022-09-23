@@ -15,9 +15,12 @@ try {
 }
 ---
 
+<!DOCTYPE html>
+<html lang={pageContext?.lang.replace('_', '-')}>
 {pageContext &&
   <PagesLayout pageContext={pageContext}>
     <HomeMain pageContext={pageContext} />
   </PagesLayout>
 }
 {loadError && <Fragment set:html={loadError.responseHTML} />}
+</html>

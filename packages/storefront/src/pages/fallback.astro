@@ -1,6 +1,7 @@
 ---
-import ViewFallback from '../lib/views/fallback.astro';
 import loadPageContext, { PageContext } from '../lib/ssr-context';
+import PagesLayout from '../lib/layouts/Pages.astro';
+import FallbackMain from '../lib/main/Fallback.astro';
 
 let pageContext: PageContext;
 try {
@@ -10,4 +11,9 @@ try {
 }
 ---
 
-<ViewFallback pageContext={pageContext} />
+<!DOCTYPE html>
+<html lang={pageContext?.lang.replace('_', '-')}>
+<PagesLayout pageContext={pageContext}>
+  <FallbackMain pageContext={pageContext} />
+</PagesLayout>
+</html>
