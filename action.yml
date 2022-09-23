@@ -64,6 +64,7 @@ runs:
         ECOM_STORE_ID=$ECOM_STORE_ID
         GITHUB_TOKEN=$GITHUB_TOKEN
         TINY_ERP_TOKEN=$TINY_ERP_TOKEN
+        DEPLOY_RAND="$RANDOM.$RANDOM"
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
 
