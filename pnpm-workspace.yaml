@@ -5,3 +5,4 @@ packages:
   - 'store'
   - 'store/*'
   - 'store/functions/*'
+  - 'store/functions/ssr/storefront'

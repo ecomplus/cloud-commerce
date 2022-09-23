@@ -41,7 +41,9 @@ if (argv.publish) {
         await $`npm i --save @cloudcommerce/${codebase}@${version}`;
         if (codebase === 'ssr') {
           cd(`${functionDir}/storefront`);
+          await $`rm -rf node_modules package-lock.json`;
           await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
+          await $`rm -rf node_modules`;
           cd(functionDir);
         }
       }
@@ -52,7 +54,7 @@ if (argv.publish) {
     await $`npm i --save @cloudcommerce/cli@${version}`;
     await $`rm -rf node_modules`;
     try {
-      await $`git add package* functions/*/package*`;
+      await $`git add package* functions/*/package* functions/ssr/storefront/package*`;
       await $`git commit -m 'Update to v${version}' \
         -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
       await $`git push`;
