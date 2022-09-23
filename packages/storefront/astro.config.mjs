@@ -43,10 +43,7 @@ const _vitePWAOptions = {
   workbox: {
     navigateFallback: null,
     globDirectory: 'dist/client',
-    globPatterns: [
-      '**/!(cms*|admin*).{js,css}',
-      '**/logo.?????*.{webp,avif,svg}', // `@astrojs/image` optimized logo if any
-    ],
+    globPatterns: ['**/!(cms*|admin*).{js,css}'],
     ignoreURLParametersMatching: [/.*/],
     runtimeCaching: [{
       urlPattern: /^\/$/,
