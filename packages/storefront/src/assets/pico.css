@@ -465,6 +465,18 @@ body > footer {
 }
 
 /**
+* Container
+*/
+.container,
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--spacing);
+  padding-left: var(--spacing);
+}
+
+/**
  * Section
  * Responsive spacings for section
  */
