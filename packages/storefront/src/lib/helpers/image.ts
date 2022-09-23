@@ -15,24 +15,33 @@ const tryImageSize = (src: string) => {
 };
 
 const getImage = async (options: Parameters<typeof _getImage>[0]) => {
-  const { src } = options;
-  let imgAttrs: Awaited<ReturnType<typeof _getImage>>;
+  if (options.width) {
+    options.width *= 2;
+  } else if (options.height) {
+    options.height *= 2;
+  }
   if (
-    typeof src === 'string'
+    typeof options.src === 'string'
     && !options.aspectRatio
     && (!options.width || !options.height)
   ) {
-    const { width, height } = tryImageSize(src);
-    imgAttrs = await _getImage({
-      width,
-      ...options,
-      aspectRatio: width && height ? width / height : 1,
-    });
-  } else {
-    imgAttrs = await _getImage(options);
+    const { width, height } = tryImageSize(options.src);
+    if (width) {
+      if (!options.width) {
+        options.width = width;
+      }
+      options.aspectRatio = height ? width / height : 1;
+    }
   }
+  const imgAttrs = await _getImage(options);
   imgAttrs.src += imgAttrs.src.includes('?') ? '&' : '?';
   imgAttrs.src += `V=${import.meta.env.DEPLOY_RAND || '_'}`;
+  if (typeof imgAttrs.width === 'number') {
+    imgAttrs.width /= 2;
+  }
+  if (typeof imgAttrs.height === 'number') {
+    imgAttrs.height /= 2;
+  }
   return imgAttrs;
 };
 
