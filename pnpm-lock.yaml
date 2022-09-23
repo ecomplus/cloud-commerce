@@ -282,7 +282,6 @@ importers:
       '@iconify-json/heroicons': ^1.1.4
       '@iconify-json/logos': ^1.1.16
       '@nanostores/vue': ^0.6.0
-      '@picocss/pico': ^1.5.5
       '@unocss/preset-icons': ^0.45.22
       astro: ^1.3.0
       color: ^4.2.3
@@ -309,7 +308,6 @@ importers:
       '@iconify-json/heroicons': 1.1.4
       '@iconify-json/logos': 1.1.16
       '@nanostores/vue': 0.6.0_hswlafrnslvidkmp33e2xqqycm
-      '@picocss/pico': 1.5.5
       '@unocss/preset-icons': 0.45.22
       astro: 1.3.0
       color: 4.2.3
@@ -2817,10 +2815,6 @@ packages:
   /@panva/asn1.js/1.0.0:
     resolution: {integrity: sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==}
     engines: {node: '>=10.13.0'}
-    dev: false
-
-  /@picocss/pico/1.5.5:
-    resolution: {integrity: sha512-AQSMeeZrk+gAF3JLe0jaQRESGWD+kH2bGMPyuoTniOjxt2MlFnLW4q6Eog9QMelKTDGO6WR0tuTSk92SK9+Ctg==}
     dev: false
 
   /@pkgr/utils/2.3.1:
