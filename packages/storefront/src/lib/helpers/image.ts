@@ -14,21 +14,26 @@ const tryImageSize = (src: string) => {
   return dimensions;
 };
 
-const getImage = (options: Parameters<typeof _getImage>[0]) => {
+const getImage = async (options: Parameters<typeof _getImage>[0]) => {
   const { src } = options;
+  let imgAttrs: Awaited<ReturnType<typeof _getImage>>;
   if (
     typeof src === 'string'
     && !options.aspectRatio
     && (!options.width || !options.height)
   ) {
     const { width, height } = tryImageSize(src);
-    return _getImage({
+    imgAttrs = await _getImage({
       width,
       ...options,
       aspectRatio: width && height ? width / height : 1,
     });
+  } else {
+    imgAttrs = await _getImage(options);
   }
-  return _getImage(options);
+  imgAttrs.src += imgAttrs.src.includes('?') ? '&' : '?';
+  imgAttrs.src += `V=${import.meta.env.DEPLOY_RAND || '_'}`;
+  return imgAttrs;
 };
 
 export default getImage;
