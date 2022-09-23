@@ -42,7 +42,7 @@ runs:
       run: |
         for d in */ ; do
           cd $d
-          npm ci --omit=dev
+          npm ci
           cd ..
         done
 
