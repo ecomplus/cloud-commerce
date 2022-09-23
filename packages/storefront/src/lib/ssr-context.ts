@@ -22,6 +22,10 @@ type StorefrontConfig = {
 
 const getConfig: () => StorefrontConfig = _getConfig;
 
+declare global {
+  // eslint-disable-next-line
+  var api_prefetch_endpoints: ApiEndpoint[];
+}
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = ['categories'];
 }
