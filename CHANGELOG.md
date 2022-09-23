@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.91](https://github.com/ecomplus/cloud-commerce/compare/v0.0.90...v0.0.91) (2022-09-23)
+
+
+### Bug Fixes
+
+* **cli:** Update default `firebase.json` isolating storefront deps for SSR deploy ([7b491b1](https://github.com/ecomplus/cloud-commerce/commit/7b491b13dbef4512c48ba4b4cb8835d84040b458))
+
 ### [0.0.90](https://github.com/ecomplus/cloud-commerce/compare/v0.0.89...v0.0.90) (2022-09-23)
 
 ### [0.0.89](https://github.com/ecomplus/cloud-commerce/compare/v0.0.88...v0.0.89) (2022-09-23)
