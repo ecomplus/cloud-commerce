@@ -2,6 +2,10 @@
 import ViewWildcard from '../lib/views/[...slug].astro';
 import loadPageContext, { PageContext } from '../lib/ssr-context';
 
+if (String(Astro.params.slug).endsWith('.css.map')) {
+  return new Response(null, { status: 404 });
+}
+
 let pageContext: PageContext;
 let loadError: any;
 try {
