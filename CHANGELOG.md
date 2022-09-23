@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.87](https://github.com/ecomplus/cloud-commerce/compare/v0.0.86...v0.0.87) (2022-09-23)
+
+
+### Bug Fixes
+
+* **storefront:** Fix `getImage` helper to transform images using high resolution sizes ([de12963](https://github.com/ecomplus/cloud-commerce/commit/de12963acdd1b74088a61994d80e60a7dc080ce4))
+* **storefront:** Remove `.container` and `.grid` from pico.css and to compose layout with utils ([a216f33](https://github.com/ecomplus/cloud-commerce/commit/a216f338de39765c04fddb515deb10ea16e0c438))
+* **storefront:** Reorganizing Astro pages/layouts to fix wrong /html before /body ([ec518f6](https://github.com/ecomplus/cloud-commerce/commit/ec518f687d15e960801b78f6ff8b200634be5160))
+
 ### [0.0.86](https://github.com/ecomplus/cloud-commerce/compare/v0.0.85...v0.0.86) (2022-09-23)
 
 
