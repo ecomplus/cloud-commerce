@@ -42,9 +42,12 @@ runs:
       run: |
         for d in */ ; do
           cd $d
-          npm ci
+          npm ci --omit=dev
           cd ..
         done
+        cd ssr/storefront
+        npm ci
+        cd ../..
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
