@@ -7,7 +7,8 @@
   "types": "lib/api.d.ts",
   "exports": {
     ".": "./lib/api.js",
-    "./types": "./lib/types.d.ts"
+    "./types": "./lib/types.d.ts",
+    "./fetch-polyfill": "./fetch-polyfill.js"
   },
   "repository": {
     "type": "git",
