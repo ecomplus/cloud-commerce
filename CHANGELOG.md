@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.86](https://github.com/ecomplus/cloud-commerce/compare/v0.0.85...v0.0.86) (2022-09-23)
+
+
+### Bug Fixes
+
+* **storefront:** Add `DEPLOY_RAND` to transformed images URL for cache control ([6fdce8d](https://github.com/ecomplus/cloud-commerce/commit/6fdce8db91a2bede01ae40b1042175067a0ba9a6))
+* **storefront:** Cannot use tailwind syntax (`theme` function) on Astro styles (yet) ([92109c9](https://github.com/ecomplus/cloud-commerce/commit/92109c9736384ce2158ed6bd0f5e5510934a5c16))
+
 ### [0.0.85](https://github.com/ecomplus/cloud-commerce/compare/v0.0.84...v0.0.85) (2022-09-23)
 
 
