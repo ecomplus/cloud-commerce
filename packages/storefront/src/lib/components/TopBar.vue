@@ -50,7 +50,7 @@ withDefaults(defineProps<Props>(), {
       class="top-bar__nav hidden md:block py-2"
     >
       <div class="container">
-        <div class="flex items-center">
+        <div class="flex items-center lg:px-2 xl:px-4">
           <div class="grow text-xs">
             <slot
               name="contacts-container"
