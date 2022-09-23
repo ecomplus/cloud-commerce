@@ -49,14 +49,6 @@ const _vitePWAOptions = {
       urlPattern: /^\/$/,
       handler: 'NetworkFirst',
     }, {
-      urlPattern: settings.logo
-        ? new RegExp(`^${(settings.mini_logo ? `(?:${settings.mini_logo}|${settings.logo})` : settings.logo)}$`)
-        : /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'logo',
-      },
-    }, {
       urlPattern: /\/((?!(?:admin|assets|img)(\/|$))[^.]+)(\.(?!js|css|xml|txt|png|jpg|jpeg|webp|avif|svg|gif)[^.]+)*$/,
       handler: 'NetworkFirst',
       options: {
@@ -71,6 +63,17 @@ const _vitePWAOptions = {
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'assets',
+      },
+    }, {
+      urlPattern: /^\/_image$/,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'sharp-images',
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          purgeOnQuotaError: true,
+        },
       },
     }, {
       urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
