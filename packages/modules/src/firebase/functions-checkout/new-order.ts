@@ -7,12 +7,14 @@ import type {
   TransactionOrder,
   BodyPaymentHistory,
 } from '../../types/index';
+import logger from 'firebase-functions/lib/logger';
 import { sendError, getValidResults } from './utils';
 import {
   newOrder,
   cancelOrder,
   saveTransaction,
   addPaymentHistory,
+  checkoutRespond,
 } from './handle-order-transaction';
 import requestModule from './request-to-module';
 
@@ -39,14 +41,6 @@ const createOrder = async (
   if (order) {
     const orderId = order._id;
     const orderNumber = order.number;
-    const responseCheckout = {
-      order: {
-        _id: orderId,
-        number: orderNumber,
-      },
-    };
-    console.log('>> ', responseCheckout);
-
     const isOrderCancelled = false;
 
     let countDone = 0;
@@ -56,8 +50,6 @@ const createOrder = async (
 
     const nextTransaction = async (index = 0) => {
       const newTransaction = transactions[index];
-      // logger.log('transaction')
-      // logger.log(number)
 
       // merge objects to create transaction request body
       const transactionBody = {
@@ -94,8 +86,6 @@ const createOrder = async (
         // simulateRequest(transactionBody, checkoutRespond, 'transaction', storeId, (results) => {
         const isFirstTransaction = index === 0;
         let isDone: boolean = false;
-        // logger.log(results)
-        // const validResults = getValidResults(results, 'transaction');
         for (let i = 0; i < listTransactions.length; i++) {
           const result = listTransactions[i];
           // treat transaction response
@@ -148,11 +138,8 @@ const createOrder = async (
             transaction.status.updated_at = dateTime;
 
             if (isFirstTransaction) {
-            // merge transaction body with order info and respond
-              return {
-                ...responseCheckout,
-                transaction,
-              };
+              // merge transaction body with order info and respond
+              return checkoutRespond(res, orderId, orderNumber, transaction);
             }
 
             // save transaction info on order data
@@ -185,14 +172,14 @@ const createOrder = async (
                   amount,
                 );
               } catch (e) {
-                // send error?
+                logger.error(e);
               }
             } catch (e) {
-              index += 1;
-              if (index < transactions.length) {
-                // eslint-disable-next-line no-await-in-loop
-                return nextTransaction(index);
-              }
+              logger.error(e);
+            }
+            index += 1;
+            if (index < transactions.length) {
+              return nextTransaction(index);
             }
             // });
             isDone = true;
@@ -207,25 +194,21 @@ const createOrder = async (
             if (amount.total / paymentsAmount > 1.01) {
               return cancelOrder(
                 'Transaction amounts doesn\'t match (is lower) order total value',
-                null,
                 orderId,
                 accessToken,
                 isOrderCancelled,
                 res,
                 usrMsg,
-                responseCheckout,
               );
-              // send error
             }
           }
-          return {
-            ...responseCheckout,
-          }; // TODO: ?
+          // return
+          return checkoutRespond(res, orderId, orderNumber);
         }
 
         // unexpected response object from create transaction module
         const firstResult = listTransactions && listTransactions[0];
-        let errorMessage;
+        let errorMessage: string | undefined;
         if (firstResult) {
           const { response } = firstResult;
           if (response) {
@@ -253,13 +236,12 @@ const createOrder = async (
         }
         return cancelOrder(
           'Error trying to create transaction',
-          errorMessage,
           orderId,
           accessToken,
           isOrderCancelled,
           res,
           usrMsg,
-          responseCheckout,
+          errorMessage,
         );
       }
       // send error no exist transaction

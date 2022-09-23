@@ -11,6 +11,9 @@ import type {
   ShippingLine,
 } from '../../types/index';
 
+// eslint-disable-next-line padding-line-between-statements
+import logger from 'firebase-functions/lib/logger';
+
 type BodyResouce = {[key:string]:any}
 
 const sendError = (
@@ -74,6 +77,9 @@ const getValidResults = (
         }
         // use it
         validResults.push(result);
+      } else {
+        // help identify likely app response errors
+        logger.error(result.response_errors);
       }
     }
   }

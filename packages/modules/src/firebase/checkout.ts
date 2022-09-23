@@ -8,7 +8,6 @@ import type {
   Item,
   BodyPayment,
 } from '../types/index';
-// import logger from 'firebase-functions/lib/logger';
 import {
   ajv,
   sendRequestError,
@@ -53,7 +52,7 @@ const runCheckout = async (
 
   const countCheckoutItems = body.items.length;
   const { customer } = body;
-  const customerId = await getCustomerId(customer);
+  const customerId = await getCustomerId(accessToken, customer);
   if (customerId && customer) {
     if (newItems.length) {
       const { _id, ...newCustomer } = customer;

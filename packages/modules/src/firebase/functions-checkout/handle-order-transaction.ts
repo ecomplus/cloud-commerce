@@ -4,10 +4,27 @@ import type {
   Amount, BodyOrder,
   BodyPaymentHistory,
   OrderPaymentHistory,
+  TransactionOrder,
 } from '../../types/index';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import { sendError } from './utils';
+
+const checkoutRespond = (
+  res: Response,
+  orderId:string & {length: 24},
+  orderNumber: number | undefined,
+  transaction?: TransactionOrder,
+) => {
+  return res.send({
+    status: 200,
+    order: {
+      _id: orderId,
+      number: orderNumber,
+    },
+    transaction,
+  });
+};
 
 const newOrder = async (
   orderBody:BodyOrder,
@@ -46,16 +63,16 @@ const newOrder = async (
 
 const cancelOrder = async (
   staffNotes: string,
-  errorMessage: string | null,
-  orderId: string,
+  orderId: string & {length: 24},
   accessToken:string,
   isOrderCancelled:boolean,
   res: Response,
   usrMsg: { en_us: string, pt_br: string },
-  responseCheckout: {order: {_id: string, number: number | undefined}},
+  errorMessage?: string,
 ) => {
+  let msgErro: string | undefined;
   if (!isOrderCancelled) {
-    const cancell = () => {
+    const msgCancell = () => {
       return new Promise((resolve) => {
         setTimeout(async () => {
           const body = {
@@ -83,16 +100,15 @@ const cancelOrder = async (
         }, 400);
       });
     };
-
-    return sendError(
-      res,
-      409,
-      'CKT704',
-      await cancell() as string,
-      usrMsg,
-    );
+    msgErro = await msgCancell() as string;
   }
-  return responseCheckout;
+  return sendError(
+    res,
+    409,
+    'CKT704',
+    msgErro || staffNotes,
+    usrMsg,
+  );
 };
 
 const saveTransaction = (
@@ -175,4 +191,5 @@ export {
   cancelOrder,
   saveTransaction,
   addPaymentHistory,
+  checkoutRespond,
 };
