@@ -39,7 +39,7 @@ if (argv.publish) {
       if (codebase !== 'core') {
         await $`npm i --save @cloudcommerce/${codebase}@${version}`;
         if (codebase === 'ssr') {
-          await $`npm i --save @cloudcommerce/storefront@${version}`;
+          await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
         }
       }
       await $`rm -rf node_modules`;
