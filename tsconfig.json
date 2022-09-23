@@ -102,6 +102,7 @@
     "**/node_modules/**",
     "**/dist/**",
     "**/scripts/**",
-    "**/tests/**"
+    "**/tests/**",
+    "packages/*/types.ts"
   ]
 }
