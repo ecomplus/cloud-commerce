@@ -29,8 +29,10 @@
       "source": "functions/ssr",
       "codebase": "ssr",
       "ignore": [
-        "storefront/**/!(entry.mjs)",
-        "functions/ssr/storefront/**/!(entry.mjs)"
+        "storefront/node_modules/**",
+        "storefront/dist/client/**",
+        "functions/ssr/storefront/node_modules/**",
+        "functions/ssr/storefront/dist/client/**"
       ]
     }
   ],
