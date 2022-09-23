@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.89](https://github.com/ecomplus/cloud-commerce/compare/v0.0.88...v0.0.89) (2022-09-23)
+
+
+### Bug Fixes
+
+* **ssr:** Directly add compiled server function dependencies ([f87e4b1](https://github.com/ecomplus/cloud-commerce/commit/f87e4b1db76a4b6480cc89a3a76da7693932fefe))
+
 ### [0.0.88](https://github.com/ecomplus/cloud-commerce/compare/v0.0.87...v0.0.88) (2022-09-23)
 
 ### [0.0.87](https://github.com/ecomplus/cloud-commerce/compare/v0.0.86...v0.0.87) (2022-09-23)
