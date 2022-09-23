@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.85](https://github.com/ecomplus/cloud-commerce/compare/v0.0.84...v0.0.85) (2022-09-23)
+
+
+### Bug Fixes
+
+* Add `fetch-polyfill` to `@cloudcommerce/api` named exports ([3dccc29](https://github.com/ecomplus/cloud-commerce/commit/3dccc29fbcb6669aa7a2896b8354046c398512f2))
+
 ### [0.0.84](https://github.com/ecomplus/cloud-commerce/compare/v0.0.83...v0.0.84) (2022-09-23)
 
 
