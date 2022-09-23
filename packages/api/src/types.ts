@@ -61,6 +61,8 @@ type Config = {
   headers?: Headers | Record<string, string>,
   timeout?: number,
   maxRetries?: number,
+  canCache?: boolean,
+  cacheMaxAge?: number,
   fetch?: typeof fetch,
 };
 

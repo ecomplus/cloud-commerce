@@ -7,6 +7,17 @@ import type {
   ErrorBody,
 } from './types';
 
+declare global {
+  // eslint-disable-next-line
+  var __apiCache: Record<string, {
+    timestamp: number,
+    res: Response & { data: any },
+  }>;
+}
+if (!globalThis.__apiCache) {
+  globalThis.__apiCache = {};
+}
+
 // @ts-ignore
 const _env: Record<string, string> = import.meta.env
   || (typeof process === 'object' && process?.env)
@@ -109,10 +120,21 @@ Promise<Response & {
 }> => {
   const { url, headers } = def.middleware(config);
   const {
-    method,
+    method = 'get',
     timeout = 20000,
     maxRetries = 3,
+    cacheMaxAge = 600000, // 10 minutes
   } = config;
+  const canCache = method === 'get'
+    && (config.canCache || (config.canCache === undefined && _env.SSR));
+  let cacheKey: string | undefined;
+  if (canCache) {
+    cacheKey = `${url}${JSON.stringify(headers)}`;
+    const cached = globalThis.__apiCache[cacheKey];
+    if (cached && Date.now() - cached.timestamp <= cacheMaxAge) {
+      return { ...cached.res, config };
+    }
+  }
   const bodyObject = config.body || config.data;
   let body: string | undefined;
   if (bodyObject) {
@@ -142,11 +164,17 @@ Promise<Response & {
 
   if (response) {
     if (response.ok) {
-      return {
+      const res = {
         ...response,
-        config,
         data: await response.json(),
       };
+      if (canCache && cacheKey) {
+        globalThis.__apiCache[cacheKey] = {
+          timestamp: Date.now(),
+          res,
+        };
+      }
+      return { ...res, config };
     }
     const { status } = response;
     if (maxRetries < retries && (status === 429 || status >= 500)) {
