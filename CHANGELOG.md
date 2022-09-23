@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.84](https://github.com/ecomplus/cloud-commerce/compare/v0.0.83...v0.0.84) (2022-09-23)
+
+
+### Features
+
+* **api:** Add `types` named export with resource type defs ([a2b8e0a](https://github.com/ecomplus/cloud-commerce/commit/a2b8e0a3b770b37feb9be34fa13d1d3243109b63))
+* **api:** Optionally cache API responses (enabled by default with 10min TTL on SSR) ([7d765b1](https://github.com/ecomplus/cloud-commerce/commit/7d765b12aa1e0951b07f1982562e21992416be12))
+* **storefront:** Add bg+color utilities for brand ad contrast on Tailwind/UnoCSS ([e5eec68](https://github.com/ecomplus/cloud-commerce/commit/e5eec684acb03f4b031225cdd5925e7d03170751))
+* **storefront:** Add new surface colors CSS vars ([89dfaf6](https://github.com/ecomplus/cloud-commerce/commit/89dfaf6756a5b92812edd189ac3218d2f8dd36ae))
+* **storefront:** First `TopVar.vue` component :tada: ([2a9bf20](https://github.com/ecomplus/cloud-commerce/commit/2a9bf20c76173c35b45be28fae222d64d6d9e369))
+* **storefront:** Start rendering header with transformed image logo ([df65efd](https://github.com/ecomplus/cloud-commerce/commit/df65efdc44298b3f50897150121bd0fb8475c252))
+
+
+### Bug Fixes
+
+* **storefront:** Fix surface color on Tailwind theme, Tailwind config must be CJS ([18de9f0](https://github.com/ecomplus/cloud-commerce/commit/18de9f0d456d2cd8dce84f0bcae770ddc7b83f52))
+* **storefront:** Properly setting yiq and rgb brand colors variants ([8bccbae](https://github.com/ecomplus/cloud-commerce/commit/8bccbae4aa709b00d0e63b26332f81964cb613f1))
+* **storefront:** Set `apiState[endpoint]` with `data.result` on list requests ([d1353c2](https://github.com/ecomplus/cloud-commerce/commit/d1353c26cb7740cc4212eab5f3f93943ecec56d7))
+* **storefront:** Update Astro and other non-major dependencies ([a63aed9](https://github.com/ecomplus/cloud-commerce/commit/a63aed93caa453956cb4f219ec3b5584f54fde9d))
+
 ### [0.0.83](https://github.com/ecomplus/cloud-commerce/compare/v0.0.82...v0.0.83) (2022-09-19)
 
 
