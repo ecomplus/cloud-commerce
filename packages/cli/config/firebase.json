@@ -29,10 +29,13 @@
       "source": "functions/ssr",
       "codebase": "ssr",
       "ignore": [
-        "storefront/node_modules/**",
+        "storefront/!(dist|content|public)/**",
         "storefront/dist/client/**",
-        "functions/ssr/storefront/node_modules/**",
-        "functions/ssr/storefront/dist/client/**"
+        "storefront/*",
+        "functions/ssr/storefront/!(dist|content|public)/**",
+        "functions/ssr/storefront/dist/client/**",
+        "functions/ssr/storefront/*",
+        "**/*.ts"
       ]
     }
   ],
