@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.96](https://github.com/ecomplus/cloud-commerce/compare/v0.0.95...v0.0.96) (2022-09-24)
+
+
+### Bug Fixes
+
+* **storefront:** Image size input with full image path using `STOREFRONT_BASE_DIR` ([59bb3f6](https://github.com/ecomplus/cloud-commerce/commit/59bb3f67fb074536fa280326ae8c268187b065f7))
+* **storefront:** Must always set `process.env.STOREFRONT_BASE_DIR` instead of `import.meta.env` ([d4b0812](https://github.com/ecomplus/cloud-commerce/commit/d4b0812e4119119c4ac6489bbee7116b4927ac74))
+
 ### [0.0.95](https://github.com/ecomplus/cloud-commerce/compare/v0.0.94...v0.0.95) (2022-09-24)
 
 
