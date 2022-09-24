@@ -67,7 +67,6 @@ type AppModuleBody = {
   application: Applications,
 };
 
-
 export type {
   Products,
   Categories,
