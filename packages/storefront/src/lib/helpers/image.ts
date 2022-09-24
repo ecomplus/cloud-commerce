@@ -1,10 +1,13 @@
+import { resolve as resolvePath } from 'path';
 import imageSize from 'image-size';
+
+const _env: Record<string, string> = import.meta.env || process.env;
 
 const tryImageSize = (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
   if (typeof src === 'string' && src.startsWith('/')) {
     try {
-      dimensions = imageSize(`public${src}`);
+      dimensions = imageSize(resolvePath(_env.STOREFRONT_BASE_DIR, `public${src}`));
     } catch (e) {
       dimensions = {};
     }
