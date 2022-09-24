@@ -1,18 +1,18 @@
-import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { resolve as resolvePath } from 'path';
 import config from '@cloudcommerce/config';
 
+const getEnvVar = (name) => {
+  return import.meta.env[name] || process.env[name];
+};
+
 export default () => {
-  const {
-    STOREFRONT_BASE_DIR,
-    VITE_ECOM_STORE_ID,
-  } = import.meta.env || process.env;
+  const STOREFRONT_BASE_DIR = getEnvVar('STOREFRONT_BASE_DIR');
+  const VITE_ECOM_STORE_ID = getEnvVar('VITE_ECOM_STORE_ID');
 
   let baseDir;
   if (STOREFRONT_BASE_DIR) {
-    const currentDir = fileURLToPath(new URL('.', import.meta.url));
-    baseDir = resolvePath(currentDir, STOREFRONT_BASE_DIR);
+    baseDir = resolvePath(process.cwd(), STOREFRONT_BASE_DIR);
   } else {
     baseDir = process.cwd();
   }
