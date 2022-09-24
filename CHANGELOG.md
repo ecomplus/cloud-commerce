@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.94](https://github.com/ecomplus/cloud-commerce/compare/v0.0.93...v0.0.94) (2022-09-24)
+
+
+### Bug Fixes
+
+* **storefront:** Properly resolve base dir with `STOREFRONT_BASE_DIR` env from cwd ([0ae3512](https://github.com/ecomplus/cloud-commerce/commit/0ae35122d757ce7bd1381d7b5262f55f330e79c7))
+
 ### [0.0.93](https://github.com/ecomplus/cloud-commerce/compare/v0.0.92...v0.0.93) (2022-09-24)
 
 
