@@ -13,7 +13,7 @@ const { httpsFunctionOptions } = config.get();
 export const ssr = onRequest({
   timeoutSeconds: 15,
   memory: '256MiB',
-  // minInstances: 1,
+  minInstances: 1,
   ...httpsFunctionOptions,
 }, (req, res) => {
   serveStorefront(req, res);
