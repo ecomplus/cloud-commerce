@@ -3,8 +3,10 @@ import { resolve as resolvePath } from 'path';
 import config from '@cloudcommerce/config';
 
 export default () => {
-  const _env = import.meta.env || process.env;
-  const { STOREFRONT_BASE_DIR, VITE_ECOM_STORE_ID } = _env;
+  const {
+    STOREFRONT_BASE_DIR,
+    VITE_ECOM_STORE_ID,
+  } = import.meta.env || process.env;
 
   let baseDir;
   if (STOREFRONT_BASE_DIR) {
@@ -12,7 +14,7 @@ export default () => {
   } else {
     baseDir = process.cwd();
   }
-  _env.STOREFRONT_BASE_DIR = baseDir;
+  process.env.STOREFRONT_BASE_DIR = baseDir;
   const dirContent = resolvePath(baseDir, 'content');
   if (VITE_ECOM_STORE_ID) {
     config.set({ storeId: Number(VITE_ECOM_STORE_ID) });
