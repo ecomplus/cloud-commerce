@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.95](https://github.com/ecomplus/cloud-commerce/compare/v0.0.94...v0.0.95) (2022-09-24)
+
+
+### Bug Fixes
+
+* **storefront:** Prevent error with undefined `import.meta.env` on config ([19ffb5b](https://github.com/ecomplus/cloud-commerce/commit/19ffb5bcc859d972d17ba45e4d0ad739333d38ad))
+
 ### [0.0.94](https://github.com/ecomplus/cloud-commerce/compare/v0.0.93...v0.0.94) (2022-09-24)
 
 
