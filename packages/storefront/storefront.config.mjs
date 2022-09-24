@@ -3,7 +3,7 @@ import { resolve as resolvePath } from 'path';
 import config from '@cloudcommerce/config';
 
 const getEnvVar = (name) => {
-  return import.meta.env[name] || process.env[name];
+  return import.meta.env?.[name] || process.env[name];
 };
 
 export default () => {
