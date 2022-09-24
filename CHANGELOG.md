@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.93](https://github.com/ecomplus/cloud-commerce/compare/v0.0.92...v0.0.93) (2022-09-24)
+
+
+### Features
+
+* **modules:** Add checkout handler to Modules API ([#49](https://github.com/ecomplus/cloud-commerce/issues/49)) ([febf332](https://github.com/ecomplus/cloud-commerce/commit/febf3326ec4951416802b9afa7a6c92c948cd5cf))
+
+
+### Bug Fixes
+
+* **cli:** Fix ignored Storefront source files for SSR function deploy on `firebase.json` ([11b9d05](https://github.com/ecomplus/cloud-commerce/commit/11b9d05c9fa5bd43acfe99e24c24f1f5dd50ac38))
+
 ### [0.0.92](https://github.com/ecomplus/cloud-commerce/compare/v0.0.91...v0.0.92) (2022-09-23)
 
 ### [0.0.91](https://github.com/ecomplus/cloud-commerce/compare/v0.0.90...v0.0.91) (2022-09-23)
