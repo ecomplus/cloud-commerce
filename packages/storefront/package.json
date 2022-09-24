@@ -25,7 +25,6 @@
     "prerelease": "sh scripts/prerelease.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.7.1",
     "@astrojs/node": "^1.0.1",
     "@astrojs/partytown": "^1.0.0",
     "@astrojs/prefetch": "^0.0.7",

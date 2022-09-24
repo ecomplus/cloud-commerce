@@ -1,6 +1,4 @@
 import imageSize from 'image-size';
-// eslint-disable-next-line import/no-unresolved
-import { getImage as _getImage } from '@astrojs/image';
 
 const tryImageSize = (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
@@ -14,37 +12,26 @@ const tryImageSize = (src: string) => {
   return dimensions;
 };
 
-const getImage = async (options: Parameters<typeof _getImage>[0]) => {
-  if (options.width) {
-    options.width *= 2;
-  } else if (options.height) {
-    options.height *= 2;
-  }
-  if (
-    typeof options.src === 'string'
-    && !options.aspectRatio
-    && (!options.width || !options.height)
-  ) {
-    const { width, height } = tryImageSize(options.src);
+const getImageAttrs = async (attrs: {
+  src: string,
+  width?: number,
+  height?: number,
+}) => {
+  if (!attrs.width || !attrs.height) {
+    const { width, height } = tryImageSize(attrs.src);
     if (width) {
-      if (!options.width) {
-        options.width = width;
+      const aspectRatio = height ? width / height : 1;
+      if (!attrs.width) {
+        attrs.width = attrs.height ? Math.round(attrs.height * aspectRatio) : width;
       }
-      options.aspectRatio = height ? width / height : 1;
+      if (!attrs.height) {
+        attrs.height = Math.round(attrs.width / aspectRatio);
+      }
     }
   }
-  const imgAttrs = await _getImage(options);
-  imgAttrs.src += imgAttrs.src.includes('?') ? '&' : '?';
-  imgAttrs.src += `V=${import.meta.env.DEPLOY_RAND || '_'}`;
-  if (typeof imgAttrs.width === 'number') {
-    imgAttrs.width /= 2;
-  }
-  if (typeof imgAttrs.height === 'number') {
-    imgAttrs.height /= 2;
-  }
-  return imgAttrs;
+  return attrs;
 };
 
-export default getImage;
+export default getImageAttrs;
 
-export { tryImageSize, getImage };
+export { tryImageSize, getImageAttrs };

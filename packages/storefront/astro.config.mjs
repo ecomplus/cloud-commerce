@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
-import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import sitemap from '@astrojs/sitemap';
@@ -65,15 +64,12 @@ const _vitePWAOptions = {
         cacheName: 'assets',
       },
     }, {
-      urlPattern: /^\/_image$/,
+      urlPattern: settings.logo
+        ? new RegExp(`^${(settings.mini_logo ? `(?:${settings.mini_logo}|${settings.logo})` : settings.logo)}$`)
+        : /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
       handler: 'StaleWhileRevalidate',
       options: {
-        cacheName: 'sharp-images',
-        expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-          purgeOnQuotaError: true,
-        },
+        cacheName: 'logo',
       },
     }, {
       urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
@@ -130,7 +126,6 @@ const genAstroConfig = ({
   adapter: node(),
   integrations: [
     vue(),
-    image(),
     partytown(),
     prefetch(),
     sitemap(),
