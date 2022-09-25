@@ -5,20 +5,17 @@ import type CmsContacts from '../../types/cms-contacts';
 import type { PageContext } from '../ssr-context';
 import { getImageAttrs } from '../helpers/image';
 import TopBar, { Props as TopBarProps } from '../components/TopBar.vue';
-import TheHeader from '../components/TheHeader.vue';
+import TheHeader, { Props as TheHeaderProps } from '../components/TheHeader.vue';
 
 export interface Props {
   pageContext: PageContext;
   topBarProps?: Partial<TopBarProps>;
-  logoTransform?: {
-    width?: number;
-    height?: number;
-    quality?: number;
-  };
+  theHeaderProps?: Partial<TheHeaderProps>;
 }
 
 declare global {
   var TopBarProps: TopBarProps;
+  var TheHeaderProps: TheHeaderProps;
 }
 
 const {
@@ -28,7 +25,7 @@ const {
     cms,
   },
   topBarProps,
-  logoTransform,
+  theHeaderProps,
 } = Astro.props as Props;
 const header = cms('header') as CmsHeader;
 const contacts = cms('contacts') as CmsContacts;
@@ -73,17 +70,21 @@ globalThis.TopBarProps = {
   ...topBarProps,
 };
 
-const logoWebpAttrs = await getImageAttrs({
-  src: settings.logo,
-  width: 150,
-});
+globalThis.TheHeaderProps = {
+  logo: {
+    ...getImageAttrs({
+      src: settings.logo,
+      width: 150,
+    }),
+    alt: settings.name,
+  },
+  ...theHeaderProps,
+};
 ---
 
 <slot name="top-bar">
   <TopBar {...globalThis.TopBarProps} />
 </slot>
 <slot name="header">
-  <TheHeader>
-    <img slot="logo" {...logoWebpAttrs} alt={`${settings.name} (logo)`} />
-  </TheHeader>
+  <TheHeader {...globalThis.TheHeaderProps} />
 </slot>

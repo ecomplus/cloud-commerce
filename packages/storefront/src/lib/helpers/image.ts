@@ -14,7 +14,7 @@ const tryImageSize = (src: string) => {
   return dimensions;
 };
 
-const getImageAttrs = async (attrs: {
+const getImageAttrs = (attrs: {
   src: string,
   width?: number,
   height?: number,

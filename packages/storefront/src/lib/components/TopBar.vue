@@ -10,10 +10,6 @@ export interface Props {
   hasPhoneLinks?: boolean;
   hasNetworkLinks?: boolean;
   socialNetworks?: string[];
-  countdownClass?: string;
-  pageLinksClass?: string;
-  contactLinksClass?: string;
-  socialNetworksClass?: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -28,16 +24,13 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <div class="top-bar w-full bg-surface">
-    <slot
-      name="countdown"
-      v-bind="{ marketingStripe, countdownClass }"
-    >
+    <slot name="countdown" v-bind="{ marketingStripe }">
       <template v-if="marketingStripe && marketingStripe.text">
         <component
           :is="marketingStripe.link ? 'a' : 'div'"
           class="top-bar__countdown block text-sm text-center p-1
             whitespace-nowrap overflow-x-auto"
-          :class="[countdownClass, marketingStripe.link ? 'primary' : 'secondary']"
+          :class="marketingStripe.link ? 'primary' : 'secondary'"
           :href="marketingStripe.link"
         >
           {{ marketingStripe.text }}
@@ -52,14 +45,10 @@ withDefaults(defineProps<Props>(), {
       <div class="container">
         <div class="flex items-center lg:px-2 xl:px-4">
           <div class="grow text-xs">
-            <slot
-              name="contacts-container"
-              v-bind="{ pageLinks, pageLinksClass }"
-            >
+            <slot name="page-links" v-bind="{ pageLinks }">
               <nav
                 v-if="pageLinks"
                 class="top-bar__page-links inline-block mr-4 font-semibold"
-                :class="pageLinksClass"
               >
                 <a
                   v-for="({ link, title }, i) in pageLinks"
@@ -74,12 +63,11 @@ withDefaults(defineProps<Props>(), {
 
             <slot
               name="contact-links"
-              v-bind="{ contacts, hasPhoneLinks, contactLinksClass }"
+              v-bind="{ contacts, hasPhoneLinks }"
             >
               <div
                 v-if="hasPhoneLinks"
                 class="top-bar__contact-links inline-block"
-                :class="contactLinksClass"
               >
                 <a
                   v-if="contacts.whatsapp"
@@ -108,7 +96,7 @@ withDefaults(defineProps<Props>(), {
 
           <slot
             name="social-networks"
-            v-bind="{ contacts, hasNetworkLinks, socialNetworksClass }"
+            v-bind="{ contacts, hasNetworkLinks }"
           >
             <div
               v-if="hasNetworkLinks"
