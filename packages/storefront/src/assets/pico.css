@@ -558,7 +558,6 @@ a:is([aria-current], :hover, :active, :focus),
   --color: var(--primary-hover);
   --text-decoration: underline;
 }
-a:focus,
 [role=link]:focus {
   --background-color: var(--primary-focus);
 }
