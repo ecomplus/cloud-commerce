@@ -24,7 +24,7 @@
     "@ecomplus/utils": "^1.4.1",
     "axios": "^0.27.2",
     "firebase-admin": "^11.0.1",
-    "firebase-functions": "^3.23.0",
+    "firebase-functions": "^3.24.0",
     "form-data": "^4.0.0"
   },
   "devDependencies": {
