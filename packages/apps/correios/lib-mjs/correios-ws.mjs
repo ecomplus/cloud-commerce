@@ -27,7 +27,8 @@ const sendCalculateRequest = (params, timeout, isDebug = false) => {
   })
     .then(async (response) => {
       // parse XML to object
-      const result = await xml2js.parseStringPromise(response.data);
+      // https://www.npmjs.com/package/xml2js#options/
+      const result = await xml2js.parseStringPromise(response.data, { explicitArray: false });
       let services;
       if (Array.isArray(result.Servicos)) {
         services = result.Servicos;
