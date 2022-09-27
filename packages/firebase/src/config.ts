@@ -35,7 +35,14 @@ const mergeConfig = {
 config.set(mergeConfig);
 
 export default config as {
-  get(): BaseConfig & typeof mergeConfig;
+  get(): BaseConfig & typeof mergeConfig & {
+    httpsFunctionOptions: {
+      region: string,
+      memory?: '128MiB' | '256MiB' | '512MiB' | '1GiB' | '2GiB',
+      timeoutSeconds?: number,
+      minInstances?: number,
+    },
+  };
   // eslint-disable-next-line
   set(config: any): void;
 };
