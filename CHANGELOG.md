@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.98](https://github.com/ecomplus/cloud-commerce/compare/v0.0.97...v0.0.98) (2022-09-27)
+
+
+### Bug Fixes
+
+* **storefront:** Fix handling `loginOffcanvasProps` from Astro component ([1897907](https://github.com/ecomplus/cloud-commerce/commit/1897907ecb948b476ffbd8d3916e8a452f541421))
+
 ### [0.0.97](https://github.com/ecomplus/cloud-commerce/compare/v0.0.96...v0.0.97) (2022-09-27)
 
 
