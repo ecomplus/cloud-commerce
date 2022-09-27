@@ -27,16 +27,7 @@
     {
       "predeploy": "npm --prefix \"$RESOURCE_DIR/storefront\" run build && npm run build -- --codebase ssr",
       "source": "functions/ssr",
-      "codebase": "ssr",
-      "ignore": [
-        "storefront/!(dist|content|public)/**",
-        "storefront/dist/client/**",
-        "storefront/*",
-        "functions/ssr/storefront/!(dist|content|public)/**",
-        "functions/ssr/storefront/dist/client/**",
-        "functions/ssr/storefront/*",
-        "**/*.ts"
-      ]
+      "codebase": "ssr"
     }
   ],
   "hosting": {
