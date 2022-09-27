@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.97](https://github.com/ecomplus/cloud-commerce/compare/v0.0.96...v0.0.97) (2022-09-27)
+
+
+### Features
+
+* **storefront:** Login offcanvas with first Firebase Auth interaction ([01519b0](https://github.com/ecomplus/cloud-commerce/commit/01519b0af00fda5db95eab69dddd6e96869f1e44))
+
+
+### Bug Fixes
+
+* **app-correios:** XML parsing fix to json ([#52](https://github.com/ecomplus/cloud-commerce/issues/52)) ([58a922f](https://github.com/ecomplus/cloud-commerce/commit/58a922f125640b24ee5a132d74f13a8400da4fee))
+* **deps:** Update all non-major dependencies ([#51](https://github.com/ecomplus/cloud-commerce/issues/51)) ([8d447a2](https://github.com/ecomplus/cloud-commerce/commit/8d447a23868ec5e07211ba3058e535c3ddf3681a))
+* **storefront:** Edit `pico.css` styles to remove link background on focus ([fd14624](https://github.com/ecomplus/cloud-commerce/commit/fd14624e56c6989ac1c98acc34370a7634b3af53))
+
 ### [0.0.96](https://github.com/ecomplus/cloud-commerce/compare/v0.0.95...v0.0.96) (2022-09-24)
 
 
