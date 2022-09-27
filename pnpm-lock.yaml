@@ -296,7 +296,7 @@ importers:
       '@astrojs/vue': ^1.0.2
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/config': workspace:*
-      '@ecomplus/i18n': ^1.32.0
+      '@ecomplus/i18n': ^1.32.2
       '@ecomplus/utils': ^1.4.1
       '@iconify-json/bxl': ^1.1.4
       '@iconify-json/heroicons': ^1.1.4
@@ -322,7 +322,7 @@ importers:
       '@astrojs/vue': 1.0.2_vue@3.2.39
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/config': link:../config
-      '@ecomplus/i18n': 1.32.0
+      '@ecomplus/i18n': 1.32.2
       '@ecomplus/utils': 1.4.1
       '@iconify-json/bxl': 1.1.4
       '@iconify-json/heroicons': 1.1.4
@@ -1914,8 +1914,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@ecomplus/i18n/1.32.0:
-    resolution: {integrity: sha512-a/JxJIGe/xieoCDMoemR9yu10pVbQ4NeCP20o51GAg/YVBvzXcNfn64b1ZhfBdKuz728Kf6qdpWoWwN5G7G0Vg==}
+  /@ecomplus/i18n/1.32.2:
+    resolution: {integrity: sha512-9RUwbmGv7/K1fbBMdFbDyvDKD55cnBvYvhdGWu6NRkVugGAlivb+jfhykOOuGZdm3G4tapCXDI+qtJIU+l0qvw==}
     dev: false
 
   /@ecomplus/utils/1.4.1:

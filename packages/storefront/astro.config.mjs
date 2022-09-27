@@ -143,7 +143,7 @@ const genAstroConfig = ({
     ],
     resolve: {
       alias: {
-        '@i18n': `@ecomplus/i18n/src/${lang}/index.js`,
+        '@i18n': `@ecomplus/i18n/lib/${lang}.mjs`,
       },
     },
   },
