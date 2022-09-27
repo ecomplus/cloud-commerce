@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.103](https://github.com/ecomplus/cloud-commerce/compare/v0.0.102...v0.0.103) (2022-09-27)
+
+
+### Bug Fixes
+
+* **ssr:** Add `astro` to pkg dependencies and remove Astro subdependencies ([4ff62b3](https://github.com/ecomplus/cloud-commerce/commit/4ff62b377b6a76bb78ea95ef83d59674ad051252))
+
 ### [0.0.102](https://github.com/ecomplus/cloud-commerce/compare/v0.0.101...v0.0.102) (2022-09-27)
 
 ### [0.0.101](https://github.com/ecomplus/cloud-commerce/compare/v0.0.100...v0.0.101) (2022-09-27)
