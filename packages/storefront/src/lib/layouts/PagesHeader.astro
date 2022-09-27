@@ -23,6 +23,7 @@ const {
   },
   topBarProps,
   theHeaderProps,
+  loginOffcanvasProps,
 } = Astro.props as Props;
 const header = cms('header') as CmsHeader;
 const contacts = cms('contacts') as CmsContacts;
@@ -81,7 +82,7 @@ globalThis.TheHeaderProps = {
   ...theHeaderProps,
 };
 globalThis.LoginOffcanvasProps = {
-  ...LoginOffcanvasProps,
+  ...loginOffcanvasProps,
 };
 ---
 
