@@ -37,7 +37,6 @@ withDefaults(defineProps<Props>(), {
         </component>
       </template>
     </slot>
-
     <div
       v-if="hasNavbar"
       class="top-bar__nav hidden md:block py-2"
@@ -60,7 +59,6 @@ withDefaults(defineProps<Props>(), {
                 </a>
               </nav>
             </slot>
-
             <slot
               name="contact-links"
               v-bind="{ contacts, hasPhoneLinks }"
@@ -81,7 +79,7 @@ withDefaults(defineProps<Props>(), {
                   {{ contacts.whatsapp }}
                 </a>
                 <a
-                  v-if="contacts.phone"
+                  v-if="contacts.phone && contacts.phone !== contacts.whatsapp"
                   :href="`tel:+${contacts.phone.replace(/\D/g, '')}`"
                   target="_blank"
                   rel="noopener"
@@ -93,7 +91,6 @@ withDefaults(defineProps<Props>(), {
               </div>
             </slot>
           </div>
-
           <slot
             name="social-networks"
             v-bind="{ contacts, hasNetworkLinks }"
@@ -110,6 +107,7 @@ withDefaults(defineProps<Props>(), {
                     target="_blank"
                     rel="noopener"
                     class="ml-1"
+                    :aria-label="`Follow on ${network}`"
                   >
                     <i v-if="network === 'facebook'" class="i-facebook"></i>
                     <i v-else-if="network === 'youtube'" class="i-youtube"></i>
@@ -127,3 +125,9 @@ withDefaults(defineProps<Props>(), {
     </div>
   </div>
 </template>
+
+<style>
+.top-bar__nav a:not(:hover) {
+  color: var(--gray);
+}
+</style>

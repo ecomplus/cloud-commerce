@@ -21,7 +21,6 @@ const {
 const state = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;
 const description = state.meta_description || state.short_description || settings.description;
-
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
 const cmsSocial = cms('social') as CmsSocial;
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
@@ -53,7 +52,6 @@ if (!ogImage) {
 <link rel="apple-touch-icon" href={settings.icon} />
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
 <meta property="og:site_name" content={settings.name}>
 <meta property="og:url" content={canonicalUrl}>
 <meta property="og:title" content={title}>
@@ -64,7 +62,4 @@ if (!ogImage) {
 {cmsSocial.fb_app_id && <meta property="fb:app_id" content={cmsSocial.fb_app_id} />}
 <meta name="twitter:card" content="summary">
 {cmsSocial.twitter_username && <meta name="twitter:site" content={cmsSocial.twitter_username} />}
-
-<link rel="preconnect" href="https://ecomplus.io/" crossorigin />
-<link rel="dns-prefetch" href="https://ecomplus.io/" />
 <meta name="ecom-store-id" content={String(storeId)}>

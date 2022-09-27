@@ -9,7 +9,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   gridClass: 'grid grid-flow-col auto-cols-max justify-between items-center',
-  actionsGridClass: 'grid',
+  actionsGridClass: 'grid items-center text-2xl',
 });
 const { logo } = toRefs(props);
 </script>
@@ -23,7 +23,6 @@ const { logo } = toRefs(props);
             <div class="i-bars-3-bottom-left"></div>
           </div>
         </slot>
-
         <slot name="logo" v-bind="{ logo }">
           <a v-if="logo" href="/" class="header__logo">
             <component :is="logo.alt ? 'h1' : 'span'" class="m-0">
@@ -31,17 +30,20 @@ const { logo } = toRefs(props);
             </component>
           </a>
         </slot>
-
         <slot name="actions-grid">
           <div :class="actionsGridClass">
             <slot name="nav" />
             <slot name="search" />
-            <slot name="buttons">
-              <div class="i-user"></div>
-            </slot>
+            <slot name="buttons" />
           </div>
         </slot>
       </div>
     </div>
   </header>
 </template>
+
+<style>
+.header a:not(:hover) {
+  color: var(--gray-accent);
+}
+</style>

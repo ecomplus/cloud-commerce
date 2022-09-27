@@ -9,7 +9,6 @@ export interface Props {
 
 const { pageContext } = Astro.props as Props;
 const { primaryColor, secondaryColor } = pageContext;
-
 const brandColors = {
   primary: primaryColor,
   secondary: secondaryColor,
@@ -65,44 +64,48 @@ Object.keys(brandColors).forEach((colorName) => {
 </body>
 
 <style is:global define:vars={colorCSSVars}>
-  :root {
-    --content-max-width: 80rem;
-    --white: #fff;
-    --gray-50: #f9fafb;
-    --gray-200: #e5e7eb;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
-    --surface-color: var(--gray-50);
-    --surface-border-color: var(--gray-200);
-    --yiq-text-light: var(--white);
-    --yiq-text-dark: var(--gray-900);
+:root {
+  --content-max-width: 80rem;
+  --white: #fff;
+  --gray-50: #f9fafb;
+  --gray-200: #e5e7eb;
+  --gray-400: #94a3b8;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray: var(--gray-600);
+  --gray-accent: var(--gray-800);
+  --surface-color: var(--gray-50);
+  --surface-border-color: var(--gray-200);
+  --yiq-text-light: var(--white);
+  --yiq-text-dark: var(--gray-900);
+}
+body {
+  --primary: var(--primary-500);
+  --primary-hover: var(--primary-700);
+  --primary-focus: rgba(var(--primary-200-rgb), 0.2);
+  --primary-inverse: var(--primary-500-yiq);
+  --secondary: var(--secondary-500);
+  --secondary-hover: var(--secondary-700);
+  --secondary-focus: rgba(var(--secondary-200-rgb), 0.2);
+  --secondary-inverse: var(--secondary-500-yiq);
+}
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    --gray: var(--gray-400);
+    --gray-accent: var(--gray-200);
+    --surface-color: var(--gray-800);
+    --surface-border-color: var(--gray-700);
   }
-  body,
-  body [data-theme=light],
-  body [data-theme=dark] {
-    --primary: var(--primary-500);
-    --primary-hover: var(--primary-700);
-    --primary-focus: rgba(var(--primary-200-rgb), 0.2);
-    --primary-inverse: var(--primary-500-yiq);
-    --secondary: var(--secondary-500);
-    --secondary-hover: var(--secondary-700);
-    --secondary-focus: rgba(var(--secondary-200-rgb), 0.2);
-    --secondary-inverse: var(--secondary-500-yiq);
+  :root:not([data-theme=light]) a:not([role=button]) {
+    --color: var(--primary-100);
   }
-  @media only screen and (prefers-color-scheme: dark) {
-    :root:not([data-theme=light]) {
-      --surface-color: var(--gray-800);
-      --surface-border-color: var(--gray-700);
-    }
-    :root:not([data-theme=light]) a {
-      --color: var(--primary-200);
-    }
-    :root:not([data-theme=light]) a:is([aria-current], :hover, :active, :focus) {
-      --color: var(--primary-400);
-    }
+  :root:not([data-theme=light]) a:not([role=button]):is([aria-current], :hover, :active, :focus) {
+    --color: var(--primary-300);
   }
-  body {
-    overflow-x: hidden;
-  }
+}
+body {
+  overflow-x: hidden;
+}
 </style>

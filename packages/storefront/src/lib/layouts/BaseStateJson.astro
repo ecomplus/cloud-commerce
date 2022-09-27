@@ -6,18 +6,19 @@ export interface Props {
   pageContext: PageContext;
 }
 
-const { pageContext } = Astro.props as Props;
 const {
-  storeId,
-  apiResource,
-  apiDoc,
-  lang,
-  countryCode,
-  currency,
-  currencySymbol,
-  domain,
-  settings,
-} = pageContext;
+  pageContext: {
+    storeId,
+    apiResource,
+    apiDoc,
+    lang,
+    countryCode,
+    currency,
+    currencySymbol,
+    domain,
+    settings,
+  },
+} = Astro.props as Props;
 
 let inlineClientJS = `
 window.storefront = ${JSON.stringify({
