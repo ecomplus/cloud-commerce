@@ -1,3 +1,5 @@
+import url from 'url';
+import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
 /* eslint-disable import/no-unresolved */
@@ -12,6 +14,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import getConfig from './storefront.config.mjs';
 
 dotenv.config();
+const currentDir = url.fileURLToPath(new URL('.', import.meta.url));
 
 const {
   lang,
@@ -143,7 +146,7 @@ const genAstroConfig = ({
     ],
     resolve: {
       alias: {
-        '@i18n': `@ecomplus/i18n/lib/${lang}.mjs`,
+        '@i18n': joinPath(currentDir, `src/lib/i18n/${lang.replace('_', '-')}`),
       },
     },
   },

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "paths": {
-      "@i18n": ["./node_modules/@ecomplus/i18n/lib/pt_br.mjs"],
+      "@i18n": ["./src/lib/i18n/pt-br.ts"],
     }
   }
 }
