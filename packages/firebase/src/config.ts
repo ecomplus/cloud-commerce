@@ -8,10 +8,22 @@ const tinyErpEvents: ApiEventName[] = [
   'applications-dataSet',
 ];
 
+const {
+  DEPLOY_REGION,
+  DEPLOY_MEMORY,
+  DEPLOY_TIMEOUT_SECONDS,
+  DEPLOY_MIN_INSTANCES,
+} = process.env;
+
 const mergeConfig = {
   hello: 'from @cloudcommerce/firebase',
   httpsFunctionOptions: {
-    region: process.env.DEPLOY_REGION || 'southamerica-east1',
+    region: DEPLOY_REGION || 'southamerica-east1',
+    memory: DEPLOY_MEMORY as '128MiB' | '256MiB' | '512MiB' | '1GiB' | undefined,
+    timeoutSeconds: DEPLOY_TIMEOUT_SECONDS
+      ? Number(DEPLOY_TIMEOUT_SECONDS) : undefined,
+    minInstances: DEPLOY_MIN_INSTANCES
+      ? Number(DEPLOY_MIN_INSTANCES) : undefined,
   },
   apps: {
     discounts: {
@@ -35,14 +47,7 @@ const mergeConfig = {
 config.set(mergeConfig);
 
 export default config as {
-  get(): BaseConfig & typeof mergeConfig & {
-    httpsFunctionOptions: {
-      region: string,
-      memory?: '128MiB' | '256MiB' | '512MiB' | '1GiB' | '2GiB',
-      timeoutSeconds?: number,
-      minInstances?: number,
-    },
-  };
+  get(): BaseConfig & typeof mergeConfig;
   // eslint-disable-next-line
   set(config: any): void;
 };
