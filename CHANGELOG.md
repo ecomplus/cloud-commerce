@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.99](https://github.com/ecomplus/cloud-commerce/compare/v0.0.98...v0.0.99) (2022-09-27)
+
+
+### Bug Fixes
+
+* **storefront:** Bump `@ecomplus/i18n` and fix alias to .mjs ([fa33b44](https://github.com/ecomplus/cloud-commerce/commit/fa33b44ffa63d48f3de075d44cf09d9e4066f9fe))
+
 ### [0.0.98](https://github.com/ecomplus/cloud-commerce/compare/v0.0.97...v0.0.98) (2022-09-27)
 
 
