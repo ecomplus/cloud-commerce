@@ -17,7 +17,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/storefront#readme",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -32,7 +32,7 @@
     "@astrojs/vue": "^1.0.2",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
-    "@ecomplus/i18n": "^1.31.0",
+    "@ecomplus/i18n": "^1.32.0",
     "@ecomplus/utils": "^1.4.1",
     "@iconify-json/bxl": "^1.1.4",
     "@iconify-json/heroicons": "^1.1.4",
