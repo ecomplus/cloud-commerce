@@ -39,7 +39,7 @@ export default () => {
 
   const settings = cms('settings');
   const { domain } = settings;
-  const primaryColor = settings.primary_color || '#20c997';
+  const primaryColor = settings.primary_color || '#137c5c';
   const secondaryColor = settings.secondary_color || '#343a40';
 
   return {
