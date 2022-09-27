@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.101](https://github.com/ecomplus/cloud-commerce/compare/v0.0.100...v0.0.101) (2022-09-27)
+
+
+### Features
+
+* **firebase:** Get additional deploy options from `process.env` ([b6c38e3](https://github.com/ecomplus/cloud-commerce/commit/b6c38e309fea94bf27eadc2f03ca697c73f56360))
+
+
+### Bug Fixes
+
+* **firebase:** Update config `httpsFunctionOptions` type def with optional props ([ff91e72](https://github.com/ecomplus/cloud-commerce/commit/ff91e723a919f2e0d6369da7a2f904691a619bab))
+* **modules:** Trying default deloy options with concurrency 12 ([5052ac6](https://github.com/ecomplus/cloud-commerce/commit/5052ac6b6c93b18d2979c39d5f88cf6c458b5794))
+
 ### [0.0.100](https://github.com/ecomplus/cloud-commerce/compare/v0.0.99...v0.0.100) (2022-09-27)
 
 
