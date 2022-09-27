@@ -13,7 +13,12 @@ import getConfig from './storefront.config.mjs';
 
 dotenv.config();
 
-const { domain, primaryColor, settings } = getConfig();
+const {
+  lang,
+  domain,
+  primaryColor,
+  settings,
+} = getConfig();
 
 const _vitePWAOptions = {
   manifest: {
@@ -136,6 +141,11 @@ const genAstroConfig = ({
     plugins: [
       VitePWA(vitePWAOptions),
     ],
+    resolve: {
+      alias: {
+        '@ecomplus/i18n$': `@ecomplus/i18n/src/${lang}/index.js`,
+      },
+    },
   },
 });
 

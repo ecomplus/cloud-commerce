@@ -296,6 +296,7 @@ importers:
       '@astrojs/vue': ^1.0.2
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/config': workspace:*
+      '@ecomplus/i18n': ^1.31.0
       '@ecomplus/utils': ^1.4.1
       '@iconify-json/bxl': ^1.1.4
       '@iconify-json/heroicons': ^1.1.4
@@ -321,6 +322,7 @@ importers:
       '@astrojs/vue': 1.0.2_vue@3.2.39
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/config': link:../config
+      '@ecomplus/i18n': 1.31.0
       '@ecomplus/utils': 1.4.1
       '@iconify-json/bxl': 1.1.4
       '@iconify-json/heroicons': 1.1.4
@@ -344,6 +346,56 @@ importers:
       '@cloudcommerce/api': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../api
+
+  store:
+    specifiers:
+      '@cloudcommerce/cli': ^0.0.96
+    dependencies:
+      '@cloudcommerce/cli': link:../packages/cli
+
+  store/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.96
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.0.96
+      '@cloudcommerce/firebase': ^0.0.96
+    dependencies:
+      '@cloudcommerce/events': link:../../../packages/events
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.96
+      '@cloudcommerce/modules': ^0.0.96
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../packages/modules
+
+  store/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.96
+      '@cloudcommerce/passport': ^0.0.96
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../packages/passport
+
+  store/functions/ssr:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.96
+      '@cloudcommerce/ssr': ^0.0.96
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../packages/ssr
+
+  store/functions/ssr/storefront:
+    specifiers:
+      '@cloudcommerce/storefront': ^0.0.96
+    devDependencies:
+      '@cloudcommerce/storefront': link:../../../../packages/storefront
 
 packages:
 
@@ -1861,6 +1913,10 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@ecomplus/i18n/1.31.0:
+    resolution: {integrity: sha512-FgOgkfu0e25sMXmQXDp3lRWL5of1wDcvOGbYBxFp+68pj2CWqBkEeXuSEA0Zlbmvcq0gkj31OT6uMA8ReBTJKw==}
+    dev: false
 
   /@ecomplus/utils/1.4.1:
     resolution: {integrity: sha512-siIMZu5qjwwtvFTqt/F29i/SkzZcIFrb/6WcmUJToh4HiBoJVx8H/id2WQRQf7EzcL9c0uYMWX6DNIN/DymvcA==}
