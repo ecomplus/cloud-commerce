@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.100](https://github.com/ecomplus/cloud-commerce/compare/v0.0.99...v0.0.100) (2022-09-27)
+
+
+### Bug Fixes
+
+* **storefront:** Replace `@ecomplus/i18n` with local dictionary modules ([1e236a6](https://github.com/ecomplus/cloud-commerce/commit/1e236a6c0062163e7f5558513af0f1831d48b3b4))
+
 ### [0.0.99](https://github.com/ecomplus/cloud-commerce/compare/v0.0.98...v0.0.99) (2022-09-27)
 
 
