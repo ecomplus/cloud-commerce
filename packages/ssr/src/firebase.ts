@@ -10,7 +10,6 @@ import serveStorefront from './firebase/serve-storefront';
 
 const {
   httpsFunctionOptions: {
-    region,
     timeoutSeconds,
     memory,
     minInstances,
@@ -18,10 +17,10 @@ const {
 } = config.get();
 
 export const ssr = onRequest({
-  region,
-  timeoutSeconds: timeoutSeconds || 15,
-  memory: memory || '256MiB',
-  minInstances: minInstances || 1,
+  region: 'us-central1',
+  timeoutSeconds: timeoutSeconds || 30,
+  memory: memory || '512MiB',
+  minInstances: typeof minInstances === 'number' ? minInstances : 1,
 }, (req, res) => {
   serveStorefront(req, res);
 });
