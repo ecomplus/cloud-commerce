@@ -48,6 +48,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
   cmsCollection?: string;
   apiPrefetchEndpoints?: ApiPrefetchEndpoints;
 } = {}) => {
+  const startedAt = Date.now();
   const urlPath = Astro.url.pathname;
   const { slug } = Astro.params;
   const config = getConfig();
@@ -103,6 +104,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
       <body></body>`;
     throw err;
   }
+  Astro.response.headers.set('X-Load-Took', Date.now() - startedAt);
   if (urlPath === '/fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else {
