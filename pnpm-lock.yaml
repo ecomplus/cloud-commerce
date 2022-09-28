@@ -259,7 +259,6 @@ importers:
       firebase-admin: ^11.0.1
       firebase-functions: ^3.24.0
       image-size: ^1.0.2
-      path-to-regexp: ^6.2.1
       vue: ^3.2.39
     dependencies:
       '@astrojs/node': 1.0.1
@@ -271,7 +270,6 @@ importers:
       firebase-admin: 11.0.1_@firebase+app-types@0.7.0
       firebase-functions: 3.24.0_firebase-admin@11.0.1
       image-size: 1.0.2
-      path-to-regexp: 6.2.1
       vue: 3.2.39
     devDependencies:
       '@cloudcommerce/types': link:../types
@@ -337,53 +335,50 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.103
+      '@cloudcommerce/cli': ^0.0.104
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.103
+      '@cloudcommerce/firebase': ^0.0.104
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.103
-      '@cloudcommerce/firebase': ^0.0.103
+      '@cloudcommerce/events': ^0.0.104
+      '@cloudcommerce/firebase': ^0.0.104
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.103
-      '@cloudcommerce/modules': ^0.0.103
+      '@cloudcommerce/firebase': ^0.0.104
+      '@cloudcommerce/modules': ^0.0.104
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.103
-      '@cloudcommerce/passport': ^0.0.103
+      '@cloudcommerce/firebase': ^0.0.104
+      '@cloudcommerce/passport': ^0.0.104
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.103
-      '@cloudcommerce/ssr': ^0.0.103
+      '@cloudcommerce/firebase': ^0.0.104
+      '@cloudcommerce/ssr': ^0.0.104
+      '@cloudcommerce/storefront': ^0.0.104
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
-
-  store/functions/ssr/storefront:
-    specifiers:
-      '@cloudcommerce/storefront': ^0.0.103
     devDependencies:
-      '@cloudcommerce/storefront': link:../../../../packages/storefront
+      '@cloudcommerce/storefront': link:../../../packages/storefront
 
 packages:
 
