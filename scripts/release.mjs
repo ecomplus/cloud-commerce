@@ -33,18 +33,13 @@ if (argv.publish) {
       .map((dirent) => dirent.name);
     for (let ii = 0; ii < functions.length; ii++) {
       const codebase = functions[ii];
-      const functionDir = `${pwd}/store/functions/${codebase}`;
-      cd(functionDir);
+      cd(`${pwd}/store/functions/${codebase}`);
       await $`rm -rf node_modules package-lock.json`;
       await $`npm i --save @cloudcommerce/firebase@${version}`;
       if (codebase !== 'core') {
         await $`npm i --save @cloudcommerce/${codebase}@${version}`;
         if (codebase === 'ssr') {
-          cd(`${functionDir}/storefront`);
-          await $`rm -rf node_modules package-lock.json`;
           await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
-          await $`rm -rf node_modules`;
-          cd(functionDir);
         }
       }
       await $`rm -rf node_modules`;
@@ -54,7 +49,7 @@ if (argv.publish) {
     await $`npm i --save @cloudcommerce/cli@${version}`;
     await $`rm -rf node_modules`;
     try {
-      await $`git add package* functions/*/package* functions/ssr/storefront/package*`;
+      await $`git add package* functions/*/package*`;
       await $`git commit -m 'Update to v${version}' \
         -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
       await $`git push`;
