@@ -1,10 +1,10 @@
-/* eslint-disable import/no-unresolved, import/first */
+/* eslint-disable import/prefer-default-export, import/no-unresolved, import/first */
 import '@cloudcommerce/api/fetch-polyfill';
 import { initializeApp } from 'firebase-admin/app';
 
 initializeApp();
 
-import functions from 'firebase-functions';
+import { onRequest } from 'firebase-functions/v2/https';
 import config from '@cloudcommerce/firebase/lib/config';
 import serveStorefront from './firebase/serve-storefront';
 
@@ -17,13 +17,11 @@ const {
   },
 } = config.get();
 
-// eslint-disable-next-line import/prefer-default-export
-export const ssr = functions
-  .region(region)
-  .runWith({
-    timeoutSeconds: timeoutSeconds || 15,
-    memory: memory ? memory.replace('i', '') as '256MB' : '256MB',
-    minInstances: minInstances || 1,
-  }).https.onRequest((req, res) => {
-    serveStorefront(req, res);
-  });
+export const ssr = onRequest({
+  region,
+  timeoutSeconds: timeoutSeconds || 15,
+  memory: memory || '256MiB',
+  minInstances: minInstances || 1,
+}, (req, res) => {
+  serveStorefront(req, res);
+});
