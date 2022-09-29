@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
+import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
@@ -71,12 +72,15 @@ const _vitePWAOptions = {
         cacheName: 'assets',
       },
     }, {
-      urlPattern: settings.logo
-        ? new RegExp(`^${(settings.mini_logo ? `(?:${settings.mini_logo}|${settings.logo})` : settings.logo)}$`)
-        : /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
+      urlPattern: /^\/_image$/,
       handler: 'StaleWhileRevalidate',
       options: {
-        cacheName: 'logo',
+        cacheName: 'sharp-images',
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          purgeOnQuotaError: true,
+        },
       },
     }, {
       urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
@@ -126,6 +130,15 @@ const _vitePWAOptions = {
 };
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
+const integrations = [
+  vue(),
+  partytown(),
+  prefetch(),
+  UnoCSS(),
+];
+if (!isSSG) {
+  integrations.push(image());
+}
 
 const genAstroConfig = ({
   site = `https://${domain}`,
@@ -134,12 +147,7 @@ const genAstroConfig = ({
   output: isSSG ? 'static' : 'server',
   adapter: isSSG ? undefined : node(),
   outDir: isSSG ? './dist/client' : './dist',
-  integrations: [
-    vue(),
-    partytown(),
-    prefetch(),
-    UnoCSS(),
-  ],
+  integrations,
   site,
   vite: {
     plugins: [
