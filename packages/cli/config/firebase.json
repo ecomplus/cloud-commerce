@@ -56,6 +56,16 @@
         "region": "southamerica-east1"
       },
       {
+        "source": "/_feeds/**",
+        "function": "feeds",
+        "region": "southamerica-east1"
+      },
+      {
+        "source": "/sitemap.xml",
+        "function": "feeds",
+        "region": "southamerica-east1"
+      },
+      {
         "source": "**/!(*(*.)ico|*(*.)png|*(*.)map)",
         "function": "ssr",
         "region": "us-central1"
