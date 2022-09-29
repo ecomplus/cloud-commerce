@@ -104,9 +104,11 @@ const loadPageContext = async (Astro: AstroGlobal, {
       <body></body>`;
     throw err;
   }
-  Astro.response.headers.set('X-Load-Took', Date.now() - startedAt);
+  Astro.response.headers.set('X-Load-Took', String(Date.now() - startedAt));
   if (urlPath === '/fallback') {
     setResponseCache(Astro, 3600, 86400);
+  } else if (urlPath === '/') {
+    setResponseCache(Astro, 180, 900);
   } else {
     setResponseCache(Astro, 120, 600);
   }
