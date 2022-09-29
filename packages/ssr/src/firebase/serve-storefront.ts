@@ -9,6 +9,8 @@ const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
 const compress = compression();
 
 export default (req: Request, res: Response) => {
+  res.set('X-XSS-Protection', '1; mode=block');
+  res.set('Content-Security-Policy', "default-src 'self'");
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, defaultCache: string) => {
