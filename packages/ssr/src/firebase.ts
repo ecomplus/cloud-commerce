@@ -15,9 +15,9 @@ export const ssr = onRequest(ssrFunctionOptions, (req, res) => {
 });
 
 export const feeds = onRequest({
+  memory: '512MiB',
   ...httpsFunctionOptions,
   timeoutSeconds: 120,
-  memory: ssrFunctionOptions.memory,
 }, (req, res) => {
   serveStorefront(req, res);
 });
