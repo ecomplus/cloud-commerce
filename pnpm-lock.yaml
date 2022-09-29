@@ -256,6 +256,7 @@ importers:
       '@firebase/app-types': ^0.7.0
       astro: ^1.3.0
       color: ^4.2.3
+      compression: ^1.7.4
       firebase-admin: ^11.0.1
       firebase-functions: ^3.24.0
       image-size: ^1.0.2
@@ -267,6 +268,7 @@ importers:
       '@ecomplus/utils': 1.4.1
       astro: 1.3.0
       color: 4.2.3
+      compression: 1.7.4
       firebase-admin: 11.0.1_@firebase+app-types@0.7.0
       firebase-functions: 3.24.0_firebase-admin@11.0.1
       image-size: 1.0.2
@@ -335,45 +337,45 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.104
+      '@cloudcommerce/cli': ^0.0.105
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.104
+      '@cloudcommerce/firebase': ^0.0.105
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.104
-      '@cloudcommerce/firebase': ^0.0.104
+      '@cloudcommerce/events': ^0.0.105
+      '@cloudcommerce/firebase': ^0.0.105
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.104
-      '@cloudcommerce/modules': ^0.0.104
+      '@cloudcommerce/firebase': ^0.0.105
+      '@cloudcommerce/modules': ^0.0.105
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.104
-      '@cloudcommerce/passport': ^0.0.104
+      '@cloudcommerce/firebase': ^0.0.105
+      '@cloudcommerce/passport': ^0.0.105
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.104
-      '@cloudcommerce/ssr': ^0.0.104
-      '@cloudcommerce/storefront': ^0.0.104
+      '@cloudcommerce/firebase': ^0.0.105
+      '@cloudcommerce/ssr': ^0.0.105
+      '@cloudcommerce/storefront': ^0.0.105
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -4101,6 +4103,11 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /bytes/3.0.0:
+    resolution: {integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=}
+    engines: {node: '>= 0.8'}
+    dev: false
+
   /bytes/3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
@@ -4348,7 +4355,21 @@ packages:
     dependencies:
       mime-db: 1.52.0
     dev: false
-    optional: true
+
+  /compression/1.7.4:
+    resolution: {integrity: sha512-jaSIDzP9pZVS4ZfQ+TzvtiWhdpFhE2RDHz8QJkpX9SIpLq88VueF5jJw6t+6CUQcAoA6t+x89MLrWAqpfDE8iQ==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      accepts: 1.3.8
+      bytes: 3.0.0
+      compressible: 2.0.18
+      debug: 2.6.9
+      on-headers: 1.0.2
+      safe-buffer: 5.1.2
+      vary: 1.1.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
@@ -8385,6 +8406,11 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       ee-first: 1.1.1
+    dev: false
+
+  /on-headers/1.0.2:
+    resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
+    engines: {node: '>= 0.8'}
     dev: false
 
   /once/1.4.0:
