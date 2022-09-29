@@ -29,7 +29,6 @@
     "@astrojs/node": "^1.0.1",
     "@astrojs/partytown": "^1.0.0",
     "@astrojs/prefetch": "^0.0.7",
-    "@astrojs/sitemap": "^1.0.0",
     "@astrojs/vue": "^1.0.2",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
