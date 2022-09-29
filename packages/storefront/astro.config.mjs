@@ -130,15 +130,6 @@ const _vitePWAOptions = {
 };
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
-const integrations = [
-  vue(),
-  partytown(),
-  prefetch(),
-  UnoCSS(),
-];
-if (!isSSG) {
-  integrations.push(image());
-}
 
 const genAstroConfig = ({
   site = `https://${domain}`,
@@ -147,7 +138,13 @@ const genAstroConfig = ({
   output: isSSG ? 'static' : 'server',
   adapter: isSSG ? undefined : node(),
   outDir: isSSG ? './dist/client' : './dist',
-  integrations,
+  integrations: [
+    image(),
+    vue(),
+    partytown(),
+    prefetch(),
+    UnoCSS(),
+  ],
   site,
   vite: {
     plugins: [
