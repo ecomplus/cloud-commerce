@@ -69,6 +69,7 @@ runs:
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
     
     - if: github.event_name == 'pull_request'
+      shell: bash
       working-directory: functions/ssr
       run: npm run build:static
 
