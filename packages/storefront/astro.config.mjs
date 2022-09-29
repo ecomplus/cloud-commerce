@@ -126,12 +126,15 @@ const _vitePWAOptions = {
   },
 };
 
+const isSSG = process.env.BUILD_OUTPUT === 'static';
+
 const genAstroConfig = ({
   site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => ({
-  output: 'server',
-  adapter: node(),
+  output: isSSG ? 'static' : 'server',
+  adapter: isSSG ? undefined : node(),
+  outDir: isSSG ? './dist/client' : './dist',
   integrations: [
     vue(),
     partytown(),

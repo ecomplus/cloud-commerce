@@ -19,6 +19,7 @@
     "dev": "astro dev",
     "start": "astro dev --host",
     "build": "astro build",
+    "build:static": "BUILD_OUTPUT=static astro build",
     "preview": "astro preview",
     "astro": "astro",
     "prepare-monorepo": "sh scripts/prepare-monorepo.sh",
