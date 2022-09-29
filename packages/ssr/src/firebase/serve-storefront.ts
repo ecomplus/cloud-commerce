@@ -10,7 +10,7 @@ const compress = compression();
 
 export default (req: Request, res: Response) => {
   res.set('X-XSS-Protection', '1; mode=block');
-  res.set('Content-Security-Policy', "default-src 'self'");
+  res.set('Content-Security-Policy', "script-src 'none'");
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, defaultCache: string) => {
