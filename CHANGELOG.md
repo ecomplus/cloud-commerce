@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.105](https://github.com/ecomplus/cloud-commerce/compare/v0.0.104...v0.0.105) (2022-09-29)
+
+
+### Features
+
+* **cli:** Update `firebase.json` with rewrites for sitemap and feeds ([019356e](https://github.com/ecomplus/cloud-commerce/commit/019356eaa6df494af898702fb89e12eb213389bb))
+* **ssr:** Getting deploy options from config `ssrFunctionOptions` ([c795e90](https://github.com/ecomplus/cloud-commerce/commit/c795e90b2e8b9f463d571763e19b9f4508b5fd1a))
+
+
+### Bug Fixes
+
+* **cli:** Updating default SSR function region to `us-central1` ([9f76842](https://github.com/ecomplus/cloud-commerce/commit/9f76842356a23800c44e82e2125bd7ad1b5b0963))
+* **passport:** Memory 128MiB option may be overwritten with `httpsFunctionOptions` ([a23fb67](https://github.com/ecomplus/cloud-commerce/commit/a23fb67100679c20103877c453c18d813fee8ac1))
+* **ssr:** Hardset XSS/CSP security response headers ([6e20063](https://github.com/ecomplus/cloud-commerce/commit/6e200630c064fff1fa89a6cee9196b7d0165ad1d))
+* **ssr:** Update default function deploy options ([c1d3cbd](https://github.com/ecomplus/cloud-commerce/commit/c1d3cbddaec4b5a0111dd9d0f4e9476e28aac283))
+* **storefront:** Remove unecessary (startup time) import/start `firebase/app` ([f4b80ec](https://github.com/ecomplus/cloud-commerce/commit/f4b80ec2ab91feb40d0a00edfb19b16654661863))
+
 ### [0.0.104](https://github.com/ecomplus/cloud-commerce/compare/v0.0.103...v0.0.104) (2022-09-28)
 
 ### [0.0.103](https://github.com/ecomplus/cloud-commerce/compare/v0.0.102...v0.0.103) (2022-09-27)
