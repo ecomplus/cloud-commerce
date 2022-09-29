@@ -119,7 +119,7 @@ async function runModule(
         let isError = false;
         let errorMessage: string | null = null;
         callAppModule(
-          appId,
+          appId || application.app_id,
           modName as AppModuleName,
           appModuleUrl,
           appModuleBody,
