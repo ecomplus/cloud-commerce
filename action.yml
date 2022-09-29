@@ -67,6 +67,10 @@ runs:
         DEPLOY_RAND=$RANDOM.$RANDOM
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
+    
+    - if: github.event_name == 'pull_request'
+      working-directory: functions/ssr
+      run: npm run build:static
 
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview
