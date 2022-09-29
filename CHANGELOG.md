@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.106](https://github.com/ecomplus/cloud-commerce/compare/v0.0.105...v0.0.106) (2022-09-29)
+
+
+### Bug Fixes
+
+* **ssr:** Change `Content-Security-Policy` header to `script-src "none"` ([51b8536](https://github.com/ecomplus/cloud-commerce/commit/51b8536cee1a70143df959e2536dd0fe0a1ee985))
+
 ### [0.0.105](https://github.com/ecomplus/cloud-commerce/compare/v0.0.104...v0.0.105) (2022-09-29)
 
 
