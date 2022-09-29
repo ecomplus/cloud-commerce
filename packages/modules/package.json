@@ -29,6 +29,7 @@
     "@cloudcommerce/app-custom-shipping": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
+    "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",

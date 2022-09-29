@@ -77,6 +77,20 @@ export default async (
           .then(({ calculateShipping }) => calculateShipping(_data));
       };
     }
+  } else if (modName === 'list_payments') {
+    if (appId === apps.mercadoPago.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-mercadopago')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+  } else if (modName === 'create_transaction') {
+    if (appId === apps.mercadoPago.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-mercadopago')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
   }
   if (internalModuleFn) {
     /*
