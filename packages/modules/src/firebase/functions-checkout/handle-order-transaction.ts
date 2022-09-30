@@ -20,10 +20,12 @@ const checkoutRespond = async (
 ) => {
   if (transaction && accessToken) {
     try {
-      // TODO: using accesstoken, invalid request for client authentication
       const transactionId = (await api.post(
         `orders/${orderId}/transactions`,
       transaction as any,
+      {
+        accessToken,
+      },
       )).data._id;
       transaction._id = transactionId;
     } catch (e) {
