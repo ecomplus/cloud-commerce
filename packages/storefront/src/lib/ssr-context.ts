@@ -36,7 +36,7 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
   let cacheControl = `public, max-age=${maxAge}, must-revalidate`;
   if (sMaxAge) {
-    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=86400`;
+    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=${(sMaxAge * 300)}`;
   }
   Astro.response.headers.set(headerName, cacheControl);
 };
