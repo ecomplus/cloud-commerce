@@ -10,12 +10,35 @@ import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import { sendError } from './utils';
 
-const checkoutRespond = (
+const checkoutRespond = async (
   res: Response,
   orderId:string & {length: 24},
   orderNumber: number | undefined,
+  usrMsg: { en_us: string, pt_br: string },
+  accessToken?: string,
   transaction?: TransactionOrder,
 ) => {
+  if (transaction && accessToken) {
+    try {
+      const transactionId = (await api.post(
+        `orders/${orderId}/transactions`,
+      transaction as any,
+      {
+        accessToken,
+      },
+      )).data._id;
+      transaction._id = transactionId;
+    } catch (e) {
+      logger.error(e);
+      return sendError(
+        res,
+        409,
+        'CKT704',
+        'Create transaction Error',
+        usrMsg,
+      );
+    }
+  }
   return res.send({
     status: 200,
     order: {
