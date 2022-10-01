@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.107](https://github.com/ecomplus/cloud-commerce/compare/v0.0.106...v0.0.107) (2022-10-01)
+
+
+### Features
+
+* **i18n:** Setup new `@cloudcommerce/i18n` pkg ([bd02d8b](https://github.com/ecomplus/cloud-commerce/commit/bd02d8beaff45597947da2efdfac96dcce878c1e))
+* **storefront:** Basic `LoginForm` component interactions for sign in/up ([eb5b462](https://github.com/ecomplus/cloud-commerce/commit/eb5b462dbbf13840572e531295ab57f18022873e))
+* **storefront:** Supporting SSG (for branch previews) with `BIULD_OUTPUT` env ([4330c0f](https://github.com/ecomplus/cloud-commerce/commit/4330c0f10ee5c8e6d44c970085d9e2a185ad1937))
+
+
+### Bug Fixes
+
+* **modules:** Properly adding order transaction on checkout ([#55](https://github.com/ecomplus/cloud-commerce/issues/55)) ([b27e83d](https://github.com/ecomplus/cloud-commerce/commit/b27e83d19e07c050e50db2fc083e362ae08e67a1))
+* **ssr:** Remove CSL header at all (yet) ([6a68407](https://github.com/ecomplus/cloud-commerce/commit/6a684079803cdd3e2f5903b333696233d4bf7368))
+* **ssr:** Setup feeds function with 512MiB by default ([a55de47](https://github.com/ecomplus/cloud-commerce/commit/a55de4781d92973a3c860ae6e69be43a5f08f5ff))
+* **storefront:** Removing Tailwind incompatible .outline (button) classes from pico.css ([4598955](https://github.com/ecomplus/cloud-commerce/commit/4598955b23dfc2e6f7da1908576654b09771afe0))
+
 ### [0.0.106](https://github.com/ecomplus/cloud-commerce/compare/v0.0.105...v0.0.106) (2022-09-29)
 
 
