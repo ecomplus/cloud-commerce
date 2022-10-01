@@ -257,6 +257,7 @@ importers:
 
   packages/ssr:
     specifiers:
+      '@astrojs/image': ^0.8.1
       '@astrojs/node': ^1.0.1
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/firebase': workspace:*
@@ -270,6 +271,7 @@ importers:
       image-size: ^1.0.2
       vue: ^3.2.39
     dependencies:
+      '@astrojs/image': 0.8.1
       '@astrojs/node': 1.0.1
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/firebase': link:../firebase

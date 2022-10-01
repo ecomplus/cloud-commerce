@@ -23,6 +23,7 @@
     "build": "sh ../../scripts/build-lib.sh"
   },
   "dependencies": {
+    "@astrojs/image": "^0.8.1",
     "@astrojs/node": "^1.0.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
