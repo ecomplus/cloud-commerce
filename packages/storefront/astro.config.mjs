@@ -140,7 +140,10 @@ const genAstroConfig = ({
     vue(),
     partytown(),
     prefetch(),
-    UnoCSS(),
+    UnoCSS({
+      injectReset: false,
+      injectEntry: false,
+    }),
   ],
   site,
   vite: {
