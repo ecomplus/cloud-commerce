@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.109](https://github.com/ecomplus/cloud-commerce/compare/v0.0.108...v0.0.109) (2022-10-04)
+
+
+### Features
+
+* **storefront:** Start handling email link sign in within `LoginForm` ([a1f17bb](https://github.com/ecomplus/cloud-commerce/commit/a1f17bba3cb8a4ec78deaefcb8caac3736d7e4f5))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([c5d6f56](https://github.com/ecomplus/cloud-commerce/commit/c5d6f56c37edbadc04dbcefae35408118bc22111))
+
 ### [0.0.108](https://github.com/ecomplus/cloud-commerce/compare/v0.0.107...v0.0.108) (2022-10-01)
 
 
