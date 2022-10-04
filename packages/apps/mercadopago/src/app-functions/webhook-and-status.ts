@@ -4,6 +4,7 @@ import axios from 'axios';
 import api from '@cloudcommerce/api';
 
 const ECHO_SKIP = 'SKIP';
+let ECHO_SUCCESS = 'OK';
 
 const parsePaymentStatus = (status: string) => {
   switch (status) {
@@ -50,7 +51,7 @@ export default async (
             const order = (await api.get(
               `orders/${orderId}`,
             )).data;
-            logger.log('>order ', order);
+            logger.log('>order ', JSON.stringify(order), '<');
             if (order && order.transactions) {
               const payment = (await axios.get(
                 `https://api.mercadopago.com/v1/payments/${notification.data.id}`,
@@ -61,7 +62,8 @@ export default async (
                   },
                 },
               )).data;
-              logger.log('>payment ', payment);
+              logger.log('>payment ', JSON.stringify(payment), ' <');
+              const methodPayment = payment.payment_method_id;
 
               const transaction = order.transactions.find(({ intermediator }) => {
                 return intermediator && intermediator.transaction_code === notification.data.id;
@@ -85,7 +87,25 @@ export default async (
                   docRef.set({ status, updatedAt }, { merge: true }).catch(logger.error);
                 }
 
-                res.status(200).send('SUCCESS');
+                if ((status === 'paid' && methodPayment === 'pix' && transaction)) {
+                  let { notes } = transaction;
+                  notes = notes?.replace('display:block', 'display:none'); // disable QR Code
+                  notes = `${notes} # PIX Aprovado`;
+
+                  // orders/${order._id}/transactions/${transactionId}.json { notes }
+                  // Update to disable QR Code
+                  try {
+                    await api.patch(
+                      `orders/${order._id}/transactions/${transaction._id}`,
+                      { notes },
+                    );
+                    ECHO_SUCCESS = 'SUCCESS';
+                  } catch (e) {
+                    logger.error(e);
+                  }
+                }
+
+                res.status(200).send(ECHO_SUCCESS);
               } else {
                 // transaction not found
                 logger.log('> Transaction not found #', notification.data.id);
@@ -107,7 +127,7 @@ export default async (
         });
       // }, 3000);
     } else {
-      res.sendStatus(409); // todo: what's error code?
+      res.sendStatus(406);
     }
   } catch (e) {
     logger.error(e);

@@ -2,12 +2,10 @@ import type { AppModuleBody } from '@cloudcommerce/types';
 import type{ CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
 import type{ CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
 import type { Firestore } from 'firebase-admin/firestore';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { logger } from 'firebase-functions';
 import axios from 'axios';
 import { parsePaymentStatus } from '../app-functions/webhook-and-status';
-
-const baseUri = '';
+import { baseUri } from '../firebase';
 
 export default async (appData: AppModuleBody, firestore:Firestore) => {
   // body was already pre-validated on @/bin/web.js
@@ -15,11 +13,12 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
   const { application, storeId } = appData;
   const params = appData.params as CreateTransactionParams;
   // app configured options
-  const config = { ...application.data, ...application.hidden_data };
-  const notificationUrl = `${baseUri}/mercadopago/webhook`;
+  const configApp = { ...application.data, ...application.hidden_data };
+  const notificationUrl = `${baseUri}/mercadopago-webhook`;
 
   let token: string| undefined;
   let paymentMethodId: string;
+  const isPix = params.payment_method.code === 'account_deposit';
   if (params.credit_card && params.credit_card.hash) {
     const hashParts = params.credit_card.hash.split(' // ');
     [token] = hashParts;
@@ -30,6 +29,8 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
     }
   } else if (params.payment_method.code === 'banking_billet') {
     paymentMethodId = 'bolbradesco';
+  } else if (params.payment_method.code === 'account_deposit') {
+    paymentMethodId = 'pix';
   } else {
     return {
       status: 400,
@@ -116,7 +117,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
     description: `Pedido #${params.order_number} de ${buyer.fullname}`.substring(0, 60),
     payment_method_id: paymentMethodId,
     token,
-    statement_descriptor: config.statement_descriptor || `${params.domain}_MercadoPago`,
+    statement_descriptor: configApp.statement_descriptor || `${params.domain}_MercadoPago`,
     installments: params.installments_number || 1,
     notification_url: notificationUrl,
     additional_info: additionalInfo,
@@ -133,7 +134,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
       url: 'https://api.mercadopago.com/v1/payments',
       method: 'post',
       headers: {
-        Authorization: `Bearer ${config.mp_access_token}`,
+        Authorization: `Bearer ${configApp.mp_access_token}`,
         'Content-Type': 'application/json',
       },
       data: payment,
@@ -141,6 +142,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
     if (data) {
       logger.log('> MP Checkout #', storeId, orderId);
 
+      const statusPayment = parsePaymentStatus(data.status);
       let isSaveRetry = false;
       const saveToDb = () => {
         return new Promise((resolve, reject) => {
@@ -150,7 +152,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
               transaction_code: data.id,
               store_id: storeId,
               order_id: orderId,
-              status: data.status,
+              status: statusPayment,
               paymentMethod: paymentMethodId,
               notificationUrl,
             }, {
@@ -185,7 +187,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
           transaction_reference: data.external_reference,
         },
         status: {
-          current: parsePaymentStatus(data.status),
+          current: statusPayment,
         },
       };
 
@@ -205,7 +207,8 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
             value: data.transaction_details.installment_amount,
           };
         }
-      } else if (data.transaction_details && data.transaction_details.external_resource_url) {
+      } else if (!isPix && data.transaction_details
+          && data.transaction_details.external_resource_url) {
         transaction.payment_link = data.transaction_details.external_resource_url;
         transaction.banking_billet = {
           link: transaction.payment_link,
@@ -216,6 +219,13 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
             transaction.banking_billet.valid_thru = dateValidThru.toISOString();
           }
         }
+      } else if (isPix && data.point_of_interaction && data.point_of_interaction.transaction_data) {
+        // https://www.mercadopago.com.br/developers/pt/docs/checkout-api/integration-configuration/integrate-with-pix#bookmark_visualiza%C3%A7%C3%A3o_de_pagamento
+        const qrCode = data.point_of_interaction.transaction_data.qr_code;
+        const qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64;
+        transaction.notes = '<div style="display:block;margin:0 auto"> '
+          + `<img width="280" height="280" style="margin:5px auto" src='data:image/jpeg;base64,${qrCodeBase64}'/> `
+          + `<lable> ${qrCode} </label></div>`;
       }
 
       return {
