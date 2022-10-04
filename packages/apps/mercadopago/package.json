@@ -4,6 +4,10 @@
   "version": "0.0.99",
   "description": "E-Com Plus Cloud Commerce app to integrate Mercado Pago",
   "main": "lib/mercadopago.js",
+  "exports": {
+    ".": "./lib/mercadopago.js",
+    "./firebase" : "./lib/firebase.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -16,7 +20,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/packages/apps/mercadopago#readme",
   "scripts": {
-    "build": "node ../../../scripts/public-apps-minification.mjs mercadopago && sh ../../../scripts/build-lib.sh"
+    "build": "sh scripts/build.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

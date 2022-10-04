@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export { mercadopago } from './mercadopago';
+export * from './mercadopago';
