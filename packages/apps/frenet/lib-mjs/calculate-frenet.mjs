@@ -46,8 +46,8 @@ export default async ({ params, application }) => {
   }
 
   // calculate
-  let took = Date.now();
-  const getSchemaFrenet = () => new Promise((resolve, reject) => {
+  const startedAt = Date.now();
+  const getSchemaFrenet = () => {
     try {
       const schema = {
         SellerCEP: config.from.zip.replace('-', ''),
@@ -71,17 +71,17 @@ export default async ({ params, application }) => {
           Quantity: quantity,
         });
       });
-      resolve({ schema });
+      return schema;
     } catch (error) {
       const err = new Error('Error with the body sent by the module');
       err.name = 'ParseFrenetSchemaError';
       err.error = error;
-      reject(err);
+      throw err;
     }
-  });
+  };
 
   try {
-    const { schema } = await getSchemaFrenet();
+    const schema = getSchemaFrenet();
     const { data } = await axios({
       url: 'http://api.frenet.com.br/shipping/quote',
       method: 'post',
@@ -91,33 +91,38 @@ export default async ({ params, application }) => {
       },
       data: schema,
     });
-    if (data && !data.ShippingSevicesArray) {
+    if (!data || !Array.isArray(data.ShippingSevicesArray)) {
       return {
         error: 'SHIPPING_QUOTE_REQUEST_ERR',
         message: 'ShippingSevicesArray property not found, try Later',
       };
     }
-    took = Date.now() - took;
     const { ShippingSevicesArray } = data;
-
-    if (ShippingSevicesArray && Array.isArray(ShippingSevicesArray)
-      && ShippingSevicesArray.length) {
-      if (ShippingSevicesArray[0].Error && ShippingSevicesArray[0].Msg) {
-        return {
-          error: 'CALCULATE_REQUEST_ERR',
-          message: ShippingSevicesArray[0].Msg,
-        };
-      }
+    if (
+      ShippingSevicesArray[0]?.Error
+      && !ShippingSevicesArray.find(({ Error }) => Error === false)
+    ) {
+      return {
+        error: 'CALCULATE_REQUEST_ERR',
+        message: ShippingSevicesArray[0].Msg,
+      };
     }
 
-    const services = ShippingSevicesArray
+    response.shipping_services = ShippingSevicesArray
       .filter((service) => !service.Error)
       .map((service) => {
         return {
-          label: service.ServiceDescription,
+          label: service.ServiceDescription.length > 50
+            ? service.Carrier
+            : service.ServiceDescription,
           carrier: service.Carrier,
-          service_name: service.ServiceDescription,
+          service_name: service.ServiceDescription.length > 70
+            ? service.Carrier
+            : service.ServiceDescription,
           service_code: `FR${service.ServiceCode}`,
+          delivery_instructions: service.ServiceDescription.length > 50
+            ? service.ServiceDescription
+            : undefined,
           shipping_line: {
             from: config.from,
             to,
@@ -134,14 +139,12 @@ export default async ({ params, application }) => {
               },
               {
                 field: 'frenet:took',
-                value: String(took),
+                value: String(Date.now() - startedAt),
               },
             ],
           },
         };
       });
-
-    response.shipping_services = services;
     return response;
   } catch (err) {
     return {
