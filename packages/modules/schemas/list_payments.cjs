@@ -451,6 +451,12 @@ const schema = {
       },
       'description': 'Optional payment method selected by customer (if already selected)'
     },
+    'installments_number': {
+      'type': 'integer',
+      'minimum': 1,
+      'maximum': 199,
+      'description': 'Number of installments chosen (if payment selected)'
+    },
     'can_fetch_when_selected': {
       'type': 'boolean',
       'default': false,

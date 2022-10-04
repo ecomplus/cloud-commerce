@@ -780,6 +780,18 @@ exports.params = {
       },
       'description': 'Extra discount to apply by coupon or UTM campaign'
     },
+    'currency_id': {
+      'type': 'string',
+      'pattern': '^[A-Z]{3}$',
+      'default': 'BRL',
+      'description': 'Designator of currency according to ISO 4217 (3 uppercase letters)'
+    },
+    'currency_symbol': {
+      'type': 'string',
+      'maxLength': 20,
+      'default': 'R$',
+      'description': 'Graphic symbol used as a shorthand for currency\'s name'
+    },
     'lang': {
       'type': 'string',
       'pattern': '^[a-z]{2}(_[a-z]{2})?$',
