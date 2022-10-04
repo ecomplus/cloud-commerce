@@ -48,8 +48,8 @@ importers:
 
   packages/__skeleton:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../api
     devDependencies:
@@ -60,8 +60,8 @@ importers:
 
   packages/apps/correios:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
       axios: ^0.27.2
       xml2js: ^0.4.23
     dependencies:
@@ -73,8 +73,8 @@ importers:
 
   packages/apps/custom-shipping:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../../api
     devDependencies:
@@ -82,8 +82,8 @@ importers:
 
   packages/apps/discounts:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@ecomplus/utils': ^1.4.1
     dependencies:
       '@cloudcommerce/api': link:../../api
@@ -93,8 +93,8 @@ importers:
 
   packages/apps/frenet:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
       axios: ^0.27.2
     dependencies:
       '@cloudcommerce/api': link:../../api
@@ -104,9 +104,9 @@ importers:
 
   packages/apps/tiny-erp:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/firebase': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@ecomplus/utils': ^1.4.1
       '@firebase/app-types': ^0.7.0
       axios: ^0.27.2
@@ -127,7 +127,7 @@ importers:
 
   packages/cli:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
       libsodium-wrappers: ^0.7.10
       md5: ^2.3.0
       zx: ^7.0.8
@@ -139,8 +139,8 @@ importers:
 
   packages/config:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@fastify/deepmerge': ^1.1.0
     dependencies:
       '@cloudcommerce/api': link:../api
@@ -150,10 +150,10 @@ importers:
 
   packages/events:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/app-tiny-erp': workspace:0.0.108
-      '@cloudcommerce/firebase': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/app-tiny-erp': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       firebase-admin: ^11.0.1
       firebase-functions: ^3.24.1
@@ -171,9 +171,9 @@ importers:
 
   packages/firebase:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/config': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/config': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       '@google-cloud/pubsub': ^3.2.0
       firebase-admin: ^11.0.1
@@ -194,8 +194,8 @@ importers:
 
   packages/i18n:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../api
     devDependencies:
@@ -203,13 +203,13 @@ importers:
 
   packages/modules:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/app-correios': workspace:0.0.108
-      '@cloudcommerce/app-custom-shipping': workspace:0.0.108
-      '@cloudcommerce/app-discounts': workspace:0.0.108
-      '@cloudcommerce/app-frenet': workspace:0.0.108
-      '@cloudcommerce/firebase': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/app-correios': workspace:*
+      '@cloudcommerce/app-custom-shipping': workspace:*
+      '@cloudcommerce/app-discounts': workspace:*
+      '@cloudcommerce/app-frenet': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       ajv: ^8.11.0
       ajv-formats: ^2.1.1
@@ -238,9 +238,9 @@ importers:
 
   packages/passport:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/firebase': workspace:0.0.108
-      '@cloudcommerce/types': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.7.0
       firebase-admin: ^11.0.1
       firebase-functions: ^3.24.1
@@ -292,9 +292,9 @@ importers:
       '@astrojs/prefetch': ^0.0.7
       '@astrojs/vue': ^1.1.0
       '@babel/core': ^7.19.3
-      '@cloudcommerce/api': workspace:0.0.108
-      '@cloudcommerce/config': workspace:0.0.108
-      '@cloudcommerce/i18n': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/config': workspace:*
+      '@cloudcommerce/i18n': workspace:*
       '@ecomplus/utils': ^1.4.1
       '@iconify-json/bxl': ^1.1.4
       '@iconify-json/heroicons': ^1.1.4
@@ -343,52 +343,52 @@ importers:
 
   packages/types:
     specifiers:
-      '@cloudcommerce/api': workspace:0.0.108
+      '@cloudcommerce/api': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../api
 
   store:
     specifiers:
-      '@cloudcommerce/cli': workspace:^0.0.108
+      '@cloudcommerce/cli': ^0.0.109
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': workspace:^0.0.108
+      '@cloudcommerce/firebase': ^0.0.109
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': workspace:^0.0.108
-      '@cloudcommerce/firebase': workspace:^0.0.108
+      '@cloudcommerce/events': ^0.0.109
+      '@cloudcommerce/firebase': ^0.0.109
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': workspace:^0.0.108
-      '@cloudcommerce/modules': workspace:^0.0.108
+      '@cloudcommerce/firebase': ^0.0.109
+      '@cloudcommerce/modules': ^0.0.109
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': workspace:^0.0.108
-      '@cloudcommerce/passport': workspace:^0.0.108
+      '@cloudcommerce/firebase': ^0.0.109
+      '@cloudcommerce/passport': ^0.0.109
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/api': workspace:^0.0.108
-      '@cloudcommerce/firebase': workspace:^0.0.108
-      '@cloudcommerce/ssr': workspace:^0.0.108
-      '@cloudcommerce/storefront': workspace:^0.0.108
+      '@cloudcommerce/api': ^0.0.109
+      '@cloudcommerce/firebase': ^0.0.109
+      '@cloudcommerce/ssr': ^0.0.109
+      '@cloudcommerce/storefront': ^0.0.109
     dependencies:
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
