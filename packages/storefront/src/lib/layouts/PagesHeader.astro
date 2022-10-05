@@ -3,7 +3,7 @@ import type { Categories } from '@cloudcommerce/api/types';
 import type CmsHeader from '../../types/cms-header';
 import type CmsContacts from '../../types/cms-contacts';
 import type { PageContext } from '../ssr-context';
-import { getImageAttrs } from '../ssr/image';
+import { getImage } from '../ssr/image';
 import TopBar, { Props as TopBarProps } from '../components/TopBar.vue';
 import TheHeader, { Props as TheHeaderProps } from '../components/TheHeader.vue';
 import LoginOffcanvas, { Props as LoginOffcanvasProps } from '../components/LoginOffcanvas.vue';
@@ -73,10 +73,12 @@ globalThis.TopBarProps = {
 };
 globalThis.TheHeaderProps = {
   logo: {
-    ...getImageAttrs({
+    ...await getImage({
       src: settings.logo,
       width: 150,
-    }),
+      format: 'webp',
+      quality: 90,
+    }) as any,
     alt: settings.name,
   },
   ...theHeaderProps,

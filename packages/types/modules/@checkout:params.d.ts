@@ -199,6 +199,14 @@ export interface CheckoutBody {
     discount_coupon?: string;
   };
   /**
+   * Designator of currency according to ISO 4217 (3 uppercase letters)
+   */
+  currency_id?: string;
+  /**
+   * Graphic symbol used as a shorthand for currency's name
+   */
+  currency_symbol?: string;
+  /**
    * Language two letters code, sometimes with region, eg.: pt_br, fr, en_us
    */
   lang?: string;

@@ -2,6 +2,97 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.109](https://github.com/ecomplus/cloud-commerce/compare/v0.0.108...v0.0.109) (2022-10-04)
+
+
+### Features
+
+* **storefront:** Start handling email link sign in within `LoginForm` ([a1f17bb](https://github.com/ecomplus/cloud-commerce/commit/a1f17bba3cb8a4ec78deaefcb8caac3736d7e4f5))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([c5d6f56](https://github.com/ecomplus/cloud-commerce/commit/c5d6f56c37edbadc04dbcefae35408118bc22111))
+
+### [0.0.108](https://github.com/ecomplus/cloud-commerce/compare/v0.0.107...v0.0.108) (2022-10-01)
+
+
+### Bug Fixes
+
+* **ssr:** Add `@astrojs/image` to direct pkg dependencies ([d2b79ef](https://github.com/ecomplus/cloud-commerce/commit/d2b79ef9ae4dce6e1e6013a0d9445a9a0f28fdfd))
+
+### [0.0.107](https://github.com/ecomplus/cloud-commerce/compare/v0.0.106...v0.0.107) (2022-10-01)
+
+
+### Features
+
+* **i18n:** Setup new `@cloudcommerce/i18n` pkg ([bd02d8b](https://github.com/ecomplus/cloud-commerce/commit/bd02d8beaff45597947da2efdfac96dcce878c1e))
+* **storefront:** Basic `LoginForm` component interactions for sign in/up ([eb5b462](https://github.com/ecomplus/cloud-commerce/commit/eb5b462dbbf13840572e531295ab57f18022873e))
+* **storefront:** Supporting SSG (for branch previews) with `BIULD_OUTPUT` env ([4330c0f](https://github.com/ecomplus/cloud-commerce/commit/4330c0f10ee5c8e6d44c970085d9e2a185ad1937))
+
+
+### Bug Fixes
+
+* **modules:** Properly adding order transaction on checkout ([#55](https://github.com/ecomplus/cloud-commerce/issues/55)) ([b27e83d](https://github.com/ecomplus/cloud-commerce/commit/b27e83d19e07c050e50db2fc083e362ae08e67a1))
+* **ssr:** Remove CSL header at all (yet) ([6a68407](https://github.com/ecomplus/cloud-commerce/commit/6a684079803cdd3e2f5903b333696233d4bf7368))
+* **ssr:** Setup feeds function with 512MiB by default ([a55de47](https://github.com/ecomplus/cloud-commerce/commit/a55de4781d92973a3c860ae6e69be43a5f08f5ff))
+* **storefront:** Removing Tailwind incompatible .outline (button) classes from pico.css ([4598955](https://github.com/ecomplus/cloud-commerce/commit/4598955b23dfc2e6f7da1908576654b09771afe0))
+
+### [0.0.106](https://github.com/ecomplus/cloud-commerce/compare/v0.0.105...v0.0.106) (2022-09-29)
+
+
+### Bug Fixes
+
+* **ssr:** Change `Content-Security-Policy` header to `script-src "none"` ([51b8536](https://github.com/ecomplus/cloud-commerce/commit/51b8536cee1a70143df959e2536dd0fe0a1ee985))
+
+### [0.0.105](https://github.com/ecomplus/cloud-commerce/compare/v0.0.104...v0.0.105) (2022-09-29)
+
+
+### Features
+
+* **cli:** Update `firebase.json` with rewrites for sitemap and feeds ([019356e](https://github.com/ecomplus/cloud-commerce/commit/019356eaa6df494af898702fb89e12eb213389bb))
+* **ssr:** Getting deploy options from config `ssrFunctionOptions` ([c795e90](https://github.com/ecomplus/cloud-commerce/commit/c795e90b2e8b9f463d571763e19b9f4508b5fd1a))
+
+
+### Bug Fixes
+
+* **cli:** Updating default SSR function region to `us-central1` ([9f76842](https://github.com/ecomplus/cloud-commerce/commit/9f76842356a23800c44e82e2125bd7ad1b5b0963))
+* **passport:** Memory 128MiB option may be overwritten with `httpsFunctionOptions` ([a23fb67](https://github.com/ecomplus/cloud-commerce/commit/a23fb67100679c20103877c453c18d813fee8ac1))
+* **ssr:** Hardset XSS/CSP security response headers ([6e20063](https://github.com/ecomplus/cloud-commerce/commit/6e200630c064fff1fa89a6cee9196b7d0165ad1d))
+* **ssr:** Update default function deploy options ([c1d3cbd](https://github.com/ecomplus/cloud-commerce/commit/c1d3cbddaec4b5a0111dd9d0f4e9476e28aac283))
+* **storefront:** Remove unecessary (startup time) import/start `firebase/app` ([f4b80ec](https://github.com/ecomplus/cloud-commerce/commit/f4b80ec2ab91feb40d0a00edfb19b16654661863))
+
+### [0.0.104](https://github.com/ecomplus/cloud-commerce/compare/v0.0.103...v0.0.104) (2022-09-28)
+
+### [0.0.103](https://github.com/ecomplus/cloud-commerce/compare/v0.0.102...v0.0.103) (2022-09-27)
+
+
+### Bug Fixes
+
+* **ssr:** Add `astro` to pkg dependencies and remove Astro subdependencies ([4ff62b3](https://github.com/ecomplus/cloud-commerce/commit/4ff62b377b6a76bb78ea95ef83d59674ad051252))
+
+### [0.0.102](https://github.com/ecomplus/cloud-commerce/compare/v0.0.101...v0.0.102) (2022-09-27)
+
+### [0.0.101](https://github.com/ecomplus/cloud-commerce/compare/v0.0.100...v0.0.101) (2022-09-27)
+
+
+### Features
+
+* **firebase:** Get additional deploy options from `process.env` ([b6c38e3](https://github.com/ecomplus/cloud-commerce/commit/b6c38e309fea94bf27eadc2f03ca697c73f56360))
+
+
+### Bug Fixes
+
+* **firebase:** Update config `httpsFunctionOptions` type def with optional props ([ff91e72](https://github.com/ecomplus/cloud-commerce/commit/ff91e723a919f2e0d6369da7a2f904691a619bab))
+* **modules:** Trying default deloy options with concurrency 12 ([5052ac6](https://github.com/ecomplus/cloud-commerce/commit/5052ac6b6c93b18d2979c39d5f88cf6c458b5794))
+
+### [0.0.100](https://github.com/ecomplus/cloud-commerce/compare/v0.0.99...v0.0.100) (2022-09-27)
+
+
+### Bug Fixes
+
+* **storefront:** Replace `@ecomplus/i18n` with local dictionary modules ([1e236a6](https://github.com/ecomplus/cloud-commerce/commit/1e236a6c0062163e7f5558513af0f1831d48b3b4))
+
 ### [0.0.99](https://github.com/ecomplus/cloud-commerce/compare/v0.0.98...v0.0.99) (2022-09-27)
 
 

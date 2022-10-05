@@ -139,7 +139,7 @@ const createOrder = async (
 
             if (isFirstTransaction) {
               // merge transaction body with order info and respond
-              return checkoutRespond(res, orderId, orderNumber, transaction);
+              return checkoutRespond(res, orderId, orderNumber, usrMsg, accessToken, transaction);
             }
 
             // save transaction info on order data
@@ -203,7 +203,7 @@ const createOrder = async (
             }
           }
           // return
-          return checkoutRespond(res, orderId, orderNumber);
+          return checkoutRespond(res, orderId, orderNumber, usrMsg);
         }
 
         // unexpected response object from create transaction module

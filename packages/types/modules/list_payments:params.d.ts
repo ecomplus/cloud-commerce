@@ -313,6 +313,10 @@ export interface ListPaymentsParams {
     name?: string;
   };
   /**
+   * Number of installments chosen (if payment selected)
+   */
+  installments_number?: number;
+  /**
    * Whether list payments can be refetched on client when payment selected
    */
   can_fetch_when_selected?: boolean;
