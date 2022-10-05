@@ -6,7 +6,7 @@
   "main": "lib/mercadopago.js",
   "exports": {
     ".": "./lib/mercadopago.js",
-    "./firebase" : "./lib/firebase.js"
+    "./webhook" : "./lib/mp-webhook.js"
   },
   "repository": {
     "type": "git",

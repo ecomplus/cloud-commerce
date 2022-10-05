@@ -3,9 +3,24 @@ import type{ CreateTransactionParams } from '@cloudcommerce/types/modules/create
 import type{ CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
 import type { Firestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
+import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
-import { parsePaymentStatus } from '../app-functions/webhook-and-status';
-import { baseUri } from '../firebase';
+
+const locationId = config.get().httpsFunctionOptions.region;
+const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
+
+const parsePaymentStatus = (status: string) => {
+  switch (status) {
+    case 'rejected':
+      return 'voided';
+    case 'in_process':
+      return 'under_analysis';
+    case 'approved':
+      return 'paid';
+    default:
+      return 'pending';
+  }
+};
 
 export default async (appData: AppModuleBody, firestore:Firestore) => {
   // body was already pre-validated on @/bin/web.js
@@ -269,4 +284,8 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
       message,
     };
   }
+};
+
+export {
+  parsePaymentStatus,
 };
