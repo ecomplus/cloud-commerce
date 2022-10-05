@@ -35,7 +35,7 @@ const toggle = (ev: MouseEvent) => {
   </div>
   <AOffcanvas v-model="isVisible" class="login-offcanvas">
     <slot name="form">
-      <LoginForm class="max-w-xs" />
+      <LoginForm class="w-80" />
     </slot>
   </AOffcanvas>
 </template>

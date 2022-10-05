@@ -1,27 +1,25 @@
 {
-  "name": "@cloudcommerce/app-correios",
+  "name": "@cloudcommerce/i18n",
   "type": "module",
   "version": "0.0.109",
-  "description": "E-Com Plus Cloud Commerce app for Correios shipping calculation",
-  "main": "lib/correios.js",
+  "description": "E-Com Plus Cloud Commerce i18n",
+  "main": "lib/all.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/apps/correios"
+    "directory": "packages/i18n"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/correios#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/i18n#readme",
   "scripts": {
-    "build": "sh ../../../scripts/build-lib.sh"
+    "build": "sh ../../scripts/build-lib.sh"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*",
-    "axios": "^0.27.2",
-    "xml2js": "^0.4.23"
+    "@cloudcommerce/api": "workspace:*"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

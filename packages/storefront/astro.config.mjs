@@ -4,9 +4,9 @@ import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
+import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
-import sitemap from '@astrojs/sitemap';
 import UnoCSS from 'unocss/astro';
 import { VitePWA } from 'vite-plugin-pwa';
 import getConfig from './storefront.config.mjs';
@@ -69,12 +69,15 @@ const _vitePWAOptions = {
         cacheName: 'assets',
       },
     }, {
-      urlPattern: settings.logo
-        ? new RegExp(`^${(settings.mini_logo ? `(?:${settings.mini_logo}|${settings.logo})` : settings.logo)}$`)
-        : /^\/(?:img\/uploads\/|img\/)?logo\.(?:png|jpg|jpeg|webp|avif|svg)$/,
+      urlPattern: /^\/_image$/,
       handler: 'StaleWhileRevalidate',
       options: {
-        cacheName: 'logo',
+        cacheName: 'sharp-images',
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          purgeOnQuotaError: true,
+        },
       },
     }, {
       urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
@@ -123,18 +126,24 @@ const _vitePWAOptions = {
   },
 };
 
+const isSSG = process.env.BUILD_OUTPUT === 'static';
+
 const genAstroConfig = ({
   site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => ({
-  output: 'server',
-  adapter: node(),
+  output: isSSG ? 'static' : 'server',
+  adapter: isSSG ? undefined : node(),
+  outDir: isSSG ? './dist/client' : './dist',
   integrations: [
+    image(),
     vue(),
     partytown(),
     prefetch(),
-    sitemap(),
-    UnoCSS(),
+    UnoCSS({
+      injectReset: false,
+      injectEntry: false,
+    }),
   ],
   site,
   vite: {
@@ -143,7 +152,7 @@ const genAstroConfig = ({
     ],
     resolve: {
       alias: {
-        '@i18n': `@ecomplus/i18n/lib/${lang}.mjs`,
+        '@i18n': `@cloudcommerce/i18n/src/${lang}.ts`,
       },
     },
   },

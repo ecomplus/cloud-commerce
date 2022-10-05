@@ -8,7 +8,7 @@ import serveModulesApi from './firebase/serve-modules-api';
 const { httpsFunctionOptions } = config.get();
 
 export const modules = onRequest({
-  concurrency: 6,
+  concurrency: 12,
   ...httpsFunctionOptions,
 }, (req, res) => {
   serveModulesApi(req, res);

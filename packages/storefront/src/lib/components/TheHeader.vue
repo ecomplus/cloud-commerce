@@ -43,7 +43,7 @@ const { logo } = toRefs(props);
 </template>
 
 <style>
-.header a:not(:hover) {
+.header a:not(:hover) [class^="i-"] {
   color: var(--gray-accent);
 }
 </style>

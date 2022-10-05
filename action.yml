@@ -42,12 +42,9 @@ runs:
       run: |
         for d in */ ; do
           cd $d
-          npm ci --omit=dev
+          npm ci
           cd ..
         done
-        cd ssr/storefront
-        npm ci
-        cd ../..
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
@@ -70,6 +67,11 @@ runs:
         DEPLOY_RAND=$RANDOM.$RANDOM
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
+    
+    - if: github.event_name == 'pull_request'
+      shell: bash
+      working-directory: functions/ssr
+      run: npm run build:static
 
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview

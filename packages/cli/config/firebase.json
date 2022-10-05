@@ -25,22 +25,13 @@
       "codebase": "passport"
     },
     {
-      "predeploy": "npm --prefix \"$RESOURCE_DIR/storefront\" run build && npm run build -- --codebase ssr",
+      "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build && npm run build -- --codebase ssr",
       "source": "functions/ssr",
-      "codebase": "ssr",
-      "ignore": [
-        "storefront/!(dist|content|public)/**",
-        "storefront/dist/client/**",
-        "storefront/*",
-        "functions/ssr/storefront/!(dist|content|public)/**",
-        "functions/ssr/storefront/dist/client/**",
-        "functions/ssr/storefront/*",
-        "**/*.ts"
-      ]
+      "codebase": "ssr"
     }
   ],
   "hosting": {
-    "public": "functions/ssr/storefront/dist/client",
+    "public": "functions/ssr/dist/client",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -65,9 +56,19 @@
         "region": "southamerica-east1"
       },
       {
+        "source": "/_feeds/**",
+        "function": "feeds",
+        "region": "southamerica-east1"
+      },
+      {
+        "source": "/sitemap.xml",
+        "function": "feeds",
+        "region": "southamerica-east1"
+      },
+      {
         "source": "**/!(*(*.)ico|*(*.)png|*(*.)map)",
         "function": "ssr",
-        "region": "southamerica-east1"
+        "region": "us-central1"
       }
     ],
     "headers": [

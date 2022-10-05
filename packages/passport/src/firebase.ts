@@ -18,8 +18,8 @@ const authFirebase = getAuth();
 const firestore = getFirestore();
 
 const options = {
-  ...config.get().httpsFunctionOptions,
   memory: '128MiB',
+  ...config.get().httpsFunctionOptions,
 } as HttpsOptions;
 
 // eslint-disable-next-line import/prefer-default-export

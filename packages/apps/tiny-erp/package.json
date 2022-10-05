@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-tiny-erp",
   "type": "module",
-  "version": "0.0.99",
+  "version": "0.0.109",
   "description": "E-Com Plus Cloud Commerce app for Tiny ERP",
   "main": "lib/tiny-erp.js",
   "repository": {
@@ -24,7 +24,7 @@
     "@ecomplus/utils": "^1.4.1",
     "axios": "^0.27.2",
     "firebase-admin": "^11.0.1",
-    "firebase-functions": "^3.24.0",
+    "firebase-functions": "^3.24.1",
     "form-data": "^4.0.0"
   },
   "devDependencies": {
