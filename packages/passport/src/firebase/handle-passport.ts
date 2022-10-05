@@ -90,7 +90,7 @@ const getAuthCustomerApi = async (
   authFirebase: Auth,
 ) => {
   const customerFirebaseAuth = await checkFirebaseAuth(authFirebase, authtoken);
-  if (customerFirebaseAuth !== null && customerFirebaseAuth.email) {
+  if (customerFirebaseAuth?.email && customerFirebaseAuth.email_verified) {
     const customer = await findCustomerByEmail(customerFirebaseAuth.email);
     if (customer !== null) {
       return generateAccessToken(firestore, customer._id);
@@ -101,10 +101,6 @@ const getAuthCustomerApi = async (
       emails: [{
         address: customerFirebaseAuth.email,
         verified: customerFirebaseAuth.email_verified,
-      }],
-      oauth_providers: [{
-        provider: customerFirebaseAuth.firebase.sign_in_provider,
-        user_id: customerFirebaseAuth.user_id,
       }],
     } as Customers;
     const customerId = await createCustomer(newCustomer);
