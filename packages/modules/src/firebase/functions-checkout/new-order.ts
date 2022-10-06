@@ -27,7 +27,6 @@ const usrMsg = {
 
 const createOrder = async (
   res: Response,
-  accessToken: string,
   hostname: string,
   amount: Amount,
   checkoutBody: CheckoutBody,
@@ -37,7 +36,7 @@ const createOrder = async (
 ) => {
   // start creating new order to API
 
-  const order = await newOrder(orderBody, accessToken);
+  const order = await newOrder(orderBody);
   if (order) {
     const orderId = order._id;
     const orderNumber = order.number;
@@ -139,7 +138,7 @@ const createOrder = async (
 
             if (isFirstTransaction) {
               // merge transaction body with order info and respond
-              return checkoutRespond(res, orderId, orderNumber, usrMsg, accessToken, transaction);
+              return checkoutRespond(res, orderId, orderNumber, usrMsg, transaction);
             }
 
             // save transaction info on order data
@@ -147,7 +146,6 @@ const createOrder = async (
             try {
               // eslint-disable-next-line no-await-in-loop
               const transactionId = await saveTransaction(
-                accessToken,
                 orderId,
                 transaction,
               ) as string;
@@ -163,7 +161,6 @@ const createOrder = async (
                 // eslint-disable-next-line no-await-in-loop
                 await addPaymentHistory(
                   orderId,
-                  accessToken,
                   paymentHistory,
                   isFirstTransaction,
                   paymentEntry,
@@ -195,7 +192,6 @@ const createOrder = async (
               return cancelOrder(
                 'Transaction amounts doesn\'t match (is lower) order total value',
                 orderId,
-                accessToken,
                 isOrderCancelled,
                 res,
                 usrMsg,
@@ -237,7 +233,6 @@ const createOrder = async (
         return cancelOrder(
           'Error trying to create transaction',
           orderId,
-          accessToken,
           isOrderCancelled,
           res,
           usrMsg,

@@ -15,17 +15,13 @@ const checkoutRespond = async (
   orderId:string & {length: 24},
   orderNumber: number | undefined,
   usrMsg: { en_us: string, pt_br: string },
-  accessToken?: string,
   transaction?: TransactionOrder,
 ) => {
-  if (transaction && accessToken) {
+  if (transaction) {
     try {
       const transactionId = (await api.post(
         `orders/${orderId}/transactions`,
-      transaction as any,
-      {
-        accessToken,
-      },
+        transaction as any,
       )).data._id;
       transaction._id = transactionId;
     } catch (e) {
@@ -49,28 +45,13 @@ const checkoutRespond = async (
   });
 };
 
-const newOrder = async (
-  orderBody:BodyOrder,
-  accessToken:string,
-) => {
+const newOrder = async (orderBody: BodyOrder) => {
   try {
-    const orderId = (await api.post(
-      'orders',
-      orderBody,
-      {
-        accessToken,
-      },
-    )).data._id;
-
+    const orderId = (await api.post('orders', orderBody)).data._id;
     return new Promise<Orders|null>((resolve) => {
       setTimeout(async () => {
         try {
-          const order = (await api.get(
-            `orders/${orderId}`,
-            {
-              accessToken,
-            },
-          )).data;
+          const order = (await api.get(`orders/${orderId}`)).data;
           resolve(order);
         } catch (e) {
           logger.error(e);
@@ -87,8 +68,7 @@ const newOrder = async (
 const cancelOrder = async (
   staffNotes: string,
   orderId: string & {length: 24},
-  accessToken:string,
-  isOrderCancelled:boolean,
+  isOrderCancelled: boolean,
   res: Response,
   usrMsg: { en_us: string, pt_br: string },
   errorMessage?: string,
@@ -106,13 +86,7 @@ const cancelOrder = async (
             body.staff_notes += ` - \`${errorMessage.substring(0, 200)}\``;
           }
           try {
-            const response = (await api.patch(
-              `orders/${orderId}`,
-              body,
-              {
-                accessToken,
-              },
-            ));
+            const response = await api.patch(`orders/${orderId}`, body);
             if (response.status === 204) {
               isOrderCancelled = true;
             }
@@ -135,7 +109,6 @@ const cancelOrder = async (
 };
 
 const saveTransaction = (
-  accessToken: string,
   orderId: string,
   transactionBody: any, // TODO: error type 'status' incompatible
 ) => {
@@ -143,9 +116,6 @@ const saveTransaction = (
     api.post(
       `orders/${orderId}/transactions`,
       transactionBody,
-      {
-        accessToken,
-      },
     )
       .then(({ data }) => {
         resolve(data._id);
@@ -158,7 +128,6 @@ const saveTransaction = (
 
 const addPaymentHistory = async (
   orderId: string,
-  accessToken:string,
   paymentHistory: BodyPaymentHistory[],
   isFirstTransaction: boolean,
   paymentEntry: BodyPaymentHistory,
@@ -189,13 +158,7 @@ const addPaymentHistory = async (
       }
 
       try {
-        const response = (await api.patch(
-          `orders/${orderId}`,
-          body,
-          {
-            accessToken,
-          },
-        ));
+        const response = await api.patch(`orders/${orderId}`, body);
         if (response.status === 204) {
           resolve(true);
         } else {

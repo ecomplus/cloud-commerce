@@ -27,8 +27,7 @@ import createOrder from './functions-checkout/new-order';
 
 const runCheckout = async (
   checkoutBody: CheckoutBody,
-  accessToken:string,
-  res:Response,
+  res: Response,
   validate: ValidateFunction,
   hostname: string,
 ) => {
@@ -52,10 +51,9 @@ const runCheckout = async (
 
   const countCheckoutItems = body.items.length;
   const { customer } = body;
-  const customerId = await getCustomerId(accessToken, customer);
-  if (customerId && customer) {
+  const customerId = await getCustomerId(customer);
+  if (customerId) {
     if (newItems.length) {
-      const { _id, ...newCustomer } = customer;
       // start mounting order body
       // https://developers.e-com.plus/docs/api/#/store/orders/orders
       const dateTime = new Date().toISOString();
@@ -64,8 +62,8 @@ const runCheckout = async (
         buyers: [
           // received customer info
           {
+            ...customer,
             _id: customerId,
-            ...newCustomer,
           },
         ],
         items: [],
@@ -183,7 +181,6 @@ const runCheckout = async (
 
       return createOrder(
         res,
-        accessToken,
         hostname,
         amount,
         checkoutBody,
@@ -217,19 +214,5 @@ export default (
   if (!req.body.browser_ip && ip) {
     req.body.browser_ip = ip;
   }
-  let acessToken = req.headers.authorization;
-  if (acessToken) {
-    acessToken = acessToken.replace(/Bearer /i, '');
-    return runCheckout(req.body, acessToken, res, validate, hostname);
-  }
-  return sendError(
-    res,
-    401,
-    109,
-    "Token is required on 'Authorization'",
-    {
-      en_us: 'No authorization for the requested method and resource',
-      pt_br: 'Sem autorização para o método e recurso solicitado',
-    },
-  );
+  return runCheckout(req.body, res, validate, hostname);
 };
