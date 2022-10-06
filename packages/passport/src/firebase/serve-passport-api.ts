@@ -1,6 +1,7 @@
 import type { Request, Response } from 'firebase-functions';
+import type { ApiError } from '@cloudcommerce/api';
 import { logger } from 'firebase-functions';
-import { getAuthCustomerApi } from './handle-passport';
+import authenticateCustomer from './authenticate-customer';
 
 export default async (req: Request, res: Response) => {
   let { url } = req;
@@ -11,21 +12,21 @@ export default async (req: Request, res: Response) => {
   if (endpoint !== 'token') {
     return res.sendStatus(404);
   }
-  if (req.method === 'POST') {
-    const { authToken } = req.body;
-    try {
-      const authCustomerApi = await getAuthCustomerApi(authToken);
-      if (authCustomerApi !== null) {
-        return res.send(authCustomerApi);
-      }
-      return res.status(401).json({
-        status: 401,
-        error: 'Invalid Firebase Auth token, unauthorized',
-      });
-    } catch (e) {
-      logger.error(e);
-      return res.sendStatus(500);
-    }
+  const firebaseAuthToken = req.headers.authorization?.split(' ')[1];
+  if (!firebaseAuthToken) {
+    return res.sendStatus(401);
   }
-  return res.sendStatus(405);
+  try {
+    const authCustomerApi = await authenticateCustomer(firebaseAuthToken);
+    if (authCustomerApi !== null) {
+      return res.send(authCustomerApi);
+    }
+    return res.status(401).json({
+      status: 401,
+      error: 'Invalid Firebase Auth token, unauthorized',
+    });
+  } catch (err) {
+    logger.error(err);
+    return res.sendStatus((err as ApiError).statusCode || 500);
+  }
 };

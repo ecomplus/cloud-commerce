@@ -1,1 +1,4 @@
-export { findCustomerByEmail, generateAccessToken } from './firebase/handle-passport';
+export {
+  findCustomerByEmail,
+  generateAccessToken,
+} from './firebase/authenticate-customer';
