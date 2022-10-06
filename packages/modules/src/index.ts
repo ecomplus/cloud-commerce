@@ -22,3 +22,5 @@ export default {
 };
 
 export { schemas };
+
+export const checkoutSchema = checkout;

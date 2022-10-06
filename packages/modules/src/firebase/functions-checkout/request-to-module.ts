@@ -4,16 +4,9 @@ import axios from 'axios';
 // handle other modules endpoints directly
 export default async (
   checkoutBody: {[key:string]:any},
-  hostname: string,
+  modulesBaseURL: string,
   label: string,
 ) => {
-  const locationId = process.env.FIREBASE_CONFIG
-    ? (JSON.parse(process.env.FIREBASE_CONFIG).locationId || 'southamerica-east1')
-    : 'southamerica-east1';
-
-  const baseUrl = hostname !== 'localhost' ? `https://${hostname}`
-    : `http://localhost:5001/${process.env.GCLOUD_PROJECT}/${locationId}/modules`; // To LocalTest
-
   let moduleBody: {[key:string]:any} | undefined;
   let modName: string | undefined;
   switch (label) {
@@ -39,7 +32,7 @@ export default async (
 
   if (moduleBody && moduleBody.app_id && modName) {
     // mask request objects
-    const url = `${baseUrl}/${modName}?app_id=${moduleBody.app_id}`;
+    const url = `${modulesBaseURL}/${modName}?app_id=${moduleBody.app_id}`;
     // mount request body with received checkout body object
     const body = {
       ...checkoutBody,
@@ -47,7 +40,6 @@ export default async (
       is_checkout_confirmation: true,
     };
     try {
-      console.log('> ', JSON.stringify({ url, body }));
       const resp = (await axios.post(
         url,
         body,
@@ -58,7 +50,6 @@ export default async (
           const result = resp.result[i];
           if (!result.validated || result.error) {
             countAppErro += 1;
-            console.error(result.response);
             logger.error(result.response);
           }
         }

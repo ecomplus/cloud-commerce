@@ -27,7 +27,7 @@ const usrMsg = {
 
 const createOrder = async (
   res: Response,
-  hostname: string,
+  modulesBaseURL: string,
   amount: Amount,
   checkoutBody: CheckoutBody,
   orderBody:BodyOrder,
@@ -79,7 +79,7 @@ const createOrder = async (
       // logger.log(JSON.stringify(checkoutBody, null, 2))
 
       // finally pass to create transaction
-      let listTransactions = await requestModule(transactionBody, hostname, 'transaction');
+      let listTransactions = await requestModule(transactionBody, modulesBaseURL, 'transaction');
       if (listTransactions) {
         listTransactions = getValidResults(listTransactions);
         // simulateRequest(transactionBody, checkoutRespond, 'transaction', storeId, (results) => {

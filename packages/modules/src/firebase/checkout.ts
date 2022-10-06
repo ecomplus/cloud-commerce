@@ -1,5 +1,4 @@
 import type { Request, Response } from 'firebase-functions';
-import type { ValidateFunction } from 'ajv';
 import type { CheckoutBody } from '@cloudcommerce/types';
 import type {
   CheckoutBodyWithItems,
@@ -8,10 +7,9 @@ import type {
   Item,
   BodyPayment,
 } from '../types/index';
-import {
-  ajv,
-  sendRequestError,
-} from './ajv';
+import config from '@cloudcommerce/firebase/lib/config';
+import { checkoutSchema } from '../index';
+import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
 import getCustomerId from './functions-checkout/get-custumerId';
 import requestModule from './functions-checkout/request-to-module';
@@ -25,12 +23,18 @@ import {
 } from './functions-checkout/utils';
 import createOrder from './functions-checkout/new-order';
 
-const runCheckout = async (
-  checkoutBody: CheckoutBody,
-  res: Response,
-  validate: ValidateFunction,
-  hostname: string,
-) => {
+export default async (req: Request, res: Response) => {
+  const { httpsFunctionOptions } = config.get();
+  const modulesBaseURL = req.hostname !== 'localhost'
+    ? `https://${req.hostname}${req.url.replace(/\/checkout[^/]*/i, '')}`
+    : `http://localhost:5001/${process.env.GCLOUD_PROJECT}`
+      + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
+
+  const validate = ajv.compile(checkoutSchema);
+  const checkoutBody = req.body as CheckoutBody;
+  if (!req.body.browser_ip && req.ip) {
+    req.body.browser_ip = req.ip;
+  }
   if (!validate(checkoutBody)) {
     return sendRequestError(res, '@checkout', validate.errors);
   }
@@ -123,7 +127,7 @@ const runCheckout = async (
         }
       });
 
-      let listShipping = await requestModule(body, hostname, 'shipping');
+      let listShipping = await requestModule(body, modulesBaseURL, 'shipping');
       if (listShipping) {
         listShipping = getValidResults(listShipping, 'shipping_services');
         handleShippingServices(body, listShipping, amount, orderBody);
@@ -141,7 +145,7 @@ const runCheckout = async (
         );
       }
 
-      let discounts = await requestModule(body, hostname, 'discount');
+      let discounts = await requestModule(body, modulesBaseURL, 'discount');
       if (discounts) {
         discounts = getValidResults(discounts);
         handleApplyDiscount(body, discounts, amount, orderBody);
@@ -161,7 +165,7 @@ const runCheckout = async (
         };
       }
 
-      let listPaymentGateways = await requestModule(paymentsBody, hostname, 'payment');
+      let listPaymentGateways = await requestModule(paymentsBody, modulesBaseURL, 'payment');
 
       if (listPaymentGateways) {
         listPaymentGateways = getValidResults(listPaymentGateways, 'payment_gateways');
@@ -181,7 +185,7 @@ const runCheckout = async (
 
       return createOrder(
         res,
-        hostname,
+        modulesBaseURL,
         amount,
         checkoutBody,
         orderBody,
@@ -201,18 +205,4 @@ const runCheckout = async (
       pt_br: 'Nenhum cliente encontrado com ID ou e-mail fornecido',
     },
   );
-};
-
-export default (
-  schema: {[key:string] : any},
-  req: Request,
-  res:Response,
-  hostname: string,
-) => {
-  const validate = ajv.compile(schema);
-  const ip = req.headers['x-real-ip'];
-  if (!req.body.browser_ip && ip) {
-    req.body.browser_ip = ip;
-  }
-  return runCheckout(req.body, res, validate, hostname);
 };
