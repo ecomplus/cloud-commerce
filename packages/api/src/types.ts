@@ -154,6 +154,17 @@ type ResponseBody<TConfig extends Config> =
 
 type DocSchema<Document extends any> =
   Omit<Document, '_id' | 'store_id' | 'store_ids' | 'created_at' | 'updated_at'>;
+type CustomerSet = DocSchema<Customers>;
+type OrderSet = DocSchema<Orders>;
+type CartSet = DocSchema<Carts>;
+type ProductSet = DocSchema<Products>;
+type CategorySet = DocSchema<Categories>;
+type BrandSet = DocSchema<Brands>;
+type CollectionSet = DocSchema<Collections>;
+type GridSet = DocSchema<Grids>;
+type StoreSet = DocSchema<Stores>;
+type ApplicationSet = DocSchema<Applications>;
+type AuthenticationSet = DocSchema<Authentications>;
 
 type SetDocEndpoint<TResource extends Resource> = TResource | `${TResource}/${ResourceId}`;
 
@@ -161,17 +172,17 @@ type RequestBody<TConfig extends Config> =
   TConfig['method'] extends undefined | 'get' | 'delete' ? undefined :
   TConfig['method'] extends 'patch' ? any : // TODO: partial body
   // method: 'post' | 'put'
-  TConfig['endpoint'] extends SetDocEndpoint<'products'> ? DocSchema<Products> :
-  TConfig['endpoint'] extends SetDocEndpoint<'categories'> ? DocSchema<Categories> :
-  TConfig['endpoint'] extends SetDocEndpoint<'brands'> ? DocSchema<Brands> :
-  TConfig['endpoint'] extends SetDocEndpoint<'collections'> ? DocSchema<Collections> :
-  TConfig['endpoint'] extends SetDocEndpoint<'grids'> ? DocSchema<Grids> :
-  TConfig['endpoint'] extends SetDocEndpoint<'carts'> ? DocSchema<Carts> :
-  TConfig['endpoint'] extends SetDocEndpoint<'orders'> ? DocSchema<Orders> :
-  TConfig['endpoint'] extends SetDocEndpoint<'customers'> ? DocSchema<Customers> :
-  TConfig['endpoint'] extends SetDocEndpoint<'stores'> ? DocSchema<Stores> :
-  TConfig['endpoint'] extends SetDocEndpoint<'applications'> ? DocSchema<Applications> :
-  TConfig['endpoint'] extends SetDocEndpoint<'authentications'> ? DocSchema<Authentications> :
+  TConfig['endpoint'] extends SetDocEndpoint<'products'> ? ProductSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'categories'> ? CategorySet :
+  TConfig['endpoint'] extends SetDocEndpoint<'brands'> ? BrandSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'collections'> ? CollectionSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'grids'> ? GridSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'carts'> ? CartSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'orders'> ? OrderSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'customers'> ? CustomerSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'stores'> ? StoreSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'applications'> ? ApplicationSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'authentications'> ? AuthenticationSet :
   any;
 
 type ErrorBody = {
@@ -197,6 +208,17 @@ export type {
   Stores,
   Applications,
   Authentications,
+  ProductSet,
+  CategorySet,
+  BrandSet,
+  CollectionSet,
+  GridSet,
+  CartSet,
+  OrderSet,
+  CustomerSet,
+  StoreSet,
+  ApplicationSet,
+  AuthenticationSet,
   Resource,
   ResourceId,
   ResourceAndId,
