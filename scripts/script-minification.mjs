@@ -7,9 +7,7 @@ import {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { minify } from 'uglify-js';
 
-const __dirname = process.cwd();
-
-const publicPath = resolve(__dirname, 'assets');
+const publicPath = resolve(process.cwd(), 'assets');
 readdirSync(publicPath).forEach((file) => {
   if (file.endsWith('.js') && !file.endsWith('.min.js')) {
     const filePath = resolve(publicPath, file);
