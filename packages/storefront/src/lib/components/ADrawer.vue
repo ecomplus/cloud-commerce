@@ -31,13 +31,13 @@ const escClickListener = (ev: KeyboardEvent) => {
 };
 watch(toRef(props, 'modelValue'), async (isOpen) => {
   if (isOpen) {
-    document.body.style.maxWidth = `${document.body.offsetWidth}px`;
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
       document.addEventListener('click', outsideClickListener, { passive: true });
       document.addEventListener('keydown', escClickListener, { passive: true });
     }, 500);
   } else {
+    document.body.style.overflow = null;
     document.removeEventListener('click', outsideClickListener);
     document.removeEventListener('keydown', escClickListener);
   }
@@ -75,7 +75,7 @@ const transition3dTx = computed(() => {
 <style>
 .offcanvas.v-enter-active,
 .offcanvas.v-leave-active {
-  transition: opacity 0.25s linear;
+  transition: opacity 0.15s linear;
 }
 .offcanvas.v-enter-from,
 .offcanvas.v-leave-to {
@@ -83,7 +83,7 @@ const transition3dTx = computed(() => {
 }
 .offcanvas.v-enter-active article,
 .offcanvas.v-leave-active article {
-  transition: transform 0.3s ease-out;
+  transition: transform 0.25s ease-in-out;
 }
 .offcanvas.v-enter-from article,
 .offcanvas.v-leave-to article {
