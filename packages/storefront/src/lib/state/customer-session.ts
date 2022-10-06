@@ -39,7 +39,7 @@ onSet(session, () => {
 });
 
 const isAuthorized = computed(session, ({ auth }) => {
-  return auth && Date.now() - new Date(auth.expires).getTime() < 1000 * 60 * 30;
+  return auth && new Date(auth.expires).getTime() - Date.now() > 1000 * 10;
 });
 const customer = computed(session, (_session) => _session.customer);
 const customerName = computed(customer, (_customer) => getNickname(_customer));
