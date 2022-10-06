@@ -1,8 +1,8 @@
-import type { Response } from 'firebase-functions';
 import type { Customers } from '@cloudcommerce/types';
-import type { Firestore } from 'firebase-admin/firestore';
 // eslint-disable-next-line import/no-unresolved
-import { Auth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
+// eslint-disable-next-line import/no-unresolved
+import { getAuth } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import getEnv from '@cloudcommerce/firebase/lib/env';
@@ -20,14 +20,12 @@ const findCustomerByEmail = async (email: string | undefined) => {
   }
 };
 
-const checkFirebaseAuth = async (
-  auth: Auth,
-  authToken: string | undefined | string [],
-) => {
+const checkFirebaseAuth = async (authToken?: string | undefined) => {
+  const firebaseAuth = getAuth();
   if (authToken && !Array.isArray(authToken)) {
     try {
-      const customer = await auth.verifyIdToken(authToken);
-      return customer;
+      const firebaseAuthUser = await firebaseAuth.verifyIdToken(authToken);
+      return firebaseAuthUser;
     } catch (e) {
       return null;
     }
@@ -46,16 +44,13 @@ const createCustomer = async (customer: Customers) => {
   }
 };
 
-const generateAccessToken = async (
-  firestore: Firestore,
-  customerId: string,
-): Promise<null | {
+const generateAccessToken = async (customerId: string): Promise<null | {
   customer_id: string,
   access_token: string,
   expires: string,
 }> => {
   const { apiAuth } = getEnv();
-  const docRef = firestore.doc(`customerTokens/${customerId}`);
+  const docRef = getFirestore().doc(`customerTokens/${customerId}`);
   const doc = await docRef.get();
   const expires: string | undefined = doc.data()?.expires;
   if (expires && new Date(expires).getTime() - Date.now() >= 2 * 60 * 1000) {
@@ -84,54 +79,31 @@ const generateAccessToken = async (
   }
 };
 
-const getAuthCustomerApi = async (
-  firestore: Firestore,
-  authtoken: string | string[] | undefined,
-  authFirebase: Auth,
-) => {
-  const customerFirebaseAuth = await checkFirebaseAuth(authFirebase, authtoken);
-  if (customerFirebaseAuth?.email && customerFirebaseAuth.email_verified) {
-    const customer = await findCustomerByEmail(customerFirebaseAuth.email);
+const getAuthCustomerApi = async (firebaseAuthToken: string | undefined) => {
+  const firebaseAuthUser = await checkFirebaseAuth(firebaseAuthToken);
+  if (firebaseAuthUser?.email && firebaseAuthUser.email_verified) {
+    const customer = await findCustomerByEmail(firebaseAuthUser.email);
     if (customer !== null) {
-      return generateAccessToken(firestore, customer._id);
+      return generateAccessToken(customer._id);
     }
     const newCustomer = {
-      display_name: customerFirebaseAuth.name || '',
-      main_email: customerFirebaseAuth.email,
+      display_name: firebaseAuthUser.name || '',
+      main_email: firebaseAuthUser.email,
       emails: [{
-        address: customerFirebaseAuth.email,
-        verified: customerFirebaseAuth.email_verified,
+        address: firebaseAuthUser.email,
+        verified: firebaseAuthUser.email_verified,
       }],
     } as Customers;
     const customerId = await createCustomer(newCustomer);
     if (customerId) {
-      return generateAccessToken(firestore, customerId);
+      return generateAccessToken(customerId);
     }
   }
   // TODO: Find customer by phone number, generate token if found, otherwise unauthorize
   return null;
 };
 
-const sendError = (
-  res: Response,
-  msg?: string,
-  status = 400,
-) => {
-  if (msg) {
-    res.status(status).json({
-      status,
-      error: msg,
-    });
-  } else {
-    res.status(500).json({
-      status: 500,
-      error: 'Internal server error',
-    });
-  }
-};
-
 export {
-  sendError,
   getAuthCustomerApi,
   findCustomerByEmail,
   generateAccessToken,

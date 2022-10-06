@@ -1,60 +1,31 @@
 import type { Request, Response } from 'firebase-functions';
-// eslint-disable-next-line import/no-unresolved
-import type { Auth } from 'firebase-admin/auth';
-// eslint-disable-next-line import/no-unresolved
-import type { Firestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
-import {
-  sendError,
-  getAuthCustomerApi,
-} from './handle-passport';
+import { getAuthCustomerApi } from './handle-passport';
 
-export default async (
-  req: Request,
-  res: Response,
-  firestore: Firestore,
-  authFirebase: Auth,
-  storeId: number,
-) => {
-  const { method } = req;
-  if (method !== 'POST') {
-    return res.sendStatus(405);
-  }
-  if (
-    method === 'POST'
-    && (!req.body || typeof req.body !== 'object' || Array.isArray(req.body))
-  ) {
-    return res.sendStatus(400);
-  }
-
+export default async (req: Request, res: Response) => {
   let { url } = req;
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
   const endpoint = url.split('/')[1];
-  // endpoint /token
-  if (endpoint === 'token' && method === 'POST') {
-    const { authtoken } = req.body;
-    if (!firestore) {
-      return sendError(res, 'Firestore not found', 500);
-    } if (storeId < 100) {
-      return sendError(res, 'Invalid store');
-    }
+  if (endpoint !== 'token') {
+    return res.sendStatus(404);
+  }
+  if (req.method === 'POST') {
+    const { authToken } = req.body;
     try {
-      const authCustomerApi = await getAuthCustomerApi(
-        firestore,
-        authtoken,
-        authFirebase,
-      );
+      const authCustomerApi = await getAuthCustomerApi(authToken);
       if (authCustomerApi !== null) {
         return res.send(authCustomerApi);
       }
-      return sendError(res, 'Invalid token, unauthorized', 401);
+      return res.status(401).json({
+        status: 401,
+        error: 'Invalid Firebase Auth token, unauthorized',
+      });
     } catch (e) {
       logger.error(e);
-      return sendError(res);
+      return res.sendStatus(500);
     }
-  } else {
-    return res.sendStatus(400);
   }
+  return res.sendStatus(405);
 };
