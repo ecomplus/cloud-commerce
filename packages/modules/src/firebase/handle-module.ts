@@ -62,7 +62,7 @@ async function runModule(
     canCacheResults = true;
   }
 
-  let appsList: Applications[];
+  let appsList: Partial<Applications>[];
   if (canCache && appsCache[cacheKey]) {
     appsList = appsCache[cacheKey];
   } else {

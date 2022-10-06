@@ -73,20 +73,20 @@ type BaseListResultMeta = {
 };
 
 type ListEndpoint<TResource extends Resource> = TResource | `${TResource}?${string}`;
-
+type ListResultDocs<Document extends any> = Array<Partial<Document> & { _id: ResourceId }>;
 type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
   result:
-    TEndpoint extends ListEndpoint<'products'> ? Products[] :
-    TEndpoint extends ListEndpoint<'categories'> ? Categories[] :
-    TEndpoint extends ListEndpoint<'brands'> ? Brands[] :
-    TEndpoint extends ListEndpoint<'collections'> ? Collections[] :
-    TEndpoint extends ListEndpoint<'grids'> ? Grids[] :
-    TEndpoint extends ListEndpoint<'carts'> ? Carts[] :
-    TEndpoint extends ListEndpoint<'orders'> ? Orders[] :
-    TEndpoint extends ListEndpoint<'customers'> ? Customers[] :
-    TEndpoint extends ListEndpoint<'stores'> ? Stores[] :
-    TEndpoint extends ListEndpoint<'applications'> ? Applications[] :
-    TEndpoint extends ListEndpoint<'authentications'> ? Authentications[] :
+    TEndpoint extends ListEndpoint<'products'> ? ListResultDocs<Products> :
+    TEndpoint extends ListEndpoint<'categories'> ? ListResultDocs<Categories> :
+    TEndpoint extends ListEndpoint<'brands'> ? ListResultDocs<Brands> :
+    TEndpoint extends ListEndpoint<'collections'> ? ListResultDocs<Collections> :
+    TEndpoint extends ListEndpoint<'grids'> ? ListResultDocs<Grids> :
+    TEndpoint extends ListEndpoint<'carts'> ? ListResultDocs<Carts> :
+    TEndpoint extends ListEndpoint<'orders'> ? ListResultDocs<Orders> :
+    TEndpoint extends ListEndpoint<'customers'> ? ListResultDocs<Customers> :
+    TEndpoint extends ListEndpoint<'stores'> ? ListResultDocs<Stores> :
+    TEndpoint extends ListEndpoint<'applications'> ? ListResultDocs<Applications> :
+    TEndpoint extends ListEndpoint<'authentications'> ? ListResultDocs<Authentications> :
     never,
   meta: BaseListResultMeta & {
     count?: number,
