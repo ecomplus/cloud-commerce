@@ -262,7 +262,7 @@ export interface CheckoutBody {
   /**
    * Customer object
    */
-  customer?: {
+  customer: {
     /**
      * Customer ID
      */

@@ -5,7 +5,7 @@ exports.params = {
   'title': 'Checkout body',
   'description': 'Triggered to handle checkout with billing and shipping and create new order',
   'type': 'object',
-  'required': [ 'items', 'shipping', 'transaction' ],
+  'required': [ 'items', 'shipping', 'transaction', 'customer' ],
   'additionalProperties': false,
   'definitions': {
     'address': {
