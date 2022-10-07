@@ -6,9 +6,6 @@ import { logger } from 'firebase-functions';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
-const locationId = config.get().httpsFunctionOptions.region;
-const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
-
 const parsePaymentStatus = (status: string) => {
   switch (status) {
     case 'rejected':
@@ -23,6 +20,8 @@ const parsePaymentStatus = (status: string) => {
 };
 
 export default async (appData: AppModuleBody, firestore:Firestore) => {
+  const locationId = config.get().httpsFunctionOptions.region;
+  const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
   // body was already pre-validated on @/bin/web.js
   // treat module request body
   const { application, storeId } = appData;
