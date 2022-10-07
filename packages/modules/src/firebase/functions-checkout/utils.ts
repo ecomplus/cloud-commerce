@@ -10,9 +10,7 @@ import type {
   ShippingSerive,
   ShippingLine,
 } from '../../types/index';
-
-// eslint-disable-next-line padding-line-between-statements
-import logger from 'firebase-functions/lib/logger';
+import { logger } from 'firebase-functions';
 
 type BodyResouce = {[key:string]:any}
 

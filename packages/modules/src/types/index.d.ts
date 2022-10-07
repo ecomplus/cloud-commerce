@@ -3,7 +3,8 @@ import type {
   Carts, 
   Orders,
   CalculateShippingResponse,
-  ListPaymentsResponse
+  ListPaymentsResponse,
+  Products
 } from '@cloudcommerce/types';
 import { Transaction } from '@cloudcommerce/types/modules/@checkout:params';
 
@@ -47,6 +48,8 @@ type ShippingSerive = Omit<CheckoutShippingService, 'shipping_line'> & {
 type PaymentGateways = ListPaymentsResponse['payment_gateways']
 type PaymentMethod = Pick<PaymentGateways[number]['payment_method'], 'code' | 'name'>
 
+type ProductItem = Products & { final_price?: Item['final_price'] } 
+
 export {
   CheckoutBodyWithItems,
   BodyPayment,
@@ -63,5 +66,6 @@ export {
   TransactionOrder,
   OrderPaymentHistory,
   BodyTransactionOrder,
-  BodyPaymentHistory
+  BodyPaymentHistory,
+  ProductItem
 };

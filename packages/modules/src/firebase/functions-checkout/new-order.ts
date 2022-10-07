@@ -7,7 +7,7 @@ import type {
   TransactionOrder,
   BodyPaymentHistory,
 } from '../../types/index';
-import logger from 'firebase-functions/lib/logger';
+import { logger } from 'firebase-functions';
 import { sendError, getValidResults } from './utils';
 import {
   newOrder,
@@ -36,7 +36,7 @@ const createOrder = async (
 ) => {
   // start creating new order to API
 
-  const order = await newOrder(orderBody);
+  const { order, err } = await newOrder(orderBody);
   if (order) {
     const orderId = order._id;
     const orderNumber = order.number;
@@ -252,16 +252,17 @@ const createOrder = async (
     return nextTransaction();
   }
   // send error
-  const userMessage = {
-    en_us: 'There was a problem saving your order, please try again later',
-    pt_br: 'Houve um problema ao salvar o pedido, por favor tente novamente mais tarde',
-  };
+  // Ref: class ApiError in api.d.ts
   return sendError(
     res,
-    409,
+    (err?.data?.status || err?.statusCode) || 409,
     'CKT701',
-    'There was a problem saving your order, please try again later',
-    userMessage,
+    (err?.message) || 'There was a problem saving your order, please try again later',
+    {
+      en_us: 'There was a problem saving your order, please try again later',
+      pt_br: 'Houve um problema ao salvar o pedido, por favor tente novamente mais tarde',
+    },
+    err?.data?.more_info,
   );
 };
 
