@@ -35,7 +35,16 @@ runs:
       run: npm i --location=global firebase-tools@11
 
     - shell: bash
-      run: npm ci --omit=dev
+      run: npm ci --omit=dev --ignore-scripts
+    
+    - shell: bash
+      working-directory: functions
+      run: |
+        for d in */ ; do
+          cd $d
+          npm ci
+          cd ..
+        done
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
