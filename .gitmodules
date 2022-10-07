@@ -2,5 +2,5 @@
 	path = store
 	url = git@github.com:ecomplus/store.git
 [submodule "ecomplus-stores/monocard"]
-	path = ecomplus-stores/monocard
+	path = .ecomplus/stores/monocard
 	url = git@github.com:ecomplus-stores/monocard.git
