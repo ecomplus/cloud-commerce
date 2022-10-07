@@ -136,14 +136,14 @@ export default async (req: Request, res: Response) => {
       // problem with shipping response object
         return sendError(
           res,
-          msgErr.status || 400,
-          msgErr.code || 'CKT901',
+          msgErr?.status || 400,
+          msgErr?.code || 'CKT901',
           'Any valid shipping service from /calculate_shipping module',
           {
             en_us: 'Shipping method not available, please choose another',
             pt_br: 'Forma de envio indisponível, por favor escolha outra',
           },
-          msgErr.moreInfo,
+          msgErr?.moreInfo,
         );
       }
 
@@ -175,14 +175,14 @@ export default async (req: Request, res: Response) => {
       } else {
         return sendError(
           res,
-          msgErr.status || 409,
-          msgErr.code || 'CKT902',
+          msgErr?.status || 409,
+          msgErr?.code || 'CKT902',
           'Any valid payment gateway from /list_payments module',
           {
             en_us: 'Payment method not available, please choose another',
             pt_br: 'Forma de pagamento indisponível, por favor escolha outra',
           },
-          msgErr.moreInfo,
+          msgErr?.moreInfo,
         );
       }
 
