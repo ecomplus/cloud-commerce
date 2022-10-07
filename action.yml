@@ -35,7 +35,7 @@ runs:
       run: npm i --location=global firebase-tools@11
 
     - shell: bash
-      run: npm ci --omit=dev --ignore-scripts
+      run: npm ci --omit=dev
     
     - shell: bash
       working-directory: functions
