@@ -171,5 +171,10 @@ Finish by saving the following secrets to your GitHub repository:
 -- More info at https://github.com/ecomplus/store#getting-started
 `;
   }
+
+  if (argv._.includes('dev') || !argv._.length) {
+    await $`npm run build -- --codebase ssr`;
+    return $`npm --prefix "${path.join(pwd, 'functions/ssr')}" run dev`;
+  }
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
