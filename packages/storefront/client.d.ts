@@ -8,7 +8,7 @@ interface Window {
     storageBucket: string,
     messagingSenderId: string,
     appId: string,
-    measurementId: string,
+    measurementId?: string,
   };
   storefront?: {
     settings: typeof import('./content/settings.json') & {
