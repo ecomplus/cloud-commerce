@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/events",
   "type": "module",
-  "version": "0.0.111",
+  "version": "0.0.112",
   "description": "E-Com Plus Cloud Commerce app events",
   "main": "lib/index.js",
   "exports": {
