@@ -3,7 +3,7 @@
 /* global $, quiet, fs, cd, globby, argv */
 import { retry, spinner } from 'zx/experimental';
 
-const listDirs = async (parentPath) => {
+const listFolders = async (parentPath) => {
   return (await fs.readdir(parentPath, { withFileTypes: true }))
     .filter((d) => d.isDirectory() && d.name.charAt(0) !== '.')
     .map((dirent) => dirent.name);
@@ -34,10 +34,11 @@ if (argv.publish) {
   await $`git submodule update --remote --merge`;
   await retry(10, '1s', async () => {
     await spinner('give npm registry a time...', () => $`sleep 9`);
-    const functions = await listDirs(`${pwd}/store/functions`);
+    const functions = await listFolders(`${pwd}/store/functions`);
     const storesDirs = [
       `${pwd}/store`,
-      ...(await listDirs(`${pwd}/.ecomplus/stores`)),
+      ...(await listFolders(`${pwd}/.ecomplus/stores`))
+        .map((store) => `${pwd}/.ecomplus/stores/${store}`),
     ];
     for (let ii = 0; ii < storesDirs.length; ii++) {
       const storeDir = storesDirs[ii];
