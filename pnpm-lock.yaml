@@ -48,46 +48,46 @@ importers:
 
   .ecomplus/stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.110
+      '@cloudcommerce/cli': ^0.0.112
     dependencies:
       '@cloudcommerce/cli': link:../../../packages/cli
 
   .ecomplus/stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.110
+      '@cloudcommerce/firebase': ^0.0.112
     dependencies:
       '@cloudcommerce/firebase': link:../../../../../packages/firebase
 
   .ecomplus/stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.110
-      '@cloudcommerce/firebase': ^0.0.110
+      '@cloudcommerce/events': ^0.0.112
+      '@cloudcommerce/firebase': ^0.0.112
     dependencies:
       '@cloudcommerce/events': link:../../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../../packages/firebase
 
   .ecomplus/stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.110
-      '@cloudcommerce/modules': ^0.0.110
+      '@cloudcommerce/firebase': ^0.0.112
+      '@cloudcommerce/modules': ^0.0.112
     dependencies:
       '@cloudcommerce/firebase': link:../../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../../packages/modules
 
   .ecomplus/stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.110
-      '@cloudcommerce/passport': ^0.0.110
+      '@cloudcommerce/firebase': ^0.0.112
+      '@cloudcommerce/passport': ^0.0.112
     dependencies:
       '@cloudcommerce/firebase': link:../../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../../packages/passport
 
   .ecomplus/stores/monocard/functions/ssr:
     specifiers:
-      '@cloudcommerce/api': ^0.0.110
-      '@cloudcommerce/firebase': ^0.0.110
-      '@cloudcommerce/ssr': ^0.0.110
-      '@cloudcommerce/storefront': ^0.0.110
+      '@cloudcommerce/api': ^0.0.112
+      '@cloudcommerce/firebase': ^0.0.112
+      '@cloudcommerce/ssr': ^0.0.112
+      '@cloudcommerce/storefront': ^0.0.112
     dependencies:
       '@cloudcommerce/api': link:../../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../../packages/firebase
@@ -315,7 +315,7 @@ importers:
       '@cloudcommerce/types': workspace:*
       '@ecomplus/utils': ^1.4.1
       '@firebase/app-types': ^0.7.0
-      astro: 1.3.x
+      astro: ^1.4.6
       firebase-admin: ^11.0.1
       firebase-functions: ^3.24.1
       image-size: ^1.0.2
@@ -326,7 +326,7 @@ importers:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/firebase': link:../firebase
       '@ecomplus/utils': 1.4.1
-      astro: 1.3.1
+      astro: 1.4.6
       firebase-admin: 11.0.1_@firebase+app-types@0.7.0
       firebase-functions: 3.24.1_firebase-admin@11.0.1
       image-size: 1.0.2
@@ -352,7 +352,7 @@ importers:
       '@iconify-json/logos': ^1.1.16
       '@nanostores/vue': ^0.6.0
       '@unocss/preset-icons': ^0.45.26
-      astro: 1.3.x
+      astro: ^1.4.6
       color: ^4.2.3
       dotenv: ^16.0.3
       firebase: ^9.10.0
@@ -378,7 +378,7 @@ importers:
       '@iconify-json/logos': 1.1.16
       '@nanostores/vue': 0.6.0_ugdr3nhkbdglzogoqip3bqbmwi
       '@unocss/preset-icons': 0.45.26
-      astro: 1.3.1
+      astro: 1.4.6
       color: 4.2.3
       dotenv: 16.0.3
       firebase: 9.10.0
@@ -400,46 +400,46 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.110
+      '@cloudcommerce/cli': ^0.0.112
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.110
+      '@cloudcommerce/firebase': ^0.0.112
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.110
-      '@cloudcommerce/firebase': ^0.0.110
+      '@cloudcommerce/events': ^0.0.112
+      '@cloudcommerce/firebase': ^0.0.112
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.110
-      '@cloudcommerce/modules': ^0.0.110
+      '@cloudcommerce/firebase': ^0.0.112
+      '@cloudcommerce/modules': ^0.0.112
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.110
-      '@cloudcommerce/passport': ^0.0.110
+      '@cloudcommerce/firebase': ^0.0.112
+      '@cloudcommerce/passport': ^0.0.112
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/api': ^0.0.110
-      '@cloudcommerce/firebase': ^0.0.110
-      '@cloudcommerce/ssr': ^0.0.110
-      '@cloudcommerce/storefront': ^0.0.110
+      '@cloudcommerce/api': ^0.0.112
+      '@cloudcommerce/firebase': ^0.0.112
+      '@cloudcommerce/ssr': ^0.0.112
+      '@cloudcommerce/storefront': ^0.0.112
     dependencies:
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -487,8 +487,8 @@ packages:
     resolution: {integrity: sha512-vBMPy9ok4iLapSyCCT1qsZ9dK7LkVFl9mObtLEmWiec9myGHS9h2kQY2xzPeFNJiWXUf9O6tSyQpQTy5As/p3g==}
     dev: false
 
-  /@astrojs/compiler/0.24.0:
-    resolution: {integrity: sha512-xZ81C/oMfExdF18I1Tyd2BKKzBqO+qYYctSy4iCwH4UWSo/4Y8A8MAzV1hG67uuE7hFRourSl6H5KUbhyChv/A==}
+  /@astrojs/compiler/0.26.1:
+    resolution: {integrity: sha512-GoRi4qB05u+bVcSlR9nu9HJfSUGFBcoUUb+WFimKSm9e/KPTy0STOMb/Q0mLIcloavF4KvEqAnd9ukX62ewoaA==}
     dev: false
 
   /@astrojs/image/0.8.1:
@@ -3266,10 +3266,6 @@ packages:
       '@types/node': 18.8.1
     dev: false
 
-  /@types/resolve/1.20.2:
-    resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
-    dev: false
-
   /@types/serve-static/1.15.0:
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
     dependencies:
@@ -3912,12 +3908,12 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /astro/1.3.1:
-    resolution: {integrity: sha512-dSgwiHMuRI7+hPlMfpkSsMA7Bdsroh5LwfNMvk3+oX6xMz2zP1IZHjDZ03w/wp2JkWek6n9s9I+Bwz7ld6yT4w==}
+  /astro/1.4.6:
+    resolution: {integrity: sha512-zGi3uCl+VwBYwbmccyo9M4xI68gx+M7jJdP7kFSR3UCdmDbCoCY6u85ixAAjbkMUSNsuxsrBrhH9HW/X5SGTzQ==}
     engines: {node: ^14.18.0 || >=16.12.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 0.24.0
+      '@astrojs/compiler': 0.26.1
       '@astrojs/language-server': 0.26.2
       '@astrojs/markdown-remark': 1.1.3
       '@astrojs/telemetry': 1.0.1
@@ -3936,6 +3932,7 @@ packages:
       boxen: 6.2.1
       ci-info: 3.4.0
       common-ancestor-path: 1.0.1
+      cookie: 0.5.0
       debug: 4.3.4
       diff: 5.1.0
       eol: 0.9.1
@@ -7747,7 +7744,7 @@ packages:
       '@types/unist': 2.0.6
       decode-named-character-reference: 1.0.2
       mdast-util-to-string: 3.1.0
-      micromark: 3.0.10
+      micromark: 3.1.0
       micromark-util-decode-numeric-character-reference: 1.0.0
       micromark-util-decode-string: 1.0.2
       micromark-util-normalize-identifier: 1.0.0
@@ -8197,8 +8194,8 @@ packages:
     resolution: {integrity: sha512-DCfg/T8fcrhrRKTPjRrw/5LLvdGV7BHySf/1LOZx7TzWZdYRjogNtyNq885z3nNallwr3QUKARjqvHqX1/7t+w==}
     dev: false
 
-  /micromark/3.0.10:
-    resolution: {integrity: sha512-ryTDy6UUunOXy2HPjelppgJ2sNfcPz1pLlMdA6Rz9jPzhLikWXv/irpWV/I2jd68Uhmny7hHxAlAhk4+vWggpg==}
+  /micromark/3.1.0:
+    resolution: {integrity: sha512-6Mj0yHLdUZjHnOPgr5xfWIMqMWS12zDN6iws9SLuSz76W8jTtAv24MN4/CL7gJrl5vtxGInkkqDv/JIoRsQOvA==}
     dependencies:
       '@types/debug': 4.1.7
       debug: 4.3.4
@@ -10146,7 +10143,7 @@ packages:
     resolution: {integrity: sha512-ZHqlstlQF449v8glscGRXzL6l2dZvASPCdXJRWG4gHEZlUVx2Jtmr+a2zeVG4LCsKhDXKRj5R3h0C/98UcVAQg==}
     dependencies:
       '@types/json5': 0.0.30
-      '@types/resolve': 1.20.2
+      '@types/resolve': 1.17.1
       json5: 2.2.1
       resolve: 1.22.1
       strip-bom: 4.0.0
