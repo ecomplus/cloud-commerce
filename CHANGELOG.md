@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.111](https://github.com/ecomplus/cloud-commerce/compare/v0.0.110...v0.0.111) (2022-10-09)
+
+
+### Bug Fixes
+
+* **deps:** Update astro to v1.4 (lastest) again ([1a7a737](https://github.com/ecomplus/cloud-commerce/commit/1a7a737d1425abc6af4f599c83f113ee4a02cdd0))
+* **storefront:** Remove default `firebaseConfig` from lib ([ad08c6c](https://github.com/ecomplus/cloud-commerce/commit/ad08c6c1cb3084b05c31fea04d1371d7fb44b9d1))
+
 ### [0.0.110](https://github.com/ecomplus/cloud-commerce/compare/v0.0.109...v0.0.110) (2022-10-06)
 
 
