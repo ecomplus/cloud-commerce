@@ -44,6 +44,9 @@ const mergeConfig = {
       appId: 105922,
       events: tinyErpEvents,
     },
+    mercadoPago: {
+      appId: 111223,
+    },
   },
 };
 config.set(mergeConfig);
