@@ -37,8 +37,8 @@ if (argv.publish) {
     const functions = await listFolders(`${pwd}/store/functions`);
     const storesDirs = [
       `${pwd}/store`,
-      ...(await listFolders(`${pwd}/.ecomplus/stores`))
-        .map((store) => `${pwd}/.ecomplus/stores/${store}`),
+      ...(await listFolders(`${pwd}/ecomplus-stores`))
+        .map((store) => `${pwd}/ecomplus-stores/${store}`),
     ];
     for (let ii = 0; ii < storesDirs.length; ii++) {
       const storeDir = storesDirs[ii];
@@ -72,7 +72,7 @@ if (argv.publish) {
     return cd(pwd);
   });
   await $`pnpm i`;
-  await $`git add pnpm-lock.yaml store .ecomplus/stores`;
+  await $`git add pnpm-lock.yaml store ecomplus-stores`;
   await $`git commit -m 'chore: Update store submodule post-release'`;
   await $`git push --follow-tags origin main`;
 }
