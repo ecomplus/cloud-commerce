@@ -1,14 +1,15 @@
 ---
 import type { PageContext } from '../ssr-context';
 import Base from './Base.astro';
-import Header from './PagesHeader.astro';
+import Header, { Props as HeaderProps } from './PagesHeader.astro';
 
 export interface Props {
   pageContext: PageContext;
   title?: string;
+  headerProps?: HeaderProps;
 }
 
-const { pageContext, title } = Astro.props as Props;
+const { pageContext, title, headerProps } = Astro.props as Props;
 ---
 
 <Base pageContext={pageContext} title={title}>
@@ -16,7 +17,7 @@ const { pageContext, title } = Astro.props as Props;
     <slot name="before-head-end" />
   </Fragment>
   <slot name="header">
-    <Header pageContext={pageContext} />
+    <Header pageContext={pageContext} {...headerProps} />
   </slot>
   <slot />
   <Fragment slot="before-body-end">

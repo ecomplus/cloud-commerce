@@ -11,6 +11,7 @@ import LoginDrawer, { Props as LoginDrawerProps } from '../components/LoginDrawe
 
 export interface Props {
   pageContext: PageContext;
+  logoTransformOptions?: Parameters<typeof getImage>[0];
   topBarProps?: Partial<TopBarProps>;
   theHeaderProps?: Partial<TheHeaderProps>;
   loginDrawerProps?: Partial<LoginDrawerProps>;
@@ -22,6 +23,7 @@ const {
     settings,
     cms,
   },
+  logoTransformOptions,
   topBarProps,
   theHeaderProps,
   loginDrawerProps,
@@ -88,6 +90,7 @@ globalThis.TheHeaderProps = {
       width: 150,
       format: 'webp',
       quality: 90,
+      ...logoTransformOptions,
     }) as any,
     alt: settings.name,
   },
