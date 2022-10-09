@@ -1,9 +1,5 @@
 import { resolve } from 'path';
-import {
-  readdirSync,
-  readFileSync,
-  writeFileSync,
-} from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { minify } from 'uglify-js';
 

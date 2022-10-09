@@ -1,5 +1,5 @@
 #!/bin/bash
 
-node ../../../scripts/script-minification.mjs
+node ../../../scripts/assets-minification.mjs
 sh ../../../scripts/build-lib.sh
 
