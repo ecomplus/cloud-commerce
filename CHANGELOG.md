@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.113](https://github.com/ecomplus/cloud-commerce/compare/v0.0.112...v0.0.113) (2022-10-09)
+
+
+### Features
+
+* **cli:** Handle `dev` (default) script to storefront dev server (`astro dev`) ([e3e8fcd](https://github.com/ecomplus/cloud-commerce/commit/e3e8fcdd73a56102cc1a75968461f3885697b6e5))
+* **mercadopago:** Create Mercado Pago payment app ([#54](https://github.com/ecomplus/cloud-commerce/issues/54)) ([d4587b4](https://github.com/ecomplus/cloud-commerce/commit/d4587b485033cc48c1c005e5da67f976ac9df11b))
+* **storefront:** Start passing deep props also for Astro components (layout -> header) ([12dbd89](https://github.com/ecomplus/cloud-commerce/commit/12dbd89624987d27289143bae8fb65c023bfe0a8))
+
 ### [0.0.112](https://github.com/ecomplus/cloud-commerce/compare/v0.0.111...v0.0.112) (2022-10-09)
 
 ### [0.0.111](https://github.com/ecomplus/cloud-commerce/compare/v0.0.110...v0.0.111) (2022-10-09)

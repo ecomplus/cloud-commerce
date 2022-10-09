@@ -1,12 +1,12 @@
 {
   "name": "@cloudcommerce/app-mercadopago",
   "type": "module",
-  "version": "0.0.99",
+  "version": "0.0.113",
   "description": "E-Com Plus Cloud Commerce app to integrate Mercado Pago",
   "main": "lib/mercadopago.js",
   "exports": {
     ".": "./lib/mercadopago.js",
-    "./webhook" : "./lib/mp-webhook.js"
+    "./webhook": "./lib/mp-webhook.js"
   },
   "repository": {
     "type": "git",
