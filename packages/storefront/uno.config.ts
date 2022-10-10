@@ -73,6 +73,14 @@ const _preflights: Preflight[] = [{
       --secondary-hover: var(--secondary-700);
       --secondary-focus: rgba(var(--secondary-200-rgb), 0.2);
       --secondary-inverse: var(--secondary-500-yiq);
+    }
+    @media only screen and (prefers-color-scheme: dark) {
+      :root:not([data-theme=light]) {
+        --gray: var(--gray-400);
+        --gray-accent: var(--gray-200);
+        --surface-color: var(--gray-800);
+        --surface-border-color: var(--gray-700);
+      }
     }`,
 }];
 
