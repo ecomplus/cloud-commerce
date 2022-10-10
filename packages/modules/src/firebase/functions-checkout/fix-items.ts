@@ -1,9 +1,11 @@
 import type { Products, CheckoutBody } from '@cloudcommerce/types';
-import type { Items, ProductItem } from '../../types';
+import type { Items, Item } from '../../types';
 import api from '@cloudcommerce/api';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/lib/logger';
 
-const checkOnPromotion = (product: ProductItem) => {
+type BodyCheckItem = Products | Products & Exclude<Products['variations'], undefined>[number] | undefined;
+
+const checkOnPromotion = (product: Products) => {
   if (typeof product !== 'object' || product === null) {
     // prevent fatal error
     logger.error(new Error('`product` must be an object'));
@@ -33,15 +35,16 @@ const checkOnPromotion = (product: ProductItem) => {
   return false;
 };
 
-const getPrice = (product: ProductItem) => {
+const getPrice = (product: Products, item: Item) => {
   // promotional sale price
   if (checkOnPromotion(product)) {
     return product.price;
   }
   if (product) {
+    // Products do not have final_price properties
     // test final price for cart item object
-    return (typeof product.final_price === 'number'
-      ? product.final_price
+    return (typeof item.final_price === 'number'
+      ? item.final_price
     // use the maximum value between sale and base price
       : Math.max(product.base_price || 0, product.price || 0)
     );
@@ -105,7 +108,7 @@ export default async (
       if (!product.available) {
         removeItem();
       } else {
-        let body: Products | undefined;
+        let body: BodyCheckItem;
 
         // check variation if any
         if (!item.variation_id) {
@@ -167,7 +170,7 @@ export default async (
             item.flags = flags;
           }
           //
-          item.final_price = getPrice(body);
+          item.final_price = getPrice(body, item);
           proceedItem();
         }
       }
@@ -191,9 +194,9 @@ export default async (
               kitItem = currentKitItem;
             }
           });
-          if (!isFixedQuantity) {
+          if (!isFixedQuantity && kitProduct.min_quantity) {
             // use parent product min quantity
-            packQuantity = kitProduct.min_quantity || 0;
+            packQuantity = kitProduct.min_quantity;
           }
 
           if (kitItem && (kitItem.quantity === undefined
@@ -211,8 +214,12 @@ export default async (
               : 1;
             if (kitTotalQuantity && kitTotalQuantity % (minPacks * packQuantity) === 0) {
               // matched pack quantity
-              item.kit_product.price = getPrice(kitProduct);
+              item.kit_product.price = getPrice(kitProduct, item);
               item.kit_product.pack_quantity = packQuantity;
+              /* TODO: slug is not a property on item
+              if (kitProduct.slug) {
+                item.slug = kitProduct.slug;
+              } */
               if (item.kit_product.price) {
                 // set final price from kit
                 item.final_price = item.kit_product.price / packQuantity;
@@ -241,9 +248,10 @@ export default async (
       const kitProductId = item.kit_product._id;
       try {
       // eslint-disable-next-line no-await-in-loop
-        const kitProduct = (await api.get(`products/${kitProductId}`, {
+        const kitProduct = (await api.get(`products/${kitProductId as string}`, {
           isNoAuth: true,
         })).data;
+
         if (kitProduct) {
           checkKitProduct(kitProduct, kitProductId);
         } else {
