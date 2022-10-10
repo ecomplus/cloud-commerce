@@ -16,23 +16,3 @@ export interface Props {
   </script>
   <slot name="before-body-end" />
 </body>
-
-<style is:global>
-@media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme=light]) {
-    --gray: var(--gray-400);
-    --gray-accent: var(--gray-200);
-    --surface-color: var(--gray-800);
-    --surface-border-color: var(--gray-700);
-  }
-  :root:not([data-theme=light]) a:not([role=button]) {
-    --color: var(--primary-100);
-  }
-  :root:not([data-theme=light]) a:not([role=button]):is([aria-current], :hover, :active, :focus) {
-    --color: var(--primary-300);
-  }
-}
-body {
-  overflow-x: hidden;
-}
-</style>
