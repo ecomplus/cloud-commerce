@@ -35,13 +35,13 @@
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "axios": "^0.27.2",
-    "firebase-admin": "^11.0.1",
+    "firebase-admin": "^11.1.0",
     "firebase-functions": "^3.24.1",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.7.0",
+    "@firebase/app-types": "^0.8.0",
     "json-schema-to-typescript": "^11.0.2"
   }
 }
