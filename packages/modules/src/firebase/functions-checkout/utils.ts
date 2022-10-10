@@ -2,7 +2,7 @@ import type { Response } from 'firebase-functions';
 import type {
   CheckoutBodyWithItems,
   BodyOrder,
-  BodyPayment,
+  Payment,
   PaymentGateways,
   PaymentMethod,
   Amount,
@@ -87,7 +87,7 @@ const getValidResults = (
 const handleListPayments = (
   body: CheckoutBodyWithItems,
   listPayment: {[key:string]:any},
-  paymentsBody: BodyPayment,
+  paymentsBody: Payment,
   amount:Amount,
   orderBody: BodyOrder,
 ) => {

@@ -2,7 +2,7 @@ import type { Response } from 'firebase-functions';
 import type { Orders } from '@cloudcommerce/types';
 import type {
   Amount, BodyOrder,
-  BodyPaymentHistory,
+  PaymentHistory,
   OrderPaymentHistory,
   TransactionOrder,
 } from '../../types/index';
@@ -129,9 +129,9 @@ const saveTransaction = (
 
 const addPaymentHistory = async (
   orderId: string,
-  paymentHistory: BodyPaymentHistory[],
+  listPaymentsHistory: PaymentHistory[],
   isFirstTransaction: boolean,
-  paymentEntry: BodyPaymentHistory,
+  paymentEntry: PaymentHistory,
   dateTime: string,
   loyaltyPointsBalance: number,
   amount: Amount,
@@ -141,7 +141,7 @@ const addPaymentHistory = async (
       const body: OrderPaymentHistory = {
         amount,
       };
-      body.payments_history = paymentHistory;
+      body.payments_history = listPaymentsHistory;
 
       if (isFirstTransaction) {
         body.financial_status = {

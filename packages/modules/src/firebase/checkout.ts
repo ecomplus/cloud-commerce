@@ -5,7 +5,7 @@ import type {
   BodyOrder,
   Amount,
   Item,
-  BodyPayment,
+  Payment,
 } from '../types/index';
 import config from '@cloudcommerce/firebase/lib/config';
 import { checkoutSchema } from '../index';
@@ -154,7 +154,7 @@ export default async (req: Request, res: Response) => {
       }
 
       const { transaction, ...bodyPayment } = body;
-      let paymentsBody: BodyPayment;
+      let paymentsBody: Payment;
       if (Array.isArray(transaction)) {
         paymentsBody = {
           ...bodyPayment,

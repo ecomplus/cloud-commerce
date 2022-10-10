@@ -5,7 +5,7 @@ import type {
   Amount,
   CheckoutTransaction,
   TransactionOrder,
-  BodyPaymentHistory,
+  PaymentHistory,
 } from '../../types/index';
 import { logger } from 'firebase-functions';
 import { sendError, getValidResults } from './utils';
@@ -45,7 +45,7 @@ const createOrder = async (
     let countDone = 0;
     let paymentsAmount = 0;
     let loyaltyPointsBalance = 0;
-    const paymentHistory: BodyPaymentHistory[] = [];
+    const paymentsHistory: PaymentHistory[] = [];
 
     const nextTransaction = async (index = 0) => {
       const newTransaction = transactions[index];
@@ -150,18 +150,18 @@ const createOrder = async (
                 transaction,
               ) as string;
               // add entry to payments history
-              const paymentEntry: BodyPaymentHistory = {
+              const paymentEntry: PaymentHistory = {
                 transaction_id: transactionId,
                 status: transaction.status.current,
                 date_time: dateTime,
                 flags: ['checkout'],
               };
-              paymentHistory.push(paymentEntry);
+              paymentsHistory.push(paymentEntry);
               try {
                 // eslint-disable-next-line no-await-in-loop
                 await addPaymentHistory(
                   orderId,
-                  paymentHistory,
+                  paymentsHistory,
                   isFirstTransaction,
                   paymentEntry,
                   dateTime,
