@@ -2,6 +2,7 @@
 import loadPageContext, { PageContext } from '../lib/ssr-context';
 import PagesLayout from '../lib/layouts/Pages.astro';
 import HomeMain from '../lib/main/Home.astro';
+import InlineScripts from '../scripts/InlineScripts.astro';
 
 let pageContext: PageContext;
 let loadError: any;
@@ -19,6 +20,7 @@ try {
 <html lang={pageContext?.lang.replace('_', '-')}>
 {pageContext &&
   <PagesLayout pageContext={pageContext}>
+    <InlineScripts slot="before-head-end" />
     <HomeMain pageContext={pageContext} />
   </PagesLayout>
 }

@@ -18,14 +18,12 @@ const cmsCustomCode = cms('code') as CmsCode;
 <head>
   <BaseHead pageContext={pageContext} title={title} />
   <BaseStateJson pageContext={pageContext} />
-  <slot name="before-head-end">
-    {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
-    {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
-  </slot>
+  {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
+  {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
+  <slot name="before-head-end" />
 </head>
 <BaseBody pageContext={pageContext}>
   <slot />
-  <slot name="before-body-end">
-    {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
-  </slot>
+  {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
+  <slot name="before-body-end" />
 </BaseBody>

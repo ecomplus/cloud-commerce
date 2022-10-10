@@ -1,31 +1,33 @@
 {
-  "name": "@cloudcommerce/app-tiny-erp",
+  "name": "@cloudcommerce/app-mercadopago",
   "type": "module",
   "version": "0.0.114",
-  "description": "E-Com Plus Cloud Commerce app for Tiny ERP",
-  "main": "lib/tiny-erp.js",
+  "description": "E-Com Plus Cloud Commerce app to integrate Mercado Pago",
+  "main": "lib/mercadopago.js",
+  "exports": {
+    ".": "./lib/mercadopago.js",
+    "./webhook": "./lib/mp-webhook.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/apps/tiny-erp"
+    "directory": "packages/apps/mercadopago"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/tiny-erp#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/packages/apps/mercadopago#readme",
   "scripts": {
-    "build": "sh ../../../scripts/build-lib.sh"
+    "build": "sh scripts/build.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "@ecomplus/utils": "^1.4.1",
     "axios": "^1.1.2",
     "firebase-admin": "^11.1.0",
-    "firebase-functions": "^3.24.1",
-    "form-data": "^4.0.0"
+    "firebase-functions": "^3.24.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",

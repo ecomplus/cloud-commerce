@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.114](https://github.com/ecomplus/cloud-commerce/compare/v0.0.113...v0.0.114) (2022-10-09)
+
+### [0.0.113](https://github.com/ecomplus/cloud-commerce/compare/v0.0.112...v0.0.113) (2022-10-09)
+
+
+### Features
+
+* **cli:** Handle `dev` (default) script to storefront dev server (`astro dev`) ([e3e8fcd](https://github.com/ecomplus/cloud-commerce/commit/e3e8fcdd73a56102cc1a75968461f3885697b6e5))
+* **mercadopago:** Create Mercado Pago payment app ([#54](https://github.com/ecomplus/cloud-commerce/issues/54)) ([d4587b4](https://github.com/ecomplus/cloud-commerce/commit/d4587b485033cc48c1c005e5da67f976ac9df11b))
+* **storefront:** Start passing deep props also for Astro components (layout -> header) ([12dbd89](https://github.com/ecomplus/cloud-commerce/commit/12dbd89624987d27289143bae8fb65c023bfe0a8))
+
+### [0.0.112](https://github.com/ecomplus/cloud-commerce/compare/v0.0.111...v0.0.112) (2022-10-09)
+
+### [0.0.111](https://github.com/ecomplus/cloud-commerce/compare/v0.0.110...v0.0.111) (2022-10-09)
+
+
+### Bug Fixes
+
+* **deps:** Update astro to v1.4 (lastest) again ([1a7a737](https://github.com/ecomplus/cloud-commerce/commit/1a7a737d1425abc6af4f599c83f113ee4a02cdd0))
+* **storefront:** Remove default `firebaseConfig` from lib ([ad08c6c](https://github.com/ecomplus/cloud-commerce/commit/ad08c6c1cb3084b05c31fea04d1371d7fb44b9d1))
+
+### [0.0.110](https://github.com/ecomplus/cloud-commerce/compare/v0.0.109...v0.0.110) (2022-10-06)
+
+
+### Features
+
+* **modules:** Schema updates from https://github.com/ecomplus/modules-api/releases/tag/v0.12.53 ([32dedbb](https://github.com/ecomplus/cloud-commerce/commit/32dedbb4c835c551892e826fa70e462fa02d1a95))
+* **storefront:** Setup `state/customer-session` with Nano Stores for authentication ([c02eab9](https://github.com/ecomplus/cloud-commerce/commit/c02eab953f4609c3a84d6ec554a0d781892b4791))
+* **storefront:** Update `LoginDrawer` handling customer session ([86b5a49](https://github.com/ecomplus/cloud-commerce/commit/86b5a496e33a7e8509c0553651470d11a92e68a7))
+* **types:** Add `{Resource}Set` types without auto set doc properties ([9be7c0b](https://github.com/ecomplus/cloud-commerce/commit/9be7c0b18a1b7128796d4146796311bdbf699b44))
+
+
+### Bug Fixes
+
+* **api:** Better type defs for list requests results (partial docs with IDs) ([8f407c2](https://github.com/ecomplus/cloud-commerce/commit/8f407c23a1674a032a8f44a5330646af2a081dd4))
+* **frenet:** Calculate shipping updates with https://github.com/ecomplus/app-frenet/tree/v0.2.32 ([b6d21c0](https://github.com/ecomplus/cloud-commerce/commit/b6d21c0663448032ed34b5f703a1861c16406d8d))
+* **modules:** Properly handling modules API base URL on checkout ([968c90a](https://github.com/ecomplus/cloud-commerce/commit/968c90a4a865ab55f0d6781119a1a2555e305efb))
+* **modules:** Update checkout params and typedef to require `customer` field ([0c2ac51](https://github.com/ecomplus/cloud-commerce/commit/0c2ac517856329fae52ec0ee3e22635baf7c1056))
+* **passport:** Must check `email_verified` to generate customer access token ([26674b4](https://github.com/ecomplus/cloud-commerce/commit/26674b46515c0a795b04ffc3d9864b49d4a54994))
+* **passport:** Receive token from (web standard) Authorization header instead ([31d2a71](https://github.com/ecomplus/cloud-commerce/commit/31d2a718f42f234f6d790dd160910bfab232ecf0))
+* **storefront:** Check customer session `isAuthorized` with token expires +10s ([3a33701](https://github.com/ecomplus/cloud-commerce/commit/3a3370184d15eaaa0995021384209d7abeb52c35))
+
 ### [0.0.109](https://github.com/ecomplus/cloud-commerce/compare/v0.0.108...v0.0.109) (2022-10-04)
 
 
