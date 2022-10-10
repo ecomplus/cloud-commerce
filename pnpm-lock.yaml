@@ -64,11 +64,11 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/types': workspace:*
-      axios: ^0.27.2
+      axios: ^1.1.2
       xml2js: ^0.4.23
     dependencies:
       '@cloudcommerce/api': link:../../api
-      axios: 0.27.2
+      axios: 1.1.2
       xml2js: 0.4.23
     devDependencies:
       '@cloudcommerce/types': link:../../types
@@ -97,10 +97,10 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/types': workspace:*
-      axios: ^0.27.2
+      axios: ^1.1.2
     dependencies:
       '@cloudcommerce/api': link:../../api
-      axios: 0.27.2
+      axios: 1.1.2
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
@@ -110,13 +110,13 @@ importers:
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.8.0
-      axios: ^0.27.2
+      axios: ^1.1.2
       firebase-admin: ^11.1.0
       firebase-functions: ^3.24.1
     dependencies:
       '@cloudcommerce/api': link:../../api
       '@cloudcommerce/firebase': link:../../firebase
-      axios: 0.27.2
+      axios: 1.1.2
       firebase-admin: 11.1.0_@firebase+app-types@0.8.0
       firebase-functions: 3.24.1_firebase-admin@11.1.0
     devDependencies:
@@ -130,7 +130,7 @@ importers:
       '@cloudcommerce/types': workspace:*
       '@ecomplus/utils': ^1.4.1
       '@firebase/app-types': ^0.8.0
-      axios: ^0.27.2
+      axios: ^1.1.2
       firebase-admin: ^11.1.0
       firebase-functions: ^3.24.1
       form-data: ^4.0.0
@@ -138,7 +138,7 @@ importers:
       '@cloudcommerce/api': link:../../api
       '@cloudcommerce/firebase': link:../../firebase
       '@ecomplus/utils': 1.4.1
-      axios: 0.27.2
+      axios: 1.1.2
       firebase-admin: 11.1.0_@firebase+app-types@0.8.0
       firebase-functions: 3.24.1_firebase-admin@11.1.0
       form-data: 4.0.0
@@ -238,7 +238,7 @@ importers:
       '@firebase/app-types': ^0.8.0
       ajv: ^8.11.0
       ajv-formats: ^2.1.1
-      axios: ^0.27.2
+      axios: ^1.1.2
       firebase-admin: ^11.1.0
       firebase-functions: ^3.24.1
       json-schema-to-typescript: ^11.0.2
@@ -254,7 +254,7 @@ importers:
       '@ecomplus/utils': 1.4.1
       ajv: 8.11.0
       ajv-formats: 2.1.1_ajv@8.11.0
-      axios: 0.27.2
+      axios: 1.1.2
       firebase-admin: 11.1.0_@firebase+app-types@0.8.0
       firebase-functions: 3.24.1_firebase-admin@11.1.0
       source-map-support: 0.5.21
@@ -3977,11 +3977,12 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: false
 
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+  /axios/1.1.2:
+    resolution: {integrity: sha512-bznQyETwElsXl2RK7HLLwb5GPpOLlycxHCtrpDR/4RqqBzjARaOTo3jz4IgtntWUYee7Ne4S8UHd92VCuzPaWA==}
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -8834,6 +8835,10 @@ packages:
     dependencies:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
+    dev: false
+
+  /proxy-from-env/1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
 
   /ps-tree/1.2.0:
