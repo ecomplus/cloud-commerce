@@ -1,6 +1,6 @@
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
-import type CmsSettings from '../types/cms-settings';
+import type CmsSettings from './types/cms-settings';
 import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
 

@@ -9,7 +9,7 @@ import {
   signInWithEmailLink,
   // updateProfile,
 } from 'firebase/auth';
-import '../scripts/firebase-app';
+import '@@storefront/scripts/firebase-app';
 
 const emptySession = {
   customer: {

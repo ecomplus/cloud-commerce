@@ -5,7 +5,7 @@ import {
   computed,
   watch,
 } from 'vue';
-import { i19close } from '@i18n';
+import { i19close } from '@@i18n';
 
 export interface Props {
   modelValue?: boolean;

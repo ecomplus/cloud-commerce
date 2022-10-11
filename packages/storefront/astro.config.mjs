@@ -1,3 +1,5 @@
+import { readdirSync } from 'fs';
+import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
 /* eslint-disable import/no-unresolved */
@@ -11,6 +13,7 @@ import UnoCSS from 'unocss/astro';
 import { VitePWA } from 'vite-plugin-pwa';
 import getConfig from './storefront.config.mjs';
 
+const __dirname = new URL('.', import.meta.url).pathname;
 dotenv.config();
 
 const {
@@ -127,6 +130,7 @@ const _vitePWAOptions = {
 };
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
+const componentsSrc = joinPath(process.cwd(), 'src/components');
 
 const genAstroConfig = ({
   site = `https://${domain}`,
@@ -151,8 +155,20 @@ const genAstroConfig = ({
       VitePWA(vitePWAOptions),
     ],
     resolve: {
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.svelte'],
       alias: {
-        '@i18n': `@cloudcommerce/i18n/src/${lang}.ts`,
+        '@@i18n': `@cloudcommerce/i18n/src/${lang}.ts`,
+        '@@storefront': joinPath(__dirname, 'src/lib'),
+        ...readdirSync(componentsSrc, { withFileTypes: true }).reduce((acc, dirent) => {
+          const { name } = dirent;
+          if (!dirent.isDirectory() && name.charAt(0) !== '.') {
+            const nameWithoutExt = name.replace(/\.\w+$/, '');
+            acc[`@@components/${name}`] = joinPath(componentsSrc, name);
+            acc[`@@components/${nameWithoutExt}`] = joinPath(componentsSrc, name);
+          }
+          return acc;
+        }, {}),
+        '@@components': joinPath(__dirname, 'src/lib/components'),
       },
     },
   },

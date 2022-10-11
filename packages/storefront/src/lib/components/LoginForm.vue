@@ -11,7 +11,7 @@ import {
   i19sendLoginCodeByEmail,
   i19signUp,
   i19visitor,
-} from '@i18n';
+} from '@@i18n';
 import {
   getAuth,
   sendSignInLinkToEmail,
@@ -22,7 +22,7 @@ import {
   customerEmail,
   setCustomerEmail,
   isLogged,
-} from '../state/customer-session';
+} from '@@storefront/state/customer-session';
 
 const emit = defineEmits(['login', 'logout']);
 watch(useStore(isLogged), (_isLogged) => {

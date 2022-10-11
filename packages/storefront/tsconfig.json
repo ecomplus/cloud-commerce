@@ -3,7 +3,9 @@
   "compilerOptions": {
     "jsx": "preserve",
     "paths": {
-      "@i18n": ["./node_modules/@cloudcommerce/i18n/src/pt_br.ts"],
+      "@@i18n": ["./node_modules/@cloudcommerce/i18n/src/pt_br.ts"],
+      "@@storefront/*": ["./src/lib/*"],
+      "@@components/*": ["./src/lib/components/*", "./src/lib/components/*.vue"],
     }
   }
 }

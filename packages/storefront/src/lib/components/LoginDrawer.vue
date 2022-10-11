@@ -4,8 +4,8 @@ import {
   i19myAccountAndOrders,
   i19myAccount,
   i19myOrders,
-} from '@i18n';
-import ADrawer from './ADrawer.vue';
+} from '@@i18n';
+import ADrawer from '@@components/ADrawer.vue';
 
 export interface Props {
   accountUrl?: string;

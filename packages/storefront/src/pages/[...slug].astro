@@ -1,7 +1,7 @@
 ---
-import loadPageContext, { PageContext } from '../lib/ssr-context';
+import loadPageContext, { PageContext } from '@@storefront/ssr-context';
 import api from '@cloudcommerce/api';
-import WildcardMain from '../lib/main/Wildcard.astro';
+import WildcardMain from '@@storefront/main/Wildcard.astro';
 import PagesLayout from '../layouts/Pages.astro';
 
 if (String(Astro.params.slug).endsWith('.css.map')) {
