@@ -28,6 +28,10 @@ const genTailwindConfig = ({
           },
           ...colors,
         }), {}),
+        gray: {
+          DEFAULT: 'var(--gray)',
+          accent: 'var(--gray-accent)',
+        },
       },
     },
   },
