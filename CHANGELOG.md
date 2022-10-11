@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.115](https://github.com/ecomplus/cloud-commerce/compare/v0.0.114...v0.0.115) (2022-10-11)
+
+
+### Features
+
+* **storefront:** Setup `@[@storefront](https://github.com/storefront)` and `@[@components](https://github.com/components)` import aliases ([e24d271](https://github.com/ecomplus/cloud-commerce/commit/e24d271597bf1a8c037433ab3fcff37adccc0434))
+
+
+### Bug Fixes
+
+* **deps:** Bump dependency axios to v1 ([#58](https://github.com/ecomplus/cloud-commerce/issues/58)) ([229f798](https://github.com/ecomplus/cloud-commerce/commit/229f7986f6ba354935139d55aad2e7ecc130e51b))
+* **deps:** Update all non-major dependencies ([#57](https://github.com/ecomplus/cloud-commerce/issues/57)) ([2082b79](https://github.com/ecomplus/cloud-commerce/commit/2082b793b58bf88a0808ae034f1fb4a58ab86d21))
+* **storefront:** Remove link variations injected styles from lib ([b6ef5d8](https://github.com/ecomplus/cloud-commerce/commit/b6ef5d80a0b4ee22a2f855cd6402ac9e56dc03ea))
+
 ### [0.0.114](https://github.com/ecomplus/cloud-commerce/compare/v0.0.113...v0.0.114) (2022-10-09)
 
 ### [0.0.113](https://github.com/ecomplus/cloud-commerce/compare/v0.0.112...v0.0.113) (2022-10-09)
