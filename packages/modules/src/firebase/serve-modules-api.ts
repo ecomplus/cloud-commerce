@@ -20,7 +20,10 @@ export default (req: Request, res: Response) => {
     url = url.slice(0, -5);
   }
   [url] = url.split('?');
+  url = url.replace('/api/modules', ''); // due to hosting rewrite
   const modName = url.split('/')[1];
+
+  console.log('url ', url, ' ', modName);
 
   const sendSchema = (isResponseSchema = false) => {
     return res.status(200)
