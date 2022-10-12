@@ -22,8 +22,7 @@
     "build:static": "BUILD_OUTPUT=static astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare-monorepo": "sh scripts/prepare-monorepo.sh",
-    "prerelease": "sh scripts/prerelease.sh"
+    "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
   },
   "dependencies": {
     "@astrojs/image": "^0.9.3",
