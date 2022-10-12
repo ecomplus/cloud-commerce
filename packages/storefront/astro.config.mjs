@@ -163,7 +163,6 @@ const genAstroConfig = ({
         { find: '@@storefront', replacement: joinPath(__dirname, 'src/lib') },
         { find: '~', replacement: joinPath(process.cwd(), 'src') },
         { find: 'content', replacement: joinPath(process.cwd(), 'content') },
-        { find: 'public', replacement: joinPath(process.cwd(), 'public') },
         {
           find: '@@components',
           replacement: '',

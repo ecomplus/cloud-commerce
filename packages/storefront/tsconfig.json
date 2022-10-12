@@ -9,7 +9,6 @@
       "@@components/*": ["./src/lib/components/*"],
       "~/*": ["./src/*"],
       "content/*": ["./content/*"],
-      "public/*": ["./public/*"],
     }
   }
 }
