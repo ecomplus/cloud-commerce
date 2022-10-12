@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { i19myAccountAndOrders } from '@@i18n';
-import HeaderLink from '@@components/header/HeaderLink.vue';
+import HeaderButtonLink from '@@storefront/components/header/HeaderButtonLink.vue';
 
 export interface Props {
   href?: string;
@@ -12,12 +12,12 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <HeaderLink
+  <HeaderButtonLink
     :href="href"
     :title="i19myAccountAndOrders"
   >
     <slot>
       <div class="i-user-circle"></div>
     </slot>
-  </HeaderLink>
+  </HeaderButtonLink>
 </template>
