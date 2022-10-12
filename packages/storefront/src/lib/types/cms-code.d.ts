@@ -1,4 +1,4 @@
-type CmsCode = typeof import('../../../content/code.json');
+type CmsCode = typeof import('content/code.json');
 
 export default CmsCode;
 

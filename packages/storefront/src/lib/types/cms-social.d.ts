@@ -1,4 +1,4 @@
-type CmsSocial = typeof import('../../../content/social.json');
+type CmsSocial = typeof import('content/social.json');
 
 export default CmsSocial;
 

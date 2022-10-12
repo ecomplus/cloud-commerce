@@ -1,4 +1,4 @@
-type CmsHeader = typeof import('../../../content/header.json');
+type CmsHeader = typeof import('content/header.json');
 
 export default CmsHeader;
 
