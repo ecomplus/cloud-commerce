@@ -1,4 +1,4 @@
-import { readdirSync } from 'fs';
+import { existsSync } from 'fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
@@ -131,24 +131,9 @@ const _vitePWAOptions = {
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
 
-const componentsSrc = joinPath(process.cwd(), 'src/components');
-const mapComponentsAliases = (folder = '') => {
-  const aliases = {};
-  const folderPath = joinPath(componentsSrc, folder);
-  readdirSync(folderPath, { withFileTypes: true }).forEach((dirent) => {
-    const { name } = dirent;
-    if (name.charAt(0) !== '.') {
-      if (!dirent.isDirectory()) {
-        const nameWithoutExt = name.replace(/\.\w+$/, '');
-        aliases[`@@components/${folder}${name}`] = joinPath(folderPath, name);
-        aliases[`@@components/${folder}${nameWithoutExt}`] = joinPath(folderPath, name);
-      } else {
-        Object.assign(aliases, mapComponentsAliases(`${folder}${name}/`));
-      }
-    }
-  });
-  return aliases;
-};
+// @@components tries ~/components with fallback to @@storefront/components
+const localComponentsDir = joinPath(process.cwd(), 'src/components');
+const libComponentsDir = joinPath(__dirname, 'src/lib/components');
 
 const genAstroConfig = ({
   site = `https://${domain}`,
@@ -173,13 +158,24 @@ const genAstroConfig = ({
       VitePWA(vitePWAOptions),
     ],
     resolve: {
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.svelte'],
-      alias: {
-        '@@i18n': `@cloudcommerce/i18n/src/${lang}.ts`,
-        '@@storefront': joinPath(__dirname, 'src/lib'),
-        ...mapComponentsAliases(),
-        '@@components': joinPath(__dirname, 'src/lib/components'),
-      },
+      alias: [
+        { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
+        { find: '@@storefront', replacement: joinPath(__dirname, 'src/lib') },
+        { find: '~', replacement: joinPath(process.cwd(), 'src') },
+        { find: '/content', replacement: joinPath(process.cwd(), 'content') },
+        { find: '/public', replacement: joinPath(process.cwd(), 'public') },
+        {
+          find: '@@components',
+          replacement: '',
+          customResolver: (componentPath) => {
+            const localReplacement = joinPath(localComponentsDir, componentPath);
+            if (existsSync(localReplacement)) {
+              return localReplacement;
+            }
+            return joinPath(libComponentsDir, componentPath);
+          },
+        },
+      ],
     },
   },
 });
