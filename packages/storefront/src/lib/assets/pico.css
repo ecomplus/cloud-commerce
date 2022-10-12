@@ -40,22 +40,22 @@
 }
 @media (min-width: 576px) {
   :root {
-    --font-size: 17px;
+    --font-size: 16.5px;
   }
 }
 @media (min-width: 768px) {
   :root {
-    --font-size: 18px;
+    --font-size: 17px;
   }
 }
 @media (min-width: 992px) {
   :root {
-    --font-size: 19px;
+    --font-size: 17.5px;
   }
 }
 @media (min-width: 1200px) {
   :root {
-    --font-size: 20px;
+    --font-size: 18px;
   }
 }
 
