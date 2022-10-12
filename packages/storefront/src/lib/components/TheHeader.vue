@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { toRefs, ImgHTMLAttributes } from 'vue';
 import HeaderWrapper from '@@components/header/HeaderWrapper.vue';
+import HeaderLogo from '@@components/header/HeaderLogo.vue';
 import HeaderNav from '@@components/header/HeaderNav.vue';
-import HeaderButtons from '@@components/header/HeaderButtons.vue';
 
 export interface Props {
   logo?: ImgHTMLAttributes;
@@ -20,24 +20,14 @@ const { logo } = toRefs(props);
       </div>
     </slot>
     <slot name="logo" v-bind="{ logo }">
-      <a v-if="logo" href="/" class="header__logo">
-        <component :is="logo.alt ? 'h1' : 'span'" class="m-0">
-          <img v-bind="logo" />
-        </component>
-      </a>
+      <HeaderLogo v-if="logo" :img="logo" />
     </slot>
     <template #actions>
       <slot name="nav">
         <HeaderNav />
       </slot>
       <slot name="search" />
-      <slot name="buttons">
-        <HeaderButtons>
-          <template #account>
-            <slot name="account" />
-          </template>
-        </HeaderButtons>
-      </slot>
+      <slot name="buttons" />
     </template>
   </HeaderWrapper>
 </template>

@@ -7,15 +7,14 @@ import { i19buyOnWhatsApp } from '@@i18n';
 import { getImage } from '@@storefront/ssr/image';
 import TopBar, { Props as TopBarProps } from '@@components/TopBar';
 import TheHeader, { Props as TheHeaderProps } from '@@components/TheHeader';
-import HeaderAccountButton,
-  { Props as HeaderAccountButtonProps } from '@@components/header/HeaderAccountButton';
+import HeaderButtons, { Props as HeaderButtonsProps } from '@@components/header/HeaderButtons';
 
 export interface Props {
   pageContext: PageContext;
   logoTransformOptions?: Parameters<typeof getImage>[0];
   topBarProps?: Partial<TopBarProps>;
   theHeaderProps?: Partial<TheHeaderProps>;
-  headerAccountButtonProps?: Partial<HeaderAccountButtonProps>;
+  headerButtonsProps?: Partial<HeaderButtonsProps>;
 }
 
 const {
@@ -27,7 +26,7 @@ const {
   logoTransformOptions,
   topBarProps,
   theHeaderProps,
-  headerAccountButtonProps,
+  headerButtonsProps,
 } = Astro.props as Props;
 const header = cms('header') as CmsHeader;
 const contacts = cms('contacts') as CmsContacts;
@@ -61,7 +60,7 @@ if (header.categories_list) {
 const hasMegamenu: boolean | undefined = header.desktop_megamenu;
 const isAlphabeticalOrderSubmenu: boolean | undefined = header.alphabetical_order_submenu;
 const isFullWidthSubmenu: boolean | undefined = header.full_width_submenu;
-const loginDrawerAdditionalLinks: HeaderAccountButtonProps['drawerAdditionalLinks']
+const loginDrawerAdditionalLinks: HeaderButtonsProps['loginDrawerAdditionalLinks']
   = header.drawer_links?.map(({ title, link }) => ({ href: link, innerHTML: title })) || [];
 if (contacts.whatsapp) {
   loginDrawerAdditionalLinks.unshift({
@@ -74,7 +73,7 @@ if (contacts.whatsapp) {
 declare global {
   var TopBarProps: TopBarProps;
   var TheHeaderProps: TheHeaderProps;
-  var HeaderAccountButtonProps: HeaderAccountButtonProps;
+  var HeaderButtonsProps: HeaderButtonsProps;
 }
 globalThis.TopBarProps = {
   marketingStripe: header.marketing_stripe,
@@ -97,9 +96,9 @@ globalThis.TheHeaderProps = {
   },
   ...theHeaderProps,
 };
-globalThis.HeaderAccountButtonProps = {
-  drawerAdditionalLinks: loginDrawerAdditionalLinks,
-  ...headerAccountButtonProps,
+globalThis.HeaderButtonsProps = {
+  loginDrawerAdditionalLinks,
+  ...headerButtonsProps,
 };
 ---
 
@@ -109,11 +108,8 @@ globalThis.HeaderAccountButtonProps = {
   </slot>
   <slot name="header">
     <TheHeader {...globalThis.TheHeaderProps}>
-      <Fragment slot="account">
-        <HeaderAccountButton
-          client:idle
-          {...globalThis.HeaderAccountButtonProps}
-        />
+      <Fragment slot="buttons">
+        <HeaderButtons client:idle {...globalThis.HeaderButtonsProps} />
       </Fragment>
     </TheHeader>
   </slot>

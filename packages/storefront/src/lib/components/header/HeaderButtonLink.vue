@@ -1,5 +1,5 @@
 <template>
-  <a class="text-gray-accent hover:text-primary no-underline">
+  <a class="text-2xl text-gray-accent hover:text-primary no-underline">
     <slot />
   </a>
 </template>

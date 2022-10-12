@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { i19myAccountAndOrders } from '@@i18n';
+import { i19openCart } from '@@i18n';
 import HeaderButtonLink from '@@components/header/HeaderButtonLink.vue';
 
 export interface Props {
@@ -7,17 +7,17 @@ export interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  href: '/app/account',
+  href: '/app/#/cart',
 });
 </script>
 
 <template>
   <HeaderButtonLink
     :href="href"
-    :title="i19myAccountAndOrders"
+    :title="i19openCart"
   >
     <slot>
-      <div class="i-user-circle"></div>
+      <div class="i-shopping-cart"></div>
     </slot>
   </HeaderButtonLink>
 </template>
