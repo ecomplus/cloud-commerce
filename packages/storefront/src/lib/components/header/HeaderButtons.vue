@@ -14,13 +14,16 @@ defineProps<Props>();
 </script>
 
 <template>
+  <slot name="left" />
   <slot name="account">
     <HeaderAccountButton
       :account-url="accountUrl"
       :drawer-additional-links="loginDrawerAdditionalLinks"
     />
   </slot>
+  <slot />
   <slot name="cart">
     <HeaderCartButton :cart-url="cartUrl" />
   </slot>
+  <slot name="right" />
 </template>
