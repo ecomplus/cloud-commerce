@@ -50,12 +50,12 @@
 }
 @media (min-width: 992px) {
   :root {
-    --font-size: 17.5px;
+    --font-size: 17.65px;
   }
 }
 @media (min-width: 1200px) {
   :root {
-    --font-size: 18px;
+    --font-size: 18.5px;
   }
 }
 
