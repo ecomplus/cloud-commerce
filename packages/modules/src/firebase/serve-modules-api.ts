@@ -23,8 +23,6 @@ export default (req: Request, res: Response) => {
   url = url.replace('/api/modules', ''); // due to hosting rewrite
   const modName = url.split('/')[1];
 
-  console.log('url ', url, ' ', modName);
-
   const sendSchema = (isResponseSchema = false) => {
     return res.status(200)
       .setHeader('Cache-Control', 'public, max-age=3600')
