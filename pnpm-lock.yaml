@@ -89,7 +89,7 @@ importers:
       '@astrojs/image': ^0.9.3
       '@cloudcommerce/api': ^0.0.115
       '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/i18n': workspace:^0.0.115
+      '@cloudcommerce/i18n': ^0.0.115
       '@cloudcommerce/ssr': ^0.0.115
       '@cloudcommerce/storefront': ^0.0.115
       lottie-web: ^5.9.6
@@ -467,8 +467,10 @@ importers:
 
   store/functions/ssr:
     specifiers:
+      '@astrojs/image': ^0.9.3
       '@cloudcommerce/api': ^0.0.115
       '@cloudcommerce/firebase': ^0.0.115
+      '@cloudcommerce/i18n': ^0.0.115
       '@cloudcommerce/ssr': ^0.0.115
       '@cloudcommerce/storefront': ^0.0.115
     dependencies:
@@ -476,6 +478,8 @@ importers:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
     devDependencies:
+      '@astrojs/image': 0.9.3
+      '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
 
 packages:
