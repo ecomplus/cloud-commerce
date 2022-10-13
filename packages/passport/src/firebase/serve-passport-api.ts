@@ -8,7 +8,9 @@ export default async (req: Request, res: Response) => {
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
+  url = url.replace('/api/modules', ''); // due to hosting rewrite
   const endpoint = url.split('/')[1];
+
   if (endpoint !== 'token') {
     return res.sendStatus(404);
   }
