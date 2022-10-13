@@ -51,7 +51,8 @@ if (argv.publish) {
           await $`npm i --save @cloudcommerce/${codebase}@${version}`;
           if (codebase === 'ssr') {
             await $`npm i --save @cloudcommerce/api@${version}`;
-            await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
+            await $`npm i --save-dev @cloudcommerce/storefront@${version} \
+              @cloudcommerce/i18n@${version} '@astrojs/image@<2'`;
           }
         }
         await $`rm -rf node_modules`;
