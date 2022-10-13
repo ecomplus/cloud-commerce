@@ -52,7 +52,7 @@ const _preflights: Preflight[] = [{
       ${Object.entries(colorCSSVars).map(([varName, value]) => `--${varName}:${value};`).join('')}
       --content-max-width: 80rem;
       --white: #fff;
-      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
       --gray-200: #e5e7eb;
       --gray-400: #94a3b8;
       --gray-600: #4b5563;
@@ -61,7 +61,7 @@ const _preflights: Preflight[] = [{
       --gray-900: #111827;
       --gray: var(--gray-600);
       --gray-accent: var(--gray-800);
-      --surface-color: var(--gray-50);
+      --surface-color: var(--gray-100);
       --surface-border-color: var(--gray-200);
       --yiq-text-light: var(--white);
       --yiq-text-dark: var(--gray-900);
