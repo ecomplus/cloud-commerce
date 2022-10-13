@@ -104,7 +104,9 @@ const customerName = useStore($customerName);
       </a>
     </small>
     <button type="submit">
-      {{ isSignUp ? i19signUp : i19accessMyAccount }}
+      <slot name="button-content" v-bind="{ isSignUp }">
+        {{ isSignUp ? i19signUp : i19accessMyAccount }}
+      </slot>
     </button>
     <a
       href="#"

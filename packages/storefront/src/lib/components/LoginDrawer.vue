@@ -38,7 +38,11 @@ const isLogged = ref(false);
     <ADrawer v-model="isVisible">
       <slot name="form">
         <div class="w-80">
-          <LoginForm @login="isLogged = true" @logout="isLogged = false" />
+          <LoginForm @login="isLogged = true" @logout="isLogged = false">
+            <template #button-content>
+              <slot name="form-button-content" />
+            </template>
+          </LoginForm>
         </div>
       </slot>
       <slot name="nav" v-bind="{ isLogged }">
