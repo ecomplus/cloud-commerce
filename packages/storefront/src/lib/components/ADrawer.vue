@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits(['update:modelValue']);
 const close = () => emit('update:modelValue', false);
+const container = ref(null);
 const article = ref(null);
 const outsideClickListener = (ev: MouseEvent) => {
   if (!article.value?.contains(ev.target)) {
@@ -30,14 +31,23 @@ const escClickListener = (ev: KeyboardEvent) => {
   }
 };
 watch(toRef(props, 'modelValue'), async (isOpen) => {
+  const header = container.value.closest('[class*="backdrop-"]');
   if (isOpen) {
     document.body.style.overflow = 'hidden';
+    if (header) {
+      header.style.backdropFilter = 'none';
+    }
     setTimeout(() => {
       document.addEventListener('click', outsideClickListener, { passive: true });
       document.addEventListener('keydown', escClickListener, { passive: true });
     }, 500);
   } else {
     document.body.style.overflow = null;
+    if (header) {
+      setTimeout(() => {
+        header.style.backdropFilter = null;
+      }, 500);
+    }
     document.removeEventListener('click', outsideClickListener);
     document.removeEventListener('keydown', escClickListener);
   }
@@ -48,28 +58,30 @@ const transition3dTx = computed(() => {
 </script>
 
 <template>
-  <Transition>
-    <dialog
-      v-if="modelValue"
-      class="offcanvas p-0"
-      :class="placement === 'end' ? 'justify-end' : 'justify-start'"
-      :open="modelValue"
-    >
-      <article
-        ref="article"
-        class="rounded-none h-full max-h-screen m-0"
+  <div ref="container">
+    <Transition>
+      <dialog
+        v-if="modelValue"
+        class="offcanvas p-0"
+        :class="placement === 'end' ? 'justify-end' : 'justify-start'"
+        :open="modelValue"
       >
-        <a
-          href="#close"
-          :aria-label="i19close"
-          class="close"
-          data-target="modal-example"
-          @click.prevent="close"
-        ></a>
-        <slot />
-      </article>
-    </dialog>
-  </Transition>
+        <article
+          ref="article"
+          class="rounded-none h-full max-h-screen m-0"
+        >
+          <a
+            href="#close"
+            :aria-label="i19close"
+            class="close"
+            data-target="modal-example"
+            @click.prevent="close"
+          ></a>
+          <slot />
+        </article>
+      </dialog>
+    </Transition>
+  </div>
 </template>
 
 <style>
