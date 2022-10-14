@@ -39,17 +39,17 @@
     "@iconify-json/logos": "^1.1.17",
     "@nanostores/vue": "^0.6.0",
     "@unocss/preset-icons": "^0.45.29",
-    "astro": "^1.4.7",
+    "astro": "^1.5.0",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
-    "firebase": "^9.11.0",
+    "firebase": "^9.12.1",
     "image-size": "^1.0.2",
     "nanostores": "^0.7.0",
     "rollup": "^2.79.1",
     "unocss": "^0.45.29",
-    "vite": "^3.1.7",
+    "vite": "^3.1.8",
     "vite-plugin-pwa": "^0.13.1",
-    "vue": "^3.2.40"
+    "vue": "^3.2.41"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"
