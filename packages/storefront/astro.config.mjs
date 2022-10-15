@@ -1,4 +1,4 @@
-import { existsSync } from 'fs';
+import { existsSync, lstatSync } from 'fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
@@ -158,6 +158,7 @@ const genAstroConfig = ({
       VitePWA(vitePWAOptions),
     ],
     resolve: {
+      preserveSymlinks: lstatSync(localComponentsDir).isSymbolicLink(),
       alias: [
         { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
         { find: '@@storefront', replacement: joinPath(__dirname, 'src/lib') },
