@@ -43,7 +43,7 @@ const isAuthenticated = computed(session, ({ auth }) => {
   return auth && new Date(auth.expires).getTime() - Date.now() > 1000 * 10;
 });
 const customer = computed(session, (_session) => _session.customer);
-const customerName = computed(customer, (_customer) => getNickname(_customer));
+const customerName = computed(customer, (_customer) => getNickname(_customer) as string);
 const customerEmail = computed(customer, (_customer) => _customer.main_email);
 
 const setCustomerEmail = (email: string) => session.setKey('customer', {
