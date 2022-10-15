@@ -749,13 +749,14 @@ button {
 [role=button] {
   display: inline-block;
   text-decoration: none;
+  cursor: pointer;
 }
 
 button,
 input[type=submit],
 input[type=button],
 input[type=reset],
-[role=button] {
+:where(a)[role=button] {
   --background-color: var(--primary);
   --border-color: var(--primary);
   --color: var(--primary-inverse);
@@ -914,7 +915,7 @@ textarea {
   border-width: 0;
 }
 
-input:not([type=checkbox], [type=radio], [type=range]) {
+:where(input):not([type=checkbox], [type=radio], [type=range]) {
   height: calc(1rem * var(--line-height) + var(--form-element-spacing-vertical) * 2 + var(--border-width) * 2);
 }
 
@@ -932,13 +933,13 @@ fieldset legend {
   font-weight: var(--form-label-font-weight, var(--font-weight));
 }
 
-input:not([type=checkbox], [type=radio]),
+:where(input):not([type=checkbox], [type=radio]),
 select,
 textarea {
   width: 100%;
 }
 
-input:not([type=checkbox], [type=radio], [type=range], [type=file]),
+:where(input):not([type=checkbox], [type=radio], [type=range], [type=file]),
 select,
 textarea {
   -webkit-appearance: none;
@@ -1035,7 +1036,7 @@ select:invalid {
   opacity: 1;
 }
 
-input:not([type=checkbox], [type=radio]),
+:where(input):not([type=checkbox], [type=radio]),
 select,
 textarea {
   margin-bottom: var(--spacing);
