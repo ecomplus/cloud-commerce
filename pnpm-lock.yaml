@@ -50,48 +50,48 @@ importers:
 
   ecomplus-stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.115
+      '@cloudcommerce/cli': ^0.0.116
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.115
+      '@cloudcommerce/firebase': ^0.0.116
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.115
-      '@cloudcommerce/firebase': ^0.0.115
+      '@cloudcommerce/events': ^0.0.116
+      '@cloudcommerce/firebase': ^0.0.116
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/modules': ^0.0.115
+      '@cloudcommerce/firebase': ^0.0.116
+      '@cloudcommerce/modules': ^0.0.116
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/passport': ^0.0.115
+      '@cloudcommerce/firebase': ^0.0.116
+      '@cloudcommerce/passport': ^0.0.116
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
 
   ecomplus-stores/monocard/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.9.3
-      '@cloudcommerce/api': ^0.0.115
-      '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/i18n': ^0.0.115
-      '@cloudcommerce/ssr': ^0.0.115
-      '@cloudcommerce/storefront': ^0.0.115
+      '@astrojs/image': ^0.10.0
+      '@cloudcommerce/api': ^0.0.116
+      '@cloudcommerce/firebase': ^0.0.116
+      '@cloudcommerce/i18n': ^0.0.116
+      '@cloudcommerce/ssr': ^0.0.116
+      '@cloudcommerce/storefront': ^0.0.116
       '@iconify-json/arcticons': ^1.1.28
       '@iconify-json/wpf': ^1.1.2
       lottie-web: ^5.9.6
@@ -102,7 +102,7 @@ importers:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
     devDependencies:
-      '@astrojs/image': 0.9.3
+      '@astrojs/image': 0.10.0
       '@cloudcommerce/i18n': link:../../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../../packages/storefront
       '@iconify-json/arcticons': 1.1.28
@@ -439,54 +439,54 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.115
+      '@cloudcommerce/cli': ^0.0.116
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.115
+      '@cloudcommerce/firebase': ^0.0.116
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.115
-      '@cloudcommerce/firebase': ^0.0.115
+      '@cloudcommerce/events': ^0.0.116
+      '@cloudcommerce/firebase': ^0.0.116
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/modules': ^0.0.115
+      '@cloudcommerce/firebase': ^0.0.116
+      '@cloudcommerce/modules': ^0.0.116
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/passport': ^0.0.115
+      '@cloudcommerce/firebase': ^0.0.116
+      '@cloudcommerce/passport': ^0.0.116
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.9.3
-      '@cloudcommerce/api': ^0.0.115
-      '@cloudcommerce/firebase': ^0.0.115
-      '@cloudcommerce/i18n': ^0.0.115
-      '@cloudcommerce/ssr': ^0.0.115
-      '@cloudcommerce/storefront': ^0.0.115
+      '@astrojs/image': ^0.10.0
+      '@cloudcommerce/api': ^0.0.116
+      '@cloudcommerce/firebase': ^0.0.116
+      '@cloudcommerce/i18n': ^0.0.116
+      '@cloudcommerce/ssr': ^0.0.116
+      '@cloudcommerce/storefront': ^0.0.116
     dependencies:
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
     devDependencies:
-      '@astrojs/image': 0.9.3
+      '@astrojs/image': 0.10.0
       '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
 
@@ -533,6 +533,23 @@ packages:
     resolution: {integrity: sha512-jdbnULQkafKuSBa9yL7amQ5Ee7WIiQSAkCCGSgWhpt7t1HvtlbviNYuNIw5ob9Ax+rA08jNQ896rHqaPB31XjA==}
     dev: false
 
+  /@astrojs/image/0.10.0:
+    resolution: {integrity: sha512-/lkQ8YbqwHEA3bU6W7igEHqqQs6V6sx4rMbhkur4qWQP61kAOnvacSSKN7GJ+YswZOiUhPGY9DTtyLRqLFLv5g==}
+    peerDependencies:
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
+      http-cache-semantics: 4.1.0
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.25.9
+      mime: 3.0.0
+      slash: 4.0.0
+    dev: true
+
   /@astrojs/image/0.9.3:
     resolution: {integrity: sha512-FvNkdj9lPH1wi4ulC/ykCqEW3+UN50rdqkGfQSJxC0Eb1P+XxJpiYKxZeGPuw6wj3JV2SbL95ZxtV7/PxB2j4Q==}
     peerDependencies:
@@ -548,6 +565,7 @@ packages:
       magic-string: 0.25.9
       mime: 3.0.0
       slash: 4.0.0
+    dev: false
 
   /@astrojs/language-server/0.26.2:
     resolution: {integrity: sha512-9nkfdd6CMXLDIJojnwbYu5XrYfOI+g63JlktOlpFCwFjFNpm1u0e/+pXXmj6Zs+PkSTo0kV1UM77dRKRS5OC1Q==}
