@@ -58,8 +58,9 @@ if (argv.publish) {
             await $`npm i --save @cloudcommerce/api@${version}`;
             await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
             for (let i = 0; i < astroPkgs.length; i++) {
-              const dep = astroPkgs[i];
-              await $`npm i --save '${dep}@${ssrDependencies[dep]}'`;
+              const astroPkg = astroPkgs[i];
+              const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
+              await $`npm i --save '${dep}'`;
             }
           }
         }
