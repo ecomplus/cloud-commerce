@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.120](https://github.com/ecomplus/cloud-commerce/compare/v0.0.119...v0.0.120) (2022-10-16)
+
+
+### Bug Fixes
+
+* **deps:** Update `@astrojs/image` and all non-major ([45be751](https://github.com/ecomplus/cloud-commerce/commit/45be751329030c7cace01571e111523f41af17d6))
+* **ssr:** Add `@cloudcommerce/i18n` to pkg dependencies ([d3bf23d](https://github.com/ecomplus/cloud-commerce/commit/d3bf23da42c10ef7561fdcb3802ef2d50f7f1959))
+
 ### [0.0.119](https://github.com/ecomplus/cloud-commerce/compare/v0.0.118...v0.0.119) (2022-10-15)
 
 ### [0.0.118](https://github.com/ecomplus/cloud-commerce/compare/v0.0.117...v0.0.118) (2022-10-15)
