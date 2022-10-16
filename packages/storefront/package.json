@@ -25,7 +25,7 @@
     "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.9.3",
+    "@astrojs/image": "^0.10.0",
     "@astrojs/node": "^1.1.0",
     "@astrojs/partytown": "^1.0.1",
     "@astrojs/prefetch": "^0.0.8",
