@@ -45,7 +45,6 @@
     "firebase": "^9.12.1",
     "image-size": "^1.0.2",
     "nanostores": "^0.7.0",
-    "rollup": "^2.79.1",
     "unocss": "^0.45.29",
     "vite": "^3.1.8",
     "vite-plugin-pwa": "^0.13.1",
