@@ -140,7 +140,9 @@ const genAstroConfig = ({
   vitePWAOptions = _vitePWAOptions,
 } = {}) => ({
   output: isSSG ? 'static' : 'server',
-  adapter: isSSG ? undefined : node(),
+  adapter: isSSG ? undefined : node({
+    mode: 'middleware',
+  }),
   outDir: isSSG ? './dist/client' : './dist',
   integrations: [
     image(),
