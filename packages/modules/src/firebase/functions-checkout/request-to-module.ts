@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import type { AxiosError } from 'axios';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/lib/logger';
 import axios from 'axios';
 
 // handle other modules endpoints directly
