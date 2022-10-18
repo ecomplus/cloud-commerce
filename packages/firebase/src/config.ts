@@ -8,6 +8,12 @@ const tinyErpEvents: ApiEventName[] = [
   'applications-dataSet',
 ];
 
+const sendGridEvents: ApiEventName[] = [
+  'orders-new',
+  'orders-anyStatusSet',
+  'carts-new'
+];
+
 const {
   DEPLOY_REGION,
   SSR_DEPLOY_REGION,
@@ -47,6 +53,10 @@ const mergeConfig = {
     mercadoPago: {
       appId: 111223,
     },
+    sendGrid : {
+      appId: 129856,
+      events: sendGridEvents
+    }
   },
 };
 config.set(mergeConfig);
