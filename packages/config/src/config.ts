@@ -25,14 +25,18 @@ const self = globalThis.__cloudCommerce || {
   config: {},
 };
 globalThis.__cloudCommerce = self;
+_env.ECOM_LANG = _env.ECOM_LANG || DEFAULT_LANG;
+_env.ECOM_CURRENCY = _env.ECOM_CURRENCY || DEFAULT_CURRENCY;
+_env.ECOM_CURRENCY_SYMBOL = _env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL;
+_env.ECOM_COUNTRY_CODE = _env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE;
 
 export default {
   get(): BaseConfig {
     return {
-      lang: _env.ECOM_LANG || DEFAULT_LANG,
-      currency: _env.ECOM_CURRENCY || DEFAULT_CURRENCY,
-      currencySymbol: _env.ECOM_CURRENCY_SYMBOL || DEFAULT_CURRENCY_SYMBOL,
-      countryCode: _env.ECOM_COUNTRY_CODE || DEFAULT_COUNTRY_CODE,
+      lang: _env.ECOM_LANG,
+      currency: _env.ECOM_CURRENCY,
+      currencySymbol: _env.ECOM_CURRENCY_SYMBOL,
+      countryCode: _env.ECOM_COUNTRY_CODE,
       storeId: Number(_env.ECOM_STORE_ID),
       ...self.config,
     };
@@ -41,6 +45,10 @@ export default {
     self.config = deepmerge(self.config, config);
     if (config.storeId) {
       _env.ECOM_STORE_ID = config.storeId;
+      _env.ECOM_LANG = _env.ECOM_LANG || self.config.lang;
+      _env.ECOM_CURRENCY = _env.ECOM_CURRENCY || self.config.currency;
+      _env.ECOM_CURRENCY_SYMBOL = _env.ECOM_CURRENCY_SYMBOL || self.config.currencySymbol;
+      _env.ECOM_COUNTRY_CODE = _env.ECOM_COUNTRY_CODE || self.config.countryCode;
     }
   },
 };

@@ -1,3 +1,5 @@
+import { existsSync, lstatSync } from 'fs';
+import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
 /* eslint-disable import/no-unresolved */
@@ -11,6 +13,7 @@ import UnoCSS from 'unocss/astro';
 import { VitePWA } from 'vite-plugin-pwa';
 import getConfig from './storefront.config.mjs';
 
+const __dirname = new URL('.', import.meta.url).pathname;
 dotenv.config();
 
 const {
@@ -128,12 +131,18 @@ const _vitePWAOptions = {
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
 
+// @@components tries ~/components with fallback to @@storefront/components
+const localComponentsDir = joinPath(process.cwd(), 'src/components');
+const libComponentsDir = joinPath(__dirname, 'src/lib/components');
+
 const genAstroConfig = ({
   site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => ({
   output: isSSG ? 'static' : 'server',
-  adapter: isSSG ? undefined : node(),
+  adapter: isSSG ? undefined : node({
+    mode: 'middleware',
+  }),
   outDir: isSSG ? './dist/client' : './dist',
   integrations: [
     image(),
@@ -151,9 +160,24 @@ const genAstroConfig = ({
       VitePWA(vitePWAOptions),
     ],
     resolve: {
-      alias: {
-        '@i18n': `@cloudcommerce/i18n/src/${lang}.ts`,
-      },
+      preserveSymlinks: lstatSync(localComponentsDir).isSymbolicLink(),
+      alias: [
+        { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
+        { find: '@@storefront', replacement: joinPath(__dirname, 'src/lib') },
+        { find: '~', replacement: joinPath(process.cwd(), 'src') },
+        { find: 'content', replacement: joinPath(process.cwd(), 'content') },
+        {
+          find: '@@components',
+          replacement: '',
+          customResolver: (componentPath) => {
+            const localReplacement = joinPath(localComponentsDir, componentPath);
+            if (existsSync(localReplacement)) {
+              return localReplacement;
+            }
+            return joinPath(libComponentsDir, componentPath);
+          },
+        },
+      ],
     },
   },
 });

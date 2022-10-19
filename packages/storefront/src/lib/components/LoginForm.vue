@@ -11,7 +11,7 @@ import {
   i19sendLoginCodeByEmail,
   i19signUp,
   i19visitor,
-} from '@i18n';
+} from '@@i18n';
 import {
   getAuth,
   sendSignInLinkToEmail,
@@ -22,7 +22,7 @@ import {
   customerEmail,
   setCustomerEmail,
   isLogged,
-} from '../state/customer-session';
+} from '@@storefront/state/customer-session';
 
 const emit = defineEmits(['login', 'logout']);
 watch(useStore(isLogged), (_isLogged) => {
@@ -104,7 +104,9 @@ const customerName = useStore($customerName);
       </a>
     </small>
     <button type="submit">
-      {{ isSignUp ? i19signUp : i19accessMyAccount }}
+      <slot name="button-content" v-bind="{ isSignUp }">
+        {{ isSignUp ? i19signUp : i19accessMyAccount }}
+      </slot>
     </button>
     <a
       href="#"

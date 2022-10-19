@@ -72,21 +72,33 @@ type BaseListResultMeta = {
   fields: Array<string>,
 };
 
-type ListEndpoint<TResource extends Resource> = TResource | `${TResource}?${string}`;
 type ListResultDocs<Document extends any> = Array<Partial<Document> & { _id: ResourceId }>;
+type ProductsList = ListResultDocs<Products>;
+type CategoriesList = ListResultDocs<Categories>;
+type BrandsList = ListResultDocs<Brands>;
+type CollectionsList = ListResultDocs<Collections>;
+type GridsList = ListResultDocs<Grids>;
+type CartsList = ListResultDocs<Carts>;
+type OrdersList = ListResultDocs<Orders>;
+type CustomersList = ListResultDocs<Customers>;
+type StoresList = ListResultDocs<Stores>;
+type ApplicationsList = ListResultDocs<Applications>;
+type AuthenticationsList = ListResultDocs<Authentications>;
+
+type ListEndpoint<TResource extends Resource> = TResource | `${TResource}?${string}`;
 type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
   result:
-    TEndpoint extends ListEndpoint<'products'> ? ListResultDocs<Products> :
-    TEndpoint extends ListEndpoint<'categories'> ? ListResultDocs<Categories> :
-    TEndpoint extends ListEndpoint<'brands'> ? ListResultDocs<Brands> :
-    TEndpoint extends ListEndpoint<'collections'> ? ListResultDocs<Collections> :
-    TEndpoint extends ListEndpoint<'grids'> ? ListResultDocs<Grids> :
-    TEndpoint extends ListEndpoint<'carts'> ? ListResultDocs<Carts> :
-    TEndpoint extends ListEndpoint<'orders'> ? ListResultDocs<Orders> :
-    TEndpoint extends ListEndpoint<'customers'> ? ListResultDocs<Customers> :
-    TEndpoint extends ListEndpoint<'stores'> ? ListResultDocs<Stores> :
-    TEndpoint extends ListEndpoint<'applications'> ? ListResultDocs<Applications> :
-    TEndpoint extends ListEndpoint<'authentications'> ? ListResultDocs<Authentications> :
+    TEndpoint extends ListEndpoint<'products'> ? ProductsList :
+    TEndpoint extends ListEndpoint<'categories'> ? CategoriesList :
+    TEndpoint extends ListEndpoint<'brands'> ? BrandsList :
+    TEndpoint extends ListEndpoint<'collections'> ? CollectionsList :
+    TEndpoint extends ListEndpoint<'grids'> ? GridsList :
+    TEndpoint extends ListEndpoint<'carts'> ? CartsList :
+    TEndpoint extends ListEndpoint<'orders'> ? OrdersList :
+    TEndpoint extends ListEndpoint<'customers'> ? CustomersList :
+    TEndpoint extends ListEndpoint<'stores'> ? StoresList :
+    TEndpoint extends ListEndpoint<'applications'> ? ApplicationsList :
+    TEndpoint extends ListEndpoint<'authentications'> ? AuthenticationsList :
     never,
   meta: BaseListResultMeta & {
     count?: number,
@@ -219,6 +231,17 @@ export type {
   StoreSet,
   ApplicationSet,
   AuthenticationSet,
+  ProductsList,
+  CategoriesList,
+  BrandsList,
+  CollectionsList,
+  GridsList,
+  CartsList,
+  OrdersList,
+  CustomersList,
+  StoresList,
+  ApplicationsList,
+  AuthenticationsList,
   Resource,
   ResourceId,
   ResourceAndId,
