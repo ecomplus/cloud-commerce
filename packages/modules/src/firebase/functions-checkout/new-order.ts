@@ -5,7 +5,7 @@ import type {
   Amount,
   CheckoutTransaction,
   TransactionOrder,
-  BodyPaymentHistory,
+  PaymentHistory,
 } from '../../types/index';
 import logger from 'firebase-functions/lib/logger';
 import { sendError, getValidResults } from './utils';
@@ -36,7 +36,7 @@ const createOrder = async (
 ) => {
   // start creating new order to API
 
-  const order = await newOrder(orderBody);
+  const { order, err } = await newOrder(orderBody);
   if (order) {
     const orderId = order._id;
     const orderNumber = order.number;
@@ -45,7 +45,7 @@ const createOrder = async (
     let countDone = 0;
     let paymentsAmount = 0;
     let loyaltyPointsBalance = 0;
-    const paymentHistory: BodyPaymentHistory[] = [];
+    const paymentsHistory: PaymentHistory[] = [];
 
     const nextTransaction = async (index = 0) => {
       const newTransaction = transactions[index];
@@ -150,18 +150,18 @@ const createOrder = async (
                 transaction,
               ) as string;
               // add entry to payments history
-              const paymentEntry: BodyPaymentHistory = {
+              const paymentEntry: PaymentHistory = {
                 transaction_id: transactionId,
                 status: transaction.status.current,
                 date_time: dateTime,
                 flags: ['checkout'],
               };
-              paymentHistory.push(paymentEntry);
+              paymentsHistory.push(paymentEntry);
               try {
                 // eslint-disable-next-line no-await-in-loop
                 await addPaymentHistory(
                   orderId,
-                  paymentHistory,
+                  paymentsHistory,
                   isFirstTransaction,
                   paymentEntry,
                   dateTime,
@@ -252,16 +252,17 @@ const createOrder = async (
     return nextTransaction();
   }
   // send error
-  const userMessage = {
-    en_us: 'There was a problem saving your order, please try again later',
-    pt_br: 'Houve um problema ao salvar o pedido, por favor tente novamente mais tarde',
-  };
+  // Ref: class ApiError in api.d.ts
   return sendError(
     res,
-    409,
+    (err?.data?.status || err?.statusCode) || 409,
     'CKT701',
-    'There was a problem saving your order, please try again later',
-    userMessage,
+    (err?.message) || 'There was a problem saving your order, please try again later',
+    {
+      en_us: 'There was a problem saving your order, please try again later',
+      pt_br: 'Houve um problema ao salvar o pedido, por favor tente novamente mais tarde',
+    },
+    err?.data?.more_info,
   );
 };
 

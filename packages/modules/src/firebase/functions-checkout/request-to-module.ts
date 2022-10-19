@@ -1,13 +1,17 @@
-import { logger } from 'firebase-functions';
+// eslint-disable-next-line no-unused-vars
+import type { AxiosError } from 'axios';
+import logger from 'firebase-functions/lib/logger';
 import axios from 'axios';
 
 // handle other modules endpoints directly
 export default async (
-  checkoutBody: {[key:string]:any},
+  checkoutBody: { [key: string]: any },
   modulesBaseURL: string,
   label: string,
 ) => {
-  let moduleBody: {[key:string]:any} | undefined;
+  const msgErr: { moreInfo?: string, code?: number | string, status?: number } = {};
+
+  let moduleBody: { [key: string]: any } | undefined;
   let modName: string | undefined;
   switch (label) {
     case 'shipping':
@@ -44,6 +48,7 @@ export default async (
         url,
         body,
       )).data;
+      // find application validation error
       if (Array.isArray(resp.result)) {
         let countAppErro = 0;
         for (let i = 0; i < resp.result.length; i++) {
@@ -51,17 +56,34 @@ export default async (
           if (!result.validated || result.error) {
             countAppErro += 1;
             logger.error(result.response);
+            msgErr.moreInfo += ` ${result.response}`;
           }
         }
         if (resp.result.length === countAppErro) {
-          return null;
+          msgErr.code = 'APP_MODULE_ERROR_VALIDATION';
+          return { msgErr };
         }
       }
       return resp.result;
-    } catch (e) {
-      logger.error('>>erro: ', e);
-      return null;
+    } catch (err: any | AxiosError) {
+      msgErr.moreInfo = 'Unexpected error ';
+      logger.error(err);
+      if (axios.isAxiosError(err)) {
+        msgErr.moreInfo = err.message;
+        if (err.code) {
+          msgErr.code = `MODULE_${err.code}`;
+        }
+        if (err.response) {
+          msgErr.status = err.response.status;
+        }
+      }
+      return { msgErr };
     }
   }
-  return null;
+
+  msgErr.moreInfo = 'Body, application or module not informed';
+  msgErr.status = 404;
+  msgErr.code = 'CKT900';
+
+  return { msgErr };
 };

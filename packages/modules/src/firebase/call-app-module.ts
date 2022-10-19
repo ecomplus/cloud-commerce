@@ -1,5 +1,5 @@
 import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/lib/logger';
 import axios, { AxiosResponse } from 'axios';
 import config from '@cloudcommerce/firebase/lib/config';
 

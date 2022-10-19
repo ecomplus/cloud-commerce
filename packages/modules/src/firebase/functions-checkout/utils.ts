@@ -2,7 +2,7 @@ import type { Response } from 'firebase-functions';
 import type {
   CheckoutBodyWithItems,
   BodyOrder,
-  BodyPayment,
+  Payment,
   PaymentGateways,
   PaymentMethod,
   Amount,
@@ -10,8 +10,6 @@ import type {
   ShippingSerive,
   ShippingLine,
 } from '../../types/index';
-
-// eslint-disable-next-line padding-line-between-statements
 import logger from 'firebase-functions/lib/logger';
 
 type BodyResouce = {[key:string]:any}
@@ -89,7 +87,7 @@ const getValidResults = (
 const handleListPayments = (
   body: CheckoutBodyWithItems,
   listPayment: {[key:string]:any},
-  paymentsBody: BodyPayment,
+  paymentsBody: Payment,
   amount:Amount,
   orderBody: BodyOrder,
 ) => {
