@@ -71,7 +71,11 @@ runs:
     - if: github.event_name == 'pull_request'
       shell: bash
       working-directory: functions/ssr
-      run: npm run build:static
+      run: |
+        printf "ECOM_STORE_ID=$ECOM_STORE_ID
+        DEPLOY_RAND=$RANDOM.$RANDOM
+        " > .env
+        npm run build:static
 
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview
