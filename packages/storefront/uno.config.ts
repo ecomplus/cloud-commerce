@@ -8,7 +8,7 @@ import {
 } from 'unocss';
 import presetIcons from '@unocss/preset-icons';
 import Color from 'color';
-import { genTailwindConfig } from './tailwind.config.cjs';
+import { genTailwindConfig, defaultIcons } from './tailwind.config.cjs';
 import getCMS from './storefront.cms.mjs';
 
 const { primaryColor, secondaryColor } = getCMS();
@@ -52,7 +52,7 @@ const _preflights: Preflight[] = [{
       ${Object.entries(colorCSSVars).map(([varName, value]) => `--${varName}:${value};`).join('')}
       --content-max-width: 80rem;
       --white: #fff;
-      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
       --gray-200: #e5e7eb;
       --gray-400: #94a3b8;
       --gray-600: #4b5563;
@@ -61,7 +61,7 @@ const _preflights: Preflight[] = [{
       --gray-900: #111827;
       --gray: var(--gray-600);
       --gray-accent: var(--gray-800);
-      --surface-color: var(--gray-50);
+      --surface-color: var(--gray-100);
       --surface-border-color: var(--gray-200);
       --yiq-text-light: var(--white);
       --yiq-text-dark: var(--gray-900);
@@ -73,38 +73,24 @@ const _preflights: Preflight[] = [{
       --secondary-hover: var(--secondary-700);
       --secondary-focus: rgba(var(--secondary-200-rgb), 0.2);
       --secondary-inverse: var(--secondary-500-yiq);
+    }
+    @media only screen and (prefers-color-scheme: dark) {
+      :root:not([data-theme=light]) {
+        --gray: var(--gray-400);
+        --gray-accent: var(--gray-200);
+        --surface-color: var(--gray-800);
+        --surface-border-color: var(--gray-700);
+      }
     }`,
 }];
 
 const genUnoCSSConfig = ({
   colorVariants = _colorVariants,
-  brandIcons = 'bxl',
-  brandIconsShortcuts = [
-    'facebook',
-    'twitter',
-    'instagram',
-    'linkedin',
-    'youtube',
-    'google',
-    'pinterest',
-    'tiktok',
-    'telegram',
-    'whatsapp',
-    'messenger',
-  ],
-  brandLogos = 'logos',
-  brandLogosShortcuts = [
-    'visa',
-    'mastercard',
-    'paypal',
-    'apple-pay',
-    'google-pay',
-    'amex',
-    'elo',
-    'hipercard',
-    'dinersclub',
-  ],
-  generalIcons = 'heroicons',
+  brandIcons = defaultIcons.brandIcons,
+  brandIconsShortcuts = defaultIcons.brandIconsShortcuts,
+  brandLogos = defaultIcons.brandLogos,
+  brandLogosShortcuts = defaultIcons.brandLogosShortcuts,
+  generalIcons = defaultIcons.generalIcons,
   shoppingCartIcon = 'shopping-bag',
   preflights = _preflights,
 }: {
@@ -123,7 +109,10 @@ const genUnoCSSConfig = ({
     plugin({
       addUtilities: (utilities: Record<string, { [k: string]: string | number }>) => {
         Object.keys(utilities).forEach((selector) => {
-          rules.push([selector.replace('.', ''), utilities[selector]]);
+          // Skip icons selectors added on tailwind.config.cjs only for IntelliSense
+          if (!selector.startsWith('.i-')) {
+            rules.push([selector.replace('.', ''), utilities[selector]]);
+          }
         });
       },
     });

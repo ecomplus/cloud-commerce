@@ -1,15 +1,10 @@
 <script lang="ts" setup>
 import { ref, defineAsyncComponent } from 'vue';
-import {
-  i19myAccountAndOrders,
-  i19myAccount,
-  i19myOrders,
-} from '@i18n';
-import ADrawer from './ADrawer.vue';
+import { i19myAccount, i19myOrders } from '@@i18n';
+import ADrawer from '@@components/ADrawer.vue';
 
 export interface Props {
   accountUrl?: string;
-  accountIconClass?: string;
   additionalLinks?: Array<{
     href: string;
     isBlank?: boolean;
@@ -19,7 +14,6 @@ export interface Props {
 
 withDefaults(defineProps<Props>(), {
   accountUrl: '/app/account',
-  accountIconClass: 'i-user-circle',
   additionalLinks: () => [],
 });
 const isVisible = ref(false);
@@ -39,16 +33,16 @@ const isLogged = ref(false);
 <template>
   <div class="login-offcanvas">
     <div @click="toggle">
-      <slot name="toggle" v-bind="{ isVisible }">
-        <a :href="accountUrl" :title="i19myAccountAndOrders">
-          <div :class="accountIconClass"></div>
-        </a>
-      </slot>
+      <slot name="toggle" v-bind="{ isVisible }" />
     </div>
     <ADrawer v-model="isVisible">
       <slot name="form">
         <div class="w-80">
-          <LoginForm @login="isLogged = true" @logout="isLogged = false" />
+          <LoginForm @login="isLogged = true" @logout="isLogged = false">
+            <template #button-content>
+              <slot name="form-button-content" />
+            </template>
+          </LoginForm>
         </div>
       </slot>
       <slot name="nav" v-bind="{ isLogged }">

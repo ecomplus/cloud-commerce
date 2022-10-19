@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.125](https://github.com/ecomplus/cloud-commerce/compare/v0.0.124...v0.0.125) (2022-10-16)
+
+### [0.0.124](https://github.com/ecomplus/cloud-commerce/compare/v0.0.123...v0.0.124) (2022-10-16)
+
+### [0.0.123](https://github.com/ecomplus/cloud-commerce/compare/v0.0.122...v0.0.123) (2022-10-16)
+
+### [0.0.122](https://github.com/ecomplus/cloud-commerce/compare/v0.0.120...v0.0.122) (2022-10-16)
+
+### [0.0.121](https://github.com/ecomplus/cloud-commerce/compare/v0.0.120...v0.0.121) (2022-10-16)
+
+### [0.0.120](https://github.com/ecomplus/cloud-commerce/compare/v0.0.119...v0.0.120) (2022-10-16)
+
+
+### Bug Fixes
+
+* **deps:** Update `@astrojs/image` and all non-major ([45be751](https://github.com/ecomplus/cloud-commerce/commit/45be751329030c7cace01571e111523f41af17d6))
+* **ssr:** Add `@cloudcommerce/i18n` to pkg dependencies ([d3bf23d](https://github.com/ecomplus/cloud-commerce/commit/d3bf23da42c10ef7561fdcb3802ef2d50f7f1959))
+
+### [0.0.119](https://github.com/ecomplus/cloud-commerce/compare/v0.0.118...v0.0.119) (2022-10-15)
+
+### [0.0.118](https://github.com/ecomplus/cloud-commerce/compare/v0.0.117...v0.0.118) (2022-10-15)
+
+### [0.0.117](https://github.com/ecomplus/cloud-commerce/compare/v0.0.116...v0.0.117) (2022-10-15)
+
+### [0.0.116](https://github.com/ecomplus/cloud-commerce/compare/v0.0.115...v0.0.116) (2022-10-15)
+
+
+### Features
+
+* **api:** Export `{Resource}List` array types ([63884cf](https://github.com/ecomplus/cloud-commerce/commit/63884cf3c17107e464479087eb5d3c6159f709b2))
+* **storefront:** Handle `@@components/*` with nested folders ([6562c84](https://github.com/ecomplus/cloud-commerce/commit/6562c845967b81c699a3ac0c838dcfbc6e1de17e))
+* **storefront:** Header subcomponents for easy customization ([ba29efa](https://github.com/ecomplus/cloud-commerce/commit/ba29efa24d7311f27a4d9a8d0b8c1df1f8a51101))
+* **storefront:** Improving header subcomponents ([2744b7c](https://github.com/ecomplus/cloud-commerce/commit/2744b7cf4230a13487f3e7ee271e198702ff1c8f))
+* **storefront:** More header subcomponents ([32f37bd](https://github.com/ecomplus/cloud-commerce/commit/32f37bd8caf512b156263141894fa5726528622c))
+* **storefront:** More header subcomponents ([48e56fb](https://github.com/ecomplus/cloud-commerce/commit/48e56fba439ac114a19487fb8f0d6022350ba924))
+* **storefront:** New `form-button-content` slot on `LoginDrawer` component ([2e4e2d3](https://github.com/ecomplus/cloud-commerce/commit/2e4e2d3f270305e76cac4ccd4e8adc76367cebb0))
+
+
+### Bug Fixes
+
+* **config:** Preset `ECOM_*` env vars ([1734759](https://github.com/ecomplus/cloud-commerce/commit/173475998b21a37925852491b0b5afb55565f3a9))
+* **deps:** Update Vue, Astro and other non-major dependencies ([688bb20](https://github.com/ecomplus/cloud-commerce/commit/688bb200454f40642426c90b4cc857c14c0847b8))
+* **firebase:** Route with URL replaces to handle Hosting rewrites ([#59](https://github.com/ecomplus/cloud-commerce/issues/59)) ([3be5eae](https://github.com/ecomplus/cloud-commerce/commit/3be5eae2bb21408355206f9172d40db2de438d07))
+* **storefront:** Add required `compilerOptions.baseUrl` for aliases ([c48f57a](https://github.com/ecomplus/cloud-commerce/commit/c48f57a6dc42c0587ab8c26974872f9fd60e66cf))
+* **storefront:** Edit `ADrawer` to remove parent (header) brackdrop if any ([bf65fde](https://github.com/ecomplus/cloud-commerce/commit/bf65fde92cf136e661257e26bfad297925420940))
+* **storefront:** Fix `apiState.categories` typedef (`CategoriesList`) ([15275ba](https://github.com/ecomplus/cloud-commerce/commit/15275ba31969322554135bf26893861798fc7abc))
+* **storefront:** Fixing aliases, set `~` for src, `content` and `public` ([c7e28c6](https://github.com/ecomplus/cloud-commerce/commit/c7e28c6f2c7df88d4e66752c5c8998b51f0004f0))
+* **storefront:** Fixing some PicoCSS base styles for Tailwind compatibilty ([b5743a9](https://github.com/ecomplus/cloud-commerce/commit/b5743a9a5bf2a1194c75ab54583c5d8dffd6f8c5))
+* **storefront:** Increasing default nav link spacings ([9d0b3cf](https://github.com/ecomplus/cloud-commerce/commit/9d0b3cfff6bb28e6746dcaa8ed6e80bb9f518fd6))
+* **storefront:** Set all `window.ECOM_*` globals for `ecomUtils` support ([ab3d90f](https://github.com/ecomplus/cloud-commerce/commit/ab3d90fe67b17457ef541baf4224ca0fcfc38996))
+* **storefront:** Update PicoCSS typography for smoth font size responsive variation ([eb96802](https://github.com/ecomplus/cloud-commerce/commit/eb968024385e2342ecff2fd400f60f365282f7e3))
+* **storefront:** Using `content` alias to import CMS JSONs instead of relative paths ([b818c5d](https://github.com/ecomplus/cloud-commerce/commit/b818c5d215b13c389c37402f158ea66a94b7868a))
+
+### [0.0.115](https://github.com/ecomplus/cloud-commerce/compare/v0.0.114...v0.0.115) (2022-10-11)
+
+
+### Features
+
+* **storefront:** Setup `@[@storefront](https://github.com/storefront)` and `@[@components](https://github.com/components)` import aliases ([e24d271](https://github.com/ecomplus/cloud-commerce/commit/e24d271597bf1a8c037433ab3fcff37adccc0434))
+
+
+### Bug Fixes
+
+* **deps:** Bump dependency axios to v1 ([#58](https://github.com/ecomplus/cloud-commerce/issues/58)) ([229f798](https://github.com/ecomplus/cloud-commerce/commit/229f7986f6ba354935139d55aad2e7ecc130e51b))
+* **deps:** Update all non-major dependencies ([#57](https://github.com/ecomplus/cloud-commerce/issues/57)) ([2082b79](https://github.com/ecomplus/cloud-commerce/commit/2082b793b58bf88a0808ae034f1fb4a58ab86d21))
+* **storefront:** Remove link variations injected styles from lib ([b6ef5d8](https://github.com/ecomplus/cloud-commerce/commit/b6ef5d80a0b4ee22a2f855cd6402ac9e56dc03ea))
+
 ### [0.0.114](https://github.com/ecomplus/cloud-commerce/compare/v0.0.113...v0.0.114) (2022-10-09)
 
 ### [0.0.113](https://github.com/ecomplus/cloud-commerce/compare/v0.0.112...v0.0.113) (2022-10-09)

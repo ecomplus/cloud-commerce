@@ -40,6 +40,11 @@ if (argv.publish) {
       ...(await listFolders(`${pwd}/ecomplus-stores`))
         .map((store) => `${pwd}/ecomplus-stores/${store}`),
     ];
+    const {
+      dependencies: ssrDependencies,
+    } = JSON.parse(fs.readFileSync(`${pwd}/packages/ssr/package.json`));
+    const astroPkgs = Object.keys(ssrDependencies)
+      .filter((dep) => dep.startsWith('@astrojs/'));
     for (let ii = 0; ii < storesDirs.length; ii++) {
       const storeDir = storesDirs[ii];
       for (let iii = 0; iii < functions.length; iii++) {
@@ -52,6 +57,11 @@ if (argv.publish) {
           if (codebase === 'ssr') {
             await $`npm i --save @cloudcommerce/api@${version}`;
             await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
+            for (let i = 0; i < astroPkgs.length; i++) {
+              const astroPkg = astroPkgs[i];
+              const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
+              await $`npm i --save ${dep}`;
+            }
           }
         }
         await $`rm -rf node_modules`;

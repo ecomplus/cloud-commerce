@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.0.114",
+  "version": "0.0.125",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "main": "src/index.js",
   "repository": {
@@ -22,12 +22,11 @@
     "build:static": "BUILD_OUTPUT=static astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare-monorepo": "sh scripts/prepare-monorepo.sh",
-    "prerelease": "sh scripts/prerelease.sh"
+    "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.9.3",
-    "@astrojs/node": "^1.1.0",
+    "@astrojs/image": "^0.10.0",
+    "@astrojs/node": "^2.0.0",
     "@astrojs/partytown": "^1.0.1",
     "@astrojs/prefetch": "^0.0.8",
     "@astrojs/vue": "^1.1.0",
@@ -40,17 +39,16 @@
     "@iconify-json/logos": "^1.1.17",
     "@nanostores/vue": "^0.6.0",
     "@unocss/preset-icons": "^0.45.29",
-    "astro": "^1.4.7",
+    "astro": "^1.5.0",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
-    "firebase": "^9.11.0",
+    "firebase": "^9.12.1",
     "image-size": "^1.0.2",
     "nanostores": "^0.7.0",
-    "rollup": "^2.79.1",
     "unocss": "^0.45.29",
-    "vite": "^3.1.7",
+    "vite": "^3.1.8",
     "vite-plugin-pwa": "^0.13.1",
-    "vue": "^3.2.40"
+    "vue": "^3.2.41"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"
