@@ -48,7 +48,6 @@ type ShippingSerive = Omit<CheckoutShippingService, 'shipping_line'> & {
 type PaymentGateways = ListPaymentsResponse['payment_gateways']
 type PaymentMethod = Pick<PaymentGateways[number]['payment_method'], 'code' | 'name'>
 
-
 export {
   CheckoutBodyWithItems,
   Payment,
