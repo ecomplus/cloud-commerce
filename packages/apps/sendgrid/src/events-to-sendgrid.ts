@@ -1,18 +1,8 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
+import type { Carts, Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/lib/logger';
 import handleOrder from './functios-to-sendgrid/handle-orders';
 import saveCarts from './functios-to-sendgrid/save-carts';
-
-/*
-'orders-new'
-'orders-anyStatusSet'
-'orders-paid'
-'orders-readyForShipping'
-'orders-shipped'
-'orders-delivered'
-'orders-cancelled'
-'carts-new'
-*/
 
 const handleApiEvent: ApiEventHandler = async ({
   evName,
@@ -48,10 +38,10 @@ const handleApiEvent: ApiEventHandler = async ({
   logger.log('> ', action, ': ', resource, ' <');
   switch (resource) {
     case 'carts': // abandoned cart
-      return saveCarts(apiEvent, app);
+      return saveCarts(apiEvent, app, apiDoc as Carts);
 
     case 'orders':
-      return handleOrder(apiEvent, app);
+      return handleOrder(apiEvent, app, apiDoc as Orders);
     default:
       break;
   }

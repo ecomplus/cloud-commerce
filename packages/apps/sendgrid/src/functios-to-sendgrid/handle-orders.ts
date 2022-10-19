@@ -3,7 +3,6 @@ import logger from 'firebase-functions/lib/logger';
 import api from '@cloudcommerce/api';
 import parseOrderToSend from './parse-data-to-send';
 import { sgSendMail, updateOrderSubresource, handleErr } from './utils';
-// const handleErr = require('./utils').handleErr
 
 const orderStatus = [
   'pending',
@@ -33,6 +32,7 @@ const orderStatus = [
 export default async (
   trigger: AppEventsPayload['apiEvent'],
   application: AppEventsPayload['app'],
+  order: Orders,
 ) => {
   try {
     const appData = {
@@ -43,7 +43,12 @@ export default async (
     const apiKey = appData.sendgrid_api_key;
     logger.log('# Order');
     const { action } = trigger;
-    const modifiedFields = trigger.modified_fields;
+    const modifiedFields: AppEventsPayload['apiEvent']['modified_fields'] = [];
+    trigger.modified_fields.forEach((field) => {
+      if (field === 'payments_history' || field === 'fulfillment') {
+        modifiedFields.push(field);
+      }
+    });
 
     if (action !== 'delete') {
       const triggerBody = trigger.body;
@@ -51,21 +56,21 @@ export default async (
       const insertedId = triggerBody._id || null;
       const orderId = resourceId;
 
-      const [{ data: store }, { data: order }] = await Promise.all([
+      const [{ data: store }] = await Promise.all([
         api.get('stores/me'),
-        api.get(`orders/${orderId}`),
+        // api.get(`orders/${orderId}`),
       ]);
 
-      if (order && store) {
-        let checkStatus: string = order.status;
+      if (store && order && order.buyers && order.buyers) {
+        let checkStatus: string | undefined = order.status;
         let lastValidRecord: { status: string; };
         const customerId = order.buyers[0]._id;
         const customer = (await api.get(`customers/${customerId}`)).data;
         // fulfillment payments_history
         if (customer) {
           modifiedFields.forEach(async (subresource) => {
-            let isCustomerNotified: boolean; let
-              lastNotifiedStatus: string;
+            let isCustomerNotified: boolean = false;
+            let lastNotifiedStatus: string | undefined;
 
             if (Array.isArray(order[subresource])) {
               const sortedRecords = order[subresource]
@@ -101,7 +106,7 @@ export default async (
               if (subresource === 'payments_history') {
                 if (!order.financial_status) {
                   order.financial_status = {
-                    current: checkStatus as Orders['financial_status']['current'],
+                    current: checkStatus as Exclude<Orders['financial_status'], undefined>['current'],
                   };
                 }
 
@@ -124,7 +129,7 @@ export default async (
               } else {
                 if (!order.fulfillment_status) {
                   order.fulfillment_status = {
-                    current: checkStatus as Orders['fulfillment_status']['current'],
+                    current: checkStatus as Exclude<Orders['fulfillment_status'], undefined>['current'],
                   };
                 }
                 emailData = parseOrderToSend(appData, checkStatus, order, store, customer);
@@ -164,7 +169,7 @@ export default async (
       return { message: 'SUCCESS' };
     }
   } catch (err) {
-    logger.err(err);
+    logger.error(err);
     return null;
   }
   return { message: 'SUCCESS' };

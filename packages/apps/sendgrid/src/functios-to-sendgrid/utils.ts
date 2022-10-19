@@ -48,7 +48,7 @@ const handleErr = (err: any) => {
       }
     }
     return {
-      status: err.response.status || 500,
+      status: err?.response?.status || 500,
       error: 'STORE_API_ERR',
       message,
     };

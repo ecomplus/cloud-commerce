@@ -133,17 +133,17 @@ const listTemplantes = [
 ];
 
 const addTotalPriceItem = (orderOrCart: OrderOrCart) => {
-  orderOrCart.items.forEach((item: Item) => {
+  orderOrCart.items?.forEach((item: Item) => {
     item.total_price = item.quantity * (item.final_price || item.price);
   });
 };
 
 export default (
   appData: { [x: string]: any},
-  status: string,
+  status: string | undefined,
   orderOrCart: OrderOrCart,
-  store:Stores,
-  customer:Customers,
+  store: Stores,
+  customer: Customers,
 ) => {
   if (orderOrCart) {
     // Sendgrid does not perform calculations
@@ -182,14 +182,16 @@ export default (
 
   const templantes = appData.sendgrid_templates;
   const nameTemplante = listTemplantes.find((type) => type.status === status);
-  const templante = templantes.find(
-    (templateFind: { trigger: string; }) => templateFind.trigger === nameTemplante.trigger,
-  );
+  if (nameTemplante) {
+    const templante = templantes.find(
+      (templateFind: { trigger: string; }) => templateFind.trigger === nameTemplante.trigger,
+    );
 
-  if (templante && !templante.disable) {
-    // logger.log('> Template found and active <')
-    body.template_id = `${templante.id}`;
-    return body;
+    if (templante && !templante.disable) {
+      // logger.log('> Template found and active <')
+      body.template_id = `${templante.id}`;
+      return body;
+    }
   }
   return null;
 };

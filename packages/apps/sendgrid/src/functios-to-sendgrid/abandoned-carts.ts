@@ -47,7 +47,7 @@ export default async () => {
               const emailData = parseCartToSend(appData, 'abandoned_cart', cart, store, customer);
               if (emailData) {
                 sgSendMail(emailData, apiKey)
-                  .then((data) => {
+                  .then(() => {
                     logger.log('>> Email sent ');
                     snapshot.ref.delete()
                       .catch(logger.error);

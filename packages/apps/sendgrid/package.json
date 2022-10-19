@@ -1,7 +1,7 @@
 {
-  "name": "@cloudcommerce/sendgrid",
+  "name": "@cloudcommerce/app-sendgrid",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.125",
   "description": "E-Com Plus Cloud Commerce app to integrate SendGrid",
   "main": "lib/index.js",
   "repository": {
@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/sendgrid#readme",
   "scripts": {
-    "build": "sh scripts/build.sh"
+    "build": "sh ../../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

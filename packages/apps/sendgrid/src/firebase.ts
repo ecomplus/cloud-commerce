@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-
 import '@cloudcommerce/firebase/lib/init';
 import config from '@cloudcommerce/firebase/lib/config';
 import functions from 'firebase-functions';
@@ -26,7 +25,7 @@ export const sendgrid = {
   ),
 
   sendAbandonedCartsEmail: functionBuilder.pubsub
-    .schedule('* * * * *') // '25 */3 * * *'
+    .schedule('25 */3 * * *')
     .onRun(() => {
       return handleAbandonedCarts();
     }),

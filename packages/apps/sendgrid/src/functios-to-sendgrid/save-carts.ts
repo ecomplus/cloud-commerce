@@ -1,14 +1,14 @@
-import type { AppEventsPayload } from '@cloudcommerce/types';
+import type { AppEventsPayload, Carts } from '@cloudcommerce/types';
 import logger from 'firebase-functions/lib/logger';
-import api from '@cloudcommerce/api';
+// import api from '@cloudcommerce/api';
 // eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
 import { handleErr } from './utils';
-// const { firestore } = require('firebase-admin');
 
 export default async (
   trigger: AppEventsPayload['apiEvent'],
   application: AppEventsPayload['app'],
+  cart: Carts,
 ) => {
   const appData = {
     ...application.data,
@@ -18,10 +18,10 @@ export default async (
   if (appData.is_abandoned_after_days) {
     const cartId = trigger.resource_id;
     try {
-      const cart = (await api.get(`carts/${cartId}`)).data;
+      // const cart = (await api.get(`carts/${cartId}`)).data;
       if (cart) {
         const { customers, available, completed } = cart;
-        if (available && completed === false) {
+        if (available && completed === false && customers) {
           const afterDaysInMs = (appData.is_abandoned_after_days || 1) * 24 * 60 * 60 * 1000;
           const createAt = new Date();
           const sendIn = new Date(createAt.getTime() + afterDaysInMs);
