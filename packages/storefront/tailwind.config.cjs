@@ -74,6 +74,10 @@ const genTailwindConfig = ({
   plugins: [
     ({ addUtilities }) => {
       addUtilities({
+        // To clear HTML element (0, 0, x) specificity styles from PicoCSS
+        '.unset': {
+          all: 'unset',
+        },
         // https://picocss.com/docs/containers.html
         '.container-fluid': {
           'max-width': 'var(--content-max-width)',
