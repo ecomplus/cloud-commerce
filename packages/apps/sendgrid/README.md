@@ -1,1 +1,1 @@
-# `@cloudcommerce/sendgrid`
+# `@cloudcommerce/app-sendgrid`

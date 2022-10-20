@@ -10,8 +10,6 @@ const handleApiEvent: ApiEventHandler = async ({
   apiDoc,
   app,
 }) => {
-  logger.log('>> API Events for SendGrid');
-
   const { resource, action } = apiEvent;
   const appData = { ...app.data, ...app.hidden_data };
   const resourceId = apiEvent.resource_id;
@@ -26,12 +24,12 @@ const handleApiEvent: ApiEventHandler = async ({
   }
 
   if (!appData.sendgrid_api_key || appData.sendgrid_api_key === '') {
-    logger.info('Webhook for, SendGrid API key not configured');
+    logger.warn('Webhook for, SendGrid API key not configured');
     return null;
   }
 
   if (!appData.sendgrid_mail || appData.sendgrid_mail === '') {
-    logger.info('Webhook, SendGrid Merchant email not configured');
+    logger.warn('Webhook, SendGrid Merchant email not configured');
     return null;
   }
 
@@ -43,10 +41,8 @@ const handleApiEvent: ApiEventHandler = async ({
     case 'orders':
       return handleOrder(apiEvent, app, apiDoc as Orders);
     default:
-      break;
+      return null;
   }
-  // Nothing to do
-  return null;
 };
 
 export default handleApiEvent;

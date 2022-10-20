@@ -180,16 +180,16 @@ export default (
     template_id: '',
   };
 
-  const templantes = appData.sendgrid_templates;
-  const nameTemplante = listTemplantes.find((type) => type.status === status);
-  if (nameTemplante) {
-    const templante = templantes.find(
-      (templateFind: { trigger: string; }) => templateFind.trigger === nameTemplante.trigger,
+  const templates = appData.sendgrid_templates;
+  const nameTemplate = listTemplantes.find((type) => type.status === status);
+  if (nameTemplate) {
+    const template = templates.find(
+      (templateFind: { trigger: string; }) => templateFind.trigger === nameTemplate.trigger,
     );
 
-    if (templante && !templante.disable) {
+    if (template && !template.disable) {
       // logger.log('> Template found and active <')
-      body.template_id = `${templante.id}`;
+      body.template_id = `${template.id}`;
       return body;
     }
   }
