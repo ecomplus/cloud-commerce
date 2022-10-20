@@ -11,7 +11,7 @@ type Item = Exclude< OrderOrCart['items'], undefined>[number] & {
   total_price?: number
 }
 
-const listTemplantes = [
+const listTemplates = [
   {
     trigger: 'Carrinho Abandonado',
     status: 'abandoned_cart',
@@ -181,7 +181,7 @@ export default (
   };
 
   const templates = appData.sendgrid_templates;
-  const nameTemplate = listTemplantes.find((type) => type.status === status);
+  const nameTemplate = listTemplates.find((type) => type.status === status);
   if (nameTemplate) {
     const template = templates.find(
       (templateFind: { trigger: string; }) => templateFind.trigger === nameTemplate.trigger,
