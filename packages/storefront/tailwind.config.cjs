@@ -1,6 +1,6 @@
 // IntelliSense for UnoCSS icons
 const defaultIcons = {
-  brandIcons: 'bxl',
+  brandIcons: 'fa6-brands',
   brandIconsShortcuts: [
     'facebook',
     'twitter',
@@ -13,6 +13,7 @@ const defaultIcons = {
     'telegram',
     'whatsapp',
     'messenger',
+    'pix',
   ],
   brandLogos: 'logos',
   brandLogosShortcuts: [

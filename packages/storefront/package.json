@@ -34,7 +34,7 @@
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "^1.4.1",
-    "@iconify-json/bxl": "^1.1.4",
+    "@iconify-json/fa6-brands": "^1.1.6",
     "@iconify-json/heroicons": "^1.1.5",
     "@iconify-json/logos": "^1.1.17",
     "@nanostores/vue": "^0.6.0",
