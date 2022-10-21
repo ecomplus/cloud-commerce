@@ -11,7 +11,6 @@ const tinyErpEvents: ApiEventName[] = [
 const sendGridEvents: ApiEventName[] = [
   'orders-new',
   'orders-anyStatusSet',
-  'carts-new'
 ];
 
 const {
@@ -53,10 +52,10 @@ const mergeConfig = {
     mercadoPago: {
       appId: 111223,
     },
-    sendGrid : {
+    sendGrid: {
       appId: 129856,
-      events: sendGridEvents
-    }
+      events: sendGridEvents,
+    },
   },
 };
 config.set(mergeConfig);

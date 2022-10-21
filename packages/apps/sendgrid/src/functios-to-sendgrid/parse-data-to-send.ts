@@ -6,7 +6,7 @@ import type {
 } from '@cloudcommerce/types';
 import logger from 'firebase-functions/lib/logger';
 
-type OrderOrCart = Orders | Carts
+type OrderOrCart = Orders | Partial<Carts>
 type Item = Exclude< OrderOrCart['items'], undefined>[number] & {
   total_price?: number
 }
