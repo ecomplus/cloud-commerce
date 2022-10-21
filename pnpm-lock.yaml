@@ -386,17 +386,15 @@ importers:
       '@cloudcommerce/config': workspace:*
       '@cloudcommerce/i18n': workspace:*
       '@ecomplus/utils': ^1.4.1
-      '@iconify-json/bxl': ^1.1.4
+      '@iconify-json/fa6-brands': ^1.1.6
       '@iconify-json/heroicons': ^1.1.5
       '@iconify-json/logos': ^1.1.17
-      '@nanostores/vue': ^0.6.0
       '@unocss/preset-icons': ^0.45.29
       astro: ^1.5.0
       color: ^4.2.3
       dotenv: ^16.0.3
       firebase: ^9.12.1
       image-size: ^1.0.2
-      nanostores: ^0.7.0
       unocss: ^0.45.29
       vite: ^3.1.8
       vite-plugin-pwa: ^0.13.1
@@ -411,17 +409,15 @@ importers:
       '@cloudcommerce/config': link:../config
       '@cloudcommerce/i18n': link:../i18n
       '@ecomplus/utils': 1.4.1
-      '@iconify-json/bxl': 1.1.4
+      '@iconify-json/fa6-brands': 1.1.6
       '@iconify-json/heroicons': 1.1.5
       '@iconify-json/logos': 1.1.17
-      '@nanostores/vue': 0.6.0_r627q4dwpmfpioilrlqhfzrl3q
       '@unocss/preset-icons': 0.45.29
       astro: 1.5.0
       color: 4.2.3
       dotenv: 16.0.3
       firebase: 9.12.1
       image-size: 1.0.2
-      nanostores: 0.7.0
       unocss: 0.45.29_vite@3.1.8
       vite: 3.1.8
       vite-plugin-pwa: 0.13.1_vite@3.1.8
@@ -2757,8 +2753,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify-json/bxl/1.1.4:
-    resolution: {integrity: sha512-x7ZEqUXdHhzkDoIrzt5XfXJJbQ6QC6/vfaN2FU+LMvCeankoXWLTNDtO4bGbESRlnz6pUvTcUDhaW+QkuhQxZQ==}
+  /@iconify-json/fa6-brands/1.1.6:
+    resolution: {integrity: sha512-/b9tHNHgfxgwi1SjB6b2+mObQrexNauRdsL9BgJVupvFpJGTqF1/rBLG4u5/l2ZsduhuVPlDIurewDS81N9jRw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: false
@@ -2849,21 +2845,6 @@ packages:
 
   /@ljharb/has-package-exports-patterns/0.0.2:
     resolution: {integrity: sha512-4/RWEeXDO6bocPONheFe6gX/oQdP/bEpv0oL4HqjPP5DCenBSt0mHgahppY49N0CpsaqffdwPq+TlX9CYOq2Dw==}
-    dev: false
-
-  /@nanostores/vue/0.6.0_r627q4dwpmfpioilrlqhfzrl3q:
-    resolution: {integrity: sha512-Co53bCDAA2hkBqpeYN975kchX/cTHMdS9qt6inqPGm8QAoB+wCoecxjmde8GSo/Arc6/JmQC5AFJGALYz0QMhw==}
-    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
-    peerDependencies:
-      '@vue/devtools-api': '>=6.1.4'
-      nanostores: '>=0.6.0'
-      vue: '>=3.2.30'
-    peerDependenciesMeta:
-      '@vue/devtools-api':
-        optional: true
-    dependencies:
-      nanostores: 0.7.0
-      vue: 3.2.41
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -8312,11 +8293,6 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-
-  /nanostores/0.7.0:
-    resolution: {integrity: sha512-y+ma9MVXuPzXKEXaRYW/iL/xG/HtMwB8fmFcMfUqt5fCNR/na2kDubbZGV4furUMTgmxfySJs0cQjORWhaPDyA==}
-    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
-    dev: false
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
