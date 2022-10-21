@@ -36,7 +36,6 @@ export default async () => {
     ]);
 
     if (abandonedCarts.length && store) {
-      // const store = (await api.get('stores/me')).data;
       for (let i = 0; i < abandonedCarts.length; i++) {
         const cart = abandonedCarts[i];
         const customerId = cart.customers ? cart.customers[0] : null;
