@@ -1,7 +1,7 @@
 import type { Customers } from '@cloudcommerce/api/types';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
-import { map, computed, onSet } from 'nanostores';
+import { computed } from 'vue';
 import {
   getAuth,
   onAuthStateChanged,
@@ -9,8 +9,10 @@ import {
   signInWithEmailLink,
   // updateProfile,
 } from 'firebase/auth';
-import '@@storefront/scripts/firebase-app';
+import useStorage from './use-storage';
+import '../scripts/firebase-app';
 
+const storageKey = 'SESSION';
 const emptySession = {
   customer: {
     display_name: '',
@@ -18,37 +20,28 @@ const emptySession = {
   },
   auth: null,
 };
-const session = map<{
+const session = useStorage<{
   customer: Partial<Customers>,
   auth: null | {
     access_token: string,
     expires: string,
     customer_id: string,
   },
-}>(emptySession);
-const storageKey = 'SESSION';
-const sessionJson = localStorage.getItem(storageKey);
-if (sessionJson) {
-  try {
-    session.set(JSON.parse(sessionJson));
-  } catch (e) {
-    localStorage.removeItem(storageKey);
-  }
-}
-onSet(session, () => {
-  localStorage.setItem(storageKey, JSON.stringify(session.get()));
-});
+}>(storageKey, emptySession);
 
-const isAuthenticated = computed(session, ({ auth }) => {
+const isAuthenticated = computed(() => {
+  const { auth } = session;
   return auth && new Date(auth.expires).getTime() - Date.now() > 1000 * 10;
 });
-const customer = computed(session, (_session) => _session.customer);
-const customerName = computed(customer, (_customer) => getNickname(_customer) as string);
-const customerEmail = computed(customer, (_customer) => _customer.main_email);
-
-const setCustomerEmail = (email: string) => session.setKey('customer', {
-  ...customer.get(),
-  main_email: email,
+const customer = computed(() => session.customer);
+const customerName = computed(() => getNickname(customer.value) as string);
+const customerEmail = computed({
+  get() {
+    return customer.value.main_email;
+  },
+  set(email) {
+    session.customer.main_email = email;
+  },
 });
 
 const firebaseAuth = getAuth();
@@ -61,11 +54,12 @@ if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
   }
 }
 
-const isLogged = computed(isAuthenticated, (_isAuthenticated) => {
-  return _isAuthenticated || !!firebaseAuth.currentUser;
+const isLogged = computed(() => {
+  return isAuthenticated.value || !!firebaseAuth.currentUser;
 });
 const logout = () => {
-  session.set(emptySession);
+  session.auth = emptySession.auth;
+  session.customer = emptySession.customer;
   localStorage.removeItem(storageKey);
   firebaseAuth.signOut();
 };
@@ -81,36 +75,35 @@ const authenticate = async () => {
         Authorization: `Bearer ${authToken}`,
       },
     });
-    session.setKey('auth', await resAuth.json());
+    session.auth = await resAuth.json();
   } catch (err) {
     console.error(err);
   }
 };
 
 const getAccessToken = async () => {
-  if (!isAuthenticated.get()) {
+  if (!isAuthenticated.value) {
     await authenticate();
   }
-  return session.get().auth.access_token;
+  return session.auth.access_token;
 };
 
 const fetchCustomer = async () => {
   const accessToken = await getAccessToken();
-  const { auth } = session.get();
-  const { data } = await api.get(`customers/${auth.customer_id}`, {
+  const { data } = await api.get(`customers/${session.auth.customer_id}`, {
     accessToken,
   });
-  session.setKey('customer', data);
+  session.customer = data;
   return data;
 };
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   if (user) {
     if (user.emailVerified) {
-      const isEmailChanged = user.email !== customerEmail.get();
-      if (isEmailChanged || !isAuthenticated.get()) {
+      const isEmailChanged = user.email !== customerEmail.value;
+      if (isEmailChanged || !isAuthenticated.value) {
         await authenticate();
-        if (isEmailChanged || !customerName.get()) {
+        if (isEmailChanged || !customerName.value) {
           await fetchCustomer();
         }
       }
@@ -128,7 +121,6 @@ export {
   customer,
   customerName,
   customerEmail,
-  setCustomerEmail,
   isLogged,
   logout,
   authenticate,
