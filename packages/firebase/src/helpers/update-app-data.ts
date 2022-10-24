@@ -1,6 +1,6 @@
 import type { Applications, AppEventsPayload } from '@cloudcommerce/types';
 import { PubSub } from '@google-cloud/pubsub';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 

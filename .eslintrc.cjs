@@ -21,7 +21,33 @@ module.exports = {
     '**/dist',
     '**/types/*.d.ts',
   ],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+    },
+  },
   rules: {
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: [
+          'firebase-functions/logger',
+          'firebase-functions/v2/https',
+          'firebase-functions/v1',
+          'firebase-admin/app',
+          'firebase-admin/firestore',
+          'firebase-admin/auth',
+          '@astrojs/[^/]+$',
+          'astro/config',
+          'unocss/astro',
+          '@@.*',
+          'content/.*',
+          '~/.*',
+        ],
+      },
+    ],
     'prefer-template': 'warn',
     'no-nested-ternary': 'warn',
     'no-await-in-loop': 'warn',
@@ -60,12 +86,5 @@ module.exports = {
       'error',
       { ignoreEOLComments: true },
     ],
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.ts'],
-      },
-    },
   },
 };
