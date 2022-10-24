@@ -26,10 +26,10 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.10.0",
-    "@astrojs/node": "^2.0.0",
+    "@astrojs/node": "^2.0.1",
     "@astrojs/partytown": "^1.0.1",
-    "@astrojs/prefetch": "^0.0.8",
-    "@astrojs/vue": "^1.1.0",
+    "@astrojs/prefetch": "^0.1.0",
+    "@astrojs/vue": "^1.2.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
@@ -37,18 +37,18 @@
     "@iconify-json/fa6-brands": "^1.1.6",
     "@iconify-json/heroicons": "^1.1.5",
     "@iconify-json/logos": "^1.1.17",
-    "@unocss/preset-icons": "^0.45.29",
-    "astro": "^1.5.0",
+    "@unocss/preset-icons": "^0.45.30",
+    "astro": "^1.5.2",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
     "firebase": "^9.12.1",
     "image-size": "^1.0.2",
-    "unocss": "^0.45.29",
+    "unocss": "^0.45.30",
     "vite": "^3.1.8",
     "vite-plugin-pwa": "^0.13.1",
     "vue": "^3.2.41"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3"
+    "@babel/core": "^7.19.6"
   }
 }
