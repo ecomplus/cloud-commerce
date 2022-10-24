@@ -10,7 +10,7 @@ import type {
   ShippingSerive,
   ShippingLine,
 } from '../../types/index';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 
 type BodyResouce = {[key:string]:any}
 

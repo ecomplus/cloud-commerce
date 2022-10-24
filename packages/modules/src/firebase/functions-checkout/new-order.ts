@@ -7,7 +7,7 @@ import type {
   TransactionOrder,
   PaymentHistory,
 } from '../../types/index';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import { sendError, getValidResults } from './utils';
 import {
   newOrder,

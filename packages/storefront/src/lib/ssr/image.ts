@@ -1,6 +1,5 @@
 import { resolve as resolvePath } from 'path';
 import imageSize from 'image-size';
-// eslint-disable-next-line import/no-unresolved
 import { getImage as _getImage } from '@astrojs/image';
 
 const tryImageSize = (src: string) => {

@@ -3,9 +3,7 @@ import '@cloudcommerce/firebase/lib/init';
 import { logger } from 'firebase-functions';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
-// eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
-// eslint-disable-next-line import/no-unresolved
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import { parsePaymentStatus } from './mp-create-transaction';

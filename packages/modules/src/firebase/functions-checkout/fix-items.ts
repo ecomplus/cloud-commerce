@@ -1,7 +1,7 @@
 import type { Products, CheckoutBody } from '@cloudcommerce/types';
 import type { Items, Item } from '../../types';
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 
 type BodyCheckItem = Products | Products & Exclude<Products['variations'], undefined>[number] | undefined;
 
