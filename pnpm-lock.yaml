@@ -90,6 +90,7 @@ importers:
       '@astrojs/node': ^1.1.0
       '@cloudcommerce/api': ^0.0.125
       '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/i18n': ^0.0.125
       '@cloudcommerce/ssr': ^0.0.125
       '@cloudcommerce/storefront': ^0.0.125
       '@iconify-json/arcticons': ^1.1.28
@@ -103,6 +104,7 @@ importers:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
     devDependencies:
+      '@cloudcommerce/i18n': link:../../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../../packages/storefront
       '@iconify-json/arcticons': 1.1.28
       '@iconify-json/wpf': 1.1.2
@@ -473,6 +475,7 @@ importers:
       '@astrojs/node': ^1.1.0
       '@cloudcommerce/api': ^0.0.125
       '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/i18n': ^0.0.125
       '@cloudcommerce/ssr': ^0.0.125
       '@cloudcommerce/storefront': ^0.0.125
     dependencies:
@@ -482,6 +485,7 @@ importers:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
     devDependencies:
+      '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
 
 packages:
