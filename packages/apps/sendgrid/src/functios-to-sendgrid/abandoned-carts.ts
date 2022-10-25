@@ -9,7 +9,7 @@ export default async () => {
   try {
     logger.log('# Check abandoned carts');
     const [application] = (await api.get(
-      'applications?app_id=111223&fields=hidden_data',
+      'applications?app_id=129856&fields=hidden_data,data',
     )).data.result;
 
     const appData = {
@@ -17,21 +17,22 @@ export default async () => {
       ...application.hidden_data,
     };
 
-    let minCartDate = new Date();
-    minCartDate.setHours(minCartDate.getHours() - (appData.abandoned_cart_delay || 3));
-    const lastDateSent = (await getFirestore().doc('sendGrid/lastCartSent').get()).data();
-    if (lastDateSent && lastDateSent.created_at) {
-      const lastNotifiedCartDate = new Date(lastDateSent.created_at);
-      if (lastNotifiedCartDate.getTime() > minCartDate.getTime()) {
-        minCartDate = lastNotifiedCartDate;
-      }
+    let filterCartsDate = '';
+    const limitDate = new Date();
+    limitDate.setHours(limitDate.getHours() - (appData.abandoned_cart_delay || 3));
+    const lastNotificationSent = (await getFirestore().doc('sendGrid/lastCartSent').get()).data();
+    if (lastNotificationSent && lastNotificationSent.time) {
+      const lastNotifiedCart = new Date(lastNotificationSent.time);
+      filterCartsDate += `&create_at>=${lastNotifiedCart.toISOString()}`;
     }
+
+    filterCartsDate += `&created_at<=${limitDate.toISOString()}`;
 
     const [
       { data: { result: abandonedCarts } },
       { data: store },
     ] = await Promise.all([
-      api.get(`carts?completed=false&available=true&metafields.field!=sendgrid_sent&created_at>=${minCartDate.toISOString()}`),
+      api.get(`carts?completed=false&available=true${filterCartsDate}`),
       api.get('stores/me'),
     ]);
 
@@ -50,31 +51,16 @@ export default async () => {
           if (cart && customer) {
             const emailData = parseCartToSend(appData, 'abandoned_cart', cart, store, customer);
             if (emailData) {
-              sgSendMail(emailData, apiKey)
-                .then(() => {
-                  logger.log('>> Email sent ');
-
-                  api.post(
-                    `carts/${cart._id}/metafields`,
-                    {
-                      field: 'sendgrid_sent',
-                      value: true,
-                    } as any,
-                  );
-
-                  if (i === (abandonedCarts.length - 1)) {
-                    // save last cart
-                    getFirestore()
-                      .doc('sendGrid/lastCartSent')
-                      .set({
-                        cartId: cart._id,
-                        create_at: cart.created_at,
-                      }).catch(logger.error);
-                  }
-                })
-                .catch((err) => {
-                  logger.error('>>#Error send email => ', err);
-                });
+              // eslint-disable-next-line no-await-in-loop
+              await sgSendMail(emailData, apiKey);
+              if (i === (abandonedCarts.length - 1)) {
+                // save last cart
+                getFirestore()
+                  .doc('sendGrid/lastCartSent')
+                  .set({
+                    time: limitDate.toISOString(),
+                  }).catch(logger.error);
+              }
             } else {
               logger.log('>> Do not send email, email data not found or trigger not configured');
             }
