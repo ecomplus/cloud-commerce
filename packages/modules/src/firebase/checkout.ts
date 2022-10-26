@@ -5,7 +5,7 @@ import type {
   BodyOrder,
   Amount,
   Item,
-  BodyPayment,
+  Payment,
 } from '../types/index';
 import config from '@cloudcommerce/firebase/lib/config';
 import { checkoutSchema } from '../index';
@@ -30,7 +30,7 @@ export default async (req: Request, res: Response) => {
     : `http://localhost:5001/${process.env.GCLOUD_PROJECT}`
       + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
 
-  const validate = ajv.compile(checkoutSchema);
+  const validate = ajv.compile(checkoutSchema.params);
   const checkoutBody = req.body as CheckoutBody;
   if (!req.body.browser_ip && req.ip) {
     req.body.browser_ip = req.ip;
@@ -128,20 +128,22 @@ export default async (req: Request, res: Response) => {
       });
 
       let listShipping = await requestModule(body, modulesBaseURL, 'shipping');
-      if (listShipping) {
+      let { msgErr } = listShipping;
+      if (listShipping && !msgErr) {
         listShipping = getValidResults(listShipping, 'shipping_services');
         handleShippingServices(body, listShipping, amount, orderBody);
       } else {
       // problem with shipping response object
         return sendError(
           res,
-          400,
-          'CKT901',
+          msgErr?.status || 400,
+          msgErr?.code || 'CKT901',
           'Any valid shipping service from /calculate_shipping module',
           {
             en_us: 'Shipping method not available, please choose another',
             pt_br: 'Forma de envio indisponível, por favor escolha outra',
           },
+          msgErr?.moreInfo,
         );
       }
 
@@ -152,7 +154,7 @@ export default async (req: Request, res: Response) => {
       }
 
       const { transaction, ...bodyPayment } = body;
-      let paymentsBody: BodyPayment;
+      let paymentsBody: Payment;
       if (Array.isArray(transaction)) {
         paymentsBody = {
           ...bodyPayment,
@@ -166,20 +168,21 @@ export default async (req: Request, res: Response) => {
       }
 
       let listPaymentGateways = await requestModule(paymentsBody, modulesBaseURL, 'payment');
-
-      if (listPaymentGateways) {
+      msgErr = listPaymentGateways.msgErr;
+      if (listPaymentGateways && !msgErr) {
         listPaymentGateways = getValidResults(listPaymentGateways, 'payment_gateways');
         handleListPayments(body, listPaymentGateways, paymentsBody, amount, orderBody);
       } else {
         return sendError(
           res,
-          409,
-          'CKT902',
+          msgErr?.status || 409,
+          msgErr?.code || 'CKT902',
           'Any valid payment gateway from /list_payments module',
           {
             en_us: 'Payment method not available, please choose another',
             pt_br: 'Forma de pagamento indisponível, por favor escolha outra',
           },
+          msgErr?.moreInfo,
         );
       }
 

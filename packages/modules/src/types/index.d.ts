@@ -3,7 +3,8 @@ import type {
   Carts, 
   Orders,
   CalculateShippingResponse,
-  ListPaymentsResponse
+  ListPaymentsResponse,
+  Products
 } from '@cloudcommerce/types';
 import { Transaction } from '@cloudcommerce/types/modules/@checkout:params';
 
@@ -20,7 +21,7 @@ type CheckoutBodyWithItems = Omit<CheckoutBody, 'items'> & {
 
 type CustomerCheckout = Exclude<CheckoutBody['customer'], undefined>
 type BodyOrder = Omit<Orders, '_id' | 'created_at' | 'updated_at' | 'store_id' | 'items' > & { 
-  items : Item[]
+  items : Items
 }
 
 type TransactionOrder = Exclude<Orders['transactions'], undefined>[number]
@@ -30,11 +31,11 @@ type BodyTransactionOrder = Omit<TransactionOrder, 'status'> & {
 }
 
 type OrderPaymentHistory = Pick<Orders,'payments_history'| 'financial_status' | 'amount'>
-type BodyPaymentHistory = Exclude<Pick<Orders,'payments_history'>['payments_history'], undefined>[number]
+type PaymentHistory = Exclude<Pick<Orders,'payments_history'>['payments_history'], undefined>[number]
 
 type CheckoutTransaction = Exclude<CheckoutBody['transaction'], Transaction[]>
 
-type BodyPayment = Omit<CheckoutBodyItems, 'transaction'> & {
+type Payment = Omit<CheckoutBodyItems, 'transaction'> & {
   transaction: CheckoutTransaction
 }
 
@@ -49,7 +50,7 @@ type PaymentMethod = Pick<PaymentGateways[number]['payment_method'], 'code' | 'n
 
 export {
   CheckoutBodyWithItems,
-  BodyPayment,
+  Payment,
   Items,
   Item,
   CustomerCheckout,
@@ -63,5 +64,5 @@ export {
   TransactionOrder,
   OrderPaymentHistory,
   BodyTransactionOrder,
-  BodyPaymentHistory
+  PaymentHistory,
 };

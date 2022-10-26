@@ -1,5 +1,5 @@
 import type { Products } from '@cloudcommerce/types';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import FormData from 'form-data';
 import ecomUtils from '@ecomplus/utils';

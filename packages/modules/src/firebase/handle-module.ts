@@ -1,6 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
 import type { Applications, AppModuleName, AppModuleBody } from '@cloudcommerce/types';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/logger';
 import Ajv, { ValidateFunction } from 'ajv';
 import addFormats from 'ajv-formats';
 import api, { ApiError, ApiConfig } from '@cloudcommerce/api';

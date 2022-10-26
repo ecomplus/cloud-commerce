@@ -1,7 +1,7 @@
 import type { CustomerCheckout } from '../../types/index';
 import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/logger';
 
 const findCustomerByEmail = async (email: string) => {
   try {

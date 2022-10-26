@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import updateAppData from '@cloudcommerce/firebase/lib/helpers/update-app-data';
 
 export default async (queueEntry, appData, application, payload) => {

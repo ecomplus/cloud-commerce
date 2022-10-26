@@ -1,7 +1,6 @@
 import type { Resource, ApiEventName, AppEventsPayload } from '@cloudcommerce/types';
-// eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import config from '../config';

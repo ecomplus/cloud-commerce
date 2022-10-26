@@ -1,5 +1,5 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import exportProduct from './integration/export-product-to-tiny';
 import exportOrder from './integration/export-order-to-tiny';
 import importProduct from './integration/import-product-from-tiny';

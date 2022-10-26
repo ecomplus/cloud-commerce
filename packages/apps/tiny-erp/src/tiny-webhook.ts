@@ -1,6 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
 import type { Applications } from '@cloudcommerce/types';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 import importProduct from './integration/import-product-from-tiny';

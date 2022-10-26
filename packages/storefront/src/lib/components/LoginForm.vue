@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
-import { useStore } from '@nanostores/vue';
+import { ref, watch } from 'vue';
 import {
   i19accessMyAccount,
   i19createAnAccount,
@@ -18,14 +17,13 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import {
-  customerName as $customerName,
-  customerEmail,
-  setCustomerEmail,
+  customerName,
+  customerEmail as email,
   isLogged,
 } from '@@storefront/state/customer-session';
 
 const emit = defineEmits(['login', 'logout']);
-watch(useStore(isLogged), (_isLogged) => {
+watch(isLogged, (_isLogged) => {
   emit(_isLogged ? 'login' : 'logout');
 }, {
   immediate: true,
@@ -36,12 +34,6 @@ watch(isSignUp, (_isSignUp) => {
   if (_isSignUp) {
     isLinkSignIn.value = true;
   }
-});
-const email = computed({
-  get() {
-    return useStore(customerEmail).value;
-  },
-  set: setCustomerEmail,
 });
 const password = ref('');
 const submitLogin = async () => {
@@ -63,7 +55,6 @@ const submitLogin = async () => {
     console.error(error);
   }
 };
-const customerName = useStore($customerName);
 </script>
 
 <template>

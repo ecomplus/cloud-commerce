@@ -1,7 +1,6 @@
 import type { Orders } from '@cloudcommerce/types';
-// eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
 import parseOrder from './parsers/order-from-tiny';

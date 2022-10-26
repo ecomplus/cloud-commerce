@@ -2,7 +2,6 @@ import { existsSync, lstatSync } from 'fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
-/* eslint-disable import/no-unresolved */
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';

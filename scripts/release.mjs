@@ -57,6 +57,7 @@ if (argv.publish) {
           if (codebase === 'ssr') {
             await $`npm i --save @cloudcommerce/api@${version}`;
             await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
+            await $`npm i --save-dev @cloudcommerce/i18n@${version}`;
             for (let i = 0; i < astroPkgs.length; i++) {
               const astroPkg = astroPkgs[i];
               const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;

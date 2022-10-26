@@ -2,11 +2,11 @@ import type { Response } from 'firebase-functions';
 import type { Orders } from '@cloudcommerce/types';
 import type {
   Amount, BodyOrder,
-  BodyPaymentHistory,
+  PaymentHistory,
   OrderPaymentHistory,
   TransactionOrder,
 } from '../../types/index';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import { sendError } from './utils';
 
@@ -24,14 +24,16 @@ const checkoutRespond = async (
         transaction as any,
       )).data._id;
       transaction._id = transactionId;
-    } catch (e) {
-      logger.error(e);
+    } catch (err: any) {
+      logger.error(err);
+      // Ref: class ApiError in api.d.ts
       return sendError(
         res,
-        409,
-        'CKT704',
-        'Create transaction Error',
-        usrMsg,
+        (err?.data?.status || err?.statusCode) || 409,
+        err?.data?.error_code || 'CKT704',
+        err?.message || 'Create transaction Error',
+        err?.data?.user_message || usrMsg,
+        err?.data?.more_info,
       );
     }
   }
@@ -48,20 +50,19 @@ const checkoutRespond = async (
 const newOrder = async (orderBody: BodyOrder) => {
   try {
     const orderId = (await api.post('orders', orderBody)).data._id;
-    return new Promise<Orders|null>((resolve) => {
+    return new Promise<{ order: Orders | null, err?: any} >((resolve) => {
       setTimeout(async () => {
         try {
-          const order = (await api.get(`orders/${orderId}`)).data;
-          resolve(order);
-        } catch (e) {
-          logger.error(e);
-          resolve(null);
+          const order = (await api.get(`orders/${orderId}`)).data as Orders;
+          resolve({ order });
+        } catch (err: any) {
+          logger.error(err);
+          resolve({ order: null, err });
         }
       }, 800);
     });
-  } catch (e) {
-    logger.error(e);
-    return null;
+  } catch (err: any) {
+    return { order: null, err };
   }
 };
 
@@ -128,9 +129,9 @@ const saveTransaction = (
 
 const addPaymentHistory = async (
   orderId: string,
-  paymentHistory: BodyPaymentHistory[],
+  listPaymentsHistory: PaymentHistory[],
   isFirstTransaction: boolean,
-  paymentEntry: BodyPaymentHistory,
+  paymentEntry: PaymentHistory,
   dateTime: string,
   loyaltyPointsBalance: number,
   amount: Amount,
@@ -140,7 +141,7 @@ const addPaymentHistory = async (
       const body: OrderPaymentHistory = {
         amount,
       };
-      body.payments_history = paymentHistory;
+      body.payments_history = listPaymentsHistory;
 
       if (isFirstTransaction) {
         body.financial_status = {
@@ -164,9 +165,9 @@ const addPaymentHistory = async (
         } else {
           reject(new Error('Error adding payment history'));
         }
-      } catch (e) {
-        logger.error(e);
-        reject(e);
+      } catch (err) {
+        logger.error(err);
+        reject(err);
       }
     }, isFirstTransaction ? 200 : 400);
   });
