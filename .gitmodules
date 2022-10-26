@@ -4,3 +4,6 @@
 [submodule "ecomplus-stores/monocard"]
 	path = ecomplus-stores/monocard
 	url = git@github.com:ecomplus-stores/monocard.git
+[submodule "ecomplus-stores/tia-sonia"]
+	path = ecomplus-stores/tia-sonia
+	url = git@github.com:ecomplus-stores/tia-sonia.git
