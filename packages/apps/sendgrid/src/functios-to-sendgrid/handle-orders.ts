@@ -1,5 +1,5 @@
 import type { AppEventsPayload, Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import parseOrderToSend from './parse-data-to-send';
 import { sgSendMail, updateOrderSubresource, handleErr } from './utils';

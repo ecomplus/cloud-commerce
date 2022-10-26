@@ -1,6 +1,5 @@
 import logger from 'firebase-functions/lib/logger';
 import api from '@cloudcommerce/api';
-// eslint-disable-next-line import/no-unresolved
 import { getFirestore } from 'firebase-admin/firestore';
 import { sgSendMail } from './utils';
 import parseCartToSend from './parse-data-to-send';
@@ -24,6 +23,10 @@ export default async () => {
     if (lastNotificationSent && lastNotificationSent.time) {
       const lastNotifiedCart = new Date(lastNotificationSent.time);
       filterCartsDate += `&create_at>=${lastNotifiedCart.toISOString()}`;
+    } else {
+      const limitStartDate = new Date();
+      limitStartDate.setHours(limitDate.getHours() - (8 * (appData.abandoned_cart_delay || 3)));
+      filterCartsDate += `&create_at>=${limitStartDate.toISOString()}`;
     }
 
     filterCartsDate += `&created_at<=${limitDate.toISOString()}`;
@@ -32,7 +35,7 @@ export default async () => {
       { data: { result: abandonedCarts } },
       { data: store },
     ] = await Promise.all([
-      api.get(`carts?completed=false&available=true${filterCartsDate}`),
+      api.get(`carts?completed=false&available=true${filterCartsDate}&limit=100&sort=created_at`),
       api.get('stores/me'),
     ]);
 
@@ -53,14 +56,12 @@ export default async () => {
             if (emailData) {
               // eslint-disable-next-line no-await-in-loop
               await sgSendMail(emailData, apiKey);
-              if (i === (abandonedCarts.length - 1)) {
-                // save last cart
-                getFirestore()
-                  .doc('sendGrid/lastCartSent')
-                  .set({
-                    time: limitDate.toISOString(),
-                  }).catch(logger.error);
-              }
+              // save last cart
+              getFirestore()
+                .doc('sendGrid/lastCartSent')
+                .set({
+                  time: cart.created_at,
+                }).catch(logger.error);
             } else {
               logger.log('>> Do not send email, email data not found or trigger not configured');
             }

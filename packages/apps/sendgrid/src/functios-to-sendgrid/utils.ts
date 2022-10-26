@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
 

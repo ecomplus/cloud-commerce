@@ -1,6 +1,6 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import type { Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import handleOrder from './functios-to-sendgrid/handle-orders';
 
 const handleApiEvent: ApiEventHandler = async ({
