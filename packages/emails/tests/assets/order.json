@@ -1,0 +1,190 @@
+{
+  "checkout_link": "https://www.sampleshop.com.br/checkout?_id=(_id)",
+  "status_link": "https://www.sampleshop.com.br/order/status?_id=(_id)",
+  "utm": {
+      "campaign": "adwords_example"
+  },
+  "browser_ip": "8.8.8.8",
+  "channel_id": "10001",
+  "domain": "www.sampleshop.com.br",
+  "opened_at": "2017-11-19T13:10:00.612Z",
+  "seller_status": "pending",
+  "financial_status": {
+      "updated_at": "2017-11-19T13:10:00.612Z",
+      "current": "pending"
+  },
+  "amount": {
+      "total": 48.05,
+      "subtotal": 42.9,
+      "freight": 5.15,
+      "discount": 0
+  },
+  "payment_method_label": "PayPal",
+  "shipping_method_label": "PAC",
+  "buyers": [
+      {
+          "_id": "3c1000000000000000000001",
+          "locale": "pt_br",
+          "main_email": "123@mail.com",
+          "display_name": "Fulano",
+          "name": {
+              "family_name": "Beltrano",
+              "given_name": "Fulano",
+              "middle_name": "Sicrano"
+          },
+          "gender": "m",
+          "phones": [
+              {
+                  "country_code": 55,
+                  "number": "31999889988",
+                  "type": "personal"
+              }
+          ],
+          "registry_type": "p",
+          "doc_country": "BR",
+          "doc_number": "11111111111"
+      }
+  ],
+  "shipping_lines": [
+      {
+          "from": {
+              "zip": "10111222",
+              "street": "Rua Exemplar",
+              "number": 100,
+              "borough": "Bairro Examplar",
+              "city": "São Paulo",
+              "province": "São Paulo",
+              "province_code": "SP"
+          },
+          "to": {
+              "zip": "30111222",
+              "street": "Rua Augusta",
+              "number": 92200,
+              "complement": "Apto. 200",
+              "borough": "Jardins",
+              "near_to": "Supermercado Exemplifica",
+              "line_address": "Rua Augusta 922200 Apto. 200, Jardins, Belo Horizonte, MG",
+              "city": "Belo Horizonte",
+              "country": "Brasil",
+              "country_code": "BR",
+              "province": "Minas Gerais",
+              "province_code": "MG",
+              "name": "Fulano",
+              "last_name": "Beltrano",
+              "phone": {
+                  "country_code": 55,
+                  "number": "31999889988"
+              }
+          },
+          "package": {
+              "dimensions": {
+                  "width": {
+                      "value": 10
+                  },
+                  "height": {
+                      "value": 8
+                  },
+                  "length": {
+                      "value": 8
+                  }
+              },
+              "weight": {
+                  "value": 400,
+                  "unit": "g"
+              }
+          },
+          "app": {
+              "_id": "77f000000000000000000001",
+              "label": "PAC",
+              "carrier": "Correios",
+              "service_name": "PAC",
+              "service_code": "44000",
+              "tracking_url": "http://www2.correios.com.br/sistemas/rastreamento/"
+          },
+          "price": 5,
+          "declared_value": 42.9,
+          "declared_value_price": 0.15,
+          "total_price": 5.15,
+          "posting_deadline": {
+              "days": 3
+          },
+          "delivery_time": {
+              "days": 5
+          }
+      }
+  ],
+  "transactions": [
+      {
+          "_id": "3ab0000000000000000000f1",
+          "created_at": "2017-11-19T13:10:00.612Z",
+          "payment_method": {
+              "code": "credit_card",
+              "name": "PayPal"
+          },
+          "billing_address": {
+              "zip": "30111222",
+              "street": "Rua Augusta",
+              "number": 92200,
+              "complement": "Apto. 200",
+              "borough": "Jardins",
+              "near_to": "Supermercado Exemplifica",
+              "line_address": "Rua Augusta 922200 Apto. 200, Jardins, Belo Horizonte, MG",
+              "city": "Belo Horizonte",
+              "country": "Brasil",
+              "country_code": "BR",
+              "province": "Minas Gerais",
+              "province_code": "MG",
+              "name": "Fulano",
+              "last_name": "Beltrano",
+              "phone": {
+                  "country_code": 55,
+                  "number": "31999889988"
+              }
+          },
+          "app": {
+              "_id": "77f000000000000000000011",
+              "label": "PayPal",
+              "icon": "https://www.paypal-brasil.com.br/logocenter/util/img/selo_aceitacao_horizontal.png",
+              "intermediator": {
+                  "name": "PayPal",
+                  "link": "https://www.paypal.com/br/home",
+                  "code": "paypal"
+              },
+              "payment_url": "https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=1abc"
+          },
+          "intermediator": {
+              "transaction_code": "1abc"
+          },
+          "amount": 48.05,
+          "installments": {
+              "number": 2,
+              "value": 24.03,
+              "total": 48.06
+          },
+          "status": {
+              "updated_at": "2017-11-19T13:10:00.612Z",
+              "current": "pending"
+          }
+      }
+  ],
+  "payments_history": [
+      {
+          "_id": "4ab0000000000000000000f1",
+          "transaction_id": "3ab0000000000000000000f1",
+          "date_time": "2017-11-19T13:10:00.612Z",
+          "status": "pending",
+          "notification_code": "1abcde"
+      }
+  ],
+  "items": [
+      {
+          "_id": "3120000000000000000000a1",
+          "product_id": "123a5432109876543210cdef",
+          "sku": "s-MP_2B4",
+          "name": "Mens Pique Polo Shirt",
+          "quantity": 1,
+          "price": 42.9
+      }
+  ],
+  "notes": "Sample order notes by customer"
+}

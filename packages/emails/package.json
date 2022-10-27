@@ -17,14 +17,16 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/emails#readme",
   "scripts": {
-    "build": "sh ../../scripts/build-lib.sh && cp -r src/types lib/"
+    "build": "sh ../../scripts/build-lib.sh && cp -r src/types lib/",
+    "test": "tsc -p ../../tsconfig.test.json && vitest run"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/firebase": "workspace:^0.0.125",
+    "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.1.3"
   },
   "devDependencies": {
-    "@cloudcommerce/types": "workspace:*"
+    "@cloudcommerce/types": "workspace:*",
+    "zx": "^7.1.1"
   }
 }

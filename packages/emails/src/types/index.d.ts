@@ -16,7 +16,7 @@ type HeadersMail = {
 }
 
 type TemplateData = {[x:string]: any} & {
-  store: Stores,
+  store?: Stores,
   customer?: Customers,
 }
 
