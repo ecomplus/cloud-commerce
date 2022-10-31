@@ -111,6 +111,61 @@ importers:
       lottie-web: 5.9.6
       lozad: 1.16.0
 
+  ecomplus-stores/tia-sonia:
+    specifiers:
+      '@cloudcommerce/cli': ^0.0.125
+    dependencies:
+      '@cloudcommerce/cli': link:../../packages/cli
+
+  ecomplus-stores/tia-sonia/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.125
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/tia-sonia/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.125
+    dependencies:
+      '@cloudcommerce/events': link:../../../../packages/events
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/tia-sonia/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/modules': ^0.0.125
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../../packages/modules
+
+  ecomplus-stores/tia-sonia/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/passport': ^0.0.125
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../../packages/passport
+
+  ecomplus-stores/tia-sonia/functions/ssr:
+    specifiers:
+      '@astrojs/image': ^0.10.0
+      '@astrojs/node': ^1.1.0
+      '@cloudcommerce/api': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/i18n': ^0.0.125
+      '@cloudcommerce/ssr': ^0.0.125
+      '@cloudcommerce/storefront': ^0.0.125
+    dependencies:
+      '@astrojs/image': 0.10.0
+      '@astrojs/node': 1.1.0
+      '@cloudcommerce/api': link:../../../../packages/api
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../../packages/storefront
+
   packages/__skeleton:
     specifiers:
       '@cloudcommerce/api': workspace:*
