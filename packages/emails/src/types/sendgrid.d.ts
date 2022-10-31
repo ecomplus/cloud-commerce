@@ -4,20 +4,29 @@ import type {
   Customers,
   Stores,
 } from '@cloudcommerce/types';
-import type { HeadersMail, TemplateData } from '../../types/index';
+import type { HeadersMail, TemplateData, EmailAdrress } from '../../types/index';
 
 type DataMailSendGrid = {
-  from: {
-  email: string,
-  name: string,
-},
-personalizations: [
-  {
-    to: HeadersMail['to'],
-    dynamic_template_data: TemplateData,
-  },
-],
-template_id: string,
+  personalizations: [
+    {
+      to: HeadersMail['to'],
+      cc?:EmailAdrress[],
+      bcc?:EmailAdrress[],
+      dynamic_template_data?: TemplateData,
+      substitutions?: TemplateData
+    },
+  ],
+  from: EmailAdrress,
+  reply_to?: EmailAdrress,
+  reply_to_list?: EmailAdrress[],
+  subject: string,
+  template_id?: string,
+  content?: [
+      {
+      type: 'text/html',
+      value: string
+    }
+  ]
 }
 
 export type {

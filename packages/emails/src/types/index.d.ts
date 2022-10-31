@@ -1,13 +1,13 @@
-
 import { DataMailSendGrid } from './sendgrid'
-type EmailAdrress ={
-    name: string
-    email: string
-  }
+
+type EmailAdrress = {
+  name: string
+  email: string
+}
 
 type HeadersMail = {
   from: EmailAdrress,
-  to: EmailAdrress []
+  to: EmailAdrress[]
   subject: string,
   cc?: EmailAdrress[],
   sender?: EmailAdrress,
@@ -15,15 +15,50 @@ type HeadersMail = {
   bcc?: EmailAdrress[],
 }
 
-type TemplateData = {[x:string]: any} & {
-  store?: Stores,
-  customer?: Customers,
-}
+type TemplateData = { [key: string]: any }
 
+type Template = 'welcome'
+  | 'abandonedCart'
+  | 'authorized'
+  | 'delivered'
+  | 'inDispute'
+  | 'inProduction'
+  | 'inSeparation'
+  | 'invoiceIssued'
+  | 'new_order'
+  | 'paid'
+  | 'partiallyDelivered'
+  | 'partiallyPaid'
+  | 'partiallyRefunded'
+  | 'partiallyShipped'
+  | 'pending'
+  | 'readyForShipping'
+  | 'receivedForExchange'
+  | 'refunded'
+  | 'returned'
+  | 'returnedForExchange'
+  | 'shipped'
+  | 'unauthorized'
+  | 'underAnalysis'
+  | 'voided'
+  | 'promo'
+  | 'stock';
+
+type SmtpConfig = {
+  host: string,
+  port: number,
+  secure: boolean,
+  auth: {
+    user: string,
+    pass: string,
+  }
+}
 
 export type {
   EmailAdrress,
   HeadersMail,
   TemplateData,
-  DataMailSendGrid
+  Template,
+  DataMailSendGrid,
+  SmtpConfig
 }

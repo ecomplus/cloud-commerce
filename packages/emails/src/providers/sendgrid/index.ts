@@ -1,6 +1,11 @@
-import type { HeadersMail, TemplateData } from '../../types/index';
+import type {
+  DataMailSendGrid,
+  HeadersMail,
+  TemplateData,
+  Template,
+} from '../../types/index';
 import axios from 'axios';
-import parseToData from './parse-to-data';
+import { parseDataByTemplateId, parseDataForTemplate } from './parse-to-data';
 
 const sgAxios = axios.create({
   baseURL: 'https://api.sendgrid.com/v3/mail',
@@ -9,20 +14,25 @@ const sgAxios = axios.create({
   },
 });
 
-const sgSendMail = (
-  sendGridApiKey: string,
+const sgSendMail = async (
   headersMail: HeadersMail,
-  templateData: TemplateData,
-  templateId?: string,
-  template?: {[x:string]: any},
+  configTemplate: {
+    templateData: TemplateData,
+    templateId?: string,
+    template?: Template,
+  },
+  sendGridApiKey: string,
 ) => {
-  let bodyMail = {};
+  const { templateData, templateId, template } = configTemplate;
+  let bodyMail: DataMailSendGrid | null = null;
   if (templateId) {
-    const { from, to } = headersMail;
-    bodyMail = parseToData(templateData, templateId, from, to);
+    bodyMail = parseDataByTemplateId(headersMail, templateData, templateId);
   } else if (template) {
-    // TODO: apply data to the template
-    bodyMail = template;
+    bodyMail = await parseDataForTemplate(headersMail, templateData, template);
+  }
+
+  if (!bodyMail) {
+    throw new Error(`Email body for template: #${templateId || template}, not found`);
   }
 
   return sgAxios.post('/send', bodyMail, {

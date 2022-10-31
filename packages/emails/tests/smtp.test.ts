@@ -10,7 +10,7 @@ const readFile = (path: string) => fs.readFileSync(`${__dirname}/${path}`, 'utf-
 
 const readJson = (path: string) => JSON.parse(readFile(path));
 
-const config = readJson('config-sendgrid.json');
+const config = readJson('config-smtp.json');
 const order = readJson('assets/order.json');
 const store = readJson('/assets/store.json');
 const customer = readJson('/assets/customer.json');
@@ -21,11 +21,21 @@ const header = {
   subject: '',
 };
 
-process.env.ECOM_STORE_ID = config.ecomStoreId;
-process.env.ECOM_AUTHENTICATION_ID = config.ecomAuthenticationId;
-process.env.ECOM_API_KEY = config.ecomApiKey;
+const {
+  ecomStoreId,
+  ecomAuthenticationId,
+  ecomApiKey,
+  smtp,
+} = config;
 
-process.env.SENDGRID_API_KEY = config.apiKey;
+process.env.ECOM_STORE_ID = ecomStoreId;
+process.env.ECOM_AUTHENTICATION_ID = ecomAuthenticationId;
+process.env.ECOM_API_KEY = ecomApiKey;
+
+process.env.SMTP_HOST = smtp.host;
+process.env.SMTP_PORT = smtp.port;
+process.env.SMTP_USER = smtp.user;
+process.env.SMTP_PASS = smtp.pass;
 
 const timeOut = 10000;
 
@@ -47,22 +57,6 @@ test('Error template not found', async () => {
     const { message } = err;
     expect(message).toBe('TemplateId or template not found');
   }
-}, 10000);
-
-test('Send email with templateId for order', async () => {
-  header.subject = 'Test email with order templateId';
-  const data = await sendMail(
-    header,
-    {
-      templateData: {
-        store,
-        order,
-        customer,
-      },
-      templateId: config.templateIdOrders,
-    },
-  );
-  expect(data.status).toBe(202);
 }, 10000);
 
 test('Send email with template for order', async () => {
