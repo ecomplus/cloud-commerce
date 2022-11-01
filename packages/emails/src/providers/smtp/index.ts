@@ -24,7 +24,7 @@ const sendEmailSmtp = async (
   const bodyEmail = await parseDataToTransactionalMails(templateData, template);
 
   if (!bodyEmail) {
-    throw new Error(`Email body for template: #${template}, not found`);
+    return { status: 404, message: `Email body for template: #${template}, not found` };
   }
 
   // create reusable transporter object using the default SMTP transport

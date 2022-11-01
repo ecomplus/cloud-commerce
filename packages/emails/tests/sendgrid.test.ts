@@ -25,11 +25,29 @@ process.env.ECOM_STORE_ID = config.ecomStoreId;
 process.env.ECOM_AUTHENTICATION_ID = config.ecomAuthenticationId;
 process.env.ECOM_API_KEY = config.ecomApiKey;
 
-process.env.SENDGRID_API_KEY = config.apiKey;
-
 const timeOut = 10000;
 
+test('Error settings not found', async () => {
+  try {
+    await sendMail(
+      header,
+      {
+        templateData: {
+          store,
+          order,
+          customer,
+        },
+        template: 'new_order',
+      },
+    );
+  } catch (err: any) {
+    const { message } = err;
+    expect(message).toBe('Provider settings or smtp not found');
+  }
+}, timeOut);
+
 test('Error template not found', async () => {
+  process.env.SENDGRID_API_KEY = config.apiKey;
   try {
     await sendMail(
       header,

@@ -21,8 +21,6 @@
     "test": "tsc -p ../../tsconfig.test.json && vitest run"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/transactional-mails": "^1.11.1",
     "axios": "^1.1.3",
     "nodemailer": "^6.8.0"

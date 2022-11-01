@@ -32,12 +32,31 @@ process.env.ECOM_STORE_ID = ecomStoreId;
 process.env.ECOM_AUTHENTICATION_ID = ecomAuthenticationId;
 process.env.ECOM_API_KEY = ecomApiKey;
 
+const timeOut = 10000;
+
+test('Error settings not found', async () => {
+  try {
+    await sendMail(
+      header,
+      {
+        templateData: {
+          store,
+          order,
+          customer,
+        },
+        template: 'new_order',
+      },
+    );
+  } catch (err: any) {
+    const { message } = err;
+    expect(message).toBe('Provider settings or smtp not found');
+  }
+}, timeOut);
+
 process.env.SMTP_HOST = smtp.host;
 process.env.SMTP_PORT = smtp.port;
 process.env.SMTP_USER = smtp.user;
 process.env.SMTP_PASS = smtp.pass;
-
-const timeOut = 10000;
 
 test('Error template not found', async () => {
   try {
@@ -55,7 +74,7 @@ test('Error template not found', async () => {
     const { message } = err;
     expect(message).toBe('TemplateId or template not found');
   }
-}, 10000);
+}, timeOut);
 
 test('Send email with template for order', async () => {
   header.subject = 'Test email with order template, using smtp';

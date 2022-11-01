@@ -27,7 +27,7 @@ const sgSendMail = async (
   }
 
   if (!bodyEmail) {
-    throw new Error(`Email body for template: #${templateId || template}, not found`);
+    return { status: 404, message: `Email body for template: #${templateId || template}, not found` };
   }
 
   return sgAxios.post('/send', bodyEmail, {

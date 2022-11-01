@@ -16,7 +16,7 @@ const sendEmail = (
   const { templateData, templateId, template } = templateConfig;
 
   if (!templateId && !template) {
-    throw new Error('TemplateId or template not found');
+    return { status: 404, message: 'TemplateId or template not found' };
   }
 
   const {
@@ -55,6 +55,7 @@ const sendEmail = (
       );
     }
   }
+
   return { status: 404, message: 'Provider settings or smtp not found' };
 };
 
