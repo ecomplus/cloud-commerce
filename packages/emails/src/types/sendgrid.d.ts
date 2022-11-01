@@ -6,7 +6,7 @@ import type {
 } from '@cloudcommerce/types';
 import type { HeadersMail, TemplateData, EmailAdrress } from '../../types/index';
 
-type DataMailSendGrid = {
+type DataEmailSendGrid = {
   personalizations: [
     {
       to: HeadersMail['to'],
@@ -30,5 +30,5 @@ type DataMailSendGrid = {
 }
 
 export type {
-  DataMailSendGrid
+  DataEmailSendGrid
 };

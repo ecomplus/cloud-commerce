@@ -1,26 +1,29 @@
 import type {
-  HeadersMail,
-  TemplateData,
+  HeadersEmail,
   Template,
+  TemplateConfig,
   SmtpConfig,
   EmailAdrress,
 } from '../../types/index';
 import nodemailer from 'nodemailer';
 import parseDataToTransactionalMails from '../../parse-data-to-transactional-mails';
 
+const parseArrayEmailsToString = (emails: EmailAdrress[]) => {
+  return emails.reduce((value: string, emailAdrress: EmailAdrress) => {
+    return `${value}, ${emailAdrress.email}`;
+  }, '');
+};
+
 const sendEmailSmtp = async (
-  headersMail: HeadersMail,
-  configTemplate: {
-    templateData: TemplateData,
-    template: Template,
-  },
+  headersEmail: HeadersEmail,
+  configTemplate: Omit<TemplateConfig, 'template'> & { template: Template},
   smtpConfig: SmtpConfig,
 ) => {
-  const { from, to } = headersMail;
+  const { from, to } = headersEmail;
   const { templateData, template } = configTemplate;
-  const bodyMail = await parseDataToTransactionalMails(templateData, template);
+  const bodyEmail = await parseDataToTransactionalMails(templateData, template);
 
-  if (!bodyMail) {
+  if (!bodyEmail) {
     throw new Error(`Email body for template: #${template}, not found`);
   }
 
@@ -28,14 +31,42 @@ const sendEmailSmtp = async (
   const transporter = nodemailer.createTransport(smtpConfig);
 
   // send mail with defined transport object
-  const info = await transporter.sendMail({
+  const dataEmail = {
     from: `"${from.name}" <${from.email}>`,
-    to: to.reduce((value: string, emailAdrress: EmailAdrress) => {
-      return `${value}, ${emailAdrress.email}`;
-    }, ''),
-    subject: headersMail.subject,
-    html: bodyMail,
-  });
+    to: parseArrayEmailsToString(to),
+    subject: headersEmail.subject,
+    html: bodyEmail,
+  };
+
+  if (headersEmail.sender) {
+    Object.assign(dataEmail, {
+      sender: `"${headersEmail.sender.name}" <${headersEmail.sender.email}>`,
+    });
+  }
+
+  if (headersEmail.cc) {
+    Object.assign(dataEmail, {
+      cc: parseArrayEmailsToString(headersEmail.cc),
+    });
+  }
+
+  if (headersEmail.bcc) {
+    Object.assign(dataEmail, {
+      bcc: parseArrayEmailsToString(headersEmail.bcc),
+    });
+  }
+
+  if (headersEmail.replyTo) {
+    const replyTo = Array.isArray(headersEmail.replyTo)
+      ? parseArrayEmailsToString(headersEmail.replyTo)
+      : `"${headersEmail.replyTo.name}" <${headersEmail.replyTo.email}>`;
+
+    Object.assign(dataEmail, {
+      replyTo,
+    });
+  }
+
+  const info = await transporter.sendMail(dataEmail);
 
   return { status: 202, message: `messageId: #${info.messageId}` };
 };

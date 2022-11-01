@@ -1,21 +1,19 @@
 import type {
-  HeadersMail,
-  TemplateData,
-  Template,
+  HeadersEmail,
+  TemplateConfig,
   SmtpConfig,
 } from './types/index';
 import sendgrid from './providers/sendgrid/index';
 import sendEmailSmpt from './providers/smtp/index';
 
+// https://docs.adonisjs.com/guides/mailer
+
 const sendEmail = (
-  headersMail: HeadersMail,
-  configTemplate: {
-    templateData: TemplateData,
-    templateId?: string,
-    template?: Template,
-  },
+  headersEmail: HeadersEmail,
+  templateConfig: TemplateConfig,
+  smtpAuthOptions?: SmtpConfig['auth'],
 ) => {
-  const { templateData, templateId, template } = configTemplate;
+  const { templateData, templateId, template } = templateConfig;
 
   if (!templateId && !template) {
     throw new Error('TemplateId or template not found');
@@ -32,31 +30,26 @@ const sendEmail = (
 
   if ((templateId || template) && SENDGRID_API_KEY) {
     return sendgrid(
-      headersMail,
-      configTemplate,
+      headersEmail,
+      templateConfig,
       SENDGRID_API_KEY,
     );
   }
 
   if (SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS) {
-    // send nodemailer
     const port = parseInt(SMTP_PORT, 10);
-    // secure = true for 465, false for other ports
-    const secure = SMTP_TLS && SMTP_TLS.toUpperCase() === 'TRUE' ? true : port === 465;
+
     const smtpConfig: SmtpConfig = {
       host: SMTP_HOST,
       port,
-      secure,
-      auth: {
-        user: SMTP_USER,
-        pass: SMTP_PASS,
-      },
-
+      // secure = true for 465, false for other ports
+      secure: SMTP_TLS && SMTP_TLS.toUpperCase() === 'TRUE' ? true : port === 465,
+      auth: smtpAuthOptions || { user: SMTP_USER, pass: SMTP_PASS },
     };
 
     if (template) {
       return sendEmailSmpt(
-        headersMail,
+        headersEmail,
         { templateData, template },
         smtpConfig,
       );

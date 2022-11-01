@@ -29,8 +29,6 @@ process.env.SENDGRID_API_KEY = config.apiKey;
 
 const timeOut = 10000;
 
-// /*
-
 test('Error template not found', async () => {
   try {
     await sendMail(
@@ -80,5 +78,3 @@ test('Send email with template for order', async () => {
   );
   expect(data?.status).toBe(202);
 }, timeOut);
-
-// */

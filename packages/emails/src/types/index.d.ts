@@ -1,11 +1,12 @@
-import { DataMailSendGrid } from './sendgrid'
+import { Stores, Orders, Carts, Products, Customers } from '@cloudcommerce/types'
+import { DataEmailSendGrid } from './sendgrid'
 
 type EmailAdrress = {
   name: string
   email: string
 }
 
-type HeadersMail = {
+type HeadersEmail = {
   from: EmailAdrress,
   to: EmailAdrress[]
   subject: string,
@@ -15,7 +16,15 @@ type HeadersMail = {
   bcc?: EmailAdrress[],
 }
 
-type TemplateData = { [key: string]: any }
+type TemplateData = {
+  store: Stores,
+  customer: Customers,
+  cart?: Carts,
+  order?: Orders,
+  product?: Products
+  lang?: 'pt_br' | 'en_us',
+  customMessage?: string
+}
 
 type Template = 'welcome'
   | 'abandonedCart'
@@ -44,21 +53,58 @@ type Template = 'welcome'
   | 'promo'
   | 'stock';
 
+
+type TemplateConfig = {
+  templateData: TemplateData,
+  templateId?: string,
+  template?: Template,
+}
+
+// https://nodemailer.com/smtp/oauth2/
+
+type SmtpAuth = {
+  user: string,
+  pass: string,
+}
+
+type SmtpAuthToken = {
+  type: 'OAuth2',
+  user: string,
+  accessToken: string,
+}
+
+type SmtpAuth3LO = {
+  type: 'OAuth2',
+  user: string,
+  clientId: string,
+  clientSecret: string,
+  refreshToken: string,
+  accessToken: string,
+  expires: number,
+}
+
+type SmtpAuth2LO = {
+  type: 'OAuth2',
+  user: string,
+  serviceClient: string,
+  privateKey?: string,
+  accessToken: string,
+  expires: number,
+}
+
 type SmtpConfig = {
   host: string,
   port: number,
   secure: boolean,
-  auth: {
-    user: string,
-    pass: string,
-  }
+  auth: SmtpAuth | SmtpAuthToken | SmtpAuth2LO | SmtpAuth3LO
 }
 
 export type {
   EmailAdrress,
-  HeadersMail,
+  HeadersEmail,
   TemplateData,
   Template,
-  DataMailSendGrid,
+  TemplateConfig,
+  DataEmailSendGrid,
   SmtpConfig
 }

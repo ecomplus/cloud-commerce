@@ -39,8 +39,6 @@ process.env.SMTP_PASS = smtp.pass;
 
 const timeOut = 10000;
 
-// /*
-
 test('Error template not found', async () => {
   try {
     await sendMail(
@@ -60,7 +58,7 @@ test('Error template not found', async () => {
 }, 10000);
 
 test('Send email with template for order', async () => {
-  header.subject = 'Test email with order template';
+  header.subject = 'Test email with order template, using smtp';
   const data = await sendMail(
     header,
     {
@@ -74,5 +72,3 @@ test('Send email with template for order', async () => {
   );
   expect(data?.status).toBe(202);
 }, timeOut);
-
-// */

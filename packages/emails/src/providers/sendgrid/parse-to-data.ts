@@ -1,14 +1,14 @@
 import type {
-  HeadersMail,
+  HeadersEmail,
   TemplateData,
-  DataMailSendGrid,
+  DataEmailSendGrid,
   Template,
 } from '../../types/index';
 import logger from 'firebase-functions/logger';
 import parseDataToTransactionalMails from '../../parse-data-to-transactional-mails';
 
 const parseDataByTemplateId = (
-  headersMail: HeadersMail,
+  headersEmail: HeadersEmail,
   templateData: TemplateData,
   templateId: string,
 ) => {
@@ -19,10 +19,10 @@ const parseDataByTemplateId = (
     replyTo,
     cc,
     bcc,
-  } = headersMail;
+  } = headersEmail;
 
   logger.log('>> from: ', from.email, ' to: ', JSON.stringify(to));
-  const body: DataMailSendGrid = {
+  const body: DataEmailSendGrid = {
     personalizations: [
       {
         to,
@@ -47,7 +47,7 @@ const parseDataByTemplateId = (
 };
 
 const parseDataForTemplate = async (
-  headersMail: HeadersMail,
+  headersEmail: HeadersEmail,
   templateData: TemplateData,
   template: Template,
 ) => {
@@ -58,10 +58,10 @@ const parseDataForTemplate = async (
     replyTo,
     cc,
     bcc,
-  } = headersMail;
+  } = headersEmail;
 
   logger.log('>> from: ', from.email, ' to: ', JSON.stringify(to));
-  const body: DataMailSendGrid = {
+  const body: DataEmailSendGrid = {
     personalizations: [
       {
         to,
