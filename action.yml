@@ -39,22 +39,25 @@ runs:
 
     - shell: bash
       working-directory: functions
+      env:
+        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
       run: |
         for d in */ ; do
           cd $d
           npm ci
           cd ..
         done
+        echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
       shell: bash
       env:
+        ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
-        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
         TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
@@ -72,7 +75,7 @@ runs:
       shell: bash
       working-directory: functions/ssr
       env:
-        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
+        ECOM_STORE_ID: ${{ env.ecom_store_id }}
       run: |
         printf "ECOM_STORE_ID=$ECOM_STORE_ID
         DEPLOY_RAND=$RANDOM.$RANDOM
