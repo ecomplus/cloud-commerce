@@ -93,7 +93,7 @@ importers:
       '@cloudcommerce/i18n': ^0.0.126
       '@cloudcommerce/ssr': ^0.0.126
       '@cloudcommerce/storefront': ^0.0.126
-      '@iconify-json/arcticons': ^1.1.28
+      '@iconify-json/arcticons': ^1.1.29
       '@iconify-json/wpf': ^1.1.2
       lottie-web: ^5.9.6
       lozad: ^1.16.0
