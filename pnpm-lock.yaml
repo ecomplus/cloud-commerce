@@ -50,56 +50,56 @@ importers:
 
   ecomplus-stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.125
+      '@cloudcommerce/cli': ^0.0.126
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.125
-      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/events': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/modules': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/modules': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/passport': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/passport': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
 
   ecomplus-stores/monocard/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.10.0
-      '@astrojs/node': ^1.1.0
-      '@cloudcommerce/api': ^0.0.125
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/i18n': ^0.0.125
-      '@cloudcommerce/ssr': ^0.0.125
-      '@cloudcommerce/storefront': ^0.0.125
+      '@astrojs/image': ^0.11.0
+      '@astrojs/node': ^2.0.2
+      '@cloudcommerce/api': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/i18n': ^0.0.126
+      '@cloudcommerce/ssr': ^0.0.126
+      '@cloudcommerce/storefront': ^0.0.126
       '@iconify-json/arcticons': ^1.1.28
       '@iconify-json/wpf': ^1.1.2
       lottie-web: ^5.9.6
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/image': 0.10.0
-      '@astrojs/node': 1.1.0
+      '@astrojs/image': 0.11.0
+      '@astrojs/node': 2.0.2
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
@@ -113,52 +113,52 @@ importers:
 
   ecomplus-stores/tia-sonia:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.125
+      '@cloudcommerce/cli': ^0.0.126
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/tia-sonia/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/tia-sonia/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.125
-      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/events': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/tia-sonia/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/modules': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/modules': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/tia-sonia/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/passport': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/passport': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
 
   ecomplus-stores/tia-sonia/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.10.0
-      '@astrojs/node': ^1.1.0
-      '@cloudcommerce/api': ^0.0.125
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/i18n': ^0.0.125
-      '@cloudcommerce/ssr': ^0.0.125
-      '@cloudcommerce/storefront': ^0.0.125
+      '@astrojs/image': ^0.11.0
+      '@astrojs/node': ^2.0.2
+      '@cloudcommerce/api': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/i18n': ^0.0.126
+      '@cloudcommerce/ssr': ^0.0.126
+      '@cloudcommerce/storefront': ^0.0.126
     dependencies:
-      '@astrojs/image': 0.10.0
-      '@astrojs/node': 1.1.0
+      '@astrojs/image': 0.11.0
+      '@astrojs/node': 2.0.2
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
@@ -490,52 +490,52 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.125
+      '@cloudcommerce/cli': ^0.0.126
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.125
-      '@cloudcommerce/firebase': ^0.0.125
+      '@cloudcommerce/events': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/modules': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/modules': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/passport': ^0.0.125
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/passport': ^0.0.126
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.10.0
-      '@astrojs/node': ^1.1.0
-      '@cloudcommerce/api': ^0.0.125
-      '@cloudcommerce/firebase': ^0.0.125
-      '@cloudcommerce/i18n': ^0.0.125
-      '@cloudcommerce/ssr': ^0.0.125
-      '@cloudcommerce/storefront': ^0.0.125
+      '@astrojs/image': ^0.11.0
+      '@astrojs/node': ^2.0.2
+      '@cloudcommerce/api': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/i18n': ^0.0.126
+      '@cloudcommerce/ssr': ^0.0.126
+      '@cloudcommerce/storefront': ^0.0.126
     dependencies:
-      '@astrojs/image': 0.10.0
-      '@astrojs/node': 1.1.0
+      '@astrojs/image': 0.11.0
+      '@astrojs/node': 2.0.2
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -585,23 +585,6 @@ packages:
 
   /@astrojs/compiler/0.29.9:
     resolution: {integrity: sha512-/oMQ0z3CJzGg6sv51tQTiHf/ETVsEu8ObN9OA7zs937dQx9Uo4SToYfdw3C4hf6olrLiADuDUsbkKSRe6fLSgA==}
-    dev: false
-
-  /@astrojs/image/0.10.0:
-    resolution: {integrity: sha512-/lkQ8YbqwHEA3bU6W7igEHqqQs6V6sx4rMbhkur4qWQP61kAOnvacSSKN7GJ+YswZOiUhPGY9DTtyLRqLFLv5g==}
-    peerDependencies:
-      sharp: '>=0.31.0'
-    peerDependenciesMeta:
-      sharp:
-        optional: true
-    dependencies:
-      '@altano/tiny-async-pool': 1.0.2
-      http-cache-semantics: 4.1.0
-      image-size: 1.0.2
-      kleur: 4.1.5
-      magic-string: 0.25.9
-      mime: 3.0.0
-      slash: 4.0.0
     dev: false
 
   /@astrojs/image/0.11.0:
@@ -682,12 +665,6 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.6
       vfile-message: 3.1.2
-    dev: false
-
-  /@astrojs/node/1.1.0:
-    resolution: {integrity: sha512-4KkCEFYtmTUSvU49UZSJD/VQfD/oKzf0ld8COjFW1pxfquBgvevLxRVpYLRanZB20L3c8/xyyQpDq7zMSMqQrg==}
-    dependencies:
-      '@astrojs/webapi': 1.1.1
     dev: false
 
   /@astrojs/node/2.0.2:
