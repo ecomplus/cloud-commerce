@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.126](https://github.com/ecomplus/cloud-commerce/compare/v0.0.125...v0.0.126) (2022-11-02)
+
+
+### Bug Fixes
+
+* **checkout:** Better error handling update and other checkout improvements ([#56](https://github.com/ecomplus/cloud-commerce/issues/56)) ([99cb75e](https://github.com/ecomplus/cloud-commerce/commit/99cb75e4e74ec66ba10369f56f1be1daa4db4ea7))
+* **deps:** Update all non-major dependencies ([#64](https://github.com/ecomplus/cloud-commerce/issues/64)) ([42cfc11](https://github.com/ecomplus/cloud-commerce/commit/42cfc11dc951d66aac772a8baf59e54a706359ba))
+* **deps:** Update all non-major dependencies ([#69](https://github.com/ecomplus/cloud-commerce/issues/69)) ([8c0e4bc](https://github.com/ecomplus/cloud-commerce/commit/8c0e4bc084928331ba07c36562f02c4026b1526f))
+* **deps:** Update dependency @astrojs/node to v2 ([#60](https://github.com/ecomplus/cloud-commerce/issues/60)) ([3c0f5a4](https://github.com/ecomplus/cloud-commerce/commit/3c0f5a40afd7322b7eaaddfbfb193913df5cb264))
+* **deps:** update dependency firebase-functions to v4 ([77627f5](https://github.com/ecomplus/cloud-commerce/commit/77627f539b9d3be4edb65506ee48be9e2fd56aeb))
+* **firebase:** Update config `ssrFunctionOptions` to no min instances by default ([2bf0a52](https://github.com/ecomplus/cloud-commerce/commit/2bf0a52418267074a39e76aa7a3440c186b6a25f))
+* Update `import logger from 'firebase-functions/logger'` for firebase-functions v4 ([1728d07](https://github.com/ecomplus/cloud-commerce/commit/1728d071dc1a00376a69619c8277d4f6a813da06))
+
 ### [0.0.125](https://github.com/ecomplus/cloud-commerce/compare/v0.0.124...v0.0.125) (2022-10-16)
 
 ### [0.0.124](https://github.com/ecomplus/cloud-commerce/compare/v0.0.123...v0.0.124) (2022-10-16)
