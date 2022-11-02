@@ -78,6 +78,21 @@ type AppModuleBody = {
   application: Applications,
 };
 
+type CmsSettings = {
+  domain: string,
+  primary_color: string,
+  bg_color: string,
+  repository: string,
+  logo: string,
+  name: string,
+  short_name: string,
+  favicon: string,
+  secondary_color: string,
+  icon: string,
+  description: string,
+  large_icon: string,
+};
+
 export type {
   Products,
   Categories,
@@ -118,4 +133,5 @@ export type {
   CreateTransactionParams,
   CreateTransactionResponse,
   CheckoutBody,
+  CmsSettings,
 };
