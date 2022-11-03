@@ -36,46 +36,50 @@ runs:
 
     - shell: bash
       run: npm ci --omit=dev
-    
+
     - shell: bash
       working-directory: functions
+      env:
+        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
       run: |
         for d in */ ; do
           cd $d
           npm ci
           cd ..
         done
+        echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
       shell: bash
       env:
+        ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GITHUB_TOKEN: ${{ inputs.github-token }}
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
-        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
         TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
-        printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
+        printf "DEPLOY_RAND=$RANDOM.$RANDOM
+        ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
         ECOM_API_KEY=$ECOM_API_KEY
         ECOM_STORE_ID=$ECOM_STORE_ID
         GITHUB_TOKEN=$GITHUB_TOKEN
         TINY_ERP_TOKEN=$TINY_ERP_TOKEN
-        DEPLOY_RAND=$RANDOM.$RANDOM
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
-    
+
     - if: github.event_name == 'pull_request'
       shell: bash
-      working-directory: functions/ssr
+      env:
+        ECOM_STORE_ID: ${{ env.ecom_store_id }}
       run: |
-        printf "ECOM_STORE_ID=$ECOM_STORE_ID
-        DEPLOY_RAND=$RANDOM.$RANDOM
-        " > .env
-        npm run build:static
+        printf "DEPLOY_RAND=$RANDOM.$RANDOM
+        ECOM_STORE_ID=$ECOM_STORE_ID
+        " > functions/ssr/.env
+        npm --prefix "functions/ssr/" run build:static && npm run build -- --codebase ssr
 
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview

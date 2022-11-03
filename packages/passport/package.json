@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/passport",
   "type": "module",
-  "version": "0.0.125",
+  "version": "0.0.126",
   "description": "E-Com Plus Cloud Commerce customers authentication (passport) API",
   "main": "lib/index.js",
   "exports": {
@@ -26,11 +26,11 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "firebase-admin": "^11.2.0",
-    "firebase-functions": "^4.0.1",
+    "firebase-functions": "^4.0.2",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.8.0"
+    "@firebase/app-types": "^0.8.1"
   }
 }
