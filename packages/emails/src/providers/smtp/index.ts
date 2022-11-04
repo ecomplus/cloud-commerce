@@ -1,74 +1,97 @@
 import type {
-  HeadersEmail,
-  Template,
-  TemplateConfig,
+  EmailHeaders,
   SmtpConfig,
   EmailAdrress,
+  TemplateData,
 } from '../../types/index';
+import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import nodemailer from 'nodemailer';
-import parseDataToTransactionalMails from '../../parse-data-to-transactional-mails';
+import parseTemplateToHtml from '../../parse-template-to.html';
 
-const parseArrayEmailsToString = (emails: EmailAdrress[]) => {
-  return emails.reduce((value: string, emailAdrress: EmailAdrress) => {
-    return `${value}, ${emailAdrress.email}`;
-  }, '');
+const parseEmailsToString = (emails: EmailAdrress | EmailAdrress[]) => {
+  if (Array.isArray(emails)) {
+    return emails.reduce((value: string, emailAdrress: EmailAdrress) => {
+      return `${value}, ${emailAdrress.email}`;
+    }, '');
+  }
+  return `"${emails.name}" <${emails.email}>`;
+};
+let smtp: nodemailer.Transporter<SMTPTransport.SentMessageInfo> | undefined;
+const setSmtpConfig = (smtpConfig: SmtpConfig) => {
+  // create reusable transporter object using the default SMTP transport
+  smtp = nodemailer.createTransport(smtpConfig);
 };
 
 const sendEmailSmtp = async (
-  headersEmail: HeadersEmail,
-  configTemplate: Omit<TemplateConfig, 'template'> & { template: Template},
+  emailHeaders: EmailHeaders,
   smtpConfig: SmtpConfig,
+  text?: string,
+  html?: string,
+  templateData?: TemplateData,
+  template?: string,
 ) => {
-  const { from, to } = headersEmail;
-  const { templateData, template } = configTemplate;
-  const bodyEmail = await parseDataToTransactionalMails(templateData, template);
-
-  if (!bodyEmail) {
-    return { status: 404, message: `Email body for template: #${template}, not found` };
+  const { from, to } = emailHeaders;
+  if (!template && !html) {
+    return { status: 404, message: 'Template or html not found' };
   }
 
-  // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport(smtpConfig);
+  if (template && !templateData) {
+    return { status: 404, message: 'Data for template not found' };
+  }
+
+  if (template && templateData) {
+    html = parseTemplateToHtml(templateData, template) || html;
+  }
+
+  if (!html) {
+    return { status: 404, message: `Email body for template: #${template}, not found` };
+  }
 
   // send mail with defined transport object
   const dataEmail = {
     from: `"${from.name}" <${from.email}>`,
-    to: parseArrayEmailsToString(to),
-    subject: headersEmail.subject,
-    html: bodyEmail,
+    to: parseEmailsToString(to),
+    subject: emailHeaders.subject,
+    html,
   };
+  if (text) {
+    Object.assign(dataEmail, text);
+  }
 
-  if (headersEmail.sender) {
+  if (emailHeaders.sender) {
     Object.assign(dataEmail, {
-      sender: `"${headersEmail.sender.name}" <${headersEmail.sender.email}>`,
+      sender: `"${emailHeaders.sender.name}" <${emailHeaders.sender.email}>`,
     });
   }
 
-  if (headersEmail.cc) {
+  if (emailHeaders.cc) {
     Object.assign(dataEmail, {
-      cc: parseArrayEmailsToString(headersEmail.cc),
+      cc: parseEmailsToString(emailHeaders.cc),
     });
   }
 
-  if (headersEmail.bcc) {
+  if (emailHeaders.bcc) {
     Object.assign(dataEmail, {
-      bcc: parseArrayEmailsToString(headersEmail.bcc),
+      bcc: parseEmailsToString(emailHeaders.bcc),
     });
   }
 
-  if (headersEmail.replyTo) {
-    const replyTo = Array.isArray(headersEmail.replyTo)
-      ? parseArrayEmailsToString(headersEmail.replyTo)
-      : `"${headersEmail.replyTo.name}" <${headersEmail.replyTo.email}>`;
-
+  if (emailHeaders.replyTo) {
+    const replyTo = parseEmailsToString(emailHeaders.replyTo);
     Object.assign(dataEmail, {
       replyTo,
     });
   }
 
-  const info = await transporter.sendMail(dataEmail);
+  if (!smtp) {
+    setSmtpConfig(smtpConfig);
+  }
 
-  return { status: 202, message: `messageId: #${info.messageId}` };
+  if (smtp) {
+    const info = await smtp.sendMail(dataEmail);
+    return { status: 202, message: `messageId: #${info.messageId}` };
+  }
+  return { status: 404, message: 'Error configuring SMTP settings' };
 };
 
 export default sendEmailSmtp;

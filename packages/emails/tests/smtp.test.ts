@@ -12,11 +12,11 @@ const readJson = (path: string) => JSON.parse(readFile(path));
 
 const config = readJson('config-smtp.json');
 const order = readJson('assets/order.json');
-const store = readJson('/assets/store.json');
-const customer = readJson('/assets/customer.json');
+const store = readJson('assets/store.json');
+const customer = readJson('assets/customer.json');
+const templateNewOrder = readFile('template/new-order.ejs');
 
 const header = {
-  from: config.from,
   to: config.to,
   subject: '',
 };
@@ -35,59 +35,48 @@ process.env.ECOM_API_KEY = ecomApiKey;
 const timeOut = 10000;
 
 test('Error settings not found', async () => {
-  try {
-    await sendMail(
-      header,
-      {
-        templateData: {
-          store,
-          order,
-          customer,
-        },
-        template: 'new_order',
-      },
-    );
-  } catch (err: any) {
-    const { message } = err;
-    expect(message).toBe('Provider settings or smtp not found');
-  }
+  const data = await sendMail({
+    ...header,
+    templateData: {
+      store,
+      order,
+      customer,
+    },
+    template: 'new_order',
+  });
+  expect(data?.status).toBe(404);
 }, timeOut);
 
-process.env.SMTP_HOST = smtp.host;
-process.env.SMTP_PORT = smtp.port;
-process.env.SMTP_USER = smtp.user;
-process.env.SMTP_PASS = smtp.pass;
-
 test('Error template not found', async () => {
-  try {
-    await sendMail(
-      header,
-      {
-        templateData: {
-          store,
-          order,
-          customer,
-        },
-      },
-    );
-  } catch (err: any) {
-    const { message } = err;
-    expect(message).toBe('TemplateId or template not found');
-  }
+  process.env.SMTP_HOST = smtp.host;
+  process.env.SMTP_PORT = smtp.port;
+  process.env.SMTP_USER = smtp.user;
+  process.env.SMTP_PASS = smtp.pass;
+  process.env.MAIL_SENDER = config.from.email;
+  process.env.MAIL_SENDER_NAME = config.from.name;
+
+  const data = await sendMail({
+    ...header,
+    templateData: {
+      store,
+      order,
+      customer,
+    },
+  });
+  expect(data?.status).toBe(404);
 }, timeOut);
 
 test('Send email with template for order', async () => {
   header.subject = 'Test email with order template, using smtp';
-  const data = await sendMail(
-    header,
-    {
-      templateData: {
-        store,
-        order,
-        customer,
-      },
-      template: 'new_order',
+  const data = await sendMail({
+    ...header,
+    templateData: {
+      store,
+      order,
+      customer,
     },
-  );
+    template: templateNewOrder,
+
+  });
   expect(data?.status).toBe(202);
 }, timeOut);

@@ -2,13 +2,13 @@ import { Stores, Orders, Carts, Products, Customers } from '@cloudcommerce/types
 import { DataEmailSendGrid } from './sendgrid'
 
 type EmailAdrress = {
-  name: string
-  email: string
+  name: string,
+  email: string,
 }
 
-type HeadersEmail = {
+type EmailHeaders = {
   from: EmailAdrress,
-  to: EmailAdrress[]
+  to: EmailAdrress | EmailAdrress[],
   subject: string,
   cc?: EmailAdrress[],
   sender?: EmailAdrress,
@@ -16,48 +16,19 @@ type HeadersEmail = {
   bcc?: EmailAdrress[],
 }
 
-type TemplateData = {
-  store: Stores,
-  customer: Customers,
-  cart?: Carts,
-  order?: Orders,
-  product?: Products
-  lang?: 'pt_br' | 'en_us',
-  customMessage?: string
-}
+type TemplateData = { [key: string]: any }
 
-type Template = 'welcome'
-  | 'abandonedCart'
-  | 'authorized'
-  | 'delivered'
-  | 'inDispute'
-  | 'inProduction'
-  | 'inSeparation'
-  | 'invoiceIssued'
-  | 'new_order'
-  | 'paid'
-  | 'partiallyDelivered'
-  | 'partiallyPaid'
-  | 'partiallyRefunded'
-  | 'partiallyShipped'
-  | 'pending'
-  | 'readyForShipping'
-  | 'receivedForExchange'
-  | 'refunded'
-  | 'returned'
-  | 'returnedForExchange'
-  | 'shipped'
-  | 'unauthorized'
-  | 'underAnalysis'
-  | 'voided'
-  | 'promo'
-  | 'stock';
-
-
-type TemplateConfig = {
-  templateData: TemplateData,
+type EmailConfig = {
+  to: EmailAdrress[]
+  subject: string,
+  cc?: EmailAdrress[],
+  sender?: EmailAdrress,
+  bcc?: EmailAdrress[],
+  text?: string,
+  html?: string,
+  templateData?: TemplateData,
   templateId?: string,
-  template?: Template,
+  template?: string,
 }
 
 // https://nodemailer.com/smtp/oauth2/
@@ -101,10 +72,9 @@ type SmtpConfig = {
 
 export type {
   EmailAdrress,
-  HeadersEmail,
+  EmailHeaders,
   TemplateData,
-  Template,
-  TemplateConfig,
+  EmailConfig,
   DataEmailSendGrid,
-  SmtpConfig
+  SmtpConfig,
 }

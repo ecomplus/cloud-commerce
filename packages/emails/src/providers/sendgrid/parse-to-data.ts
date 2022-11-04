@@ -1,16 +1,14 @@
 import type {
-  HeadersEmail,
+  EmailHeaders,
   TemplateData,
   DataEmailSendGrid,
-  Template,
 } from '../../types/index';
 import logger from 'firebase-functions/logger';
-import parseDataToTransactionalMails from '../../parse-data-to-transactional-mails';
+import parseTemplateToHtml from '../../parse-template-to.html';
 
-const parseDataByTemplateId = (
-  headersEmail: HeadersEmail,
-  templateData: TemplateData,
-  templateId: string,
+const createBodySendGrid = (
+  headersEmail: EmailHeaders,
+
 ) => {
   const {
     from,
@@ -21,19 +19,16 @@ const parseDataByTemplateId = (
     bcc,
   } = headersEmail;
 
-  logger.log('>> from: ', from.email, ' to: ', JSON.stringify(to));
   const body: DataEmailSendGrid = {
     personalizations: [
       {
         to,
         cc,
         bcc,
-        dynamic_template_data: templateData,
       },
     ],
     from,
     subject,
-    template_id: templateId,
   };
 
   if (replyTo) {
@@ -46,42 +41,28 @@ const parseDataByTemplateId = (
   return body;
 };
 
-const parseDataForTemplate = async (
-  headersEmail: HeadersEmail,
+const sendGridBodyWithTemplateId = (
+  headersEmail: EmailHeaders,
   templateData: TemplateData,
-  template: Template,
+  templateId: string,
 ) => {
-  const {
-    from,
-    to,
-    subject,
-    replyTo,
-    cc,
-    bcc,
-  } = headersEmail;
+  logger.log('>> from: ', headersEmail.from.email, ' to: ', JSON.stringify(headersEmail.to));
+  const body = createBodySendGrid(headersEmail);
+  body.personalizations[0].dynamic_template_data = templateData;
+  body.template_id = templateId;
 
-  logger.log('>> from: ', from.email, ' to: ', JSON.stringify(to));
-  const body: DataEmailSendGrid = {
-    personalizations: [
-      {
-        to,
-        cc,
-        bcc,
-      },
-    ],
-    from,
-    subject,
-  };
+  return body;
+};
 
-  if (replyTo) {
-    if (Array.isArray(replyTo)) {
-      body.reply_to_list = replyTo;
-    } else {
-      body.reply_to = replyTo;
-    }
-  }
+const sendGridBodyWithTemplate = async (
+  headersEmail: EmailHeaders,
+  templateData: TemplateData,
+  template: string,
+) => {
+  logger.log('>> from: ', headersEmail.from.email, ' to: ', JSON.stringify(headersEmail.to));
+  const body = createBodySendGrid(headersEmail);
 
-  const contentValue = await parseDataToTransactionalMails(templateData, template);
+  const contentValue = parseTemplateToHtml(templateData, template);
 
   if (!contentValue) {
     return null;
@@ -91,10 +72,27 @@ const parseDataForTemplate = async (
     type: 'text/html',
     value: contentValue,
   }];
+
+  return body;
+};
+
+const sendGridBodyWithHtml = (
+  headersEmail: EmailHeaders,
+  html: string,
+) => {
+  logger.log('>> from: ', headersEmail.from.email, ' to: ', JSON.stringify(headersEmail.to));
+  const body = createBodySendGrid(headersEmail);
+
+  body.content = [{
+    type: 'text/html',
+    value: html,
+  }];
+
   return body;
 };
 
 export {
-  parseDataByTemplateId,
-  parseDataForTemplate,
+  sendGridBodyWithTemplateId,
+  sendGridBodyWithTemplate,
+  sendGridBodyWithHtml,
 };
