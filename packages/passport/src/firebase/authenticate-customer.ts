@@ -67,8 +67,10 @@ const authenticateCustomer = async (firebaseAuthToken: string) => {
         if (expires && new Date(expires).getTime() - Date.now() >= 2 * 60 * 1000) {
           return storedToken;
         }
-        const customerToken = generateAccessToken(customerId);
-        docRef.set(customerToken).catch(logger.error);
+        const customerToken = await generateAccessToken(customerId);
+        if (customerToken) {
+          docRef.set(customerToken).catch(logger.error);
+        }
         return customerToken;
       }
       const { data: newCustomer } = await api.post('customers', {
