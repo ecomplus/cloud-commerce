@@ -8,7 +8,7 @@ type EmailAdrress = {
 
 type EmailHeaders = {
   from: EmailAdrress,
-  to: EmailAdrress | EmailAdrress[],
+  to: EmailAdrress[],
   subject: string,
   cc?: EmailAdrress[],
   sender?: EmailAdrress,

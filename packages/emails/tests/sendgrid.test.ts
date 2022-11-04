@@ -14,7 +14,7 @@ const config = readJson('config-sendgrid.json');
 const order = readJson('assets/order.json');
 const store = readJson('/assets/store.json');
 const customer = readJson('/assets/customer.json');
-const templateNewOrder = readFile('template/new-order.ejs');
+const templateNewOrder = readFile('templates/new-order.ejs');
 
 const header = {
   to: config.to,
@@ -93,7 +93,7 @@ test('Send email retry with template for templateId error', async () => {
       order,
       customer,
     },
-    templateId: 'd-000000000000000000000000000999c7',
+    templateId: 'd-00000000000000000000000000000000',
     template: templateNewOrder,
   });
   expect(data?.status).toBe(202);
@@ -108,7 +108,7 @@ test('Error templateId not found', async () => {
       order,
       customer,
     },
-    templateId: 'd-000000000000000000000000000999c7',
+    templateId: 'd-00000000000000000000000000000000',
   });
   expect(data?.status).toBe(400);
 }, timeOut);

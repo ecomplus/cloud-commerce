@@ -21,11 +21,19 @@ const sgAxios = axios.create({
 const sendGridSendEmail = async (
   emailHeaders: EmailHeaders,
   sendGridApiKey: string,
-  templateData?: TemplateData,
-  templateId?: string,
-  template?: string,
-  html?: string,
+  dataOptions: {
+    html?: string,
+    templateData?: TemplateData,
+    templateId?: string,
+    template?: string,
+  },
 ) => {
+  const {
+    templateData,
+    templateId,
+    template,
+  } = dataOptions;
+  const { html } = dataOptions;
   let bodyEmail: DataEmailSendGrid | null = null;
   if (templateId && templateData) {
     bodyEmail = sendGridBodyWithTemplateId(emailHeaders, templateData, templateId);

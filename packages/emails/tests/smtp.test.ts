@@ -14,7 +14,7 @@ const config = readJson('config-smtp.json');
 const order = readJson('assets/order.json');
 const store = readJson('assets/store.json');
 const customer = readJson('assets/customer.json');
-const templateNewOrder = readFile('template/new-order.ejs');
+const templateNewOrder = readFile('templates/new-order.ejs');
 
 const header = {
   to: config.to,
@@ -76,7 +76,6 @@ test('Send email with template for order', async () => {
       customer,
     },
     template: templateNewOrder,
-
   });
   expect(data?.status).toBe(202);
 }, timeOut);

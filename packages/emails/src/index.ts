@@ -11,7 +11,7 @@ import sendEmailSmpt from './providers/smtp/index';
 
 const sendEmail = (
   config: {
-    to: EmailAdrress | EmailAdrress[],
+    to: EmailAdrress[],
     subject: string,
     cc?: EmailAdrress[],
     sender?: EmailAdrress,
@@ -79,10 +79,12 @@ const sendEmail = (
     return sendgrid(
       emailHeaders,
       SENDGRID_API_KEY,
-      templateData,
-      templateId,
-      template,
-      html,
+      {
+        templateData,
+        templateId,
+        template,
+        html,
+      },
     );
   }
 
@@ -101,10 +103,12 @@ const sendEmail = (
       return sendEmailSmpt(
         emailHeaders,
         smtpConfig,
-        text,
-        html,
-        templateData,
-        template,
+        {
+          text,
+          html,
+          templateData,
+          template,
+        },
       );
     }
   }

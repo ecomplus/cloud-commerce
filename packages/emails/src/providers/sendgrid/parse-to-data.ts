@@ -42,12 +42,12 @@ const createBodySendGrid = (
 };
 
 const sendGridBodyWithTemplateId = (
-  headersEmail: EmailHeaders,
+  emailHeaders: EmailHeaders,
   templateData: TemplateData,
   templateId: string,
 ) => {
-  logger.log('>> from: ', headersEmail.from.email, ' to: ', JSON.stringify(headersEmail.to));
-  const body = createBodySendGrid(headersEmail);
+  logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
+  const body = createBodySendGrid(emailHeaders);
   body.personalizations[0].dynamic_template_data = templateData;
   body.template_id = templateId;
 
@@ -55,12 +55,12 @@ const sendGridBodyWithTemplateId = (
 };
 
 const sendGridBodyWithTemplate = async (
-  headersEmail: EmailHeaders,
+  emailHeaders: EmailHeaders,
   templateData: TemplateData,
   template: string,
 ) => {
-  logger.log('>> from: ', headersEmail.from.email, ' to: ', JSON.stringify(headersEmail.to));
-  const body = createBodySendGrid(headersEmail);
+  logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
+  const body = createBodySendGrid(emailHeaders);
 
   const contentValue = parseTemplateToHtml(templateData, template);
 
@@ -77,11 +77,11 @@ const sendGridBodyWithTemplate = async (
 };
 
 const sendGridBodyWithHtml = (
-  headersEmail: EmailHeaders,
+  emailHeaders: EmailHeaders,
   html: string,
 ) => {
-  logger.log('>> from: ', headersEmail.from.email, ' to: ', JSON.stringify(headersEmail.to));
-  const body = createBodySendGrid(headersEmail);
+  logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
+  const body = createBodySendGrid(emailHeaders);
 
   body.content = [{
     type: 'text/html',

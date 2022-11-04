@@ -25,12 +25,21 @@ const setSmtpConfig = (smtpConfig: SmtpConfig) => {
 const sendEmailSmtp = async (
   emailHeaders: EmailHeaders,
   smtpConfig: SmtpConfig,
-  text?: string,
-  html?: string,
-  templateData?: TemplateData,
-  template?: string,
+  dataOptions: {
+    text?: string,
+    html?: string,
+    templateData?: TemplateData,
+    template?: string,
+  },
 ) => {
+  const {
+    text,
+    templateData,
+    template,
+  } = dataOptions;
+  let { html } = dataOptions;
   const { from, to } = emailHeaders;
+
   if (!template && !html) {
     return { status: 404, message: 'Template or html not found' };
   }
@@ -48,37 +57,37 @@ const sendEmailSmtp = async (
   }
 
   // send mail with defined transport object
-  const dataEmail = {
+  const mailOptions = {
     from: `"${from.name}" <${from.email}>`,
     to: parseEmailsToString(to),
     subject: emailHeaders.subject,
     html,
   };
   if (text) {
-    Object.assign(dataEmail, text);
+    Object.assign(mailOptions, text);
   }
 
   if (emailHeaders.sender) {
-    Object.assign(dataEmail, {
+    Object.assign(mailOptions, {
       sender: `"${emailHeaders.sender.name}" <${emailHeaders.sender.email}>`,
     });
   }
 
   if (emailHeaders.cc) {
-    Object.assign(dataEmail, {
+    Object.assign(mailOptions, {
       cc: parseEmailsToString(emailHeaders.cc),
     });
   }
 
   if (emailHeaders.bcc) {
-    Object.assign(dataEmail, {
+    Object.assign(mailOptions, {
       bcc: parseEmailsToString(emailHeaders.bcc),
     });
   }
 
   if (emailHeaders.replyTo) {
     const replyTo = parseEmailsToString(emailHeaders.replyTo);
-    Object.assign(dataEmail, {
+    Object.assign(mailOptions, {
       replyTo,
     });
   }
@@ -88,7 +97,7 @@ const sendEmailSmtp = async (
   }
 
   if (smtp) {
-    const info = await smtp.sendMail(dataEmail);
+    const info = await smtp.sendMail(mailOptions);
     return { status: 202, message: `messageId: #${info.messageId}` };
   }
   return { status: 404, message: 'Error configuring SMTP settings' };
