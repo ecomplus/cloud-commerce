@@ -68,9 +68,7 @@ const authenticateCustomer = async (firebaseAuthToken: string) => {
           return storedToken;
         }
         const customerToken = await generateAccessToken(customerId);
-        if (customerToken) {
-          docRef.set(customerToken).catch(logger.error);
-        }
+        docRef.set(customerToken).catch(logger.error);
         return customerToken;
       }
       const { data: newCustomer } = await api.post('customers', {
