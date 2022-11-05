@@ -162,7 +162,7 @@ export default async ({ params, application }) => {
           // start calculating discount
           let value = 0;
           rule.product_ids.forEach((productId) => {
-            const item = params.items.find((item) => productId === item.product_id);
+            const item = params.items.find((_item) => productId === _item.product_id);
             if (item) {
               value += ecomUtils.price(item);
             }
@@ -302,8 +302,11 @@ export default async ({ params, application }) => {
                   // eslint-disable-next-line no-await-in-loop
                   const { data } = await api.get(`${endpoint}${query}`);
                   countOrders = data.result.length;
-                } catch (e) {
-                  countOrders = max;
+                } catch (err) {
+                  return {
+                    error: 'CANT_CHECK_USAGE_LIMITS',
+                    message: err.message,
+                  };
                 }
 
                 if (countOrders >= max) {
