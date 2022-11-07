@@ -18,6 +18,9 @@ type EmailHeaders = {
 
 type TemplateData = { [key: string]: any }
 
+// TODO: in the future the template can be an object, to accept other types of template besides EJS
+type Template = string
+
 type EmailConfig = {
   to: EmailAdrress[]
   subject: string,
@@ -74,6 +77,7 @@ export type {
   EmailAdrress,
   EmailHeaders,
   TemplateData,
+  Template,
   EmailConfig,
   DataEmailSendGrid,
   SmtpConfig,

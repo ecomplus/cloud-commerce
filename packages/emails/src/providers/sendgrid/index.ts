@@ -2,6 +2,7 @@ import type {
   DataEmailSendGrid,
   EmailHeaders,
   TemplateData,
+  Template,
 } from '../../types/index';
 import axios from 'axios';
 import logger from 'firebase-functions/logger';
@@ -18,14 +19,14 @@ const sgAxios = axios.create({
   },
 });
 
-const sendGridSendEmail = async (
+const sendEmail = async (
   emailHeaders: EmailHeaders,
   sendGridApiKey: string,
   dataOptions: {
     html?: string,
     templateData?: TemplateData,
     templateId?: string,
-    template?: string,
+    template?: Template,
   },
 ) => {
   const {
@@ -81,4 +82,4 @@ const sendGridSendEmail = async (
   }
 };
 
-export default sendGridSendEmail;
+export default sendEmail;

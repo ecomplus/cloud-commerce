@@ -1,11 +1,20 @@
+import type { CmsSettings } from '@cloudcommerce/types';
 import type {
   EmailAdrress,
   TemplateData,
+  Template,
   SmtpConfig,
   EmailHeaders,
 } from './types/index';
-import sendgrid from './providers/sendgrid/index';
+import url from 'url';
+import fs from 'fs';
+import sendEmailSendGrid from './providers/sendgrid/index';
 import sendEmailSmpt from './providers/smtp/index';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const readJson = (path: string) => JSON.parse(fs.readFileSync(`${__dirname}/${path}`, 'utf-8'));
+
+const cmsSettings = readJson('../content/settings.json') as CmsSettings;
 
 // https://docs.adonisjs.com/guides/mailer
 
@@ -20,7 +29,7 @@ const sendEmail = (
     html?: string,
     templateData?: TemplateData,
     templateId?: string,
-    template?: string,
+    template?: Template,
   },
 ) => {
   const {
@@ -63,20 +72,20 @@ const sendEmail = (
     sender,
     bcc,
     from: {
-      name: MAIL_SENDER_NAME || '',
+      name: MAIL_SENDER_NAME || cmsSettings.name,
       email: MAIL_SENDER,
     },
   };
 
   if (MAIL_REPLY_TO) {
     emailHeaders.replyTo = {
-      name: MAIL_SENDER_NAME || '',
+      name: MAIL_SENDER_NAME || cmsSettings.name,
       email: MAIL_REPLY_TO,
     };
   }
 
   if ((templateId || template) && SENDGRID_API_KEY) {
-    return sendgrid(
+    return sendEmailSendGrid(
       emailHeaders,
       SENDGRID_API_KEY,
       {
@@ -116,7 +125,7 @@ const sendEmail = (
   return { status: 404, message: 'Provider settings or smtp not found' };
 };
 
-sendEmail.sendgrid = sendgrid;
+sendEmail.sendgrid = sendEmailSendGrid;
 sendEmail.smpt = sendEmailSmpt;
 
 export default sendEmail;

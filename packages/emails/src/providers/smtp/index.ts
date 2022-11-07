@@ -3,6 +3,7 @@ import type {
   SmtpConfig,
   EmailAdrress,
   TemplateData,
+  Template,
 } from '../../types/index';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import nodemailer from 'nodemailer';
@@ -16,20 +17,20 @@ const parseEmailsToString = (emails: EmailAdrress | EmailAdrress[]) => {
   }
   return `"${emails.name}" <${emails.email}>`;
 };
-let smtp: nodemailer.Transporter<SMTPTransport.SentMessageInfo> | undefined;
-const setSmtpConfig = (smtpConfig: SmtpConfig) => {
+let transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo> | undefined;
+const setConfig = (smtpConfig: SmtpConfig) => {
   // create reusable transporter object using the default SMTP transport
-  smtp = nodemailer.createTransport(smtpConfig);
+  transporter = nodemailer.createTransport(smtpConfig);
 };
 
-const sendEmailSmtp = async (
+const sendEmail = async (
   emailHeaders: EmailHeaders,
   smtpConfig: SmtpConfig,
   dataOptions: {
     text?: string,
     html?: string,
     templateData?: TemplateData,
-    template?: string,
+    template?: Template,
   },
 ) => {
   const {
@@ -92,15 +93,15 @@ const sendEmailSmtp = async (
     });
   }
 
-  if (!smtp) {
-    setSmtpConfig(smtpConfig);
+  if (!transporter) {
+    setConfig(smtpConfig);
   }
 
-  if (smtp) {
-    const info = await smtp.sendMail(mailOptions);
+  if (transporter) {
+    const info = await transporter.sendMail(mailOptions);
     return { status: 202, message: `messageId: #${info.messageId}` };
   }
   return { status: 404, message: 'Error configuring SMTP settings' };
 };
 
-export default sendEmailSmtp;
+export default sendEmail;

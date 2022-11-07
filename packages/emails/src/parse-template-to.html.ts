@@ -1,18 +1,25 @@
-import type { TemplateData } from './types';
+import type { TemplateData, Template } from './types';
 import ejs from 'ejs';
 import logger from 'firebase-functions/logger';
 
-const parseEjsToHtml = (
+const parseTemplateToHtml = (
   templateData: TemplateData,
-  template: string,
+  template: Template,
 ) => {
   try {
-    const html = ejs.render(template, templateData);
-    return html;
+    if (typeof template === 'string') {
+      const html = ejs.render(template, templateData);
+      return html;
+    }
+    /*
+      TODO: if in the future the template is an object and
+      it is necessary to identify the type of the template
+    */
+    return null;
   } catch (err) {
     logger.error(err);
     return null;
   }
 };
 
-export default parseEjsToHtml;
+export default parseTemplateToHtml;

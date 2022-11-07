@@ -1,6 +1,7 @@
 import type {
   EmailHeaders,
   TemplateData,
+  Template,
   DataEmailSendGrid,
 } from '../../types/index';
 import logger from 'firebase-functions/logger';
@@ -57,7 +58,7 @@ const sendGridBodyWithTemplateId = (
 const sendGridBodyWithTemplate = async (
   emailHeaders: EmailHeaders,
   templateData: TemplateData,
-  template: string,
+  template: Template,
 ) => {
   logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
   const body = createBodySendGrid(emailHeaders);
