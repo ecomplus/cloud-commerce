@@ -2,7 +2,7 @@
 import url from 'url';
 import fs from 'fs';
 import { test, expect } from 'vitest';
-import sendMail from '../src/index';
+import email from '../src/index';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -31,7 +31,7 @@ process.env.MAIL_SENDER_NAME = config.from.name;
 const timeOut = 10000;
 
 test('Error settings not found', async () => {
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -45,7 +45,7 @@ test('Error settings not found', async () => {
 
 test('Error template not found', async () => {
   process.env.SENDGRID_API_KEY = config.apiKey;
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -58,7 +58,7 @@ test('Error template not found', async () => {
 
 test('Send email with templateId for order', async () => {
   header.subject = 'Test email with order templateId';
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -72,7 +72,7 @@ test('Send email with templateId for order', async () => {
 
 test('Send email with template for order', async () => {
   header.subject = 'Test email with order template';
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -86,7 +86,7 @@ test('Send email with template for order', async () => {
 
 test('Send email retry with template for templateId error', async () => {
   header.subject = 'Test retry email';
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -101,7 +101,7 @@ test('Send email retry with template for templateId error', async () => {
 
 test('Error templateId not found', async () => {
   header.subject = 'Test email, templateId error';
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,

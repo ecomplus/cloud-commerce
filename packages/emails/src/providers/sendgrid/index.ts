@@ -1,3 +1,4 @@
+import type { AxiosInstance } from 'axios';
 import type {
   DataEmailSendGrid,
   EmailHeaders,
@@ -12,16 +13,20 @@ import {
   sendGridBodyWithHtml,
 } from './parse-to-data';
 
-const sgAxios = axios.create({
-  baseURL: 'https://api.sendgrid.com/v3/mail',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+let sgAxios: AxiosInstance | undefined;
+
+const setSendGridConfig = (apiKey: string) => {
+  sgAxios = axios.create({
+    baseURL: 'https://api.sendgrid.com/v3/mail',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
+};
 
 const sendEmail = async (
   emailHeaders: EmailHeaders,
-  sendGridApiKey: string,
   dataOptions: {
     html?: string,
     templateData?: TemplateData,
@@ -47,39 +52,38 @@ const sendEmail = async (
   if (!bodyEmail) {
     return { status: 404, message: `Email body for template: #${templateId || template}, not found` };
   }
-  try {
-    const result = await sgAxios.post('/send', bodyEmail, {
-      headers: {
-        Authorization: `Bearer ${sendGridApiKey}`,
-      },
-    });
-    return result;
-  } catch (err: any) {
-    let message = 'Unexpected error';
-    const { response } = err;
-    const {
-      status,
-    } = response;
-    const [errors] = response.data.errors;
+  if (sgAxios) {
+    try {
+      const result = await sgAxios.post('/send', bodyEmail);
+      return result;
+    } catch (err: any) {
+      let message = 'Unexpected error';
+      const { response } = err;
+      const {
+        status,
+      } = response;
+      const [errors] = response.data.errors;
 
-    if (errors.field === 'template_id' && template && templateData) {
-      bodyEmail = await sendGridBodyWithTemplate(emailHeaders, templateData, template);
-      if (bodyEmail) {
-        return sgAxios.post('/send', bodyEmail, {
-          headers: {
-            Authorization: `Bearer ${sendGridApiKey}`,
-          },
-        });
+      if (errors.field === 'template_id' && template && templateData) {
+        bodyEmail = await sendGridBodyWithTemplate(emailHeaders, templateData, template);
+        if (bodyEmail) {
+          return sgAxios.post('/send', bodyEmail);
+        }
+        message = 'TemplateId and template not found';
+      } else if (response && response.data && response.data.errors) {
+        message = response.data.errors;
+      } else {
+        logger.error(err);
       }
-      message = 'TemplateId and template not found';
-    } else if (response && response.data && response.data.errors) {
-      message = response.data.errors;
-    } else {
-      logger.error(err);
-    }
 
-    return { status: status || 400, message };
+      return { status: status || 400, message };
+    }
   }
+  return { status: 404, message: 'SendGrid API key not found' };
 };
 
 export default sendEmail;
+
+export {
+  setSendGridConfig,
+};

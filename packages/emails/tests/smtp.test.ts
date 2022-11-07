@@ -2,7 +2,7 @@
 import url from 'url';
 import fs from 'fs';
 import { test, expect } from 'vitest';
-import sendMail from '../src/index';
+import email from '../src/index';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -35,7 +35,7 @@ process.env.ECOM_API_KEY = ecomApiKey;
 const timeOut = 10000;
 
 test('Error settings not found', async () => {
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -55,7 +55,7 @@ test('Error template not found', async () => {
   process.env.MAIL_SENDER = config.from.email;
   process.env.MAIL_SENDER_NAME = config.from.name;
 
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,
@@ -68,7 +68,7 @@ test('Error template not found', async () => {
 
 test('Send email with template for order', async () => {
   header.subject = 'Test email with order template, using smtp';
-  const data = await sendMail({
+  const data = await email.send({
     ...header,
     templateData: {
       store,

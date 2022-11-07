@@ -1,4 +1,3 @@
-import type { CmsSettings } from '@cloudcommerce/types';
 import type {
   EmailAdrress,
   TemplateData,
@@ -6,20 +5,14 @@ import type {
   SmtpConfig,
   EmailHeaders,
 } from './types/index';
-import url from 'url';
-import fs from 'fs';
-import sendEmailSendGrid from './providers/sendgrid/index';
-import sendEmailSmpt from './providers/smtp/index';
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-const readJson = (path: string) => JSON.parse(fs.readFileSync(`${__dirname}/${path}`, 'utf-8'));
-
-const cmsSettings = readJson('../content/settings.json') as CmsSettings;
+import config from '@cloudcommerce/firebase/lib/config';
+import sendEmailSmpt, { setSmptConfig } from './providers/smtp/index';
+import sendEmailSendGrid, { setSendGridConfig } from './providers/sendgrid/index';
 
 // https://docs.adonisjs.com/guides/mailer
 
 const sendEmail = (
-  config: {
+  emailData: {
     to: EmailAdrress[],
     subject: string,
     cc?: EmailAdrress[],
@@ -43,7 +36,9 @@ const sendEmail = (
     bcc,
     text,
     html,
-  } = config;
+  } = emailData;
+
+  const { cmsSettings } = config.get();
 
   if (!templateId && !template && !html) {
     return { status: 404, message: 'TemplateId, template or html not found' };
@@ -85,9 +80,9 @@ const sendEmail = (
   }
 
   if ((templateId || template) && SENDGRID_API_KEY) {
+    setSendGridConfig(SENDGRID_API_KEY);
     return sendEmailSendGrid(
       emailHeaders,
-      SENDGRID_API_KEY,
       {
         templateData,
         templateId,
@@ -109,9 +104,9 @@ const sendEmail = (
     };
 
     if (template) {
+      setSmptConfig(smtpConfig);
       return sendEmailSmpt(
         emailHeaders,
-        smtpConfig,
         {
           text,
           html,
@@ -125,7 +120,17 @@ const sendEmail = (
   return { status: 404, message: 'Provider settings or smtp not found' };
 };
 
-sendEmail.sendgrid = sendEmailSendGrid;
-sendEmail.smpt = sendEmailSmpt;
+const smpt = {
+  setConfig: setSmptConfig,
+  send: sendEmailSmpt,
+};
+const sendGrid = {
+  setConfig: setSendGridConfig,
+  send: sendEmailSendGrid,
+};
 
-export default sendEmail;
+export default {
+  send: sendEmail,
+  smpt,
+  sendGrid,
+};

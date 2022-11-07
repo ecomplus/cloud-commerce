@@ -18,14 +18,13 @@ const parseEmailsToString = (emails: EmailAdrress | EmailAdrress[]) => {
   return `"${emails.name}" <${emails.email}>`;
 };
 let transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo> | undefined;
-const setConfig = (smtpConfig: SmtpConfig) => {
+const setSmptConfig = (smtpConfig: SmtpConfig) => {
   // create reusable transporter object using the default SMTP transport
   transporter = nodemailer.createTransport(smtpConfig);
 };
 
 const sendEmail = async (
   emailHeaders: EmailHeaders,
-  smtpConfig: SmtpConfig,
   dataOptions: {
     text?: string,
     html?: string,
@@ -93,10 +92,6 @@ const sendEmail = async (
     });
   }
 
-  if (!transporter) {
-    setConfig(smtpConfig);
-  }
-
   if (transporter) {
     const info = await transporter.sendMail(mailOptions);
     return { status: 202, message: `messageId: #${info.messageId}` };
@@ -105,3 +100,7 @@ const sendEmail = async (
 };
 
 export default sendEmail;
+
+export {
+  setSmptConfig,
+};
