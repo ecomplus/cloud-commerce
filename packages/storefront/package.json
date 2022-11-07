@@ -25,30 +25,30 @@
     "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.11.0",
+    "@astrojs/image": "^0.11.1",
     "@astrojs/node": "^2.0.2",
     "@astrojs/partytown": "^1.0.1",
-    "@astrojs/prefetch": "^0.1.0",
+    "@astrojs/prefetch": "^0.1.1",
     "@astrojs/vue": "^1.2.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "^1.4.1",
     "@iconify-json/fa6-brands": "^1.1.6",
-    "@iconify-json/heroicons": "^1.1.5",
+    "@iconify-json/heroicons": "^1.1.6",
     "@iconify-json/logos": "^1.1.18",
-    "@unocss/preset-icons": "^0.46.2",
-    "astro": "^1.6.2",
+    "@unocss/preset-icons": "^0.46.3",
+    "astro": "^1.6.3",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
     "firebase": "^9.13.0",
     "image-size": "^1.0.2",
-    "unocss": "^0.46.2",
-    "vite": "^3.2.2",
-    "vite-plugin-pwa": "^0.13.1",
+    "unocss": "^0.46.3",
+    "vite": "^3.2.3",
+    "vite-plugin-pwa": "^0.13.3",
     "vue": "^3.2.41"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.6"
+    "@babel/core": "^7.20.2"
   }
 }
