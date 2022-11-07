@@ -110,6 +110,9 @@ runs:
         printf "DEPLOY_RAND=$RANDOM.$RANDOM
         ECOM_STORE_ID=$ECOM_STORE_ID
         " > functions/ssr/.env
+        if [ ! -f ".firebaserc" ]; then
+          echo '{ "projects": { "default": "ecom2-002" } }' > .firebaserc
+        fi
         npm --prefix "functions/ssr/" run build:static && npm run build -- --codebase ssr
 
     - if: github.event_name == 'pull_request'

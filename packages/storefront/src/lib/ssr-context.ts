@@ -37,7 +37,7 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
   let cacheControl = `public, max-age=${maxAge}, must-revalidate`;
   if (sMaxAge) {
-    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=${(sMaxAge * 300)}`;
+    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=604800`;
   }
   Astro.response.headers.set(headerName, cacheControl);
 };
@@ -113,9 +113,9 @@ const loadPageContext = async (Astro: AstroGlobal, {
   if (urlPath === '/fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else if (urlPath === '/') {
-    setResponseCache(Astro, 180, 900);
+    setResponseCache(Astro, 180, 300);
   } else {
-    setResponseCache(Astro, 120, 600);
+    setResponseCache(Astro, 120, 300);
   }
   return {
     ...config,

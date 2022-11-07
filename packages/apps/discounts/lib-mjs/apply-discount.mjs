@@ -32,9 +32,11 @@ export default async ({ params, application }) => {
     return response;
   };
 
-  const addDiscount = (discount, flag, label) => {
+  const addDiscount = (discount, flag, label, maxDiscount) => {
     let value;
-    const maxDiscount = params.amount[discount.apply_at || 'total'];
+    if (typeof maxDiscount !== 'number') {
+      maxDiscount = params.amount[discount.apply_at || 'total'];
+    }
     if (maxDiscount) {
       // update amount discount and total
       if (discount.type === 'percentage') {
@@ -82,6 +84,11 @@ export default async ({ params, application }) => {
     }
     const kitDiscounts = getValidDiscountRules(config.product_kit_discounts, params, params.items)
       .sort((a, b) => {
+        if (!Array.isArray(a.product_ids) || !a.product_ids.length) {
+          if (Array.isArray(b.product_ids) && b.product_ids.length) {
+            return 1;
+          }
+        }
         if (a.min_quantity > b.min_quantity) {
           return -1;
         }
@@ -98,6 +105,8 @@ export default async ({ params, application }) => {
       });
     // prevent applying duplicated kit discount for same items
     let discountedItemIds = [];
+    // check buy together recommendations
+    const buyTogether = [];
 
     kitDiscounts.forEach((kitDiscount, index) => {
       if (kitDiscount) {
@@ -106,39 +115,101 @@ export default async ({ params, application }) => {
           : [];
         let kitItems = productIds.length
           ? params.items.filter((item) => item.quantity && productIds.indexOf(item.product_id) > -1)
-          : params.items;
-        kitItems = kitItems.filter((item) => discountedItemIds.indexOf(item._id) === -1);
+          : params.items.filter((item) => item.quantity);
+        kitItems = kitItems.filter((item) => discountedItemIds.indexOf(item.product_id) === -1);
+        if (!kitItems.length) {
+          return;
+        }
+
+        const recommendBuyTogether = () => {
+          if (
+            params.items.length === 1
+            && productIds.length <= 4
+            && buyTogether.length < 300
+          ) {
+            const baseProductId = params.items[0].product_id;
+            if (productIds.indexOf(baseProductId) === -1) {
+              return;
+            }
+            const baseItemQuantity = params.items[0].quantity || 1;
+            const perItemQuantity = kitDiscount.min_quantity > 2
+              ? Math.max(kitDiscount.min_quantity / (productIds.length - 1) - baseItemQuantity, 1)
+              : 1;
+            const buyTogetherProducts = {};
+            productIds.forEach((productId) => {
+              if (productId !== baseProductId) {
+                buyTogetherProducts[productId] = perItemQuantity;
+              }
+            });
+            if (Object.keys(buyTogetherProducts).length) {
+              buyTogether.push({
+                products: buyTogetherProducts,
+                discount: {
+                  type: kitDiscount.discount.type,
+                  value: kitDiscount.discount.value,
+                },
+              });
+            }
+          }
+        };
+
+        const discount = { ...kitDiscount.discount };
         if (kitDiscount.min_quantity > 0) {
           // check total items quantity
-          let totalQuantity = 0;
-          kitItems.forEach(({ quantity }) => {
-            totalQuantity += quantity;
-          });
-          if (totalQuantity < kitDiscount.min_quantity) {
-            return;
-          }
-          if (kitDiscount.discount.type === 'fixed' && kitDiscount.cumulative_discount !== false) {
-            kitDiscount.discount.value *= Math.floor(totalQuantity / kitDiscount.min_quantity);
+          if (kitDiscount.same_product_quantity) {
+            kitItems = kitItems.filter((item) => item.quantity >= kitDiscount.min_quantity);
+          } else {
+            let totalQuantity = 0;
+            kitItems.forEach(({ quantity }) => {
+              totalQuantity += quantity;
+            });
+            if (totalQuantity < kitDiscount.min_quantity) {
+              if (productIds.length > 1 && kitDiscount.check_all_items !== false) {
+                recommendBuyTogether();
+                return;
+              }
+              return;
+            }
+            if (discount.type === 'fixed' && kitDiscount.cumulative_discount !== false) {
+              discount.value *= Math.floor(totalQuantity / kitDiscount.min_quantity);
+            }
           }
         }
 
-        if (!params.amount || !(kitDiscount.discount.min_amount > params.amount.total)) {
+        if (!params.amount || !(discount.min_amount > params.amount.total)) {
           if (kitDiscount.check_all_items !== false) {
             for (let i = 0; i < productIds.length; i++) {
               const productId = productIds[i];
-              if (productId
-                && !kitItems.find((item) => item.quantity && item.product_id === productId)) {
+              if (
+                productId
+                && !kitItems.find((item) => item.quantity && item.product_id === productId)
+              ) {
                 // product not on current cart
+                recommendBuyTogether();
                 return;
               }
             }
           }
           // apply cumulative discount \o/
-          addDiscount(kitDiscount.discount, `KIT-${(index + 1)}`, kitDiscount.label);
+          if (kitDiscount.same_product_quantity) {
+            kitItems.forEach((item, i) => {
+              addDiscount(
+                discount,
+                `KIT-${(index + 1)}-${i}`,
+                kitDiscount.label,
+                ecomUtils.price(item) * (item.quantity || 1),
+              );
+            });
+          } else {
+            addDiscount(discount, `KIT-${(index + 1)}`, kitDiscount.label);
+          }
           discountedItemIds = discountedItemIds.concat(kitItems.map((item) => item.product_id));
         }
       }
     });
+    if (buyTogether.length) {
+      response.buy_together = buyTogether;
+    }
 
     // gift products (freebies) campaings
     if (Array.isArray(config.freebies_rules)) {
@@ -162,7 +233,7 @@ export default async ({ params, application }) => {
           // start calculating discount
           let value = 0;
           rule.product_ids.forEach((productId) => {
-            const item = params.items.find((item) => productId === item.product_id);
+            const item = params.items.find((_item) => productId === _item.product_id);
             if (item) {
               value += ecomUtils.price(item);
             }
@@ -302,8 +373,11 @@ export default async ({ params, application }) => {
                   // eslint-disable-next-line no-await-in-loop
                   const { data } = await api.get(`${endpoint}${query}`);
                   countOrders = data.result.length;
-                } catch (e) {
-                  countOrders = max;
+                } catch (err) {
+                  return {
+                    error: 'CANT_CHECK_USAGE_LIMITS',
+                    message: err.message,
+                  };
                 }
 
                 if (countOrders >= max) {
