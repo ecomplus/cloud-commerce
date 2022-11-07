@@ -1,4 +1,6 @@
-import type { ApiEventName } from '@cloudcommerce/types';
+import type { ApiEventName, CmsSettings } from '@cloudcommerce/types';
+import { join as joinPath } from 'path';
+import { readFileSync } from 'fs';
 import config, { BaseConfig } from '@cloudcommerce/config';
 
 const tinyErpEvents: ApiEventName[] = [
@@ -15,6 +17,9 @@ const {
   SSR_DEPLOY_TIMEOUT_SECONDS,
   SSR_DEPLOY_MIN_INSTANCES,
 } = process.env;
+
+const cmsSettingsFile = joinPath(process.cwd(), 'content/settings.json');
+const cmsSettings: CmsSettings = JSON.parse(readFileSync(cmsSettingsFile, 'utf-8'));
 
 const mergeConfig = {
   hello: 'from @cloudcommerce/firebase',
@@ -48,6 +53,7 @@ const mergeConfig = {
       appId: 111223,
     },
   },
+  cmsSettings,
 };
 config.set(mergeConfig);
 
