@@ -4,12 +4,17 @@ import type {
   Template,
   SmtpConfig,
   EmailHeaders,
-} from './types/index';
+} from '../types/index';
 import config from '@cloudcommerce/firebase/lib/config';
-import sendEmailSmpt from './providers/smtp/index';
+import sendEmailSmpt, { setConfigSmtp } from './providers/smtp/index';
 import sendEmailSendGrid from './providers/sendgrid/index';
 
 // https://docs.adonisjs.com/guides/mailer
+let smtpConfig: SmtpConfig | undefined;
+
+const setApiKeySendGrid = (apiKey: string) => {
+  process.env.SENDGRID_API_KEY = apiKey;
+};
 
 const sendEmail = (
   emailData: {
@@ -26,6 +31,18 @@ const sendEmail = (
   },
 ) => {
   const {
+    MAIL_SENDER,
+    MAIL_SENDER_NAME,
+    MAIL_REPLY_TO,
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASS,
+    SMTP_TLS,
+    SENDGRID_API_KEY,
+  } = process.env;
+
+  const {
     templateData,
     templateId,
     template,
@@ -41,23 +58,11 @@ const sendEmail = (
   const { cmsSettings } = config.get();
 
   if (!templateId && !template && !html) {
-    return { status: 404, message: 'TemplateId, template or html not found' };
+    throw new Error('TemplateId, template or html not found');
   }
 
-  const {
-    MAIL_SENDER,
-    MAIL_SENDER_NAME,
-    MAIL_REPLY_TO,
-    SMTP_HOST,
-    SMTP_PORT,
-    SMTP_USER,
-    SMTP_PASS,
-    SMTP_TLS,
-    SENDGRID_API_KEY,
-  } = process.env;
-
   if (!MAIL_SENDER) {
-    return { status: 404, message: 'Sender email not configured' };
+    throw new Error('Sender email not configured');
   }
 
   const emailHeaders: EmailHeaders = {
@@ -82,7 +87,6 @@ const sendEmail = (
   if ((templateId || template) && SENDGRID_API_KEY) {
     return sendEmailSendGrid(
       emailHeaders,
-      SENDGRID_API_KEY,
       {
         templateData,
         templateId,
@@ -92,45 +96,49 @@ const sendEmail = (
     );
   }
 
-  if (SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS) {
+  if (!smtpConfig && SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS) {
     const port = parseInt(SMTP_PORT, 10);
-
-    const smtpConfig: SmtpConfig = {
+    const secure = SMTP_TLS && SMTP_TLS.toUpperCase() === 'TRUE' ? true : port === 465;
+    // secure = true for 465, false for other ports
+    smtpConfig = {
       host: SMTP_HOST,
       port,
-      // secure = true for 465, false for other ports
-      secure: SMTP_TLS && SMTP_TLS.toUpperCase() === 'TRUE' ? true : port === 465,
+      secure,
       auth: { user: SMTP_USER, pass: SMTP_PASS },
     };
-
-    if (template) {
-      return sendEmailSmpt(
-        emailHeaders,
-        smtpConfig,
-        {
-          text,
-          html,
-          templateData,
-          template,
-        },
-      );
-    }
+    setConfigSmtp(smtpConfig);
   }
 
-  return { status: 404, message: 'Provider settings or smtp not found' };
+  if (template && smtpConfig) {
+    return sendEmailSmpt(
+      emailHeaders,
+      {
+        text,
+        html,
+        templateData,
+        template,
+      },
+    );
+  }
+
+  throw new Error('Provider settings or smtp not found');
 };
 
 const sendGrid = {
   send: sendEmailSendGrid,
+  setConfig: setApiKeySendGrid,
+
 };
 
 const smtp = {
   send: sendEmailSmpt,
+  setConfig: setConfigSmtp,
 };
 
 export default { send: sendEmail };
 
 export {
+  sendEmail,
   sendGrid,
   smtp,
 };

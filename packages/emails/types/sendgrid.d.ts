@@ -1,4 +1,4 @@
-import type { EmailHeaders, TemplateData, EmailAdrress } from '../../types/index';
+import type { EmailHeaders, TemplateData, EmailAdrress } from './index';
 
 type DataEmailSendGrid = {
   personalizations: [

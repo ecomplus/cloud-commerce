@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "E-Com Plus Cloud Commerce",
   "main": "lib/index.js",
-  "types": "lib/types/index.d.ts",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/emails#readme",
   "scripts": {
-    "build": "sh scripts/build.sh",
+    "build": "sh ../../scripts/build-lib.sh",
     "test": "tsc -p ../../tsconfig.test.json && vitest run"
   },
   "dependencies": {

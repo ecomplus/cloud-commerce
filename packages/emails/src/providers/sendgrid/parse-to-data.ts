@@ -3,14 +3,10 @@ import type {
   TemplateData,
   Template,
   DataEmailSendGrid,
-} from '../../types/index';
-import logger from 'firebase-functions/logger';
-import parseTemplateToHtml from '../../parse-template-to.html';
+} from '../../../types/index';
+import parseTemplateToHtml from '../../parse-template-to-html';
 
-const createBodySendGrid = (
-  headersEmail: EmailHeaders,
-
-) => {
+const createBodySendGrid = (emailHeaders: EmailHeaders) => {
   const {
     from,
     to,
@@ -18,7 +14,7 @@ const createBodySendGrid = (
     replyTo,
     cc,
     bcc,
-  } = headersEmail;
+  } = emailHeaders;
 
   const body: DataEmailSendGrid = {
     personalizations: [
@@ -47,7 +43,6 @@ const sendGridBodyWithTemplateId = (
   templateData: TemplateData,
   templateId: string,
 ) => {
-  logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
   const body = createBodySendGrid(emailHeaders);
   body.personalizations[0].dynamic_template_data = templateData;
   body.template_id = templateId;
@@ -60,7 +55,6 @@ const sendGridBodyWithTemplate = async (
   templateData: TemplateData,
   template: Template,
 ) => {
-  logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
   const body = createBodySendGrid(emailHeaders);
 
   const contentValue = parseTemplateToHtml(templateData, template);
@@ -81,7 +75,6 @@ const sendGridBodyWithHtml = (
   emailHeaders: EmailHeaders,
   html: string,
 ) => {
-  logger.log('>> from: ', emailHeaders.from.email, ' to: ', JSON.stringify(emailHeaders.to));
   const body = createBodySendGrid(emailHeaders);
 
   body.content = [{
