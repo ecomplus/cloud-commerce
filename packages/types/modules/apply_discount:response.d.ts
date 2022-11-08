@@ -68,4 +68,36 @@ export interface ApplyDiscountResponse {
    * @maxItems 3000
    */
   freebie_product_ids?: string[];
+  /**
+   * List of buy together offers
+   *
+   * @maxItems 300
+   */
+  buy_together?: {
+    /**
+     * Products to buy together with respective quantity, product ID as object property
+     */
+    products?: {
+      /**
+       * Product quantity to buy
+       *
+       * This interface was referenced by `undefined`'s JSON-Schema definition
+       * via the `patternProperty` "^([a-f0-9]{24})$".
+       */
+      [k: string]: number;
+    };
+    /**
+     * Discount object
+     */
+    discount: {
+      /**
+       * Discount type
+       */
+      type?: 'percentage' | 'fixed';
+      /**
+       * Discount value, percentage or fixed
+       */
+      value: number;
+    };
+  }[];
 }

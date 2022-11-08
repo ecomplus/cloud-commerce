@@ -319,6 +319,53 @@ exports.response = {
         'description': 'Product ID'
       },
       'description': 'List of available freebie (gift) products'
+    },
+    'buy_together': {
+      'type': 'array',
+      'maxItems': 300,
+      'items': {
+        'type': 'object',
+        'required': [ 'discount' ],
+        'additionalProperties': false,
+        'properties': {
+          'products': {
+            'type': 'object',
+            'maxProperties': 100,
+            'patternProperties': {
+              '^([a-f0-9]{24})$': {
+                'type': 'number',
+                'minimum': 1,
+                'maximum': 9999999,
+                'description': 'Product quantity to buy'
+              }
+            },
+            'description': 'Products to buy together with respective quantity, product ID as object property'
+          },
+          'discount': {
+            'type': 'object',
+            'required': [ 'value' ],
+            'additionalProperties': false,
+            'properties': {
+              'type': {
+                'type': 'string',
+                'enum': [ 'percentage', 'fixed' ],
+                'default': 'percentage',
+                'description': 'Discount type'
+              },
+              'value': {
+                'type': 'number',
+                // 'multipleOf': 0.0001,
+                'minimum': -99999999,
+                'maximum': 99999999,
+                'description': 'Discount value, percentage or fixed'
+              }
+            },
+            'description': 'Discount object'
+          }
+        },
+        'description': 'Buy together offer object'
+      },
+      'description': 'List of buy together offers'
     }
   }
 };
