@@ -6,8 +6,8 @@ import type {
   EmailHeaders,
 } from './types/index';
 import config from '@cloudcommerce/firebase/lib/config';
-import sendEmailSmpt, { setSmptConfig } from './providers/smtp/index';
-import sendEmailSendGrid, { setSendGridConfig } from './providers/sendgrid/index';
+import sendEmailSmpt from './providers/smtp/index';
+import sendEmailSendGrid from './providers/sendgrid/index';
 
 // https://docs.adonisjs.com/guides/mailer
 
@@ -80,9 +80,9 @@ const sendEmail = (
   }
 
   if ((templateId || template) && SENDGRID_API_KEY) {
-    setSendGridConfig(SENDGRID_API_KEY);
     return sendEmailSendGrid(
       emailHeaders,
+      SENDGRID_API_KEY,
       {
         templateData,
         templateId,
@@ -104,9 +104,9 @@ const sendEmail = (
     };
 
     if (template) {
-      setSmptConfig(smtpConfig);
       return sendEmailSmpt(
         emailHeaders,
+        smtpConfig,
         {
           text,
           html,
@@ -120,17 +120,17 @@ const sendEmail = (
   return { status: 404, message: 'Provider settings or smtp not found' };
 };
 
-const smpt = {
-  setConfig: setSmptConfig,
-  send: sendEmailSmpt,
-};
 const sendGrid = {
-  setConfig: setSendGridConfig,
   send: sendEmailSendGrid,
 };
 
-export default {
-  send: sendEmail,
-  smpt,
+const smtp = {
+  send: sendEmailSmpt,
+};
+
+export default { send: sendEmail };
+
+export {
   sendGrid,
+  smtp,
 };
