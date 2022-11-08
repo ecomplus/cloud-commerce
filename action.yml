@@ -20,16 +20,18 @@ inputs:
     description: 'App: Tiny ERP API token'
   mail-sender:
     description: "Emails: sender email"
-  mail-sender-reply:
+  mail-sender-name:
+    description: "Emails: sender name (default is store name)"
+  mail-reply-to:
     description: "Emails: Reply email"
   smpt-host: 
-    description: "Emails": SMTP host configuration"
+    description: "Emails": SMTP hostname"
   smpt-port: 
-    description: "Emails": SMTP port configuration"
+    description: "Emails": SMTP port number"
   smpt-user: 
-    description: "Emails": SMTP user configuration"
+    description: "Emails": SMTP username"
   smpt-pass: 
-    description: "Emails": SMTP user password setup"
+    description: "Emails": SMTP password"
   sendgrid-api-key:
     description: 'Emails: SendGrid API key configuration'
 
@@ -75,7 +77,7 @@ runs:
         TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
         MAIL_SENDER: ${{ inputs.mail-sender }}
         MAIL_SENDER_NAME: ${{ inputs.mail-sender-name }}
-        MAIL_REPLY_TO: ${{ inputs.mail-sender-reply }}
+        MAIL_REPLY_TO: ${{ inputs.mail-reply-to }}
         SMTP_HOST: ${{ inputs.smpt-host }}
         SMTP_PORT: ${{ inputs.smpt-port }}
         SMTP_USER: ${{ inputs.smpt-user }}
