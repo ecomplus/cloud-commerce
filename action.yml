@@ -18,6 +18,22 @@ inputs:
     description: 'Store ID if not defined in config.json'
   tiny-erp-token:
     description: 'App: Tiny ERP API token'
+  mail-sender:
+    description: "Emails: sender email"
+  mail-sender-name:
+    description: "Emails: sender name (default is store name)"
+  mail-reply-to:
+    description: "Emails: Reply email"
+  smpt-host: 
+    description: "Emails": SMTP hostname"
+  smpt-port: 
+    description: "Emails": SMTP port number"
+  smpt-user: 
+    description: "Emails": SMTP username"
+  smpt-pass: 
+    description: "Emails": SMTP password"
+  sendgrid-api-key:
+    description: 'Emails: SendGrid API key configuration'
 
 outputs: {}
 
@@ -59,6 +75,15 @@ runs:
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
         TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
+        MAIL_SENDER: ${{ inputs.mail-sender }}
+        MAIL_SENDER_NAME: ${{ inputs.mail-sender-name }}
+        MAIL_REPLY_TO: ${{ inputs.mail-reply-to }}
+        SMTP_HOST: ${{ inputs.smpt-host }}
+        SMTP_PORT: ${{ inputs.smpt-port }}
+        SMTP_USER: ${{ inputs.smpt-user }}
+        SMTP_PASS: ${{ inputs.smpt-pass }}
+        SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
+
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -68,6 +93,14 @@ runs:
         ECOM_STORE_ID=$ECOM_STORE_ID
         GITHUB_TOKEN=$GITHUB_TOKEN
         TINY_ERP_TOKEN=$TINY_ERP_TOKEN
+        MAIL_SENDER=$MAIL_SENDER
+        MAIL_SENDER_NAME=$MAIL_SENDER_NAME
+        MAIL_REPLY_TO=$MAIL_REPLY_TO
+        SMTP_HOST=$SMTP_HOST
+        SMTP_PORT=$SMTP_PORT
+        SMTP_USER=$SMTP_USER
+        SMTP_PASS=$SMTP_PASS
+        SENDGRID_API_KEY=$SENDGRID_API_KEY
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
 
