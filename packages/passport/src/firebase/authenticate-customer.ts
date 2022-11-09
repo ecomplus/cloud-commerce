@@ -18,7 +18,7 @@ const findCustomerByEmail = async (email: string | undefined, isOnlyId = true) =
   return null;
 };
 
-const generateAccessToken = async (customerId: string): Promise<null | {
+const generateAccessToken = async (customerId: string): Promise<{
   customer_id: string,
   access_token: string,
   expires: string,
