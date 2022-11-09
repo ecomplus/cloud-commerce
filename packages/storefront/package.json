@@ -17,6 +17,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/storefront#readme",
   "scripts": {
     "dev": "astro dev",
+    "dev:cms": "tinacms dev -c \"astro dev\"",
     "start": "astro dev --host",
     "build": "astro build",
     "build:static": "BUILD_OUTPUT=static astro build",
@@ -49,6 +50,7 @@
     "vue": "^3.2.41"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2"
+    "@babel/core": "^7.20.2",
+    "@cloudcommerce/types": "workspace:*"
   }
 }
