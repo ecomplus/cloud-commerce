@@ -1,5 +1,5 @@
 import type { ResourceId, Products, Carts } from '@cloudcommerce/api/types';
-import { price } from '@ecomplus/utils';
+import { price as getPrice } from '@ecomplus/utils';
 
 type CartItem = Carts['items'][0];
 
@@ -31,6 +31,6 @@ export default (product: Products, variationId?: ResourceId, quantity?: number) 
   item.max_quantity = item.quantity || product.quantity;
   const minQuantity = item.min_quantity || product.min_quantity;
   item.quantity = minQuantity > 0 ? Math.max(minQuantity, quantity) : quantity;
-  item.price = price(item) || price(product);
+  item.price = getPrice(item) || getPrice(product);
   return item as CartItem;
 };

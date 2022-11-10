@@ -1,7 +1,7 @@
 ---
 import type CmsSocial from '@@storefront/types/cms-social';
 import type { PageContext } from '@@storefront/ssr-context';
-import ecomUtils from '@ecomplus/utils';
+import { img as getImg } from '@ecomplus/utils';
 
 export interface Props {
   pageContext: PageContext;
@@ -26,7 +26,7 @@ const cmsSocial = cms('social') as CmsSocial;
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
 let ogImage: string | undefined;
 if (apiDoc) {
-  const picture = ecomUtils.img(state, null, 'zoom');
+  const picture = getImg(state, null, 'zoom');
   ogImage = picture && picture.url;
 }
 if (!ogImage) {

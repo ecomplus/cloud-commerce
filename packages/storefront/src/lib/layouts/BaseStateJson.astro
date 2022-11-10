@@ -1,6 +1,6 @@
 ---
 import type { PageContext } from '@@storefront/ssr-context';
-import ecomUtils from '@ecomplus/utils';
+import { price as getPrice } from '@ecomplus/utils';
 
 export interface Props {
   pageContext: PageContext;
@@ -38,7 +38,7 @@ window.storefront = ${JSON.stringify({
 })};`;
 if (apiDoc) {
   if (typeof apiDoc.price === 'number') {
-    apiDoc.price = ecomUtils.price(apiDoc);
+    apiDoc.price = getPrice(apiDoc);
   }
   const slimDocRegex = globalThis.storefront_slim_doc_regex
     || /body|meta|records|description|i18n/;
