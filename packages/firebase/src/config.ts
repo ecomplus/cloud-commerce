@@ -10,6 +10,11 @@ const tinyErpEvents: ApiEventName[] = [
   'applications-dataSet',
 ];
 
+const sendTransactionalEmailsEvents: ApiEventName[] = [
+  'orders-new',
+  'orders-anyStatusSet',
+];
+
 const {
   DEPLOY_REGION,
   SSR_DEPLOY_REGION,
@@ -51,6 +56,10 @@ const mergeConfig = {
     },
     mercadoPago: {
       appId: 111223,
+    },
+    sendTransactionalEmails: {
+      appId: 1243, // appId of the SES app
+      events: sendTransactionalEmailsEvents,
     },
   },
   cmsSettings,
