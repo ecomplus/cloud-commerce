@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { $, fs } from 'zx';
 
 const serviceAccountId = 'cloud-commerce-gh-actions';

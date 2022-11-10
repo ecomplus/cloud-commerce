@@ -6,9 +6,9 @@
   "bin": {
     "cloudcommerce": "./bin/run.mjs"
   },
-  "main": "lib/index.js",
+  "main": "lib/cli.js",
   "exports": {
-    ".": "./lib/index.js",
+    ".": "./lib/cli.js",
     "./create-auth": "./create-auth.js"
   },
   "repository": {
