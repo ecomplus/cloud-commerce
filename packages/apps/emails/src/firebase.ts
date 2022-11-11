@@ -6,7 +6,7 @@ import {
   createAppEventsFunction,
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import handleApiEvent from './events-to-app';
+import handleApiEvent from './events-to-app-emails';
 import handleAbandonedCarts from './functios-lib/abandoned-carts';
 
 const { httpsFunctionOptions: { region } } = config.get();
@@ -20,7 +20,7 @@ const functionBuilder = functions
 
 export const sendgrid = {
   onStoreEvent: createAppEventsFunction(
-    'sendTransactionalEmails',
+    'emails',
     handleApiEvent as ApiEventHandler,
   ),
 

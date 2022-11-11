@@ -1,5 +1,6 @@
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
+import config from '@cloudcommerce/firebase/lib/config';
 
 const updateOrderSubresource = (
   orderId: string,
@@ -32,8 +33,24 @@ const toCamelCase = (status: string) => {
   });
 };
 
+const getStore = () => {
+  const { cmsSettings, lang } = config.get();
+  return {
+    lang,
+    domain: cmsSettings.domain,
+    name: cmsSettings.name,
+    corporate_name: cmsSettings.name,
+    // contact_email: cmsSettings.email,
+    logo: {
+      url: `https://${cmsSettings.domain}${cmsSettings.logo}`,
+    },
+    // address: cmsSettings.address
+  };
+};
+
 export {
   updateOrderSubresource,
   handleErr,
   toCamelCase,
+  getStore,
 };

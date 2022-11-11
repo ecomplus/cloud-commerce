@@ -9,7 +9,7 @@ const handleApiEvent: ApiEventHandler = async ({
   apiDoc,
   app,
 }) => {
-  const { resource, action } = apiEvent;
+  const { resource } = apiEvent;
   const appData = { ...app.data, ...app.hidden_data };
   const resourceId = apiEvent.resource_id;
   const key = `${evName}_${resourceId}`;
@@ -22,7 +22,7 @@ const handleApiEvent: ApiEventHandler = async ({
     return null;
   }
 
-  logger.log('> ', action, ': ', resource, ' <');
+  // logger.log('> ', action, ': ', resource, ' <');
   switch (resource) {
     case 'orders':
       return handleOrder(apiEvent, app, apiDoc as Orders);

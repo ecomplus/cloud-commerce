@@ -3,8 +3,8 @@ import api from '@cloudcommerce/api';
 import transactionalMails from '@ecomplus/transactional-mails';
 import { getFirestore } from 'firebase-admin/firestore';
 import email from '@cloudcommerce/emails';
-// import parseCartToSend from './parse-data-to-send';
 import triggerActions from './trigger-actions';
+import { getStore } from './utils';
 
 export default async () => {
   try {
@@ -13,12 +13,14 @@ export default async () => {
       'applications?app_id=1243&fields=hidden_data,data',
     )).data.result;
 
+    const store = getStore();
+
     const appData = {
       ...application.data,
       ...application.hidden_data,
     };
 
-    const lang = (appData.lang && appData.lang === 'Inglês') ? 'en_us' : 'pt_br';
+    const lang = (appData.lang && appData.lang === 'Inglês') ? 'en_us' : (store.lang || 'pt_br');
 
     let filterCartsDate = '';
     const limitDate = new Date();
@@ -39,13 +41,10 @@ export default async () => {
 
     filterCartsDate += `&created_at<=${limitDate.toISOString()}`;
 
-    const [
-      { data: { result: abandonedCarts } },
-      { data: store },
-    ] = await Promise.all([
-      api.get(`carts?completed=false&available=true${filterCartsDate}&limit=100&sort=created_at`),
-      api.get('stores/me'),
-    ]);
+    const
+      { data: { result: abandonedCarts } } = await api.get(
+        `carts?completed=false&available=true${filterCartsDate}&limit=100&sort=created_at`,
+      );
 
     if (abandonedCarts.length && store) {
       for (let i = 0; i < abandonedCarts.length; i++) {
@@ -96,6 +95,6 @@ export default async () => {
       }
     }
   } catch (err) {
-    logger.error('>> Error => ', err);
+    logger.error('(App Emails) Error => ', err);
   }
 };
