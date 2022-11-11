@@ -80,17 +80,18 @@ type AppModuleBody = {
 
 type CmsSettings = {
   domain: string,
-  primary_color: string,
-  bg_color: string,
-  repository: string,
-  logo: string,
   name: string,
-  short_name: string,
-  favicon: string,
-  secondary_color: string,
-  icon: string,
   description: string,
-  large_icon: string,
+  email: string,
+  logo: string,
+  icon: string,
+  primary_color: string,
+  secondary_color: string,
+  bg_color: string,
+  lang: string,
+  currency: string,
+  currency_symbol: string,
+  country_code: string,
 };
 
 export type {

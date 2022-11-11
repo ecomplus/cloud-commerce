@@ -1,3 +1,4 @@
+import type { CmsSettings } from '@cloudcommerce/types';
 import Deepmerge from '@fastify/deepmerge';
 import {
   DEFAULT_LANG,
@@ -12,6 +13,7 @@ type BaseConfig = {
   currencySymbol: string,
   countryCode: string,
   storeId: number,
+  cmsSettings?: CmsSettings,
 };
 
 // @ts-ignore
@@ -41,15 +43,22 @@ export default {
       ...self.config,
     };
   },
-  set(config) {
+  set(config: Partial<BaseConfig>) {
+    const { cmsSettings } = config;
+    if (cmsSettings) {
+      config.lang = config.lang || cmsSettings.lang;
+      config.currency = config.currency || cmsSettings.currency;
+      config.currencySymbol = config.currencySymbol || cmsSettings.currency_symbol;
+      config.countryCode = config.currencySymbol || cmsSettings.country_code;
+    }
     self.config = deepmerge(self.config, config);
     if (config.storeId) {
       _env.ECOM_STORE_ID = config.storeId;
-      _env.ECOM_LANG = _env.ECOM_LANG || self.config.lang;
-      _env.ECOM_CURRENCY = _env.ECOM_CURRENCY || self.config.currency;
-      _env.ECOM_CURRENCY_SYMBOL = _env.ECOM_CURRENCY_SYMBOL || self.config.currencySymbol;
-      _env.ECOM_COUNTRY_CODE = _env.ECOM_COUNTRY_CODE || self.config.countryCode;
     }
+    _env.ECOM_LANG = _env.ECOM_LANG || self.config.lang;
+    _env.ECOM_CURRENCY = _env.ECOM_CURRENCY || self.config.currency;
+    _env.ECOM_CURRENCY_SYMBOL = _env.ECOM_CURRENCY_SYMBOL || self.config.currencySymbol;
+    _env.ECOM_COUNTRY_CODE = _env.ECOM_COUNTRY_CODE || self.config.countryCode;
   },
 };
 
