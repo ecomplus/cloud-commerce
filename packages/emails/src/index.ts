@@ -84,7 +84,7 @@ const sendEmail = (
     };
   }
 
-  if ((templateId || template) && SENDGRID_API_KEY) {
+  if ((templateId || template || html) && SENDGRID_API_KEY) {
     return sendEmailSendGrid(
       emailHeaders,
       {
@@ -109,7 +109,7 @@ const sendEmail = (
     setConfigSmtp(smtpConfig);
   }
 
-  if (template && smtpConfig) {
+  if ((template || html) && smtpConfig) {
     return sendEmailSmpt(
       emailHeaders,
       {

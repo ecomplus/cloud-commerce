@@ -15,11 +15,17 @@ const tryImageSize = (src: string) => {
   return dimensions;
 };
 
-const getImage = async (options: Parameters<typeof _getImage>[0]) => {
-  if (options.width) {
-    options.width *= 2;
-  } else if (options.height) {
-    options.height *= 2;
+type TransformOptions = Parameters<typeof _getImage>[0] & {
+  isLowResolution?: boolean,
+};
+const getImage = async (options: TransformOptions) => {
+  if (!options.isLowResolution) {
+    if (options.width) {
+      options.width *= 2;
+    }
+    if (options.height) {
+      options.height *= 2;
+    }
   }
   if (
     typeof options.src === 'string'

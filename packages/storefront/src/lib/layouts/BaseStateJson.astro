@@ -1,6 +1,6 @@
 ---
 import type { PageContext } from '@@storefront/ssr-context';
-import ecomUtils from '@ecomplus/utils';
+import { price as getPrice } from '@ecomplus/utils';
 
 export interface Props {
   pageContext: PageContext;
@@ -26,19 +26,10 @@ window.ECOM_LANG = '${lang}';
 window.ECOM_CURRENCY = '${currency}';
 window.ECOM_CURRENCY_SYMBOL = '${currencySymbol}';
 window.ECOM_COUNTRY_CODE = '${countryCode}';
-window.storefront = ${JSON.stringify({
-  settings: {
-    ...settings,
-    store_id: storeId,
-    lang,
-    country_code: countryCode,
-    currency,
-    currency_symbol: currencySymbol,
-  },
-})};`;
+window.storefront = ${JSON.stringify({ settings })};`;
 if (apiDoc) {
   if (typeof apiDoc.price === 'number') {
-    apiDoc.price = ecomUtils.price(apiDoc);
+    apiDoc.price = getPrice(apiDoc);
   }
   const slimDocRegex = globalThis.storefront_slim_doc_regex
     || /body|meta|records|description|i18n/;

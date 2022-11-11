@@ -31,7 +31,7 @@
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "@ecomplus/utils": "^1.4.1",
+    "@ecomplus/utils": "1.5.0-rc.3",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "axios": "^1.1.3",
