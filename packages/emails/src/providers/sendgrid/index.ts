@@ -56,8 +56,12 @@ const sendEmail = async (
   } catch (err: any) {
     const { response } = err;
     const [errors] = response.data.errors;
-    if (errors.field === 'template_id' && template && templateData) {
-      bodyEmail = await sendGridBodyWithTemplate(emailHeaders, templateData, template);
+    if (errors.field === 'template_id' && ((template && templateData) || html)) {
+      if (template && templateData) {
+        bodyEmail = await sendGridBodyWithTemplate(emailHeaders, templateData, template);
+      } else if (html) {
+        bodyEmail = sendGridBodyWithHtml(emailHeaders, html);
+      }
       if (bodyEmail) {
         return sgAxios.post('/send', bodyEmail, {
           headers: {
