@@ -1,7 +1,8 @@
 ---
 import type CmsSocial from '@@storefront/types/cms-social';
-import type { PageContext } from '@@storefront/ssr-context';
 import { img as getImg } from '@ecomplus/utils';
+import type { PageContext } from '@@storefront/ssr-context';
+import { getImage as transformImage } from '@@storefront/ssr/image';
 
 export interface Props {
   pageContext: PageContext;
@@ -21,6 +22,15 @@ const {
 const state = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;
 const description = state.meta_description || state.short_description || settings.description;
+const favicon = settings.icon
+  ? (await transformImage({
+      src: settings.icon,
+      width: 32,
+      height: 32,
+      format: 'png',
+      isLowResolution: true,
+    })).src
+  : '/favicon.ico';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
 const cmsSocial = cms('social') as CmsSocial;
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
@@ -42,7 +52,7 @@ if (!ogImage) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content={primaryColor}>
-<link rel="icon" href={settings.favicon || '/favicon.ico'} />
+<link rel="icon" href={favicon} />
 {import.meta.env.PROD && <link rel="manifest" href="/manifest.webmanifest" />}
 <title>{title}</title>
 <meta name="description" content={description}>

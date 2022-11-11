@@ -22,6 +22,7 @@ export default () => {
     settings,
     cms,
   } = getCMS();
+  config.set({ cmsSettings: settings });
 
   return {
     storeId,

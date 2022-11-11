@@ -15,6 +15,9 @@ import getConfig from './storefront.config.mjs';
 const __dirname = new URL('.', import.meta.url).pathname;
 dotenv.config();
 
+const isSSG = process.env.BUILD_OUTPUT === 'static';
+const deployRand = process.env.DEPLOY_RAND || '_';
+
 const {
   lang,
   domain,
@@ -22,24 +25,29 @@ const {
   settings,
 } = getConfig();
 
+const getIconUrl = (size) => {
+  return `/_image?f=png&w=${size}&h=${size}`
+    + `&href=${encodeURIComponent(settings.icon)}&V=${deployRand}`;
+};
+
 const _vitePWAOptions = {
   manifest: {
     name: settings.name || 'My Shop',
     short_name: settings.short_name || settings.name || 'MyShop',
     description: settings.description || 'My PWA Shop',
-    background_color: settings.bg_color || '#ffffff',
+    background_color: settings.bg_color || '#f5f6fa',
     theme_color: primaryColor,
     crossorigin: 'use-credentials',
     icons: [{
-      src: settings.icon || '/img/icon.png',
+      src: settings.icon ? getIconUrl(192) : '/img/icon.png',
       sizes: '192x192',
       type: 'image/png',
     }, {
-      src: settings.large_icon || '/img/large-icon.png',
+      src: settings.icon ? getIconUrl(512) : '/img/large-icon.png',
       sizes: '512x512',
       type: 'image/png',
     }, {
-      src: settings.large_icon || '/img/large-icon.png',
+      src: settings.icon || '/img/large-icon.png',
       sizes: '512x512',
       type: 'image/png',
       purpose: 'any maskable',
@@ -127,8 +135,6 @@ const _vitePWAOptions = {
     }],
   },
 };
-
-const isSSG = process.env.BUILD_OUTPUT === 'static';
 
 // @@components tries ~/components with fallback to @@storefront/components
 const localComponentsDir = joinPath(process.cwd(), 'src/components');
