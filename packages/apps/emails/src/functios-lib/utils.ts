@@ -1,4 +1,3 @@
-import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 
@@ -16,16 +15,6 @@ const updateOrderSubresource = (
   return api.patch(`orders/${orderId}/${subresource}/${statusRecordId}`, body);
 };
 
-const handleErr = (err: any) => {
-  logger.error(err);
-  // request to Store API with error response
-  const { message } = err;
-  return {
-    status: 500,
-    error: 'APP_ERR',
-    message: message || 'Unexpected error',
-  };
-};
 const toCamelCase = (status: string) => {
   return status.replace(/^([A-Z])|[\s-_](\w)/g, (p1, p2) => {
     if (p2) return p2.toUpperCase();
@@ -34,23 +23,22 @@ const toCamelCase = (status: string) => {
 };
 
 const getStore = () => {
-  const { cmsSettings, lang } = config.get();
+  const { cmsSettings } = config.get();
   return {
-    lang,
+    lang: cmsSettings.lang,
     domain: cmsSettings.domain,
     name: cmsSettings.name,
     corporate_name: cmsSettings.name,
-    // contact_email: cmsSettings.email,
+    contact_email: cmsSettings.email,
     logo: {
       url: `https://${cmsSettings.domain}${cmsSettings.logo}`,
     },
-    // address: cmsSettings.address
+    address: '', // TODO: cmsSettings.address,
   };
 };
 
 export {
   updateOrderSubresource,
-  handleErr,
   toCamelCase,
   getStore,
 };

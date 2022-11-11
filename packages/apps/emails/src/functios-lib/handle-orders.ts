@@ -214,17 +214,12 @@ export default async (
                     insertedId,
                   );
                 }
-                return { message: 'SUCCESS' };
               }
-              return { message: 'SUCCESS' };
             }
-            // logger.log('>> Customer already notified of this status')
-            return { message: 'SUCCESS' };
+            // logger.log('(App Emails) Success');
+          } else {
+            logger.warn('(App Emails) Not Found Status');
           }
-          // TODO: check message
-          logger.warn('(App Emails) Not Found Status');
-          // Nothing to do
-          return null;
         });
       } else {
         logger.warn('(App Emails) Not Found Customer');
@@ -233,6 +228,5 @@ export default async (
       logger.warn('(App Emails) Not found Order or Store');
     }
   }
-  // Nothing to do
   return null;
 };
