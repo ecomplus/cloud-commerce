@@ -304,7 +304,7 @@ importers:
   packages/ssr:
     specifiers:
       '@astrojs/image': ^0.11.4
-      '@astrojs/node': ^2.0.2
+      '@astrojs/node': ^3.0.0
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/i18n': workspace:*
@@ -318,7 +318,7 @@ importers:
       vue: ^3.2.45
     dependencies:
       '@astrojs/image': 0.11.4
-      '@astrojs/node': 2.0.2
+      '@astrojs/node': 3.0.0_astro@1.6.7
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/firebase': link:../firebase
       '@cloudcommerce/i18n': link:../i18n
@@ -335,7 +335,7 @@ importers:
   packages/storefront:
     specifiers:
       '@astrojs/image': ^0.11.4
-      '@astrojs/node': ^2.0.2
+      '@astrojs/node': ^3.0.0
       '@astrojs/partytown': ^1.0.1
       '@astrojs/prefetch': ^0.1.1
       '@astrojs/vue': ^1.2.1
@@ -360,7 +360,7 @@ importers:
       vue: ^3.2.45
     dependencies:
       '@astrojs/image': 0.11.4
-      '@astrojs/node': 2.0.2
+      '@astrojs/node': 3.0.0_astro@1.6.7
       '@astrojs/partytown': 1.0.1
       '@astrojs/prefetch': 0.1.1
       '@astrojs/vue': 1.2.1_pskjd6ywq3nhqrsxpncsuo4wqi
@@ -512,10 +512,13 @@ packages:
       vfile-message: 3.1.2
     dev: false
 
-  /@astrojs/node/2.0.2:
-    resolution: {integrity: sha512-po6YZ+jecEXg2bo27hvi9hWppSCtR7zWJl/AwR4bcFWeUOcZKJcfv6LT4BQzzIsOjMbS3lIxZ4mgT2seYNLU9Q==}
+  /@astrojs/node/3.0.0_astro@1.6.7:
+    resolution: {integrity: sha512-07l0D0iq3Bdd4fw8LPf2/DveL3X0Mn/ZuhEvWh2W+hxsrDfot9XGmdzExjmY/C2DtYOUUJKf8mg1cA5ZXOif8Q==}
+    peerDependencies:
+      astro: ^1.6.4
     dependencies:
-      '@astrojs/webapi': 1.1.0
+      '@astrojs/webapi': 1.1.1
+      astro: 1.6.7
       send: 0.18.0
     transitivePeerDependencies:
       - supports-color
@@ -572,13 +575,6 @@ packages:
       - '@babel/core'
       - supports-color
       - vite
-    dev: false
-
-  /@astrojs/webapi/1.1.0:
-    resolution: {integrity: sha512-yLSksFKv9kRbI3WWPuRvbBjS+J5ZNmZHacJ6Io8XQleKIHHHcw7RoNcrLK0s+9iwVPhqMYIzja6HJuvnO93oFw==}
-    dependencies:
-      global-agent: 3.0.0
-      node-fetch: 3.3.0
     dev: false
 
   /@astrojs/webapi/1.1.1:
