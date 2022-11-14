@@ -15,10 +15,10 @@ const functionBuilder = functions
   .region(region)
   .runWith({
     timeoutSeconds: 300,
-    memory: '128MB',
+    memory: '256MB',
   });
 
-export const sendgrid = {
+export const emails = {
   onStoreEvent: createAppEventsFunction(
     'emails',
     handleApiEvent as ApiEventHandler,

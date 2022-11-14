@@ -28,12 +28,12 @@ const getStore = () => {
     lang: cmsSettings.lang,
     domain: cmsSettings.domain,
     name: cmsSettings.name,
-    corporate_name: cmsSettings.name,
+    corporate_name: cmsSettings.corporate_name || cmsSettings.name,
     contact_email: cmsSettings.email,
     logo: {
       url: `https://${cmsSettings.domain}${cmsSettings.logo}`,
     },
-    address: '', // TODO: cmsSettings.address,
+    address: cmsSettings.address,
   };
 };
 

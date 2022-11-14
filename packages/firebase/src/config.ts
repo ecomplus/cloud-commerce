@@ -58,7 +58,7 @@ const mergeConfig = {
       appId: 111223,
     },
     emails: {
-      appId: 1243, // appId of the SES app
+      appId: 1243,
       events: emailsEvents,
     },
   },
