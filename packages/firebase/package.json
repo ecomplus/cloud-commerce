@@ -32,9 +32,9 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@google-cloud/pubsub": "^3.2.1",
-    "firebase-admin": "^11.2.0",
+    "firebase-admin": "^11.2.1",
     "firebase-functions": "^4.0.2",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^3.3.0",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
