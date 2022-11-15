@@ -182,6 +182,13 @@ const genAstroConfig = ({
             return joinPath(libComponentsDir, componentPath);
           },
         },
+        { find: '@storefront-ui/vue', replacement: joinPath(__dirname, 'vendor/sfui') },
+        {
+          find: /^~[^/]+/,
+          replacement: (val) => {
+            return val.replace('~', '');
+          },
+        },
       ],
     },
   },

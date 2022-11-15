@@ -9,6 +9,8 @@
       "@@components/*": ["./src/components/*", "./src/lib/components/*"],
       "~/*": ["./src/*"],
       "content/*": ["./content/*"],
-    }
+      "@storefront-ui/vue/*": ["./vendor/sfui/*"],
+    },
+    "allowJs": true
   }
 }
