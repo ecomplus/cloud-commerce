@@ -484,9 +484,11 @@ importers:
       '@cloudcommerce/i18n': workspace:*
       '@cloudcommerce/types': workspace:*
       '@ecomplus/utils': 1.5.0-rc.3
+      '@glidejs/glide': ^3.6.0
       '@iconify-json/fa6-brands': ^1.1.6
       '@iconify-json/heroicons': ^1.1.6
       '@iconify-json/logos': ^1.1.18
+      '@storefront-ui/shared': 0.13.5
       '@unocss/preset-icons': ^0.46.5
       astro: ^1.6.7
       color: ^4.2.3
@@ -507,9 +509,11 @@ importers:
       '@cloudcommerce/config': link:../config
       '@cloudcommerce/i18n': link:../i18n
       '@ecomplus/utils': 1.5.0-rc.3
+      '@glidejs/glide': 3.6.0
       '@iconify-json/fa6-brands': 1.1.6
       '@iconify-json/heroicons': 1.1.6
       '@iconify-json/logos': 1.1.18
+      '@storefront-ui/shared': 0.13.5
       '@unocss/preset-icons': 0.46.5
       astro: 1.6.7
       color: 4.2.3
@@ -2738,6 +2742,10 @@ packages:
     resolution: {integrity: sha512-CJW8vxt6bJaBeco2VnlJjmCmAkrrtIdf0GGKvpAB4J5gw8Gi0rHb+qsgKp6LsyS5W6ALPLawLs7phZmw02dvLw==}
     dev: false
 
+  /@glidejs/glide/3.6.0:
+    resolution: {integrity: sha512-47Aa+JmYjY4xTFpTtYCwrqirmI1arnp1UZETwtWpbTPisXUAuxrdJxKJLH8KHFWMsSrLi9+AcfyfzDIuO75rEA==}
+    dev: false
+
   /@google-cloud/firestore/6.4.0:
     resolution: {integrity: sha512-qhL5V8S6uIGlESQYC/TMKISlKHaM2qSACz0X15ID0s4F1NuVgSM3Z2FS10WYHdCGIwJ2C73xdLaS+ByFDsu7sg==}
     engines: {node: '>=12.0.0'}
@@ -3186,6 +3194,10 @@ packages:
       '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    dev: false
+
+  /@storefront-ui/shared/0.13.5:
+    resolution: {integrity: sha512-Y27gFIxIvsPcU/vnIgLbbi+OZioWErSqvMLho0rFiqkIcpMcK7x98PkaSfN3bHPKWkSf1QsgY8OOdsnlyxuK2Q==}
     dev: false
 
   /@surma/rollup-plugin-off-main-thread/2.2.3:
