@@ -11,12 +11,6 @@ import handleAbandonedCarts from './functios-lib/abandoned-carts';
 
 const { httpsFunctionOptions: { region } } = config.get();
 
-const functionBuilder = functions
-  .region(region)
-  .runWith({
-    timeoutSeconds: 300,
-    memory: '256MB',
-  });
 
 export const emails = {
   onStoreEvent: createAppEventsFunction(
@@ -24,7 +18,7 @@ export const emails = {
     handleApiEvent as ApiEventHandler,
   ),
 
-  sendAbandonedCartsEmail: functionBuilder.pubsub
+  cronAbandonedCarts: functions.region(region).pubsub
     .schedule('25 */3 * * *')
     .onRun(() => {
       return handleAbandonedCarts();
