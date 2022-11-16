@@ -3,10 +3,10 @@
   "type": "module",
   "version": "0.0.126",
   "description": "E-Com Plus Cloud Commerce app to integrate Pagar.me",
-  "main": "lib/pagar-me.js",
+  "main": "lib/pagarme.js",
   "exports": {
-    ".": "./lib/pagar-me.js",
-    "./webhook": "./lib/pagar-me-webhook.js"
+    ".": "./lib/pagarme.js",
+    "./webhook": "./lib/pagarme-webhook.js"
   },
   "repository": {
     "type": "git",

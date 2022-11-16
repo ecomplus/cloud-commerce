@@ -1,7 +1,7 @@
 import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
 import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
 import type { AppModuleBody } from '@cloudcommerce/types';
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import addInstallments from './functions-lib/add-installments';

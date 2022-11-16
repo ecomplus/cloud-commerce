@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import logger from 'firebase-functions/lib/logger';
+import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';

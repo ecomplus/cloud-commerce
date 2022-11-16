@@ -1,1 +1,1 @@
-export * from './lib/pagarme-wehook';
+export * from './lib/pagarme-webhook';
