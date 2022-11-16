@@ -52,6 +52,9 @@ const mergeConfig = {
     mercadoPago: {
       appId: 111223,
     },
+    pagarMe: {
+      appId: 117391,
+    },
   },
   cmsSettings,
 };
