@@ -48,6 +48,124 @@ importers:
       vitest: 0.25.1
       zx: 7.1.1
 
+  ecomplus-stores/monocard:
+    specifiers:
+      '@cloudcommerce/cli': ^0.0.126
+    dependencies:
+      '@cloudcommerce/cli': link:../../packages/cli
+
+  ecomplus-stores/monocard/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/monocard/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+    dependencies:
+      '@cloudcommerce/events': link:../../../../packages/events
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/monocard/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/modules': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../../packages/modules
+
+  ecomplus-stores/monocard/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/passport': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../../packages/passport
+
+  ecomplus-stores/monocard/functions/ssr:
+    specifiers:
+      '@astrojs/image': ^0.11.0
+      '@astrojs/node': ^2.0.2
+      '@cloudcommerce/api': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/i18n': ^0.0.126
+      '@cloudcommerce/ssr': ^0.0.126
+      '@cloudcommerce/storefront': ^0.0.126
+      '@iconify-json/arcticons': ^1.1.29
+      '@iconify-json/wpf': ^1.1.2
+      lottie-web: ^5.9.6
+      lozad: ^1.16.0
+    dependencies:
+      '@astrojs/image': 0.11.4
+      '@astrojs/node': 2.0.2
+      '@cloudcommerce/api': link:../../../../packages/api
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../../packages/storefront
+      '@iconify-json/arcticons': 1.1.30
+      '@iconify-json/wpf': 1.1.2
+      lottie-web: 5.9.6
+      lozad: 1.16.0
+
+  ecomplus-stores/tia-sonia:
+    specifiers:
+      '@cloudcommerce/cli': ^0.0.126
+    dependencies:
+      '@cloudcommerce/cli': link:../../packages/cli
+
+  ecomplus-stores/tia-sonia/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/tia-sonia/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+    dependencies:
+      '@cloudcommerce/events': link:../../../../packages/events
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/tia-sonia/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/modules': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../../packages/modules
+
+  ecomplus-stores/tia-sonia/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/passport': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../../packages/passport
+
+  ecomplus-stores/tia-sonia/functions/ssr:
+    specifiers:
+      '@astrojs/image': ^0.11.0
+      '@astrojs/node': ^2.0.2
+      '@cloudcommerce/api': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/i18n': ^0.0.126
+      '@cloudcommerce/ssr': ^0.0.126
+      '@cloudcommerce/storefront': ^0.0.126
+    dependencies:
+      '@astrojs/image': 0.11.4
+      '@astrojs/node': 2.0.2
+      '@cloudcommerce/api': link:../../../../packages/api
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../../packages/storefront
+
   packages/__skeleton:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -92,6 +210,27 @@ importers:
       '@ecomplus/utils': 1.5.0-rc.3
     devDependencies:
       '@cloudcommerce/types': link:../../types
+
+  packages/apps/emails:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/emails': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+      '@ecomplus/transactional-mails': ^1.11.1
+      '@firebase/app-types': ^0.8.1
+      firebase-admin: ^11.1.0
+      firebase-functions: ^3.24.1
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/emails': link:../../emails
+      '@cloudcommerce/firebase': link:../../firebase
+      '@ecomplus/transactional-mails': 1.11.1
+      firebase-admin: 11.2.1_@firebase+app-types@0.8.1
+      firebase-functions: 3.24.1_firebase-admin@11.2.1
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.8.1
 
   packages/apps/frenet:
     specifiers:
@@ -391,6 +530,61 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
 
+  store:
+    specifiers:
+      '@cloudcommerce/cli': ^0.0.126
+    dependencies:
+      '@cloudcommerce/cli': link:../packages/cli
+
+  store/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+    dependencies:
+      '@cloudcommerce/events': link:../../../packages/events
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/modules': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../packages/modules
+
+  store/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/passport': ^0.0.126
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../packages/passport
+
+  store/functions/ssr:
+    specifiers:
+      '@astrojs/image': ^0.11.0
+      '@astrojs/node': ^2.0.2
+      '@cloudcommerce/api': ^0.0.126
+      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/i18n': ^0.0.126
+      '@cloudcommerce/ssr': ^0.0.126
+      '@cloudcommerce/storefront': ^0.0.126
+    dependencies:
+      '@astrojs/image': 0.11.4
+      '@astrojs/node': 2.0.2
+      '@cloudcommerce/api': link:../../../packages/api
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../packages/storefront
+
 packages:
 
   /@altano/tiny-async-pool/1.0.2:
@@ -510,6 +704,15 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.6
       vfile-message: 3.1.2
+    dev: false
+
+  /@astrojs/node/2.0.2:
+    resolution: {integrity: sha512-po6YZ+jecEXg2bo27hvi9hWppSCtR7zWJl/AwR4bcFWeUOcZKJcfv6LT4BQzzIsOjMbS3lIxZ4mgT2seYNLU9Q==}
+    dependencies:
+      '@astrojs/webapi': 1.1.1
+      send: 0.18.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@astrojs/node/3.0.0_astro@1.6.7:
@@ -1978,6 +2181,22 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
+  /@ecomplus/transactional-mails/1.11.1:
+    resolution: {integrity: sha512-Y59rKzm08HgAGZAmyvH1c75oCb0BzgnkWNct9EcuAN26WL2c0xX2Jz8HWrV+rIYqz/t/i+qpU6GgSkCu9JoNuQ==}
+    dependencies:
+      '@ecomplus/utils': 1.4.1
+      ejs: 3.1.8
+      intl: 1.2.5
+      intl-locales-supported: 1.8.12
+      sass: 1.56.1
+    dev: false
+
+  /@ecomplus/utils/1.4.1:
+    resolution: {integrity: sha512-siIMZu5qjwwtvFTqt/F29i/SkzZcIFrb/6WcmUJToh4HiBoJVx8H/id2WQRQf7EzcL9c0uYMWX6DNIN/DymvcA==}
+    optionalDependencies:
+      core-js: 3.26.0
+    dev: false
+
   /@ecomplus/utils/1.5.0-rc.3:
     resolution: {integrity: sha512-T0wc7p1JwQ64W9bN3JEgJi22rY+AiETt8q4ldTVCRqayPvaTf18TmwqNOhCn3rtUnrgNDwV0pdqZ2l0pCJ8sgw==}
     optionalDependencies:
@@ -2683,6 +2902,12 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
+  /@iconify-json/arcticons/1.1.30:
+    resolution: {integrity: sha512-3YvOQOYMU5wXLGsHry+EYkKMb9yCi8uYqN70Q63VTC4qd4GIBDxIG0qvxyb+f5/RFZ43L0avHHsHBcNZzXjoIA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/fa6-brands/1.1.6:
     resolution: {integrity: sha512-/b9tHNHgfxgwi1SjB6b2+mObQrexNauRdsL9BgJVupvFpJGTqF1/rBLG4u5/l2ZsduhuVPlDIurewDS81N9jRw==}
     dependencies:
@@ -2701,9 +2926,14 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/wpf/1.1.2:
+    resolution: {integrity: sha512-KgjldssGrXI9OALjg8qjZBMb48PYleK73s22lJpE0LhGoRd7T1nSeAAqig1qASmP8UvbHviBTT9sM8wfJK58Ag==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils/2.0.1:
     resolution: {integrity: sha512-t8IyICk25wgZL4YKn/2kYfjG5MGA6EWZlaUJZ1OEIku4V+kX9V900T5E4HIqS3hLyD6/RJET0zY4vxO9pHLHHw==}
@@ -6109,6 +6339,25 @@ packages:
       - supports-color
     dev: false
 
+  /firebase-functions/3.24.1_firebase-admin@11.2.1:
+    resolution: {integrity: sha512-GYhoyOV0864HFMU1h/JNBXYNmDk2MlbvU7VO/5qliHX6u/6vhSjTJjlyCG4leDEI8ew8IvmkIC5QquQ1U8hAuA==}
+    engines: {node: ^8.13.0 || >=10.10.0}
+    hasBin: true
+    peerDependencies:
+      firebase-admin: ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
+    dependencies:
+      '@types/cors': 2.8.12
+      '@types/express': 4.17.3
+      cors: 2.8.5
+      express: 4.18.2
+      firebase-admin: 11.2.1_@firebase+app-types@0.8.1
+      lodash: 4.17.21
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
   /firebase-functions/4.0.2_firebase-admin@11.2.1:
     resolution: {integrity: sha512-y2JEMVRQfKQyib/wRMn6qSEg1kfJhl0nBOPHbcvrWN3cFakOssTVfq78GEQe3m9PPE8toF9ysabsetTUi4vkSg==}
     engines: {node: '>=14.10.0'}
@@ -6844,6 +7093,10 @@ packages:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
     dev: false
 
+  /immutable/4.1.0:
+    resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
+    dev: false
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -6890,6 +7143,15 @@ packages:
       get-intrinsic: 1.1.3
       has: 1.0.3
       side-channel: 1.0.4
+
+  /intl-locales-supported/1.8.12:
+    resolution: {integrity: sha512-FJPl7p1LYO/C+LpwlDcvVpq7AeFTdFgwnq1JjdNYKjb51xkIxssXRR8LaA0fJFogjwRRztqw1ahgSJMSZsSFdw==}
+    deprecated: bad publish
+    dev: false
+
+  /intl/1.2.5:
+    resolution: {integrity: sha512-rK0KcPHeBFBcqsErKSpvZnrOmWOj+EmDkyJ57e90YWaQNqbcivcqmKDlHEeNprDWOsKzPsh1BfSpPQdDvclHVw==}
+    dev: false
 
   /ipaddr.js/1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
@@ -7583,10 +7845,18 @@ packages:
     resolution: {integrity: sha512-cHlYSUpL2s7Fb3394mYxwTYj8niTaNHUCLr0qdiCXQfSjfuA7CKofpX2uSwEfFDQ0EB7JcnMnm+GjbqqoinYYg==}
     dev: false
 
+  /lottie-web/5.9.6:
+    resolution: {integrity: sha512-JFs7KsHwflugH5qIXBpB4905yC1Sub2MZWtl/elvO/QC6qj1ApqbUZJyjzJseJUtVpgiDaXQLjBlIJGS7UUUXA==}
+    dev: true
+
   /loupe/2.3.4:
     resolution: {integrity: sha512-OvKfgCC2Ndby6aSTREl5aCCPTNIzlDfQZvZxNUrBrihDhL3xcrYegTblhmEiCrg2kKQz4XsFIaemE5BF4ybSaQ==}
     dependencies:
       get-func-name: 2.0.0
+    dev: true
+
+  /lozad/1.16.0:
+    resolution: {integrity: sha512-JBr9WjvEFeKoyim3svo/gsQPTkgG/mOHJmDctZ/+U9H3ymUuvEkqpn8bdQMFsvTMcyRJrdJkLv0bXqGm0sP72w==}
     dev: true
 
   /lru-cache/4.0.2:
@@ -9383,6 +9653,16 @@ packages:
     resolution: {integrity: sha512-NKFP8ddjhUYi6A/iD1cEtzkEs91U61kzqe3lY9SVNuvX7LGc88xnEN0mmsWL7Ol//YTi2GL/ol7b9XZ2+hgXuA==}
     dependencies:
       suf-log: 2.5.3
+    dev: false
+
+  /sass/1.56.1:
+    resolution: {integrity: sha512-VpEyKpyBPCxE7qGDtOcdJ6fFbcpOM+Emu7uZLxVrkX8KVU/Dp5UF7WLvzqRuUhB6mqqQt1xffLoG+AndxTZrCQ==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.1.0
+      source-map-js: 1.0.2
     dev: false
 
   /sax/1.2.4:
