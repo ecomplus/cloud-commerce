@@ -25,6 +25,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
+    "@cloudcommerce/app-pagarme": "workspace:*",
     "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "firebase-admin": "^11.2.1",
