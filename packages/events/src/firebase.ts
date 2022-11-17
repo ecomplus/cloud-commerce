@@ -5,4 +5,6 @@ export * from '@cloudcommerce/app-tiny-erp';
 
 export * from '@cloudcommerce/app-mercadopago/webhook';
 
+export * from '@cloudcommerce/app-emails';
+
 export * from '@cloudcommerce/app-pagarme/webhook';

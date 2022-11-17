@@ -61,7 +61,7 @@ export default async (appData: AppModuleBody) => {
 
   // https://docs.pagar.me/docs/realizando-uma-transacao-de-cartao-de-credito
   // https://docs.pagar.me/docs/realizando-uma-transacao-de-boleto-bancario
-  let pagarmeTransaction;
+  let pagarmeTransaction: { [key: string]: any };
 
   if (isCreditCard) {
     let installmentsNumber = params.installments_number;
@@ -134,7 +134,8 @@ export default async (appData: AppModuleBody) => {
 
   pagarmeTransaction.api_key = configApp.pagarme_api_key;
   pagarmeTransaction.postback_url = notificationUrl;
-  pagarmeTransaction.soft_descriptor = (configApp.soft_descriptor || `${params.domain}_PagarMe`).substr(0, 13);
+  pagarmeTransaction.soft_descriptor = (configApp.soft_descriptor
+    || `${params.domain}_PagarMe`).substring(0, 13);
   pagarmeTransaction.metadata = {
     order_number: params.order_number,
     store_id: storeId,
@@ -192,13 +193,15 @@ export default async (appData: AppModuleBody) => {
     }
   });
 
-  // https://docs.pagar.me/reference#criar-transacao
-  axios({
-    url: 'https://api.pagar.me/1/transactions',
-    method: 'post',
-    data: pagarmeTransaction,
-  })
-    .then(({ data }) => {
+  try {
+    // https://docs.pagar.me/reference#criar-transacao
+    const { data } = await axios({
+      url: 'https://api.pagar.me/1/transactions',
+      method: 'post',
+      data: pagarmeTransaction,
+    });
+
+    if (data) {
       if (data.authorized_amount) {
         transaction.amount = data.authorized_amount / 100;
       } else if (data.amount) {
@@ -255,36 +258,50 @@ export default async (appData: AppModuleBody) => {
         updated_at: data.date_created || data.date_updated || new Date().toISOString(),
         current: parseStatus(data.status),
       };
-      return { transaction };
-    })
-    .catch((error: any) => {
-      logger.error('(App:PagarMe) =>', error);
-      const errCode = 'PAGARME_TRANSACTION_ERR_';
-      let { message } = error;
-      //
-      const err = {
-        status: 409,
-        message: `PAGARME_TRANSACTION_ERR Order: #${orderId} => ${message}`,
-        payment: '',
-        response: '',
-        errCode,
+
+      return {
+        status: 200,
+        redirect_to_payment: false,
+        transaction,
       };
+    }
+    return {
+      status: 409,
+      message: `PAGARME_TRANSACTION_ERR Order: #${orderId} => Pagar.Me not response`,
+    };
+  } catch (error: any) {
+    logger.error('(App:PagarMe) =>', error);
+    let { message } = error;
+    //
+    const err = {
+      message: `PAGARME_TRANSACTION_ERR Order: #${orderId} => ${message}`,
+      payment: '',
+      status: 0,
+      response: '',
+    };
+    let errCode = 'PAGARME_TRANSACTION_ERR_';
 
-      if (error.response) {
-        const { status, data } = error.response;
-        if (status !== 401 && status !== 403) {
-          err.payment = JSON.stringify(pagarmeTransaction);
-          err.errCode += status;
-          if (typeof data === 'object' && data) {
-            err.response = JSON.stringify(data);
-          } else {
-            err.response = data;
-          }
-        } else if (data && Array.isArray(data.errors) && data.errors[0] && data.errors[0].message) {
-          message = data.errors[0].message;
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status !== 401 && status !== 403) {
+        err.payment = JSON.stringify(pagarmeTransaction);
+        errCode += status;
+        err.status = status;
+        if (typeof data === 'object' && data) {
+          err.response = JSON.stringify(data);
+        } else {
+          err.response = data;
         }
+      } else if (data && Array.isArray(data.errors) && data.errors[0] && data.errors[0].message) {
+        message = data.errors[0].message;
       }
+    }
 
-      return err;
-    });
+    // logger.error(err);
+    return {
+      status: 409,
+      error: errCode,
+      message,
+    };
+  }
 };
