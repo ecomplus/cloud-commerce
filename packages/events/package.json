@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-emails": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
