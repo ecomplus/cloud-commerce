@@ -1,6 +1,6 @@
 // IntelliSense for UnoCSS icons
-const defaultIcons = {
-  brandIcons: 'fa6-brands',
+let defaultIcons = {
+  brandIcons: 'brands',
   brandIconsShortcuts: [
     'facebook',
     'twitter',
@@ -27,8 +27,12 @@ const defaultIcons = {
     'hipercard',
     'dinersclub',
   ],
-  generalIcons: 'heroicons',
+  generalIcons: 'general',
 };
+if (globalThis.storefront_default_icons) {
+  const deepmerge = require('@fastify/deepmerge')();
+  defaultIcons = deepmerge(defaultIcons, globalThis.storefront_default_icons);
+}
 
 const genTailwindConfig = ({
   colorVariants = [
@@ -69,6 +73,9 @@ const genTailwindConfig = ({
           DEFAULT: 'var(--gray)',
           accent: 'var(--gray-accent)',
         },
+      },
+      fontFamily: {
+        sans: ['var(--font-family)'],
       },
     },
   },
