@@ -1,37 +1,34 @@
 {
-  "name": "@cloudcommerce/events",
+  "name": "@cloudcommerce/app-pagarme",
   "type": "module",
   "version": "0.0.126",
-  "description": "E-Com Plus Cloud Commerce app events",
-  "main": "lib/index.js",
+  "description": "E-Com Plus Cloud Commerce app to integrate Pagar.me",
+  "main": "lib/pagarme.js",
   "exports": {
-    ".": "./lib/index.js",
-    "./firebase": "./lib/firebase.js"
+    ".": "./lib/pagarme.js",
+    "./webhook": "./lib/pagarme-webhook.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/events"
+    "directory": "packages/apps/pagar-me"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/events#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/pagarme#readme",
   "scripts": {
-    "build": "sh ../../scripts/build-lib.sh"
+    "build": "sh scripts/build.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/app-emails": "workspace:*",
-    "@cloudcommerce/app-mercadopago": "workspace:*",
-    "@cloudcommerce/app-pagarme": "workspace:*",
-    "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "firebase-admin": "^11.2.1",
+    "axios": "^1.1.3",
     "firebase-functions": "^4.0.2",
-    "source-map-support": "^0.5.21"
+    "pagarme": "^4.28.0",
+    "qs": "^6.11.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",

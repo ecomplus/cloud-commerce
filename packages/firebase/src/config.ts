@@ -61,6 +61,9 @@ const mergeConfig = {
       appId: 1243,
       events: emailsEvents,
     },
+    pagarMe: {
+      appId: 117391,
+    },
   },
   cmsSettings,
 };
