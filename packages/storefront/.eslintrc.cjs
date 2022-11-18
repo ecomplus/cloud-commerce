@@ -4,5 +4,6 @@ module.exports = {
     'no-console': 'off',
     semi: 'warn',
     'arrow-parens': 'warn',
+    'global-require': 'off',
   },
 };

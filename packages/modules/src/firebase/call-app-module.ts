@@ -84,10 +84,22 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagarMe.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-pagarme')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
   } else if (modName === 'create_transaction') {
     if (appId === apps.mercadoPago.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-mercadopago')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.pagarMe.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-pagarme')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }
