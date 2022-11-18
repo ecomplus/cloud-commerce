@@ -32,7 +32,7 @@ const saveToDb = (
             .set({
               pixApi,
               rand,
-              // createdAt: firestore.Timestamp.fromDate(new Date()), // TODO: ?
+              createdAt: new Date().toISOString(),
             })
             .then(() => pixAxios({
               url: `/v2/webhook/${configApp.pix_key}`,
@@ -73,7 +73,6 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
   const params = appData.params as CreateTransactionParams;
   // app configured options
   const configApp = { ...application.data, ...application.hidden_data };
-  // const notificationUrl = `${baseUri}/pix-webhook`;
 
   const {
     amount,
@@ -119,6 +118,7 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
 
   try {
     await pix.preparing;
+    // console.log('>> ')
 
     let txid = [...Array(32)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
     let docNumber: string;
@@ -165,65 +165,71 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
     }
 
     items.forEach((item, i) => {
-      pixCob.infoAdicionais.push({
-        nome: `item_${(i + 1)}`,
-        valor: `${item.quantity}x ${(item.name || item.sku)}`.substring(0, 200),
-      });
+      if (pixCob) {
+        pixCob.infoAdicionais.push({
+          nome: `item_${(i + 1)}`,
+          valor: `${item.quantity}x ${(item.name || item.sku)}`.substring(0, 200),
+        });
+      }
     });
+
     pixCob.infoAdicionais.push({
       nome: 'ecom_order_id',
       valor: String(orderId),
     });
 
-    let { data } = await pix.axios({
-      url: `/v2/cob/${txid}`,
-      method: 'PUT',
-      data: pixCob,
-    });
-    if (data) {
-      const { loc } = data;
-      txid = data.txid;
-
-      const location = (loc && loc.location) || data.location;
-      const pixCodeHost = 'https://gerarqrcodepix.com.br/api/v1';
-      const pixCodeParams = `&location=${location}`
-        + `&nome=${encodeURIComponent(configApp.pix_receiver || params.domain)}`
-        + `&cidade=${encodeURIComponent(configApp.pix_city || params.domain)}`;
-      const qrCodeUrl = `${pixCodeHost}?pim=12&saida=qr${pixCodeParams}`;
-      let qrCodeSrc = qrCodeUrl;
-      const brCodeUrl = `${pixCodeHost}?saida=br${pixCodeParams}`;
-
-      try {
-        if (isGerencianet && loc && loc.id) {
-          const res = await pix.axios.get(`/v2/loc/${loc.id}/qrcode`);
-          qrCodeSrc = res.data.imagemQrcode;
-        } else {
-          throw new Error('Retry');
-        }
-      } catch (err: any) {
-        data = (await axios.get(brCodeUrl)).data;
-      }
-
+    if (pix.axios) {
+      let { data } = await pix.axios({
+        url: `/v2/cob/${txid}`,
+        method: 'PUT',
+        data: pixCob,
+      });
       if (data) {
-        transaction.intermediator = {
-          payment_method: params.payment_method,
-          transaction_id: txid,
-          transaction_code: data.brcode || data.qrcode,
-        };
-        transaction.payment_link = qrCodeUrl;
-        transaction.notes = `<img src="${qrCodeSrc}" style="display:block;margin:0 auto">`;
+        const { loc } = data;
+        txid = data.txid;
 
-        await saveToDb(firestore, clientId, clientSecret, pixApi, pix.axios, configApp, baseUri);
+        const location = (loc && loc.location) || data.location;
+        const pixCodeHost = 'https://gerarqrcodepix.com.br/api/v1';
+        const pixCodeParams = `&location=${location}`
+          + `&nome=${encodeURIComponent(configApp.pix_receiver || params.domain)}`
+          + `&cidade=${encodeURIComponent(configApp.pix_city || params.domain)}`;
+        const qrCodeUrl = `${pixCodeHost}?pim=12&saida=qr${pixCodeParams}`;
+        let qrCodeSrc = qrCodeUrl;
+        const brCodeUrl = `${pixCodeHost}?saida=br${pixCodeParams}`;
 
-        return {
-          status: 200,
-          redirect_to_payment: false,
-          transaction,
-        };
+        try {
+          if (isGerencianet && loc && loc.id) {
+            const res = await pix.axios.get(`/v2/loc/${loc.id}/qrcode`);
+            qrCodeSrc = res.data.imagemQrcode;
+          } else {
+            throw new Error('Retry');
+          }
+        } catch (err: any) {
+          data = (await axios.get(brCodeUrl)).data;
+        }
+
+        if (data) {
+          transaction.intermediator = {
+            payment_method: params.payment_method,
+            transaction_id: txid,
+            transaction_code: data.brcode || data.qrcode,
+          };
+          transaction.payment_link = qrCodeUrl;
+          transaction.notes = `<img src="${qrCodeSrc}" style="display:block;margin:0 auto">`;
+
+          await saveToDb(firestore, clientId, clientSecret, pixApi, pix.axios, configApp, baseUri);
+
+          return {
+            status: 200,
+            redirect_to_payment: false,
+            transaction,
+          };
+        }
+        return responseError(409, 'PIX_REQUEST_ERR_', 'QRCode not found');
       }
-      return responseError(409, 'PIX_REQUEST_ERR_', 'QRCode not found');
+      return responseError(409, 'PIX_REQUEST_ERR_', 'Unexpected error creating charge');
     }
-    return responseError(409, 'PIX_REQUEST_ERR_', 'Unexpected error creating charge');
+    return responseError(409, 'PIX_REQUEST_ERR_', 'Axios instance not created');
   } catch (error: any) {
     logger.error(error);
     // try to debug request error

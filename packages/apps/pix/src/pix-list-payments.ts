@@ -16,7 +16,7 @@ export default (data: AppModuleBody) => {
   const { application } = data;
   const params = data.params as ListPaymentsParams;
   // https://apx-mods.e-com.plus/api/v1/list_payments/schema.json?store_id=100
-  const amount = params.amount || { total: undefined };
+  const amount = params.amount || { total: undefined, discount: undefined };
   // const initialTotalAmount = amount.total;
 
   const configApp = {
@@ -75,7 +75,7 @@ export default (data: AppModuleBody) => {
 
     if (discount.min_amount) {
       // check amount value to apply discount
-      if (amount.total < discount.min_amount) {
+      if (amount.total && amount.total < discount.min_amount) {
         delete gateway.discount;
       }
       if (response.discount_option) {

@@ -17,7 +17,7 @@ const firestoreColl = 'pix_tokens';
 
 export default class Pix {
   preparing: Promise<unknown>;
-  axios: AxiosInstance;
+  axios: AxiosInstance | undefined;
 
   constructor(options: Option) {
     const {
