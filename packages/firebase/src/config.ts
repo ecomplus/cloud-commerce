@@ -61,6 +61,9 @@ const mergeConfig = {
       appId: 1243,
       events: emailsEvents,
     },
+    pix: {
+      appId: 101827,
+    },
   },
   cmsSettings,
 };
