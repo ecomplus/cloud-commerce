@@ -61,14 +61,16 @@ export default class Pix {
       } else if (documentRef) {
         documentRef.get()
           .then((documentSnapshot) => {
-            const token = documentSnapshot.get('tokenData');
-            const expiresIn = (tokenData && tokenData.expires_in) || 3600;
-            const deadline = Date.now() + 10000 - documentSnapshot.updateTime.toDate().getTime();
-            if (
-              documentSnapshot.exists
-              && deadline <= expiresIn * 1000
-            ) {
-              authenticate(token);
+            if (documentSnapshot.exists) {
+              const token = documentSnapshot.get('tokenData');
+              const expiresIn = (tokenData && tokenData.expires_in) || 3600;
+              const deadline = Date.now() + 10000 - documentSnapshot.updateTime.toDate().getTime();
+
+              if (deadline <= expiresIn * 1000) {
+                authenticate(token);
+              } else {
+                fetchOauth();
+              }
             } else {
               fetchOauth();
             }

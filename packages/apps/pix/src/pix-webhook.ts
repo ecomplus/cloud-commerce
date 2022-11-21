@@ -161,7 +161,6 @@ export const pix = {
     .https.onRequest(async (req, res) => {
       const { method } = req;
       const rand = req.url.split('/')[1];
-      console.log('>>> ', rand);
 
       if (method === 'POST' || method === 'PUT') {
         handler(req, res, rand);

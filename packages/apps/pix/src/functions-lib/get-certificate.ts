@@ -1,26 +1,24 @@
-import { getFirestore } from 'firebase-admin/firestore';
+import path from 'path';
+import os from 'os';
+import fs from 'fs';
+// eslint-disable-next-line import/no-unresolved
+import { getStorage } from 'firebase-admin/storage';
 
-const firestoreColl = 'pix_certificates';
+export default async (certificate: string) => {
+  const fileName = `${certificate}.p12`;
 
-export default (certificate: string) => {
-  let documentRef;
-  if (firestoreColl) {
-    documentRef = getFirestore()
-      .doc(`${firestoreColl}/${certificate}`);
-  }
+  const bucket = getStorage().bucket();
+
+  const tempFilePath = path.join(os.tmpdir(), fileName);
+
+  await bucket.file(fileName).download({ destination: tempFilePath });
 
   return new Promise((resolve, reject) => {
-    if (documentRef) {
-      documentRef.get()
-        .then((documentSnapshot) => {
-          if (!documentSnapshot.exists || !documentSnapshot.get('doc')) {
-            reject(new Error('>(App: Pix) Document not found'));
-          }
-          const doc = documentSnapshot.get('doc');
-          resolve(doc);
-        });
-    } else {
-      reject(new Error('>(App: Pix) Document not found'));
+    try {
+      const file = fs.readFileSync(tempFilePath);
+      resolve(file);
+    } catch (err) {
+      reject(err);
     }
   });
 };
