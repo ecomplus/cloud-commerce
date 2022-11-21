@@ -26,8 +26,8 @@
     "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.11.4",
-    "@astrojs/node": "^3.0.0",
+    "@astrojs/image": "^0.11.6",
+    "@astrojs/node": "^3.1.0",
     "@astrojs/partytown": "^1.0.1",
     "@astrojs/prefetch": "^0.1.1",
     "@astrojs/vue": "^1.2.1",
@@ -39,13 +39,13 @@
     "@iconify-json/brands": "npm:@iconify-json/fa6-brands@^1.1.7",
     "@iconify-json/general": "npm:@iconify-json/heroicons@^1.1.6",
     "@iconify-json/logos": "^1.1.18",
-    "astro": "^1.6.7",
+    "astro": "^1.6.10",
     "color": "^4.2.3",
     "dotenv": "^16.0.3",
     "firebase": "^9.14.0",
     "image-size": "^1.0.2",
     "unocss": "^0.46.5",
-    "vite": "^3.2.3",
+    "vite": "^3.2.4",
     "vite-plugin-pwa": "^0.13.3",
     "vue": "^3.2.45"
   },
