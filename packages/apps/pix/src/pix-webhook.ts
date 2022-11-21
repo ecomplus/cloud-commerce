@@ -1,17 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import type { Request, Response } from 'firebase-functions';
 import '@cloudcommerce/firebase/lib/init';
-import * as path from 'path';
-import * as fs from 'fs';
-import url from 'url';
 import api from '@cloudcommerce/api';
 import * as logger from 'firebase-functions/logger';
 import { getFirestore } from 'firebase-admin/firestore';
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import Pix from './functions-lib/pix-auth/construtor';
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+import getPfx from './functions-lib/get-certificate';
 
 const handler = async (req: Request, res: Response, rand: string) => {
   try {
@@ -44,17 +40,16 @@ const handler = async (req: Request, res: Response, rand: string) => {
             setHookState();
           }
 
-          let pfx: any;
+          let pfx;
           try {
-            pfx = fs.readFileSync(
-              path.join(__dirname, `../__fixtures/certificates/${pixApi.certificate}`),
-            );
-          } catch (e) {
+            pfx = await getPfx(pixApi.certificate);
+          } catch (err) {
+            logger.error(err);
             return res.sendStatus(409);
           }
 
           let baseURL: string | undefined;
-          if (typeof pixApi.host === 'string' && pixApi.host) {
+          if (pixApi.host && typeof pixApi.host === 'string') {
             baseURL = pixApi.host.startsWith('http') ? pixApi.host : `https://${pixApi.host}`;
           }
 
@@ -166,7 +161,7 @@ export const pix = {
     .https.onRequest(async (req, res) => {
       const { method } = req;
       const rand = req.url.split('/')[1];
-      // console.log('>>> ', rand);
+      console.log('>>> ', rand);
 
       if (method === 'POST' || method === 'PUT') {
         handler(req, res, rand);

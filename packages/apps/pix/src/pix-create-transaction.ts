@@ -3,16 +3,12 @@ import type { AppModuleBody } from '@cloudcommerce/types';
 import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
 import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
 import type { Firestore } from 'firebase-admin/firestore';
-import * as path from 'path';
-import * as fs from 'fs';
-import url from 'url';
 import * as logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import { responseError } from './pix-list-payments';
 import Pix from './functions-lib/pix-auth/construtor';
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+import getPfx from './functions-lib/get-certificate';
 
 const saveToDb = (
   firestore: Firestore,
@@ -38,7 +34,7 @@ const saveToDb = (
               url: `/v2/webhook/${configApp.pix_key}`,
               method: 'PUT',
               data: {
-                webhookUrl: `${baseUri}/pix/${rand}`, // TODO: ?
+                webhookUrl: `${baseUri}/pix-webhook/${rand}`,
               },
             }))
 
@@ -92,13 +88,14 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
   const pixApi = configApp.pix_api;
   let pfx;
   try {
-    pfx = fs.readFileSync(path.join(__dirname, `../__fixtures/certificates/${pixApi.certificate}`));
+    pfx = await getPfx(pixApi.certificate);
   } catch (e) {
+    logger.error(e);
     return responseError(409, 'INVALID_PIX_CERTIFICATE', 'Arquivo de certificado não encontrado ou inválido');
   }
 
   let baseURL: string | undefined;
-  if (typeof pixApi.host === 'string' && pixApi.host) {
+  if (pixApi.host && typeof pixApi.host === 'string') {
     baseURL = pixApi.host.startsWith('http') ? pixApi.host : `https://${pixApi.host}`;
   }
   const isGerencianet = Boolean(baseURL && baseURL.indexOf('gerencianet.') > -1);
@@ -118,7 +115,6 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
 
   try {
     await pix.preparing;
-    // console.log('>> ')
 
     let txid = [...Array(32)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
     let docNumber: string;
