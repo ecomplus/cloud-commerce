@@ -8,3 +8,5 @@ export * from '@cloudcommerce/app-mercadopago/webhook';
 export * from '@cloudcommerce/app-emails';
 
 export * from '@cloudcommerce/app-pagarme/webhook';
+
+export * from '@cloudcommerce/app-infinitepay/webhook';
