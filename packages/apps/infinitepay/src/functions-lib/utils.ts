@@ -16,8 +16,11 @@ const responseError = (status: number | null, error: string, message: string) =>
   };
 };
 
+const isSandbox = true; // TODO: false
+
 export {
   readFile,
   readJson,
   responseError,
+  isSandbox,
 };

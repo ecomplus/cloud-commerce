@@ -1,1 +1,1 @@
-// export * from './lib/infinitepay-webhook.js';
+export * from './lib/ip-webhook.js';

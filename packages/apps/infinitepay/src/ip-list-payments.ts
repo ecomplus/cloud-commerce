@@ -4,7 +4,7 @@ import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_pay
 import * as logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';
 import addInstallments from './functions-lib/add-installments';
-import { readFile, responseError } from './functions-lib/utils';
+import { readFile, responseError, isSandbox } from './functions-lib/utils';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']
@@ -34,18 +34,17 @@ export default async (data: AppModuleBody) => {
     return responseError(409, 'NO_INFINITE_KEY_PIX', 'Chave Pix InfinitePay não configurada');
   }
 
-  const isSandbox = false; // TODO: false
   logger.log('>(App: InfinitePay) List Payment', `${isSandbox ? ' Sandbox' : ''}`);
-
-  const ipAxios = new IPAxios({
-    clientId: configApp.client_id,
-    clientSecret: configApp.client_secret,
-    typeScope: 'card',
-    isSandbox,
-  });
 
   let tokenJWT: string | undefined;
   try {
+    const ipAxios = new IPAxios({
+      clientId: configApp.client_id,
+      clientSecret: configApp.client_secret,
+      typeScope: 'card',
+      isSandbox,
+    });
+
     await ipAxios.preparing;
     tokenJWT = ipAxios.cardTokenization;
   } catch (err: any) {
@@ -115,7 +114,7 @@ export default async (data: AppModuleBody) => {
             ? 'development' : 'production'}/ipay-latest.min.js`,
           onload_expression: `window._infiniteJwtTokenCard="${tokenJWT}";
            window._infiniteCardSandbox="${isSandbox}";
-           ${readFile('../../../public/onload-expression.min.js')}`,
+           ${readFile('../../assets/onload-expression.min.js')}`,
           cc_hash: {
             function: '_infiniteHashCard',
             is_promise: true,

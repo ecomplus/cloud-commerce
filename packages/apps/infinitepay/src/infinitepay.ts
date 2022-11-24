@@ -1,5 +1,5 @@
-import '@cloudcommerce/firebase/lib/init';
 import type { AppModuleBody } from '@cloudcommerce/types';
+import '@cloudcommerce/firebase/lib/init';
 import { getFirestore } from 'firebase-admin/firestore';
 import handleListPayments from './ip-list-payments';
 import handleCreateTransaction from './ip-create-transaction';

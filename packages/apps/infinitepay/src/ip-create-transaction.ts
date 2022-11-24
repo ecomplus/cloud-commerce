@@ -6,7 +6,7 @@ import config from '@cloudcommerce/firebase/lib/config';
 import * as logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';
 import addInstallments from './functions-lib/add-installments';
-import { responseError } from './functions-lib/utils';
+import { responseError, isSandbox } from './functions-lib/utils';
 
 // type To = Exclude<CreateTransactionParams['to'], undefined>
 
@@ -127,8 +127,6 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
   // app configured options
   const configApp = { ...application.data, ...application.hidden_data };
   const callbackUrl = `${baseUri}/infinitepay-webhook`;
-
-  const isSandbox = false; // TODO: false
 
   const ipAxios = new IPAxios({
     clientId: configApp.client_id,
