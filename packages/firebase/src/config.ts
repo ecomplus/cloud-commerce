@@ -64,6 +64,9 @@ const mergeConfig = {
     pagarMe: {
       appId: 117391,
     },
+    pix: {
+      appId: 101827,
+    },
   },
   cmsSettings,
 };
