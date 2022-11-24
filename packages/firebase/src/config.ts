@@ -64,10 +64,12 @@ const mergeConfig = {
     pagarMe: {
       appId: 117391,
     },
+    pix: {
+      appId: 101827,
+    },
     infinitePay: {
       appId: 110373,
     },
-
   },
   cmsSettings,
 };
