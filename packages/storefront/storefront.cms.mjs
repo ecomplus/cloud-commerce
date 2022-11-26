@@ -21,10 +21,15 @@ export default () => {
     return JSON.parse(fs.readFileSync(filepath, 'utf8'));
   };
 
-  const settings = cms('settings');
+  let settings;
+  try {
+    settings = cms('settings');
+  } catch (e) {
+    settings = {};
+  }
   const { domain } = settings;
   const primaryColor = settings.primary_color || '#137c5c';
-  const secondaryColor = settings.secondary_color || '#343a40';
+  const secondaryColor = settings.secondary_color || primaryColor;
 
   return {
     domain,
