@@ -40,14 +40,16 @@
     "@iconify-json/general": "npm:@iconify-json/heroicons@^1.1.6",
     "@iconify-json/logos": "^1.1.18",
     "astro": "^1.6.10",
-    "color": "^4.2.3",
+    "chroma-js": "^2.4.2",
     "dotenv": "^16.0.3",
     "firebase": "^9.14.0",
     "image-size": "^1.0.2",
+    "tailwindcss": "^3.2.4",
     "unocss": "^0.46.5",
     "vite": "^3.2.4",
     "vite-plugin-pwa": "^0.13.3",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-bind-once": "^0.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
