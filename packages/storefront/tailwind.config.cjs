@@ -1,3 +1,7 @@
+const colors = require('tailwindcss/colors');
+const chroma = require('chroma-js');
+const getCMS = require('./storefront.cms.cjs');
+
 // IntelliSense for UnoCSS icons
 let defaultIcons = {
   brandIcons: 'brands',
@@ -34,132 +38,150 @@ if (globalThis.storefront_default_icons) {
   defaultIcons = deepmerge(defaultIcons, globalThis.storefront_default_icons);
 }
 
+const { primaryColor, secondaryColor } = getCMS();
+const brandColors = {
+  primary: primaryColor,
+  secondary: secondaryColor || primaryColor,
+  ...globalThis.storefront_brand_colors,
+};
+const brandColorsPalletes = {};
+const onBrandColors = {};
+Object.keys(brandColors).forEach((colorName) => {
+  const hex = brandColors[colorName];
+  const color = chroma(hex);
+  let subtle;
+  let bold;
+  if (color.luminance() >= 0.1) {
+    subtle = chroma(hex).brighten(1.5);
+    bold = chroma(hex).darken(1.5);
+  } else {
+    subtle = chroma(hex).darken();
+    bold = chroma(hex).brighten();
+  }
+  const pallete = {
+    subtle: subtle.css(),
+    DEFAULT: color.css(),
+    bold: bold.css(),
+  };
+  const scale = chroma.scale([
+    chroma(hex).luminance(0.95), // 50
+    chroma(hex).luminance(0.84), // 100
+    chroma(hex).luminance(0.73), // 200
+    chroma(hex).luminance(0.62), // 300
+    chroma(hex).luminance(0.49), // 400
+    chroma(hex).luminance(0.35), // 500
+    chroma(hex).luminance(0.23), // 600
+    chroma(hex).luminance(0.15), // 700
+    chroma(hex).luminance(0.10), // 800
+    chroma(hex).luminance(0.05), // 900
+  ]).colors(10);
+  scale.forEach((sHex, index) => {
+    const palleteIndex = index === 0 ? '50' : (100 * index).toString();
+    pallete[palleteIndex] = chroma(sHex).css();
+  });
+  brandColorsPalletes[colorName] = pallete;
+  const colorVariants = { color, subtle, bold };
+  Object.keys(colorVariants).forEach((tone) => {
+    const label = tone === 'color' ? colorName : `${colorName}-${tone}`;
+    const lightness = colorVariants[tone].get('lab.l');
+    if (lightness > 90) {
+      onBrandColors[label] = pallete['800'];
+    } else if (lightness > 75) {
+      onBrandColors[label] = pallete['900'];
+    } else {
+      onBrandColors[label] = `var(--c-on-${(lightness > 60 ? 'light' : 'dark')})`;
+    }
+  });
+});
+
 const genTailwindConfig = ({
-  colorVariants = [
-    '50',
-    ...[...Array(9).keys()].map((i) => String((i + 1) * 100)),
-  ],
   brandIcons = defaultIcons.brandIcons,
   brandIconsShortcuts = defaultIcons.brandIconsShortcuts,
   brandLogos = defaultIcons.brandLogos,
   brandLogosShortcuts = defaultIcons.brandLogosShortcuts,
   generalIcons = defaultIcons.generalIcons,
-} = {}) => ({
-  theme: {
-    extend: {
-      colors: {
-        // Color vars from Base.astro styles
-        ...['primary', 'secondary', 'contrast'].reduce((colors, color) => {
-          const colorVariations = ['hover', 'focus', 'inverse'];
-          if (color !== 'contrast') {
-            colorVariations.push(...colorVariants);
-          }
-          colors[color] = colorVariations.reduce((colorPalette, variant) => {
-            colorPalette[variant] = `var(--${color}-${variant})`;
-            return colorPalette;
-          }, {
-            DEFAULT: `var(--${color})`,
-          });
-          return colors;
-        }, {}),
-        ...['surface', 'muted'].reduce((colors, color) => ({
-          [color]: {
-            DEFAULT: `var(--${color}-color)`,
-            border: `var(--${color}-border-color)`,
-          },
-          ...colors,
-        }), {}),
-        gray: {
-          DEFAULT: 'var(--gray)',
-          accent: 'var(--gray-accent)',
+  baseColor = 'slate',
+  successColor = 'emerald',
+  warningColor = 'amber',
+  dangerColor = 'rose',
+} = {}) => {
+  const config = {
+    theme: {
+      extend: {
+        colors: {
+          ...brandColorsPalletes,
+          on: onBrandColors,
+          base: typeof baseColor === 'string' ? colors[baseColor] : baseColor,
+          success: typeof successColor === 'string' ? colors[successColor] : successColor,
+          warning: typeof warningColor === 'string' ? colors[warningColor] : warningColor,
+          danger: typeof dangerColor === 'string' ? colors[dangerColor] : dangerColor,
         },
-      },
-      fontFamily: {
-        sans: ['var(--font-family)'],
+        fontFamily: {
+          sans: ['var(--font-sans)'],
+          mono: ['var(--font-mono)'],
+        },
       },
     },
-  },
-  plugins: [
-    ({ addUtilities }) => {
-      addUtilities({
-        // To clear HTML element (0, 0, x) specificity styles from PicoCSS
-        '.unset': {
-          all: 'unset',
-        },
-        // https://picocss.com/docs/containers.html
-        '.container-fluid': {
-          'max-width': 'var(--content-max-width)',
-        },
-        // https://picocss.com/docs/buttons.html
-        ...['primary', 'secondary', 'contrast'].reduce((utilities, color) => ({
-          ...utilities,
-          [`.${color}`]: {
-            '--background-color': `var(--${color})`,
-            'background-color': 'var(--background-color)',
-            color: `var(--${color}-inverse)`,
-          },
-        }), {}),
-        ...['primary', 'secondary'].reduce((utilities, color) => {
-          colorVariants.forEach((variant) => {
-            const colorLabel = `${color}-${variant}`;
-            let textColor;
-            if (Number(variant) <= 100) {
-              textColor = 'var(--yiq-text-dark)';
-            } else if (Number(variant) >= 900) {
-              textColor = 'var(--yiq-text-light)';
-            } else {
-              textColor = `var(--${colorLabel}-yiq)`;
-            }
+    plugins: [
+      ({ addUtilities }) => {
+        addUtilities({
+          ...Object.keys(onBrandColors).reduce((utilities, colorLabel) => {
+            const [colorName, tone] = colorLabel.split('-');
+            const textColor = onBrandColors[colorLabel];
+            const backgroundColor = brandColorsPalletes[colorName][tone || 'DEFAULT'];
             utilities[`.${colorLabel}`] = {
-              'background-color': `var(--${colorLabel})`,
-              color: textColor,
+              'background-color': `var(--c-${colorLabel}, ${backgroundColor})`,
+              color: `var(--c-on-${colorLabel}, ${textColor})`,
             };
-          });
-          return utilities;
-        }, {}),
-        ...[{
-          iconset: generalIcons,
-        }, {
-          iconset: brandIcons,
-          shortcuts: brandIconsShortcuts,
-        }, {
-          iconset: brandLogos,
-          shortcuts: brandLogosShortcuts,
-        }].reduce((utilities, { iconset, shortcuts }) => {
-          if (iconset) {
-            if (!shortcuts) {
-              // eslint-disable-next-line
-              const { icons } = require(`@iconify-json/${iconset}`);
-              shortcuts = Object.keys(icons.icons);
-              if (!shortcuts.includes('shopping-cart')) {
-                shortcuts.push('shopping-cart');
+            return utilities;
+          }, {}),
+          ...[{
+            iconset: generalIcons,
+          }, {
+            iconset: brandIcons,
+            shortcuts: brandIconsShortcuts,
+          }, {
+            iconset: brandLogos,
+            shortcuts: brandLogosShortcuts,
+          }].reduce((utilities, { iconset, shortcuts }) => {
+            if (iconset) {
+              if (!shortcuts) {
+                const { icons } = require(`@iconify-json/${iconset}`);
+                shortcuts = Object.keys(icons.icons);
+                if (!shortcuts.includes('shopping-cart')) {
+                  shortcuts.push('shopping-cart');
+                }
               }
+              shortcuts.forEach((shortcut) => {
+                if (typeof shortcut === 'string') {
+                  utilities[`.i-${shortcut}`] = {
+                    '--iconify': iconset,
+                    '--icon': `"${shortcut}"`,
+                  };
+                } else {
+                  utilities[`.i-${shortcut[0]}`] = {
+                    '--iconify': iconset,
+                    '--icon': `"${shortcut[1]}"`,
+                  };
+                }
+              });
             }
-            shortcuts.forEach((shortcut) => {
-              if (typeof shortcut === 'string') {
-                utilities[`.i-${shortcut}`] = {
-                  '--iconify': iconset,
-                  '--icon': `"${shortcut}"`,
-                };
-              } else {
-                utilities[`.i-${shortcut[0]}`] = {
-                  '--iconify': iconset,
-                  '--icon': `"${shortcut[1]}"`,
-                };
-              }
-            });
-          }
-          return utilities;
-        }, {}),
-      });
-    },
-  ],
-});
+            return utilities;
+          }, {}),
+        });
+      },
+    ],
+  };
+  return config;
+};
 
 const tailwindConfig = genTailwindConfig();
 
-module.exports = { ...tailwindConfig, genTailwindConfig, defaultIcons };
-
-exports.genTailwindConfig = genTailwindConfig;
-exports.tailwindConfig = tailwindConfig;
-exports.defaultIcons = defaultIcons;
+module.exports = {
+  ...tailwindConfig,
+  genTailwindConfig,
+  defaultIcons,
+  brandColors,
+  brandColorsPalletes,
+  onBrandColors,
+};
