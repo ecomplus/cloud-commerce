@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import { getFirestore } from 'firebase-admin/firestore';
-import * as logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 import auth from './oauth';
 import Axios from './create-axios';
 

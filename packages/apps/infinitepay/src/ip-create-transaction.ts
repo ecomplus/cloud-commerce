@@ -3,12 +3,10 @@ import type { CreateTransactionParams } from '@cloudcommerce/types/modules/creat
 import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
 import type { Firestore } from 'firebase-admin/firestore';
 import config from '@cloudcommerce/firebase/lib/config';
-import * as logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';
 import addInstallments from './functions-lib/add-installments';
 import { responseError, isSandbox } from './functions-lib/utils';
-
-// type To = Exclude<CreateTransactionParams['to'], undefined>
 
 type Items = {
   id: string;
@@ -170,10 +168,11 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
   let dataHash: ParseHash;
 
   if (isCreditCard) {
+    const buyerNames = buyer.fullname.split(' ');
     const IPCustumer = {
       document_number: buyer.doc_number,
-      first_name: buyer.fullname.split(' ')[0],
-      last_name: buyer.fullname.split(' ')[buyer.fullname.split(' ').length - 1],
+      first_name: buyerNames[0],
+      last_name: buyerNames[buyerNames.length - 1],
       email: buyer.email,
       phone_number: buyer.phone.number,
       address: to?.street,
@@ -325,7 +324,7 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
     return responseError(409, 'INFINITE_REQUEST_ERR_', 'Unexpected error creating charge');
   }
   // if (paymentMethod === 'account_deposit')
-  const firestoreColl = 'infinitepay_transactions_pix';
+  const firestoreColl = 'infinitepayTransactionsPix';
 
   const transactionReference = new Date().getTime();
   const secret = Buffer.from(`${storeId}-${orderId}-${transactionReference}`).toString('base64');

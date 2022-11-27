@@ -1,7 +1,7 @@
 import type { AppModuleBody } from '@cloudcommerce/types';
 import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
 import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
-import * as logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';
 import addInstallments from './functions-lib/add-installments';
 import { readFile, responseError, isSandbox } from './functions-lib/utils';

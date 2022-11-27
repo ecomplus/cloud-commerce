@@ -1,19 +1,14 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/prefer-default-export */
 import type { Request, Response } from 'firebase-functions';
-// import type { Firestore } from 'firebase-admin/firestore';
 import type { Orders } from '@cloudcommerce/types';
 import '@cloudcommerce/firebase/lib/init';
 import api from '@cloudcommerce/api';
-import * as logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 import { getFirestore } from 'firebase-admin/firestore';
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import cryptoJS from 'crypto-js';
-
-// import axios from 'axios';
-// Encrypt package
-// const cryptoJS = require('crypto-js');
 
 type DocTransactionPix = {
   orderId: string;
@@ -21,7 +16,7 @@ type DocTransactionPix = {
   transactionReference: number;
 }
 
-const handleErro = (error: any, res: Response, status?: number) => {
+const handleError = (error: any, res: Response, status?: number) => {
   const { response } = error;
   if (response) {
     status = response.status;
@@ -76,17 +71,9 @@ const handler = async (req: Request, res: Response) => {
   // https://gist.github.com/luisbebop/ca87e04da04bcf662f732b1b6848d6ca#integration-
   // const transactionId = req.body && req.body.transaction_id;
   const hasPix = req.query && req.query.pix;
-  const firestoreColl = 'infinitepay_transactions_pix';
-
-  // const callbackBody = req.body ? JSON.stringify(req.body) : '';
-  // console.log('>Body ', callbackBody, ' <');
-  // const callbackHeader = req.headers ? JSON.stringify(req.headers) : '';
-  // console.log('>Headers ', callbackHeader, ' <');
+  const firestoreColl = 'infinitepayTransactionsPix';
 
   logger.log(`>> >(App: Infinite) Webhook ${hasPix ? 'pix' : ''} <`);
-  // const app = (await api.get(
-  //   'applications?app_id=110373&fields=hidden_data',
-  // )).data.result[0].hidden_data;
 
   if (hasPix && hasPix === 'confirm') {
     const collectionTransactions = getFirestore().collection(firestoreColl);
@@ -170,10 +157,10 @@ const handler = async (req: Request, res: Response) => {
         });
       } catch (err: any) {
         logger.error('>(App: Infinite) Error=>', err);
-        return handleErro(err, res);
+        return handleError(err, res);
       }
     } else {
-      res.send({
+      return res.send({
         status: 404,
         message: `Transaction error #${pixId}, property not found invalid store`,
       });

@@ -6,13 +6,11 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const readFile = (path: string) => fs.readFileSync(joinPath(__dirname, path), 'utf8');
 
-const readJson = (path: string) => JSON.parse(readFile(path));
-
 const responseError = (status: number | null, error: string, message: string) => {
   return {
     status: status || 409,
     error,
-    message: `${message} (lojista deve configurar o aplicativo)`,
+    message: `${message} (shopkeeper must configure the application)`,
   };
 };
 
@@ -20,7 +18,6 @@ const isSandbox = false; // TODO: false
 
 export {
   readFile,
-  readJson,
   responseError,
   isSandbox,
 };

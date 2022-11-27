@@ -1,5 +1,19 @@
 import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
-import { readJson } from './utils';
+
+const standardMonthlyInterest = [
+  4.20,
+  1.3390,
+  1.5041,
+  1.5992,
+  1.6630,
+  1.7057,
+  2.3454,
+  2.3053,
+  2.2755,
+  2.2490,
+  2.2306,
+  2.2111,
+];
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 
@@ -9,8 +23,6 @@ const addInstallments = (
   gateway: Gateway,
   response?: ListPaymentsResponse,
 ) => {
-  const IPInterestMonthly = readJson('../../assets/ip-interest-monthly.json');
-
   const maxInterestFree = installments.max_interest_free;
   const minInstallment = installments.min_installment || 5;
   const qtyPosssibleInstallment = total ? Math.floor((total / minInstallment)) : 12;
@@ -21,10 +33,10 @@ const addInstallments = (
   let monthlyInstallmentInterest = 0;
 
   if (maxInterestFree <= 1) {
-    const IPInterestMonthlyDefault = IPInterestMonthly[maxInstallments - 1];
+    const IPInterestMonthly = standardMonthlyInterest[maxInstallments - 1];
 
-    monthlyInstallmentInterest = (monthlyInterest > IPInterestMonthlyDefault ? monthlyInterest
-      : IPInterestMonthlyDefault);
+    monthlyInstallmentInterest = (monthlyInterest > IPInterestMonthly ? monthlyInterest
+      : IPInterestMonthly);
   }
 
   if (maxInstallments > 1) {
@@ -43,7 +55,7 @@ const addInstallments = (
         const tax = !(maxInterestFree >= number);
         let interest;
         if (tax) {
-          const IPMonthInterestRate = IPInterestMonthly[number - 1];
+          const IPMonthInterestRate = standardMonthlyInterest[number - 1];
           interest = (monthlyInterest > IPMonthInterestRate ? monthlyInterest : IPMonthInterestRate)
             / 100;
         }

@@ -1,4 +1,4 @@
-import * as logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 import Axios from './create-axios';
 
 export default (
