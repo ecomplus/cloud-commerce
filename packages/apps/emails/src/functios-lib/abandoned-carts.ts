@@ -29,7 +29,7 @@ export default async () => {
       SES app abandoned_cart_delay is set in days rather than hours as suggested here
     */
     limitDate.setHours(limitDate.getHours() - (appData.abandoned_cart_delay || 3));
-    const lastNotificationSent = (await getFirestore().doc('sendTransactionalEmails/lastCartSent').get()).data();
+    const lastNotificationSent = (await getFirestore().doc('emails/lastCartSent').get()).data();
     if (lastNotificationSent && lastNotificationSent.time) {
       const lastNotifiedCart = new Date(lastNotificationSent.time);
       filterCartsDate += `&create_at>=${lastNotifiedCart.toISOString()}`;
@@ -85,7 +85,7 @@ export default async () => {
 
               // save last cart
               getFirestore()
-                .doc('sendTransactionalEmails/lastCartSent')
+                .doc('emails/lastCartSent')
                 .set({
                   time: cart.created_at,
                 }).catch(logger.error);

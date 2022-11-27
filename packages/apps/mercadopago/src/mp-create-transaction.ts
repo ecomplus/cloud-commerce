@@ -160,7 +160,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
       let isSaveRetry = false;
       const saveToDb = () => {
         return new Promise((resolve, reject) => {
-          firestore.collection('mp_payments')
+          firestore.collection('mercadopagoPayments')
             .doc(String(data.id))
             .set({
               transaction_code: data.id,

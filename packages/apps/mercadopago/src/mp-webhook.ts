@@ -33,7 +33,7 @@ export const mercadopago = {
             // setTimeout(() => {
             logger.log('> MP Notification for Payment #', notification.data.id);
 
-            const docRef = getFirestore().collection('mp_payments')
+            const docRef = getFirestore().collection('mercadopagoPayments')
               .doc(String(notification.data.id));
 
             docRef.get()

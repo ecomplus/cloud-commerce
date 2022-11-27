@@ -11,7 +11,6 @@ import handleAbandonedCarts from './functios-lib/abandoned-carts';
 
 const { httpsFunctionOptions: { region } } = config.get();
 
-
 export const emails = {
   onStoreEvent: createAppEventsFunction(
     'emails',

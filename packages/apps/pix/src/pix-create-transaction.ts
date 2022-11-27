@@ -20,7 +20,7 @@ const saveToDb = (
   baseUri: string,
 ) => {
   return new Promise((resolve) => {
-    firestore.doc(`pix_setup/${clientId}:${clientSecret}`).get()
+    firestore.doc(`pixSetup/${clientId}:${clientSecret}`).get()
       .then((documentSnapshot) => {
         if (!documentSnapshot.exists || !documentSnapshot.get('hasWebhook')) {
           const rand = String(Date.now());

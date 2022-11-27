@@ -12,7 +12,7 @@ import getPfx from './functions-lib/get-certificate';
 const handler = async (req: Request, res: Response, rand: string) => {
   try {
     const querySnapshot = await getFirestore()
-      .collection('pix_setup')
+      .collection('pixSetup')
       .where('rand', '==', rand)
       .limit(1)
       .get();

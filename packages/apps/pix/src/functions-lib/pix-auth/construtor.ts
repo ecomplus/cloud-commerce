@@ -13,7 +13,7 @@ type Option = {
   baseURL?: string
 }
 
-const firestoreColl = 'pix_tokens';
+const firestoreColl = 'pixTokens';
 
 export default class Pix {
   preparing: Promise<unknown>;
