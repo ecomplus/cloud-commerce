@@ -31,15 +31,16 @@ if (argv.publish) {
       await $`exit 0`;
     }
   }
+  const canUpdateStores = !argv['skip-stores'];
   await $`git submodule update --remote --merge`;
   await retry(10, '1s', async () => {
     await spinner('give npm registry a time...', () => $`sleep 9`);
     const functions = await listFolders(`${pwd}/store/functions`);
-    const storesDirs = [
-      `${pwd}/store`,
-      ...(await listFolders(`${pwd}/ecomplus-stores`))
-        .map((store) => `${pwd}/ecomplus-stores/${store}`),
-    ];
+    let storesDirs = [`${pwd}/store`];
+    if (canUpdateStores) {
+      storesDirs = storesDirs.concat((await listFolders(`${pwd}/ecomplus-stores`))
+        .map((store) => `${pwd}/ecomplus-stores/${store}`));
+    }
     const {
       dependencies: ssrDependencies,
     } = JSON.parse(fs.readFileSync(`${pwd}/packages/ssr/package.json`));
@@ -84,7 +85,7 @@ if (argv.publish) {
     return cd(pwd);
   });
   await $`pnpm i`;
-  await $`git add pnpm-lock.yaml store ecomplus-stores`;
+  await $`git add pnpm-lock.yaml store ${(canUpdateStores ? 'ecomplus-stores' : '')}`;
   await $`git commit -m 'chore: Update store submodule post-release'`;
   await $`git push --follow-tags origin main`;
 }
