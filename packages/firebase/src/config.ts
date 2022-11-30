@@ -67,6 +67,9 @@ const mergeConfig = {
     pix: {
       appId: 101827,
     },
+    infinitePay: {
+      appId: 110373,
+    },
   },
   cmsSettings,
 };
