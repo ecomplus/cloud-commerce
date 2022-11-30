@@ -4,7 +4,7 @@ import logger from 'firebase-functions/logger';
 import auth from './oauth';
 import Axios from './create-axios';
 
-const firestoreColl = 'infinitepay_tokens';
+const firestoreColl = 'infinitepayTokens';
 
 type Option = {
   clientId: string;
