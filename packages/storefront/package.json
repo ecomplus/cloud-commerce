@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.0.127",
+  "version": "0.0.128",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "main": "src/index.js",
   "repository": {

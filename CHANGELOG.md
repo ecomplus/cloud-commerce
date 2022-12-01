@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.128](https://github.com/ecomplus/cloud-commerce/compare/v0.0.127...v0.0.128) (2022-12-01)
+
+
+### Bug Fixes
+
+* **config:** Check `SETTINGS_FILEPATH` and add last fallback to _functions/ssr/..._ ([ae6e92a](https://github.com/ecomplus/cloud-commerce/commit/ae6e92a03c9a12ad8d8e7b690592f6e673a71362))
+
 ### [0.0.127](https://github.com/ecomplus/cloud-commerce/compare/v0.0.126...v0.0.127) (2022-12-01)
 
 
