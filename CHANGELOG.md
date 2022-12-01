@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.127](https://github.com/ecomplus/cloud-commerce/compare/v0.0.126...v0.0.127) (2022-12-01)
+
+
+### Features
+
+* **cli:** Copy CMS `content/settings.json` to all functions codebases ([98f8895](https://github.com/ecomplus/cloud-commerce/commit/98f8895ec81ef324ad33c1b2932c65fce62cefd0)), closes [#discussion_r1011148218](https://github.com/ecomplus/cloud-commerce/issues/discussion_r1011148218)
+* **discounts:** Add buy together recommendations and same product kits ([e94227b](https://github.com/ecomplus/cloud-commerce/commit/e94227b296a6eafc05bd695a4ba725a01168b392))
+* **emails:** Crate `@cloudcommerce/emails` package ([#68](https://github.com/ecomplus/cloud-commerce/issues/68)) ([5998c93](https://github.com/ecomplus/cloud-commerce/commit/5998c93c538cfdd82a059bcfa1c161b22ace8f42))
+* **emails:** Create default app for sending transactional emails ([#73](https://github.com/ecomplus/cloud-commerce/issues/73)) ([15dbe07](https://github.com/ecomplus/cloud-commerce/commit/15dbe070adbe6b2f0c254632c344f33378813f32)), closes [#62](https://github.com/ecomplus/cloud-commerce/issues/62)
+* **events:** Add emails app ([#79](https://github.com/ecomplus/cloud-commerce/issues/79)) ([727dff9](https://github.com/ecomplus/cloud-commerce/commit/727dff9db497f56c115a1abcd8fd4a29dbc1b1e8))
+* **firebase:** Parse deployed CMS settinfs JSON and merge to config ([9d34c38](https://github.com/ecomplus/cloud-commerce/commit/9d34c388a80eff883623921581a0e6bad36ec1b7))
+* **infinitepay:** Create InfinitePay payment app ([#83](https://github.com/ecomplus/cloud-commerce/issues/83)) ([8c46ca2](https://github.com/ecomplus/cloud-commerce/commit/8c46ca2b61e5b721cbea8d5a7bc0c3c229e33ac1))
+* **modules:** Add `buy_together` recommendations to apply discount response schema ([36c56aa](https://github.com/ecomplus/cloud-commerce/commit/36c56aa2f3e00e365994b46f57b89bffb62c910d))
+* **pagar-me:** Create app pagar.me ([6c93a46](https://github.com/ecomplus/cloud-commerce/commit/6c93a465931202831b7fe91b8006b6a105a2dd10))
+* **pix:** Creating Pix (Bacen API) payment app ([#81](https://github.com/ecomplus/cloud-commerce/issues/81)) ([351279b](https://github.com/ecomplus/cloud-commerce/commit/351279b29f55e62a93a85d36d2495befa909cb78))
+* **storefront:** Better handling branc colors tokens with Tailwind colors and CSS vars ([8af936d](https://github.com/ecomplus/cloud-commerce/commit/8af936debdd7f8332c24de2d2270fe32ce2bac54))
+* **storefront:** Handle `shoppingCart` state with Vue Reactivity API ([235a329](https://github.com/ecomplus/cloud-commerce/commit/235a329bcc26aab9b2e273bc63c946db2a9dc0ff))
+
+
+### Bug Fixes
+
+* **cli:** Change import from `index` to `cli` in run.mjs file ([#80](https://github.com/ecomplus/cloud-commerce/issues/80)) ([ab38861](https://github.com/ecomplus/cloud-commerce/commit/ab3886168a7a7f9099ea8c157613cb24fb245a51))
+* **config:** Handle `cmsSettings` (optional) to base config object ([25ceb8c](https://github.com/ecomplus/cloud-commerce/commit/25ceb8cfd7544bc4e7a6bd26437bb4ddadad3e2e))
+* **create-transaction:** Respond to module promise ([e241d37](https://github.com/ecomplus/cloud-commerce/commit/e241d37330f251693e44b7b8b957654b8503af2d))
+* **deps:** Update `@ecomplus/utils` for typedefs and esm imports ([4810a80](https://github.com/ecomplus/cloud-commerce/commit/4810a80c87c01d12c19aa1405507a346f69c3ca0))
+* **deps:** Update all non-major dependencies ([#72](https://github.com/ecomplus/cloud-commerce/issues/72)) ([ecdeed0](https://github.com/ecomplus/cloud-commerce/commit/ecdeed041fddf1f939b3a89b05ad33f638ffdf55))
+* **deps:** Update all non-major dependencies ([#75](https://github.com/ecomplus/cloud-commerce/issues/75)) ([077076f](https://github.com/ecomplus/cloud-commerce/commit/077076fa7566f43ce5c14195b2dfce03d0c0e4df))
+* **deps:** update all non-major dependencies ([#82](https://github.com/ecomplus/cloud-commerce/issues/82)) ([1fe1c1e](https://github.com/ecomplus/cloud-commerce/commit/1fe1c1ea4d57d937e360dfbea75477286fa8947b))
+* **deps:** Update all non-major dependencies ([#84](https://github.com/ecomplus/cloud-commerce/issues/84)) ([d12c5a9](https://github.com/ecomplus/cloud-commerce/commit/d12c5a99ae4986b167ae5aec457e1256813af097))
+* **deps:** Update dependency @astrojs/node to v3 ([#76](https://github.com/ecomplus/cloud-commerce/issues/76)) ([5d5b20f](https://github.com/ecomplus/cloud-commerce/commit/5d5b20f1df8f7bca250c2ff3eea5038d1f8c38ec))
+* **discounts:** Better debug usage limits error ([6ee764f](https://github.com/ecomplus/cloud-commerce/commit/6ee764ff8a4edce62d9b1d3f73ec5c05a35c2c87))
+* **emails:** Allow sending emails with ready-made HTML ([#74](https://github.com/ecomplus/cloud-commerce/issues/74)) ([61da656](https://github.com/ecomplus/cloud-commerce/commit/61da6562a1bc459b45db474f1f58e62bfe9c6cb5))
+* **firebase-config:** Resolve conflicts ([47a80e3](https://github.com/ecomplus/cloud-commerce/commit/47a80e3d47a1a76adf6ea33dabccad3afdd13493))
+* **passport:** Properly await generate token request ([#71](https://github.com/ecomplus/cloud-commerce/issues/71)) ([3f13bb1](https://github.com/ecomplus/cloud-commerce/commit/3f13bb159572384e4a18c09a348421028a05a96c))
+* **passport:** Type fix `generateAccessToken` promise never resolves with null ([920326f](https://github.com/ecomplus/cloud-commerce/commit/920326f5d835cedbf01511cfb067dd4690bd7417))
+* **storefront:** Fix image transform to high resolution (keep ar) ([5d56c3b](https://github.com/ecomplus/cloud-commerce/commit/5d56c3bc3ff6fea0e784f7412830a25bc76327f3))
+* **storefront:** Update pages SSR cache sMaxAge to 5min and SWR to 7 days ([e75d914](https://github.com/ecomplus/cloud-commerce/commit/e75d914bf25c50e61060e0f841f3decd22faad0e))
+* **storefront:** Updates to handle new CMS settings object with localization and unique icon ([6ca3b8c](https://github.com/ecomplus/cloud-commerce/commit/6ca3b8ceb5fb096254186f05bd53b6548c977f33))
+* **storefront:** Use aliases for iconify collections pkgs ([cf32085](https://github.com/ecomplus/cloud-commerce/commit/cf3208527f714beea84a451eaac8707893fe7033))
+* **types:** Adding more required company info to CMS settings types ([ee10856](https://github.com/ecomplus/cloud-commerce/commit/ee10856898c6748f131a4842a65fa1ca64c3936f)), closes [#discussion_r1020415433](https://github.com/ecomplus/cloud-commerce/issues/discussion_r1020415433)
+* **types:** Update CMS settings to make secondary and bg colors optionals ([428c4e3](https://github.com/ecomplus/cloud-commerce/commit/428c4e339351070ba5ad6f867f5cf9f56eaa93f5))
+* **webhook:** Correct file names ([4ccd557](https://github.com/ecomplus/cloud-commerce/commit/4ccd557076adae4289a9b31fe1c10e5da17107ac))
+
 ### [0.0.126](https://github.com/ecomplus/cloud-commerce/compare/v0.0.125...v0.0.126) (2022-11-02)
 
 
