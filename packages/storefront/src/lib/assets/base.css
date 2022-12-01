@@ -1,0 +1,110 @@
+:root {
+  --content-max-width: 80rem;
+  --font-size: 14.5px;
+  --font-sans: var(--custom-font-sans, ui-sans-serif),
+    system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: var(--custom-font-mono, ui-monospace),
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-family: var(--font-sans);
+  --transition: .15s ease-in-out;
+  --c-on-dark: rgb(255, 255, 255);
+  --c-on-light: rgb(0, 0, 0);
+
+  --fg-on-dark: #fff;
+  --fg-on-light: theme('colors.slate.800');
+  --base-01: #fff;
+  --base-02: theme('colors.slate.100');
+  --base-03: theme('colors.slate.200');
+  --muted-10: theme('colors.slate.400');
+  --muted-20: theme('colors.slate.500');
+  --muted-30: theme('colors.slate.600');
+  --contrast-10: theme('colors.slate.700');
+  --contrast-20: theme('colors.slate.800');
+  --contrast-30: theme('colors.slate.900');
+  --success-10: theme('colors.emerald.700');
+  --success-20: theme('colors.emerald.700');
+  --success-30: theme('colors.emerald.800');
+  --warning-10: theme('colors.amber.600');
+  --warning-20: theme('colors.amber.700');
+  --warning-30: theme('colors.amber.800');
+  --danger-10: theme('colors.amber.600');
+  --danger-20: theme('colors.amber.700');
+  --danger-30: theme('colors.amber.800');
+  --c-link: var(--primary-500);
+  --c-link-hover: var(--primary-700);
+  --c-link-visited: var(--primary-800);
+  --c-background: var(--base-10);
+  --c-border: var(--base-30);
+  --c-foreground: var(--contrast-10);
+  color-scheme: light;
+  accent-color: var(--secondary-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0s;
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+@screen sm {
+  html {
+    font-size: calc(var(--font-size) * 1.0345); /* 15px */
+  }
+}
+@screen md {
+  html {
+    font-size: calc(var(--font-size) * 1.0689); /* 15.5px */
+  }
+}
+@screen lg {
+  html {
+    font-size: calc(var(--font-size) * 1.1034); /* 16px */
+  }
+}
+@screen xl {
+  html {
+    font-size: calc(var(--font-size) * 1.1379); /* 16.5px */
+  }
+}
+@screen 2xl {
+  html {
+    font-size: calc(var(--font-size) * 1.1724); /* 17px */
+  }
+}
+
+body > header,
+body > main,
+body > footer {
+  margin-left: auto;
+  margin-right: auto;
+}
+body > main {
+  max-width: var(--content-max-width);
+}
+
+:focus-visible {
+  outline-color: rgba(var(--secondary-200-rgb), var(--alpha, .2));
+}
+::selection {
+  background-color: rgba(var(--color-rgb, --secondary-500-rgb), var(--alpha, .2));
+}
+::marker {
+  color: var(--primary-500);
+}
+:is(
+  ::-webkit-calendar-picker-indicator,
+  ::-webkit-clear-button,
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button
+) {
+  color: var(--secondary-500);
+}
+
+body {
+  background: var(--c-base);
+}

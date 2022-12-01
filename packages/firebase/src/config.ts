@@ -1,6 +1,6 @@
 import type { ApiEventName, CmsSettings } from '@cloudcommerce/types';
-import { join as joinPath } from 'path';
-import { readFileSync } from 'fs';
+import { join as joinPath } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
 import config, { BaseConfig } from '@cloudcommerce/config';
 
 const tinyErpEvents: ApiEventName[] = [
@@ -16,6 +16,7 @@ const emailsEvents: ApiEventName[] = [
 ];
 
 const {
+  SETTINGS_FILEPATH,
   DEPLOY_REGION,
   SSR_DEPLOY_REGION,
   SSR_DEPLOY_MEMORY,
@@ -23,7 +24,12 @@ const {
   SSR_DEPLOY_MIN_INSTANCES,
 } = process.env;
 
-const cmsSettingsFile = joinPath(process.cwd(), 'content/settings.json');
+let cmsSettingsFile = SETTINGS_FILEPATH && existsSync(SETTINGS_FILEPATH)
+  ? SETTINGS_FILEPATH
+  : joinPath(process.cwd(), 'content/settings.json');
+if (!existsSync(cmsSettingsFile)) {
+  cmsSettingsFile = joinPath(process.cwd(), 'functions/ssr/content/settings.json');
+}
 const cmsSettings: CmsSettings = JSON.parse(readFileSync(cmsSettingsFile, 'utf-8'));
 
 const mergeConfig = {

@@ -31,7 +31,7 @@ const isLogged = ref(false);
 </script>
 
 <template>
-  <div class="login-offcanvas">
+  <div class="login-drawer">
     <div @click="toggle">
       <slot name="toggle" v-bind="{ isVisible }" />
     </div>

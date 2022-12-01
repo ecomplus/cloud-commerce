@@ -1,0 +1,92 @@
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    color-scheme: dark;
+    --background-color: #11191f;
+    --color: hsl(205deg, 16%, 77%);
+    --h1-color: hsl(205deg, 20%, 94%);
+    --h2-color: #e1e6eb;
+    --h3-color: hsl(205deg, 18%, 86%);
+    --h4-color: #c8d1d8;
+    --h5-color: hsl(205deg, 16%, 77%);
+    --h6-color: #afbbc4;
+    --muted-color: hsl(205deg, 10%, 50%);
+    --muted-border-color: #1f2d38;
+    --contrast: hsl(205deg, 20%, 94%);
+    --contrast-hover: #fff;
+    --contrast-focus: rgba(115, 130, 140, 0.25);
+    --contrast-inverse: #000;
+    --mark-background-color: #d1c284;
+    --mark-color: #11191f;
+    --ins-color: #388e3c;
+    --del-color: #c62828;
+    --blockquote-border-color: var(--muted-border-color);
+    --blockquote-footer-color: var(--muted-color);
+    --button-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    --button-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    --form-element-background-color: #11191f;
+    --form-element-border-color: #374956;
+    --form-element-color: var(--color);
+    --form-element-placeholder-color: var(--muted-color);
+    --form-element-active-background-color: var(--form-element-background-color);
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --form-element-disabled-background-color: hsl(205deg, 25%, 23%);
+    --form-element-disabled-border-color: hsl(205deg, 20%, 32%);
+    --form-element-disabled-opacity: 0.5;
+    --form-element-invalid-border-color: #b71c1c;
+    --form-element-invalid-active-border-color: #c62828;
+    --form-element-invalid-focus-color: rgba(198, 40, 40, 0.25);
+    --form-element-valid-border-color: #2e7d32;
+    --form-element-valid-active-border-color: #388e3c;
+    --form-element-valid-focus-color: rgba(56, 142, 60, 0.25);
+    --switch-background-color: #374956;
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+    --range-border-color: #24333e;
+    --range-active-border-color: hsl(205deg, 25%, 23%);
+    --range-thumb-border-color: var(--background-color);
+    --range-thumb-color: var(--secondary);
+    --range-thumb-hover-color: var(--secondary-hover);
+    --range-thumb-active-color: var(--primary);
+    --table-border-color: var(--muted-border-color);
+    --table-row-stripped-background-color: rgba(115, 130, 140, 0.05);
+    --code-background-color: #18232c;
+    --code-color: var(--muted-color);
+    --code-kbd-background-color: var(--contrast);
+    --code-kbd-color: var(--contrast-inverse);
+    --code-tag-color: hsl(330deg, 30%, 50%);
+    --code-property-color: hsl(185deg, 30%, 50%);
+    --code-value-color: hsl(40deg, 10%, 50%);
+    --code-comment-color: #4d606d;
+    --accordion-border-color: var(--muted-border-color);
+    --accordion-active-summary-color: var(--primary);
+    --accordion-close-summary-color: var(--color);
+    --accordion-open-summary-color: var(--muted-color);
+    --card-background-color: #141e26;
+    --card-border-color: var(--card-background-color);
+    --card-box-shadow:
+      0.0145rem 0.029rem 0.174rem rgba(0, 0, 0, 0.01698),
+      0.0335rem 0.067rem 0.402rem rgba(0, 0, 0, 0.024),
+      0.0625rem 0.125rem 0.75rem rgba(0, 0, 0, 0.03),
+      0.1125rem 0.225rem 1.35rem rgba(0, 0, 0, 0.036),
+      0.2085rem 0.417rem 2.502rem rgba(0, 0, 0, 0.04302),
+      0.5rem 1rem 6rem rgba(0, 0, 0, 0.06),
+      0 0 0 0.0625rem rgba(0, 0, 0, 0.015);
+    --card-sectionning-background-color: #18232c;
+    --dropdown-background-color: hsl(205deg, 30%, 15%);
+    --dropdown-border-color: #24333e;
+    --dropdown-box-shadow: var(--card-box-shadow);
+    --dropdown-color: var(--color);
+    --dropdown-hover-background-color: rgba(36, 51, 62, 0.75);
+    --modal-overlay-background-color: rgba(36, 51, 62, 0.8);
+    --progress-background-color: #24333e;
+    --progress-color: var(--primary);
+    --loading-spinner-opacity: 0.5;
+    --tooltip-background-color: var(--contrast);
+    --tooltip-color: var(--contrast-inverse);
+    --gray: var(--gray-400);
+    --gray-accent: var(--gray-200);
+    --surface-color: var(--gray-800);
+    --surface-border-color: var(--gray-700);
+  }
+}

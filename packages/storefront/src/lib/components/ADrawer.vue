@@ -62,13 +62,13 @@ const transition3dTx = computed(() => {
     <Transition>
       <dialog
         v-if="modelValue"
-        class="offcanvas p-0"
+        class="drawer p-0"
         :class="placement === 'end' ? 'justify-end' : 'justify-start'"
         :open="modelValue"
       >
         <article
           ref="article"
-          class="rounded-none h-full max-h-screen m-0"
+          class="card rounded-none h-full max-h-screen m-0"
         >
           <a
             href="#close"
@@ -85,26 +85,26 @@ const transition3dTx = computed(() => {
 </template>
 
 <style>
-.offcanvas.v-enter-active,
-.offcanvas.v-leave-active {
+.drawer.v-enter-active,
+.drawer.v-leave-active {
   transition: opacity 0.15s linear;
 }
-.offcanvas.v-enter-from,
-.offcanvas.v-leave-to {
+.drawer.v-enter-from,
+.drawer.v-leave-to {
   opacity: 0;
 }
-.offcanvas.v-enter-active article,
-.offcanvas.v-leave-active article {
+.drawer.v-enter-active article,
+.drawer.v-leave-active article {
   transition: transform 0.25s ease-in-out;
 }
-.offcanvas.v-enter-from article,
-.offcanvas.v-leave-to article {
+.drawer.v-enter-from article,
+.drawer.v-leave-to article {
   transform: translate3d(var(--transition-3d-tx), 0, 0);
 }
 </style>
 
 <style scoped>
-.offcanvas {
+.drawer {
   --transition-3d-tx: v-bind(transition3dTx);
 }
 </style>

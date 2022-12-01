@@ -60,71 +60,59 @@
 }
 
 @media (min-width: 640px) {
-  body > header,
-body > main,
-body > footer,
-section {
+  .section {
     --block-spacing-vertical: calc(var(--spacing) * 2.5);
   }
 }
 @media (min-width: 768px) {
-  body > header,
-body > main,
-body > footer,
-section {
+  .section {
     --block-spacing-vertical: calc(var(--spacing) * 3);
   }
 }
 @media (min-width: 1024px) {
-  body > header,
-body > main,
-body > footer,
-section {
+  .section {
     --block-spacing-vertical: calc(var(--spacing) * 3.5);
   }
 }
 @media (min-width: 1280px) {
-  body > header,
-body > main,
-body > footer,
-section {
+  .section {
     --block-spacing-vertical: calc(var(--spacing) * 4);
   }
 }
 
 @media (min-width: 640px) {
-  article {
+  .card {
     --block-spacing-horizontal: calc(var(--spacing) * 1.25);
   }
 }
 @media (min-width: 768px) {
-  article {
+  .card {
     --block-spacing-horizontal: calc(var(--spacing) * 1.5);
   }
 }
 @media (min-width: 1024px) {
-  article {
+  .card {
     --block-spacing-horizontal: calc(var(--spacing) * 1.75);
   }
 }
 @media (min-width: 1280px) {
-  article {
+  .card {
     --block-spacing-horizontal: calc(var(--spacing) * 2);
   }
 }
 
-dialog > article {
+dialog > .card {
   --block-spacing-vertical: calc(var(--spacing) * 2);
   --block-spacing-horizontal: var(--spacing);
 }
 @media (min-width: 640px) {
-  dialog > article {
+  dialog > .card {
     --block-spacing-vertical: calc(var(--spacing) * 2.5);
     --block-spacing-horizontal: calc(var(--spacing) * 1.25);
   }
 }
 @media (min-width: 768px) {
-  dialog > article {
+  dialog > .card {
     --block-spacing-vertical: calc(var(--spacing) * 3);
     --block-spacing-horizontal: calc(var(--spacing) * 1.5);
   }
@@ -141,36 +129,36 @@ small {
   --font-size: 0.875em;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
   --font-weight: 700;
 }
 
-h1 {
+.prose h1 {
   --font-size: 2rem;
   --typography-spacing-vertical: 3rem;
 }
 
-h2 {
+.prose h2 {
   --font-size: 1.75rem;
   --typography-spacing-vertical: 2.625rem;
 }
 
-h3 {
+.prose h3 {
   --font-size: 1.5rem;
   --typography-spacing-vertical: 2.25rem;
 }
 
-h4 {
+.prose h4 {
   --font-size: 1.25rem;
   --typography-spacing-vertical: 1.874rem;
 }
 
-h5 {
+.prose h5 {
   --font-size: 1.125rem;
   --typography-spacing-vertical: 1.6875rem;
 }
@@ -294,95 +282,6 @@ kbd {
   color-scheme: light;
 }
 
-@media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme=light]) {
-    --background-color: #11191f;
-    --color: hsl(205deg, 16%, 77%);
-    --h1-color: hsl(205deg, 20%, 94%);
-    --h2-color: #e1e6eb;
-    --h3-color: hsl(205deg, 18%, 86%);
-    --h4-color: #c8d1d8;
-    --h5-color: hsl(205deg, 16%, 77%);
-    --h6-color: #afbbc4;
-    --muted-color: hsl(205deg, 10%, 50%);
-    --muted-border-color: #1f2d38;
-    --contrast: hsl(205deg, 20%, 94%);
-    --contrast-hover: #fff;
-    --contrast-focus: rgba(115, 130, 140, 0.25);
-    --contrast-inverse: #000;
-    --mark-background-color: #d1c284;
-    --mark-color: #11191f;
-    --ins-color: #388e3c;
-    --del-color: #c62828;
-    --blockquote-border-color: var(--muted-border-color);
-    --blockquote-footer-color: var(--muted-color);
-    --button-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    --button-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    --form-element-background-color: #11191f;
-    --form-element-border-color: #374956;
-    --form-element-color: var(--color);
-    --form-element-placeholder-color: var(--muted-color);
-    --form-element-active-background-color: var(--form-element-background-color);
-    --form-element-active-border-color: var(--primary);
-    --form-element-focus-color: var(--primary-focus);
-    --form-element-disabled-background-color: hsl(205deg, 25%, 23%);
-    --form-element-disabled-border-color: hsl(205deg, 20%, 32%);
-    --form-element-disabled-opacity: 0.5;
-    --form-element-invalid-border-color: #b71c1c;
-    --form-element-invalid-active-border-color: #c62828;
-    --form-element-invalid-focus-color: rgba(198, 40, 40, 0.25);
-    --form-element-valid-border-color: #2e7d32;
-    --form-element-valid-active-border-color: #388e3c;
-    --form-element-valid-focus-color: rgba(56, 142, 60, 0.25);
-    --switch-background-color: #374956;
-    --switch-color: var(--primary-inverse);
-    --switch-checked-background-color: var(--primary);
-    --range-border-color: #24333e;
-    --range-active-border-color: hsl(205deg, 25%, 23%);
-    --range-thumb-border-color: var(--background-color);
-    --range-thumb-color: var(--secondary);
-    --range-thumb-hover-color: var(--secondary-hover);
-    --range-thumb-active-color: var(--primary);
-    --table-border-color: var(--muted-border-color);
-    --table-row-stripped-background-color: rgba(115, 130, 140, 0.05);
-    --code-background-color: #18232c;
-    --code-color: var(--muted-color);
-    --code-kbd-background-color: var(--contrast);
-    --code-kbd-color: var(--contrast-inverse);
-    --code-tag-color: hsl(330deg, 30%, 50%);
-    --code-property-color: hsl(185deg, 30%, 50%);
-    --code-value-color: hsl(40deg, 10%, 50%);
-    --code-comment-color: #4d606d;
-    --accordion-border-color: var(--muted-border-color);
-    --accordion-active-summary-color: var(--primary);
-    --accordion-close-summary-color: var(--color);
-    --accordion-open-summary-color: var(--muted-color);
-    --card-background-color: #141e26;
-    --card-border-color: var(--card-background-color);
-    --card-box-shadow:
-      0.0145rem 0.029rem 0.174rem rgba(0, 0, 0, 0.01698),
-      0.0335rem 0.067rem 0.402rem rgba(0, 0, 0, 0.024),
-      0.0625rem 0.125rem 0.75rem rgba(0, 0, 0, 0.03),
-      0.1125rem 0.225rem 1.35rem rgba(0, 0, 0, 0.036),
-      0.2085rem 0.417rem 2.502rem rgba(0, 0, 0, 0.04302),
-      0.5rem 1rem 6rem rgba(0, 0, 0, 0.06),
-      0 0 0 0.0625rem rgba(0, 0, 0, 0.015);
-    --card-sectionning-background-color: #18232c;
-    --dropdown-background-color: hsl(205deg, 30%, 15%);
-    --dropdown-border-color: #24333e;
-    --dropdown-box-shadow: var(--card-box-shadow);
-    --dropdown-color: var(--color);
-    --dropdown-hover-background-color: rgba(36, 51, 62, 0.75);
-    --modal-overlay-background-color: rgba(36, 51, 62, 0.8);
-    --progress-background-color: #24333e;
-    --progress-color: var(--primary);
-    --loading-spinner-opacity: 0.5;
-    --tooltip-background-color: var(--contrast);
-    --tooltip-color: var(--contrast-inverse);
-    color-scheme: dark;
-  }
-}
-
 progress,
 [type=checkbox],
 [type=radio],
@@ -444,7 +343,7 @@ body > footer {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding: var(--block-spacing-vertical) 0;
+  padding: 0;
 }
 
 /**
@@ -463,7 +362,7 @@ body > footer {
  * Section
  * Responsive spacings for section
  */
-section {
+.section {
   margin-bottom: var(--block-spacing-vertical);
 }
 
@@ -1636,28 +1535,28 @@ details[open] > summary::after {
 /**
  * Card (<article>)
  */
-article {
+.card {
   margin: var(--block-spacing-vertical) 0;
   padding: var(--block-spacing-vertical) var(--block-spacing-horizontal);
   border-radius: var(--border-radius);
   background: var(--card-background-color);
   box-shadow: var(--card-box-shadow);
 }
-article > header,
-article > footer {
+.card > header,
+.card > footer {
   margin-right: calc(var(--block-spacing-horizontal) * -1);
   margin-left: calc(var(--block-spacing-horizontal) * -1);
   padding: calc(var(--block-spacing-vertical) * 0.66) var(--block-spacing-horizontal);
   background-color: var(--card-sectionning-background-color);
 }
-article > header {
+.card > header {
   margin-top: calc(var(--block-spacing-vertical) * -1);
   margin-bottom: var(--block-spacing-vertical);
   border-bottom: var(--border-width) solid var(--card-border-color);
   border-top-right-radius: var(--border-radius);
   border-top-left-radius: var(--border-radius);
 }
-article > footer {
+.card > footer {
   margin-top: var(--block-spacing-vertical);
   margin-bottom: calc(var(--block-spacing-vertical) * -1);
   border-top: var(--border-width) solid var(--card-border-color);
