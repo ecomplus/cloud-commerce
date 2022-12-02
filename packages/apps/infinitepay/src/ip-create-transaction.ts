@@ -287,20 +287,23 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
         logger.log('>>(App:Infinite) Attributes: ', attributes, ' <<<');
 
         const intermediator = {
-          transaction_id: attributes.nsu,
+          transaction_code: attributes.nsu,
+          transaction_reference: attributes.authorization_code,
           payment_method: params.payment_method,
-          transaction_code: '',
         };
-        if (attributes.authorization_id) {
+        if (attributes.authorization_id && attributes.authorization_code
+          && attributes.authorization_code === '00') {
           logger.log('>>(App:Infinite) Authorized transaction in InfinitePay Order: #', orderId);
-          intermediator.transaction_code = attributes.authorization_id;
+          Object.assign(intermediator, { transaction_id: attributes.authorization_id });
 
           transaction.status = {
             current: 'paid',
             updated_at: attributes.created_at || new Date().toISOString(),
           };
         } else {
-          logger.log('>>(App:Infinite) Unauthorized transaction in InfinitePay Order: #', orderId);
+          logger.log(`>>(App:Infinite) Unauthorized transaction in InfinitePay code: 
+          ${attributes.authorization_code} #o: ${orderId}`);
+
           transaction.status = {
             current: 'unauthorized',
             updated_at: attributes.created_at || new Date().toISOString(),
