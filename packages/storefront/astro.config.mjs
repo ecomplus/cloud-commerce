@@ -9,7 +9,15 @@ import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
+import AutoImport from 'unplugin-auto-import/astro';
 import { VitePWA } from 'vite-plugin-pwa';
+import Components from 'unplugin-vue-components/vite';
+import {
+  HeadlessUiResolver,
+  VueUseComponentsResolver,
+  VueUseDirectiveResolver,
+} from 'unplugin-vue-components/resolvers';
+import { ptBr } from '@cloudcommerce/i18n';
 import getConfig from './storefront.config.mjs';
 
 const __dirname = new URL('.', import.meta.url).pathname;
@@ -158,11 +166,31 @@ const genAstroConfig = ({
       injectReset: false,
       injectEntry: false,
     }),
+    AutoImport({
+      include: [
+        /\.vue$/, /\.vue\?vue/,
+        /\.mdx?$/,
+        /\.astro$/,
+      ],
+      imports: [
+        'vue',
+        '@vueuse/core',
+        { '@@i18n': Object.keys(ptBr) },
+      ],
+    }),
   ],
   site,
   vite: {
     plugins: [
       VitePWA(vitePWAOptions),
+      Components({
+        dirs: [localComponentsDir, libComponentsDir],
+        resolvers: [
+          HeadlessUiResolver(),
+          VueUseComponentsResolver(),
+          VueUseDirectiveResolver(),
+        ],
+      }),
     ],
     resolve: {
       preserveSymlinks: lstatSync(localComponentsDir).isSymbolicLink(),

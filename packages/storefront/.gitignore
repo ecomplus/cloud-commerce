@@ -6,3 +6,5 @@
 /src/components
 /src/scripts
 /src/assets
+/auto-imports.d.ts
+/components.d.ts

@@ -42,6 +42,8 @@ module.exports = {
           '@astrojs/[^/]+$',
           'astro/config',
           'unocss/astro',
+          'unplugin-vue-components/*',
+          'unplugin-auto-import/*',
           '@@.*',
           'content/.*',
           '~/.*',

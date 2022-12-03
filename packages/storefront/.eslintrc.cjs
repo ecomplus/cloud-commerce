@@ -7,4 +7,8 @@ module.exports = {
     'global-require': 'off',
     'import/no-dynamic-require': 'off',
   },
+  ignorePatterns: [
+    'auto-imports.d.ts',
+    'components.d.ts',
+  ],
 };
