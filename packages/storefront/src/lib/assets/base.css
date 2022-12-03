@@ -70,10 +70,10 @@ body > main {
 }
 
 :focus-visible {
-  outline-color: rgba(var(--c-secondary-rgb), var(--alpha, .1));
+  outline-color: var(--c-outline, rgba(var(--rgb-secondary), .1));
 }
 ::selection {
-  background-color: rgba(var(--color-rgb, --c-secondary-rgb), var(--alpha, .2));
+  background-color: var(--c-selection-background, rgba(var(--rgb-secondary), .15));
 }
 ::marker {
   color: var(--c-primary);

@@ -24,11 +24,11 @@ Object.keys(brandColors).forEach((colorName) => {
     let colorLabel;
     if (tone === 'DEFAULT') {
       colorLabel = colorName;
-      colorCSSVars[`${colorLabel}-rgb`] = rgb.substring(4).replace(')', ''); // rgb(rgb) -> rgb
+      colorCSSVars[`rgb-${colorLabel}`] = rgb.substring(4).replace(')', ''); // rgb(rgb) -> rgb
     } else {
       colorLabel = `${colorName}-${tone}`;
     }
-    colorCSSVars[colorLabel] = brandColorsPalletes[colorName][tone];
+    colorCSSVars[`c-${colorLabel}`] = brandColorsPalletes[colorName][tone];
   });
 });
 Object.keys(onBrandColors).forEach((colorLabel) => {
@@ -37,7 +37,7 @@ Object.keys(onBrandColors).forEach((colorLabel) => {
   const colorCSSVar = Object.keys(colorCSSVars).find((varName) => {
     return colorCSSVars[varName] === rgb && new RegExp(`${colorName}-\\d`).test(varName);
   });
-  colorCSSVars[`on-${colorLabel}`] = colorCSSVar ? `var(--c-${colorCSSVar})` : rgb;
+  colorCSSVars[`on-${colorLabel}`] = colorCSSVar ? `var(--${colorCSSVar})` : rgb;
 });
 
 const genUnoCSSConfig = ({
@@ -50,7 +50,7 @@ const genUnoCSSConfig = ({
   preflights = [{
     getCSS: () => {
       const strCSSVars = Object.entries(colorCSSVars)
-        .map(([varName, value]) => `--c-${varName}:${value};`)
+        .map(([varName, value]) => `--${varName}:${value};`)
         .join(' ');
       return `:root { ${strCSSVars} }`;
     },
