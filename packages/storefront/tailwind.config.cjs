@@ -1,6 +1,6 @@
 const colors = require('tailwindcss/colors');
 const chroma = require('chroma-js');
-const getCMS = require('./storefront.cms.cjs');
+const getCMS = require('./config/storefront.cms.cjs');
 
 // IntelliSense for UnoCSS icons
 let defaultIcons = {

@@ -1,5 +1,5 @@
 import config from '@cloudcommerce/config';
-import getCMS from './storefront.cms.mjs';
+import getCMS from './config/storefront.cms.mjs';
 
 export default () => {
   const { VITE_ECOM_STORE_ID } = import.meta.env || process.env;
