@@ -168,6 +168,14 @@ const genTailwindConfig = ({
             }
             return utilities;
           }, {}),
+          // require('@tailwindcss/typography'),
+          // https://github.com/unocss/unocss/tree/main/packages/preset-typography
+          ...['prose', 'not-prose', 'prose-invert'].reduce((utilities, proseClass) => {
+            utilities[`.${proseClass}`] = {
+              [`--un-${proseClass}`]: 'default',
+            };
+            return utilities;
+          }, {}),
         });
       },
     ],

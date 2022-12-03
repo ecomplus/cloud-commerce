@@ -11,35 +11,17 @@
   --transition: .15s ease-in-out;
   --c-on-dark: rgb(255, 255, 255);
   --c-on-light: rgb(0, 0, 0);
-
-  --fg-on-dark: #fff;
-  --fg-on-light: theme('colors.slate.800');
-  --base-01: #fff;
-  --base-02: theme('colors.slate.100');
-  --base-03: theme('colors.slate.200');
-  --muted-10: theme('colors.slate.400');
-  --muted-20: theme('colors.slate.500');
-  --muted-30: theme('colors.slate.600');
-  --contrast-10: theme('colors.slate.700');
-  --contrast-20: theme('colors.slate.800');
-  --contrast-30: theme('colors.slate.900');
-  --success-10: theme('colors.emerald.700');
-  --success-20: theme('colors.emerald.700');
-  --success-30: theme('colors.emerald.800');
-  --warning-10: theme('colors.amber.600');
-  --warning-20: theme('colors.amber.700');
-  --warning-30: theme('colors.amber.800');
-  --danger-10: theme('colors.amber.600');
-  --danger-20: theme('colors.amber.700');
-  --danger-30: theme('colors.amber.800');
-  --c-link: var(--primary-500);
-  --c-link-hover: var(--primary-700);
-  --c-link-visited: var(--primary-800);
-  --c-background: var(--base-10);
-  --c-border: var(--base-30);
-  --c-foreground: var(--contrast-10);
+  --c-background: #fff;
+  --c-on-background: theme('colors.base.800');
+  --un-prose-body: theme('colors.base.700');
+  --un-prose-headings: theme('colors.base.900');
+  --un-prose-links: var(--c-primary);
+  --un-prose-captions: theme('colors.base.500');
+  --un-prose-borders: theme('colors.base.200');
+  --un-prose-hr: theme('colors.base.300');
+  --un-prose-bg-soft: theme('colors.base.100');
   color-scheme: light;
-  accent-color: var(--secondary-500);
+  accent-color: var(--c-secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -88,13 +70,13 @@ body > main {
 }
 
 :focus-visible {
-  outline-color: rgba(var(--secondary-200-rgb), var(--alpha, .2));
+  outline-color: rgba(var(--c-secondary-rgb), var(--alpha, .1));
 }
 ::selection {
-  background-color: rgba(var(--color-rgb, --secondary-500-rgb), var(--alpha, .2));
+  background-color: rgba(var(--color-rgb, --c-secondary-rgb), var(--alpha, .2));
 }
 ::marker {
-  color: var(--primary-500);
+  color: var(--c-primary);
 }
 :is(
   ::-webkit-calendar-picker-indicator,
@@ -102,9 +84,10 @@ body > main {
   ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button
 ) {
-  color: var(--secondary-500);
+  color: var(--c-secondary);
 }
 
 body {
-  background: var(--c-base);
+  background: var(--c-background);
+  color: var(--c-on-background);
 }

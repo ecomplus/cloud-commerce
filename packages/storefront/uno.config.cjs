@@ -4,6 +4,7 @@ const {
   defineConfig,
   presetUno,
   presetIcons,
+  presetTypography,
   transformerCompileClass,
   transformerDirectives,
 } = require('unocss');
@@ -19,7 +20,14 @@ const {
 const colorCSSVars = {};
 Object.keys(brandColors).forEach((colorName) => {
   Object.keys(brandColorsPalletes[colorName]).forEach((tone) => {
-    const colorLabel = tone === 'DEFAULT' ? colorName : `${colorName}-${tone}`;
+    const rgb = brandColorsPalletes[colorName][tone];
+    let colorLabel;
+    if (tone === 'DEFAULT') {
+      colorLabel = colorName;
+      colorCSSVars[`${colorLabel}-rgb`] = rgb.substring(4).replace(')', ''); // rgb(rgb) -> rgb
+    } else {
+      colorLabel = `${colorName}-${tone}`;
+    }
     colorCSSVars[colorLabel] = brandColorsPalletes[colorName][tone];
   });
 });
@@ -54,8 +62,8 @@ const genUnoCSSConfig = ({
     plugin({
       addUtilities: (utilities) => {
         Object.keys(utilities).forEach((selector) => {
-          // Skip icons selectors added on tailwind.config.cjs only for IntelliSense
-          if (!selector.startsWith('.i-')) {
+          // Skip icons and prose selectors added on tailwind.config.cjs only for IntelliSense
+          if (!selector.startsWith('.i-') && !selector.includes('prose')) {
             rules.push([selector.replace('.', ''), utilities[selector]]);
           }
         });
@@ -113,6 +121,7 @@ const genUnoCSSConfig = ({
           'vertical-align': 'middle',
         },
       }),
+      presetTypography(),
     ],
   };
 };
