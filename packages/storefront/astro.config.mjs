@@ -1,4 +1,4 @@
-import { existsSync, lstatSync } from 'fs';
+import { existsSync, lstatSync, readdirSync } from 'fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
@@ -184,7 +184,18 @@ const genAstroConfig = ({
     plugins: [
       VitePWA(vitePWAOptions),
       Components({
-        dirs: [localComponentsDir, libComponentsDir],
+        dirs: [localComponentsDir, libComponentsDir].reduce((dirs, dir) => {
+          readdirSync(dir).forEach((filename) => {
+            if (!filename.startsWith('.')) {
+              const filepath = joinPath(dir, filename);
+              if (lstatSync(filepath).isDirectory()) {
+                dirs.push(filepath);
+              }
+            }
+          });
+          dirs.push(dir);
+          return dirs;
+        }, []),
         resolvers: [
           HeadlessUiResolver(),
           VueUseComponentsResolver(),
