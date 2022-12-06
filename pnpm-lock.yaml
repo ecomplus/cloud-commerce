@@ -623,52 +623,52 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.128
+      '@cloudcommerce/cli': ^0.0.129
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.128
+      '@cloudcommerce/firebase': ^0.0.129
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.128
-      '@cloudcommerce/firebase': ^0.0.128
+      '@cloudcommerce/events': ^0.0.129
+      '@cloudcommerce/firebase': ^0.0.129
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.128
-      '@cloudcommerce/modules': ^0.0.128
+      '@cloudcommerce/firebase': ^0.0.129
+      '@cloudcommerce/modules': ^0.0.129
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.128
-      '@cloudcommerce/passport': ^0.0.128
+      '@cloudcommerce/firebase': ^0.0.129
+      '@cloudcommerce/passport': ^0.0.129
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.11.6
+      '@astrojs/image': ^0.12.1
       '@astrojs/node': ^3.1.0
-      '@cloudcommerce/api': ^0.0.128
-      '@cloudcommerce/firebase': ^0.0.128
-      '@cloudcommerce/i18n': ^0.0.128
-      '@cloudcommerce/ssr': ^0.0.128
-      '@cloudcommerce/storefront': ^0.0.128
-      '@cloudcommerce/types': ^0.0.128
+      '@cloudcommerce/api': ^0.0.129
+      '@cloudcommerce/firebase': ^0.0.129
+      '@cloudcommerce/i18n': ^0.0.129
+      '@cloudcommerce/ssr': ^0.0.129
+      '@cloudcommerce/storefront': ^0.0.129
+      '@cloudcommerce/types': ^0.0.129
     dependencies:
-      '@astrojs/image': 0.11.6
+      '@astrojs/image': 0.12.1
       '@astrojs/node': 3.1.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -680,16 +680,16 @@ importers:
 
   store/storefront:
     specifiers:
-      '@astrojs/image': ^0.11.6
+      '@astrojs/image': ^0.12.1
       '@astrojs/node': ^3.1.0
-      '@cloudcommerce/api': ^0.0.128
-      '@cloudcommerce/firebase': ^0.0.128
-      '@cloudcommerce/i18n': ^0.0.128
-      '@cloudcommerce/ssr': ^0.0.128
-      '@cloudcommerce/storefront': ^0.0.128
-      '@cloudcommerce/types': ^0.0.128
+      '@cloudcommerce/api': ^0.0.129
+      '@cloudcommerce/firebase': ^0.0.129
+      '@cloudcommerce/i18n': ^0.0.129
+      '@cloudcommerce/ssr': ^0.0.129
+      '@cloudcommerce/storefront': ^0.0.129
+      '@cloudcommerce/types': ^0.0.129
     dependencies:
-      '@astrojs/image': 0.11.6
+      '@astrojs/image': 0.12.1
       '@astrojs/node': 3.1.0
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
@@ -757,6 +757,24 @@ packages:
 
   /@astrojs/image/0.12.0:
     resolution: {integrity: sha512-daX4pKHpOjRDgU4VieXUjrNgxI2NQVif47zihGEycaHUCxbMJr9rtdk6snT8m9+hdyFHTuihiUFsu7TJLFGGdw==}
+    peerDependencies:
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
+      http-cache-semantics: 4.1.0
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.25.9
+      mime: 3.0.0
+      slash: 4.0.0
+      web-streams-polyfill: 3.2.1
+    dev: false
+
+  /@astrojs/image/0.12.1:
+    resolution: {integrity: sha512-7pBUPCw7/FPwfEntx+mGjhdwpaWXNHwRVcTK71rpf+c2yb8iIesRS9r26U7lGozTzXUROh1y1ftA82ziuqYF6Q==}
     peerDependencies:
       sharp: '>=0.31.0'
     peerDependenciesMeta:
@@ -10126,6 +10144,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
 
   /space-separated-tokens/2.0.1:
     resolution: {integrity: sha512-ekwEbFp5aqSPKaqeY1PGrlGQxPNaq+Cnx4+bE2D8sciBQrHpbwoBbawqTN2+6jPs9IdWxxiUcN0K2pkczD3zmw==}
