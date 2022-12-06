@@ -74,7 +74,7 @@ if (argv.publish) {
       await $`npm i --save @cloudcommerce/cli@${version}`;
       await $`rm -rf node_modules`;
       try {
-        await $`git add package* functions/*/package* functions/ssr/*.d.ts **/.*-auto-*`;
+        await $`git add package* functions/*/package* functions/ssr/*.d.ts functions/**/.*-auto-*`;
         await $`git commit -m 'Update to v${version}' \
           -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
         await $`git push`;
