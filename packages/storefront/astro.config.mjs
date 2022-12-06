@@ -177,6 +177,10 @@ const genAstroConfig = ({
         '@vueuse/core',
         { '@@i18n': Object.keys(ptBr) },
       ],
+      dts: true,
+      eslintrc: {
+        enabled: true,
+      },
     }),
   ],
   site,

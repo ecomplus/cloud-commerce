@@ -11,4 +11,14 @@ module.exports = {
     'auto-imports.d.ts',
     'components.d.ts',
   ],
+  overrides: [{
+    files: [
+      'src/**/*.vue',
+      'src/**/*.astro',
+    ],
+    extends: [
+      '../../.eslintrc.cjs',
+      './.eslintrc-auto-import.json',
+    ],
+  }],
 };
