@@ -16,9 +16,6 @@ module.exports = {
       'src/**/*.vue',
       'src/**/*.astro',
     ],
-    extends: [
-      '../../.eslintrc.cjs',
-      './.eslintrc-auto-import.json',
-    ],
+    extends: './.eslintrc-auto-import.json',
   }],
 };
