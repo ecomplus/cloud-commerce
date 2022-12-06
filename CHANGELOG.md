@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.129](https://github.com/ecomplus/cloud-commerce/compare/v0.0.128...v0.0.129) (2022-12-06)
+
+
+### Features
+
+* **storefront:** Setup auto import for Vue components, Vue API, Vueuse and i18n ([f41d802](https://github.com/ecomplus/cloud-commerce/commit/f41d8027901e26d315d06ec1b5667fab423bc826))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#86](https://github.com/ecomplus/cloud-commerce/issues/86)) ([6b3c061](https://github.com/ecomplus/cloud-commerce/commit/6b3c061ea8cf01f9cc686b5683a93cc0539e5d7f))
+* **infinitepay:** Fix authorization error with `authorization_code` other than '00' ([#85](https://github.com/ecomplus/cloud-commerce/issues/85)) ([dcc55a1](https://github.com/ecomplus/cloud-commerce/commit/dcc55a1ad0933617457070d8d78c97b6048c6c2f))
+* **storefront:** Rename `--rgb-*` CSS vars, fix ::selection bg ([192d4b3](https://github.com/ecomplus/cloud-commerce/commit/192d4b3427b0eaef9e51e293aa189aa156825ccb))
+
 ### [0.0.128](https://github.com/ecomplus/cloud-commerce/compare/v0.0.127...v0.0.128) (2022-12-01)
 
 
