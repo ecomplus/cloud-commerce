@@ -27,7 +27,7 @@ const createPubSubFunction = (
       if (eventAgeMs > eventMaxAgeMs) {
         logger.warn(`Dropping event ${context.eventId} with age[ms]: ${eventAgeMs}`);
       }
-      fn(message.json, context, message);
+      return fn(message.json, context, message);
     });
 };
 
