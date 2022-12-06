@@ -17,15 +17,23 @@ withDefaults(defineProps<Props>(), {
   additionalLinks: () => [],
 });
 const isVisible = ref(false);
+let loadingFormResolve: (value: unknown) => void | undefined;
+let loadingFormReject: (reason?: any) => void | undefined;
 const loadingLoginForm = !import.meta.env.SSR
-  ? import('./LoginForm.vue')
+  ? new Promise((resolve, reject) => {
+    loadingFormResolve = resolve;
+    loadingFormReject = reject;
+  })
   : Promise.resolve() as Promise<any>;
 const LoginForm = defineAsyncComponent(() => loadingLoginForm);
+let hasImportedForm = false;
 const toggle = (ev: MouseEvent) => {
-  loadingLoginForm.then(() => {
-    isVisible.value = !isVisible.value;
-    ev.preventDefault();
-  });
+  if (!hasImportedForm) {
+    hasImportedForm = true;
+    import('./LoginForm.vue').then(loadingFormResolve).catch(loadingFormReject);
+  }
+  isVisible.value = !isVisible.value;
+  ev.preventDefault();
 };
 const isLogged = ref(false);
 </script>
