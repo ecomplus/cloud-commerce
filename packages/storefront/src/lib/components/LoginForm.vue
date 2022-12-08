@@ -20,7 +20,7 @@ import {
   customerName,
   customerEmail as email,
   isLogged,
-} from '@@storefront/state/customer-session';
+} from '@@sf/state/customer-session';
 
 const emit = defineEmits(['login', 'logout']);
 watch(isLogged, (_isLogged) => {
