@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.131](https://github.com/ecomplus/cloud-commerce/compare/v0.0.130...v0.0.131) (2022-12-08)
+
+
+### Bug Fixes
+
+* **firebase:** PubSub function handler should return promise ([44edda5](https://github.com/ecomplus/cloud-commerce/commit/44edda5c9d29cb7680a9758c8453f9a719e1df7c))
+
 ### [0.0.130](https://github.com/ecomplus/cloud-commerce/compare/v0.0.129...v0.0.130) (2022-12-06)
 
 ### [0.0.129](https://github.com/ecomplus/cloud-commerce/compare/v0.0.128...v0.0.129) (2022-12-06)

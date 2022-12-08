@@ -8,7 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ADrawer: typeof import('./src/lib/components/ADrawer.vue')['default']
-    ALink: typeof import('./src/lib/components/atoms/ALink.vue')['default']
     HeaderButtonLink: typeof import('./src/components/header/HeaderButtonLink.vue')['default']
     HeaderButtons: typeof import('./src/components/header/HeaderButtons.vue')['default']
     HeaderNav: typeof import('./src/components/header/HeaderNav.vue')['default']
