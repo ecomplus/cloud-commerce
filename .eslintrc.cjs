@@ -33,6 +33,7 @@ module.exports = {
       'error',
       {
         ignore: [
+          // https://github.com/import-js/eslint-plugin-import/issues/1810
           'firebase-functions/logger',
           'firebase-functions/v2/https',
           'firebase-functions/v1',

@@ -1,5 +1,5 @@
 /* eslint-disable */
-/// <reference types="./vue-globals" />
+/// <reference types="./src/vue-globals" />
 
 interface Window {
   firebaseConfig?: {

@@ -6,7 +6,6 @@ import {
 } from 'node:fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
-// https://github.com/import-js/eslint-plugin-import/issues/1810
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
@@ -177,7 +176,7 @@ const genAstroConfig = ({
         'vue',
         '@vueuse/core',
       ],
-      dts: true,
+      dts: 'src/auto-imports.d.ts',
       eslintrc: {
         enabled: true,
       },
@@ -206,6 +205,7 @@ const genAstroConfig = ({
         },
       },
       Components({
+        dts: 'src/components.d.ts',
         dirs: [localComponentsDir, libComponentsDir].reduce((dirs, dir) => {
           readdirSync(dir).forEach((filename) => {
             if (!filename.startsWith('.')) {
