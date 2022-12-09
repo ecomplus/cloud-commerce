@@ -1,4 +1,9 @@
-import { existsSync, lstatSync, readdirSync } from 'fs';
+import {
+  existsSync,
+  lstatSync,
+  readdirSync,
+  readFileSync,
+} from 'node:fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 // https://github.com/import-js/eslint-plugin-import/issues/1810
@@ -17,7 +22,7 @@ import {
   VueUseComponentsResolver,
   VueUseDirectiveResolver,
 } from 'unplugin-vue-components/resolvers';
-import { ptBr } from '@cloudcommerce/i18n';
+import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './storefront.config.mjs';
 
 const __dirname = new URL('.', import.meta.url).pathname;
@@ -159,7 +164,7 @@ const genAstroConfig = ({
   outDir: isSSG ? './dist/client' : './dist',
   integrations: [
     image(),
-    vue(),
+    vue({ appEntrypoint: '/src/pages/_vue' }),
     partytown(),
     prefetch(),
     UnoCSS({
@@ -167,15 +172,10 @@ const genAstroConfig = ({
       injectEntry: false,
     }),
     AutoImport({
-      include: [
-        /\.vue$/, /\.vue\?vue/,
-        /\.mdx?$/,
-        /\.astro$/,
-      ],
+      include: [/\.vue$/, /\.vue\?vue/],
       imports: [
         'vue',
         '@vueuse/core',
-        { '@@i18n': Object.keys(ptBr) },
       ],
       dts: true,
       eslintrc: {
@@ -187,6 +187,24 @@ const genAstroConfig = ({
   vite: {
     plugins: [
       VitePWA(vitePWAOptions),
+      {
+        name: 'vue-i18n',
+        transform(code, id) {
+          if (!/\.vue$/.test(id)) {
+            return;
+          }
+          // eslint-disable-next-line consistent-return
+          return code.replace(/\$t\.i19([a-z][\w$]+)/g, (match, p1) => {
+            try {
+              const text = readFileSync(joinPath(dictionaryDir, lang, `i19${p1}.txt`));
+              return `'${text}'`;
+            } catch (e) {
+              console.error(e);
+              return match;
+            }
+          });
+        },
+      },
       Components({
         dirs: [localComponentsDir, libComponentsDir].reduce((dirs, dir) => {
           readdirSync(dir).forEach((filename) => {
