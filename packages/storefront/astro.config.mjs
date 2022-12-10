@@ -1,9 +1,4 @@
-import {
-  existsSync,
-  lstatSync,
-  readdirSync,
-  readFileSync,
-} from 'node:fs';
+import { existsSync, lstatSync, readFileSync } from 'node:fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
@@ -206,18 +201,7 @@ const genAstroConfig = ({
       },
       Components({
         dts: 'src/components.d.ts',
-        dirs: [localComponentsDir, libComponentsDir].reduce((dirs, dir) => {
-          readdirSync(dir).forEach((filename) => {
-            if (!filename.startsWith('.')) {
-              const filepath = joinPath(dir, filename);
-              if (lstatSync(filepath).isDirectory()) {
-                dirs.push(filepath);
-              }
-            }
-          });
-          dirs.push(dir);
-          return dirs;
-        }, []),
+        dirs: [localComponentsDir, libComponentsDir],
         resolvers: [
           HeadlessUiResolver(),
           VueUseComponentsResolver(),
