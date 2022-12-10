@@ -20,5 +20,9 @@ module.exports = {
       'src/**/*.astro',
     ],
     extends: './.eslintrc-auto-import.json',
+    globals: {
+      Ref: true,
+      ComputedRef: true,
+    },
   }],
 };
