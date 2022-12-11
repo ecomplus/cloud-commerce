@@ -136,7 +136,7 @@ export default (data: AppModuleBody) => {
         gateway.js_client = {
           script_uri: 'https://assets.pagar.me/pagarme-js/4.8/pagarme.min.js',
           onload_expression: `window._pagarmeKey="${configApp.pagarme_encryption_key}";
-          ${fs.readFileSync(path.join(__dirname, '../../assets/onload-expression.min.js'), 'utf8')}`,
+          ${fs.readFileSync(path.join(__dirname, '../assets/onload-expression.min.js'), 'utf8')}`,
           cc_hash: {
             function: '_pagarmeHash',
             is_promise: true,
