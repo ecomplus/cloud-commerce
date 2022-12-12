@@ -10,19 +10,4 @@ module.exports = {
       ignores: ['Price'],
     }],
   },
-  ignorePatterns: [
-    'auto-imports.d.ts',
-    'components.d.ts',
-  ],
-  overrides: [{
-    files: [
-      'src/**/*.vue',
-      'src/**/*.astro',
-    ],
-    extends: './.eslintrc-auto-import.json',
-    globals: {
-      Ref: true,
-      ComputedRef: true,
-    },
-  }],
 };

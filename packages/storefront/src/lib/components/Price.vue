@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Products, Carts } from '@cloudcommerce/api/types';
+import { ComputedRef, computed } from 'vue';
 import { price as getPrice } from '@ecomplus/utils';
 import modulesInfo from '@@sf/state/modules-info';
+import PriceSale from '@@components/Price/PriceSale.vue';
 
 export interface Props {
   product?: (Partial<Products> | Partial<Carts['items'][0]>) & { price: Products['price'] };

@@ -8,14 +8,7 @@ import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
-import AutoImport from 'unplugin-auto-import/astro';
 import { VitePWA } from 'vite-plugin-pwa';
-import Components from 'unplugin-vue-components/vite';
-import {
-  HeadlessUiResolver,
-  VueUseComponentsResolver,
-  VueUseDirectiveResolver,
-} from 'unplugin-vue-components/resolvers';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './storefront.config.mjs';
 
@@ -165,17 +158,6 @@ const genAstroConfig = ({
       injectReset: false,
       injectEntry: false,
     }),
-    AutoImport({
-      include: [/\.vue$/, /\.vue\?vue/],
-      imports: [
-        'vue',
-        '@vueuse/core',
-      ],
-      dts: 'src/auto-imports.d.ts',
-      eslintrc: {
-        enabled: true,
-      },
-    }),
   ],
   site,
   vite: {
@@ -199,15 +181,6 @@ const genAstroConfig = ({
           });
         },
       },
-      Components({
-        dts: 'src/components.d.ts',
-        dirs: [localComponentsDir, libComponentsDir],
-        resolvers: [
-          HeadlessUiResolver(),
-          VueUseComponentsResolver(),
-          VueUseDirectiveResolver(),
-        ],
-      }),
     ],
     resolve: {
       preserveSymlinks: lstatSync(localComponentsDir).isSymbolicLink(),
