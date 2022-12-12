@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.132](https://github.com/ecomplus/cloud-commerce/compare/v0.0.131...v0.0.132) (2022-12-12)
+
+
+### Features
+
+* **i18n:** Build each lang/word to txt ([7d7843b](https://github.com/ecomplus/cloud-commerce/commit/7d7843b2e15cd6c6b56b54f3f344d61b075fe64d))
+* **storefront:** Handling modules info with Vue Reactivity API ([0d68c44](https://github.com/ecomplus/cloud-commerce/commit/0d68c4488e1956fda89e1df81b70c5d98c04fac0))
+* **storefront:** Handling session UTM on <BaseBody> ([90212fd](https://github.com/ecomplus/cloud-commerce/commit/90212fddcfcc00d23b197b438fcdce156eba84a6))
+* **storefront:** Setup Vue app globals $t and $formatMoney from `@ecomplus/utils` ([8db559f](https://github.com/ecomplus/cloud-commerce/commit/8db559f3a249076c14b0a1d445deb5c75cbc4847))
+* **storefront:** Starting `Price` component with headless approach ([eec5e39](https://github.com/ecomplus/cloud-commerce/commit/eec5e399ed30180bee5180ff5ef26f9253696e9b))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#87](https://github.com/ecomplus/cloud-commerce/issues/87)) ([748ccf9](https://github.com/ecomplus/cloud-commerce/commit/748ccf9bdc12f45c37e492405d8cabce4429e652))
+* **i18n:** Fix `i19labelOfCustomization` ([06a9b76](https://github.com/ecomplus/cloud-commerce/commit/06a9b76bddfeceae6a74afb7a1d32f5fad41a1b3))
+* **pagarme:** Correct path to read `assets/onload-expression.min.js` ([f5831d9](https://github.com/ecomplus/cloud-commerce/commit/f5831d9375a88e53f09782eb0e35deb28a1cbaa6))
+
 ### [0.0.131](https://github.com/ecomplus/cloud-commerce/compare/v0.0.130...v0.0.131) (2022-12-08)
 
 
