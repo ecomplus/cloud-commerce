@@ -665,36 +665,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.132
+      '@cloudcommerce/cli': ^0.0.133
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.132
+      '@cloudcommerce/firebase': ^0.0.133
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.132
-      '@cloudcommerce/firebase': ^0.0.132
+      '@cloudcommerce/events': ^0.0.133
+      '@cloudcommerce/firebase': ^0.0.133
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.132
-      '@cloudcommerce/modules': ^0.0.132
+      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/modules': ^0.0.133
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.132
-      '@cloudcommerce/passport': ^0.0.132
+      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/passport': ^0.0.133
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -702,16 +702,16 @@ importers:
   store/functions/ssr:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.0
-      '@cloudcommerce/api': ^0.0.132
-      '@cloudcommerce/firebase': ^0.0.132
-      '@cloudcommerce/i18n': ^0.0.132
-      '@cloudcommerce/ssr': ^0.0.132
-      '@cloudcommerce/storefront': ^0.0.132
-      '@cloudcommerce/types': ^0.0.132
+      '@astrojs/node': ^3.1.1
+      '@cloudcommerce/api': ^0.0.133
+      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/i18n': ^0.0.133
+      '@cloudcommerce/ssr': ^0.0.133
+      '@cloudcommerce/storefront': ^0.0.133
+      '@cloudcommerce/types': ^0.0.133
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.0
+      '@astrojs/node': 3.1.1
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -723,16 +723,16 @@ importers:
   store/storefront:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.0
-      '@cloudcommerce/api': ^0.0.132
-      '@cloudcommerce/firebase': ^0.0.132
-      '@cloudcommerce/i18n': ^0.0.132
-      '@cloudcommerce/ssr': ^0.0.132
-      '@cloudcommerce/storefront': ^0.0.132
-      '@cloudcommerce/types': ^0.0.132
+      '@astrojs/node': ^3.1.1
+      '@cloudcommerce/api': ^0.0.133
+      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/i18n': ^0.0.133
+      '@cloudcommerce/ssr': ^0.0.133
+      '@cloudcommerce/storefront': ^0.0.133
+      '@cloudcommerce/types': ^0.0.133
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.0
+      '@astrojs/node': 3.1.1
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
       '@cloudcommerce/ssr': link:../../packages/ssr
@@ -882,17 +882,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@astrojs/node/3.1.0:
-    resolution: {integrity: sha512-teKbDU3u1BIhh3pIVtLsBF/Hxr6NioInfnVFLlPp9afFFlVhakO3N+nR8fPkXrpNXGP3AxQmk+ROI4YHvhIIFw==}
-    peerDependencies:
-      astro: ^1.6.10
-    dependencies:
-      '@astrojs/webapi': 1.1.1
-      send: 0.18.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@astrojs/node/3.1.0_astro@1.6.14:
     resolution: {integrity: sha512-teKbDU3u1BIhh3pIVtLsBF/Hxr6NioInfnVFLlPp9afFFlVhakO3N+nR8fPkXrpNXGP3AxQmk+ROI4YHvhIIFw==}
     peerDependencies:
@@ -900,6 +889,17 @@ packages:
     dependencies:
       '@astrojs/webapi': 1.1.1
       astro: 1.6.14
+      send: 0.18.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@astrojs/node/3.1.1:
+    resolution: {integrity: sha512-EWfsvCtOGvN1ugpxhiW4sr0xD8xUGltFOcU/ysOHdVpP6WXWQUTZbYbqDo+fgYhYHksLIcBLxg8vLi+gBQMA1Q==}
+    peerDependencies:
+      astro: ^1.6.15
+    dependencies:
+      '@astrojs/webapi': 1.1.1
       send: 0.18.0
     transitivePeerDependencies:
       - supports-color
