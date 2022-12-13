@@ -10,7 +10,7 @@ import {
 import handleApiEvent from './functions-lib/ecom/events-to-galaxpay';
 import handleGalaxpayWebhook from './functions-lib/galaxpay/webhook';
 
-export const tinyerp = {
+export const galaxpay = {
   onStoreEvent: createAppEventsFunction(
     'galaxPay',
     handleApiEvent as ApiEventHandler,

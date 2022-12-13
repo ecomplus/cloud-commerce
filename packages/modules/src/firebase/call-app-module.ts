@@ -102,6 +102,12 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.galaxPay.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-galaxpay')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
   } else if (modName === 'create_transaction') {
     if (appId === apps.mercadoPago.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -124,6 +130,12 @@ export default async (
     if (appId === apps.infinitePay.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-infinitepay')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.galaxPay.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-galaxpay')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

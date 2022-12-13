@@ -15,6 +15,10 @@ const emailsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const galaxPayEvents: ApiEventName[] = [
+  'orders-cancelled',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -75,6 +79,10 @@ const mergeConfig = {
     },
     infinitePay: {
       appId: 110373,
+    },
+    galaxPay: {
+      appId: 123188,
+      events: galaxPayEvents,
     },
   },
   cmsSettings,
