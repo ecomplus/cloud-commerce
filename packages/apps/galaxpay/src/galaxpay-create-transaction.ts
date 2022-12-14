@@ -162,21 +162,22 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
   try {
     await galaxpayAxios.preparing;
   } catch (err: any) {
-    logger.error('>(App: InfinitePay) Error =>', err);
-    return responseError(409, 'NO_INFINITE_AUTH', 'Error getting authentication');
+    logger.error('>(App: GalaxPay) Error =>', err);
+    return responseError(409, 'NO_GALAXPAY_AUTH', 'Error getting authentication');
   }
-  if (galaxpayAxios.axios) {
+
+  const { axios } = galaxpayAxios;
+  if (axios) {
     try {
       if (type === 'recurrence') {
-        const data = (await galaxpayAxios.axios.post('/subscriptions', galaxpaySubscriptions))
-          .data.Subscription;
+        const { data: { Subscription } } = await axios.post('/subscriptions', galaxpaySubscriptions);
 
-        logger.log('> New Subscription');
-        transaction.payment_link = data.paymentLink;
-        const transactionGalaxPay = data.Transactions[0];
+        logger.log('>(App: GalaxPay) New Subscription ', Subscription, ' <');
+        transaction.payment_link = Subscription.paymentLink;
+        const transactionGalaxPay = Subscription.Transactions[0];
 
         transaction.status = {
-          updated_at: data.datetimeLastSentToOperator || new Date().toISOString(),
+          updated_at: Subscription.datetimeLastSentToOperator || new Date().toISOString(),
           current: parseStatus(transactionGalaxPay.status),
         };
 
@@ -204,9 +205,9 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
           transaction,
         };
       }
+      return responseError(409, 'GALAXPAY_TYPE_ERR_', 'Invalid transaction type');
     } catch (error: any) {
-      //
-      logger.log(error.response);
+      // logger.log(error.response);
       // try to debug request error
       let { message } = error;
       const err = {
@@ -229,7 +230,7 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
           message = data.errors[0].message;
         }
       }
-      // logger.error(err);
+      logger.error(err);
       return responseError(409, 'GALAXPAY_TRANSACTION_ERR', message);
     }
   }

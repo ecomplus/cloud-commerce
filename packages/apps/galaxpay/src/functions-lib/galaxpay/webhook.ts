@@ -94,7 +94,7 @@ const createTransaction = async (
     // let body;
     const originalOrder = (await api.get(`orders/${originalOrderId}`)).data;
 
-    // console.log('> Create new Order ')
+    // logger.log('> Create new Order ')
     if (originalOrder.transactions && originalOrder.items) {
       const { installment } = GalaxPayTransaction;
       const {
@@ -168,14 +168,14 @@ const createTransaction = async (
 
       if (!result.length) {
         await api.post('orders', body);
-        // console.log('> Created new order API')
+        // logger.log('> Created new order API')
         return res.sendStatus(200);
       }
       // Order Exists
       return res.sendStatus(200);
     }
   }
-  // console.log('> Not Found Subscritpion or Transaction exists')
+  // logger.log('> Not Found Subscritpion or Transaction exists')
   return res.sendStatus(404);
 };
 
@@ -194,12 +194,12 @@ const handleWehook = async (req: Request, res: Response) => {
   const GalaxPayTransactionValue = GalaxPayTransaction.value / 100;
 
   logger.log(
-    `> (App:Galaxy) WebHook ${type}, Body ${JSON.stringify(galaxpayHook)}, quantity:
+    `> (App GalaxPay) WebHook ${type}, Body ${JSON.stringify(galaxpayHook)}, quantity:
     ${GalaxPaySubscriptionQuantity}, status: ${GalaxPayTransaction.status} <`,
   );
 
   // if (galaxpayHook.confirmHash) {
-  //   console.log('> ', galaxpayHook.confirmHash);
+  //   logger.log('> ', galaxpayHook.confirmHash);
   // }
   try {
     if (type === 'transaction.updateStatus') {
@@ -219,14 +219,14 @@ const handleWehook = async (req: Request, res: Response) => {
             const order = await findOrderById(originalOrderId);
             // Update value Subscription in GalaxPay
 
-            //   console.log('plan-> ', JSON.stringify(plan));
+            //   logger.log('plan-> ', JSON.stringify(plan));
             // not update subscripton canceled
             if (!checkStatusNotValid(GalaxPayTransaction.status) && order.items) {
               const app = await getApp();
               await updateValueSubscription(app, originalOrderId, order.amount, order.items, plan);
             }
-            //   console.log('ORDER: ', JSON.stringify(order.amount), ' **');
-            // console.log('> order ', order)
+            //   logger.log('ORDER: ', JSON.stringify(order.amount), ' **');
+            // logger.log('> order ', order)
 
             if (order.financial_status
               && checkStatus(order.financial_status, GalaxPayTransaction)) {
@@ -268,7 +268,7 @@ const handleWehook = async (req: Request, res: Response) => {
             const { result } = await findOrderByTransactionId(transactionId);
 
             if (!result || !result.length) {
-              // console.log('> Not found Transaction in API')
+              // logger.log('> Not found Transaction in API')
               if (!checkStatusNotValid(GalaxPayTransaction.status)
                 && checkPayDay(GalaxPayTransaction.payday)) {
                 // necessary to create order
@@ -290,10 +290,10 @@ const handleWehook = async (req: Request, res: Response) => {
             const order = result[0];
             if (order.financial_status
               && checkStatus(order.financial_status, GalaxPayTransaction)) {
-              // console.log('> Equals Status')
+              // logger.log('> Equals Status')
               return res.sendStatus(200);
             }
-            // console.log('> Order id ')
+            // logger.log('> Order id ')
             // update payment
             const bodyPaymentHistory = {
               date_time: new Date().toISOString(),
@@ -305,7 +305,7 @@ const handleWehook = async (req: Request, res: Response) => {
 
             await api.post(`orders/${order._id}/payments_history`, bodyPaymentHistory);
 
-            // console.log('>  create Payment History')
+            // logger.log('>  create Payment History')
 
             await api.patch(
               `orders/${order._id}/transactions/${transactionId}`,
@@ -321,10 +321,10 @@ const handleWehook = async (req: Request, res: Response) => {
               || parseStatus(GalaxPayTransaction.status) === 'refunded') {
               await api.patch(`orders/${order._id}`, { status: 'cancelled' });
 
-              // console.log('> UPDATE ORDER OK')
+              // logger.log('> UPDATE ORDER OK')
               return res.sendStatus(200);
             }
-            // console.log('> UPDATE Transaction OK')
+            // logger.log('> UPDATE Transaction OK')
             return res.sendStatus(200);
           }
         }

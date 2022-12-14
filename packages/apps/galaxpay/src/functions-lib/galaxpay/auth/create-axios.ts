@@ -1,5 +1,5 @@
 import axios from 'axios';
-import logger from 'firebase-functions/logger';
+// import logger from 'firebase-functions/logger';
 
 export default (accessToken: string | undefined | null, isSandbox?: boolean) => {
   // https://docs.galaxpay.com.br/autenticacao
@@ -9,8 +9,9 @@ export default (accessToken: string | undefined | null, isSandbox?: boolean) => 
     'Content-Type': 'application/json',
   };
   if (accessToken) {
-    logger.log('> token ', accessToken);
+    // logger.log('>(App GalaxPay) token: ', accessToken);
     Object.assign(headers, { Authorization: `Bearer ${accessToken}` });
+    Object.assign(headers, { 'Accept-Encoding': 'gzip,deflate,compress' });
   }
 
   return axios.create({

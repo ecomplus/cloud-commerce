@@ -6,35 +6,35 @@ export type GalaxpayApp = {
   galaxpay_public_token?: string,
   credit_card?: {
     disable?: boolean,
-    label?: string
-    min_amount: number | 0
+    label?: string,
+    min_amount: number,
     text?: string,
     icon?: string,
   }
   banking_billet?: {
     disable?: boolean,
     label?: string,
-    min_amount: number | 0,
+    min_amount: number,
     text?: string,
     icon?: string,
-    add_days: integer | 0,
+    add_days: integer,
   };
   pix?: {
     disable?: boolean,
     label?: string,
-    min_amount: number | 0,
+    min_amount: number,
     instructions?: string,
-    add_days: integer | 0
+    add_days: integer
   };
   plans?: {
     label: string,
-    periodicity: Semanal | Quinzenal | Mensal | Bimestral | Trimestral | Semestral | Anual
+    periodicity: 'Semanal' | 'Quinzenal' | 'Mensal' | 'Bimestral' | 'Trimestral' | 'Semestral' | 'Anual'
     quantity: integer | 0,
     discount: {
-      percentage: boolean | false,
+      percentage: boolean,
       value: number,
-      apply_at: total | subtotal | frete,
-      min_amount?: number | 0
+      apply_at: 'total' | 'subtotal' | 'frete',
+      min_amount?: number
     }
   }[];
 }

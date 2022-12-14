@@ -41,16 +41,16 @@ export default class GalaxPay {
     }
 
     this.preparing = new Promise((resolve, reject) => {
-      const authenticate = (accessToken: string) => {
-        self.axios = createAxios(accessToken, isSandbox);
+      const authenticate = (token: string) => {
+        self.axios = createAxios(token, isSandbox);
         resolve(self);
       };
 
       const handleAuth = () => {
-        logger.log('> Galaxpay Auth02 ');
+        logger.log('>(App Galaxpay) Auth02 ');
         gerateAccessToken(hashLogin, isSandbox, hashPartner)
           .then((accessToken) => {
-            logger.log(`> Galaxpay token: #${hashLogin}`);
+            // logger.log(`>(App Galaxpay) ${hashLogin}: ${accessToken}`);
             authenticate(accessToken as string);
             if (documentRef) {
               documentRef.set({ accessToken }).catch(logger.error);

@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/logger';
+// import logger from 'firebase-functions/logger';
 import Axios from './create-axios';
 
 const gereteToken = (
@@ -13,14 +13,16 @@ const gereteToken = (
   const request = (isRetry?: boolean) => {
     const headers = { Authorization: `Basic ${hashLogin}` };
     if (!isSandbox && hashPartner) {
-      logger.log('#AuthorizationPartner ');
+      // logger.log('#AuthorizationPartner ');
       Object.assign(headers, { AuthorizationPartner: hashPartner });
     }
     axios.post('/token', {
       grant_type: 'authorization_code',
       scope: 'customers.read customers.write plans.read plans.write transactions.read transactions.write webhooks.write cards.read cards.write card-brands.read subscriptions.read subscriptions.write charges.read charges.write boletos.read',
     }, { headers })
-      .then(({ data }) => resolve(data.access_token))
+      .then(({ data }) => {
+        resolve(data.access_token);
+      })
       .catch((err) => {
         if (!isRetry && err.response && err.response.status >= 429) {
           setTimeout(() => request(true), 7000);

@@ -10,7 +10,7 @@ const responseError = (status: number | null, error: string, message: string) =>
   return {
     status: status || 409,
     error,
-    message: `${message} (shopkeeper must configure the application)`,
+    message,
   };
 };
 
