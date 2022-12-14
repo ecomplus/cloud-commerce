@@ -16,7 +16,7 @@ const modulesInfo = reactive<{
   list_payments: {
     installments_option?: ListPaymentsResponse['installments_option'],
     discount_option?: ListPaymentsResponse['discount_option'],
-    loyalty_points_programs?: ListPaymentsResponse['discount_option'],
+    loyalty_points_programs?: ListPaymentsResponse['loyalty_points_programs'],
   },
   calculate_shipping: {
     free_shipping_from_value?: CalculateShippingResponse['free_shipping_from_value'],

@@ -10,6 +10,7 @@ export interface Props {
   isAmountTotal?: boolean,
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
+  loyaltyPointsProgram?: ListPaymentsResponse['loyalty_points_programs']['k'];
 }
 
 const getPriceWithDiscount = (price: number, discount: Props['discountOption']) => {
@@ -107,8 +108,35 @@ export default (props: Props) => {
     }
     return {};
   });
+  const discountLabel = computed(() => {
+    return discountObject.value.label || '';
+  });
   const priceWithDiscount = computed(() => {
     return getPriceWithDiscount(salePrice.value, discountObject.value);
+  });
+
+  const pointsProgramObject = computed(() => {
+    if (props.loyaltyPointsProgram) {
+      return props.loyaltyPointsProgram;
+    }
+    const pointsPrograms = modulesInfo.list_payments.loyalty_points_programs;
+    const programIds = Object.keys(pointsPrograms);
+    for (let i = 0; i < programIds.length; i++) {
+      const program = pointsPrograms[i];
+      if (program && program.earn_percentage > 0) {
+        return program;
+      }
+    }
+    return { ratio: 0 };
+  });
+  const pointsMinPrice = computed(() => {
+    return pointsProgramObject.value.min_subtotal_to_earn || 0;
+  });
+  const pointsProgramName = computed(() => {
+    return pointsProgramObject.value.name || '';
+  });
+  const earnPointsFactor = computed(() => {
+    return (pointsProgramObject.value.earn_percentage || 0) / 100;
   });
 
   return {
@@ -119,6 +147,11 @@ export default (props: Props) => {
     installmentsNumber,
     installmentValue,
     discountObject,
+    discountLabel,
     priceWithDiscount,
+    pointsProgramObject,
+    pointsMinPrice,
+    pointsProgramName,
+    earnPointsFactor,
   };
 };
