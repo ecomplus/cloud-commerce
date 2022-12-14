@@ -7,22 +7,7 @@ module.exports = {
     'global-require': 'off',
     'import/no-dynamic-require': 'off',
     'vue/multi-word-component-names': ['error', {
-      ignores: ['Price'],
+      ignores: ['Prices'],
     }],
   },
-  ignorePatterns: [
-    'auto-imports.d.ts',
-    'components.d.ts',
-  ],
-  overrides: [{
-    files: [
-      'src/**/*.vue',
-      'src/**/*.astro',
-    ],
-    extends: './.eslintrc-auto-import.json',
-    globals: {
-      Ref: true,
-      ComputedRef: true,
-    },
-  }],
 };

@@ -1,6 +1,5 @@
 import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
-import axios, { AxiosResponse } from 'axios';
 import config from '@cloudcommerce/firebase/lib/config';
 
 // Blacklist urls to prevent consecultive errors
@@ -11,6 +10,7 @@ export default async (
   modName: AppModuleName,
   url: string,
   data: any,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isBigTimeout: boolean,
 ) => {
   if (blacklist[url] > 2) {
@@ -18,7 +18,7 @@ export default async (
     const err = new Error('Blacklited endpoint URL');
     return Promise.reject(err);
   }
-  const { storeId, apps } = config.get();
+  const { apps } = config.get();
 
   const checkErrorResponse = (logHead: string, resData: any) => {
     if (typeof resData === 'object' && resData !== null) {
@@ -26,28 +26,6 @@ export default async (
       if (typeof error === 'string' && error.length && typeof message === 'string') {
         logger.warn(logHead, JSON.stringify({ error, message }));
       }
-    }
-  };
-
-  const debugAndBlacklist = (response: AxiosResponse) => {
-    const status = response ? response.status : 0;
-    if (!blacklist[url]) {
-      blacklist[url] = 1;
-    } else {
-      blacklist[url] += 1;
-    }
-    setTimeout(() => {
-      if (blacklist[url] > 1) {
-        blacklist[url] -= 1;
-      } else {
-        delete blacklist[url];
-      }
-    }, !status ? 180000 : 6000);
-    const logHead = `${url} : ${status}`;
-    if (status >= 400 && status < 500) {
-      checkErrorResponse(logHead, response.data);
-    } else {
-      logger.info(logHead);
     }
   };
 
@@ -175,6 +153,11 @@ export default async (
     }
   }
 
+  return Promise.resolve({
+    error: 'APP_NOT_IMPLEMENTED',
+    message: 'Not handling external modules by URL (returns 403)',
+  });
+  /* TODO: Update legacy app deploys to accept those requests ?
   return axios({
     method: 'POST',
     maxRedirects: 2,
@@ -204,4 +187,5 @@ export default async (
       }
       throw err;
     });
+  */
 };

@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Ref as _Ref, ComputedRef as _ComputedRef } from 'vue';
+// Read more: https://github.com/vuejs/core/pull/3399
+import '@vue/runtime-core'
 
 type Dictionary = Omit<typeof import('@@i18n'),
   'i19StoreApiResources' | 'i19ApiActions' | 'i19TransactionsType' | 'i19StateRegister' |
@@ -16,11 +17,6 @@ declare module '@vue/runtime-core' {
     };
     $formatMoney: typeof import('@ecomplus/utils')['formatMoney'];
   }
-}
-
-declare global {
-  interface Ref<T> extends _Ref<T> { }
-  interface ComputedRef<T> extends _ComputedRef<T> { }
 }
 
 export {}

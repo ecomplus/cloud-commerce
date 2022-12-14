@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.133](https://github.com/ecomplus/cloud-commerce/compare/v0.0.132...v0.0.133) (2022-12-12)
+
+
+### Bug Fixes
+
+* **storefront:** Problems with Vite auto imports and Astro SSR, removing ([e0dea76](https://github.com/ecomplus/cloud-commerce/commit/e0dea7644158ce1ffea15607629d86e0ebded727))
+
 ### [0.0.132](https://github.com/ecomplus/cloud-commerce/compare/v0.0.131...v0.0.132) (2022-12-12)
 
 
