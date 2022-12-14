@@ -76,6 +76,9 @@ const mergeConfig = {
     infinitePay: {
       appId: 110373,
     },
+    jadlog: {
+      appId: 115229,
+    },
   },
   cmsSettings,
 };
