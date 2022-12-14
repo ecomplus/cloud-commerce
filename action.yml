@@ -83,6 +83,8 @@ runs:
         SMTP_USER: ${{ inputs.smpt-user }}
         SMTP_PASS: ${{ inputs.smpt-pass }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
+        ID_GALAXPAY_PARTNER: ${{ secrets.ID_GALAXPAY_PARTNER }}
+        HASH_GALAXPAY_PARTNER: ${{ secrets.HASH_GALAXPAY_PARTNER }}
 
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
@@ -101,6 +103,8 @@ runs:
         SMTP_USER=$SMTP_USER
         SMTP_PASS=$SMTP_PASS
         SENDGRID_API_KEY=$SENDGRID_API_KEY
+        ID_GALAXPAY_PARTNER:$ID_GALAXPAY_PARTNER
+        HASH_GALAXPAY_PARTNER:$HASH_GALAXPAY_PARTNER
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
 
