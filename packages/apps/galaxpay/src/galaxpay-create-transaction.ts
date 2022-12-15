@@ -1,9 +1,9 @@
 import type { AppModuleBody } from '@cloudcommerce/types';
 import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
 import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
-import type { Firestore } from 'firebase-admin/firestore';
-import type { GalaxpayApp, GalaxPaySubscriptions } from '../types/configApp';
+import type { GalaxpayApp, GalaxPaySubscriptions } from '../types/config-app';
 import logger from 'firebase-functions/logger';
+import { getFirestore } from 'firebase-admin/firestore';
 import Galaxpay from './functions-lib/galaxpay/auth/create-access';
 import { responseError, isSandbox } from './functions-lib/utils';
 import { findPlanToCreateTransction } from './functions-lib/galaxpay/handle-plans';
@@ -23,7 +23,7 @@ const parseAddress = (to: To) => ({
   state: to.province || to.province_code,
 });
 
-export default async (appData: AppModuleBody, firestore: Firestore) => {
+export default async (appData: AppModuleBody) => {
   // treat module request body
   const { application } = appData;
   const params = appData.params as CreateTransactionParams;
@@ -186,7 +186,7 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
           transaction_code: transactionGalaxPay.authorizationCode,
         };
 
-        const documentRef = firestore.doc(`${firestoreColl}/${orderId}`);
+        const documentRef = getFirestore().doc(`${firestoreColl}/${orderId}`);
         if (documentRef) {
           documentRef.set({
             subscriptionLabel: plan?.label ? plan.label : 'Plano',
