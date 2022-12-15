@@ -1,4 +1,4 @@
-import type { GalaxpayApp } from '../../../types/configApp';
+import type { GalaxpayApp } from '../../../types/config-app';
 // import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
 import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
 

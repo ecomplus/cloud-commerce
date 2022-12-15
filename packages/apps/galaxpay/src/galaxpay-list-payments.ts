@@ -1,7 +1,7 @@
 import type { AppModuleBody } from '@cloudcommerce/types';
 import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
 import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
-import type { GalaxpayApp } from '../types/configApp';
+import type { GalaxpayApp } from '../types/config-app';
 import logger from 'firebase-functions/logger';
 import { readFile, responseError, isSandbox } from './functions-lib/utils';
 import { handleGateway, discountPlan } from './functions-lib/galaxpay/handle-plans';
