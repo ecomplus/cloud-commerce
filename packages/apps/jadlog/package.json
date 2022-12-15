@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/app-jadlog",
   "type": "module",
   "version": "0.0.0",
-  "description": "E-Com Plus Cloud Commerce",
+  "description": "E-Com Plus Cloud Commerce  app for Jadlog shipping calculation",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
