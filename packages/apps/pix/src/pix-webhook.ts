@@ -2,7 +2,7 @@
 import type { Request, Response } from 'firebase-functions';
 import '@cloudcommerce/firebase/lib/init';
 import api from '@cloudcommerce/api';
-import * as logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 import { getFirestore } from 'firebase-admin/firestore';
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
