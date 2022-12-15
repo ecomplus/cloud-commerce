@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/app-jadlog": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@google-cloud/pubsub": "^3.2.1",
     "firebase-admin": "^11.3.0",
