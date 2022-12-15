@@ -34,10 +34,10 @@ export default class GalaxPay {
         .doc(`${firestoreColl}/${hashLogin}`);
     }
 
-    let hashPartner: any;
+    let hashPartner: string | undefined;
 
     if (ID_GALAXPAY_PARTNER && HASH_GALAXPAY_PARTNER) {
-      Buffer.from(`${ID_GALAXPAY_PARTNER}:${HASH_GALAXPAY_PARTNER}`).toString('base64');
+      hashPartner = Buffer.from(`${ID_GALAXPAY_PARTNER}:${HASH_GALAXPAY_PARTNER}`).toString('base64');
     }
 
     this.preparing = new Promise((resolve, reject) => {

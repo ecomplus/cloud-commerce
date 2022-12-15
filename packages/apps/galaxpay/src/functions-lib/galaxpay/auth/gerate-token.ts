@@ -25,7 +25,7 @@ const gereteToken = (
       })
       .catch((err) => {
         if (!isRetry && err.response && err.response.status >= 429) {
-          setTimeout(() => request(true), 7000);
+          setTimeout(() => request(true), 700);
         }
         reject(err);
       });
