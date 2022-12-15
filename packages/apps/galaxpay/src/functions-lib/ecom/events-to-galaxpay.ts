@@ -54,7 +54,11 @@ const handleApiEvent: ApiEventHandler = async ({
               } catch (err: any) {
                 const statusCode = err.response?.status;
                 if (statusCode === 404) {
-                  logger.warn('> (App:GalaxPay): Subscription not fount in GalaxPay');
+                  logger.warn('> (App:GalaxPay): Subscription not found in GalaxPay');
+                  return null;
+                }
+                if (statusCode === 401 || statusCode === 403) {
+                  logger.warn('> (App:GalaxPay): Unauthorized subscription deletion request');
                   return null;
                 }
                 throw err;
