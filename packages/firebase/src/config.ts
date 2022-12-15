@@ -80,6 +80,9 @@ const mergeConfig = {
     infinitePay: {
       appId: 110373,
     },
+    jadlog: {
+      appId: 115229,
+    },
     galaxPay: {
       appId: 123188,
       events: galaxPayEvents,
