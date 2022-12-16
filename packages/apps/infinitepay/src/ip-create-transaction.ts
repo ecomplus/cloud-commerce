@@ -1,7 +1,7 @@
 import type { AppModuleBody } from '@cloudcommerce/types';
 import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
 import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
-import type { Firestore } from 'firebase-admin/firestore';
+import { getFirestore } from 'firebase-admin/firestore';
 import config from '@cloudcommerce/firebase/lib/config';
 import logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';
@@ -115,7 +115,7 @@ const handleError = (
   return responseError(404, errCode, message);
 };
 
-export default async (appData: AppModuleBody, firestore: Firestore) => {
+export default async (appData: AppModuleBody) => {
   const locationId = config.get().httpsFunctionOptions.region;
   const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
   // body was already pre-validated on @/bin/web.js
@@ -389,7 +389,7 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
           updated_at: attributes.created_at || new Date().toISOString(),
         };
         const updatedAt = new Date().toISOString();
-        const documentRef = firestore.doc(`${firestoreColl}/${transactionId}`);
+        const documentRef = getFirestore().doc(`${firestoreColl}/${transactionId}`);
         if (documentRef) {
           documentRef.set({
             isSandbox,
