@@ -79,6 +79,9 @@ const mergeConfig = {
     jadlog: {
       appId: 115229,
     },
+    customPayment: {
+      appId: 108091,
+    },
   },
   cmsSettings,
 };
