@@ -79,6 +79,9 @@ const mergeConfig = {
     jadlog: {
       appId: 115229,
     },
+    loyaltyPoints: {
+      appId: 124890,
+    },
   },
   cmsSettings,
 };
