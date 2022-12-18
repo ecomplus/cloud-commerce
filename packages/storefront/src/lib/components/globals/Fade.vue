@@ -2,14 +2,20 @@
 import { computed } from 'vue';
 
 export interface Props {
+  speed?: 'default' | 'slow' | 'slower',
   slide?: 'down' | 'left' | 'right' | 'up',
   isLeaveTo?: boolean,
   isEnterFrom?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  speed: 'default',
   isLeaveTo: true,
   isEnterFrom: true,
+});
+const duration = computed(() => {
+  if (props.speed === 'default') return 'var(--transition)';
+  return `var(--transition-${props.speed})`;
 });
 const transform = computed(() => {
   switch (props.slide) {
@@ -51,7 +57,7 @@ const leaveToTransform = computed(() => {
 <style>
 .sf-fade-enter-active,
 .sf-fade-leave-active {
-  transition: opacity var(--transition), transform var(--transition);
+  transition: opacity var(--duration), transform var(--duration);
 }
 .sf-fade-enter-from {
   opacity: var(--enter-from-opacity);
@@ -65,6 +71,7 @@ const leaveToTransform = computed(() => {
 
 <style scoped>
 [class*=sf-fade] {
+  --duration: v-bind(duration);
   --enter-from-opacity: v-bind(enterFromOpacity);
   --leave-to-opacity: v-bind(leaveToOpacity);
   --enter-from-transform: v-bind(enterFromTransform);
