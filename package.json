@@ -7,7 +7,7 @@
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "engines": {
-    "node": ">=16",
+    "node": ">=18",
     "pnpm": ">=7"
   },
   "scripts": {
@@ -40,7 +40,6 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-vue": "^9.8.0",
     "husky": "^8.0.2",
-    "node-fetch": "^3.3.0",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.1",
     "turbo": "^1.6.3",
@@ -52,7 +51,9 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "ignoreMissing": ["astro"]
+      "ignoreMissing": [
+        "astro"
+      ]
     }
   }
 }

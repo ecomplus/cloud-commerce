@@ -1,7 +1,6 @@
 /* eslint-disable no-console, import/no-extraneous-dependencies */
 
 import { test, expect } from 'vitest';
-import '../fetch-polyfill';
 import api, { ApiError } from '../src/api';
 
 const productId = '618041aa239b7206d3fc06de';
