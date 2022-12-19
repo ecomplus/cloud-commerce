@@ -417,7 +417,7 @@ importers:
   packages/ssr:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.1
+      '@astrojs/node': ^4.0.0
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/i18n': workspace:*
@@ -431,7 +431,7 @@ importers:
       vue: ^3.2.45
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.1_astro@1.7.1
+      '@astrojs/node': 4.0.0_astro@1.7.1
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/firebase': link:../firebase
       '@cloudcommerce/i18n': link:../i18n
@@ -448,7 +448,7 @@ importers:
   packages/storefront:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.1
+      '@astrojs/node': ^4.0.0
       '@astrojs/partytown': ^1.0.2
       '@astrojs/prefetch': ^0.1.1
       '@astrojs/vue': ^1.2.2
@@ -477,7 +477,7 @@ importers:
       vue-bind-once: ^0.1.1
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.1_astro@1.7.1
+      '@astrojs/node': 4.0.0_astro@1.7.1
       '@astrojs/partytown': 1.0.2
       '@astrojs/prefetch': 0.1.1
       '@astrojs/vue': 1.2.2_4xplmbtffd47tdi237lkhkyj4y
@@ -637,10 +637,10 @@ packages:
       vfile-message: 3.1.2
     dev: false
 
-  /@astrojs/node/3.1.1_astro@1.7.1:
-    resolution: {integrity: sha512-EWfsvCtOGvN1ugpxhiW4sr0xD8xUGltFOcU/ysOHdVpP6WXWQUTZbYbqDo+fgYhYHksLIcBLxg8vLi+gBQMA1Q==}
+  /@astrojs/node/4.0.0_astro@1.7.1:
+    resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
     peerDependencies:
-      astro: ^1.6.15
+      astro: ^1.7.0
     dependencies:
       '@astrojs/webapi': 1.1.1
       astro: 1.7.1

@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.12.1",
-    "@astrojs/node": "^3.1.1",
+    "@astrojs/node": "^4.0.0",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
