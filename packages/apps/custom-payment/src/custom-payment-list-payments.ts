@@ -1,6 +1,4 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
-import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
+import type { AppModuleBody, ListPaymentsParams, ListPaymentsResponse } from '@cloudcommerce/types';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 
