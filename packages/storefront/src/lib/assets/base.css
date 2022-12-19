@@ -9,6 +9,8 @@
     SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-family: var(--font-sans);
   --transition: .15s ease-in-out;
+  --transition-slow: .25s ease-in-out;
+  --transition-slower: .45s ease-in-out;
   --c-on-dark: rgb(255, 255, 255);
   --c-on-light: rgb(0, 0, 0);
   --c-background: #fff;
@@ -27,6 +29,8 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --transition: 0s;
+    --transition-slow: 0s;
+    --transition-slower: .15s linear;
   }
 }
 

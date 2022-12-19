@@ -1,7 +1,7 @@
 import type { AppModuleBody } from '@cloudcommerce/types';
-import type{ CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
-import type{ CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
-import type { Firestore } from 'firebase-admin/firestore';
+import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
+import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
+import { getFirestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
@@ -19,7 +19,7 @@ const parsePaymentStatus = (status: string) => {
   }
 };
 
-export default async (appData: AppModuleBody, firestore:Firestore) => {
+export default async (appData: AppModuleBody) => {
   const locationId = config.get().httpsFunctionOptions.region;
   const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
   // body was already pre-validated on @/bin/web.js
@@ -30,7 +30,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
   const configApp = { ...application.data, ...application.hidden_data };
   const notificationUrl = `${baseUri}/mercadopago-webhook`;
 
-  let token: string| undefined;
+  let token: string | undefined;
   let paymentMethodId: string;
   const isPix = params.payment_method.code === 'account_deposit';
   if (params.credit_card && params.credit_card.hash) {
@@ -62,7 +62,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
     area_code: buyer.phone.number.substring(0, 2),
     number: buyer.phone.number.substring(2, 11),
   };
-  const additionalInfo: {[key:string]: any} = {
+  const additionalInfo: { [key: string]: any } = {
     items: [],
     payer: {
       first_name: buyer.fullname.replace(/\s.*/, ''),
@@ -143,7 +143,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
   logger.log('>data: ', JSON.stringify(payment));
 
   try {
-  // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post
+    // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post
     const { data } = await axios({
       url: 'https://api.mercadopago.com/v1/payments',
       method: 'post',
@@ -160,7 +160,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
       let isSaveRetry = false;
       const saveToDb = () => {
         return new Promise((resolve, reject) => {
-          firestore.collection('mercadopagoPayments')
+          getFirestore().collection('mercadopagoPayments')
             .doc(String(data.id))
             .set({
               transaction_code: data.id,
@@ -222,7 +222,7 @@ export default async (appData: AppModuleBody, firestore:Firestore) => {
           };
         }
       } else if (!isPix && data.transaction_details
-          && data.transaction_details.external_resource_url) {
+        && data.transaction_details.external_resource_url) {
         transaction.payment_link = data.transaction_details.external_resource_url;
         transaction.banking_billet = {
           link: transaction.payment_link,

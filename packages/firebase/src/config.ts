@@ -15,6 +15,15 @@ const emailsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const galaxPayEvents: ApiEventName[] = [
+  'orders-cancelled',
+];
+
+const loyaltyPointsEvents: ApiEventName[] = [
+  'orders-new',
+  'orders-anyStatusSet',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -79,8 +88,16 @@ const mergeConfig = {
     jadlog: {
       appId: 115229,
     },
+    galaxPay: {
+      appId: 123188,
+      events: galaxPayEvents,
+    },
+    customPayment: {
+      appId: 108091,
+    },
     loyaltyPoints: {
       appId: 124890,
+      events: loyaltyPointsEvents,
     },
   },
   cmsSettings,

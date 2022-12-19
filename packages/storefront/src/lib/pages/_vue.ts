@@ -1,5 +1,7 @@
 import type { App } from 'vue';
 import { i18n, formatMoney } from '@ecomplus/utils';
+// @ts-ignore
+import Fade from '@@components/globals/Fade.vue';
 
 export default (app: App) => {
   app.use({
@@ -13,4 +15,5 @@ export default (app: App) => {
       app.config.globalProperties.$formatMoney = formatMoney;
     },
   });
+  app.component('Fade', Fade);
 };

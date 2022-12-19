@@ -119,6 +119,7 @@ const genTailwindConfig = ({
         fontFamily: {
           sans: ['var(--font-sans)'],
           mono: ['var(--font-mono)'],
+          brand: ['var(--font-brand, var(--font-sans))'],
         },
       },
     },

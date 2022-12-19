@@ -26,9 +26,11 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-correios": "workspace:*",
+    "@cloudcommerce/app-custom-payment": "workspace:*",
     "@cloudcommerce/app-custom-shipping": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
+    "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-infinitepay": "workspace:*",
     "@cloudcommerce/app-jadlog": "workspace:*",
     "@cloudcommerce/app-loyalty-points": "workspace:*",
@@ -40,8 +42,8 @@
     "ajv": "^8.11.2",
     "ajv-formats": "^2.1.1",
     "axios": "^1.2.1",
-    "firebase-admin": "^11.3.0",
-    "firebase-functions": "^4.1.0",
+    "firebase-admin": "^11.4.0",
+    "firebase-functions": "^4.1.1",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {

@@ -4,5 +4,6 @@
   },
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "css.lint.unknownAtRules": "ignore"
 }
