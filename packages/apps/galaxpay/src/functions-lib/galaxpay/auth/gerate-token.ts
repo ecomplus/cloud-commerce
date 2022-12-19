@@ -4,7 +4,7 @@ import Axios from './create-axios';
 const gereteToken = (
   hashLogin: string,
   isSandbox?: boolean,
-  hashPartner?: string,
+  galaxpayPartnerHash?: string,
 ) => new Promise((resolve, reject) => {
   // https://docs.galaxpay.com.br/autenticacao
   // https://docs.galaxpay.com.br/auth/token
@@ -12,9 +12,9 @@ const gereteToken = (
   const axios = Axios(null, isSandbox);
   const request = (isRetry?: boolean) => {
     const headers = { Authorization: `Basic ${hashLogin}` };
-    if (!isSandbox && hashPartner) {
+    if (!isSandbox && galaxpayPartnerHash) {
       // logger.log('#AuthorizationPartner ');
-      Object.assign(headers, { AuthorizationPartner: hashPartner });
+      Object.assign(headers, { AuthorizationPartner: galaxpayPartnerHash });
     }
     axios.post('/token', {
       grant_type: 'authorization_code',

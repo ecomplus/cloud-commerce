@@ -5,7 +5,7 @@ import { isSandbox } from '../../utils';
 import gerateAccessToken from './gerate-token';
 import createAxios from './create-axios';
 
-const { ID_GALAXPAY_PARTNER, HASH_GALAXPAY_PARTNER } = process.env;
+const { GALAXPAY_PARTNER_ID, GALAXPAY_PARTNER_HASH } = process.env;
 
 const firestoreColl = 'galaxpayTokens';
 
@@ -34,10 +34,10 @@ export default class GalaxPay {
         .doc(`${firestoreColl}/${hashLogin}`);
     }
 
-    let hashPartner: string | undefined;
+    let galaxpayPartnerHash: string | undefined;
 
-    if (ID_GALAXPAY_PARTNER && HASH_GALAXPAY_PARTNER) {
-      hashPartner = Buffer.from(`${ID_GALAXPAY_PARTNER}:${HASH_GALAXPAY_PARTNER}`).toString('base64');
+    if (GALAXPAY_PARTNER_ID && GALAXPAY_PARTNER_HASH) {
+      galaxpayPartnerHash = Buffer.from(`${GALAXPAY_PARTNER_ID}:${GALAXPAY_PARTNER_HASH}`).toString('base64');
     }
 
     this.preparing = new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export default class GalaxPay {
 
       const handleAuth = () => {
         logger.log('>(App Galaxpay) Auth02 ');
-        gerateAccessToken(hashLogin, isSandbox, hashPartner)
+        gerateAccessToken(hashLogin, isSandbox, galaxpayPartnerHash)
           .then((accessToken) => {
             // logger.log(`>(App Galaxpay) ${hashLogin}: ${accessToken}`);
             authenticate(accessToken as string);

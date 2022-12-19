@@ -1,6 +1,4 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
-import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
+import type { AppModuleBody, CreateTransactionParams, CreateTransactionResponse } from '@cloudcommerce/types';
 import type { GalaxpayApp, GalaxPaySubscriptions } from '../types/config-app';
 import logger from 'firebase-functions/logger';
 import { getFirestore } from 'firebase-admin/firestore';

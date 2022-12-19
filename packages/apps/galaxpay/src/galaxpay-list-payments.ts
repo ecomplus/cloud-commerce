@@ -1,6 +1,4 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
-import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
+import type { AppModuleBody, ListPaymentsParams, ListPaymentsResponse } from '@cloudcommerce/types';
 import type { GalaxpayApp } from '../types/config-app';
 import logger from 'firebase-functions/logger';
 import { readFile, responseError, isSandbox } from './functions-lib/utils';
@@ -97,7 +95,7 @@ export default async (data: AppModuleBody) => {
             gateway.js_client = {
               script_uri: 'https://js.galaxpay.com.br/checkout.min.js',
               onload_expression: `window._galaxPayPublicToken="${configApp.galaxpay_public_token}";
-              window._galaxPaySandbox="${isSandbox}";
+              window._galaxPaySandbox=${isSandbox};
               ${readFile('../../assets/onload-expression.min.js')}`,
               cc_hash: {
                 function: '_galaxyHashcard',
