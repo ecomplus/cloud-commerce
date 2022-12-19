@@ -2,8 +2,8 @@ import type { AxiosInstance } from 'axios';
 import type { AppModuleBody } from '@cloudcommerce/types';
 import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
 import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
-import type { Firestore } from 'firebase-admin/firestore';
-import * as logger from 'firebase-functions/logger';
+import { getFirestore } from 'firebase-admin/firestore';
+import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import { responseError } from './pix-list-payments';
@@ -11,7 +11,6 @@ import Pix from './functions-lib/pix-auth/construtor';
 import getPfx from './functions-lib/get-certificate';
 
 const saveToDb = (
-  firestore: Firestore,
   clientId: string,
   clientSecret: string,
   pixApi: any,
@@ -20,7 +19,7 @@ const saveToDb = (
   baseUri: string,
 ) => {
   return new Promise((resolve) => {
-    firestore.doc(`pixSetup/${clientId}:${clientSecret}`).get()
+    getFirestore().doc(`pixSetup/${clientId}:${clientSecret}`).get()
       .then((documentSnapshot) => {
         if (!documentSnapshot.exists || !documentSnapshot.get('hasWebhook')) {
           const rand = String(Date.now());
@@ -60,7 +59,7 @@ const saveToDb = (
   });
 };
 
-export default async (appData: AppModuleBody, firestore: Firestore) => {
+export default async (appData: AppModuleBody) => {
   const locationId = config.get().httpsFunctionOptions.region;
   const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
   // body was already pre-validated on @/bin/web.js
@@ -213,7 +212,7 @@ export default async (appData: AppModuleBody, firestore: Firestore) => {
           transaction.payment_link = qrCodeUrl;
           transaction.notes = `<img src="${qrCodeSrc}" style="display:block;margin:0 auto">`;
 
-          await saveToDb(firestore, clientId, clientSecret, pixApi, pix.axios, configApp, baseUri);
+          await saveToDb(clientId, clientSecret, pixApi, pix.axios, configApp, baseUri);
 
           return {
             status: 200,

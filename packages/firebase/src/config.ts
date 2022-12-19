@@ -87,6 +87,9 @@ const mergeConfig = {
       appId: 123188,
       events: galaxPayEvents,
     },
+    customPayment: {
+      appId: 108091,
+    },
   },
   cmsSettings,
 };

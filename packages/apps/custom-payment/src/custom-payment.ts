@@ -1,7 +1,6 @@
 import type { AppModuleBody } from '@cloudcommerce/types';
-import '@cloudcommerce/firebase/lib/init';
-import handleListPayments from './ip-list-payments';
-import handleCreateTransaction from './ip-create-transaction';
+import handleListPayments from './custom-payment-list-payments';
+import handleCreateTransaction from './custom-payment-create-transaction';
 
 export const listPayments = async (modBody: AppModuleBody) => {
   return handleListPayments(modBody);

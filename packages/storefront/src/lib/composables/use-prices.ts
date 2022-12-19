@@ -28,13 +28,19 @@ const getPriceWithDiscount = (price: number, discount: Props['discountOption']) 
 };
 
 export default (props: Props) => {
+  const _product = computed(() => {
+    return props.product || {
+      price: props.price || 0,
+      base_price: props.basePrice,
+    };
+  });
   const hasVariedPrices = computed(() => {
-    const { variations } = props.product;
+    const { variations } = _product.value;
     if (variations) {
-      const productPrice = getPrice(props.product);
+      const productPrice = getPrice(_product.value);
       for (let i = 0; i < variations.length; i++) {
         const price = getPrice({
-          ...props.product,
+          ..._product.value,
           ...variations[i],
         });
         if (price > productPrice) {
@@ -48,7 +54,7 @@ export default (props: Props) => {
     return modulesInfo.apply_discount.available_extra_discount;
   });
   const salePrice = computed(() => {
-    const price = props.price || getPrice(props.product);
+    const price = getPrice(_product.value);
     const discount = extraDiscount.value;
     if (discount && (!discount.min_amount || price > discount.min_amount)) {
       return getPriceWithDiscount(price, discount);
@@ -56,13 +62,10 @@ export default (props: Props) => {
     return price;
   });
   const comparePrice = computed(() => {
-    if (props.basePrice) {
-      return props.basePrice;
+    if (checkOnPromotion(_product.value)) {
+      return _product.value.base_price as number;
     }
-    if (checkOnPromotion(props.product)) {
-      return props.product.base_price as number;
-    }
-    const price = props.price || getPrice(props.product);
+    const price = getPrice(_product.value);
     if (price > salePrice.value) {
       return price;
     }

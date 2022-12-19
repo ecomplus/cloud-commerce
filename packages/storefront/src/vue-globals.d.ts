@@ -17,6 +17,11 @@ declare module '@vue/runtime-core' {
     };
     $formatMoney: typeof import('@ecomplus/utils')['formatMoney'];
   }
+
+  export interface GlobalComponents {
+    // @ts-ignore
+    Fade: typeof import('@@components/globals/Fade.vue')['default']
+  }
 }
 
 export {}

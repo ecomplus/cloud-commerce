@@ -1,5 +1,4 @@
-/* eslint-disable import/prefer-default-export, import/no-unresolved, import/first */
-import '@cloudcommerce/api/fetch-polyfill';
+/* eslint-disable import/prefer-default-export, import/first */
 import { initializeApp } from 'firebase-admin/app';
 
 initializeApp();

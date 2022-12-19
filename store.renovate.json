@@ -51,5 +51,6 @@
       "semanticCommitType": "fix",
       "groupName": "@ecomplus non-major"
     }
-  ]
+  ],
+  "ignoreDeps": ["node", "@astrojs/image", "@astrojs/node"]
 }

@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies, no-unused-vars */
+/* eslint-disable */
 
 import fetch, {
   Blob,
