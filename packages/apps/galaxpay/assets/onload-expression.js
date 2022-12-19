@@ -5,7 +5,7 @@
       const token = window._galaxPayPublicToken;
 
       // !window._galaxPaySandbox // false = sandbox, true = production
-      const isLive = !window._galaxPaySandbox || true;
+      const isLive = !window._galaxPaySandbox;
       const galaxPay = new GalaxPay(token, isLive);
       const galaxpayCard = galaxPay.newCard({
         number: card.number,
