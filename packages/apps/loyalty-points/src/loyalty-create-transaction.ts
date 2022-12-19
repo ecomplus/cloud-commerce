@@ -1,10 +1,13 @@
-import type { AppModuleBody, Customers } from '@cloudcommerce/types';
-import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
-import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
+import type {
+  AppModuleBody,
+  CreateTransactionParams,
+  CreateTransactionResponse,
+  Customers,
+} from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
-import getProgramId from './get-program-id';
+import getProgramId from './functions-lib/get-program-id';
 
 type UsedPointsEntries = Exclude<Customers['loyalty_points_entries'], undefined>[number]
   & { original_active_points: number }

@@ -1,7 +1,9 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
-import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
-import getProgramId from './get-program-id';
+import type {
+  AppModuleBody,
+  ListPaymentsResponse,
+  ListPaymentsParams,
+} from '@cloudcommerce/types';
+import getProgramId from './functions-lib/get-program-id';
 
 export default (data: AppModuleBody) => {
   const { application } = data;

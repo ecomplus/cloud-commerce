@@ -3,7 +3,11 @@
   "type": "module",
   "version": "0.0.0",
   "description": "E-Com Plus Cloud Commerce app to handle simple loyalty points programs",
-  "main": "lib/index.js",
+  "main": "lib/loyalty-points.js",
+  "exports": {
+    ".": "./lib/loyalty-points.js",
+    "./events": "./lib/loyalty-points-events.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
