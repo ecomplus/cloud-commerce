@@ -15,6 +15,10 @@ const emailsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const galaxPayEvents: ApiEventName[] = [
+  'orders-cancelled',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -78,6 +82,10 @@ const mergeConfig = {
     },
     jadlog: {
       appId: 115229,
+    },
+    galaxPay: {
+      appId: 123188,
+      events: galaxPayEvents,
     },
     customPayment: {
       appId: 108091,
