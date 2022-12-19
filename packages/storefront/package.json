@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.12.1",
-    "@astrojs/node": "^3.1.1",
+    "@astrojs/node": "^4.0.0",
     "@astrojs/partytown": "^1.0.2",
     "@astrojs/prefetch": "^0.1.1",
     "@astrojs/vue": "^1.2.2",
