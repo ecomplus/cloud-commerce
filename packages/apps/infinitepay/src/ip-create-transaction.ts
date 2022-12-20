@@ -3,6 +3,7 @@ import type {
   CreateTransactionParams,
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
+import { getFirestore } from 'firebase-admin/firestore';
 import config from '@cloudcommerce/firebase/lib/config';
 import logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';

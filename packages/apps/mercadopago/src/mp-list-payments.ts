@@ -132,7 +132,8 @@ export default (data: AppModuleBody) => {
         }
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
-          onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");${fs.readFileSync(path.join(__dirname, '../../assets/onload-expression.min.js'), 'utf8')}`,
+          onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");
+          ${fs.readFileSync(path.join(__dirname, '../../assets/onload-expression.min.js'), 'utf8')}`,
           cc_brand: {
             function: '_mpBrand',
             is_promise: true,
