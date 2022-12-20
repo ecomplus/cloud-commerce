@@ -1,7 +1,8 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
-import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
-import { getFirestore } from 'firebase-admin/firestore';
+import type {
+  AppModuleBody,
+  CreateTransactionParams,
+  CreateTransactionResponse,
+} from '@cloudcommerce/types';
 import config from '@cloudcommerce/firebase/lib/config';
 import logger from 'firebase-functions/logger';
 import IPAxios from './functions-lib/ip-auth/create-access';
