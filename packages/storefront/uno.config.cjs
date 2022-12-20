@@ -119,6 +119,7 @@ const genUnoCSSConfig = ({
         extraProperties: {
           display: 'inline-block',
           'vertical-align': 'middle',
+          'margin-bottom': '0.22rem',
         },
       }),
       presetTypography(),
