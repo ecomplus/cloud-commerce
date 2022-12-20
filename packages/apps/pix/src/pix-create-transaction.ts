@@ -1,7 +1,9 @@
 import type { AxiosInstance } from 'axios';
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
-import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
+import type {
+  AppModuleBody,
+  CreateTransactionParams,
+  CreateTransactionResponse,
+} from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';

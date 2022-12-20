@@ -1,4 +1,8 @@
-import type { AppModuleBody, ListPaymentsParams, ListPaymentsResponse } from '@cloudcommerce/types';
+import type {
+  AppModuleBody,
+  ListPaymentsParams,
+  ListPaymentsResponse,
+} from '@cloudcommerce/types';
 import type { GalaxpayApp } from '../types/config-app';
 import logger from 'firebase-functions/logger';
 import { readFile, responseError, isSandbox } from './functions-lib/utils';

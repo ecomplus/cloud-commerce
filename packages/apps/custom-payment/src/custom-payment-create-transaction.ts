@@ -1,4 +1,8 @@
-import type { AppModuleBody, CreateTransactionParams, CreateTransactionResponse } from '@cloudcommerce/types';
+import type {
+  AppModuleBody,
+  CreateTransactionParams,
+  CreateTransactionResponse,
+} from '@cloudcommerce/types';
 
 export default async (appData: AppModuleBody) => {
   // treat module request body
