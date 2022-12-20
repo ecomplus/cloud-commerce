@@ -1,6 +1,7 @@
 /* eslint-disable */
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
+import type { FormatPercentage } from '@@sf/pages/_vue';
 
 type Dictionary = Omit<typeof import('@@i18n'),
   'i19StoreApiResources' | 'i19ApiActions' | 'i19TransactionsType' | 'i19StateRegister' |
@@ -11,11 +12,12 @@ type Dictionary = Omit<typeof import('@@i18n'),
   'i19ChannelType' | 'i19CancelReason'>
 
 declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
+  export interface ComponentCustomProperties {
     $t: Dictionary & {
       (dict: string | Record<string, string>, lang?: string): string;
     };
-    $formatMoney: typeof import('@ecomplus/utils')['formatMoney'];
+    $money: typeof import('@ecomplus/utils')['formatMoney'];
+    $percentage: FormatPercentage;
   }
 
   export interface GlobalComponents {
