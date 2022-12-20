@@ -235,6 +235,15 @@ importers:
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
+  packages/apps/custom-payment:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+
   packages/apps/custom-shipping:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -286,6 +295,25 @@ importers:
       axios: 1.2.1
     devDependencies:
       '@cloudcommerce/types': link:../../types
+
+  packages/apps/galaxpay:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.9.0
+      axios: ^1.2.1
+      firebase-admin: ^11.3.0
+      firebase-functions: ^4.1.0
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/firebase': link:../../firebase
+      axios: 1.2.1
+      firebase-admin: 11.4.0_@firebase+app-types@0.9.0
+      firebase-functions: 4.1.1_firebase-admin@11.4.0
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.9.0
 
   packages/apps/infinitepay:
     specifiers:
@@ -451,6 +479,7 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/app-emails': workspace:*
+      '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
       '@cloudcommerce/app-pagarme': workspace:*
@@ -465,6 +494,7 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/app-emails': link:../apps/emails
+      '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
       '@cloudcommerce/app-pagarme': link:../apps/pagarme
@@ -512,9 +542,11 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/app-correios': workspace:*
+      '@cloudcommerce/app-custom-payment': workspace:*
       '@cloudcommerce/app-custom-shipping': workspace:*
       '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/app-frenet': workspace:*
+      '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
       '@cloudcommerce/app-jadlog': workspace:0.0.0
       '@cloudcommerce/app-mercadopago': workspace:*
@@ -534,9 +566,11 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/app-correios': link:../apps/correios
+      '@cloudcommerce/app-custom-payment': link:../apps/custom-payment
       '@cloudcommerce/app-custom-shipping': link:../apps/custom-shipping
       '@cloudcommerce/app-discounts': link:../apps/discounts
       '@cloudcommerce/app-frenet': link:../apps/frenet
+      '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
       '@cloudcommerce/app-jadlog': link:../apps/jadlog
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
@@ -895,6 +929,9 @@ packages:
     resolution: {integrity: sha512-EWfsvCtOGvN1ugpxhiW4sr0xD8xUGltFOcU/ysOHdVpP6WXWQUTZbYbqDo+fgYhYHksLIcBLxg8vLi+gBQMA1Q==}
     peerDependencies:
       astro: ^1.6.15
+    peerDependenciesMeta:
+      astro:
+        optional: true
     dependencies:
       '@astrojs/webapi': 1.1.1
       send: 0.18.0
@@ -906,6 +943,9 @@ packages:
     resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
     peerDependencies:
       astro: ^1.7.0
+    peerDependenciesMeta:
+      astro:
+        optional: true
     dependencies:
       '@astrojs/webapi': 1.1.1
       astro: 1.7.1
