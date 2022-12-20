@@ -14,3 +14,5 @@ export * from '@cloudcommerce/app-pix/webhook';
 export * from '@cloudcommerce/app-infinitepay/webhook';
 
 export * from '@cloudcommerce/app-galaxpay/events';
+
+export * from '@cloudcommerce/app-frenet/events';
