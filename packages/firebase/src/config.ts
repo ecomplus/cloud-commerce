@@ -19,6 +19,10 @@ const galaxPayEvents: ApiEventName[] = [
   'orders-cancelled',
 ];
 
+const frenetEvents: ApiEventName[] = [
+  'orders-new',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -59,6 +63,7 @@ const mergeConfig = {
     },
     frenet: {
       appId: 1244,
+      events: frenetEvents,
     },
     tinyErp: {
       appId: 105922,
