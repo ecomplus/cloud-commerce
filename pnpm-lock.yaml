@@ -548,7 +548,7 @@ importers:
       '@cloudcommerce/app-frenet': workspace:*
       '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
-      '@cloudcommerce/app-jadlog': workspace:0.0.0
+      '@cloudcommerce/app-jadlog': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
       '@cloudcommerce/app-pagarme': workspace:*
       '@cloudcommerce/app-pix': workspace:*
@@ -710,36 +710,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.133
+      '@cloudcommerce/cli': ^0.1.0
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/firebase': ^0.1.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.133
-      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/events': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/modules': ^0.0.133
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/modules': ^0.1.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/passport': ^0.0.133
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/passport': ^0.1.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -747,16 +747,16 @@ importers:
   store/functions/ssr:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.1
-      '@cloudcommerce/api': ^0.0.133
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/i18n': ^0.0.133
-      '@cloudcommerce/ssr': ^0.0.133
-      '@cloudcommerce/storefront': ^0.0.133
-      '@cloudcommerce/types': ^0.0.133
+      '@astrojs/node': ^4.0.0
+      '@cloudcommerce/api': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/i18n': ^0.1.0
+      '@cloudcommerce/ssr': ^0.1.0
+      '@cloudcommerce/storefront': ^0.1.0
+      '@cloudcommerce/types': ^0.1.0
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.1
+      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -768,16 +768,16 @@ importers:
   store/storefront:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.1
-      '@cloudcommerce/api': ^0.0.133
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/i18n': ^0.0.133
-      '@cloudcommerce/ssr': ^0.0.133
-      '@cloudcommerce/storefront': ^0.0.133
-      '@cloudcommerce/types': ^0.0.133
+      '@astrojs/node': ^4.0.0
+      '@cloudcommerce/api': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/i18n': ^0.1.0
+      '@cloudcommerce/ssr': ^0.1.0
+      '@cloudcommerce/storefront': ^0.1.0
+      '@cloudcommerce/types': ^0.1.0
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.1
+      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
       '@cloudcommerce/ssr': link:../../packages/ssr
@@ -927,10 +927,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@astrojs/node/3.1.1:
-    resolution: {integrity: sha512-EWfsvCtOGvN1ugpxhiW4sr0xD8xUGltFOcU/ysOHdVpP6WXWQUTZbYbqDo+fgYhYHksLIcBLxg8vLi+gBQMA1Q==}
+  /@astrojs/node/4.0.0:
+    resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
     peerDependencies:
-      astro: ^1.6.15
+      astro: ^1.7.0
     peerDependenciesMeta:
       astro:
         optional: true
