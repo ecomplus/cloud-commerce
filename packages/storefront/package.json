@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.0.133",
+  "version": "0.1.0",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "main": "src/index.js",
   "repository": {
@@ -15,9 +15,11 @@
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/storefront#readme",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "dev": "astro dev",
-    "dev:cms": "tinacms dev -c \"astro dev\"",
     "start": "astro dev --host",
     "build": "astro build",
     "build:static": "BUILD_OUTPUT=static astro build",
@@ -45,6 +47,7 @@
     "chroma-js": "^2.4.2",
     "dotenv": "^16.0.3",
     "firebase": "^9.15.0",
+    "floating-vue": "2.0.0-beta.20",
     "image-size": "^1.0.2",
     "tailwindcss": "^3.2.4",
     "unocss": "^0.47.6",

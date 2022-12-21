@@ -1,6 +1,8 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type{ ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
-import type{ ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
+import type {
+  AppModuleBody,
+  ListPaymentsParams,
+  ListPaymentsResponse,
+} from '@cloudcommerce/types';
 import * as path from 'path';
 import * as fs from 'fs';
 import url from 'url';
@@ -66,7 +68,7 @@ export default (data: AppModuleBody) => {
 
         // fix local amount object
         const maxDiscount = amount[discount.apply_at || 'subtotal'];
-        let discountValue:number;
+        let discountValue: number;
         if (discount.type === 'percentage') {
           discountValue = (maxDiscount * discount.value) / 100;
         } else {
@@ -111,7 +113,7 @@ export default (data: AppModuleBody) => {
       } else {
         label = paymentMethod === 'account_deposit' ? 'Pix' : 'Boleto bancário';
       }
-      const gateway:Gateway = {
+      const gateway: Gateway = {
         label,
         icon: methodConfig.icon,
         text: methodConfig.text,
@@ -130,8 +132,8 @@ export default (data: AppModuleBody) => {
         }
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
-          onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");${
-            fs.readFileSync(path.join(__dirname, '../../assets/onload-expression.min.js'), 'utf8')}`,
+          onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");
+          ${fs.readFileSync(path.join(__dirname, '../../assets/onload-expression.min.js'), 'utf8')}`,
           cc_brand: {
             function: '_mpBrand',
             is_promise: true,

@@ -123,11 +123,13 @@ export default (props: Props) => {
       return props.loyaltyPointsProgram;
     }
     const pointsPrograms = modulesInfo.list_payments.loyalty_points_programs;
-    const programIds = Object.keys(pointsPrograms);
-    for (let i = 0; i < programIds.length; i++) {
-      const program = pointsPrograms[i];
-      if (program && program.earn_percentage > 0) {
-        return program;
+    if (pointsPrograms) {
+      const programIds = Object.keys(pointsPrograms);
+      for (let i = 0; i < programIds.length; i++) {
+        const program = pointsPrograms[i];
+        if (program && program.earn_percentage > 0) {
+          return program;
+        }
       }
     }
     return { ratio: 0 };
@@ -138,8 +140,15 @@ export default (props: Props) => {
   const pointsProgramName = computed(() => {
     return pointsProgramObject.value.name || '';
   });
+  const earnPointsPercentage = computed(() => {
+    return pointsProgramObject.value.earn_percentage || 0;
+  });
   const earnPointsFactor = computed(() => {
-    return (pointsProgramObject.value.earn_percentage || 0) / 100;
+    return earnPointsPercentage.value / 100;
+  });
+  const pointsCashback = computed(() => {
+    return earnPointsFactor.value > 0
+      ? salePrice.value * earnPointsFactor.value : 0;
   });
 
   return {
@@ -148,6 +157,7 @@ export default (props: Props) => {
     comparePrice,
     installmentsObject,
     installmentsNumber,
+    monthlyInterest,
     installmentValue,
     discountObject,
     discountLabel,
@@ -155,6 +165,8 @@ export default (props: Props) => {
     pointsProgramObject,
     pointsMinPrice,
     pointsProgramName,
+    earnPointsPercentage,
     earnPointsFactor,
+    pointsCashback,
   };
 };
