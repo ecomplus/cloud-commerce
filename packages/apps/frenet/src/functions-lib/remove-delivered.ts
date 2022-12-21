@@ -6,11 +6,11 @@ const removeDeliveredToFirestore = async () => {
   // eslint-disable-next-line no-async-promise-executor
   const job = new Promise(async (resolve, reject) => {
     try {
-      const codes: TrackingDoc[] = await db.trackingCodes.getAllDelivered() as TrackingDoc[];
+      const codes: TrackingDoc[] = await db.getAllDelivered() as TrackingDoc[];
       if (codes.length > 0) {
         codes.forEach(async (code) => {
           try {
-            await db.trackingCodes.remove(code.trackingCode, code.serviceCode);
+            await db.remove(code.trackingCode, code.serviceCode);
             logger.log('> (App Frenet) Code removed, delivered status', code);
           } catch (err) {
             logger.error('> (App Frenet) => TrackingCodesRemoveErr =>', err);

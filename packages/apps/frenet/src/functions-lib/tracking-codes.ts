@@ -35,7 +35,7 @@ const handleTrackingCodes = async () => {
     let codes: TrackingDoc[] | undefined;
 
     try {
-      codes = await db.trackingCodes.getAll() as TrackingDoc[];
+      codes = await db.getAll() as TrackingDoc[];
     } catch (err: any) {
       if (err.name !== 'NoTrackingCodesForUpdate') {
         reject(err);
@@ -80,7 +80,7 @@ const handleTrackingCodes = async () => {
               if (startWithError || diffInDays(code.createdAt) >= 15) {
                 // remove pra evitar flod com errors
                 try {
-                  await db.trackingCodes.remove(code.trackingCode, code.serviceCode);
+                  await db.remove(code.trackingCode, code.serviceCode);
                   logger.log('> (App Frenet) Code removed, error detected in \'trackingData\'', code);
                 } catch (err) {
                   logger.error('> (App Frenet) => TrackingCodesRemoveErr =>', err);
@@ -122,7 +122,7 @@ const handleTrackingCodes = async () => {
                   trackingEvent.date,
                 );
 
-                await db.trackingCodes.update(trackingEvent.status, code.trackingCode);
+                await db.update(trackingEvent.status, code.trackingCode);
 
                 logger.log(`> (App Frenet) Novo Evento => orderId #${code.orderId}, 
                 code: ${code.trackingCode}  lastStatus: ${code.trackingStatus}  

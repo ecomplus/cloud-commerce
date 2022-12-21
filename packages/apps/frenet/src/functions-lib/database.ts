@@ -7,8 +7,8 @@ const save = (
   orderId: string,
   trackingStatus: string,
   trackingCode: string,
-  serviceCode: string,
-) => {
+  serviceCode?: string,
+) => new Promise((resolve) => {
   const documentRef = getFirestore().doc(`${firestoreColl}/${trackingCode}`);
   if (documentRef) {
     documentRef.set({
@@ -17,15 +17,15 @@ const save = (
       trackingCode,
       serviceCode,
       createdAt: new Date(),
-    })
+    }).then(() => resolve(true))
       .catch(logger.error);
   }
-};
+});
 
 const get = async (
   orderId: string,
   trackingCode: string,
-) => new Promise((resolve) => {
+) => new Promise((resolve, reject) => {
   getFirestore().doc(`${firestoreColl}/${trackingCode}`)
     .get()
     .then((documentSnapshot) => {
@@ -39,6 +39,10 @@ const get = async (
       } else {
         resolve(null);
       }
+    })
+    .catch((err: any) => {
+      err.name = 'TrackingCodeNotFound';
+      reject(err);
     });
 });
 
@@ -133,17 +137,17 @@ const getAllDelivered = () => new Promise((resolve, reject) => {
     });
 });
 
-export default {
-  trackingCodes: {
-    save,
-    get,
-    clear,
-    remove,
-    update,
-    getAll,
-    getAllDelivered,
-  },
+const db = {
+  save,
+  get,
+  clear,
+  remove,
+  update,
+  getAll,
+  getAllDelivered,
 };
+
+export default db;
 
 export type TrackingDoc = {
   orderId: string,
