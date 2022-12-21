@@ -1,6 +1,8 @@
-import type { AppModuleBody } from '@cloudcommerce/types';
-import type { ListPaymentsParams } from '@cloudcommerce/types/modules/list_payments:params';
-import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
+import type {
+  AppModuleBody,
+  ListPaymentsParams,
+  ListPaymentsResponse,
+} from '@cloudcommerce/types';
 import * as path from 'path';
 import * as fs from 'fs';
 import url from 'url';

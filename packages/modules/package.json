@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/modules",
   "type": "module",
-  "version": "0.0.133",
+  "version": "0.1.0",
   "description": "E-Com Plus Cloud Commerce modules API",
   "main": "lib/index.cjs",
   "exports": {
@@ -32,7 +32,7 @@
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-infinitepay": "workspace:*",
-    "@cloudcommerce/app-jadlog": "workspace:0.0.0",
+    "@cloudcommerce/app-jadlog": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",

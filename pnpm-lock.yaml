@@ -235,6 +235,15 @@ importers:
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
+  packages/apps/custom-payment:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/types': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+
   packages/apps/custom-shipping:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -286,6 +295,25 @@ importers:
       axios: 1.2.1
     devDependencies:
       '@cloudcommerce/types': link:../../types
+
+  packages/apps/galaxpay:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.9.0
+      axios: ^1.2.1
+      firebase-admin: ^11.3.0
+      firebase-functions: ^4.1.0
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/firebase': link:../../firebase
+      axios: 1.2.1
+      firebase-admin: 11.4.0_@firebase+app-types@0.9.0
+      firebase-functions: 4.1.1_firebase-admin@11.4.0
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.9.0
 
   packages/apps/infinitepay:
     specifiers:
@@ -451,6 +479,7 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/app-emails': workspace:*
+      '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
       '@cloudcommerce/app-pagarme': workspace:*
@@ -465,6 +494,7 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/app-emails': link:../apps/emails
+      '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
       '@cloudcommerce/app-pagarme': link:../apps/pagarme
@@ -512,11 +542,13 @@ importers:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/app-correios': workspace:*
+      '@cloudcommerce/app-custom-payment': workspace:*
       '@cloudcommerce/app-custom-shipping': workspace:*
       '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/app-frenet': workspace:*
+      '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
-      '@cloudcommerce/app-jadlog': workspace:0.0.0
+      '@cloudcommerce/app-jadlog': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
       '@cloudcommerce/app-pagarme': workspace:*
       '@cloudcommerce/app-pix': workspace:*
@@ -534,9 +566,11 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
       '@cloudcommerce/app-correios': link:../apps/correios
+      '@cloudcommerce/app-custom-payment': link:../apps/custom-payment
       '@cloudcommerce/app-custom-shipping': link:../apps/custom-shipping
       '@cloudcommerce/app-discounts': link:../apps/discounts
       '@cloudcommerce/app-frenet': link:../apps/frenet
+      '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
       '@cloudcommerce/app-jadlog': link:../apps/jadlog
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
@@ -628,6 +662,7 @@ importers:
       chroma-js: ^2.4.2
       dotenv: ^16.0.3
       firebase: ^9.15.0
+      floating-vue: 2.0.0-beta.20
       image-size: ^1.0.2
       tailwindcss: ^3.2.4
       unocss: ^0.47.6
@@ -655,6 +690,7 @@ importers:
       chroma-js: 2.4.2
       dotenv: 16.0.3
       firebase: 9.15.0
+      floating-vue: 2.0.0-beta.20_vue@3.2.45
       image-size: 1.0.2
       tailwindcss: 3.2.4
       unocss: 0.47.6_vite@3.2.5
@@ -674,36 +710,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.133
+      '@cloudcommerce/cli': ^0.1.0
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/firebase': ^0.1.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.133
-      '@cloudcommerce/firebase': ^0.0.133
+      '@cloudcommerce/events': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/modules': ^0.0.133
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/modules': ^0.1.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/passport': ^0.0.133
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/passport': ^0.1.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -711,16 +747,16 @@ importers:
   store/functions/ssr:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.1
-      '@cloudcommerce/api': ^0.0.133
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/i18n': ^0.0.133
-      '@cloudcommerce/ssr': ^0.0.133
-      '@cloudcommerce/storefront': ^0.0.133
-      '@cloudcommerce/types': ^0.0.133
+      '@astrojs/node': ^4.0.0
+      '@cloudcommerce/api': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/i18n': ^0.1.0
+      '@cloudcommerce/ssr': ^0.1.0
+      '@cloudcommerce/storefront': ^0.1.0
+      '@cloudcommerce/types': ^0.1.0
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.1
+      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -732,16 +768,16 @@ importers:
   store/storefront:
     specifiers:
       '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^3.1.1
-      '@cloudcommerce/api': ^0.0.133
-      '@cloudcommerce/firebase': ^0.0.133
-      '@cloudcommerce/i18n': ^0.0.133
-      '@cloudcommerce/ssr': ^0.0.133
-      '@cloudcommerce/storefront': ^0.0.133
-      '@cloudcommerce/types': ^0.0.133
+      '@astrojs/node': ^4.0.0
+      '@cloudcommerce/api': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/i18n': ^0.1.0
+      '@cloudcommerce/ssr': ^0.1.0
+      '@cloudcommerce/storefront': ^0.1.0
+      '@cloudcommerce/types': ^0.1.0
     dependencies:
       '@astrojs/image': 0.12.1
-      '@astrojs/node': 3.1.1
+      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
       '@cloudcommerce/ssr': link:../../packages/ssr
@@ -891,10 +927,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@astrojs/node/3.1.1:
-    resolution: {integrity: sha512-EWfsvCtOGvN1ugpxhiW4sr0xD8xUGltFOcU/ysOHdVpP6WXWQUTZbYbqDo+fgYhYHksLIcBLxg8vLi+gBQMA1Q==}
+  /@astrojs/node/4.0.0:
+    resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
     peerDependencies:
-      astro: ^1.6.15
+      astro: ^1.7.0
+    peerDependenciesMeta:
+      astro:
+        optional: true
     dependencies:
       '@astrojs/webapi': 1.1.1
       send: 0.18.0
@@ -906,6 +945,9 @@ packages:
     resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
     peerDependencies:
       astro: ^1.7.0
+    peerDependenciesMeta:
+      astro:
+        optional: true
     dependencies:
       '@astrojs/webapi': 1.1.1
       astro: 1.7.1
@@ -3305,6 +3347,16 @@ packages:
 
   /@firebase/webchannel-wrapper/0.9.0:
     resolution: {integrity: sha512-BpiZLBWdLFw+qFel9p3Zs1jD6QmH7Ii4aTDu6+vx8ShdidChZUXqDhYJly4ZjSgQh54miXbBgBrk0S+jTIh/Qg==}
+
+  /@floating-ui/core/0.3.1:
+    resolution: {integrity: sha512-ensKY7Ub59u16qsVIFEo2hwTCqZ/r9oZZFh51ivcLGHfUwTn8l1Xzng8RJUe91H/UP8PeqeBronAGx0qmzwk2g==}
+    dev: false
+
+  /@floating-ui/dom/0.1.10:
+    resolution: {integrity: sha512-4kAVoogvQm2N0XE0G6APQJuCNuErjOfPW8Ux7DFxh8+AfugWflwVJ5LDlHOwrwut7z/30NUvdtHzQ3zSip4EzQ==}
+    dependencies:
+      '@floating-ui/core': 0.3.1
+    dev: false
 
   /@google-cloud/firestore/6.4.0:
     resolution: {integrity: sha512-qhL5V8S6uIGlESQYC/TMKISlKHaM2qSACz0X15ID0s4F1NuVgSM3Z2FS10WYHdCGIwJ2C73xdLaS+ByFDsu7sg==}
@@ -7128,6 +7180,16 @@ packages:
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
+
+  /floating-vue/2.0.0-beta.20_vue@3.2.45:
+    resolution: {integrity: sha512-N68otcpp6WwcYC7zP8GeJqNZVdfvS7tEY88lwmuAHeqRgnfWx1Un8enzLxROyVnBDZ3TwUoUdj5IFg+bUT7JeA==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@floating-ui/dom': 0.1.10
+      vue: 3.2.45
+      vue-resize: 2.0.0-alpha.1_vue@3.2.45
+    dev: false
 
   /follow-redirects/1.15.2:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
@@ -11703,6 +11765,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-resize/2.0.0-alpha.1_vue@3.2.45:
+    resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.2.45
+    dev: false
 
   /vue/3.2.45:
     resolution: {integrity: sha512-9Nx/Mg2b2xWlXykmCwiTUCWHbWIj53bnkizBxKai1g61f2Xit700A1ljowpTIM11e3uipOeiPcSqnmBg6gyiaA==}

@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/ecomplus/cloud-commerce/compare/v0.0.133...v0.1.0) (2022-12-21)
+
+
+### Features
+
+* **custom-payment:** Setup custom payments app from https://github.com/ecomplus/app-custom-payment ([#93](https://github.com/ecomplus/cloud-commerce/issues/93)) ([402ea85](https://github.com/ecomplus/cloud-commerce/commit/402ea85aa8046365e4a4c033ad2ec2b2d8ed0fe3))
+* **galaxpay:** Setup Galax Pay app from https://github.com/ecomplus/app-galaxpay ([#89](https://github.com/ecomplus/cloud-commerce/issues/89)) ([4ac160a](https://github.com/ecomplus/cloud-commerce/commit/4ac160afd9e4f71bbcf8c5c59b550cdcc6a866bf))
+* **i18n:** Add `i19get$1back`, fix `i19get` pt ([d212189](https://github.com/ecomplus/cloud-commerce/commit/d212189d3debb139e522e3bb9f77a0625886a269))
+* **jadlog:** Setup Jadlog app from https://github.com/ecomplus/app-jadlog ([c3f82e2](https://github.com/ecomplus/cloud-commerce/commit/c3f82e2771dbb24509d9c4a476b6fb69182d055f))
+* **storefront:** Add global directive `v-tooltip` to default Vue instance ([3b41702](https://github.com/ecomplus/cloud-commerce/commit/3b41702503c87bcd17cc1d4e8266a168193e3184))
+* **storefront:** Add new global `Fade` component to default Vue instance ([2124406](https://github.com/ecomplus/cloud-commerce/commit/2124406d61ca4109ebb096980827717b3c025ba4))
+* **storefront:** Handle loyalty points on `usePrices` composable ([dd20816](https://github.com/ecomplus/cloud-commerce/commit/dd20816d57439b84672fc295ca03fbfb351003f6))
+* **storefront:** New `speed` prop with slow and slower options for global Fade component ([5945059](https://github.com/ecomplus/cloud-commerce/commit/5945059cc4563d667e5e878c0c3a981735d4b5b7))
+* **storefront:** Setup (almost) renderless `Prices` components, defining components API ([924dda0](https://github.com/ecomplus/cloud-commerce/commit/924dda02ab26582dac34af0ce7c239c30d4e9c56))
+* **storefront:** Setup `usePrices` composable ([f03cca4](https://github.com/ecomplus/cloud-commerce/commit/f03cca4d9af32cde56078ae4410434df5d22e272))
+* **storefront:** Update `Fade` component to change el height/width on tarnsition with slide ([9ff310e](https://github.com/ecomplus/cloud-commerce/commit/9ff310e3c70cbd09bbe074bf0acb5cb05c73429a))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#94](https://github.com/ecomplus/cloud-commerce/issues/94)) ([f5abf55](https://github.com/ecomplus/cloud-commerce/commit/f5abf55dde1e216a4c22c2a96d0bf00146eafabd))
+* **deps:** Update dependency @astrojs/node to v4 ([#95](https://github.com/ecomplus/cloud-commerce/issues/95)) ([7d69a3e](https://github.com/ecomplus/cloud-commerce/commit/7d69a3eed09230e5310b67aab1c1f5e512d5408d))
+* **modules:** Skipping not implemented (external) apps por now ([2f139b6](https://github.com/ecomplus/cloud-commerce/commit/2f139b6c15e3c9131842d89a4cfedb4a36bdfb9c))
+* **storefront:** Edit `usePrices` composable to peorperly handle optional product prop ([d528de2](https://github.com/ecomplus/cloud-commerce/commit/d528de2be354515680afa5540392539c0caf6e48))
+
 ### [0.0.133](https://github.com/ecomplus/cloud-commerce/compare/v0.0.132...v0.0.133) (2022-12-12)
 
 

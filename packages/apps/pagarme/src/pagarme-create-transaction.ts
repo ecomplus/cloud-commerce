@@ -1,6 +1,8 @@
-import type { CreateTransactionParams } from '@cloudcommerce/types/modules/create_transaction:params';
-import type { CreateTransactionResponse } from '@cloudcommerce/types/modules/create_transaction:response';
-import type { AppModuleBody } from '@cloudcommerce/types';
+import type {
+  AppModuleBody,
+  CreateTransactionParams,
+  CreateTransactionResponse,
+} from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';

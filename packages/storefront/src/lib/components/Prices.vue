@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Products, Carts, ListPaymentsResponse } from '@cloudcommerce/types';
 import usePrices from '@@sf/composables/use-prices';
+import useComponentVariant from '@@sf/composables/use-component-variant';
+import { ref } from 'vue';
 
 export interface Props {
   product?: Partial<Carts['items'][0]> & Partial<Products> & { price: Products['price'] };
@@ -9,20 +11,155 @@ export interface Props {
   isAmountTotal?: boolean,
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
+  isBig?: boolean;
+  isLiteral?: boolean;
+  hasCashback?: boolean;
+  hasPriceOptions?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  as: 'div',
-  product: () => ({ price: 0 }),
+  hasCashback: true,
+  hasPriceOptions: true,
 });
-const exposed = usePrices(props);
-const { salePrice } = exposed;
+const prices = usePrices(props);
+const {
+  hasVariedPrices,
+  salePrice,
+  comparePrice,
+  earnPointsPercentage,
+  pointsCashback,
+  installmentsNumber,
+  monthlyInterest,
+  installmentValue,
+  priceWithDiscount,
+  discountLabel,
+} = prices;
+const componentVariant = useComponentVariant(props);
+const isFade = ref(false);
+setTimeout(() => {
+  isFade.value = true;
+  setTimeout(() => {
+    isFade.value = false;
+  }, 5000);
+}, 5000);
 </script>
 
 <template>
-  <slot v-bind="exposed">
-    <div data-prices>
-      {{ salePrice }}
+  <slot v-bind="prices">
+    <div :data-sf-prices="componentVariant" class="text-base-600">
+      <slot v-if="comparePrice" name="compare" v-bind="prices">
+        <span :data-sf-prices-compare="comparePrice" class="text-base-500 mr-1">
+          <slot name="compare-pre">
+            <small v-if="isLiteral">
+              {{ `${$t.i19from} ` }}
+            </small>
+          </slot>
+          <slot name="compare-value" v-bind="prices">
+            <s>{{ $money(comparePrice) }}</s>
+          </slot>
+          <slot name="compare-post">
+            <small v-if="isLiteral">
+              {{ ` ${$t.i19to}` }}
+            </small>
+          </slot>
+        </span>
+      </slot>
+      <slot name="sale" v-bind="prices">
+        <strong :data-sf-prices-sale="salePrice" class="inline-block text-base-800">
+          <slot name="sale-pre">
+            <small v-if="hasVariedPrices">
+              {{ `${$t.i19asOf} ` }}
+            </small>
+          </slot>
+          <slot name="sale-value" v-bind="prices">
+            {{ $money(salePrice) }}
+          </slot>
+          <slot name="sale-post" />
+        </strong>
+      </slot>
+      <slot v-if="pointsCashback" name="cashback" v-bind="prices">
+        <Fade slide="down">
+          <div v-if="hasCashback" :data-sf-prices-cashback="pointsCashback">
+            <span v-tooltip.bottom="$t.i19get$1back
+              .replace('$1', $percentage(earnPointsPercentage))">
+              <slot name="cashback-pre">
+                <i class="i-arrow-uturn-left mr-1"></i>
+              </slot>
+              <slot name="cashback-value" v-bind="prices">
+                <span class="font-medium">
+                  {{ $money(pointsCashback) }}
+                </span>
+              </slot>
+              <slot name="cashback-post">
+                <small> cashback</small>
+              </slot>
+            </span>
+          </div>
+        </Fade>
+      </slot>
+      <slot v-if="installmentValue" name="installment" v-bind="prices">
+        <Fade slide="down">
+          <div v-if="hasPriceOptions" :data-sf-prices-installment="installmentValue">
+            <slot name="installment-pre">
+              <small v-if="isLiteral">
+                {{ `${$t.i19upTo} ` }}
+              </small>
+            </slot>
+            <slot name="installment-value" v-bind="prices">
+              {{ installmentsNumber }}x
+              <small v-if="isLiteral">
+                {{ ` ${$t.i19of} ` }}
+              </small>
+              <span>{{ $money(installmentValue) }}</span>
+            </slot>
+            <slot name="installment-post">
+              <small v-if="!monthlyInterest && isLiteral">
+                {{ $t.i19interestFree }}
+              </small>
+            </slot>
+          </div>
+        </Fade>
+      </slot>
+      <slot v-if="priceWithDiscount < salePrice" name="discount" v-bind="prices">
+        <Fade slide="down">
+          <div v-if="hasPriceOptions" :data-sf-prices-discount="priceWithDiscount">
+            <slot name="discount-pre">
+              <small v-if="!discountLabel">
+                {{ `${$t.i19asOf} ` }}
+              </small>
+            </slot>
+            <slot name="discount-value" v-bind="prices">
+              <span>{{ $money(priceWithDiscount) }}</span>
+            </slot>
+            <slot name="discount-post">
+              <small v-if="discountLabel">
+                {{ ` ${discountLabel}` }}
+              </small>
+            </slot>
+          </div>
+        </Fade>
+      </slot>
     </div>
   </slot>
 </template>
+
+<style>
+[data-sf-prices-compare] {
+  font-size: 87%;
+}
+[data-sf-prices-cashback],
+[data-sf-prices-installment],
+[data-sf-prices-discount] {
+  font-size: 90%;
+}
+[data-sf-prices] small {
+  @apply lowercase;
+  font-size: 92%;
+}
+[data-sf-prices~=Big] {
+  @apply text-lg;
+}
+[data-sf-prices~=Big] [data-sf-prices-sale] {
+  @apply text-5xl block;
+}
+</style>
