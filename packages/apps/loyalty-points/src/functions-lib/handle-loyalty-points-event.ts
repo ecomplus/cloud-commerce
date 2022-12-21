@@ -4,28 +4,52 @@ import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 import getProgramId from './get-program-id';
 
-const SKIP_TRIGGER_NAME = 'SkipTrigger';
 const ECHO_SUCCESS = 'SUCCESS';
 const ECHO_SKIP = 'SKIP';
-const ECHO_API_ERROR = 'STORE_API_ERR';
+
+type UsedPointsEntries = Exclude<Customers['loyalty_points_entries'], undefined>[number]
+  & { original_active_points: number }
 
 const responsePubSub = (response: string) => {
   logger.log('(App: Loyalty Points): ', response);
   return null;
 };
 
+const haveEarnedPoints = (pointsList: Customers['loyalty_points_entries'], orderId: string) => {
+  if (pointsList) {
+    let hasEarned = false;
+    for (let i = 0; i < pointsList.length; i++) {
+      const point = pointsList[i];
+      if (point.order_id === orderId) {
+        hasEarned = true;
+        break;
+      }
+    }
+    return hasEarned;
+  }
+  return false;
+};
+
+const findPointIndex = (pointsList: Customers['loyalty_points_entries'], pointEntry: UsedPointsEntries) => {
+  if (pointsList) {
+    for (let i = 0; i < pointsList.length; i++) {
+      const point = pointsList[i];
+      if (point.name === pointEntry.name) {
+        return i;
+      }
+    }
+  }
+  return null;
+};
+
 const handleLoyaltyPointsEvent = async (
   order: Orders,
-  appData: { [x: string]: any },
-  key: string,
+  programRules: any[],
 ) => {
   const orderId = order._id;
   const currentStatus = order.financial_status && order.financial_status.current;
-  let isPaid: boolean;
-  let isCancelled: boolean;
-
-  isPaid = false;
-  isCancelled = false;
+  let isPaid: boolean = false;
+  let isCancelled: boolean = false;
 
   switch (currentStatus) {
     case 'paid':
@@ -58,31 +82,19 @@ const handleLoyaltyPointsEvent = async (
       break;
   }
 
-  let programRules: string | any[];
-
   try {
     if (isPaid || isCancelled) {
       // get app configured options
-      programRules = appData.programs_rules;
-      if (
-        !Array.isArray(programRules)
-        || !programRules.length
-      ) {
-        // ignore current trigger
-        logger.info('>> ', key, ' - Ignored event [SKIP APP Loyalty Points]');
-        return null;
-      }
-
       const { amount, buyers } = order;
       const customerId = buyers && buyers[0] && buyers[0]._id;
       if (customerId) {
         const pointsList: Customers['loyalty_points_entries'] = (await api.get(
-          `customers/${customerId}/loyalty_points_entries?order_id=${orderId}`,
+          `customers/${customerId}/loyalty_points_entries`,
         )
-        ).data.result;
+        ).data;
 
         if (pointsList) {
-          const hasEarnedPoints = pointsList.length > 0;
+          const hasEarnedPoints = haveEarnedPoints(pointsList, orderId);
 
           if (isPaid && !hasEarnedPoints) {
             for (let i = 0; i < programRules.length; i++) {
@@ -109,34 +121,10 @@ const handleLoyaltyPointsEvent = async (
                     order_id: orderId,
                   } as any; // TODO: set the correct type
 
-                  const tryAddPoints = async () => {
-                    await api.post(`customers/${customerId}/loyalty_points_entries`, data);
+                  // eslint-disable-next-line no-await-in-loop
+                  await api.post(`customers/${customerId}/loyalty_points_entries`, data);
 
-                    return responsePubSub(ECHO_SUCCESS);
-                  };
-
-                  try {
-                    // eslint-disable-next-line no-await-in-loop
-                    await tryAddPoints();
-                  } catch (error: any) {
-                    if (error.response && error.response.status === 403) {
-                      // delete older points entry and retry
-
-                      // eslint-disable-next-line no-await-in-loop
-                      const pointsListFound: Customers['loyalty_points_entries'] = (await api.get(
-                        `customers/${customerId}/loyalty_points_entries?valid_thru<=
-                      ${(new Date().toISOString())}&sort=active_points&limit=1`,
-                      )).data.result;
-
-                      if (pointsListFound && pointsListFound.length) {
-                        // eslint-disable-next-line no-await-in-loop
-                        await api.delete(`customers/${customerId}/loyalty_points_entries/0`);
-                        return tryAddPoints();
-                      }
-                    } else {
-                      throw error;
-                    }
-                  }
+                  return responsePubSub(ECHO_SUCCESS);
                 }
               }
             }
@@ -144,69 +132,64 @@ const handleLoyaltyPointsEvent = async (
 
           if (isCancelled && hasEarnedPoints) {
             for (let i = 0; i < pointsList.length; i++) {
-              // eslint-disable-next-line no-await-in-loop
-              await api.delete(`customers/${customerId}/loyalty_points_entries/${i}`);
+              if (pointsList[i].order_id === orderId) {
+                // eslint-disable-next-line no-await-in-loop
+                await api.delete(`customers/${customerId}/loyalty_points_entries/${i}`);
+              }
             }
 
             return responsePubSub(ECHO_SUCCESS);
           }
         }
-      }
 
-      if (customerId && isCancelled) {
-        const documentRef = getFirestore().doc(`billedPoints/${orderId}`);
-        const documentSnapshot = await documentRef.get();
-        if (documentSnapshot.exists) {
-          const usedPointsEntries = documentSnapshot.get('usedPointsEntries');
-          documentRef.delete();
-          if (Array.isArray(usedPointsEntries)) {
-            for (let i = 0; i < usedPointsEntries.length; i++) {
-              const pointsEntry = usedPointsEntries[i];
-              const pointsToRefund = pointsEntry.original_active_points - pointsEntry.active_points;
-              if (pointsToRefund > 0) {
-                let pointsFound: Exclude<Customers['loyalty_points_entries'], undefined>[number] | undefined;
-                try {
-                  // eslint-disable-next-line no-await-in-loop
-                  pointsFound = (await api.get(
-                    `customers/${customerId}/loyalty_points_entries/${i}`,
-                  )).data;
+        if (isCancelled) {
+          const documentRef = getFirestore().doc(`billedPoints/${orderId}`);
+          const documentSnapshot = await documentRef.get();
 
-                  // response = result.response;
-                } catch (error: any) {
-                  if (!error.response || error.response.status !== 404) {
-                    throw error;
+          if (documentSnapshot.exists) {
+            const usedPointsEntries = documentSnapshot.get('usedPointsEntries') as UsedPointsEntries[];
+            documentRef.delete();
+
+            if (Array.isArray(usedPointsEntries)) {
+              for (let i = 0; i < usedPointsEntries.length; i++) {
+                const pointsEntry = usedPointsEntries[i];
+                const pointsToRefund = pointsEntry.original_active_points
+                  - pointsEntry.active_points;
+                if (pointsToRefund > 0) {
+                  const pointIndex = findPointIndex(pointsList, pointsEntry);
+
+                  if (pointIndex && pointsList) {
+                    const activePoints = pointsList[pointIndex].active_points;
+                    const body = {
+                      active_points: activePoints + pointsToRefund,
+                    };
+
+                    // eslint-disable-next-line no-await-in-loop
+                    await api.patch(
+                      `customers/${customerId}/loyalty_points_entries/${pointIndex}`,
+                      body,
+                    );
+
+                    return responsePubSub(ECHO_SUCCESS);
                   }
                 }
-
-                if (pointsFound) {
-                  const activePoints = pointsFound.active_points;
-                  const data = {
-                    active_points: activePoints + pointsToRefund,
-                  };
-
-                  // eslint-disable-next-line no-await-in-loop
-                  await api.patch(`customers/${customerId}/loyalty_points_entries/${i}`, data);
-
-                  return responsePubSub(ECHO_SUCCESS);
-                }
               }
-            }
 
-            const transaction = order.transactions
-              && order.transactions.find((transactionFound) => {
-                return transactionFound.payment_method.code === 'loyalty_points';
-              });
+              const transaction = order.transactions
+                && order.transactions.find((transactionFound) => {
+                  return transactionFound.payment_method.code === 'loyalty_points';
+                });
 
-            if (transaction) {
-              // const endpoint = `/orders/${orderId}/payments_history.json`
-              const bodyPaymentHistory = {
-                transaction_id: transaction._id,
-                date_time: new Date().toISOString(),
-                status: currentStatus?.startsWith('partially') ? 'refunded' : currentStatus,
-                customer_notified: true,
-              } as any; // TODO: incompatible type=> amount and status
+              if (transaction) {
+                const bodyPaymentHistory = {
+                  transaction_id: transaction._id,
+                  date_time: new Date().toISOString(),
+                  status: currentStatus?.startsWith('partially') ? 'refunded' : currentStatus,
+                  customer_notified: true,
+                } as any; // TODO: incompatible type=> amount and status
 
-              await api.post(`orders/${orderId}/payments_history`, bodyPaymentHistory);
+                await api.post(`orders/${orderId}/payments_history`, bodyPaymentHistory);
+              }
             }
           }
         }
@@ -215,19 +198,7 @@ const handleLoyaltyPointsEvent = async (
     }
     // not paid nor cancelled
     return responsePubSub(ECHO_SKIP);
-  } catch (err: any) {
-    if (err.name === SKIP_TRIGGER_NAME) {
-      // trigger ignored by app configuration
-      return responsePubSub(ECHO_SKIP);
-    }
-
-    const { message, response } = err;
-    // request to Store API with error response
-    // return error status code
-
-    if (response && (response.status === 401 || response.status === 403)) {
-      return responsePubSub(`${ECHO_API_ERROR} => ${message}`);
-    }
+  } catch (err) {
     logger.error('(App Loyalty Points) Error =>', err);
     throw err;
   }

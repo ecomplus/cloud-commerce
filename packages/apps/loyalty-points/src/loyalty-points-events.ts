@@ -18,16 +18,19 @@ const handleApiEvent: ApiEventHandler = async ({
   logger.info('>> ', resourceId, ' - Action: ', apiEvent.action);
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };
+  const programRules = appData.programs_rules;
+
   if (
-    Array.isArray(appData.ignore_events)
-    && appData.ignore_events.includes(evName)
+    (Array.isArray(appData.ignore_events)
+      && appData.ignore_events.includes(evName))
+    || (!Array.isArray(programRules) || !programRules.length)
   ) {
     logger.info('>> ', key, ' - Ignored event');
     return null;
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
-  return handleLoyaltyPointsEvent(apiDoc as Orders, appData, key);
+  return handleLoyaltyPointsEvent(apiDoc as Orders, programRules, key);
 };
 
 export const loyaltypoints = {
