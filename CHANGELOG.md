@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/ecomplus/cloud-commerce/compare/v0.1.0...v0.1.1) (2022-12-22)
+
+
+### Features
+
+* **loyalty-points:** Setup loyalty points payment app from https://github.com/ecomplus/app-loyalty-points  ([#92](https://github.com/ecomplus/cloud-commerce/issues/92)) ([f796092](https://github.com/ecomplus/cloud-commerce/commit/f796092efb52a22a10fb1f30e579fbc8b667097b))
+
+
+### Bug Fixes
+
+* **storefront:** Import `VTooltip` TS src (to be compiled) to prevent ESM error ([22a84f5](https://github.com/ecomplus/cloud-commerce/commit/22a84f5bbd8d548e505dfe52a7d2d9d0207fa9ba))
+
 ## [0.1.0](https://github.com/ecomplus/cloud-commerce/compare/v0.0.133...v0.1.0) (2022-12-21)
 
 
