@@ -138,77 +138,81 @@ importers:
 
   ecomplus-stores/tia-sonia:
     specifiers:
-      '@cloudcommerce/cli': ^0.0.126
+      '@cloudcommerce/cli': ^0.1.0
     dependencies:
-      '@cloudcommerce/cli': 0.0.126
+      '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/tia-sonia/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/firebase': ^0.1.0
     dependencies:
-      '@cloudcommerce/firebase': 0.0.126
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/tia-sonia/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.0.126
-      '@cloudcommerce/firebase': ^0.0.126
+      '@cloudcommerce/events': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
     dependencies:
-      '@cloudcommerce/events': 0.0.126
-      '@cloudcommerce/firebase': 0.0.126
+      '@cloudcommerce/events': link:../../../../packages/events
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/tia-sonia/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.126
-      '@cloudcommerce/modules': ^0.0.126
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/modules': ^0.1.0
     dependencies:
-      '@cloudcommerce/firebase': 0.0.126
-      '@cloudcommerce/modules': 0.0.126
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/tia-sonia/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.0.126
-      '@cloudcommerce/passport': ^0.0.126
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/passport': ^0.1.0
     dependencies:
-      '@cloudcommerce/firebase': 0.0.126
-      '@cloudcommerce/passport': 0.0.126
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../../packages/passport
 
   ecomplus-stores/tia-sonia/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.11.0
-      '@astrojs/node': ^2.0.2
-      '@cloudcommerce/api': ^0.0.126
-      '@cloudcommerce/firebase': ^0.0.126
-      '@cloudcommerce/i18n': ^0.0.126
-      '@cloudcommerce/ssr': ^0.0.126
-      '@cloudcommerce/storefront': ^0.0.126
+      '@astrojs/image': ^0.12.1
+      '@astrojs/node': ^4.0.0
+      '@cloudcommerce/api': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/i18n': ^0.1.0
+      '@cloudcommerce/ssr': ^0.1.0
+      '@cloudcommerce/storefront': ^0.1.0
+      '@cloudcommerce/types': ^0.1.0
     dependencies:
-      '@astrojs/image': 0.11.6
-      '@astrojs/node': 2.0.2
-      '@cloudcommerce/api': 0.0.126
-      '@cloudcommerce/firebase': 0.0.126
-      '@cloudcommerce/ssr': 0.0.126
+      '@astrojs/image': 0.12.1
+      '@astrojs/node': 4.0.0
+      '@cloudcommerce/api': link:../../../../packages/api
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../../packages/ssr
     devDependencies:
-      '@cloudcommerce/i18n': 0.0.126
-      '@cloudcommerce/storefront': 0.0.126
+      '@cloudcommerce/i18n': link:../../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../../packages/storefront
+      '@cloudcommerce/types': link:../../../../packages/types
 
   ecomplus-stores/tia-sonia/storefront:
     specifiers:
-      '@astrojs/image': ^0.11.0
-      '@astrojs/node': ^2.0.2
-      '@cloudcommerce/api': ^0.0.126
-      '@cloudcommerce/firebase': ^0.0.126
-      '@cloudcommerce/i18n': ^0.0.126
-      '@cloudcommerce/ssr': ^0.0.126
-      '@cloudcommerce/storefront': ^0.0.126
+      '@astrojs/image': ^0.12.1
+      '@astrojs/node': ^4.0.0
+      '@cloudcommerce/api': ^0.1.0
+      '@cloudcommerce/firebase': ^0.1.0
+      '@cloudcommerce/i18n': ^0.1.0
+      '@cloudcommerce/ssr': ^0.1.0
+      '@cloudcommerce/storefront': ^0.1.0
+      '@cloudcommerce/types': ^0.1.0
     dependencies:
-      '@astrojs/image': 0.11.6
-      '@astrojs/node': 2.0.2
-      '@cloudcommerce/api': 0.0.126
-      '@cloudcommerce/firebase': 0.0.126
-      '@cloudcommerce/ssr': 0.0.126
+      '@astrojs/image': 0.12.1
+      '@astrojs/node': 4.0.0
+      '@cloudcommerce/api': link:../../../packages/api
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../packages/ssr
     devDependencies:
-      '@cloudcommerce/i18n': 0.0.126
-      '@cloudcommerce/storefront': 0.0.126
+      '@cloudcommerce/i18n': link:../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../packages/storefront
+      '@cloudcommerce/types': link:../../../packages/types
 
   packages/__skeleton:
     specifiers:
@@ -349,6 +353,17 @@ importers:
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
+  packages/apps/loyalty-points:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/firebase': link:../../firebase
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+
   packages/apps/mercadopago:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -481,6 +496,7 @@ importers:
       '@cloudcommerce/app-emails': workspace:*
       '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
+      '@cloudcommerce/app-loyalty-points': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
       '@cloudcommerce/app-pagarme': workspace:*
       '@cloudcommerce/app-pix': workspace:*
@@ -496,6 +512,7 @@ importers:
       '@cloudcommerce/app-emails': link:../apps/emails
       '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
+      '@cloudcommerce/app-loyalty-points': link:../apps/loyalty-points
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
       '@cloudcommerce/app-pagarme': link:../apps/pagarme
       '@cloudcommerce/app-pix': link:../apps/pix
@@ -549,6 +566,7 @@ importers:
       '@cloudcommerce/app-galaxpay': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
       '@cloudcommerce/app-jadlog': workspace:*
+      '@cloudcommerce/app-loyalty-points': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
       '@cloudcommerce/app-pagarme': workspace:*
       '@cloudcommerce/app-pix': workspace:*
@@ -573,6 +591,7 @@ importers:
       '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
       '@cloudcommerce/app-jadlog': link:../apps/jadlog
+      '@cloudcommerce/app-loyalty-points': link:../apps/loyalty-points
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
       '@cloudcommerce/app-pagarme': link:../apps/pagarme
       '@cloudcommerce/app-pix': link:../apps/pix
