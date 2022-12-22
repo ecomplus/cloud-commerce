@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import { i18n, formatMoney } from '@ecomplus/utils';
-import { VTooltip } from 'floating-vue';
+import VTooltip from 'floating-vue/src/directives/v-tooltip';
 // @ts-ignore
 import Fade from '@@components/globals/Fade.vue';
 
