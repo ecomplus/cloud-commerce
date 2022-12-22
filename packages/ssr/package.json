@@ -32,6 +32,7 @@
     "astro": "^1.7.1",
     "firebase-admin": "^11.4.0",
     "firebase-functions": "^4.1.1",
+    "floating-vue": "2.0.0-beta.20",
     "image-size": "^1.0.2",
     "vue": "^3.2.45"
   },

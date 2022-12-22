@@ -628,6 +628,7 @@ importers:
       astro: ^1.7.1
       firebase-admin: ^11.4.0
       firebase-functions: ^4.1.1
+      floating-vue: 2.0.0-beta.20
       image-size: ^1.0.2
       vue: ^3.2.45
     dependencies:
@@ -640,6 +641,7 @@ importers:
       astro: 1.7.1
       firebase-admin: 11.4.0_@firebase+app-types@0.9.0
       firebase-functions: 4.1.1_firebase-admin@11.4.0
+      floating-vue: 2.0.0-beta.20_vue@3.2.45
       image-size: 1.0.2
       vue: 3.2.45
     devDependencies:
