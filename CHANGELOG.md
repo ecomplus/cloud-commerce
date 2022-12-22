@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/ecomplus/cloud-commerce/compare/v0.1.1...v0.1.2) (2022-12-22)
+
+
+### Bug Fixes
+
+* **ssr:** For global directive, `floating-vue` must be at SSR deps ([3cc4b17](https://github.com/ecomplus/cloud-commerce/commit/3cc4b17bd43dcfb40922887c5a257e2359ae5b59))
+
 ### [0.1.1](https://github.com/ecomplus/cloud-commerce/compare/v0.1.0...v0.1.1) (2022-12-22)
 
 
