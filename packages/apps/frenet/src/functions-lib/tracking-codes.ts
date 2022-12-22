@@ -4,6 +4,7 @@ import logger from 'firebase-functions/logger';
 import db from './database';
 import updateOrderfulfilllment from './update-fulfillments';
 import fetchTrackingEvents from './fetch-tracking-code';
+import removeDeliveredToFirestore from './remove-delivered';
 
 const getConfig = async () => {
   try {
@@ -28,8 +29,10 @@ const diffInDays = (
 };
 
 const handleTrackingCodes = async () => {
+  const appConfig = await getConfig();
+
   // eslint-disable-next-line no-async-promise-executor
-  const job = new Promise(async (resolve, reject) => {
+  const checkTrackingCodes = new Promise(async (resolve, reject) => {
     logger.log('> (App Frenet) Automatic tracking code update started.');
 
     let codes: TrackingDoc[] | undefined;
@@ -42,7 +45,6 @@ const handleTrackingCodes = async () => {
       }
       resolve(null);
     }
-    const appConfig = await getConfig();
 
     if (!appConfig || !appConfig.frenet_access_token || !codes) {
       // no config for store bye
@@ -148,9 +150,21 @@ const handleTrackingCodes = async () => {
     }
   });
 
-  await job.catch((err) => {
-    logger.error('> (App Frenet) Error => ', err);
-  });
+  if (appConfig && appConfig.frenet_access_token) {
+    await checkTrackingCodes.catch((err) => {
+      logger.error('> (App Frenet) Error => ', err);
+    });
+
+    await removeDeliveredToFirestore().catch((err) => {
+      logger.error('> (App Frenet) Error removing Delivered to Firestore => ', err);
+    });
+
+    if (new Date().getHours() === 23) {
+      await db.clear().catch((err) => {
+        logger.error('> (App Frenet) Error removing old tracking codes => ', err);
+      });
+    }
+  }
 };
 
 export default handleTrackingCodes;
