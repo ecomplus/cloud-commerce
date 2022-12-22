@@ -97,6 +97,12 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.loyaltyPoints.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-loyalty-points')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
   } else if (modName === 'create_transaction') {
     if (appId === apps.mercadoPago.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -131,6 +137,12 @@ export default async (
     if (appId === apps.customPayment.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-custom-payment')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.loyaltyPoints.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-loyalty-points')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

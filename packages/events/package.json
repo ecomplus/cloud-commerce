@@ -27,6 +27,7 @@
     "@cloudcommerce/app-emails": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-infinitepay": "workspace:*",
+    "@cloudcommerce/app-loyalty-points": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",
