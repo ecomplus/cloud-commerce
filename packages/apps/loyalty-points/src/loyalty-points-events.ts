@@ -30,7 +30,7 @@ const handleApiEvent: ApiEventHandler = async ({
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
-  return handleLoyaltyPointsEvent(apiDoc as Orders, programRules, key);
+  return handleLoyaltyPointsEvent(apiDoc as Orders, programRules);
 };
 
 export const loyaltypoints = {
