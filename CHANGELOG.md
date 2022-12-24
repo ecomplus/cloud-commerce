@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/ecomplus/cloud-commerce/compare/v0.1.2...v0.1.3) (2022-12-24)
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([dae94d3](https://github.com/ecomplus/cloud-commerce/commit/dae94d37862f3b01c1799cc7be4906893b111a46))
+* **ssr:** Add `@vueuse/core` and `@headlessui/vue` to SSR deps ([6c7204e](https://github.com/ecomplus/cloud-commerce/commit/6c7204ee3569a81075e36407fd962f36fac1c669))
+
 ### [0.1.2](https://github.com/ecomplus/cloud-commerce/compare/v0.1.1...v0.1.2) (2022-12-22)
 
 
