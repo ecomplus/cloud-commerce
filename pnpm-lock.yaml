@@ -186,6 +186,7 @@ importers:
       '@cloudcommerce/ssr': ^0.1.2
       '@cloudcommerce/storefront': ^0.1.2
       '@cloudcommerce/types': ^0.1.2
+      '@fontsource/dm-serif-text': ^4.5.9
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
@@ -196,6 +197,7 @@ importers:
       '@cloudcommerce/i18n': link:../../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../../packages/storefront
       '@cloudcommerce/types': link:../../../../packages/types
+      '@fontsource/dm-serif-text': 4.5.9
 
   ecomplus-stores/tia-sonia/storefront:
     specifiers:
@@ -207,6 +209,7 @@ importers:
       '@cloudcommerce/ssr': ^0.1.2
       '@cloudcommerce/storefront': ^0.1.2
       '@cloudcommerce/types': ^0.1.2
+      '@fontsource/dm-serif-text': ^4.5.9
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
@@ -217,6 +220,7 @@ importers:
       '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
       '@cloudcommerce/types': link:../../../packages/types
+      '@fontsource/dm-serif-text': 4.5.9
 
   packages/__skeleton:
     specifiers:
@@ -3214,6 +3218,10 @@ packages:
     dependencies:
       '@floating-ui/core': 0.3.1
     dev: false
+
+  /@fontsource/dm-serif-text/4.5.9:
+    resolution: {integrity: sha512-PQmFlPf21YOHMRiB8vF1w+ox8zfsIQrLS2774TrTOjpQqHdZ60TzRfT02d0xh9lJQ/lC77LjIyGRp4vmcVKSNQ==}
+    dev: true
 
   /@google-cloud/firestore/6.4.0:
     resolution: {integrity: sha512-qhL5V8S6uIGlESQYC/TMKISlKHaM2qSACz0X15ID0s4F1NuVgSM3Z2FS10WYHdCGIwJ2C73xdLaS+ByFDsu7sg==}
