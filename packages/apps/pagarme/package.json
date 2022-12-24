@@ -26,9 +26,9 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.2.1",
-    "firebase-admin": "^11.4.0",
+    "firebase-admin": "^11.4.1",
     "firebase-functions": "^4.1.1",
-    "pagarme": "^4.28.0",
+    "pagarme": "^4.29.0",
     "qs": "^6.11.0"
   },
   "devDependencies": {

@@ -42,8 +42,8 @@
     "@iconify-json/brands": "npm:@iconify-json/fa6-brands@^1.1.8",
     "@iconify-json/general": "npm:@iconify-json/heroicons@^1.1.6",
     "@iconify-json/logos": "^1.1.19",
-    "@vueuse/core": "^9.7.0",
-    "astro": "^1.7.1",
+    "@vueuse/core": "^9.9.0",
+    "astro": "^1.7.2",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.0.3",
     "firebase": "^9.15.0",
@@ -57,7 +57,7 @@
     "vue-bind-once": "^0.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.20.7",
     "@cloudcommerce/types": "workspace:*"
   }
 }
