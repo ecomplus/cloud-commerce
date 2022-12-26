@@ -46,182 +46,6 @@ importers:
       vitest: 0.26.2
       zx: 7.1.1
 
-  ecomplus-stores/monocard:
-    specifiers:
-      '@cloudcommerce/cli': ^0.1.3
-    dependencies:
-      '@cloudcommerce/cli': link:../../packages/cli
-
-  ecomplus-stores/monocard/functions/core:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-
-  ecomplus-stores/monocard/functions/events:
-    specifiers:
-      '@cloudcommerce/events': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-    dependencies:
-      '@cloudcommerce/events': link:../../../../packages/events
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-
-  ecomplus-stores/monocard/functions/modules:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/modules': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-      '@cloudcommerce/modules': link:../../../../packages/modules
-
-  ecomplus-stores/monocard/functions/passport:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/passport': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-      '@cloudcommerce/passport': link:../../../../packages/passport
-
-  ecomplus-stores/monocard/functions/ssr:
-    specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/i18n': ^0.1.3
-      '@cloudcommerce/ssr': ^0.1.3
-      '@cloudcommerce/storefront': ^0.1.3
-      '@cloudcommerce/types': ^0.1.3
-      '@iconify-json/arcticons': ^1.1.34
-      '@iconify-json/wpf': ^1.1.3
-      lottie-web: ^5.10.0
-      lozad: ^1.16.0
-    dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
-      '@cloudcommerce/api': link:../../../../packages/api
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-      '@cloudcommerce/ssr': link:../../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n': link:../../../../packages/i18n
-      '@cloudcommerce/storefront': link:../../../../packages/storefront
-      '@cloudcommerce/types': link:../../../../packages/types
-      '@iconify-json/arcticons': 1.1.34
-      '@iconify-json/wpf': 1.1.3
-      lottie-web: 5.10.0
-      lozad: 1.16.0
-
-  ecomplus-stores/monocard/storefront:
-    specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/i18n': ^0.1.3
-      '@cloudcommerce/ssr': ^0.1.3
-      '@cloudcommerce/storefront': ^0.1.3
-      '@cloudcommerce/types': ^0.1.3
-      '@iconify-json/arcticons': ^1.1.34
-      '@iconify-json/wpf': ^1.1.3
-      lottie-web: ^5.10.0
-      lozad: ^1.16.0
-    dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
-      '@cloudcommerce/api': link:../../../packages/api
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-      '@cloudcommerce/ssr': link:../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n': link:../../../packages/i18n
-      '@cloudcommerce/storefront': link:../../../packages/storefront
-      '@cloudcommerce/types': link:../../../packages/types
-      '@iconify-json/arcticons': 1.1.34
-      '@iconify-json/wpf': 1.1.3
-      lottie-web: 5.10.0
-      lozad: 1.16.0
-
-  ecomplus-stores/tia-sonia:
-    specifiers:
-      '@cloudcommerce/cli': ^0.1.3
-    dependencies:
-      '@cloudcommerce/cli': link:../../packages/cli
-
-  ecomplus-stores/tia-sonia/functions/core:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-
-  ecomplus-stores/tia-sonia/functions/events:
-    specifiers:
-      '@cloudcommerce/events': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-    dependencies:
-      '@cloudcommerce/events': link:../../../../packages/events
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-
-  ecomplus-stores/tia-sonia/functions/modules:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/modules': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-      '@cloudcommerce/modules': link:../../../../packages/modules
-
-  ecomplus-stores/tia-sonia/functions/passport:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/passport': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-      '@cloudcommerce/passport': link:../../../../packages/passport
-
-  ecomplus-stores/tia-sonia/functions/ssr:
-    specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/i18n': ^0.1.3
-      '@cloudcommerce/ssr': ^0.1.3
-      '@cloudcommerce/storefront': ^0.1.3
-      '@cloudcommerce/types': ^0.1.3
-      '@fontsource/dm-serif-text': ^4.5.9
-    dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
-      '@cloudcommerce/api': link:../../../../packages/api
-      '@cloudcommerce/firebase': link:../../../../packages/firebase
-      '@cloudcommerce/ssr': link:../../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n': link:../../../../packages/i18n
-      '@cloudcommerce/storefront': link:../../../../packages/storefront
-      '@cloudcommerce/types': link:../../../../packages/types
-      '@fontsource/dm-serif-text': 4.5.9
-
-  ecomplus-stores/tia-sonia/storefront:
-    specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/i18n': ^0.1.3
-      '@cloudcommerce/ssr': ^0.1.3
-      '@cloudcommerce/storefront': ^0.1.3
-      '@cloudcommerce/types': ^0.1.3
-      '@fontsource/dm-serif-text': ^4.5.9
-    dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
-      '@cloudcommerce/api': link:../../../packages/api
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-      '@cloudcommerce/ssr': link:../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n': link:../../../packages/i18n
-      '@cloudcommerce/storefront': link:../../../packages/storefront
-      '@cloudcommerce/types': link:../../../packages/types
-      '@fontsource/dm-serif-text': 4.5.9
-
   packages/__skeleton:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -698,7 +522,7 @@ importers:
       floating-vue: 2.0.0-beta.20
       image-size: ^1.0.2
       tailwindcss: ^3.2.4
-      unocss: ^0.47.6
+      unocss: ^0.48.0
       vite: ^3.2.5
       vite-plugin-pwa: ^0.14.0
       vue: ^3.2.45
@@ -726,7 +550,7 @@ importers:
       floating-vue: 2.0.0-beta.20_vue@3.2.45
       image-size: 1.0.2
       tailwindcss: 3.2.4
-      unocss: 0.47.6_vite@3.2.5
+      unocss: 0.48.0_vite@3.2.5
       vite: 3.2.5
       vite-plugin-pwa: 0.14.0_vite@3.2.5
       vue: 3.2.45
@@ -740,84 +564,6 @@ importers:
       '@cloudcommerce/api': workspace:*
     dependencies:
       '@cloudcommerce/api': link:../api
-
-  store:
-    specifiers:
-      '@cloudcommerce/cli': ^0.1.3
-    dependencies:
-      '@cloudcommerce/cli': link:../packages/cli
-
-  store/functions/core:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-
-  store/functions/events:
-    specifiers:
-      '@cloudcommerce/events': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-    dependencies:
-      '@cloudcommerce/events': link:../../../packages/events
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-
-  store/functions/modules:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/modules': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-      '@cloudcommerce/modules': link:../../../packages/modules
-
-  store/functions/passport:
-    specifiers:
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/passport': ^0.1.3
-    dependencies:
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-      '@cloudcommerce/passport': link:../../../packages/passport
-
-  store/functions/ssr:
-    specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/i18n': ^0.1.3
-      '@cloudcommerce/ssr': ^0.1.3
-      '@cloudcommerce/storefront': ^0.1.3
-      '@cloudcommerce/types': ^0.1.3
-    dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
-      '@cloudcommerce/api': link:../../../packages/api
-      '@cloudcommerce/firebase': link:../../../packages/firebase
-      '@cloudcommerce/ssr': link:../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n': link:../../../packages/i18n
-      '@cloudcommerce/storefront': link:../../../packages/storefront
-      '@cloudcommerce/types': link:../../../packages/types
-
-  store/storefront:
-    specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.3
-      '@cloudcommerce/firebase': ^0.1.3
-      '@cloudcommerce/i18n': ^0.1.3
-      '@cloudcommerce/ssr': ^0.1.3
-      '@cloudcommerce/storefront': ^0.1.3
-      '@cloudcommerce/types': ^0.1.3
-    dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
-      '@cloudcommerce/api': link:../../packages/api
-      '@cloudcommerce/firebase': link:../../packages/firebase
-      '@cloudcommerce/ssr': link:../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n': link:../../packages/i18n
-      '@cloudcommerce/storefront': link:../../packages/storefront
-      '@cloudcommerce/types': link:../../packages/types
 
 packages:
 
@@ -942,20 +688,6 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.6
       vfile-message: 3.1.3
-    dev: false
-
-  /@astrojs/node/4.0.0:
-    resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
-    peerDependencies:
-      astro: ^1.7.0
-    peerDependenciesMeta:
-      astro:
-        optional: true
-    dependencies:
-      '@astrojs/webapi': 1.1.1
-      send: 0.18.0
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /@astrojs/node/4.0.0_astro@1.7.2:
@@ -3205,10 +2937,6 @@ packages:
       '@floating-ui/core': 0.3.1
     dev: false
 
-  /@fontsource/dm-serif-text/4.5.9:
-    resolution: {integrity: sha512-PQmFlPf21YOHMRiB8vF1w+ox8zfsIQrLS2774TrTOjpQqHdZ60TzRfT02d0xh9lJQ/lC77LjIyGRp4vmcVKSNQ==}
-    dev: true
-
   /@google-cloud/firestore/6.4.1:
     resolution: {integrity: sha512-5q4sl1XCL8NH2y82KZ4WQGHDOPnrSMYq3JpIeKD5C0OCSb4MfckOTB9LeAQ3p5tlL+7UsVRHj0SyzKz27XZJjw==}
     engines: {node: '>=12.0.0'}
@@ -3381,12 +3109,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@iconify-json/arcticons/1.1.34:
-    resolution: {integrity: sha512-47N6RQ67+7yhgqnedyNlcBuX5sFWkA+meoUFkIsWmxZe7V7Z2vhryQ4RDurvaC8elRdR5kOiXrVFIVZTHZDG5A==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
-
   /@iconify-json/fa6-brands/1.1.8:
     resolution: {integrity: sha512-ndwmH8/fITnc2t8EsKpHjxiDSviyORLz91urwZju1MtTrheamJvTUp8wui7+WSzzzJ2Dva4jn26J37vKD3eolg==}
     dependencies:
@@ -3405,14 +3127,9 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
-  /@iconify-json/wpf/1.1.3:
-    resolution: {integrity: sha512-ojrr1i4UQq/IPx0+GCPvpNyyHwzAy0u/ebDocPOJBjaDhd/srbHpKGEe3zcHx99ByEciFlcqZQFzJrtu+ZK8HQ==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
-
   /@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: false
 
   /@iconify/utils/2.0.4:
     resolution: {integrity: sha512-/ZYdSK+vao8XPoRPkdQeetGBtuCcPcVTtuXUz2Y+281EpcmM/5G1SCbtgty28r/Y9HkR9ePbKst7eWUOK7/jNQ==}
@@ -4145,159 +3862,161 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@unocss/astro/0.47.6_vite@3.2.5:
-    resolution: {integrity: sha512-8lR4KwuCeVxOTKk6g6hx6VUHhW1u+hki8oRsJaKEB0s5iUPmY6rCNtb/iaBJdceY11bZMMy5LZHJFTkod/T/zg==}
+  /@unocss/astro/0.48.0_vite@3.2.5:
+    resolution: {integrity: sha512-MoINkgukO6YxVVEmEsY0oLWqU+Fv/dzPtUQhfsfek1mqtUbnwQ3n1xuOJ2S0eJSYmbprSuhvW/yTFVn1twsM1A==}
     dependencies:
-      '@unocss/core': 0.47.6
-      '@unocss/reset': 0.47.6
-      '@unocss/vite': 0.47.6_vite@3.2.5
+      '@unocss/core': 0.48.0
+      '@unocss/reset': 0.48.0
+      '@unocss/vite': 0.48.0_vite@3.2.5
     transitivePeerDependencies:
       - rollup
       - vite
     dev: false
 
-  /@unocss/cli/0.47.6:
-    resolution: {integrity: sha512-Lwuzl6xK+67LUb4pCKlyrMv9cDuTvywhlSBiYzDj1Su+21IQVRxUagpo10b1WlLXWWQz4J3bOJZYE/e/QV2/HQ==}
+  /@unocss/cli/0.48.0:
+    resolution: {integrity: sha512-stfRsxzWK11VtrwUXTRPUyndzhdc2UUp5J148QlgMOClLpR370LADSfj8SHawF5+ID/0k+pd65r7fMGQsx75pw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@ampproject/remapping': 2.2.0
       '@rollup/pluginutils': 5.0.2
-      '@unocss/config': 0.47.6
-      '@unocss/core': 0.47.6
-      '@unocss/preset-uno': 0.47.6
+      '@unocss/config': 0.48.0
+      '@unocss/core': 0.48.0
+      '@unocss/preset-uno': 0.48.0
       cac: 6.7.14
       chokidar: 3.5.3
       colorette: 2.0.19
       consola: 2.15.3
       fast-glob: 3.2.12
-      magic-string: 0.26.7
+      magic-string: 0.27.0
       pathe: 1.0.0
       perfect-debounce: 0.1.3
     transitivePeerDependencies:
       - rollup
     dev: false
 
-  /@unocss/config/0.47.6:
-    resolution: {integrity: sha512-KycIrpKqPrTnrbNRLUgePuzfZUKk6afsKII6B53q9rVxxC1og4g7wCsvrn2D89lPipsJ6B9041VsdIhNqa8bFg==}
+  /@unocss/config/0.48.0:
+    resolution: {integrity: sha512-fr4baghDl8QhlRiGbIO6FWB0k/MGzm9uiWe+Azhpwi6DgFd3MUJMfTfEqia4n/u/sRRaUAbD1nrWrDtpneFLPQ==}
     engines: {node: '>=14'}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
       unconfig: 0.3.7
     dev: false
 
-  /@unocss/core/0.47.6:
-    resolution: {integrity: sha512-Pjg/NdpuTwZk2Ns3bzI/3XVPuXU+AQ78Sw+9QJyMgA56dArd3TlpNDN6UTOD9XAK6mxdPUu7rNSKpNTLpBW2og==}
+  /@unocss/core/0.48.0:
+    resolution: {integrity: sha512-WvAvChbJ65l97mHismyApeFVgNeGR4uSZl1BzVY+E/fRmyooE4QxiCm3g2akox6mQryzxvBvgSpP9aPzH676ZQ==}
     dev: false
 
-  /@unocss/inspector/0.47.6:
-    resolution: {integrity: sha512-enYQJo7+/UtSbgzpyKzL4vZU9Tz3QyoPGDmuKoHXSIt6sAtB+DQelW7vMWjcmwA19uaISxIGXx9BJPj5XV67UA==}
+  /@unocss/inspector/0.48.0:
+    resolution: {integrity: sha512-Yr/O8oWmm5wfbnKJQF8IMH7GMmQEKcuunzI5KaZLK0QgS/5viPS+rcTOSwowYKRkXx5HUS+ClkA3+FMzoS9eYQ==}
     dependencies:
       gzip-size: 6.0.0
       sirv: 2.0.2
     dev: false
 
-  /@unocss/preset-attributify/0.47.6:
-    resolution: {integrity: sha512-s5XB8JpBPbGCHjvzc2j+Cx9o+QQm2CjRdQ7UjL05+uQcVYb8PBjlfD3BeIA21eBH5IxXF9SdOJfx8kUWNa5WFQ==}
+  /@unocss/preset-attributify/0.48.0:
+    resolution: {integrity: sha512-2W6PTX85dLbKm0wAUKfVbMD8rDxE3DSPSWQNfbLewC1o202qzIS8PeTKh++nHMVw1gzpATd546FbPvbZJlTtzw==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/preset-icons/0.47.6:
-    resolution: {integrity: sha512-YvANR5ueN+r1E4YOfqF1llyUzS6yxROrJ+7MGNdIfyNHFcTwdHRy0f6y8uyiMYWyLc6nGGrUjjdo+DEc30obSA==}
+  /@unocss/preset-icons/0.48.0:
+    resolution: {integrity: sha512-3vro36gTkjEic5rO9BcUudby8tQ9ZRCduKZ1+4CKP0hKoB58nDm1QZM+kvWQ8RVN2xoSU9vWkHhx1RLl8miE0g==}
     dependencies:
       '@iconify/utils': 2.0.4
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
       ohmyfetch: 0.4.21
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@unocss/preset-mini/0.47.6:
-    resolution: {integrity: sha512-XP7ShDB42WU0xvZA1dG4E3LnzN4TYISm6AKQee3gmITUtE0ELTp9XutMgt0sqTe5FXeTRqw9XH7axv+4EqnE3Q==}
+  /@unocss/preset-mini/0.48.0:
+    resolution: {integrity: sha512-u1EWnmLt25SmCC201+9MqLn1qFYw0aRFH+3clHn9xkrLxXMdb5hnCNssTHItalvht+mskHrfxpQmKUBtxpls+g==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/preset-tagify/0.47.6:
-    resolution: {integrity: sha512-9MxgZAUWWEg5OPLY+fpEf/Clw88pi57HON95E9zKvRy816S5gqhbt3PSxal7pCB9WO+3JM6BFLazAJ7DHpT1qA==}
+  /@unocss/preset-tagify/0.48.0:
+    resolution: {integrity: sha512-vHlm3Ag15DHALgnhUZwWZvJXPpJFqxxaCsPdlDsAFRa65FPZEu5iM5V6jzn5H0/GCbTil/WARytlG95m369Scg==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/preset-typography/0.47.6:
-    resolution: {integrity: sha512-/Hfsw05ogolLXqrxTu5bLFIgGGmVdRHGw5vSmY3g+YPy37HfWpbP3cOs8YEOv8r3lV9J7vzAxAKKT0MQgukiHQ==}
+  /@unocss/preset-typography/0.48.0:
+    resolution: {integrity: sha512-CB5hPe9jP/tZI/H49nE7e79Accgu2q8yp2qRGIM4jlDcU1Tz4g0JmAxg8MeIqrqajVuJQhAu9cd3QnZ5wuh6hA==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/preset-uno/0.47.6:
-    resolution: {integrity: sha512-pDRuFmPzshX6ICaWhj7UBrnoL++rYD/QY52aljg9L4yAOZsZ1m0XRUlbnoXXXsEqDjw38SYNUzA1LtYcevBRvA==}
+  /@unocss/preset-uno/0.48.0:
+    resolution: {integrity: sha512-mTauhEXdy3ClSPiC6/wgZvSClkBVmrJjuCQFu4mGzFB0IuelsbEjxT7OHlv3Nrwv1d4xEcr9ed6JWm31ketdtA==}
     dependencies:
-      '@unocss/core': 0.47.6
-      '@unocss/preset-mini': 0.47.6
-      '@unocss/preset-wind': 0.47.6
+      '@unocss/core': 0.48.0
+      '@unocss/preset-mini': 0.48.0
+      '@unocss/preset-wind': 0.48.0
     dev: false
 
-  /@unocss/preset-web-fonts/0.47.6:
-    resolution: {integrity: sha512-TkN/etSSl61TtqxQJSVG/zfJUccdpgIuvqYrJOf4OZMj2rLwNHU2kOJEPFCfDyHTS+UjQ7LibfnE6snFDJ3pgQ==}
+  /@unocss/preset-web-fonts/0.48.0:
+    resolution: {integrity: sha512-eH2tcr2ax1EWKVnT8lZWPGMZDur70UNhyyhF1qZaBdGmbRG4qxEhro9TB70FaNJ/ggHEpvUE8g/t1ZZ5IgwtdQ==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
       ohmyfetch: 0.4.21
     dev: false
 
-  /@unocss/preset-wind/0.47.6:
-    resolution: {integrity: sha512-yl9zayR/CRfgnlM1iGEBKI3CkIVADv72UQHY+ZHqq/0VzeW8lSRG1KezqDKz2x3fMfrtbfls/fGLXQPNpD0mIw==}
+  /@unocss/preset-wind/0.48.0:
+    resolution: {integrity: sha512-dd91Ja8K9gqjl27QcY9B5eVS2ScYDXGAPk6/zxDdNVehpKyrLhoCApO7UN0BR6rJSV5jJXi6ztByIDsBg8d6UQ==}
     dependencies:
-      '@unocss/core': 0.47.6
-      '@unocss/preset-mini': 0.47.6
+      '@unocss/core': 0.48.0
+      '@unocss/preset-mini': 0.48.0
     dev: false
 
-  /@unocss/reset/0.47.6:
-    resolution: {integrity: sha512-bdc2dbuDg+CzgeLowEwO1URRIMdzmCE4RH4IKpCpT1Xoa+92RRubdtzK4N/9ZiSo8d4vvfWcc8fvhZko/6smPQ==}
+  /@unocss/reset/0.48.0:
+    resolution: {integrity: sha512-i7z6Rbs7fXFD3NdlVJViFltpDJUCo5xDm5y01Xaoa4mJQHr/1335Ht0JW/emAJXf170UYSwb2rUeK1J3fty9eg==}
     dev: false
 
-  /@unocss/scope/0.47.6:
-    resolution: {integrity: sha512-aI7B4Il5xYfMcr50AC90I+Igi3KB9U0JPX2yiU2/WhOaO33ZReBWJmBQ4LhBGrdgNh8vkHpeqs8ntwq/o25nbA==}
+  /@unocss/scope/0.48.0:
+    resolution: {integrity: sha512-r/a89Ip2NWlhvEglsZ4qQMy6smCmgGyA8aOKSEpU59il9Lmxjsz8eVLqofeiRzjBI9NTutpfLoEw3vrAK0YxRA==}
     dev: false
 
-  /@unocss/transformer-attributify-jsx/0.47.6:
-    resolution: {integrity: sha512-1sjBPNpczbg1ZsM4OKr9SCisc3vXEpW+3aeCRlBq7UGlJId3vJlX19Yp6IV9IEnVubsUkgo/3nr0B12OD58VdQ==}
+  /@unocss/transformer-attributify-jsx/0.48.0:
+    resolution: {integrity: sha512-aKWE2qvCeM+ev91tdnDoLVY53cNtRhqlisJnvmFUkIkDTJBZiMQnkKQdaoCrZDbIptRogqMtpJVlGxPe41z2WA==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/transformer-compile-class/0.47.6:
-    resolution: {integrity: sha512-/+O0qJlHFOF4iO+RVkK5sPLJJzWp8dkAJGH/ArBzpT4hnxe8W7c0tb0hlJxwUp5J7UcP4lDhd8VKKvlyadHkuA==}
+  /@unocss/transformer-compile-class/0.48.0:
+    resolution: {integrity: sha512-8Hi1KRQfqac7AT+YQuVM0eW6Z83u7PzuKD+SU7k+UzQLpX+M/S5t4iYJPYDSJ34btN8VhvXcn5iV//kclFAWgg==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/transformer-directives/0.47.6:
-    resolution: {integrity: sha512-vRY9bNhE+iNlRpsnky86MtKpRb8ipk3IHvtuRkK5DSjcjn7RGmh5ZpH9pzg39NvbWtRYq5/EN19riIYQHRetnA==}
+  /@unocss/transformer-directives/0.48.0:
+    resolution: {integrity: sha512-Iq55a/vAcTM7xoEtMkqlDP3BT+0ljaqTFctvlentJWDoAjJlbOoPe4gE5BKld5ulWEsV4wvpY2acn/y8SGvJUw==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
       css-tree: 2.3.1
     dev: false
 
-  /@unocss/transformer-variant-group/0.47.6:
-    resolution: {integrity: sha512-+uXz0pOv6WbEzQuW5RbgDSiwO274blsOsE63PdiRBMID1eSYKffGBcmiDh875QWc9ncFpjSKml+4q8jU7I+a0w==}
+  /@unocss/transformer-variant-group/0.48.0:
+    resolution: {integrity: sha512-a3S4NTCt2JacUl+qL4eIpUjw1hkvthGV5pgkq8wMa5cGxJy2NpS/ZaLMfwsUA1Eo6fgMfK/QwMeLJihhs7G/qQ==}
     dependencies:
-      '@unocss/core': 0.47.6
+      '@unocss/core': 0.48.0
     dev: false
 
-  /@unocss/vite/0.47.6_vite@3.2.5:
-    resolution: {integrity: sha512-NL3A20sJHwMyCHOaxLlFXnr71QHEd118GN82e/mtFluEh7F3WyLndaZfWQLmLEeJ3z+P4nURFCLirZJIXr4XgQ==}
+  /@unocss/vite/0.48.0_vite@3.2.5:
+    resolution: {integrity: sha512-j4QS2Ns02J9LRwdpLNiKt+Fo0+YUtvTQ66Xc/xq9s/ErptUwNnXsTCEDQzadXwPw+I8REKakLUve32to8VAd0w==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0
     dependencies:
       '@ampproject/remapping': 2.2.0
       '@rollup/pluginutils': 5.0.2
-      '@unocss/config': 0.47.6
-      '@unocss/core': 0.47.6
-      '@unocss/inspector': 0.47.6
-      '@unocss/scope': 0.47.6
-      '@unocss/transformer-directives': 0.47.6
+      '@unocss/config': 0.48.0
+      '@unocss/core': 0.48.0
+      '@unocss/inspector': 0.48.0
+      '@unocss/scope': 0.48.0
+      '@unocss/transformer-directives': 0.48.0
+      chokidar: 3.5.3
+      fast-glob: 3.2.12
       magic-string: 0.27.0
       vite: 3.2.5
     transitivePeerDependencies:
@@ -8170,18 +7889,10 @@ packages:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
     dev: false
 
-  /lottie-web/5.10.0:
-    resolution: {integrity: sha512-q2hfqKrGXNkwjSSZjKxf3fWMi0e3ZBc03qBkVWoGbwUJ7BcG+9YXjMPtmmhitzk8Nc6VQ5PRnh9yInPdfq0PZg==}
-    dev: true
-
   /loupe/2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
     dependencies:
       get-func-name: 2.0.0
-    dev: true
-
-  /lozad/1.16.0:
-    resolution: {integrity: sha512-JBr9WjvEFeKoyim3svo/gsQPTkgG/mOHJmDctZ/+U9H3ymUuvEkqpn8bdQMFsvTMcyRJrdJkLv0bXqGm0sP72w==}
     dev: true
 
   /lru-cache/4.0.2:
@@ -8217,13 +7928,6 @@ packages:
 
   /magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
-    dependencies:
-      sourcemap-codec: 1.4.8
-    dev: false
-
-  /magic-string/0.26.7:
-    resolution: {integrity: sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==}
-    engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
     dev: false
@@ -11151,32 +10855,32 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
 
-  /unocss/0.47.6_vite@3.2.5:
-    resolution: {integrity: sha512-cc+m2h/Iky24zwAKir9ElmIhkPYNjZEUTemInctWlVN8QX9qpzsRZahAl7ZmKsBorXPFtux/JYoUCCtXftyxOw==}
+  /unocss/0.48.0_vite@3.2.5:
+    resolution: {integrity: sha512-rDyMHyvRTRUPOd406CzgoYfiQ4tzN/TGU++jFTDzLsJ9Unuwf/pBBclP6z6aqt5eRBoEOEMqrJJwm9QN7aeYdA==}
     engines: {node: '>=14'}
     peerDependencies:
-      '@unocss/webpack': 0.47.6
+      '@unocss/webpack': 0.48.0
     peerDependenciesMeta:
       '@unocss/webpack':
         optional: true
     dependencies:
-      '@unocss/astro': 0.47.6_vite@3.2.5
-      '@unocss/cli': 0.47.6
-      '@unocss/core': 0.47.6
-      '@unocss/preset-attributify': 0.47.6
-      '@unocss/preset-icons': 0.47.6
-      '@unocss/preset-mini': 0.47.6
-      '@unocss/preset-tagify': 0.47.6
-      '@unocss/preset-typography': 0.47.6
-      '@unocss/preset-uno': 0.47.6
-      '@unocss/preset-web-fonts': 0.47.6
-      '@unocss/preset-wind': 0.47.6
-      '@unocss/reset': 0.47.6
-      '@unocss/transformer-attributify-jsx': 0.47.6
-      '@unocss/transformer-compile-class': 0.47.6
-      '@unocss/transformer-directives': 0.47.6
-      '@unocss/transformer-variant-group': 0.47.6
-      '@unocss/vite': 0.47.6_vite@3.2.5
+      '@unocss/astro': 0.48.0_vite@3.2.5
+      '@unocss/cli': 0.48.0
+      '@unocss/core': 0.48.0
+      '@unocss/preset-attributify': 0.48.0
+      '@unocss/preset-icons': 0.48.0
+      '@unocss/preset-mini': 0.48.0
+      '@unocss/preset-tagify': 0.48.0
+      '@unocss/preset-typography': 0.48.0
+      '@unocss/preset-uno': 0.48.0
+      '@unocss/preset-web-fonts': 0.48.0
+      '@unocss/preset-wind': 0.48.0
+      '@unocss/reset': 0.48.0
+      '@unocss/transformer-attributify-jsx': 0.48.0
+      '@unocss/transformer-compile-class': 0.48.0
+      '@unocss/transformer-directives': 0.48.0
+      '@unocss/transformer-variant-group': 0.48.0
+      '@unocss/vite': 0.48.0_vite@3.2.5
     transitivePeerDependencies:
       - rollup
       - supports-color
