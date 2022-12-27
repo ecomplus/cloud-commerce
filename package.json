@@ -11,7 +11,7 @@
     "pnpm": ">=7"
   },
   "scripts": {
-    "fix-install": "bash scripts/pre-install.sh && pnpm i --frozen-lockfile",
+    "fix-install": "bash scripts/pre-install.sh && pnpm i",
     "postinstall": "husky install && pnpm run -r prepare-monorepo",
     "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build",
