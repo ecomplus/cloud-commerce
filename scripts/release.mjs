@@ -84,7 +84,7 @@ if (argv.publish) {
     }
     return cd(pwd);
   });
-  await $`pnpm i`;
+  await $`pnpm fix-install`;
   await $`git add pnpm-lock.yaml store ${(canUpdateStores ? 'ecomplus-stores' : '')}`;
   await $`git commit -m 'chore: Update store submodule post-release'`;
   await $`git push --follow-tags origin main`;
