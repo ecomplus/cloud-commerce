@@ -51,9 +51,13 @@ Object.keys(brandColors).forEach((colorName) => {
   const color = chroma(hex);
   let subtle;
   let bold;
-  if (color.luminance() >= 0.1) {
+  const luminance = color.luminance();
+  if (luminance >= 0.1) {
     subtle = chroma(hex).brighten(1.5);
     bold = chroma(hex).darken(1.5);
+  } else if (luminance > 0.03) {
+    subtle = chroma(hex).brighten();
+    bold = chroma(hex).darken();
   } else {
     subtle = chroma(hex).darken();
     bold = chroma(hex).brighten();
@@ -100,10 +104,10 @@ const genTailwindConfig = ({
   brandLogos = defaultIcons.brandLogos,
   brandLogosShortcuts = defaultIcons.brandLogosShortcuts,
   generalIcons = defaultIcons.generalIcons,
-  baseColor = 'slate',
-  successColor = 'emerald',
-  warningColor = 'amber',
-  dangerColor = 'rose',
+  baseColor = globalThis.storefront_color_base || 'slate',
+  successColor = globalThis.storefront_color_success || 'emerald',
+  warningColor = globalThis.storefront_color_warning || 'amber',
+  dangerColor = globalThis.storefront_color_danger || 'rose',
 } = {}) => {
   const config = {
     theme: {
