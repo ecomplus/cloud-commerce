@@ -57,7 +57,7 @@ const genUnoCSSConfig = (themeOptions = {}) => {
       },
     }],
   } = deepmerge(defaultThemeOptions, themeOptions);
-  const tailwindConfig = genTailwindConfig();
+  const tailwindConfig = genTailwindConfig(themeOptions);
   const rules = [];
   tailwindConfig.plugins?.forEach((plugin) => {
     plugin({
