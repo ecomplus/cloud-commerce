@@ -1,10 +1,15 @@
+const deepmerge = require('@fastify/deepmerge')();
 const colors = require('tailwindcss/colors');
 const chroma = require('chroma-js');
 const getCMS = require('./config/storefront.cms.cjs');
 
-// IntelliSense for UnoCSS icons
-let defaultIcons = {
-  brandIcons: 'brands',
+let defaultThemeOptions = {
+  baseColor: 'slate',
+  successColor: 'emerald',
+  warningColor: 'amber',
+  dangerColor: 'rose',
+  // IntelliSense for UnoCSS icons
+  brandIcons: 'fa6-brands',
   brandIconsShortcuts: [
     'facebook',
     'twitter',
@@ -31,11 +36,10 @@ let defaultIcons = {
     'hipercard',
     'dinersclub',
   ],
-  generalIcons: 'general',
+  generalIcons: 'heroicons',
 };
-if (globalThis.storefront_default_icons) {
-  const deepmerge = require('@fastify/deepmerge')();
-  defaultIcons = deepmerge(defaultIcons, globalThis.storefront_default_icons);
+if (globalThis.storefront_theme_options) {
+  defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.storefront_theme_options);
 }
 
 const { primaryColor, secondaryColor } = getCMS();
@@ -99,16 +103,16 @@ Object.keys(brandColors).forEach((colorName) => {
 });
 
 const genTailwindConfig = ({
-  brandIcons = defaultIcons.brandIcons,
-  brandIconsShortcuts = defaultIcons.brandIconsShortcuts,
-  brandLogos = defaultIcons.brandLogos,
-  brandLogosShortcuts = defaultIcons.brandLogosShortcuts,
-  generalIcons = defaultIcons.generalIcons,
-  baseColor = globalThis.storefront_color_base || 'slate',
-  successColor = globalThis.storefront_color_success || 'emerald',
-  warningColor = globalThis.storefront_color_warning || 'amber',
-  dangerColor = globalThis.storefront_color_danger || 'rose',
-} = {}) => {
+  brandIcons,
+  brandIconsShortcuts,
+  brandLogos,
+  brandLogosShortcuts,
+  generalIcons,
+  baseColor,
+  successColor,
+  warningColor,
+  dangerColor,
+} = defaultThemeOptions) => {
   const config = {
     theme: {
       extend: {
@@ -185,6 +189,9 @@ const genTailwindConfig = ({
       },
     ],
   };
+  if (globalThis.storefront_tailwind_config) {
+    return deepmerge(config, globalThis.storefront_tailwind_config);
+  }
   return config;
 };
 
@@ -193,7 +200,7 @@ const tailwindConfig = genTailwindConfig();
 module.exports = {
   ...tailwindConfig,
   genTailwindConfig,
-  defaultIcons,
+  defaultThemeOptions,
   brandColors,
   brandColorsPalletes,
   onBrandColors,

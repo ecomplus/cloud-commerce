@@ -11,7 +11,7 @@ const {
 
 const {
   genTailwindConfig,
-  defaultIcons,
+  defaultThemeOptions,
   brandColors,
   brandColorsPalletes,
   onBrandColors,
@@ -42,11 +42,11 @@ Object.keys(onBrandColors).forEach((colorLabel) => {
 });
 
 const genUnoCSSConfig = ({
-  brandIcons = defaultIcons.brandIcons,
-  brandIconsShortcuts = defaultIcons.brandIconsShortcuts,
-  brandLogos = defaultIcons.brandLogos,
-  brandLogosShortcuts = defaultIcons.brandLogosShortcuts,
-  generalIcons = defaultIcons.generalIcons,
+  brandIcons = defaultThemeOptions.brandIcons,
+  brandIconsShortcuts = defaultThemeOptions.brandIconsShortcuts,
+  brandLogos = defaultThemeOptions.brandLogos,
+  brandLogosShortcuts = defaultThemeOptions.brandLogosShortcuts,
+  generalIcons = defaultThemeOptions.generalIcons,
   shoppingCartIcon = 'shopping-bag',
   preflights = [{
     getCSS: () => {
