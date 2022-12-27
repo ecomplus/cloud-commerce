@@ -104,19 +104,20 @@ Object.keys(brandColors).forEach((colorName) => {
   });
 });
 
-const genTailwindConfig = ({
-  brandIcons,
-  brandIconsShortcuts,
-  brandLogos,
-  brandLogosShortcuts,
-  generalIcons,
-  baseColor,
-  successColor,
-  warningColor,
-  dangerColor,
-  shoppingCartIcon,
-  cashbackIcon,
-} = defaultThemeOptions) => {
+const genTailwindConfig = (themeOptions = {}) => {
+  const {
+    brandIcons,
+    brandIconsShortcuts,
+    brandLogos,
+    brandLogosShortcuts,
+    generalIcons,
+    baseColor,
+    successColor,
+    warningColor,
+    dangerColor,
+    shoppingCartIcon,
+    cashbackIcon,
+  } = deepmerge(defaultThemeOptions, themeOptions);
   const config = {
     theme: {
       extend: {

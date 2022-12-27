@@ -1,5 +1,4 @@
-const { join: joinPath } = require('path');
-
+const deepmerge = require('@fastify/deepmerge')();
 const {
   defineConfig,
   presetUno,
@@ -8,14 +7,13 @@ const {
   transformerCompileClass,
   transformerDirectives,
 } = require('unocss');
-
 const {
   genTailwindConfig,
   defaultThemeOptions,
   brandColors,
   brandColorsPalletes,
   onBrandColors,
-} = require(joinPath(process.cwd(), 'tailwind.config.cjs'));
+} = require('./tailwind.config.cjs');
 
 const colorCSSVars = {};
 Object.keys(brandColors).forEach((colorName) => {
@@ -41,23 +39,24 @@ Object.keys(onBrandColors).forEach((colorLabel) => {
     : cssRGB.substring(4).replace(')', '');
 });
 
-const genUnoCSSConfig = ({
-  brandIcons = defaultThemeOptions.brandIcons,
-  brandIconsShortcuts = defaultThemeOptions.brandIconsShortcuts,
-  brandLogos = defaultThemeOptions.brandLogos,
-  brandLogosShortcuts = defaultThemeOptions.brandLogosShortcuts,
-  generalIcons = defaultThemeOptions.generalIcons,
-  shoppingCartIcon = defaultThemeOptions.shoppingCartIcon,
-  cashbackIcon = defaultThemeOptions.cashbackIcon,
-  preflights = [{
-    getCSS: () => {
-      const strCSSVars = Object.entries(colorCSSVars)
-        .map(([varName, value]) => `--${varName}:${value};`)
-        .join(' ');
-      return `:root { ${strCSSVars} }`;
-    },
-  }],
-} = {}) => {
+const genUnoCSSConfig = (themeOptions = {}) => {
+  const {
+    brandIcons,
+    brandIconsShortcuts,
+    brandLogos,
+    brandLogosShortcuts,
+    generalIcons,
+    shoppingCartIcon,
+    cashbackIcon,
+    preflights = [{
+      getCSS: () => {
+        const strCSSVars = Object.entries(colorCSSVars)
+          .map(([varName, value]) => `--${varName}:${value};`)
+          .join(' ');
+        return `:root { ${strCSSVars} }`;
+      },
+    }],
+  } = deepmerge(defaultThemeOptions, themeOptions);
   const tailwindConfig = genTailwindConfig();
   const rules = [];
   tailwindConfig.plugins?.forEach((plugin) => {
