@@ -1,27 +1,30 @@
 {
-  "name": "@cloudcommerce/app-correios",
+  "name": "@cloudcommerce/app-loyalty-points",
   "type": "module",
   "version": "0.1.3",
-  "description": "E-Com Plus Cloud Commerce app for Correios shipping calculation",
-  "main": "lib/correios.js",
+  "description": "E-Com Plus Cloud Commerce app to handle simple loyalty points programs",
+  "main": "lib/loyalty-points.js",
+  "exports": {
+    ".": "./lib/loyalty-points.js",
+    "./events": "./lib/loyalty-points-events.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/apps/correios"
+    "directory": "packages/loyalty-points"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/correios#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/loyalty-points#readme",
   "scripts": {
     "build": "sh ../../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "axios": "^1.2.1",
-    "xml2js": "^0.4.23"
+    "@cloudcommerce/firebase": "workspace:*"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

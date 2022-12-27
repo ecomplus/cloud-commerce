@@ -19,6 +19,11 @@ const galaxPayEvents: ApiEventName[] = [
   'orders-cancelled',
 ];
 
+const loyaltyPointsEvents: ApiEventName[] = [
+  'orders-new',
+  'orders-anyStatusSet',
+];
+
 const frenetEvents: ApiEventName[] = [
   'orders-new',
 ];
@@ -94,6 +99,10 @@ const mergeConfig = {
     },
     customPayment: {
       appId: 108091,
+    },
+    loyaltyPoints: {
+      appId: 124890,
+      events: loyaltyPointsEvents,
     },
   },
   cmsSettings,

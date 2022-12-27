@@ -1,10 +1,15 @@
+const deepmerge = require('@fastify/deepmerge')();
 const colors = require('tailwindcss/colors');
 const chroma = require('chroma-js');
 const getCMS = require('./config/storefront.cms.cjs');
 
-// IntelliSense for UnoCSS icons
-let defaultIcons = {
-  brandIcons: 'brands',
+let defaultThemeOptions = {
+  baseColor: 'slate',
+  successColor: 'emerald',
+  warningColor: 'amber',
+  dangerColor: 'rose',
+  // IntelliSense for UnoCSS icons
+  brandIcons: 'fa6-brands',
   brandIconsShortcuts: [
     'facebook',
     'twitter',
@@ -31,11 +36,10 @@ let defaultIcons = {
     'hipercard',
     'dinersclub',
   ],
-  generalIcons: 'general',
+  generalIcons: 'heroicons',
 };
-if (globalThis.storefront_default_icons) {
-  const deepmerge = require('@fastify/deepmerge')();
-  defaultIcons = deepmerge(defaultIcons, globalThis.storefront_default_icons);
+if (globalThis.storefront_theme_options) {
+  defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.storefront_theme_options);
 }
 
 const { primaryColor, secondaryColor } = getCMS();
@@ -51,9 +55,13 @@ Object.keys(brandColors).forEach((colorName) => {
   const color = chroma(hex);
   let subtle;
   let bold;
-  if (color.luminance() >= 0.1) {
+  const luminance = color.luminance();
+  if (luminance >= 0.1) {
     subtle = chroma(hex).brighten(1.5);
     bold = chroma(hex).darken(1.5);
+  } else if (luminance > 0.03) {
+    subtle = chroma(hex).brighten();
+    bold = chroma(hex).darken();
   } else {
     subtle = chroma(hex).darken();
     bold = chroma(hex).brighten();
@@ -95,16 +103,16 @@ Object.keys(brandColors).forEach((colorName) => {
 });
 
 const genTailwindConfig = ({
-  brandIcons = defaultIcons.brandIcons,
-  brandIconsShortcuts = defaultIcons.brandIconsShortcuts,
-  brandLogos = defaultIcons.brandLogos,
-  brandLogosShortcuts = defaultIcons.brandLogosShortcuts,
-  generalIcons = defaultIcons.generalIcons,
-  baseColor = 'slate',
-  successColor = 'emerald',
-  warningColor = 'amber',
-  dangerColor = 'rose',
-} = {}) => {
+  brandIcons,
+  brandIconsShortcuts,
+  brandLogos,
+  brandLogosShortcuts,
+  generalIcons,
+  baseColor,
+  successColor,
+  warningColor,
+  dangerColor,
+} = defaultThemeOptions) => {
   const config = {
     theme: {
       extend: {
@@ -181,6 +189,9 @@ const genTailwindConfig = ({
       },
     ],
   };
+  if (globalThis.storefront_tailwind_config) {
+    return deepmerge(config, globalThis.storefront_tailwind_config);
+  }
   return config;
 };
 
@@ -189,7 +200,7 @@ const tailwindConfig = genTailwindConfig();
 module.exports = {
   ...tailwindConfig,
   genTailwindConfig,
-  defaultIcons,
+  defaultThemeOptions,
   brandColors,
   brandColorsPalletes,
   onBrandColors,
