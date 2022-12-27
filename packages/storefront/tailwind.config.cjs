@@ -37,6 +37,8 @@ let defaultThemeOptions = {
     'dinersclub',
   ],
   generalIcons: 'heroicons',
+  shoppingCartIcon: 'shopping-bag',
+  cashbackIcon: 'arrow-uturn-left',
 };
 if (globalThis.storefront_theme_options) {
   defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.storefront_theme_options);
@@ -112,6 +114,8 @@ const genTailwindConfig = ({
   successColor,
   warningColor,
   dangerColor,
+  shoppingCartIcon,
+  cashbackIcon,
 } = defaultThemeOptions) => {
   const config = {
     theme: {
@@ -157,9 +161,8 @@ const genTailwindConfig = ({
               if (!shortcuts) {
                 const { icons } = require(`@iconify-json/${iconset}`);
                 shortcuts = Object.keys(icons.icons);
-                if (!shortcuts.includes('shopping-cart')) {
-                  shortcuts.push('shopping-cart');
-                }
+                shortcuts.push(['shopping-cart', shoppingCartIcon]);
+                shortcuts.push(['cashback', cashbackIcon]);
               }
               shortcuts.forEach((shortcut) => {
                 if (typeof shortcut === 'string') {

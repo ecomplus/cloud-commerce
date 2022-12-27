@@ -47,7 +47,8 @@ const genUnoCSSConfig = ({
   brandLogos = defaultThemeOptions.brandLogos,
   brandLogosShortcuts = defaultThemeOptions.brandLogosShortcuts,
   generalIcons = defaultThemeOptions.generalIcons,
-  shoppingCartIcon = 'shopping-bag',
+  shoppingCartIcon = defaultThemeOptions.shoppingCartIcon,
+  cashbackIcon = defaultThemeOptions.cashbackIcon,
   preflights = [{
     getCSS: () => {
       const strCSSVars = Object.entries(colorCSSVars)
@@ -87,6 +88,7 @@ const genUnoCSSConfig = ({
           : { [`i-${brand[0]}`]: `i-${brandLogos}:${brand[1]}` };
       }),
       { 'i-shopping-cart': `i-${generalIcons}:${shoppingCartIcon}` },
+      { 'i-cashback': `i-${generalIcons}:${cashbackIcon}` },
       [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
     ],
     theme: {
