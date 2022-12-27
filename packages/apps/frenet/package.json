@@ -30,6 +30,7 @@
     "firebase-functions": "^4.1.1"
   },
   "devDependencies": {
-    "@cloudcommerce/types": "workspace:*"
+    "@cloudcommerce/types": "workspace:*",
+    "@firebase/app-types": "^0.9.0"
   }
 }
