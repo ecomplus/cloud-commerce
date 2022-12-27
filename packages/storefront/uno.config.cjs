@@ -20,24 +20,25 @@ const {
 const colorCSSVars = {};
 Object.keys(brandColors).forEach((colorName) => {
   Object.keys(brandColorsPalletes[colorName]).forEach((tone) => {
-    const rgb = brandColorsPalletes[colorName][tone];
-    let colorLabel;
-    if (tone === 'DEFAULT') {
-      colorLabel = colorName;
-      colorCSSVars[`rgb-${colorLabel}`] = rgb.substring(4).replace(')', ''); // rgb(rgb) -> rgb
-    } else {
-      colorLabel = `${colorName}-${tone}`;
+    const cssRGB = brandColorsPalletes[colorName][tone];
+    const colorLabel = tone === 'DEFAULT' ? colorName : `${colorName}-${tone}`;
+    colorCSSVars[`rgb-${colorLabel}`] = cssRGB.substring(4).replace(')', ''); // rgb(rgb) -> rgb
+    if (!/\d/.test(tone)) {
+      colorCSSVars[`c-${colorLabel}`] = cssRGB;
+      colorCSSVars[`c-on-${colorLabel}`] = onBrandColors[colorLabel];
     }
-    colorCSSVars[`c-${colorLabel}`] = brandColorsPalletes[colorName][tone];
   });
 });
 Object.keys(onBrandColors).forEach((colorLabel) => {
-  const rgb = onBrandColors[colorLabel];
+  const cssRGB = onBrandColors[colorLabel];
   const [colorName] = colorLabel.split('-');
   const colorCSSVar = Object.keys(colorCSSVars).find((varName) => {
-    return colorCSSVars[varName] === rgb && new RegExp(`${colorName}-\\d`).test(varName);
+    return `rgb(${colorCSSVars[varName]})` === cssRGB
+      && new RegExp(`${colorName}-\\d`).test(varName);
   });
-  colorCSSVars[`on-${colorLabel}`] = colorCSSVar ? `var(--${colorCSSVar})` : rgb;
+  colorCSSVars[`rgb-on-${colorLabel}`] = colorCSSVar
+    ? `var(--${colorCSSVar})`
+    : cssRGB.substring(4).replace(')', '');
 });
 
 const genUnoCSSConfig = ({
@@ -97,14 +98,14 @@ const genUnoCSSConfig = ({
           colors[colorName] = {};
           Object.keys(brandColorsPalletes[colorName]).forEach((tone) => {
             const colorLabel = tone === 'DEFAULT' ? colorName : `${colorName}-${tone}`;
-            colors[colorName][tone] = `var(--c-${colorLabel})`;
+            colors[colorName][tone] = `rgb(var(--rgb-${colorLabel}))`;
           });
           return colors;
         }, {}),
         on: Object.keys(onBrandColors).reduce((onColors, colorLabel) => {
           return {
             ...onColors,
-            colorLabel: `var(--c-on-${colorLabel})`,
+            colorLabel: `rgb(var(--rgb-on-${colorLabel}))`,
           };
         }, {}),
       },
