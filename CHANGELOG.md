@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/ecomplus/cloud-commerce/compare/v0.1.4...v0.1.5) (2022-12-28)
+
+
+### Features
+
+* **storefront:** New icon alias `i-cashback` used on Prices component by default ([456ddd4](https://github.com/ecomplus/cloud-commerce/commit/456ddd4c2078ab62f0fae5bb51e2dcfc082f5365))
+
+
+### Bug Fixes
+
+* **storefront:** Merge theme options object as argument for Tailwind/UnoCSS config gen ([a5673f0](https://github.com/ecomplus/cloud-commerce/commit/a5673f0dfbb385bb47109c8221b07ee0b7c134ad))
+* **storefront:** Pass theme options from UnoCSS config to `genTailwindConfig` ([280f1ac](https://github.com/ecomplus/cloud-commerce/commit/280f1ac04e1c9f0167d97365803670246e234f77))
+
+### [0.1.4](https://github.com/ecomplus/cloud-commerce/compare/v0.1.3...v0.1.4) (2022-12-27)
+
+
+### Features
+
+* **frenet:** Create Frenet app events for shipping status auto-update ([#97](https://github.com/ecomplus/cloud-commerce/issues/97)) ([d71b46b](https://github.com/ecomplus/cloud-commerce/commit/d71b46b617120f143647fa7d4ca4853ebd45568e))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency unocss to ^0.48.0 ([#98](https://github.com/ecomplus/cloud-commerce/issues/98)) ([d25cc84](https://github.com/ecomplus/cloud-commerce/commit/d25cc84b88a3b9009333cd00e8a03a2b432d1cca))
+* **storefront:** Update default bold/subtle diffs ([7380a8e](https://github.com/ecomplus/cloud-commerce/commit/7380a8e7bb7a26048fe97eebffda7a177ba90db5))
+* **storefront:** Use RGB values on CSS vars to support color utils with opacity ([5c37128](https://github.com/ecomplus/cloud-commerce/commit/5c371288e101b111bdfb7f88da9755ebf03b12b0)), closes [#discussioncomment-4491119](https://github.com/ecomplus/cloud-commerce/issues/discussioncomment-4491119)
+
 ### [0.1.3](https://github.com/ecomplus/cloud-commerce/compare/v0.1.2...v0.1.3) (2022-12-24)
 
 

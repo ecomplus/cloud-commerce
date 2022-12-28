@@ -1,0 +1,43 @@
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+  --c-background: var(--c-tooltip-background, rgba(44, 44, 44, 0.85));
+  --c-foreground: var(--c-tooltip-foreground, var(--c-on-dark));
+}
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--transition);
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 102%;
+  margin-top: 5px;
+  font-size: clamp(0.75rem, 90%, 1rem);
+  width: max-content;
+  background-color: var(--c-background);
+  color: var(--c-foreground);
+  text-align: center;
+  @apply rounded-sm py-1 px-2 leading-snug;
+}
+[data-tooltip]::after {
+  content: "";
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--transition);
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 102%;
+  margin-left: -5px;
+  margin-top: -4px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--c-background) transparent;
+}
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+}

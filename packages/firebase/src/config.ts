@@ -24,6 +24,10 @@ const loyaltyPointsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const frenetEvents: ApiEventName[] = [
+  'orders-new',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -64,6 +68,7 @@ const mergeConfig = {
     },
     frenet: {
       appId: 1244,
+      events: frenetEvents,
     },
     tinyErp: {
       appId: 105922,

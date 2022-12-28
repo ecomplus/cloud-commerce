@@ -80,10 +80,10 @@ setTimeout(() => {
       <slot v-if="pointsCashback" name="cashback" v-bind="prices">
         <Fade slide="down">
           <div v-if="hasCashback" :data-sf-prices-cashback="pointsCashback">
-            <span v-tooltip.bottom="$t.i19get$1back
+            <span :data-tooltip="$t.i19get$1back
               .replace('$1', $percentage(earnPointsPercentage))">
               <slot name="cashback-pre">
-                <i class="i-arrow-uturn-left mr-1"></i>
+                <i class="i-cashback mr-1"></i>
               </slot>
               <slot name="cashback-value" v-bind="prices">
                 <span class="font-medium">
