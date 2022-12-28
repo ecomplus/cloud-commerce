@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/ecomplus/cloud-commerce/compare/v0.1.4...v0.1.5) (2022-12-28)
+
+
+### Features
+
+* **storefront:** New icon alias `i-cashback` used on Prices component by default ([456ddd4](https://github.com/ecomplus/cloud-commerce/commit/456ddd4c2078ab62f0fae5bb51e2dcfc082f5365))
+
+
+### Bug Fixes
+
+* **storefront:** Merge theme options object as argument for Tailwind/UnoCSS config gen ([a5673f0](https://github.com/ecomplus/cloud-commerce/commit/a5673f0dfbb385bb47109c8221b07ee0b7c134ad))
+* **storefront:** Pass theme options from UnoCSS config to `genTailwindConfig` ([280f1ac](https://github.com/ecomplus/cloud-commerce/commit/280f1ac04e1c9f0167d97365803670246e234f77))
+
 ### [0.1.4](https://github.com/ecomplus/cloud-commerce/compare/v0.1.3...v0.1.4) (2022-12-27)
 
 
