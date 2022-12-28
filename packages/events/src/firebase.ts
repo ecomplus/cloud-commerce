@@ -18,3 +18,5 @@ export * from '@cloudcommerce/app-galaxpay/events';
 export * from '@cloudcommerce/app-loyalty-points/events';
 
 export * from '@cloudcommerce/app-frenet/events';
+
+export * from '@cloudcommerce/app-fb-conversions';
