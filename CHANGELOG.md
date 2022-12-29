@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/ecomplus/cloud-commerce/compare/v0.1.5...v0.1.6) (2022-12-29)
+
+
+### Features
+
+* **fb-conversions:** App to send carts/orders to Facebook Conversions API ([#99](https://github.com/ecomplus/cloud-commerce/issues/99)) ([1c6a785](https://github.com/ecomplus/cloud-commerce/commit/1c6a785b194c4dda81409c6ddfd36aaeea974e5b))
+
+
+### Bug Fixes
+
+* **fb-conversions:** Add `firebase-admin` (peer) to dependencies ([6a0cf07](https://github.com/ecomplus/cloud-commerce/commit/6a0cf07a267316538ce04ce637b4f30103c498cb))
+
 ### [0.1.5](https://github.com/ecomplus/cloud-commerce/compare/v0.1.4...v0.1.5) (2022-12-28)
 
 
