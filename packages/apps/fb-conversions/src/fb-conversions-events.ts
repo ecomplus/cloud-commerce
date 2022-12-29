@@ -56,7 +56,12 @@ const handleApiEvent: ApiEventHandler = async ({
   const order = apiDoc as Orders;
   const orderId = order._id;
 
-  const { clientUserAgent, eventID } = getPixelInMetafield(order);
+  // eslint-disable-next-line prefer-const
+  let { clientUserAgent, eventID } = getPixelInMetafield(order);
+
+  if (!clientUserAgent) {
+    clientUserAgent = order.client_user_agent;
+  }
 
   if (order.status === 'cancelled') {
     return null;
@@ -177,7 +182,7 @@ const handleApiEvent: ApiEventHandler = async ({
   }
 };
 
-export const fbConversions = {
+export const fbconversions = {
   onStoreEvent: createAppEventsFunction(
     'fbConversions',
     handleApiEvent,
