@@ -48,36 +48,36 @@ importers:
 
   ecomplus-stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.1.5
+      '@cloudcommerce/cli': ^0.1.6
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
+      '@cloudcommerce/events': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/modules': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/modules': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/passport': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/passport': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
@@ -86,12 +86,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.12.1
       '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/i18n': ^0.1.5
-      '@cloudcommerce/ssr': ^0.1.5
-      '@cloudcommerce/storefront': ^0.1.5
-      '@cloudcommerce/types': ^0.1.5
+      '@cloudcommerce/api': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/i18n': ^0.1.6
+      '@cloudcommerce/ssr': ^0.1.6
+      '@cloudcommerce/storefront': ^0.1.6
+      '@cloudcommerce/types': ^0.1.6
       '@iconify-json/arcticons': ^1.1.34
       '@iconify-json/wpf': ^1.1.3
       lottie-web: ^5.10.0
@@ -115,12 +115,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.12.1
       '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/i18n': ^0.1.5
-      '@cloudcommerce/ssr': ^0.1.5
-      '@cloudcommerce/storefront': ^0.1.5
-      '@cloudcommerce/types': ^0.1.5
+      '@cloudcommerce/api': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/i18n': ^0.1.6
+      '@cloudcommerce/ssr': ^0.1.6
+      '@cloudcommerce/storefront': ^0.1.6
+      '@cloudcommerce/types': ^0.1.6
       '@iconify-json/arcticons': ^1.1.34
       '@iconify-json/wpf': ^1.1.3
       lottie-web: ^5.10.0
@@ -142,36 +142,36 @@ importers:
 
   ecomplus-stores/tia-sonia:
     specifiers:
-      '@cloudcommerce/cli': ^0.1.5
+      '@cloudcommerce/cli': ^0.1.6
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/tia-sonia/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/tia-sonia/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
+      '@cloudcommerce/events': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/tia-sonia/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/modules': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/modules': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/tia-sonia/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/passport': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/passport': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
@@ -180,12 +180,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.12.1
       '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/i18n': ^0.1.5
-      '@cloudcommerce/ssr': ^0.1.5
-      '@cloudcommerce/storefront': ^0.1.5
-      '@cloudcommerce/types': ^0.1.5
+      '@cloudcommerce/api': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/i18n': ^0.1.6
+      '@cloudcommerce/ssr': ^0.1.6
+      '@cloudcommerce/storefront': ^0.1.6
+      '@cloudcommerce/types': ^0.1.6
       '@fontsource/dm-serif-text': ^4.5.9
       '@fontsource/roboto-condensed': ^4.5.9
       '@iconify-json/tabler': ^1.1.53
@@ -207,12 +207,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.12.1
       '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/i18n': ^0.1.5
-      '@cloudcommerce/ssr': ^0.1.5
-      '@cloudcommerce/storefront': ^0.1.5
-      '@cloudcommerce/types': ^0.1.5
+      '@cloudcommerce/api': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/i18n': ^0.1.6
+      '@cloudcommerce/ssr': ^0.1.6
+      '@cloudcommerce/storefront': ^0.1.6
+      '@cloudcommerce/types': ^0.1.6
       '@fontsource/dm-serif-text': ^4.5.9
       '@fontsource/roboto-condensed': ^4.5.9
       '@iconify-json/tabler': ^1.1.53
@@ -788,36 +788,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.1.5
+      '@cloudcommerce/cli': ^0.1.6
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
+      '@cloudcommerce/events': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/modules': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/modules': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/passport': ^0.1.5
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/passport': ^0.1.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -826,12 +826,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.12.1
       '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/i18n': ^0.1.5
-      '@cloudcommerce/ssr': ^0.1.5
-      '@cloudcommerce/storefront': ^0.1.5
-      '@cloudcommerce/types': ^0.1.5
+      '@cloudcommerce/api': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/i18n': ^0.1.6
+      '@cloudcommerce/ssr': ^0.1.6
+      '@cloudcommerce/storefront': ^0.1.6
+      '@cloudcommerce/types': ^0.1.6
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
@@ -847,12 +847,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.12.1
       '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.1.5
-      '@cloudcommerce/firebase': ^0.1.5
-      '@cloudcommerce/i18n': ^0.1.5
-      '@cloudcommerce/ssr': ^0.1.5
-      '@cloudcommerce/storefront': ^0.1.5
-      '@cloudcommerce/types': ^0.1.5
+      '@cloudcommerce/api': ^0.1.6
+      '@cloudcommerce/firebase': ^0.1.6
+      '@cloudcommerce/i18n': ^0.1.6
+      '@cloudcommerce/ssr': ^0.1.6
+      '@cloudcommerce/storefront': ^0.1.6
+      '@cloudcommerce/types': ^0.1.6
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
