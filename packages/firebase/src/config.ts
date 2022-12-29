@@ -27,6 +27,9 @@ const loyaltyPointsEvents: ApiEventName[] = [
 const frenetEvents: ApiEventName[] = [
   'orders-new',
 ];
+const fbConversionsEvents: ApiEventName[] = [
+  'orders-new',
+];
 
 const {
   SETTINGS_FILEPATH,
@@ -103,6 +106,10 @@ const mergeConfig = {
     loyaltyPoints: {
       appId: 124890,
       events: loyaltyPointsEvents,
+    },
+    fbConversions: {
+      appId: 131670,
+      events: fbConversionsEvents,
     },
   },
   cmsSettings,
