@@ -15,25 +15,6 @@ import {
   FacebookAdsApi,
 } from 'facebook-nodejs-business-sdk';
 
-const ECHO_SUCCESS = 'SUCCESS';
-
-const getPixelInMetafield = (order: Orders) => {
-  let eventID;
-  let clientUserAgent;
-
-  if (order.metafields && order.status !== 'cancelled') {
-    const metafield = order.metafields.find(({ namespace, field }) => {
-      return namespace === 'fb' && field === 'pixel';
-    });
-    if (metafield) {
-      const { value } = metafield;
-      eventID = value.eventID;
-      clientUserAgent = value.userAgent;
-    }
-  }
-  return { eventID, clientUserAgent };
-};
-
 const handleApiEvent: ApiEventHandler = async ({
   evName,
   apiEvent,
@@ -54,18 +35,27 @@ const handleApiEvent: ApiEventHandler = async ({
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
   const order = apiDoc as Orders;
+  if (order.status === 'cancelled') {
+    return null;
+  }
   const orderId = order._id;
 
-  // eslint-disable-next-line prefer-const
-  let { clientUserAgent, eventID } = getPixelInMetafield(order);
-
+  let eventID: undefined | string;
+  let clientUserAgent: undefined | string;
+  if (order.metafields) {
+    const metafield = order.metafields.find(({ namespace, field }) => {
+      return namespace === 'fb' && field === 'pixel';
+    });
+    if (metafield) {
+      const { value } = metafield;
+      eventID = value.eventID as string;
+      clientUserAgent = value.userAgent as string;
+    }
+  }
   if (!clientUserAgent) {
     clientUserAgent = order.client_user_agent;
   }
 
-  if (order.status === 'cancelled') {
-    return null;
-  }
   try {
     const buyer = order.buyers && order.buyers[0];
     const clientIp = order.client_ip;
@@ -163,17 +153,15 @@ const handleApiEvent: ApiEventHandler = async ({
         try {
           const response = await eventRequest.execute();
           logger.info('>> (App fb-conversions): ', response);
-          return ECHO_SUCCESS;
+          return null;
         } catch (err: any) {
           logger.error(`(App fb-conversions): event request error: ${err.message} =>`, err);
           return null;
         }
       }
-
       logger.warn('>> (App fb-conversions): PixelId or fbToken not found');
       return null;
     }
-
     logger.warn('>> (App fb-conversions): orderId , buyer or clientIp not found');
     return null;
   } catch (err: any) {
