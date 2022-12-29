@@ -150,7 +150,9 @@ const genAstroConfig = ({
   }),
   outDir: isSSG ? './dist/client' : './dist',
   integrations: [
-    image(),
+    image({
+      serviceEntryPoint: '@astrojs/image/sharp',
+    }),
     vue({ appEntrypoint: '/src/pages/_vue' }),
     partytown(),
     prefetch(),
