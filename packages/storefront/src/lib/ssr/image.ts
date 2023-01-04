@@ -15,8 +15,9 @@ const tryImageSize = (src: string) => {
   return dimensions;
 };
 
-type TransformOptions = Parameters<typeof _getImage>[0] & {
+type TransformOptions = Omit<Parameters<typeof _getImage>[0], 'alt'> & {
   isLowResolution?: boolean,
+  alt?: string,
 };
 const getImage = async (options: TransformOptions) => {
   if (!options.isLowResolution) {
@@ -40,7 +41,7 @@ const getImage = async (options: TransformOptions) => {
       options.aspectRatio = height ? width / height : 1;
     }
   }
-  const imgAttrs = await _getImage(options);
+  const imgAttrs = await _getImage({ alt: '', ...options });
   imgAttrs.src += imgAttrs.src.includes('?') ? '&' : '?';
   imgAttrs.src += `V=${import.meta.env.DEPLOY_RAND || '_'}`;
   if (typeof imgAttrs.width === 'number') {
