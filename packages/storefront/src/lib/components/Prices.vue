@@ -2,7 +2,6 @@
 import type { Products, ListPaymentsResponse } from '@cloudcommerce/types';
 import usePrices from '@@sf/composables/use-prices';
 import useComponentVariant from '@@sf/composables/use-component-variant';
-import { ref } from 'vue';
 
 export interface Props {
   product?: Partial<Products> & { price: number, final_price?: number };
@@ -35,25 +34,18 @@ const {
   discountLabel,
 } = prices;
 const componentVariant = useComponentVariant(props);
-const isFade = ref(false);
-setTimeout(() => {
-  isFade.value = true;
-  setTimeout(() => {
-    isFade.value = false;
-  }, 5000);
-}, 5000);
 </script>
 
 <template>
   <div :data-sf-prices="componentVariant" class="text-base-600">
-    <slot v-if="comparePrice" name="compare" v-bind="prices">
+    <slot v-if="comparePrice" name="compare" v-bind="{ salePrice, comparePrice }">
       <span :data-sf-prices-compare="comparePrice" class="text-base-500 mr-1">
         <slot name="compare-pre">
           <small v-if="isLiteral">
             {{ `${$t.i19from} ` }}
           </small>
         </slot>
-        <slot name="compare-value" v-bind="prices">
+        <slot name="compare-value" v-bind="{ salePrice, comparePrice }">
           <s>{{ $money(comparePrice) }}</s>
         </slot>
         <slot name="compare-post">
@@ -63,20 +55,24 @@ setTimeout(() => {
         </slot>
       </span>
     </slot>
-    <slot name="sale" v-bind="prices">
+    <slot name="sale" v-bind="{ salePrice }">
       <strong :data-sf-prices-sale="salePrice" class="inline-block text-base-800">
         <slot name="sale-pre">
           <small v-if="hasVariedPrices">
             {{ `${$t.i19asOf} ` }}
           </small>
         </slot>
-        <slot name="sale-value" v-bind="prices">
+        <slot name="sale-value" v-bind="{ salePrice }">
           {{ $money(salePrice) }}
         </slot>
         <slot name="sale-post" />
       </strong>
     </slot>
-    <slot v-if="cashbackValue" name="cashback" v-bind="prices">
+    <slot
+      v-if="cashbackValue"
+      name="cashback"
+      v-bind="{ salePrice, cashbackValue, cashbackPercentage }"
+    >
       <Fade slide="down">
         <div
           v-if="hasCashback"
@@ -88,7 +84,10 @@ setTimeout(() => {
             <slot name="cashback-pre">
               <i class="i-cashback mr-1"></i>
             </slot>
-            <slot name="cashback-value" v-bind="prices">
+            <slot
+              name="cashback-value"
+              v-bind="{ salePrice, cashbackValue, cashbackPercentage }"
+            >
               <span class="font-medium">
                 {{ $money(cashbackValue) }}
               </span>
@@ -100,7 +99,11 @@ setTimeout(() => {
         </div>
       </Fade>
     </slot>
-    <slot v-if="installmentValue" name="installment" v-bind="prices">
+    <slot
+      v-if="installmentValue"
+      name="installment"
+      v-bind="{ salePrice, installmentValue, installmentsNumber, monthlyInterest }"
+    >
       <Fade slide="down">
         <div v-if="hasPriceOptions" :data-sf-prices-installment="installmentValue">
           <slot name="installment-pre">
@@ -108,7 +111,10 @@ setTimeout(() => {
               {{ `${$t.i19upTo} ` }}
             </small>
           </slot>
-          <slot name="installment-value" v-bind="prices">
+          <slot
+            name="installment-value"
+            v-bind="{ salePrice, installmentValue, installmentsNumber, monthlyInterest }"
+          >
             {{ installmentsNumber }}x
             <small v-if="isLiteral">
               {{ ` ${$t.i19of} ` }}
@@ -123,7 +129,11 @@ setTimeout(() => {
         </div>
       </Fade>
     </slot>
-    <slot v-if="priceWithDiscount < salePrice" name="discount" v-bind="prices">
+    <slot
+      v-if="priceWithDiscount < salePrice"
+      name="discount"
+      v-bind="{ salePrice, priceWithDiscount, discountLabel }"
+    >
       <Fade slide="down">
         <div v-if="hasPriceOptions" :data-sf-prices-discount="priceWithDiscount">
           <slot name="discount-pre">
@@ -131,7 +141,10 @@ setTimeout(() => {
               {{ `${$t.i19asOf} ` }}
             </small>
           </slot>
-          <slot name="discount-value" v-bind="prices">
+          <slot
+            name="discount-value"
+            v-bind="{ salePrice, priceWithDiscount, discountLabel }"
+          >
             <span>{{ $money(priceWithDiscount) }}</span>
           </slot>
           <slot name="discount-post">
