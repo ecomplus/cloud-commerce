@@ -24,5 +24,6 @@ interface Window {
       doc: Record<string, any>,
       timestamp: number,
     },
+    modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info')>,
   };
 }

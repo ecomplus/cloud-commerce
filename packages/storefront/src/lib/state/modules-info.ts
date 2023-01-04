@@ -46,10 +46,16 @@ if (!import.meta.env.SSR) {
   if (persistedValue?.list_payments) {
     Object.assign(modulesInfo, persistedValue);
   } else {
-    const modulesToFetch: { modName: string, reqOptions?: Record<string, any> }[] = [
-      { modName: 'list_payments' },
-      { modName: 'calculate_shipping' },
-    ];
+    const modulesInfoPreset = window.storefront?.modulesInfoPreset;
+    if (modulesInfoPreset) {
+      Object.assign(modulesInfo, modulesInfoPreset);
+    }
+    const modulesToFetch: { modName: string, reqOptions?: Record<string, any> }[] = [];
+    ['list_payments', 'calculate_shipping'].forEach((modName) => {
+      if (!Object.keys(modulesInfo[modName]).length) {
+        modulesToFetch.push({ modName });
+      }
+    });
     if (Object.keys(utm).length) {
       modulesToFetch.push({
         modName: 'apply_discount',
