@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/ecomplus/cloud-commerce/compare/v0.1.6...v0.1.7) (2023-01-04)
+
+
+### Features
+
+* **storefront:** New optional global `window.storefront.modulesInfoPreset` ([aa587fd](https://github.com/ecomplus/cloud-commerce/commit/aa587fd977016116b65b52847fd76121673dd464))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#101](https://github.com/ecomplus/cloud-commerce/issues/101)) ([9fcfe7c](https://github.com/ecomplus/cloud-commerce/commit/9fcfe7cfaed2a643cc19bad927d1bce42845655e))
+* **storefront:** Edit `usePrices` composable to support compound discount labels ([7ae2114](https://github.com/ecomplus/cloud-commerce/commit/7ae211456949b8728857be79142d019a8653dabb))
+* **storefront:** Fix `Prices` component slots binds to pass values instead of Computed/Ref objects ([951507a](https://github.com/ecomplus/cloud-commerce/commit/951507ace35fc69b96ba7387d5a557ee46a1ec06))
+* **storefront:** Fix `window.storefront.modulesInfoPreset` typedef ([8bf3cc5](https://github.com/ecomplus/cloud-commerce/commit/8bf3cc53bf20c767d14915aa5f16bcd2d3bdc0e4))
+* **storefront:** Fix typedef and cashback/installments handlers on `usePrices` and `Prices` ([f0bd969](https://github.com/ecomplus/cloud-commerce/commit/f0bd969cd6d646237d7c36df503d759ae1711fbf))
+* **storefront:** Minor fix SSR image transform typedef to not require `alt` property ([0875cb0](https://github.com/ecomplus/cloud-commerce/commit/0875cb043bc002b765f02c04916aaa0633de605f))
+* **storefront:** Remove root slot from `Prices` to support attributes inheritance ([9a0a8b0](https://github.com/ecomplus/cloud-commerce/commit/9a0a8b0246999d6cd48be2bad0896df95c944345))
+
 ### [0.1.6](https://github.com/ecomplus/cloud-commerce/compare/v0.1.5...v0.1.6) (2022-12-29)
 
 
