@@ -112,7 +112,14 @@ export default (props: Props) => {
     return {};
   });
   const discountLabel = computed(() => {
-    return (discountObject.value.label && `via ${discountObject.value.label}`) || '';
+    const { label } = discountObject.value;
+    if (label) {
+      if (label.includes(' ')) {
+        return label;
+      }
+      return `via ${label}`;
+    }
+    return '';
   });
   const priceWithDiscount = computed(() => {
     return getPriceWithDiscount(salePrice.value, discountObject.value);
