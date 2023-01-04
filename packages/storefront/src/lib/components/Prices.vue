@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Products, Carts, ListPaymentsResponse } from '@cloudcommerce/types';
+import type { Products, ListPaymentsResponse } from '@cloudcommerce/types';
 import usePrices from '@@sf/composables/use-prices';
 import useComponentVariant from '@@sf/composables/use-component-variant';
 import { ref } from 'vue';
 
 export interface Props {
-  product?: Partial<Carts['items'][0]> & Partial<Products> & { price: Products['price'] };
+  product?: Partial<Products> & { price: number, final_price?: number };
   price?: number;
   basePrice?: number;
   isAmountTotal?: boolean,
@@ -26,8 +26,8 @@ const {
   hasVariedPrices,
   salePrice,
   comparePrice,
-  earnPointsPercentage,
-  pointsCashback,
+  cashbackPercentage,
+  cashbackValue,
   installmentsNumber,
   monthlyInterest,
   installmentValue,
@@ -77,17 +77,21 @@ setTimeout(() => {
           <slot name="sale-post" />
         </strong>
       </slot>
-      <slot v-if="pointsCashback" name="cashback" v-bind="prices">
+      <slot v-if="cashbackValue" name="cashback" v-bind="prices">
         <Fade slide="down">
-          <div v-if="hasCashback" :data-sf-prices-cashback="pointsCashback">
+          <div
+            v-if="hasCashback"
+            :data-sf-prices-cashback="cashbackValue"
+            class="relative z-10"
+          >
             <span :data-tooltip="$t.i19get$1back
-              .replace('$1', $percentage(earnPointsPercentage))">
+              .replace('$1', $percentage(cashbackPercentage))">
               <slot name="cashback-pre">
                 <i class="i-cashback mr-1"></i>
               </slot>
               <slot name="cashback-value" v-bind="prices">
                 <span class="font-medium">
-                  {{ $money(pointsCashback) }}
+                  {{ $money(cashbackValue) }}
                 </span>
               </slot>
               <slot name="cashback-post">

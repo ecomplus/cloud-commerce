@@ -1,10 +1,10 @@
-import type { Products, Carts, ListPaymentsResponse } from '@cloudcommerce/types';
+import type { Products, ListPaymentsResponse } from '@cloudcommerce/types';
 import { computed } from 'vue';
 import { price as getPrice, onPromotion as checkOnPromotion } from '@ecomplus/utils';
 import modulesInfo from '@@sf/state/modules-info';
 
 export interface Props {
-  product?: Partial<Carts['items'][0]> & Partial<Products> & { price: Products['price'] };
+  product?: Partial<Products> & { price: number, final_price?: number };
   price?: number;
   basePrice?: number;
   isAmountTotal?: boolean,
@@ -90,7 +90,7 @@ export default (props: Props) => {
   });
   const installmentValue = computed(() => {
     if (installmentsNumber.value >= 2) {
-      if (monthlyInterest.value) {
+      if (!monthlyInterest.value) {
         return salePrice.value / installmentsNumber.value;
       }
       const interest = monthlyInterest.value / 100;
@@ -112,7 +112,7 @@ export default (props: Props) => {
     return {};
   });
   const discountLabel = computed(() => {
-    return discountObject.value.label || '';
+    return (discountObject.value.label && `via ${discountObject.value.label}`) || '';
   });
   const priceWithDiscount = computed(() => {
     return getPriceWithDiscount(salePrice.value, discountObject.value);
@@ -126,7 +126,7 @@ export default (props: Props) => {
     if (pointsPrograms) {
       const programIds = Object.keys(pointsPrograms);
       for (let i = 0; i < programIds.length; i++) {
-        const program = pointsPrograms[i];
+        const program = pointsPrograms[programIds[i]];
         if (program && program.earn_percentage > 0) {
           return program;
         }
@@ -143,12 +143,12 @@ export default (props: Props) => {
   const earnPointsPercentage = computed(() => {
     return pointsProgramObject.value.earn_percentage || 0;
   });
-  const earnPointsFactor = computed(() => {
-    return earnPointsPercentage.value / 100;
+  const cashbackPercentage = computed(() => {
+    return earnPointsPercentage.value * pointsProgramObject.value.ratio;
   });
-  const pointsCashback = computed(() => {
-    return earnPointsFactor.value > 0
-      ? salePrice.value * earnPointsFactor.value : 0;
+  const cashbackValue = computed(() => {
+    return cashbackPercentage.value >= 1
+      ? salePrice.value * (cashbackPercentage.value / 100) : 0;
   });
 
   return {
@@ -166,7 +166,7 @@ export default (props: Props) => {
     pointsMinPrice,
     pointsProgramName,
     earnPointsPercentage,
-    earnPointsFactor,
-    pointsCashback,
+    cashbackPercentage,
+    cashbackValue,
   };
 };
