@@ -45,106 +45,104 @@ setTimeout(() => {
 </script>
 
 <template>
-  <slot v-bind="prices">
-    <div :data-sf-prices="componentVariant" class="text-base-600">
-      <slot v-if="comparePrice" name="compare" v-bind="prices">
-        <span :data-sf-prices-compare="comparePrice" class="text-base-500 mr-1">
-          <slot name="compare-pre">
+  <div :data-sf-prices="componentVariant" class="text-base-600">
+    <slot v-if="comparePrice" name="compare" v-bind="prices">
+      <span :data-sf-prices-compare="comparePrice" class="text-base-500 mr-1">
+        <slot name="compare-pre">
+          <small v-if="isLiteral">
+            {{ `${$t.i19from} ` }}
+          </small>
+        </slot>
+        <slot name="compare-value" v-bind="prices">
+          <s>{{ $money(comparePrice) }}</s>
+        </slot>
+        <slot name="compare-post">
+          <small v-if="isLiteral">
+            {{ ` ${$t.i19to}` }}
+          </small>
+        </slot>
+      </span>
+    </slot>
+    <slot name="sale" v-bind="prices">
+      <strong :data-sf-prices-sale="salePrice" class="inline-block text-base-800">
+        <slot name="sale-pre">
+          <small v-if="hasVariedPrices">
+            {{ `${$t.i19asOf} ` }}
+          </small>
+        </slot>
+        <slot name="sale-value" v-bind="prices">
+          {{ $money(salePrice) }}
+        </slot>
+        <slot name="sale-post" />
+      </strong>
+    </slot>
+    <slot v-if="cashbackValue" name="cashback" v-bind="prices">
+      <Fade slide="down">
+        <div
+          v-if="hasCashback"
+          :data-sf-prices-cashback="cashbackValue"
+          class="relative z-10"
+        >
+          <span :data-tooltip="$t.i19get$1back
+            .replace('$1', $percentage(cashbackPercentage))">
+            <slot name="cashback-pre">
+              <i class="i-cashback mr-1"></i>
+            </slot>
+            <slot name="cashback-value" v-bind="prices">
+              <span class="font-medium">
+                {{ $money(cashbackValue) }}
+              </span>
+            </slot>
+            <slot name="cashback-post">
+              <small> cashback</small>
+            </slot>
+          </span>
+        </div>
+      </Fade>
+    </slot>
+    <slot v-if="installmentValue" name="installment" v-bind="prices">
+      <Fade slide="down">
+        <div v-if="hasPriceOptions" :data-sf-prices-installment="installmentValue">
+          <slot name="installment-pre">
             <small v-if="isLiteral">
-              {{ `${$t.i19from} ` }}
+              {{ `${$t.i19upTo} ` }}
             </small>
           </slot>
-          <slot name="compare-value" v-bind="prices">
-            <s>{{ $money(comparePrice) }}</s>
-          </slot>
-          <slot name="compare-post">
+          <slot name="installment-value" v-bind="prices">
+            {{ installmentsNumber }}x
             <small v-if="isLiteral">
-              {{ ` ${$t.i19to}` }}
+              {{ ` ${$t.i19of} ` }}
+            </small>
+            <span>{{ $money(installmentValue) }}</span>
+          </slot>
+          <slot name="installment-post">
+            <small v-if="!monthlyInterest && isLiteral">
+              {{ $t.i19interestFree }}
             </small>
           </slot>
-        </span>
-      </slot>
-      <slot name="sale" v-bind="prices">
-        <strong :data-sf-prices-sale="salePrice" class="inline-block text-base-800">
-          <slot name="sale-pre">
-            <small v-if="hasVariedPrices">
+        </div>
+      </Fade>
+    </slot>
+    <slot v-if="priceWithDiscount < salePrice" name="discount" v-bind="prices">
+      <Fade slide="down">
+        <div v-if="hasPriceOptions" :data-sf-prices-discount="priceWithDiscount">
+          <slot name="discount-pre">
+            <small v-if="!discountLabel">
               {{ `${$t.i19asOf} ` }}
             </small>
           </slot>
-          <slot name="sale-value" v-bind="prices">
-            {{ $money(salePrice) }}
+          <slot name="discount-value" v-bind="prices">
+            <span>{{ $money(priceWithDiscount) }}</span>
           </slot>
-          <slot name="sale-post" />
-        </strong>
-      </slot>
-      <slot v-if="cashbackValue" name="cashback" v-bind="prices">
-        <Fade slide="down">
-          <div
-            v-if="hasCashback"
-            :data-sf-prices-cashback="cashbackValue"
-            class="relative z-10"
-          >
-            <span :data-tooltip="$t.i19get$1back
-              .replace('$1', $percentage(cashbackPercentage))">
-              <slot name="cashback-pre">
-                <i class="i-cashback mr-1"></i>
-              </slot>
-              <slot name="cashback-value" v-bind="prices">
-                <span class="font-medium">
-                  {{ $money(cashbackValue) }}
-                </span>
-              </slot>
-              <slot name="cashback-post">
-                <small> cashback</small>
-              </slot>
-            </span>
-          </div>
-        </Fade>
-      </slot>
-      <slot v-if="installmentValue" name="installment" v-bind="prices">
-        <Fade slide="down">
-          <div v-if="hasPriceOptions" :data-sf-prices-installment="installmentValue">
-            <slot name="installment-pre">
-              <small v-if="isLiteral">
-                {{ `${$t.i19upTo} ` }}
-              </small>
-            </slot>
-            <slot name="installment-value" v-bind="prices">
-              {{ installmentsNumber }}x
-              <small v-if="isLiteral">
-                {{ ` ${$t.i19of} ` }}
-              </small>
-              <span>{{ $money(installmentValue) }}</span>
-            </slot>
-            <slot name="installment-post">
-              <small v-if="!monthlyInterest && isLiteral">
-                {{ $t.i19interestFree }}
-              </small>
-            </slot>
-          </div>
-        </Fade>
-      </slot>
-      <slot v-if="priceWithDiscount < salePrice" name="discount" v-bind="prices">
-        <Fade slide="down">
-          <div v-if="hasPriceOptions" :data-sf-prices-discount="priceWithDiscount">
-            <slot name="discount-pre">
-              <small v-if="!discountLabel">
-                {{ `${$t.i19asOf} ` }}
-              </small>
-            </slot>
-            <slot name="discount-value" v-bind="prices">
-              <span>{{ $money(priceWithDiscount) }}</span>
-            </slot>
-            <slot name="discount-post">
-              <small v-if="discountLabel">
-                {{ ` ${discountLabel}` }}
-              </small>
-            </slot>
-          </div>
-        </Fade>
-      </slot>
-    </div>
-  </slot>
+          <slot name="discount-post">
+            <small v-if="discountLabel">
+              {{ ` ${discountLabel}` }}
+            </small>
+          </slot>
+        </div>
+      </Fade>
+    </slot>
+  </div>
 </template>
 
 <style>
