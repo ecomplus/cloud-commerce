@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/app-google-analytics",
   "type": "module",
   "version": "0.0.0",
-  "description": "E-Com Plus Cloud Commerce app to send carts/orders events to GA Measurement Protocol ",
+  "description": "E-Com Plus Cloud Commerce app to send carts/orders events to GA Measurement Protocol",
   "main": "lib/index.js",
   "repository": {
     "type": "git",

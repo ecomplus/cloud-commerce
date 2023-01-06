@@ -25,6 +25,7 @@ type EventItem = {
 }
 
 type EventParams = {
+  id: string,
   currency: string,
   transaction_id: string,
   value: number,
@@ -32,8 +33,7 @@ type EventParams = {
   coupon?: string,
   shipping?: number,
   tax?: number,
-  items: EventItem[]
-
+  items: EventItem[],
 }
 
 export {

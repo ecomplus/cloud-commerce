@@ -32,7 +32,7 @@ const fbConversionsEvents: ApiEventName[] = [
 ];
 
 const googleAnalyticsEvents: ApiEventName[] = [
-  'orders-new',
+  'orders-anyStatusSet',
 ];
 
 const {
