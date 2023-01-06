@@ -189,12 +189,14 @@ importers:
       '@fontsource/dm-serif-text': ^4.5.9
       '@fontsource/roboto-condensed': ^4.5.9
       '@iconify-json/tabler': ^1.1.53
+      lozad: ^1.16.0
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
+      lozad: 1.16.0
     devDependencies:
       '@cloudcommerce/i18n': link:../../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../../packages/storefront
@@ -216,12 +218,14 @@ importers:
       '@fontsource/dm-serif-text': ^4.5.9
       '@fontsource/roboto-condensed': ^4.5.9
       '@iconify-json/tabler': ^1.1.53
+      lozad: ^1.16.0
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
+      lozad: 1.16.0
     devDependencies:
       '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
@@ -8464,7 +8468,6 @@ packages:
 
   /lozad/1.16.0:
     resolution: {integrity: sha512-JBr9WjvEFeKoyim3svo/gsQPTkgG/mOHJmDctZ/+U9H3ymUuvEkqpn8bdQMFsvTMcyRJrdJkLv0bXqGm0sP72w==}
-    dev: true
 
   /lru-cache/4.0.2:
     resolution: {integrity: sha512-uQw9OqphAGiZhkuPlpFGmdTU2tEuhxTourM/19qGJrxBPHAr/f8BT1a0i/lOclESnGatdJG/UCkP9kZB/Lh1iw==}
