@@ -29,6 +29,7 @@ type EventParams = {
   currency: string,
   transaction_id: string,
   value: number,
+  status?: string,
   affiliation?: string,
   coupon?: string,
   shipping?: number,

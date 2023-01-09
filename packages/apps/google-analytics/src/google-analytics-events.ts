@@ -43,71 +43,87 @@ const handleApiEvent: ApiEventHandler = async ({
   const buyer = order.buyers && order.buyers[0];
   const clientIp = order.client_ip;
 
+  let enabledEvent: string = order.financial_status?.current
+    && appData.custom_events[order.financial_status?.current];
+
+  if (order.status === 'cancelled') {
+    enabledEvent = appData.custom_events.cancelled;
+  }
+
   if (orderId && buyer && clientIp && order.items) {
     try {
-      if (measurementId && apiSecret) {
-        if (order.status === 'cancelled' || order.financial_status) {
-          const url = `/mp/collect?api_secret=${apiSecret}&measurement_id=${measurementId}`;
+      logger.log(
+        '>> (App google-analytics) status: ',
+        order.status,
+        ' financial Status: ',
+        order.financial_status?.current,
+        ' enable: ',
+        enabledEvent,
+      );
 
-          const items = order.items.map((item) => {
-            const eventItem: EventItem = {
-              item_id: item.product_id,
-              item_name: item.name || item.sku || '',
-              price: item.final_price || item.price,
-              quantity: item.quantity,
-            };
+      if (measurementId && apiSecret && enabledEvent) {
+        const url = `/mp/collect?api_secret=${apiSecret}&measurement_id=${measurementId}`;
 
-            if (item.variation_id) {
-              eventItem.item_variant = item.variation_id;
-            }
-            if (item.kit_product) {
-              eventItem.item_list_id = item.kit_product._id;
-              eventItem.item_list_name = item.kit_product.name;
-            }
-            return eventItem;
-          });
-
-          const params: EventParams = {
-            id: orderId,
-            currency: order.currency_id || 'BRL',
-            transaction_id: orderId,
-            value: order.amount.total,
-            items,
-          };
-          if (order.amount.freight) {
-            params.shipping = order.amount.freight;
-          }
-
-          if (order.amount.tax || order.amount.extra) {
-            params.tax = (order.amount.tax || 0) + (order.amount.extra || 0);
-          }
-
-          if (order.extra_discount?.discount_coupon) {
-            params.coupon = order.extra_discount.discount_coupon;
-          }
-
-          let eventName: string;
-
-          if (order.status === 'cancelled') {
-            eventName = 'refund';
-          } else {
-            eventName = `purchase_${order.financial_status?.current}`;
-          }
-
-          const body = {
-            client_id: `${buyer._id}`,
-            events: [{
-              name: eventName,
-              params,
-            }],
+        const items = order.items.map((item) => {
+          const eventItem: EventItem = {
+            item_id: item.product_id,
+            item_name: item.name || item.sku || '',
+            price: item.final_price || item.price,
+            quantity: item.quantity,
           };
 
-          await Axios.post(url, body);
-          return null;
+          if (item.variation_id) {
+            eventItem.item_variant = item.variation_id;
+          }
+          if (item.kit_product) {
+            eventItem.item_list_id = item.kit_product._id;
+            eventItem.item_list_name = item.kit_product.name;
+          }
+          return eventItem;
+        });
+
+        const params: EventParams = {
+          id: orderId,
+          currency: order.currency_id || 'BRL',
+          transaction_id: orderId,
+          value: order.amount.total,
+          status: order.financial_status?.current || order.status,
+          items,
+        };
+        if (order.amount.freight) {
+          params.shipping = order.amount.freight;
         }
+
+        if (order.amount.tax || order.amount.extra) {
+          params.tax = (order.amount.tax || 0) + (order.amount.extra || 0);
+        }
+
+        if (order.extra_discount?.discount_coupon) {
+          params.coupon = order.extra_discount.discount_coupon;
+        }
+
+        let eventName: string;
+
+        if (order.status === 'cancelled') {
+          eventName = 'refund';
+        } else {
+          eventName = `purchase_${order.financial_status?.current}`;
+        }
+
+        const body = {
+          client_id: `${buyer._id}`,
+          events: [{
+            name: eventName,
+            params,
+          }],
+        };
+
+        await Axios.post(url, body);
         return null;
       }
-      logger.warn('>> (App google-analytics): measurement_id or api_secret not found (App config)');
+
+      logger.warn('>> (App google-analytics): measurement_id or api_secret not found,'
+        + ' or disabled event (App config)');
       return null;
     } catch (err: any) {
       logger.error('>> (App google-analytics): event error => ', err);
