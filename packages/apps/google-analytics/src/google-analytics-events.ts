@@ -1,6 +1,9 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/prefer-default-export */
+import '@cloudcommerce/firebase/lib/init';
 import type { Orders } from '@cloudcommerce/types';
 import type { EventItem, EventParams } from '../types';
+import { getFirestore } from 'firebase-admin/firestore';
 import {
   createAppEventsFunction,
   ApiEventHandler,
@@ -13,6 +16,24 @@ const Axios = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+const getSentEventFirestore = (
+  collectionEventsSent: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>,
+  orderId: string,
+): Promise<FirebaseFirestore.DocumentData | undefined | false> => new Promise((resolve) => {
+  const subscription = collectionEventsSent.doc(orderId);
+  subscription.get()
+    .then((documentSnapshot) => {
+      if (documentSnapshot.exists) {
+        resolve(documentSnapshot.data());
+      } else {
+        resolve(false);
+      }
+    })
+    .catch(() => {
+      resolve(false);
+    });
 });
 
 const handleApiEvent: ApiEventHandler = async ({
@@ -43,12 +64,8 @@ const handleApiEvent: ApiEventHandler = async ({
   const buyer = order.buyers && order.buyers[0];
   const clientIp = order.client_ip;
 
-  let enabledEvent: string = order.financial_status?.current
-    && appData.custom_events[order.financial_status?.current];
-
-  if (order.status === 'cancelled') {
-    enabledEvent = appData.custom_events.cancelled;
-  }
+  const enabledCustonEvent = order.financial_status?.current && appData.custom_events;
+  const enabledRefundEvent = order.status === 'cancelled' && appData.refund_event;
 
   if (orderId && buyer && clientIp && order.items) {
     try {
@@ -57,11 +74,14 @@ const handleApiEvent: ApiEventHandler = async ({
         order.status,
         ' financial Status: ',
         order.financial_status?.current,
-        ' enable: ',
-        enabledEvent,
+        ' enable Custon: ',
+        enabledCustonEvent,
+        ' Event Cancelled: ',
+        enabledRefundEvent,
       );
 
-      if (measurementId && apiSecret && enabledEvent) {
+      if (measurementId && apiSecret
+        && (enabledCustonEvent || enabledRefundEvent)) {
         const url = `/mp/collect?api_secret=${apiSecret}&measurement_id=${measurementId}`;
 
         const items = order.items.map((item) => {
@@ -102,28 +122,59 @@ const handleApiEvent: ApiEventHandler = async ({
           params.coupon = order.extra_discount.discount_coupon;
         }
 
-        let eventName: string;
+        const events: {
+          name: string,
+          params: EventParams
+        }[] = [];
 
-        if (order.status === 'cancelled') {
-          eventName = 'refund';
-        } else {
-          eventName = `purchase_${order.financial_status?.current}`;
+        const collectionEventsSent = getFirestore().collection('eventsSentGA4');
+        let customEventsSent: string[] = [];
+
+        if (enabledCustonEvent && order.financial_status) {
+          const eventFirestore = await getSentEventFirestore(collectionEventsSent, orderId);
+          const eventName = `purchase_${order.financial_status.current}`;
+          customEventsSent = (eventFirestore && eventFirestore.customEventsSent) || [];
+
+          if (customEventsSent[customEventsSent.length - 1] !== eventName) {
+            events.push({
+              name: eventName,
+              params,
+            });
+
+            customEventsSent.push(eventName);
+          }
         }
 
-        const body = {
-          client_id: `${buyer._id}`,
-          events: [{
-            name: eventName,
+        if (enabledRefundEvent) {
+          events.push({
+            name: 'refund',
             params,
-          }],
+          });
+        }
+        // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#purchase
+
+        const body = {
+          client_id: buyer._id,
+          events,
         };
+        // logger.log('(App google-analytics): url: ', url, ' body: ', JSON.stringify(body));
 
         await Axios.post(url, body);
+
+        collectionEventsSent.doc(orderId)
+          .set({
+            status: order.status,
+            customEventsSent,
+            updatedAt: new Date().toISOString(),
+          }, { merge: true })
+          .catch(logger.error);
+
         return null;
       }
 
       logger.warn('>> (App google-analytics): measurement_id or api_secret not found,'
         + ' or disabled event (App config)');
+
       return null;
     } catch (err: any) {
       logger.error('>> (App google-analytics): event error => ', err);
