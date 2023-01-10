@@ -69,19 +69,7 @@ const handleApiEvent: ApiEventHandler = async ({
 
   if (orderId && buyer && clientIp && order.items) {
     try {
-      logger.log(
-        '>> (App google-analytics) status: ',
-        order.status,
-        ' financial Status: ',
-        order.financial_status?.current,
-        ' enable Custon: ',
-        enabledCustonEvent,
-        ' Event Cancelled: ',
-        enabledRefundEvent,
-      );
-
-      if (measurementId && apiSecret
-        && (enabledCustonEvent || enabledRefundEvent)) {
+      if (measurementId && apiSecret && (enabledCustonEvent || enabledRefundEvent)) {
         const url = `/mp/collect?api_secret=${apiSecret}&measurement_id=${measurementId}`;
 
         const items = order.items.map((item) => {
