@@ -39,7 +39,7 @@ inputs:
   galaxpay-partner-hash:
     description: 'App: Optional Galax Pay partner hash'
   datafrete-operator-token:
-    description: 'App: Config token to receive webhooks'
+    description: 'App: Random token (https://randomkeygen.com/) to validate Datafrete webhooks'
 
 outputs: {}
 
