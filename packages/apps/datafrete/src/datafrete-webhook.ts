@@ -3,13 +3,16 @@ import type { Request, Response } from 'firebase-functions';
 import type { Orders } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
+import getEnv from '@cloudcommerce/firebase/lib/env';
 import functions from 'firebase-functions/v1';
 import logger from 'firebase-functions/logger';
 
 const handleWebhook = async (req: Request, res: Response) => {
-  // if (operatorToken !== req.get('x-operator-token')) {
-  //   return res.sendStatus(401);
-  // }
+  const operatorToken = process.env.DATAFRETE_OPERATOR_TOKEN || getEnv().apiAuth.apiKey;
+
+  if (operatorToken !== req.get('x-operator-token')) {
+    return res.sendStatus(401);
+  }
 
   const {
     order_update: {
@@ -23,7 +26,7 @@ const handleWebhook = async (req: Request, res: Response) => {
   if (!number || !fulfillment || !fulfillment.status) {
     return res.sendStatus(400);
   }
-  logger.log('>(App datafrete) Webhook #', number);
+  logger.log('> Webhook #', number);
 
   const order = (await api.get(
     `orders?number=${number}&fields=_id,fulfillment_status,shipping_lines&limit=1`,
