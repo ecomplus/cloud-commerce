@@ -114,7 +114,7 @@ const handleApiEvent: ApiEventHandler = async ({
 
         const body = {
           client_id: buyer?._id || new Date().toISOString(),
-          events
+          events,
         };
 
         // logger.log('(App google-analytics): url: ', url, ' body: ', JSON.stringify(body));

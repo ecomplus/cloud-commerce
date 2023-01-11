@@ -28,6 +28,7 @@
     "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-custom-payment": "workspace:*",
     "@cloudcommerce/app-custom-shipping": "workspace:*",
+    "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
