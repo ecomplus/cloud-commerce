@@ -65,7 +65,7 @@ const handleApiEvent: ApiEventHandler = async ({
   const clientIp = order.client_ip;
 
   const enabledCustonEvent = order.financial_status?.current && appData.custom_events;
-  const enabledRefundEvent = order.status === 'cancelled' && appData.refund_event;
+  const enabledRefundEvent = order.status === 'cancelled' && appData.refund_event !== false;
 
   if (orderId && buyer && clientIp && order.items) {
     try {
@@ -115,11 +115,11 @@ const handleApiEvent: ApiEventHandler = async ({
           params: EventParams
         }[] = [];
 
-        const collectionEventsSent = getFirestore().collection('eventsSentGA4');
+        const collectionEventsSent = getFirestore().collection('googleAnalyticsEventsSent');
         let customEventsSent: string[] = [];
+        const eventFirestore = await getSentEventFirestore(collectionEventsSent, orderId);
 
         if (enabledCustonEvent && order.financial_status) {
-          const eventFirestore = await getSentEventFirestore(collectionEventsSent, orderId);
           const eventName = `purchase_${order.financial_status.current}`;
           customEventsSent = (eventFirestore && eventFirestore.customEventsSent) || [];
 
@@ -133,7 +133,7 @@ const handleApiEvent: ApiEventHandler = async ({
           }
         }
 
-        if (enabledRefundEvent) {
+        if (enabledRefundEvent && (!eventFirestore || eventFirestore.status !== 'cancelled')) {
           events.push({
             name: 'refund',
             params,
@@ -160,16 +160,16 @@ const handleApiEvent: ApiEventHandler = async ({
         return null;
       }
 
-      logger.warn('>> (App google-analytics): measurement_id or api_secret not found,'
+      logger.warn('>> measurement_id or api_secret not found,'
         + ' or disabled event (App config)');
 
       return null;
     } catch (err: any) {
-      logger.error('>> (App google-analytics): event error => ', err);
+      logger.error('>> event error => ', err);
       return null;
     }
   }
-  logger.warn('>>(App google-analytics): orderId , buyer or clientIp not found');
+  logger.warn('>> orderId , buyer or clientIp not found');
   return null;
 };
 
