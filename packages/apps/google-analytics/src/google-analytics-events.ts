@@ -18,24 +18,6 @@ const Axios = axios.create({
   },
 });
 
-const getSentEventFirestore = (
-  collectionEventsSent: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>,
-  orderId: string,
-): Promise<FirebaseFirestore.DocumentData | undefined | false> => new Promise((resolve) => {
-  const subscription = collectionEventsSent.doc(orderId);
-  subscription.get()
-    .then((documentSnapshot) => {
-      if (documentSnapshot.exists) {
-        resolve(documentSnapshot.data());
-      } else {
-        resolve(false);
-      }
-    })
-    .catch(() => {
-      resolve(false);
-    });
-});
-
 const handleApiEvent: ApiEventHandler = async ({
   evName,
   apiEvent,
@@ -62,12 +44,11 @@ const handleApiEvent: ApiEventHandler = async ({
   const orderId = order._id;
 
   const buyer = order.buyers && order.buyers[0];
-  const clientIp = order.client_ip;
 
   const enabledCustonEvent = order.financial_status?.current && appData.custom_events;
   const enabledRefundEvent = order.status === 'cancelled' && appData.refund_event !== false;
 
-  if (orderId && buyer && clientIp && order.items) {
+  if (orderId && order.items) {
     try {
       if (measurementId && apiSecret && (enabledCustonEvent || enabledRefundEvent)) {
         const url = `/mp/collect?api_secret=${apiSecret}&measurement_id=${measurementId}`;
@@ -115,46 +96,35 @@ const handleApiEvent: ApiEventHandler = async ({
           params: EventParams
         }[] = [];
 
-        const collectionEventsSent = getFirestore().collection('googleAnalyticsEventsSent');
-        let customEventsSent: string[] = [];
-        const eventFirestore = await getSentEventFirestore(collectionEventsSent, orderId);
+        const docRef = getFirestore().doc(`googleAnalyticsEventsSent/${orderId}`);
+        const lastSentEvents = (await docRef.get()).get('eventNames') || [];
 
         if (enabledCustonEvent && order.financial_status) {
           const eventName = `purchase_${order.financial_status.current}`;
-          customEventsSent = (eventFirestore && eventFirestore.customEventsSent) || [];
 
-          if (customEventsSent[customEventsSent.length - 1] !== eventName) {
-            events.push({
-              name: eventName,
-              params,
-            });
-
-            customEventsSent.push(eventName);
+          if (!lastSentEvents.includes(eventName)) {
+            events.push({ name: eventName, params });
           }
         }
 
-        if (enabledRefundEvent && (!eventFirestore || eventFirestore.status !== 'cancelled')) {
-          events.push({
-            name: 'refund',
-            params,
-          });
+        if (enabledRefundEvent && !lastSentEvents.includes('refund')) {
+          events.push({ name: 'refund', params });
         }
         // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#purchase
 
         const body = {
-          client_id: buyer._id,
-          events,
+          client_id: buyer?._id || new Date().toISOString(),
+          events
         };
+
         // logger.log('(App google-analytics): url: ', url, ' body: ', JSON.stringify(body));
 
         await Axios.post(url, body);
 
-        collectionEventsSent.doc(orderId)
-          .set({
-            status: order.status,
-            customEventsSent,
-            updatedAt: new Date().toISOString(),
-          }, { merge: true })
+        await docRef.set({
+          eventNames: events.map(({ name }) => name),
+          updatedAt: new Date(),
+        }, { merge: true })
           .catch(logger.error);
 
         return null;
