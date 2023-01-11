@@ -38,6 +38,8 @@ inputs:
     description: 'App: Optional Galax Pay partner ID'
   galaxpay-partner-hash:
     description: 'App: Optional Galax Pay partner hash'
+  datafrete-operator-token:
+    description: 'App: Random token (https://randomkeygen.com/) to validate Datafrete webhooks'
 
 outputs: {}
 
@@ -89,6 +91,7 @@ runs:
         TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
+        DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
 
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
@@ -109,6 +112,7 @@ runs:
         TINY_ERP_TOKEN=$TINY_ERP_TOKEN
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
+        DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
 

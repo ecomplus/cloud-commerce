@@ -111,6 +111,9 @@ const mergeConfig = {
       appId: 131670,
       events: fbConversionsEvents,
     },
+    datafrete: {
+      appId: 123886,
+    },
   },
   cmsSettings,
 };

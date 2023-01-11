@@ -59,6 +59,11 @@ export default async (
         return import('@cloudcommerce/app-jadlog')
           .then(({ calculateShipping }) => calculateShipping(_data));
       };
+    } else if (appId === apps.datafrete.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-datafrete')
+          .then(({ calculateShipping }) => calculateShipping(_data));
+      };
     }
   } else if (modName === 'list_payments') {
     if (appId === apps.mercadoPago.appId) {

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
     "@cloudcommerce/app-fb-conversions": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",

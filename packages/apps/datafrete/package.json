@@ -1,0 +1,36 @@
+{
+  "name": "@cloudcommerce/app-datafrete",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce app to integrate Datafrete shipping gateway ",
+  "main": "lib/datafrete.js",
+  "exports": {
+    ".": "./lib/datafrete.js",
+    "./webhook": "./lib/datafrete-webhook.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/datafrete"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/datafrete#readme",
+  "scripts": {
+    "build": "sh ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:^0.1.7",
+    "@ecomplus/utils": "1.5.0-rc.3",
+    "axios": "^1.2.2",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^4.1.1"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}
