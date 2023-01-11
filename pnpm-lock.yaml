@@ -277,6 +277,27 @@ importers:
     devDependencies:
       '@cloudcommerce/types': link:../../types
 
+  packages/apps/datafrete:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:^0.1.7
+      '@cloudcommerce/types': workspace:*
+      '@ecomplus/utils': 1.5.0-rc.3
+      '@firebase/app-types': ^0.9.0
+      axios: ^1.2.2
+      firebase-admin: ^11.4.1
+      firebase-functions: ^4.1.1
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/firebase': link:../../firebase
+      '@ecomplus/utils': 1.5.0-rc.3
+      axios: 1.2.2
+      firebase-admin: 11.4.1_@firebase+app-types@0.9.0
+      firebase-functions: 4.1.1_firebase-admin@11.4.1
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.9.0
+
   packages/apps/discounts:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -542,6 +563,7 @@ importers:
   packages/events:
     specifiers:
       '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/app-datafrete': workspace:*
       '@cloudcommerce/app-emails': workspace:*
       '@cloudcommerce/app-fb-conversions': workspace:*
       '@cloudcommerce/app-frenet': workspace:*
@@ -560,6 +582,7 @@ importers:
       source-map-support: ^0.5.21
     dependencies:
       '@cloudcommerce/api': link:../api
+      '@cloudcommerce/app-datafrete': link:../apps/datafrete
       '@cloudcommerce/app-emails': link:../apps/emails
       '@cloudcommerce/app-fb-conversions': link:../apps/fb-conversions
       '@cloudcommerce/app-frenet': link:../apps/frenet
@@ -614,6 +637,7 @@ importers:
       '@cloudcommerce/app-correios': workspace:*
       '@cloudcommerce/app-custom-payment': workspace:*
       '@cloudcommerce/app-custom-shipping': workspace:*
+      '@cloudcommerce/app-datafrete': workspace:*
       '@cloudcommerce/app-discounts': workspace:*
       '@cloudcommerce/app-frenet': workspace:*
       '@cloudcommerce/app-galaxpay': workspace:*
@@ -639,6 +663,7 @@ importers:
       '@cloudcommerce/app-correios': link:../apps/correios
       '@cloudcommerce/app-custom-payment': link:../apps/custom-payment
       '@cloudcommerce/app-custom-shipping': link:../apps/custom-shipping
+      '@cloudcommerce/app-datafrete': link:../apps/datafrete
       '@cloudcommerce/app-discounts': link:../apps/discounts
       '@cloudcommerce/app-frenet': link:../apps/frenet
       '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
