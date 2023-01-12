@@ -3,7 +3,7 @@
 import '@cloudcommerce/firebase/lib/init';
 import type { Orders } from '@cloudcommerce/types';
 import type { EventItem, EventParams } from '../types';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import {
   createAppEventsFunction,
   ApiEventHandler,
@@ -113,7 +113,7 @@ const handleApiEvent: ApiEventHandler = async ({
         // https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#purchase
 
         const body = {
-          client_id: buyer?._id || new Date().toISOString(),
+          client_id: buyer?._id || Date.now().toString(),
           events,
         };
 
@@ -123,7 +123,7 @@ const handleApiEvent: ApiEventHandler = async ({
 
         await docRef.set({
           eventNames: events.map(({ name }) => name),
-          updatedAt: new Date(),
+          updatedAt: Timestamp.now(),
         }, { merge: true })
           .catch(logger.error);
 
