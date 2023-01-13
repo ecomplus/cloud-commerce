@@ -189,14 +189,13 @@ importers:
       '@fontsource/dm-serif-text': ^4.5.9
       '@fontsource/roboto-condensed': ^4.5.9
       '@iconify-json/tabler': ^1.1.53
-      lozad: ^1.16.0
+      '@iconify-json/uim': ^1.1.3
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
-      lozad: 1.16.0
     devDependencies:
       '@cloudcommerce/i18n': link:../../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../../packages/storefront
@@ -204,6 +203,7 @@ importers:
       '@fontsource/dm-serif-text': 4.5.9
       '@fontsource/roboto-condensed': 4.5.9
       '@iconify-json/tabler': 1.1.54
+      '@iconify-json/uim': 1.1.3
 
   ecomplus-stores/tia-sonia/storefront:
     specifiers:
@@ -218,14 +218,13 @@ importers:
       '@fontsource/dm-serif-text': ^4.5.9
       '@fontsource/roboto-condensed': ^4.5.9
       '@iconify-json/tabler': ^1.1.53
-      lozad: ^1.16.0
+      '@iconify-json/uim': ^1.1.3
     dependencies:
       '@astrojs/image': 0.12.1
       '@astrojs/node': 4.0.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
-      lozad: 1.16.0
     devDependencies:
       '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
@@ -233,6 +232,7 @@ importers:
       '@fontsource/dm-serif-text': 4.5.9
       '@fontsource/roboto-condensed': 4.5.9
       '@iconify-json/tabler': 1.1.54
+      '@iconify-json/uim': 1.1.3
 
   packages/__skeleton:
     specifiers:
@@ -371,6 +371,25 @@ importers:
       '@firebase/app-types': 0.9.0
 
   packages/apps/galaxpay:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.9.0
+      axios: ^1.2.2
+      firebase-admin: ^11.4.1
+      firebase-functions: ^4.1.1
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/firebase': link:../../firebase
+      axios: 1.2.2
+      firebase-admin: 11.4.1_@firebase+app-types@0.9.0
+      firebase-functions: 4.1.1_firebase-admin@11.4.1
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.9.0
+
+  packages/apps/google-analytics:
     specifiers:
       '@cloudcommerce/api': workspace:*
       '@cloudcommerce/firebase': workspace:*
@@ -568,6 +587,7 @@ importers:
       '@cloudcommerce/app-fb-conversions': workspace:*
       '@cloudcommerce/app-frenet': workspace:*
       '@cloudcommerce/app-galaxpay': workspace:*
+      '@cloudcommerce/app-google-analytics': workspace:*
       '@cloudcommerce/app-infinitepay': workspace:*
       '@cloudcommerce/app-loyalty-points': workspace:*
       '@cloudcommerce/app-mercadopago': workspace:*
@@ -587,6 +607,7 @@ importers:
       '@cloudcommerce/app-fb-conversions': link:../apps/fb-conversions
       '@cloudcommerce/app-frenet': link:../apps/frenet
       '@cloudcommerce/app-galaxpay': link:../apps/galaxpay
+      '@cloudcommerce/app-google-analytics': link:../apps/google-analytics
       '@cloudcommerce/app-infinitepay': link:../apps/infinitepay
       '@cloudcommerce/app-loyalty-points': link:../apps/loyalty-points
       '@cloudcommerce/app-mercadopago': link:../apps/mercadopago
@@ -3494,6 +3515,12 @@ packages:
 
   /@iconify-json/tabler/1.1.54:
     resolution: {integrity: sha512-7vavDCi9fChPXqydWU7KlqYNS2yqNWQ4vGfU/69KEC/ZQo4vcGK7Vu5FfcUXt877RPAAScf5wXPwrTDWxrKz6w==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/uim/1.1.3:
+    resolution: {integrity: sha512-/vF3TRFdTL4g6A8uC8Edjm6Jsw8Xik1cZBMXFbJtt06a6W+pKgR14tx01yRvTkdFrYgWH/k9FSxQ/CvC1cJ4Yw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -8493,6 +8520,7 @@ packages:
 
   /lozad/1.16.0:
     resolution: {integrity: sha512-JBr9WjvEFeKoyim3svo/gsQPTkgG/mOHJmDctZ/+U9H3ymUuvEkqpn8bdQMFsvTMcyRJrdJkLv0bXqGm0sP72w==}
+    dev: true
 
   /lru-cache/4.0.2:
     resolution: {integrity: sha512-uQw9OqphAGiZhkuPlpFGmdTU2tEuhxTourM/19qGJrxBPHAr/f8BT1a0i/lOclESnGatdJG/UCkP9kZB/Lh1iw==}
