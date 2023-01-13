@@ -31,6 +31,10 @@ const fbConversionsEvents: ApiEventName[] = [
   'orders-new',
 ];
 
+const googleAnalyticsEvents: ApiEventName[] = [
+  'orders-anyStatusSet',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -113,6 +117,10 @@ const mergeConfig = {
     },
     datafrete: {
       appId: 123886,
+    },
+    googleAnalytics: {
+      appId: 122241,
+      events: googleAnalyticsEvents,
     },
   },
   cmsSettings,
