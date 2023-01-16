@@ -38,9 +38,9 @@
     "@headlessui/vue": "^1.7.7",
     "@iconify-json/fa6-brands": "^1.1.8",
     "@iconify-json/heroicons": "^1.1.8",
-    "@iconify-json/logos": "^1.1.21",
-    "@vueuse/core": "^9.9.0",
-    "astro": "^1.8.0",
+    "@iconify-json/logos": "^1.1.22",
+    "@vueuse/core": "^9.10.0",
+    "astro": "^1.9.2",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.0.3",
     "firebase": "^9.15.0",
@@ -48,14 +48,14 @@
     "semver": "^7.3.8",
     "sharp": "^0.31.3",
     "tailwindcss": "^3.2.4",
-    "unocss": "^0.48.0",
+    "unocss": "^0.48.4",
     "vite": "^3.2.5",
-    "vite-plugin-pwa": "^0.14.0",
+    "vite-plugin-pwa": "^0.14.1",
     "vue": "^3.2.45",
     "vue-bind-once": "^0.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@cloudcommerce/types": "workspace:*"
   }
 }
