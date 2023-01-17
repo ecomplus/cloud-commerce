@@ -742,6 +742,7 @@ importers:
       firebase-admin: ^11.4.1
       firebase-functions: ^4.1.1
       image-size: ^1.0.2
+      lodash: ^4.17.21
       semver: ^7.3.8
       sharp: ^0.31.3
       vue: ^3.2.45
@@ -758,6 +759,7 @@ importers:
       firebase-admin: 11.4.1_@firebase+app-types@0.9.0
       firebase-functions: 4.1.1_firebase-admin@11.4.1
       image-size: 1.0.2
+      lodash: 4.17.21
       semver: 7.3.8
       sharp: 0.31.3
       vue: 3.2.45
@@ -783,12 +785,14 @@ importers:
       '@iconify-json/fa6-brands': ^1.1.8
       '@iconify-json/heroicons': ^1.1.8
       '@iconify-json/logos': ^1.1.22
+      '@vite-pwa/astro': ^0.0.1
       '@vueuse/core': ^9.10.0
       astro: ^1.9.2
       chroma-js: ^2.4.2
       dotenv: ^16.0.3
       firebase: ^9.15.0
       image-size: ^1.0.2
+      lodash: ^4.17.21
       semver: ^7.3.8
       sharp: ^0.31.3
       tailwindcss: ^3.2.4
@@ -796,7 +800,6 @@ importers:
       vite: ^3.2.5
       vite-plugin-pwa: ^0.14.1
       vue: ^3.2.45
-      vue-bind-once: ^0.1.1
     dependencies:
       '@astrojs/image': 0.12.1_sharp@0.31.3
       '@astrojs/node': 4.0.0_astro@1.9.2
@@ -812,12 +815,14 @@ importers:
       '@iconify-json/fa6-brands': 1.1.8
       '@iconify-json/heroicons': 1.1.8
       '@iconify-json/logos': 1.1.22
+      '@vite-pwa/astro': 0.0.1
       '@vueuse/core': 9.10.0_vue@3.2.45
       astro: 1.9.2
       chroma-js: 2.4.2
       dotenv: 16.0.3
       firebase: 9.15.0
       image-size: 1.0.2
+      lodash: 4.17.21
       semver: 7.3.8
       sharp: 0.31.3
       tailwindcss: 3.2.4
@@ -825,7 +830,6 @@ importers:
       vite: 3.2.5
       vite-plugin-pwa: 0.14.1_vite@3.2.5
       vue: 3.2.45
-      vue-bind-once: 0.1.1_vue@3.2.45
     devDependencies:
       '@babel/core': 7.20.12
       '@cloudcommerce/types': link:../types
@@ -2259,7 +2263,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.3.3_@babel+core@7.20.12
       babel-plugin-polyfill-corejs3: 0.6.0_@babel+core@7.20.12
       babel-plugin-polyfill-regenerator: 0.4.1_@babel+core@7.20.12
-      core-js-compat: 3.26.1
+      core-js-compat: 3.27.1
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -3773,7 +3777,7 @@ packages:
       rollup: 2.79.1
     dev: false
 
-  /@rollup/plugin-replace/5.0.2_rollup@3.8.1:
+  /@rollup/plugin-replace/5.0.2_rollup@3.10.0:
     resolution: {integrity: sha512-M9YXNekv/C/iHHK+cvORzfRYfPbq0RDD8r0G+bMiTXjNGKulPnCT9O3Ss46WfhI6ZOCgApOP7xAdmCQJ+U2LAA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3782,9 +3786,9 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.0.2_rollup@3.8.1
+      '@rollup/pluginutils': 5.0.2_rollup@3.10.0
       magic-string: 0.27.0
-      rollup: 3.8.1
+      rollup: 3.10.0
     dev: false
 
   /@rollup/pluginutils/3.1.0_rollup@2.79.1:
@@ -3813,7 +3817,7 @@ packages:
       picomatch: 2.3.1
     dev: false
 
-  /@rollup/pluginutils/5.0.2_rollup@3.8.1:
+  /@rollup/pluginutils/5.0.2_rollup@3.10.0:
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3825,7 +3829,7 @@ packages:
       '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 3.8.1
+      rollup: 3.10.0
     dev: false
 
   /@surma/rollup-plugin-off-main-thread/2.2.3:
@@ -4447,6 +4451,10 @@ packages:
       - rollup
     dev: false
 
+  /@vite-pwa/astro/0.0.1:
+    resolution: {integrity: sha512-FkX3F+JbVVjSjXrHkE681ZmOSIS2h43ldj7+YnBf52/qoSM9Ns05kNcjC7RNSIlRpD0a0TN1efutulDWWra6UQ==}
+    dev: false
+
   /@vitejs/plugin-vue-jsx/2.1.1_vite@3.2.5+vue@3.2.45:
     resolution: {integrity: sha512-JgDhxstQlwnHBvZ1BSnU5mbmyQ14/t5JhREc6YH5kWyu2QdAAOsLF6xgHoIWarj8tddaiwFrNzLbWJPudpXKYA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -4995,7 +5003,7 @@ packages:
     dependencies:
       '@babel/core': 7.20.12
       '@babel/helper-define-polyfill-provider': 0.3.3_@babel+core@7.20.12
-      core-js-compat: 3.26.1
+      core-js-compat: 3.27.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5653,8 +5661,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /core-js-compat/3.26.1:
-    resolution: {integrity: sha512-622/KzTudvXCDLRw70iHW4KKs1aGpcRcowGWyYJr2DEBfRrd6hNJybxSWJFuZYD4ma86xhrwDDHxmDaIq4EA8A==}
+  /core-js-compat/3.27.1:
+    resolution: {integrity: sha512-Dg91JFeCDA17FKnneN7oCMz4BkQ4TcffkgHP4OWwp9yx3pi7ubqMDXXSacfNak1PQqjc95skyt+YBLHQJnkJwA==}
     dependencies:
       browserslist: 4.21.4
     dev: false
@@ -7766,10 +7774,6 @@ packages:
 
   /idb/7.0.1:
     resolution: {integrity: sha512-UUxlE7vGWK5RfB/fDwEGgRf84DY/ieqNha6msMV99UsEMQhJ1RwbCd8AYBj3QMgnE3VZnfQvm4oKVCJTYlqIgg==}
-    dev: false
-
-  /idb/7.1.1:
-    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
     dev: false
 
   /ieee754/1.2.1:
@@ -10522,8 +10526,8 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
 
-  /rollup/3.8.1:
-    resolution: {integrity: sha512-4yh9eMW7byOroYcN8DlF9P/2jCpu6txVIHjEqquQVSx7DI0RgyCCN3tjrcy4ra6yVtV336aLBB3v2AarYAxePQ==}
+  /rollup/3.10.0:
+    resolution: {integrity: sha512-JmRYz44NjC1MjVF2VKxc0M1a97vn+cDxeqWmnwyAF4FvpjK8YFdHpaqvQB+3IxCvX05vJxKZkoMDU8TShhmJVA==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -10582,10 +10586,6 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-    dev: false
-
-  /scule/0.2.1:
-    resolution: {integrity: sha512-M9gnWtn3J0W+UhJOHmBxBTwv8mZCan5i1Himp60t6vvZcor0wr+IM0URKmIglsWJ7bRujNAVVN77fp+uZaWoKg==}
     dev: false
 
   /section-matter/1.0.0:
@@ -11890,11 +11890,11 @@ packages:
     peerDependencies:
       vite: ^3.1.0 || ^4.0.0
     dependencies:
-      '@rollup/plugin-replace': 5.0.2_rollup@3.8.1
+      '@rollup/plugin-replace': 5.0.2_rollup@3.10.0
       debug: 4.3.4
       fast-glob: 3.2.12
       pretty-bytes: 6.0.0
-      rollup: 3.8.1
+      rollup: 3.10.0
       vite: 3.2.5
       workbox-build: 6.5.4
       workbox-window: 6.5.4
@@ -12095,15 +12095,6 @@ packages:
     resolution: {integrity: sha512-eOpPHogvorZRobNqJGhapa0JdwaxpjVvyBp0QIUMRMSf8ZAlqOdEquKuRmw9Qwu0qXtJIWqFtMkmvJjUZmMjVA==}
     dev: false
 
-  /vue-bind-once/0.1.1_vue@3.2.45:
-    resolution: {integrity: sha512-4kUdc1tZGzpkoJyDLO0UUW5ka+INXVQleY5xNauc3/sRw2SZ2Ok4INDrCJgkiCrhpJISwao6SP539mWzyjB7tw==}
-    peerDependencies:
-      vue: ^3
-    dependencies:
-      scule: 0.2.1
-      vue: 3.2.45
-    dev: false
-
   /vue-demi/0.13.11_vue@3.2.45:
     resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
     engines: {node: '>=12'}
@@ -12254,7 +12245,7 @@ packages:
   /workbox-background-sync/6.5.4:
     resolution: {integrity: sha512-0r4INQZMyPky/lj4Ou98qxcThrETucOde+7mRGJl13MPJugQNKeZQOdIJe/1AchOP23cTqHcN/YVpD6r8E6I8g==}
     dependencies:
-      idb: 7.1.1
+      idb: 7.0.1
       workbox-core: 6.5.4
     dev: false
 
@@ -12323,7 +12314,7 @@ packages:
   /workbox-expiration/6.5.4:
     resolution: {integrity: sha512-jUP5qPOpH1nXtjGGh1fRBa1wJL2QlIb5mGpct3NzepjGG2uFFBn4iiEBiI9GUmfAFR2ApuRhDydjcRmYXddiEQ==}
     dependencies:
-      idb: 7.1.1
+      idb: 7.0.1
       workbox-core: 6.5.4
     dev: false
 
