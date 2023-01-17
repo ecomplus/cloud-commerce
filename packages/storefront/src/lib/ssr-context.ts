@@ -26,9 +26,14 @@ const getConfig: () => StorefrontConfig = _getConfig;
 declare global {
   // eslint-disable-next-line
   var api_prefetch_endpoints: ApiEndpoint[];
+  // eslint-disable-next-line
+  var storefront: { settings: Partial<CmsSettings> };
 }
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = ['categories'];
+}
+if (!globalThis.storefront) {
+  globalThis.storefront = { settings: {} };
 }
 
 type ApiPrefetchEndpoints = Array<ApiEndpoint>;
@@ -53,6 +58,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
   const urlPath = Astro.url.pathname;
   const { slug } = Astro.params;
   const config = getConfig();
+  globalThis.storefront.settings = config.settings;
   let cmsContent: Record<string, any> | undefined;
   let apiResource: string | undefined;
   let apiDoc: Record<string, any> | undefined;
