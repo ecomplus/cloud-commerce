@@ -9,6 +9,7 @@
       "@@components/*": ["./src/components/*", "./src/lib/components/*"],
       "~/*": ["./src/*"],
       "content/*": ["./content/*"],
-    }
+    },
+    "types": ["vite-plugin-pwa/info"]
   }
 }
