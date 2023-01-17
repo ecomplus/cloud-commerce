@@ -37,9 +37,9 @@ const componentVariant = useComponentVariant(props);
 </script>
 
 <template>
-  <div :data-sf-prices="componentVariant" class="text-base-600">
+  <div :data-prices="componentVariant" class="text-base-600">
     <slot v-if="comparePrice" name="compare" v-bind="{ salePrice, comparePrice }">
-      <span data-sf-prices-compare class="text-base-500 mr-1">
+      <span data-prices-compare class="text-base-500 mr-1">
         <slot name="compare-pre">
           <small v-if="isLiteral">
             {{ `${$t.i19from} ` }}
@@ -56,7 +56,7 @@ const componentVariant = useComponentVariant(props);
       </span>
     </slot>
     <slot name="sale" v-bind="{ salePrice }">
-      <strong data-sf-prices-sale class="inline-block text-base-800">
+      <strong data-prices-sale class="inline-block text-base-800">
         <slot name="sale-pre">
           <small v-if="hasVariedPrices">
             {{ `${$t.i19asOf} ` }}
@@ -74,7 +74,7 @@ const componentVariant = useComponentVariant(props);
       v-bind="{ salePrice, cashbackValue, cashbackPercentage }"
     >
       <Fade slide="down">
-        <div v-if="hasCashback" data-sf-prices-cashback class="relative z-10">
+        <div v-if="hasCashback" data-prices-cashback class="relative z-10">
           <span :data-tooltip="$t.i19get$1back
             .replace('$1', $percentage(cashbackPercentage))">
             <slot name="cashback-pre">
@@ -101,7 +101,7 @@ const componentVariant = useComponentVariant(props);
       v-bind="{ salePrice, installmentValue, installmentsNumber, monthlyInterest }"
     >
       <Fade slide="down">
-        <div v-if="hasPriceOptions" data-sf-prices-installment>
+        <div v-if="hasPriceOptions" data-prices-installment>
           <slot name="installment-pre">
             <small v-if="isLiteral">
               {{ `${$t.i19upTo} ` }}
@@ -131,7 +131,7 @@ const componentVariant = useComponentVariant(props);
       v-bind="{ salePrice, priceWithDiscount, discountLabel }"
     >
       <Fade slide="down">
-        <div v-if="hasPriceOptions" data-sf-prices-discount>
+        <div v-if="hasPriceOptions" data-prices-discount>
           <slot name="discount-pre">
             <small v-if="!discountLabel">
               {{ `${$t.i19asOf} ` }}
@@ -155,22 +155,22 @@ const componentVariant = useComponentVariant(props);
 </template>
 
 <style>
-[data-sf-prices-compare] {
+[data-prices-compare] {
   font-size: 87%;
 }
-[data-sf-prices-cashback],
-[data-sf-prices-installment],
-[data-sf-prices-discount] {
+[data-prices-cashback],
+[data-prices-installment],
+[data-prices-discount] {
   font-size: 90%;
 }
-[data-sf-prices] small {
+[data-prices] small {
   @apply lowercase;
   font-size: 92%;
 }
-[data-sf-prices~=Big] {
+[data-prices~=Big] {
   @apply text-lg;
 }
-[data-sf-prices~=Big] [data-sf-prices-sale] {
+[data-prices~=Big] [data-prices-sale] {
   @apply text-5xl block;
 }
 </style>
