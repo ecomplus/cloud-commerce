@@ -18,7 +18,7 @@ const collectionSubscription = getFirestore().collection('galaxpaySubscriptions'
 const getApp = async (): Promise<Applications> => {
   return new Promise((resolve, reject) => {
     api.get(
-      'applications?app_id=123188&fields=hidden_data',
+      `applications?app_id=${config.get().apps.galaxPay.appId}&fields=hidden_data`,
     )
       .then(({ data: result }) => {
         resolve(result[0]);

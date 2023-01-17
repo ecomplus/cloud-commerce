@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import '@cloudcommerce/firebase/lib/init';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -21,7 +21,7 @@ export const mercadopago = {
         logger.log('>> Webhook MP #', JSON.stringify(body), ' <<');
         try {
           const app = (await api.get(
-            'applications?app_id=111223&fields=hidden_data',
+            `applications?app_id=${config.get().apps.mercadoPago.appId}&fields=hidden_data`,
           )).data.result;
           const accessTokenMp = app[0].hidden_data?.mp_access_token;
           if (accessTokenMp) {
@@ -75,7 +75,7 @@ export const mercadopago = {
                       } as any; // TODO: incompatible type=> amount and status
 
                       if (status !== order.financial_status?.current) {
-                      // avoid unnecessary API request
+                        // avoid unnecessary API request
                         await api.post(`orders/${orderId}/payments_history`, bodyPaymentHistory);
                         const updatedAt = new Date().toISOString();
                         docRef.set({ status, updatedAt }, { merge: true }).catch(logger.error);
@@ -101,12 +101,12 @@ export const mercadopago = {
 
                       res.status(200).send(ECHO_SUCCESS);
                     } else {
-                    // transaction not found
+                      // transaction not found
                       logger.log('> Transaction not found #', notification.data.id);
                       res.sendStatus(404);
                     }
                   } else {
-                  // order or order transaction not found
+                    // order or order transaction not found
                     logger.log('> Order Not Found #', orderId);
                     res.sendStatus(404);
                   }
@@ -119,7 +119,7 @@ export const mercadopago = {
                 logger.error(err);
                 res.sendStatus(503);
               });
-          // }, 3000);
+            // }, 3000);
           } else {
             res.sendStatus(406);
           }

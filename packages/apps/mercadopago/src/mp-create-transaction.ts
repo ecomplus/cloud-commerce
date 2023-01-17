@@ -4,7 +4,7 @@ import type {
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
-import { logger } from 'firebase-functions';
+import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
