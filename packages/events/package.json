@@ -34,6 +34,7 @@
     "@cloudcommerce/app-loyalty-points": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
+    "@cloudcommerce/app-paghiper": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",
     "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
