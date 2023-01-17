@@ -30,7 +30,6 @@ export const mercadopago = {
               res.status(404).send(ECHO_SKIP);
             }
 
-            // setTimeout(() => {
             logger.log('> MP Notification for Payment #', notification.data.id);
 
             const docRef = getFirestore().collection('mercadopagoPayments')
@@ -86,7 +85,6 @@ export const mercadopago = {
                         notes = notes?.replace('display:block', 'display:none'); // disable QR Code
                         notes = `${notes} # PIX Aprovado`;
 
-                        // orders/${order._id}/transactions/${transactionId}.json { notes }
                         // Update to disable QR Code
                         try {
                           await api.patch(
@@ -101,12 +99,10 @@ export const mercadopago = {
 
                       res.status(200).send(ECHO_SUCCESS);
                     } else {
-                      // transaction not found
                       logger.log('> Transaction not found #', notification.data.id);
                       res.sendStatus(404);
                     }
                   } else {
-                    // order or order transaction not found
                     logger.log('> Order Not Found #', orderId);
                     res.sendStatus(404);
                   }
@@ -119,7 +115,6 @@ export const mercadopago = {
                 logger.error(err);
                 res.sendStatus(503);
               });
-            // }, 3000);
           } else {
             res.sendStatus(406);
           }
