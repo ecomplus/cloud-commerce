@@ -37,8 +37,14 @@ let defaultThemeOptions = {
     'dinersclub',
   ],
   generalIcons: 'heroicons',
-  shoppingCartIcon: 'shopping-bag',
-  cashbackIcon: 'arrow-uturn-left',
+  iconAliases: {
+    'shopping-cart': 'shopping-bag',
+    cashback: 'arrow-uturn-left',
+    'chevron-right': 'chevron-right',
+    'chevron-left': 'chevron-left',
+    'chevron-up': 'chevron-up',
+    'chevron-down': 'chevron-down',
+  },
 };
 if (globalThis.storefront_theme_options) {
   defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.storefront_theme_options);
@@ -115,8 +121,7 @@ const genTailwindConfig = (themeOptions = {}) => {
     successColor,
     warningColor,
     dangerColor,
-    shoppingCartIcon,
-    cashbackIcon,
+    iconAliases,
   } = deepmerge(defaultThemeOptions, themeOptions);
   const config = {
     theme: {
@@ -162,8 +167,9 @@ const genTailwindConfig = (themeOptions = {}) => {
               if (!shortcuts) {
                 const { icons } = require(`@iconify-json/${iconset}`);
                 shortcuts = Object.keys(icons.icons);
-                shortcuts.push(['shopping-cart', shoppingCartIcon]);
-                shortcuts.push(['cashback', cashbackIcon]);
+                Object.keys(iconAliases).forEach((alias) => {
+                  shortcuts.push([alias, iconAliases[alias]]);
+                });
               }
               shortcuts.forEach((shortcut) => {
                 if (typeof shortcut === 'string') {
