@@ -13,10 +13,6 @@ export interface Props {
 
 <body>
   <slot />
-  <script>
-    import { registerSW } from 'virtual:pwa-register';
-    import '../scripts/session-utm';
-    registerSW();
-  </script>
+  <script src="../scripts/session-utm"></script>
   <slot name="before-body-end" />
 </body>

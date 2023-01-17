@@ -8,7 +8,7 @@ import image from '@astrojs/image';
 import partytown from '@astrojs/partytown';
 import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
-import { VitePWA } from 'vite-plugin-pwa';
+import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './storefront.config.mjs';
 
@@ -55,7 +55,7 @@ const _vitePWAOptions = {
   },
   registerType: 'autoUpdate',
   workbox: {
-    navigateFallback: null,
+    navigateFallback: '/404',
     globDirectory: 'dist/client',
     globPatterns: ['**/!(cms*|admin*).{js,css}'],
     ignoreURLParametersMatching: [/.*/],
@@ -160,11 +160,11 @@ const genAstroConfig = ({
       injectReset: false,
       injectEntry: false,
     }),
+    AstroPWA(vitePWAOptions),
   ],
   site,
   vite: {
     plugins: [
-      VitePWA(vitePWAOptions),
       {
         name: 'vue-i18n',
         transform(code, id) {
