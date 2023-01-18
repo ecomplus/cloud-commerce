@@ -7,17 +7,18 @@ import type { Request, Response } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
 import { parseStatus, parsePeriodicityToEcom, gerateId } from '../all-parses';
 import { updateValueSubscription, checkAmountItemsOrder } from './update-subscription';
 
 type FinancialStatusCurrent = Exclude<Orders['financial_status'], undefined>['current']
 
-const collectionSubscription = getFirestore().collection('subscriptions');
+const collectionSubscription = getFirestore().collection('galaxpaySubscriptions');
 
 const getApp = async (): Promise<Applications> => {
   return new Promise((resolve, reject) => {
     api.get(
-      'applications?app_id=123188&fields=hidden_data',
+      `applications?app_id=${config.get().apps.galaxPay.appId}&fields=hidden_data`,
     )
       .then(({ data: result }) => {
         resolve(result[0]);

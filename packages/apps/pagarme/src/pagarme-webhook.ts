@@ -19,7 +19,7 @@ export const pagarme = {
       } else {
         // read configured E-Com Plus app data
         const app = (await api.get(
-          'applications?app_id=117391&fields=hidden_data',
+          `applications?app_id=${config.get().apps.pagarMe.appId}&fields=hidden_data`,
         )).data.result;
         const apiKeyPagame = app[0].hidden_data?.pagarme_api_key;
 
