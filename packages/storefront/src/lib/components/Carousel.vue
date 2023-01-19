@@ -9,10 +9,12 @@ import {
   nextTick,
 } from 'vue';
 import debounce from 'lodash/debounce';
+import { useElementHover } from '@vueuse/core';
 
 export interface Props {
   as?: string;
   modelValue?: number;
+  autoplay?: number;
 }
 
 const approximatelyEqual = (v1, v2, epsilon) => {
@@ -104,7 +106,8 @@ const calcCurrentPosition = () => {
 };
 const calcMaxPages = () => {
   const maxPos = wrapperScrollWidth.value - wrapperVisibleWidth.value;
-  maxPages.value = slidesWidth.value.findIndex(({ offsetLeft }) => offsetLeft > maxPos) - 1;
+  maxPages.value = slidesWidth.value
+    .findIndex(({ offsetLeft }) => (offsetLeft >= maxPos));
 };
 const calcOnInit = () => {
   if (!wrapper.value) {
@@ -125,12 +128,44 @@ const calcOnScroll = () => {
   calcCurrentPage();
   calcBounds();
 };
+let autoplayTimer = null;
+const restartAutoplay = () => {
+  if (props.autoplay) {
+    clearTimeout(autoplayTimer);
+    autoplayTimer = setTimeout(() => {
+      // eslint-disable-next-line no-use-before-define
+      changeSlide(1);
+    }, props.autoplay);
+  }
+};
 const changeSlide = (direction) => {
+  if (direction < 0) {
+    if (boundLeft.value) {
+      calcMaxPages();
+      currentPage.value = maxPages.value - 1;
+      changeSlide(1);
+      return;
+    }
+  } else if (boundRight.value) {
+    currentPage.value = 1;
+    changeSlide(-1);
+    return;
+  }
   const nextSlideWidth = calcNextWidth(direction);
   if (nextSlideWidth) {
     wrapper.value.scrollBy({ left: nextSlideWidth, behavior: 'smooth' });
+    restartAutoplay();
   }
 };
+const carousel = ref(null);
+const isHovered = useElementHover(carousel);
+watch(isHovered, (_isHovered) => {
+  if (_isHovered) {
+    clearTimeout(autoplayTimer);
+  } else {
+    restartAutoplay();
+  }
+});
 onMounted(() => {
   calcOnInit();
   if (!import.meta.env.SSR) {
@@ -140,22 +175,24 @@ onMounted(() => {
     wrapper.value.addEventListener('scroll', onScrollFn.value);
     window.addEventListener('resize', onResizeFn.value);
     nextTick(() => {
-      wrapper.value.childNodes.forEach((slide: HTMLElement) => {
+      [...wrapper.value.children].forEach((slide: HTMLElement) => {
         slide.setAttribute('tabindex', '0');
       });
     });
+    restartAutoplay();
   }
 });
 onBeforeUnmount(() => {
   if (!import.meta.env.SSR) {
     wrapper.value.removeEventListener('scroll', onScrollFn.value);
     window.removeEventListener('resize', onResizeFn.value);
+    clearTimeout(autoplayTimer);
   }
 });
 </script>
 
 <template>
-  <div data-carousel>
+  <div ref="carousel" data-carousel>
     <component :is="as" ref="wrapper" data-carousel-wrapper>
       <slot />
     </component>
@@ -169,29 +206,21 @@ onBeforeUnmount(() => {
       <button
         type="button"
         :aria-label="$t.i19previous"
-        :disabled="boundLeft"
         @click="changeSlide(-1)"
         data-carousel-control="previous"
       >
         <slot name="previous">
-          <i
-            class="i-chevron-left px-3"
-            :class="boundLeft ? 'opacity-50' : 'opacity-100'"
-          ></i>
+          <i class="i-chevron-left px-3"></i>
         </slot>
       </button>
       <button
         type="button"
         :aria-label="$t.i19next"
-        :disabled="boundRight"
         @click="changeSlide(1)"
         data-carousel-control="next"
       >
         <slot name="next">
-          <i
-            class="i-chevron-right px-3"
-            :class="boundRight ? 'opacity-50' : 'opacity-100'"
-          ></i>
+          <i class="i-chevron-right px-3"></i>
         </slot>
       </button>
     </slot>
