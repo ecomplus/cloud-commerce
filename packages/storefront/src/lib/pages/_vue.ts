@@ -1,9 +1,9 @@
 import type { App } from 'vue';
 import { i18n, formatMoney } from '@ecomplus/utils';
 // @ts-ignore
-import Fade from '@@components/globals/Fade.vue';
+import Fade from '@@sf/components/globals/Fade.vue';
 // @ts-ignore
-import ALink from '@@components/globals/ALink.vue';
+import ALink from '@@sf/components/globals/ALink.vue';
 
 const formatPercentage = (value: number, digits = 1) => {
   return Number.isInteger(value) ? `${value}%` : `${value.toFixed(digits)}%`;
