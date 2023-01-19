@@ -174,7 +174,10 @@ onBeforeUnmount(() => {
         data-carousel-control="previous"
       >
         <slot name="previous">
-          <i class="i-chevron-left"></i>
+          <i
+            class="i-chevron-left px-3"
+            :class="boundLeft ? 'opacity-50' : 'opacity-100'"
+          ></i>
         </slot>
       </button>
       <button
@@ -185,7 +188,10 @@ onBeforeUnmount(() => {
         data-carousel-control="next"
       >
         <slot name="next">
-          <i class="i-chevron-right"></i>
+          <i
+            class="i-chevron-right px-3"
+            :class="boundRight ? 'opacity-50' : 'opacity-100'"
+          ></i>
         </slot>
       </button>
     </slot>
@@ -225,7 +231,6 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 0;
   bottom: 0;
-  @apply px-3 py-2;
 }
 [data-carousel-control=previous] {
   left: 0;
