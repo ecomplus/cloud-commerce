@@ -22,7 +22,7 @@ declare module '@vue/runtime-core' {
 
   export interface GlobalComponents {
     // @ts-ignore
-    Fade: typeof import('@@components/globals/Fade.vue')['default']
+    Fade: typeof import('@@sf/components/globals/Fade.vue')['default']
   }
 }
 
