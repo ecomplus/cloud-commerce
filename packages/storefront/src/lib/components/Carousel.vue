@@ -210,7 +210,10 @@ onBeforeUnmount(() => {
         data-carousel-control="previous"
       >
         <slot name="previous">
-          <i class="i-chevron-left px-3"></i>
+          <i
+            class="i-chevron-left p-3 hover:opacity-100"
+            :class="autoplay ? 'opacity-40' : 'opacity-50'"
+          ></i>
         </slot>
       </button>
       <button
@@ -220,7 +223,10 @@ onBeforeUnmount(() => {
         data-carousel-control="next"
       >
         <slot name="next">
-          <i class="i-chevron-right px-3"></i>
+          <i
+            class="i-chevron-right p-3 hover:opacity-100"
+            :class="autoplay ? 'opacity-40' : 'opacity-50'"
+          ></i>
         </slot>
       </button>
     </slot>
@@ -230,6 +236,7 @@ onBeforeUnmount(() => {
 <style>
 [data-carousel] {
   position: relative;
+  --background-color: var(--c-carousel-background, transparent);
 }
 [data-carousel-wrapper] {
   display: flex;
@@ -260,6 +267,7 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 0;
   bottom: 0;
+  background-color: var(--background-color);
 }
 [data-carousel-control=previous] {
   left: 0;
