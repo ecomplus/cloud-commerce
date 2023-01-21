@@ -56,6 +56,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
 } = {}) => {
   const startedAt = Date.now();
   const urlPath = Astro.url.pathname;
+  const isHomepage = urlPath === '/';
   const { slug } = Astro.params;
   const config = getConfig();
   globalThis.storefront.settings = config.settings;
@@ -118,13 +119,14 @@ const loadPageContext = async (Astro: AstroGlobal, {
   Astro.response.headers.set('X-Load-Took', String(Date.now() - startedAt));
   if (urlPath === '/fallback') {
     setResponseCache(Astro, 3600, 86400);
-  } else if (urlPath === '/') {
+  } else if (isHomepage) {
     setResponseCache(Astro, 180, 300);
   } else {
     setResponseCache(Astro, 120, 300);
   }
   return {
     ...config,
+    isHomepage,
     cmsContent,
     apiResource,
     apiDoc,
