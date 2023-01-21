@@ -5,8 +5,8 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
 import image from '@astrojs/image';
-import partytown from '@astrojs/partytown';
-import prefetch from '@astrojs/prefetch';
+// import partytown from '@astrojs/partytown';
+// import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
@@ -150,8 +150,8 @@ const genAstroConfig = ({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),
     vue({ appEntrypoint: '/src/pages/_vue' }),
-    partytown(),
-    prefetch(),
+    // partytown(),
+    // prefetch(),
     UnoCSS({
       injectReset: false,
       injectEntry: false,
