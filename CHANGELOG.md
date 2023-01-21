@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/ecomplus/cloud-commerce/compare/v0.1.7...v0.2.0) (2023-01-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `@@components/**` imports no more working
+* **storefront:** `shoppingCartIcon`, `cashbackIcon` fields no more working as Storefront Tailwind config (gen) options
+* **storefront:** Getting money values from dataset no more available
+
+### Features
+
+* **datafrete:** Create app to integrate Datafrete shipping gateway  ([#103](https://github.com/ecomplus/cloud-commerce/issues/103)) ([5c28ab1](https://github.com/ecomplus/cloud-commerce/commit/5c28ab15ddc45f5d7d5570896cc1dcabec69ac51))
+* **google-analytics:** App to send orders events to GA4 server side ([#102](https://github.com/ecomplus/cloud-commerce/issues/102)) ([899e308](https://github.com/ecomplus/cloud-commerce/commit/899e308a1cc78b5ef3801cab3961af6b0950afbe))
+* **storefront:** Add `autoplay` prop (ms) to Carousel component ([18b91dd](https://github.com/ecomplus/cloud-commerce/commit/18b91dd0589c7ce53120d3fd1c630002ffb5512c))
+* **storefront:** Add `CarouselControl` child-component for headless Carousel ([8c43757](https://github.com/ecomplus/cloud-commerce/commit/8c43757942ca553e4e984ff31d805f6b6a406e31))
+* **storefront:** Add `PitchBar` component with carousel slides ([c86d845](https://github.com/ecomplus/cloud-commerce/commit/c86d845803dbaa7856324ed30ad4ed4033bc23ca))
+* **storefront:** Add new `Carousel.vue` headless component ([9f01ff6](https://github.com/ecomplus/cloud-commerce/commit/9f01ff616eed45d13496b8bf1c8b5153e788c69c))
+* **storefront:** New global Vue component `ALink` ([58b552f](https://github.com/ecomplus/cloud-commerce/commit/58b552fda2849f61148c88a89623a91e3efb9796))
+* **storefront:** Use an object `iconAliases` on UnoCSS/Tailwind configs, add chevron icons aliases ([2cc164d](https://github.com/ecomplus/cloud-commerce/commit/2cc164d7438c8a322f8c106c74681331abe64a47))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#104](https://github.com/ecomplus/cloud-commerce/issues/104)) ([6cb0644](https://github.com/ecomplus/cloud-commerce/commit/6cb0644d463989cccf808974ea08e8fa559531a0))
+* **galaxpay:** Fix the name of the collection ([db63905](https://github.com/ecomplus/cloud-commerce/commit/db6390503e632ad1c3b8ffdbeebaf412c13339c3))
+* **storefront:** Fix `client.d.ts` Window interface ([9ec46c9](https://github.com/ecomplus/cloud-commerce/commit/9ec46c9b2b359f37bcc5e390a03f914c33353b15))
+* **storefront:** Fix TS shims, update Vue globals typedef and add `vue/ref-macros` types ([97fa988](https://github.com/ecomplus/cloud-commerce/commit/97fa988cfb52b96395c588e3b09f1dc1254444ed))
+* **storefront:** Import SW before /head, use `@vite-pwa/astro` ([30e254b](https://github.com/ecomplus/cloud-commerce/commit/30e254ba85671f1a4505111987aeb574632270cc))
+
+
+* **storefront:** Removing `@[@components](https://github.com/components)` alias for now ([441cfb7](https://github.com/ecomplus/cloud-commerce/commit/441cfb74f26ab0b70caaa97fe724fd205a752f18))
+* **storefront:** Update `Prices` component removing values for secondary [data-sf-prices-*] attrs ([fae36af](https://github.com/ecomplus/cloud-commerce/commit/fae36afb2f3d5c20535f4cd3d3411cb6016069a8))
+
 ### [0.1.7](https://github.com/ecomplus/cloud-commerce/compare/v0.1.6...v0.1.7) (2023-01-04)
 
 
