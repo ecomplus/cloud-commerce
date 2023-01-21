@@ -1,4 +1,3 @@
-/* eslint-disable */
 /// <reference types="./src/vue-globals" />
 
 interface Window {

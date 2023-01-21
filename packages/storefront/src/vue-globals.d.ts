@@ -1,6 +1,6 @@
-/* eslint-disable */
 // Read more: https://github.com/vuejs/core/pull/3399
-import '@vue/runtime-core'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@vue/runtime-core';
 import type { FormatPercentage } from '@@sf/pages/_vue';
 
 type Dictionary = Omit<typeof import('@@i18n'),
@@ -21,9 +21,9 @@ declare module '@vue/runtime-core' {
   }
 
   export interface GlobalComponents {
-    // @ts-ignore
-    Fade: typeof import('@@sf/components/globals/Fade.vue')['default']
+    Fade: typeof import('@@sf/components/globals/Fade.vue')['default'];
+    ALink: typeof import('@@sf/components/globals/ALink.vue')['default'];
   }
 }
 
-export {}
+export {};
