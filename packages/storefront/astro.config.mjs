@@ -187,6 +187,8 @@ const genAstroConfig = ({
         { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
         { find: '~', replacement: joinPath(process.cwd(), 'src') },
         { find: 'content', replacement: joinPath(process.cwd(), 'content') },
+        { find: '/img', replacement: joinPath(process.cwd(), 'public/img') },
+        { find: '/assets', replacement: joinPath(process.cwd(), 'public/assets') },
       ],
     },
   },
