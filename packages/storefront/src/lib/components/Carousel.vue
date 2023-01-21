@@ -7,14 +7,17 @@ import {
   watch,
   toRef,
   nextTick,
+  provide,
 } from 'vue';
 import debounce from 'lodash/debounce';
 import { useElementHover } from '@vueuse/core';
+import { carouselKey } from './_injection-keys';
+import CarouselControl from './CarouselControl.vue';
 
 export interface Props {
   as?: string;
   modelValue?: number;
-  autoplay?: number;
+  autoplay?: number; // milliseconds
 }
 
 const approximatelyEqual = (v1, v2, epsilon) => {
@@ -43,8 +46,8 @@ watch(currentPage, (current, previous) => {
   }
 });
 const wrapper = ref<HTMLElement>(null);
-const boundLeft = ref(true);
-const boundRight = ref(false);
+const isBoundLeft = ref(true);
+const isBoundRight = ref(false);
 const slidesWidth = ref([]);
 const wrapperScrollWidth = ref(0);
 const wrapperVisibleWidth = ref(0);
@@ -54,24 +57,20 @@ const onResizeFn = ref(null);
 const onScrollFn = ref(null);
 const calcBounds = () => {
   // Find the closest point, with 5px approximate.
-  const isBoundLeft = approximatelyEqual(currentPos.value, 0, 5);
-  const isBoundRight = approximatelyEqual(
+  const _isBoundLeft = approximatelyEqual(currentPos.value, 0, 5);
+  const _isBoundRight = approximatelyEqual(
     wrapperScrollWidth.value - wrapperVisibleWidth.value,
     currentPos.value,
     5,
   );
-  if (isBoundLeft) {
+  if (_isBoundLeft) {
     emit('bound-left', true);
-    boundLeft.value = true;
-  } else {
-    boundLeft.value = false;
   }
-  if (isBoundRight) {
+  isBoundLeft.value = _isBoundLeft;
+  if (_isBoundRight) {
     emit('bound-right', true);
-    boundRight.value = true;
-  } else {
-    boundRight.value = false;
   }
+  isBoundRight.value = _isBoundRight;
 };
 const calcWrapperWidth = () => {
   wrapperScrollWidth.value = wrapper.value.scrollWidth;
@@ -138,15 +137,15 @@ const restartAutoplay = () => {
     }, props.autoplay);
   }
 };
-const changeSlide = (direction) => {
+const changeSlide = (direction: number) => {
   if (direction < 0) {
-    if (boundLeft.value) {
+    if (isBoundLeft.value) {
       calcMaxPages();
       currentPage.value = maxPages.value - 1;
       changeSlide(1);
       return;
     }
-  } else if (boundRight.value) {
+  } else if (isBoundRight.value) {
     currentPage.value = 1;
     changeSlide(-1);
     return;
@@ -189,6 +188,12 @@ onBeforeUnmount(() => {
     clearTimeout(autoplayTimer);
   }
 });
+provide(carouselKey, {
+  autoplay: toRef(props, 'autoplay'),
+  changeSlide,
+  isBoundLeft,
+  isBoundRight,
+});
 </script>
 
 <template>
@@ -199,36 +204,14 @@ onBeforeUnmount(() => {
     <!-- @slot Slot for Arrows -->
     <slot
       name="controls"
-      :change-slide="changeSlide"
-      :bound-left="boundLeft"
-      :bound-right="boundRight"
+      v-bind="{ changeSlide, isBoundLeft, isBoundRight }"
     >
-      <button
-        type="button"
-        :aria-label="$t.i19previous"
-        @click="changeSlide(-1)"
-        data-carousel-control="previous"
-      >
-        <slot name="previous">
-          <i
-            class="i-chevron-left p-3 hover:opacity-100"
-            :class="autoplay ? 'opacity-40' : 'opacity-50'"
-          ></i>
-        </slot>
-      </button>
-      <button
-        type="button"
-        :aria-label="$t.i19next"
-        @click="changeSlide(1)"
-        data-carousel-control="next"
-      >
-        <slot name="next">
-          <i
-            class="i-chevron-right p-3 hover:opacity-100"
-            :class="autoplay ? 'opacity-40' : 'opacity-50'"
-          ></i>
-        </slot>
-      </button>
+      <CarouselControl :direction="-1">
+        <slot name="previous" />
+      </CarouselControl>
+      <CarouselControl>
+        <slot name="next" />
+      </CarouselControl>
     </slot>
   </div>
 </template>
@@ -236,7 +219,6 @@ onBeforeUnmount(() => {
 <style>
 [data-carousel] {
   position: relative;
-  --background-color: var(--c-carousel-background, transparent);
 }
 [data-carousel-wrapper] {
   display: flex;
@@ -267,7 +249,6 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 0;
   bottom: 0;
-  background-color: var(--background-color);
 }
 [data-carousel-control=previous] {
   left: 0;
