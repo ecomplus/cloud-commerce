@@ -21,7 +21,7 @@ const { changeSlide } = inject(carouselKey);
   >
     <slot>
       <i
-        class="mb-0 z-10"
+        class="m-0"
         :class="direction > 0 ? 'i-chevron-right' : 'i-chevron-left'"
       ></i>
     </slot>
