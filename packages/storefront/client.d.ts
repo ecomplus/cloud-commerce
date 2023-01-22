@@ -16,7 +16,7 @@ interface Window {
   ECOM_CURRENCY_SYMBOL: string;
   ECOM_COUNTRY_CODE: string;
   storefront?: {
-    settings: typeof import('./content/settings.json'),
+    settings: import('./src/lib/types/cms-settings').default,
     context?: {
       resource: string,
       doc: Record<string, any>,
