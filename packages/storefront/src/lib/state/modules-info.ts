@@ -3,7 +3,8 @@ import type {
   CalculateShippingResponse,
   ApplyDiscountResponse,
 } from '@cloudcommerce/types';
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
+import { formatMoney } from '@ecomplus/utils';
 import afetch from '../../helpers/afetch';
 import utm from '../scripts/session-utm';
 
@@ -144,3 +145,29 @@ if (!import.meta.env.SSR) {
 }
 
 export default modulesInfo;
+
+const parsePhrase = <T extends keyof typeof modulesInfo>(
+  phrase: string,
+  modName: T,
+  varName: string & keyof typeof modulesInfo[T],
+  formatValue: (x: any) => string = formatMoney,
+) => {
+  return computed(() => {
+    const searchString = `{{${varName}}}`;
+    const index = phrase.indexOf(searchString);
+    if (index > -1) {
+      const fieldValue = modulesInfo[modName][varName];
+      if (fieldValue) {
+        const replacement = formatValue(fieldValue);
+        return phrase.substring(0, index) + replacement
+          + phrase.substring(index + searchString.length);
+      }
+      return '';
+    }
+    return phrase;
+  });
+};
+
+export const parseShippingPhrase = (phrase: string) => {
+  return parsePhrase(phrase, 'calculate_shipping', 'free_shipping_from_value');
+};
