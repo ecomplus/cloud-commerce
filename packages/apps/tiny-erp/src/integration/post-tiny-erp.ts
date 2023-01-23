@@ -4,7 +4,7 @@ export default (
   url: string,
   body: Record<string, any>,
   token = process.env.TINY_ERP_TOKEN,
-  options: AxiosRequestConfig = {},
+  options: Partial<AxiosRequestConfig> = {},
 ) => {
   // https://www.tiny.com.br/ajuda/api/api2
   let data = `token=${token}&formato=JSON`;
