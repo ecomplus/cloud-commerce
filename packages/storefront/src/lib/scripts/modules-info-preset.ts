@@ -3,7 +3,7 @@ const checkObjNotNull = (obj: { [k: string]: any }) => {
 };
 
 const modulesInfoPreset: typeof window.storefront.modulesInfoPreset = {};
-const settingsModules = window.storefront.settings.modules;
+const settingsModules = globalThis.storefront.settings.modules;
 if (settingsModules) {
   const settingsPayments = settingsModules.list_payments;
   if (settingsPayments) {
@@ -40,6 +40,8 @@ if (settingsModules) {
   }
 }
 
-window.storefront.modulesInfoPreset = modulesInfoPreset;
+if (!import.meta.env.SSR) {
+  window.storefront.modulesInfoPreset = modulesInfoPreset;
+}
 
 export default modulesInfoPreset;
