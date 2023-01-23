@@ -2,6 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type CmsSettings from './types/cms-settings';
+import { EventEmitter } from 'node:events';
 import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
 
@@ -21,19 +22,28 @@ type StorefrontConfig = {
     ? Array<string> : Record<string, any>,
 };
 
+const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
 
 declare global {
   // eslint-disable-next-line
   var api_prefetch_endpoints: ApiEndpoint[];
   // eslint-disable-next-line
-  var storefront: { settings: Partial<CmsSettings> };
+  var storefront: {
+    settings: Partial<CmsSettings>,
+    onLoad: (callback: (...args: any[]) => void) => void,
+  };
 }
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = ['categories'];
 }
 if (!globalThis.storefront) {
-  globalThis.storefront = { settings: {} };
+  globalThis.storefront = {
+    settings: {},
+    onLoad(callback: (...args: any[]) => void) {
+      emitter.on('load', callback);
+    },
+  };
 }
 
 type ApiPrefetchEndpoints = Array<ApiEndpoint>;
@@ -124,7 +134,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
   } else {
     setResponseCache(Astro, 120, 300);
   }
-  return {
+  const pageContext = {
     ...config,
     isHomepage,
     cmsContent,
@@ -132,6 +142,8 @@ const loadPageContext = async (Astro: AstroGlobal, {
     apiDoc,
     apiState,
   };
+  emitter.emit('load', pageContext);
+  return pageContext;
 };
 
 export default loadPageContext;

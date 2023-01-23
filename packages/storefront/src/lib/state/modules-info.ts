@@ -5,7 +5,7 @@ import type {
 } from '@cloudcommerce/types';
 import { reactive, computed } from 'vue';
 import { formatMoney } from '@ecomplus/utils';
-import modulesInfoPreset from '@@sf/scripts/modules-info-preset';
+import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
 import utm from '@@sf/scripts/session-utm';
 import afetch from '../../helpers/afetch';
 
@@ -27,9 +27,9 @@ const modulesInfo = reactive<{
     available_extra_discount?: ApplyDiscountResponse['available_extra_discount'],
   },
 }>(emptyInfo);
-if (modulesInfoPreset) {
+loadingGlobalInfoPreset.then((modulesInfoPreset) => {
   Object.assign(modulesInfo, modulesInfoPreset);
-}
+});
 
 if (!import.meta.env.SSR) {
   const storageKey = 'MODULES_INFO';
@@ -48,96 +48,103 @@ if (!import.meta.env.SSR) {
     }
   }
 
-  const modulesToFetch: { modName: string, reqOptions?: Record<string, any> }[] = [];
-  ['list_payments', 'calculate_shipping'].forEach((modName) => {
-    if (!Object.keys(modulesInfo[modName]).length) {
-      modulesToFetch.push({ modName });
-    }
-  });
-  if (Object.keys(utm).length) {
-    modulesToFetch.push({
-      modName: 'apply_discount',
-      reqOptions: {
-        method: 'post',
-        body: { utm },
-      },
+  const fetchInfo = () => {
+    const modulesToFetch: { modName: string, reqOptions?: Record<string, any> }[] = [];
+    ['list_payments', 'calculate_shipping'].forEach((modName) => {
+      if (!Object.keys(modulesInfo[modName]).length) {
+        modulesToFetch.push({ modName });
+      }
     });
-  }
+    if (Object.keys(utm).length) {
+      modulesToFetch.push({
+        modName: 'apply_discount',
+        reqOptions: {
+          method: 'post',
+          body: { utm },
+        },
+      });
+    }
 
-  modulesToFetch.forEach(({ modName, reqOptions }) => {
-    afetch(`/api/modules/${modName}`, reqOptions)
-      .then(async (response) => {
-        if (response.ok) {
-          const modInfo = {};
-          modulesInfo[modName] = modInfo;
-          const { result } = await response.json();
-          if (Array.isArray(result)) {
-            result.forEach(({ error, response: data }) => {
-              if (!error) {
-                let field: string;
-                let val: any;
-                switch (modName) {
-                  case 'calculate_shipping':
-                    field = 'free_shipping_from_value';
-                    val = data[field];
-                    if (
-                      typeof val === 'number'
-                      && (modInfo[field] === undefined || val < modInfo[field])
-                    ) {
-                      modInfo[field] = val;
-                    }
-                    break;
+    modulesToFetch.forEach(({ modName, reqOptions }) => {
+      afetch(`/api/modules/${modName}`, reqOptions)
+        .then(async (response) => {
+          if (response.ok) {
+            const modInfo = {};
+            modulesInfo[modName] = modInfo;
+            const { result } = await response.json();
+            if (Array.isArray(result)) {
+              result.forEach(({ error, response: data }) => {
+                if (!error) {
+                  let field: string;
+                  let val: any;
+                  switch (modName) {
+                    case 'calculate_shipping':
+                      field = 'free_shipping_from_value';
+                      val = data[field];
+                      if (
+                        typeof val === 'number'
+                        && (modInfo[field] === undefined || val < modInfo[field])
+                      ) {
+                        modInfo[field] = val;
+                      }
+                      break;
 
-                  case 'list_payments':
-                    field = 'installments_option';
-                    val = data[field];
-                    if (
-                      val && (!modInfo[field]
-                        || val.monthly_interest < modInfo[field].monthly_interest
-                        || val.max_number > modInfo[field].max_number)
-                    ) {
-                      modInfo[field] = val;
-                    }
-                    field = 'discount_option';
-                    val = data[field];
-                    if (val && (!modInfo[field] || val.value > modInfo[field].value)) {
-                      data.payment_gateways.forEach(({ discount }) => {
-                        if (
-                          discount && discount.apply_at !== 'freight'
-                          && discount.value === val.value
-                        ) {
-                          modInfo[field] = {
-                            apply_at: discount.apply_at,
-                            ...val,
-                          };
-                        }
-                      });
-                    }
-                    field = 'loyalty_points_programs';
-                    val = data[field];
-                    if (val) {
-                      modInfo[field] = { ...modInfo[field], ...val };
-                    }
-                    break;
+                    case 'list_payments':
+                      field = 'installments_option';
+                      val = data[field];
+                      if (
+                        val && (!modInfo[field]
+                          || val.monthly_interest < modInfo[field].monthly_interest
+                          || val.max_number > modInfo[field].max_number)
+                      ) {
+                        modInfo[field] = val;
+                      }
+                      field = 'discount_option';
+                      val = data[field];
+                      if (val && (!modInfo[field] || val.value > modInfo[field].value)) {
+                        data.payment_gateways.forEach(({ discount }) => {
+                          if (
+                            discount && discount.apply_at !== 'freight'
+                            && discount.value === val.value
+                          ) {
+                            modInfo[field] = {
+                              apply_at: discount.apply_at,
+                              ...val,
+                            };
+                          }
+                        });
+                      }
+                      field = 'loyalty_points_programs';
+                      val = data[field];
+                      if (val) {
+                        modInfo[field] = { ...modInfo[field], ...val };
+                      }
+                      break;
 
-                  default:
-                    field = 'available_extra_discount';
-                    val = data[field];
-                    if (val && (!modInfo[field] || val.value > modInfo[field].value)) {
-                      modInfo[field] = val;
-                    }
+                    default:
+                      field = 'available_extra_discount';
+                      val = data[field];
+                      if (val && (!modInfo[field] || val.value > modInfo[field].value)) {
+                        modInfo[field] = val;
+                      }
+                  }
                 }
-              }
-            });
+              });
+            }
+            sessionStorage.setItem(storageKey, JSON.stringify({
+              ...modulesInfo,
+              __timestamp: Date.now(),
+            }));
           }
-          sessionStorage.setItem(storageKey, JSON.stringify({
-            ...modulesInfo,
-            __timestamp: Date.now(),
-          }));
-        }
-      })
-      .catch(console.error);
-  });
+        })
+        .catch(console.error);
+    });
+  };
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(fetchInfo);
+  } else {
+    setTimeout(fetchInfo, 300);
+  }
 }
 
 export default modulesInfo;
