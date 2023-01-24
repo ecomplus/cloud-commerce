@@ -3,9 +3,11 @@ import type {
   CalculateShippingResponse,
   ApplyDiscountResponse,
 } from '@cloudcommerce/types';
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
+import { formatMoney } from '@ecomplus/utils';
+import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
+import utm from '@@sf/scripts/session-utm';
 import afetch from '../../helpers/afetch';
-import utm from '../scripts/session-utm';
 
 const emptyInfo = {
   list_payments: {},
@@ -25,31 +27,28 @@ const modulesInfo = reactive<{
     available_extra_discount?: ApplyDiscountResponse['available_extra_discount'],
   },
 }>(emptyInfo);
+loadingGlobalInfoPreset.then((modulesInfoPreset) => {
+  Object.assign(modulesInfo, modulesInfoPreset);
+});
 
 if (!import.meta.env.SSR) {
   const storageKey = 'MODULES_INFO';
   const sessionJson = sessionStorage.getItem(storageKey);
-  let persistedValue;
   if (sessionJson) {
     try {
-      persistedValue = JSON.parse(sessionJson);
-      if (persistedValue.__timestamp < Date.now() - 1000 * 60 * 5) {
-        persistedValue = null;
+      const persistedValue = JSON.parse(sessionJson);
+      if (persistedValue.__timestamp >= Date.now() - 1000 * 60 * 5) {
+        delete persistedValue.__timestamp;
+        Object.assign(modulesInfo, persistedValue);
+      } else {
         sessionStorage.removeItem(storageKey);
       }
-      delete persistedValue.__timestamp;
     } catch (e) {
       sessionStorage.removeItem(storageKey);
     }
   }
 
-  if (persistedValue?.list_payments) {
-    Object.assign(modulesInfo, persistedValue);
-  } else {
-    const modulesInfoPreset = window.storefront?.modulesInfoPreset;
-    if (modulesInfoPreset) {
-      Object.assign(modulesInfo, modulesInfoPreset);
-    }
+  const fetchInfo = () => {
     const modulesToFetch: { modName: string, reqOptions?: Record<string, any> }[] = [];
     ['list_payments', 'calculate_shipping'].forEach((modName) => {
       if (!Object.keys(modulesInfo[modName]).length) {
@@ -140,7 +139,38 @@ if (!import.meta.env.SSR) {
         })
         .catch(console.error);
     });
+  };
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(fetchInfo);
+  } else {
+    setTimeout(fetchInfo, 300);
   }
 }
 
 export default modulesInfo;
+
+const parsePhrase = <T extends keyof typeof modulesInfo>(
+  phrase: string,
+  modName: T,
+  varName: string & keyof typeof modulesInfo[T],
+  formatValue: (x: any) => string = formatMoney,
+) => {
+  return computed(() => {
+    const searchString = `{{${varName}}}`;
+    const index = phrase.indexOf(searchString);
+    if (index > -1) {
+      const fieldValue = modulesInfo[modName][varName];
+      if (fieldValue) {
+        const replacement = formatValue(fieldValue);
+        return phrase.substring(0, index) + replacement
+          + phrase.substring(index + searchString.length);
+      }
+      return '';
+    }
+    return phrase;
+  });
+};
+
+export const parseShippingPhrase = (phrase: string) => {
+  return parsePhrase(phrase, 'calculate_shipping', 'free_shipping_from_value');
+};

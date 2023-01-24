@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Prices from '@@components/Prices.vue';
+import Prices from '@@sf/components/Prices.vue';
 
 export interface Props {
   as?: string;

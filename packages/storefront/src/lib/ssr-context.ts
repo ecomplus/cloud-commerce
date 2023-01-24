@@ -2,6 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type CmsSettings from './types/cms-settings';
+import { EventEmitter } from 'node:events';
 import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
 
@@ -21,14 +22,28 @@ type StorefrontConfig = {
     ? Array<string> : Record<string, any>,
 };
 
+const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
 
 declare global {
   // eslint-disable-next-line
   var api_prefetch_endpoints: ApiEndpoint[];
+  // eslint-disable-next-line
+  var storefront: {
+    settings: Partial<CmsSettings>,
+    onLoad: (callback: (...args: any[]) => void) => void,
+  };
 }
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = ['categories'];
+}
+if (!globalThis.storefront) {
+  globalThis.storefront = {
+    settings: {},
+    onLoad(callback: (...args: any[]) => void) {
+      emitter.on('load', callback);
+    },
+  };
 }
 
 type ApiPrefetchEndpoints = Array<ApiEndpoint>;
@@ -51,8 +66,10 @@ const loadPageContext = async (Astro: AstroGlobal, {
 } = {}) => {
   const startedAt = Date.now();
   const urlPath = Astro.url.pathname;
+  const isHomepage = urlPath === '/';
   const { slug } = Astro.params;
   const config = getConfig();
+  globalThis.storefront.settings = config.settings;
   let cmsContent: Record<string, any> | undefined;
   let apiResource: string | undefined;
   let apiDoc: Record<string, any> | undefined;
@@ -112,18 +129,21 @@ const loadPageContext = async (Astro: AstroGlobal, {
   Astro.response.headers.set('X-Load-Took', String(Date.now() - startedAt));
   if (urlPath === '/fallback') {
     setResponseCache(Astro, 3600, 86400);
-  } else if (urlPath === '/') {
+  } else if (isHomepage) {
     setResponseCache(Astro, 180, 300);
   } else {
     setResponseCache(Astro, 120, 300);
   }
-  return {
+  const pageContext = {
     ...config,
+    isHomepage,
     cmsContent,
     apiResource,
     apiDoc,
     apiState,
   };
+  emitter.emit('load', pageContext);
+  return pageContext;
 };
 
 export default loadPageContext;

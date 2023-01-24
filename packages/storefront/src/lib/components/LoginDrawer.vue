@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, defineAsyncComponent } from 'vue';
 import { i19myAccount, i19myOrders } from '@@i18n';
-import ADrawer from '@@components/ADrawer.vue';
+import ADrawer from '@@sf/components/ADrawer.vue';
 
 export interface Props {
   accountUrl?: string;

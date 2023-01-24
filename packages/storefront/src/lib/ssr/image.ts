@@ -15,6 +15,16 @@ const tryImageSize = (src: string) => {
   return dimensions;
 };
 
+const getAspectRatio = (src: string | { width?: number, height?: number }) => {
+  if (typeof src === 'string') {
+    src = tryImageSize(src);
+  }
+  if (src.width) {
+    return src.height ? src.width / src.height : 1;
+  }
+  return 0;
+};
+
 type TransformOptions = Omit<Parameters<typeof _getImage>[0], 'alt'> & {
   isLowResolution?: boolean,
   alt?: string,
@@ -38,7 +48,7 @@ const getImage = async (options: TransformOptions) => {
       if (!options.width) {
         options.width = width;
       }
-      options.aspectRatio = height ? width / height : 1;
+      options.aspectRatio = getAspectRatio({ width, height });
     }
   }
   const imgAttrs = await _getImage({ alt: '', ...options });
@@ -55,4 +65,4 @@ const getImage = async (options: TransformOptions) => {
 
 export default getImage;
 
-export { tryImageSize, getImage };
+export { tryImageSize, getAspectRatio, getImage };

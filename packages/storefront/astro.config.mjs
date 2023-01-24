@@ -1,14 +1,14 @@
-import { existsSync, lstatSync, readFileSync } from 'node:fs';
+import { lstatSync, readFileSync } from 'node:fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
 import image from '@astrojs/image';
-import partytown from '@astrojs/partytown';
-import prefetch from '@astrojs/prefetch';
+// import partytown from '@astrojs/partytown';
+// import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
-import { VitePWA } from 'vite-plugin-pwa';
+import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './storefront.config.mjs';
 
@@ -55,7 +55,7 @@ const _vitePWAOptions = {
   },
   registerType: 'autoUpdate',
   workbox: {
-    navigateFallback: null,
+    navigateFallback: '/404',
     globDirectory: 'dist/client',
     globPatterns: ['**/!(cms*|admin*).{js,css}'],
     ignoreURLParametersMatching: [/.*/],
@@ -136,10 +136,6 @@ const _vitePWAOptions = {
   },
 };
 
-// @@components tries ~/components with fallback to @@sf/components
-const localComponentsDir = joinPath(process.cwd(), 'src/components');
-const libComponentsDir = joinPath(__dirname, 'src/lib/components');
-
 const genAstroConfig = ({
   site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
@@ -154,17 +150,17 @@ const genAstroConfig = ({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),
     vue({ appEntrypoint: '/src/pages/_vue' }),
-    partytown(),
-    prefetch(),
+    // partytown(),
+    // prefetch(),
     UnoCSS({
       injectReset: false,
       injectEntry: false,
     }),
+    AstroPWA(vitePWAOptions),
   ],
   site,
   vite: {
     plugins: [
-      VitePWA(vitePWAOptions),
       {
         name: 'vue-i18n',
         transform(code, id) {
@@ -185,23 +181,14 @@ const genAstroConfig = ({
       },
     ],
     resolve: {
-      preserveSymlinks: lstatSync(localComponentsDir).isSymbolicLink(),
+      preserveSymlinks: lstatSync(joinPath(process.cwd(), 'src/components')).isSymbolicLink(),
       alias: [
         { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
         { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
         { find: '~', replacement: joinPath(process.cwd(), 'src') },
         { find: 'content', replacement: joinPath(process.cwd(), 'content') },
-        {
-          find: '@@components',
-          replacement: '',
-          customResolver: (componentPath) => {
-            const localReplacement = joinPath(localComponentsDir, componentPath);
-            if (existsSync(localReplacement)) {
-              return localReplacement;
-            }
-            return joinPath(libComponentsDir, componentPath);
-          },
-        },
+        { find: '/img', replacement: joinPath(process.cwd(), 'public/img') },
+        { find: '/assets', replacement: joinPath(process.cwd(), 'public/assets') },
       ],
     },
   },

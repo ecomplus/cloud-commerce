@@ -1,4 +1,3 @@
-/* eslint-disable */
 /// <reference types="./src/vue-globals" />
 
 interface Window {
@@ -11,14 +10,13 @@ interface Window {
     appId: string,
     measurementId?: string,
   };
+  ECOM_STORE_ID: number;
+  ECOM_LANG: string;
+  ECOM_CURRENCY: string;
+  ECOM_CURRENCY_SYMBOL: string;
+  ECOM_COUNTRY_CODE: string;
   storefront?: {
-    settings: typeof import('./content/settings.json') & {
-      store_id: number,
-      lang: string,
-      country_code: string,
-      currency: string,
-      currency_symbol: string,
-    },
+    settings: import('./src/lib/types/cms-settings').default,
     context?: {
       resource: string,
       doc: Record<string, any>,

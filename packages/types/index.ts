@@ -96,6 +96,23 @@ type CmsSettings = {
   currency: string,
   currency_symbol: string,
   country_code: string,
+  modules?: {
+    list_payments?: {
+      installments_option?: Partial<ListPaymentsResponse['installments_option']>,
+      discount_option?: Partial<ListPaymentsResponse['discount_option']>,
+      loyalty_points_program?: Partial<
+        Exclude<ListPaymentsResponse['loyalty_points_programs'], undefined>[''] & {
+          id: string,
+        }>,
+      loyalty_points_programs?: ListPaymentsResponse['loyalty_points_programs'],
+    },
+    calculate_shipping?: {
+      free_shipping_from_value?: CalculateShippingResponse['free_shipping_from_value'] | null,
+    },
+    apply_discount?: {
+      available_extra_discount?: Partial<ApplyDiscountResponse['available_extra_discount']>,
+    },
+  },
 };
 
 export type {

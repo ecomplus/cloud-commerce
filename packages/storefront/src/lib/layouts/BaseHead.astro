@@ -1,7 +1,8 @@
 ---
 import type CmsSocial from '@@sf/types/cms-social';
-import { img as getImg } from '@ecomplus/utils';
 import type { PageContext } from '@@sf/ssr-context';
+import { pwaInfo } from 'virtual:pwa-info';
+import { img as getImg } from '@ecomplus/utils';
 import { getImage as transformImage } from '@@sf/ssr/image';
 
 export interface Props {
@@ -53,7 +54,6 @@ if (!ogImage) {
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content={primaryColor}>
 <link rel="icon" href={favicon} />
-{import.meta.env.PROD && <link rel="manifest" href="/manifest.webmanifest" />}
 <title>{title}</title>
 <meta name="description" content={description}>
 <meta name="author" content={settings.name}>
@@ -73,3 +73,8 @@ if (!ogImage) {
 <meta name="twitter:card" content="summary">
 {cmsSocial.twitter_username && <meta name="twitter:site" content={cmsSocial.twitter_username} />}
 <meta name="ecom-store-id" content={String(storeId)}>
+{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+<script>
+  import { registerSW } from 'virtual:pwa-register';
+  registerSW({ immediate: true });
+</script>

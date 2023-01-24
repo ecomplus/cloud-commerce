@@ -1,8 +1,9 @@
 [data-tooltip] {
   position: relative;
   cursor: help;
-  --c-background: var(--c-tooltip-background, rgba(44, 44, 44, 0.85));
-  --c-foreground: var(--c-tooltip-foreground, var(--c-on-dark));
+  --background-color: var(--c-tooltip-background, rgba(44, 44, 44, 0.85));
+  --color: var(--c-tooltip-foreground, var(--c-on-dark));
+  --border-color: transparent transparent var(--background-color) transparent;
 }
 [data-tooltip]::before {
   content: attr(data-tooltip);
@@ -16,8 +17,8 @@
   margin-top: 5px;
   font-size: clamp(0.75rem, 90%, 1rem);
   width: max-content;
-  background-color: var(--c-background);
-  color: var(--c-foreground);
+  background-color: var(--background-color);
+  color: var(--color);
   text-align: center;
   @apply rounded-sm py-1 px-2 leading-snug;
 }
@@ -34,7 +35,7 @@
   margin-top: -4px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent var(--c-background) transparent;
+  border-color: var(--border-color);
 }
 [data-tooltip]:hover::before,
 [data-tooltip]:hover::after {
