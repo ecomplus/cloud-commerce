@@ -1,8 +1,4 @@
-import type {
-  Orders,
-  // Applications,
-  // ResourceListResult,
-} from '@cloudcommerce/types';
+import type { Orders } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
@@ -128,7 +124,6 @@ export default async (req: Request, res: Response) => {
             await api.post(`orders/${_id}/payments_history`, bodyPaymentHistory as any); // TODO: incompatible type
           });
 
-          //
           return res.status(204).send('SUCCESS');
         } catch (err: any) {
           //
@@ -162,7 +157,6 @@ export default async (req: Request, res: Response) => {
             logger.error(debugMsg);
             statusCode = 409;
           }
-
           // return response with error
           return res.status(statusCode)
             .send({
@@ -171,8 +165,6 @@ export default async (req: Request, res: Response) => {
             });
         }
       };
-
-      //
       await handleNotification();
     }
 

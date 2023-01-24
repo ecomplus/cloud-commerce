@@ -6,7 +6,7 @@ import type {
 import type { PagHiperApp } from '../types/config-app';
 import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
-import Axios from './functions-lib/create-axios';
+import axios from './functions-lib/create-axios';
 
 type ItemsPagHiper = {
   description: string,
@@ -37,8 +37,8 @@ const createTransactionPagHiper = async (
 
   // returns request promise
   const endpoint = `/${(isPix ? 'invoice' : 'transaction')}/create/`;
-  return new Promise((resolve) => {
-    Axios(isPix).post(endpoint, body)
+  return new Promise((resolve, reject) => {
+    axios(isPix).post(endpoint, body)
       .then(({ data }) => {
         // save transaction ID on database first
         let createRequest: any;
@@ -50,7 +50,8 @@ const createTransactionPagHiper = async (
         }
 
         resolve(createRequest);
-      });
+      })
+      .catch(reject);
   });
 };
 
@@ -133,7 +134,7 @@ export default async (appData: AppModuleBody) => {
     paghiperTransaction.notification_url += '/pix';
   }
 
-  //   // use configured PagHiper API key
+  // use configured PagHiper API key
   paghiperTransaction.apiKey = configApp.paghiper_api_key;
   // merge configured banking billet options
   const options = configApp.banking_billet_options;
@@ -181,7 +182,7 @@ export default async (appData: AppModuleBody) => {
         }
       }
       transaction.notes = `<img src="${pixCode.qrcode_image_url}" `
-        + 'style="display:block;max-width:100%;margin:0 auto">';
+        + 'style="display:block;max-width:100%;margin:0 auto" />';
     } else {
       const bankSlip = createRequest.bank_slip;
       transaction.payment_link = bankSlip.url_slip;
@@ -217,7 +218,8 @@ export default async (appData: AppModuleBody) => {
         if (err.response.status === 200) {
           const { data } = err.response;
           if (data) {
-            debugMsg += ` ${typeof data === 'object' ? JSON.stringify(data) : data} ${JSON.stringify(paghiperTransaction)}`;
+            debugMsg += ` ${typeof data === 'object' ? JSON.stringify(data) : data}`;
+            debugMsg += ` ${JSON.stringify(paghiperTransaction)}`;
             if (data.create_request && data.create_request.response_message) {
               message = data.create_request.response_message;
             }

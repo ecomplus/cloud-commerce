@@ -32,5 +32,3 @@ export type PagHiperApp = {
     discount?: DiscountConfig,
   },
 }
-
-
