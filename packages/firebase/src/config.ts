@@ -122,6 +122,9 @@ const mergeConfig = {
       appId: 122241,
       events: googleAnalyticsEvents,
     },
+    pagHiper: {
+      appId: 1251,
+    },
   },
   cmsSettings,
 };

@@ -108,6 +108,12 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagHiper.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-paghiper')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
   } else if (modName === 'create_transaction') {
     if (appId === apps.mercadoPago.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -148,6 +154,12 @@ export default async (
     if (appId === apps.loyaltyPoints.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-loyalty-points')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.pagHiper.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-paghiper')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }
