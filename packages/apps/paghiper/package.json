@@ -6,7 +6,7 @@
   "main": "lib/paghiper.js",
   "exports": {
     ".": "./lib/paghiper.js",
-    "./events": "./lib/paghiper-webhook.js"
+    "./webhook": "./lib/paghiper-webhook.js"
   },
   "repository": {
     "type": "git",
