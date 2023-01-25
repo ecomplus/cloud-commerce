@@ -3,23 +3,25 @@ import type { Categories } from '@cloudcommerce/api/types';
 import type CmsHeader from '@@sf/types/cms-header';
 import type CmsContacts from '@@sf/types/cms-contacts';
 import type { PageContext } from '@@sf/ssr-context';
-import { i19buyOnWhatsApp } from '@@i18n';
-import { getImage } from '@@sf/ssr/image';
+import Picture from '@@sf/ssr/Picture.astro';
 import PitchBar, { Props as PitchBarProps } from '@@sf/components/PitchBar.vue';
+import StickyHeader from '@@sf/components/StickyHeader.vue';
 
 export interface Props {
   pageContext: PageContext;
+  logoHeading?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | null;
 }
 
 const {
   pageContext: {
+    isHomepage,
     apiState,
     settings,
     cms,
   },
 } = Astro.props as Props;
 const header = cms('header') as CmsHeader &
-  { marketing_stripe?: { text: string, link: string } };
+  { marketing_stripe?: { text: string, link: string }, logo?: string };
 const pitchBar: PitchBarProps = { slides: [] };
 if (header.pitch_bar) {
   pitchBar.slides = header.pitch_bar;
@@ -29,10 +31,29 @@ if (header.pitch_bar) {
     html: header.marketing_stripe.text,
   }];
 }
+const logoSrc = header.logo || settings.logo;
+const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
 ---
 
 <Fragment>
   <slot name="pitch-bar">
     {pitchBar.slides.length && <PitchBar {...pitchBar} client:idle />}
+  </slot>
+  <slot name="sticky-header">
+    <StickyHeader>
+      <Fragment slot="logo">
+        <slot name="logo">
+          <LogoHeading>
+            <Picture
+              src={logoSrc}
+              alt={settings.name}
+              widths={[300]}
+              sizes="150px"
+              fetchpriority="high"
+            />
+          </LogoHeading>
+        </slot>
+      </Fragment>
+    </StickyHeader>
   </slot>
 </Fragment>
