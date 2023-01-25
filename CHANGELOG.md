@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/ecomplus/cloud-commerce/compare/v0.2.1...v0.2.2) (2023-01-25)
+
+
+### Features
+
+* **paghiper:** Create PagHiper app from https://github.com/ecomplus/app-paghiper  ([#105](https://github.com/ecomplus/cloud-commerce/issues/105)) ([5f1c7c5](https://github.com/ecomplus/cloud-commerce/commit/5f1c7c5f5ba0f64d20637f403339e61c595e4633))
+* **storefront:** Add /img and /assets Vite aliases to public dir on Astro config ([93a9da3](https://github.com/ecomplus/cloud-commerce/commit/93a9da389817818f0ba36e5e85353267d63e66ca))
+* **storefront:** Add `parseShippingPhrase` util to modules info state exports ([6645159](https://github.com/ecomplus/cloud-commerce/commit/6645159c1f81a24898bc810d7206db7ddfa094df))
+* **storefront:** Export new `getAspecRatio` on SSR image helpers ([7626a53](https://github.com/ecomplus/cloud-commerce/commit/7626a532ba400c58b0ba0d7b5c741bf905203ec6))
+* **storefront:** Load modules info presets (payment, shipping) from CMS settings ([56afb71](https://github.com/ecomplus/cloud-commerce/commit/56afb71c9b05c34954b4ea56adf304abc0b281cb))
+* **storefront:** New `ssr/Picture.astro` to automatically handle aspect ration for local images ([3da9bb2](https://github.com/ecomplus/cloud-commerce/commit/3da9bb2831c1f110497993e2f1c7fd1598f6b56b))
+
+
+### Bug Fixes
+
+* **storefront:** Add SSR `global.storefront.onLoad` emitter and async load modules info preset ([235934d](https://github.com/ecomplus/cloud-commerce/commit/235934d46295ca41496ceb2be305c765d1aa337c))
+* **storefront:** Also load modules info preset on SSR, prevents hydration mismatch ([911ab0e](https://github.com/ecomplus/cloud-commerce/commit/911ab0e6951fdbc82202e396aff60337a25fb49d))
+* **storefront:** Config fallbacks to `config.json` when `ECOM_STORE_ID` not set (dev) ([13d8db7](https://github.com/ecomplus/cloud-commerce/commit/13d8db713928328ba229e58891fd5ce8b04d134c))
+* **storefront:** Fix merged `CmsSettings` typedef and update `window.storefront` interface ([2dfee42](https://github.com/ecomplus/cloud-commerce/commit/2dfee422a9f782daaca8d37568d56fdad2c93a2a))
+* **storefront:** Move base ES Lint config to Storefront codebase to be imported ([62c8ba4](https://github.com/ecomplus/cloud-commerce/commit/62c8ba446a88f68192d113bb9bbfd14d436db64d))
+* **storefront:** Reduce default darken factor for brand colors pallete (bold) ([6441ef8](https://github.com/ecomplus/cloud-commerce/commit/6441ef8fa836958c0cf2f6e66df496e8934cf4ef))
+* **storefront:** Update `PitchBar` to use `parseShippingPhrase` and check number of slides ([9c0fe4a](https://github.com/ecomplus/cloud-commerce/commit/9c0fe4aa48ceca87a433497edc5fd4f9d037f71f))
+
 ### [0.2.1](https://github.com/ecomplus/cloud-commerce/compare/v0.2.0...v0.2.1) (2023-01-21)
 
 
