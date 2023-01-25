@@ -1,5 +1,5 @@
-import fs from 'fs';
-import { resolve as resolvePath } from 'path';
+import fs from 'node:fs';
+import { resolve as resolvePath } from 'node:path';
 
 export default () => {
   const { STOREFRONT_BASE_DIR } = process.env;
