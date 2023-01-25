@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join as joinPath } from 'node:path';
 import config from '@cloudcommerce/config';
 import getCMS from './config/storefront.cms.mjs';
 
@@ -8,14 +10,6 @@ export default () => {
   }
 
   const {
-    storeId,
-    lang,
-    countryCode,
-    currency,
-    currencySymbol,
-  } = config.get();
-
-  const {
     domain,
     primaryColor,
     secondaryColor,
@@ -23,6 +17,24 @@ export default () => {
     cms,
   } = getCMS();
   config.set({ cmsSettings: settings });
+
+  let { storeId } = config.get();
+  if (!storeId) {
+    const configFilepath = joinPath(process.cwd(), 'config.json');
+    try {
+      const mergeConfig = JSON.parse(readFileSync(configFilepath), 'utf8');
+      if (mergeConfig.storeId) {
+        storeId = mergeConfig.storeId;
+        config.set({ storeId });
+      }
+    } catch { /* */ }
+  }
+  const {
+    lang,
+    countryCode,
+    currency,
+    currencySymbol,
+  } = config.get();
 
   return {
     storeId,
