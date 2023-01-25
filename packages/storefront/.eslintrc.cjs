@@ -1,5 +1,5 @@
 module.exports = {
-  extends: '../../.eslintrc.cjs',
+  extends: './.base.eslintrc.cjs',
   rules: {
     'no-console': 'off',
     semi: 'warn',
