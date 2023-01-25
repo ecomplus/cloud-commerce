@@ -66,7 +66,7 @@ Object.keys(brandColors).forEach((colorName) => {
   const luminance = color.luminance();
   if (luminance >= 0.1) {
     subtle = chroma(hex).brighten(1.5);
-    bold = chroma(hex).darken(1.5);
+    bold = chroma(hex).darken(1.25);
   } else if (luminance > 0.03) {
     subtle = chroma(hex).brighten();
     bold = chroma(hex).darken();
