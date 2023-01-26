@@ -29,6 +29,7 @@ const frenetEvents: ApiEventName[] = [
 ];
 const fbConversionsEvents: ApiEventName[] = [
   'orders-new',
+  'carts-new',
 ];
 
 const googleAnalyticsEvents: ApiEventName[] = [
