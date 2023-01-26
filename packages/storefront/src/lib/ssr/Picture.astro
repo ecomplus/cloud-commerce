@@ -2,9 +2,14 @@
 import { Picture } from '@astrojs/image/components';
 import { getAspectRatio } from '@@sf/ssr/image';
 
-export type Props = Parameters<typeof Picture>[0];
+type PictureProps = Parameters<typeof Picture>[0];
 
-const props = Astro.props as Props;
+export type Props = Omit<PictureProps, 'aspectRatio'> & {
+  aspectRatio?: PictureProps['aspectRatio'],
+  fetchpriority: 'high' | 'low' | 'auto',
+};
+
+const props = Astro.props as PictureProps;
 if (!props.aspectRatio && typeof props.src === 'string') {
   props.aspectRatio = getAspectRatio(props.src);
 }
