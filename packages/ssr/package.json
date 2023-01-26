@@ -23,15 +23,15 @@
     "build": "sh ../../scripts/build-lib.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.12.1",
-    "@astrojs/node": "^4.0.0",
+    "@astrojs/image": "^0.13.0",
+    "@astrojs/node": "^5.0.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.3",
     "@headlessui/vue": "^1.7.7",
     "@vueuse/core": "^9.11.1",
-    "astro": "^1.9.2",
+    "astro": "^2.0.2",
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.2.0",
     "image-size": "^1.0.2",
