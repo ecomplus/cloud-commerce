@@ -68,12 +68,12 @@ const componentVariant = useComponentVariant(props);
         <slot name="sale-post" />
       </strong>
     </slot>
-    <slot
-      v-if="cashbackValue"
-      name="cashback"
-      v-bind="{ salePrice, cashbackValue, cashbackPercentage }"
-    >
-      <Fade slide="down">
+    <Fade slide="down">
+      <slot
+        v-if="cashbackValue"
+        name="cashback"
+        v-bind="{ salePrice, cashbackValue, cashbackPercentage }"
+      >
         <div v-if="hasCashback" data-prices-cashback class="relative z-10">
           <span :data-tooltip="$t.i19get$1back
             .replace('$1', $percentage(cashbackPercentage))">
@@ -93,14 +93,14 @@ const componentVariant = useComponentVariant(props);
             </slot>
           </span>
         </div>
-      </Fade>
-    </slot>
-    <slot
-      v-if="installmentValue"
-      name="installment"
-      v-bind="{ salePrice, installmentValue, installmentsNumber, monthlyInterest }"
-    >
-      <Fade slide="down">
+      </slot>
+    </Fade>
+    <Fade slide="down">
+      <slot
+        v-if="installmentValue"
+        name="installment"
+        v-bind="{ salePrice, installmentValue, installmentsNumber, monthlyInterest }"
+      >
         <div v-if="hasPriceOptions" data-prices-installment>
           <slot name="installment-pre">
             <small v-if="isLiteral">
@@ -123,14 +123,14 @@ const componentVariant = useComponentVariant(props);
             </small>
           </slot>
         </div>
-      </Fade>
-    </slot>
-    <slot
-      v-if="priceWithDiscount < salePrice"
-      name="discount"
-      v-bind="{ salePrice, priceWithDiscount, discountLabel }"
-    >
-      <Fade slide="down">
+      </slot>
+    </Fade>
+    <Fade slide="down">
+      <slot
+        v-if="priceWithDiscount < salePrice"
+        name="discount"
+        v-bind="{ salePrice, priceWithDiscount, discountLabel }"
+      >
         <div v-if="hasPriceOptions" data-prices-discount>
           <slot name="discount-pre">
             <small v-if="!discountLabel">
@@ -149,8 +149,8 @@ const componentVariant = useComponentVariant(props);
             </small>
           </slot>
         </div>
-      </Fade>
-    </slot>
+      </slot>
+    </Fade>
   </div>
 </template>
 
