@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/ecomplus/cloud-commerce/compare/v0.2.2...v0.2.3) (2023-01-26)
+
+
+### Features
+
+* **fb-conversions:** Handle new cart event to send `InitiateCheckout` ([#109](https://github.com/ecomplus/cloud-commerce/issues/109)) ([4fecb0f](https://github.com/ecomplus/cloud-commerce/commit/4fecb0f2fa5df546bae1115839677b4d486d2da4))
+* **storefront:** Update deps to Astro v2 (and Vite 4) ([91d0dd7](https://github.com/ecomplus/cloud-commerce/commit/91d0dd73ca64356acb243385121a4967be7861eb))
+
+
+### Bug Fixes
+
+* **storefront:** Fix `Prices` component fade animations on values load ([d21b9f3](https://github.com/ecomplus/cloud-commerce/commit/d21b9f3ea409c14b55fdb35ae622a2a4a295498d))
+* **storefront:** Minor fix typedef for `Picture` with Astro v4 ([8652bc8](https://github.com/ecomplus/cloud-commerce/commit/8652bc85397e05021d88ecba1484a59cdba2f04d))
+
 ### [0.2.2](https://github.com/ecomplus/cloud-commerce/compare/v0.2.1...v0.2.2) (2023-01-25)
 
 
