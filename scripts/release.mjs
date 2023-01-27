@@ -44,8 +44,12 @@ if (argv.publish) {
     const {
       dependencies: ssrDependencies,
     } = JSON.parse(fs.readFileSync(`${pwd}/packages/ssr/package.json`));
-    const astroPkgs = Object.keys(ssrDependencies)
-      .filter((dep) => dep.startsWith('@astrojs/'));
+    const astroPkgs = ['astro'];
+    Object.keys(ssrDependencies).forEach((dep) => {
+      if (dep.startsWith('@astrojs/')) {
+        astroPkgs.push(dep);
+      }
+    });
     for (let ii = 0; ii < storesDirs.length; ii++) {
       const storeDir = storesDirs[ii];
       for (let iii = 0; iii < functions.length; iii++) {
