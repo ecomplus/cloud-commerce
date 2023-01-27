@@ -37,9 +37,9 @@ const componentVariant = useComponentVariant(props);
 </script>
 
 <template>
-  <div :data-prices="componentVariant" class="text-base-600">
+  <div class="text-base-600" :data-prices="componentVariant">
     <slot v-if="comparePrice" name="compare" v-bind="{ salePrice, comparePrice }">
-      <span data-prices-compare class="text-base-500 mr-1">
+      <span class="text-base-500 mr-1" data-prices-compare>
         <slot name="compare-pre">
           <small v-if="isLiteral">
             {{ `${$t.i19from} ` }}
@@ -56,7 +56,7 @@ const componentVariant = useComponentVariant(props);
       </span>
     </slot>
     <slot name="sale" v-bind="{ salePrice }">
-      <strong data-prices-sale class="inline-block text-base-800">
+      <strong class="inline-block text-base-800" data-prices-sale>
         <slot name="sale-pre">
           <small v-if="hasVariedPrices">
             {{ `${$t.i19asOf} ` }}
@@ -74,7 +74,7 @@ const componentVariant = useComponentVariant(props);
         name="cashback"
         v-bind="{ salePrice, cashbackValue, cashbackPercentage }"
       >
-        <div v-if="hasCashback" data-prices-cashback class="relative z-10">
+        <div v-if="hasCashback" class="relative z-10" data-prices-cashback>
           <span :data-tooltip="$t.i19get$1back
             .replace('$1', $percentage(cashbackPercentage))">
             <slot name="cashback-pre">
