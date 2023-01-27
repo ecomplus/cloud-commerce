@@ -84,8 +84,6 @@ importers:
 
   ecomplus-stores/monocard/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
       '@cloudcommerce/api': ^0.1.7
       '@cloudcommerce/firebase': ^0.1.7
       '@cloudcommerce/i18n': ^0.1.7
@@ -97,8 +95,6 @@ importers:
       lottie-web: ^5.10.0
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': 0.1.7
       '@cloudcommerce/firebase': 0.1.7
       '@cloudcommerce/ssr': 0.1.7
@@ -113,8 +109,6 @@ importers:
 
   ecomplus-stores/monocard/storefront:
     specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
       '@cloudcommerce/api': ^0.1.7
       '@cloudcommerce/firebase': ^0.1.7
       '@cloudcommerce/i18n': ^0.1.7
@@ -126,8 +120,6 @@ importers:
       lottie-web: ^5.10.0
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': 0.1.7
       '@cloudcommerce/firebase': 0.1.7
       '@cloudcommerce/ssr': 0.1.7
@@ -178,8 +170,6 @@ importers:
 
   ecomplus-stores/tia-sonia/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
       '@cloudcommerce/api': ^0.1.7
       '@cloudcommerce/firebase': ^0.1.7
       '@cloudcommerce/i18n': ^0.1.7
@@ -191,8 +181,6 @@ importers:
       '@iconify-json/tabler': ^1.1.53
       '@iconify-json/uim': ^1.1.3
     dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': 0.1.7
       '@cloudcommerce/firebase': 0.1.7
       '@cloudcommerce/ssr': 0.1.7
@@ -207,8 +195,6 @@ importers:
 
   ecomplus-stores/tia-sonia/storefront:
     specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
       '@cloudcommerce/api': ^0.1.7
       '@cloudcommerce/firebase': ^0.1.7
       '@cloudcommerce/i18n': ^0.1.7
@@ -220,8 +206,6 @@ importers:
       '@iconify-json/tabler': ^1.1.53
       '@iconify-json/uim': ^1.1.3
     dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
       '@cloudcommerce/api': 0.1.7
       '@cloudcommerce/firebase': 0.1.7
       '@cloudcommerce/ssr': 0.1.7
@@ -865,56 +849,58 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.2.2
+      '@cloudcommerce/cli': ^0.2.3
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.2.2
+      '@cloudcommerce/firebase': ^0.2.3
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.2.2
-      '@cloudcommerce/firebase': ^0.2.2
+      '@cloudcommerce/events': ^0.2.3
+      '@cloudcommerce/firebase': ^0.2.3
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.2.2
-      '@cloudcommerce/modules': ^0.2.2
+      '@cloudcommerce/firebase': ^0.2.3
+      '@cloudcommerce/modules': ^0.2.3
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.2.2
-      '@cloudcommerce/passport': ^0.2.2
+      '@cloudcommerce/firebase': ^0.2.3
+      '@cloudcommerce/passport': ^0.2.3
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.2.2
-      '@cloudcommerce/firebase': ^0.2.2
-      '@cloudcommerce/i18n': ^0.2.2
-      '@cloudcommerce/ssr': ^0.2.2
-      '@cloudcommerce/storefront': ^0.2.2
-      '@cloudcommerce/types': ^0.2.2
+      '@astrojs/image': ^0.13.0
+      '@astrojs/node': ^5.0.1
+      '@cloudcommerce/api': ^0.2.3
+      '@cloudcommerce/firebase': ^0.2.3
+      '@cloudcommerce/i18n': ^0.2.3
+      '@cloudcommerce/ssr': ^0.2.3
+      '@cloudcommerce/storefront': ^0.2.3
+      '@cloudcommerce/types': ^0.2.3
+      astro: ^2.0.2
     dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
+      '@astrojs/image': 0.13.0_astro@2.0.2
+      '@astrojs/node': 5.0.1_astro@2.0.2
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
+      astro: 2.0.2
     devDependencies:
       '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
@@ -922,20 +908,22 @@ importers:
 
   store/storefront:
     specifiers:
-      '@astrojs/image': ^0.12.1
-      '@astrojs/node': ^4.0.0
-      '@cloudcommerce/api': ^0.2.2
-      '@cloudcommerce/firebase': ^0.2.2
-      '@cloudcommerce/i18n': ^0.2.2
-      '@cloudcommerce/ssr': ^0.2.2
-      '@cloudcommerce/storefront': ^0.2.2
-      '@cloudcommerce/types': ^0.2.2
+      '@astrojs/image': ^0.13.0
+      '@astrojs/node': ^5.0.1
+      '@cloudcommerce/api': ^0.2.3
+      '@cloudcommerce/firebase': ^0.2.3
+      '@cloudcommerce/i18n': ^0.2.3
+      '@cloudcommerce/ssr': ^0.2.3
+      '@cloudcommerce/storefront': ^0.2.3
+      '@cloudcommerce/types': ^0.2.3
+      astro: ^2.0.2
     dependencies:
-      '@astrojs/image': 0.12.1
-      '@astrojs/node': 4.0.0
+      '@astrojs/image': 0.13.0_astro@2.0.2
+      '@astrojs/node': 5.0.1_astro@2.0.2
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
       '@cloudcommerce/ssr': link:../../packages/ssr
+      astro: 2.0.2
     devDependencies:
       '@cloudcommerce/i18n': link:../../packages/i18n
       '@cloudcommerce/storefront': link:../../packages/storefront
@@ -986,24 +974,6 @@ packages:
     resolution: {integrity: sha512-77aacobLKcL98NmhK3OBS5EHIrX9gs1ckB/vGSIdkVZuB7u51V4jh05I6W0tSvG7/86tALv6QtHTRZ8rLhFTbQ==}
     dev: false
 
-  /@astrojs/image/0.12.1:
-    resolution: {integrity: sha512-7pBUPCw7/FPwfEntx+mGjhdwpaWXNHwRVcTK71rpf+c2yb8iIesRS9r26U7lGozTzXUROh1y1ftA82ziuqYF6Q==}
-    peerDependencies:
-      sharp: '>=0.31.0'
-    peerDependenciesMeta:
-      sharp:
-        optional: true
-    dependencies:
-      '@altano/tiny-async-pool': 1.0.2
-      http-cache-semantics: 4.1.0
-      image-size: 1.0.2
-      kleur: 4.1.5
-      magic-string: 0.25.9
-      mime: 3.0.0
-      slash: 4.0.0
-      web-streams-polyfill: 3.2.1
-    dev: false
-
   /@astrojs/image/0.12.1_sharp@0.31.3:
     resolution: {integrity: sha512-7pBUPCw7/FPwfEntx+mGjhdwpaWXNHwRVcTK71rpf+c2yb8iIesRS9r26U7lGozTzXUROh1y1ftA82ziuqYF6Q==}
     peerDependencies:
@@ -1021,6 +991,27 @@ packages:
       sharp: 0.31.3
       slash: 4.0.0
       web-streams-polyfill: 3.2.1
+
+  /@astrojs/image/0.13.0_astro@2.0.2:
+    resolution: {integrity: sha512-18IlEsb/mau4ji9sR7+JVPFJHtgIk7Qh/Ol+Hh/JNcPn/oMrjP6FMU3VrNHPy5Ltvw1DyzkDV4wu+jYKU/V0Hw==}
+    peerDependencies:
+      astro: ^2.0.0
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
+      astro: 2.0.2
+      http-cache-semantics: 4.1.0
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.27.0
+      mime: 3.0.0
+      slash: 4.0.0
+    dev: false
 
   /@astrojs/image/0.13.0_astro@2.0.2+sharp@0.31.3:
     resolution: {integrity: sha512-18IlEsb/mau4ji9sR7+JVPFJHtgIk7Qh/Ol+Hh/JNcPn/oMrjP6FMU3VrNHPy5Ltvw1DyzkDV4wu+jYKU/V0Hw==}
@@ -1129,20 +1120,6 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.6
       vfile-message: 3.1.3
-
-  /@astrojs/node/4.0.0:
-    resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
-    peerDependencies:
-      astro: ^1.7.0
-    peerDependenciesMeta:
-      astro:
-        optional: true
-    dependencies:
-      '@astrojs/webapi': 1.1.1
-      send: 0.18.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /@astrojs/node/4.0.0_astro@1.9.2:
     resolution: {integrity: sha512-A4lYDutwZBbpUVOxYPjkcnB/Z9M+Z2zOS2MlBYNA88Al7fCdZLwVYLK9nr/YEtOYN/TX7+OEclN2rw8Fbrv0jA==}
@@ -5240,7 +5217,7 @@ packages:
       '@babel/helper-module-imports': 7.18.6
       '@babel/plugin-syntax-jsx': 7.18.6
       '@babel/template': 7.20.7
-      '@babel/traverse': 7.20.10
+      '@babel/traverse': 7.20.12
       '@babel/types': 7.20.7
       '@vue/babel-helper-vue-transform-on': 1.0.2
       camelcase: 6.3.0
