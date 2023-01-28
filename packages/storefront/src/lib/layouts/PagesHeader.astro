@@ -37,10 +37,11 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
 
 <Fragment>
   <slot name="pitch-bar">
-    {pitchBar.slides.length && <PitchBar {...pitchBar} client:idle />}
+    {pitchBar.slides.length > 1 && <PitchBar {...pitchBar} client:idle />}
+    {pitchBar.slides.length === 1 && <PitchBar {...pitchBar} />}
   </slot>
   <slot name="sticky-header">
-    <StickyHeader>
+    <StickyHeader client:load>
       <Fragment slot="logo">
         <slot name="logo">
           <LogoHeading>
@@ -57,3 +58,12 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     </StickyHeader>
   </slot>
 </Fragment>
+
+<style is:global>
+[data-pitch-bar] {
+  @apply bg-slate-300;
+}
+[data-pitch-bar-controls] > * {
+  @apply bg-slate-300;
+}
+</style>
