@@ -53,8 +53,8 @@ const wrapperScrollWidth = ref(0);
 const wrapperVisibleWidth = ref(0);
 const currentPos = ref(0);
 const maxPages = ref(0);
-const onResizeFn = ref(null);
-const onScrollFn = ref(null);
+let onResizeFn: (...args: any[]) => void;
+let onScrollFn: (...args: any[]) => void;
 const calcBounds = () => {
   // Find the closest point, with 5px approximate.
   const _isBoundLeft = approximatelyEqual(currentPos.value, 0, 5);
@@ -169,10 +169,10 @@ onMounted(() => {
   calcOnInit();
   if (!import.meta.env.SSR) {
     // Assign to new variable and keep reference for removeEventListener (Avoid Memory Leaks)
-    onScrollFn.value = debounce(calcOnScroll, SCROLL_DEBOUNCE);
-    onResizeFn.value = debounce(calcOnInit, RESIZE_DEBOUNCE);
-    wrapper.value.addEventListener('scroll', onScrollFn.value);
-    window.addEventListener('resize', onResizeFn.value);
+    onScrollFn = debounce(calcOnScroll, SCROLL_DEBOUNCE);
+    onResizeFn = debounce(calcOnInit, RESIZE_DEBOUNCE);
+    wrapper.value.addEventListener('scroll', onScrollFn);
+    window.addEventListener('resize', onResizeFn);
     nextTick(() => {
       [...wrapper.value.children].forEach((slide: HTMLElement) => {
         slide.setAttribute('tabindex', '0');
@@ -183,10 +183,10 @@ onMounted(() => {
 });
 onBeforeUnmount(() => {
   if (!import.meta.env.SSR) {
-    wrapper.value.removeEventListener('scroll', onScrollFn.value);
-    window.removeEventListener('resize', onResizeFn.value);
-    clearTimeout(autoplayTimer);
+    wrapper.value.removeEventListener('scroll', onScrollFn);
+    window.removeEventListener('resize', onResizeFn);
   }
+  clearTimeout(autoplayTimer);
 });
 provide(carouselKey, {
   autoplay: toRef(props, 'autoplay'),
