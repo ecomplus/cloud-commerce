@@ -84,3 +84,17 @@ body {
   background: var(--c-background);
   color: var(--c-on-background);
 }
+
+/*
+Custom elements for responsive tricks in /content JSON.
+Avoids the need of escape \" for class names with common elements.
+*/
+
+d-md {
+  display: none;
+}
+@screen md {
+  d-md {
+    display: inline;
+  }
+}

@@ -149,7 +149,14 @@ const genAstroConfig = ({
     image({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),
-    vue({ appEntrypoint: '/src/pages/_vue' }),
+    vue({
+      appEntrypoint: '/src/pages/_vue',
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('d-'),
+        },
+      },
+    }),
     // partytown(),
     // prefetch(),
     UnoCSS({
