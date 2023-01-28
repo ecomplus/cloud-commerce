@@ -1,5 +1,4 @@
 :root {
-  --content-max-width: 80rem;
   --font-size: 14.5px;
   --font-sans: var(--custom-font-sans, ui-sans-serif),
     system-ui, -apple-system, BlinkMacSystemFont,
@@ -61,16 +60,6 @@ html {
   html {
     font-size: calc(var(--font-size) * 1.1724); /* 17px */
   }
-}
-
-body > header,
-body > main,
-body > footer {
-  margin-left: auto;
-  margin-right: auto;
-}
-body > main {
-  max-width: var(--content-max-width);
 }
 
 :focus-visible {
