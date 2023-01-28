@@ -32,6 +32,7 @@ const countValidSlides = computed(() => {
             :is="slide.href ? 'ALink' : 'span'"
             :href="slide.href"
             :target="slide.target"
+            class="inline-block px-8"
             :class="slide.href ? 'hover:underline' : null"
           >
             <slot name="slide" v-bind="{ slide, i, parsedContents }">
