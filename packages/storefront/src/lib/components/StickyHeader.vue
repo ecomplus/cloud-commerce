@@ -75,14 +75,6 @@ const componentVariant = useComponentVariant(reactive({
     :style="{ transition }"
     :data-sticky-header="componentVariant"
   >
-    <slot name="wrapper">
-      <div
-        class="container mx-auto px-4
-        grid grid-flow-col auto-cols-max justify-between items-center"
-        data-sticky-header-wrapper
-      >
-        <slot/>
-      </div>
-    </slot>
+    <slot/>
   </header>
 </template>
