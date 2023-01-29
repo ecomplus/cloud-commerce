@@ -1,43 +1,88 @@
 <script setup lang="ts">
-import type { ImgHTMLAttributes } from 'vue';
-import { toRefs } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  reactive,
+  onMounted,
+} from 'vue';
+import debounce from 'lodash/debounce';
+import { promiseTimeout, useTimeout, useScroll } from '@vueuse/core';
+import useComponentVariant from '@@sf/composables/use-component-variant';
 
 export interface Props {
-  logo?: ImgHTMLAttributes;
-  logoAltHeading?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | null;
+  isShownOnScrollDown?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  logoAltHeading: 'h2',
+const props = defineProps<Props>();
+const header = ref<HTMLElement | null>(null);
+const { ready, start } = useTimeout(100, { controls: true, immediate: false });
+const height = ref(0);
+if (!import.meta.env.SSR) {
+  onMounted(() => {
+    const fixHeight = () => {
+      height.value = header.value.offsetHeight;
+      start();
+    };
+    const imgs = header.value.getElementsByTagName('IMG');
+    let isAllLoaded = true;
+    for (let i = 0; i < imgs.length; i++) {
+      const img = imgs[i] as HTMLImageElement;
+      if (!img.complete || img.naturalHeight === 0) {
+        isAllLoaded = false;
+        img.onload = fixHeight;
+      }
+    }
+    if (isAllLoaded) {
+      fixHeight();
+    }
+    window.addEventListener('resize', debounce(fixHeight, 300));
+  });
+}
+const { y } = !import.meta.env.SSR ? useScroll(document) : { y: ref(0) };
+const isSticky = computed(() => ready.value && y.value > height.value * 1.5);
+const transition = ref('none');
+watch(isSticky, async (isSetSticky) => {
+  if (!isSetSticky) {
+    start();
+    transition.value = 'none';
+  } else {
+    await promiseTimeout(300);
+    transition.value = 'opacity var(--transition-slow), transform var(--transition)';
+  }
 });
-const { logo } = toRefs(props);
+const isScrollUp = ref(false);
+watch(y, (newY, oldY) => {
+  isScrollUp.value = newY > 0 && newY < oldY;
+});
+const componentVariant = useComponentVariant(reactive({
+  ...props,
+  isSticky,
+  isScrollUp,
+}));
 </script>
 
 <template>
-  <header class="header bg-opacity-90 backdrop-blur-md
-    sticky top-0 z-50 py-1 sm:py-2" data-sticky-header>
-    <div class="container">
-      <div class="grid grid-flow-col auto-cols-max justify-between items-center">
-        <slot name="aside">
-          <div class="header__aside md:hidden">
-            <div class="i-bars-3-bottom-left"></div>
-          </div>
-        </slot>
-        <slot name="logo" v-bind="{ logo }">
-          <a v-if="logo" href="/">
-            <component :is="(logo.alt && logoAltHeading) || 'span'" class="m-0">
-              <img v-bind="logo" />
-            </component>
-          </a>
-        </slot>
-        <div class="flex items-center">
-          <slot name="actions">
-            <slot name="nav" />
-            <slot name="search" />
-            <slot name="buttons" />
-          </slot>
-        </div>
+  <div :style="isSticky ? `height: ${height}px` : null"></div>
+  <header
+    ref="header"
+    class="z-50 top-0 will-change-transform"
+    :class="{
+      'sticky bg-white/80 backdrop-blur-md shadow py-2 md:py-3': isSticky,
+      'opacity-0 -translate-y-full': isSticky && (!isScrollUp || isShownOnScrollDown),
+      'py-3 sm:py-4 md:py-5': !isSticky,
+    }"
+    :style="{ transition }"
+    :data-sticky-header="componentVariant"
+  >
+    <slot name="wrapper">
+      <div
+        class="container mx-auto px-4
+        grid grid-flow-col auto-cols-max justify-between items-center"
+        data-sticky-header-wrapper
+      >
+        <slot/>
       </div>
-    </div>
+    </slot>
   </header>
 </template>
