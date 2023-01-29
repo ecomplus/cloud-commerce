@@ -7,7 +7,7 @@ export interface Props {
   product?: Partial<Products> & { price: number, final_price?: number };
   price?: number;
   basePrice?: number;
-  isAmountTotal?: boolean,
+  isAmountTotal?: boolean;
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
   loyaltyPointsProgram?: ListPaymentsResponse['loyalty_points_programs']['k'];
@@ -27,7 +27,7 @@ const getPriceWithDiscount = (price: number, discount: Props['discountOption']) 
   return price;
 };
 
-export default (props: Props) => {
+const usePrices = (props: Props) => {
   const _product = computed(() => {
     return props.product || {
       price: props.price || 0,
@@ -177,3 +177,5 @@ export default (props: Props) => {
     cashbackValue,
   };
 };
+
+export default usePrices;

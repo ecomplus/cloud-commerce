@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 
-export default (props: Record<string, any>) => {
+const useComponentVariant = (props: Record<string, any>) => {
   return computed(() => {
     let variantName = '';
     Object.keys(props).forEach((prop) => {
@@ -11,3 +11,5 @@ export default (props: Record<string, any>) => {
     return variantName.slice(1);
   });
 };
+
+export default useComponentVariant;

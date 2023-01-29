@@ -7,7 +7,7 @@ export interface Props {
   product?: Partial<Products> & { price: number, final_price?: number };
   price?: number;
   basePrice?: number;
-  isAmountTotal?: boolean,
+  isAmountTotal?: boolean;
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
   isBig?: boolean;
