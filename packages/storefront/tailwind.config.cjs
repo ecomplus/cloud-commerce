@@ -44,6 +44,10 @@ let defaultThemeOptions = {
     'chevron-left': 'chevron-left',
     'chevron-up': 'chevron-up',
     'chevron-down': 'chevron-down',
+    menu: 'bars-3-bottom-left',
+    search: 'magnifying-glass',
+    account: 'user-circle',
+    'x-mark': 'x-mark',
   },
 };
 if (globalThis.storefront_theme_options) {

@@ -5,7 +5,7 @@ import type CmsContacts from '@@sf/types/cms-contacts';
 import type { PageContext } from '@@sf/ssr-context';
 import Picture from '@@sf/ssr/Picture.astro';
 import PitchBar, { Props as PitchBarProps } from '@@sf/components/PitchBar.vue';
-import StickyHeader from '@@sf/components/StickyHeader.vue';
+import ShopHeader from '@@sf/components/ShopHeader.vue';
 
 export interface Props {
   pageContext: PageContext;
@@ -41,29 +41,34 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     {pitchBar.slides.length === 1 && <PitchBar {...pitchBar} />}
   </slot>
   <slot name="sticky-header">
-    <StickyHeader client:load>
+    <ShopHeader client:load>
       <Fragment slot="logo">
         <slot name="logo">
-          <LogoHeading>
-            <Picture
-              src={logoSrc}
-              alt={settings.name}
-              widths={[300]}
-              sizes="150px"
-              fetchpriority="high"
-            />
-          </LogoHeading>
+          <a href="/">
+            <LogoHeading>
+              <Picture
+                src={logoSrc}
+                alt={settings.name}
+                widths={[300]}
+                sizes="150px"
+                fetchpriority="high"
+                class="hover:drop-shadow-sm"
+              />
+            </LogoHeading>
+          </a>
         </slot>
       </Fragment>
-    </StickyHeader>
+    </ShopHeader>
   </slot>
 </Fragment>
 
 <style is:global>
+/*
 [data-pitch-bar] {
   @apply bg-slate-300;
 }
 [data-pitch-bar-controls] > * {
   @apply bg-slate-300;
 }
+*/
 </style>
