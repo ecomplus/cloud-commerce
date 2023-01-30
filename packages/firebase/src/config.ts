@@ -36,6 +36,13 @@ const googleAnalyticsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const webhooksAppEvents: ApiEventName[] = [
+  'applications-dataSet',
+  'orders-anyStatusSet',
+  'carts-new',
+  'carts-customerSet',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -125,6 +132,10 @@ const mergeConfig = {
     },
     pagHiper: {
       appId: 1251,
+    },
+    webhooksApp: {
+      appId: 123113,
+      events: webhooksAppEvents,
     },
   },
   cmsSettings,
