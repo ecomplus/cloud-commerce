@@ -35,7 +35,6 @@
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.2.0",
     "image-size": "^1.0.2",
-    "lodash": "^4.17.21",
     "semver": "^7.3.8",
     "sharp": "^0.31.3",
     "vue": "^3.2.45"

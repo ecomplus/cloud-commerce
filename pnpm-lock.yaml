@@ -749,7 +749,6 @@ importers:
       firebase-admin: ^11.5.0
       firebase-functions: ^4.2.0
       image-size: ^1.0.2
-      lodash: ^4.17.21
       semver: ^7.3.8
       sharp: ^0.31.3
       vue: ^3.2.45
@@ -766,7 +765,6 @@ importers:
       firebase-admin: 11.5.0
       firebase-functions: 4.2.0_firebase-admin@11.5.0
       image-size: 1.0.2
-      lodash: 4.17.21
       semver: 7.3.8
       sharp: 0.31.3
       vue: 3.2.45
@@ -799,7 +797,6 @@ importers:
       dotenv: ^16.0.3
       firebase: ^9.16.0
       image-size: ^1.0.2
-      lodash: ^4.17.21
       semver: ^7.3.8
       sharp: ^0.31.3
       tailwindcss: ^3.2.4
@@ -829,7 +826,6 @@ importers:
       dotenv: 16.0.3
       firebase: 9.16.0
       image-size: 1.0.2
-      lodash: 4.17.21
       semver: 7.3.8
       sharp: 0.31.3
       tailwindcss: 3.2.4
@@ -4230,7 +4226,7 @@ packages:
       '@iconify/types': 2.0.0
       debug: 4.3.4
       kolorist: 1.6.0
-      local-pkg: 0.4.2
+      local-pkg: 0.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -6748,8 +6744,8 @@ packages:
   /defined/1.0.1:
     resolution: {integrity: sha512-hsBd2qSVCRE+5PmNdHt1uzyrFu5d3RwmFDKzyNZMFq/EwDNJF7Ee5+D5oEKF0hU6LhtoUF1macFvOe4AskQC1Q==}
 
-  /defu/6.1.1:
-    resolution: {integrity: sha512-aA964RUCsBt0FGoNIlA3uFgo2hO+WWC0fiC6DBps/0SFzkKcYoM/3CzVLIa5xSsrFjdioMdYgAIbwo80qp2MoA==}
+  /defu/6.1.2:
+    resolution: {integrity: sha512-+uO4+qr7msjNNWKYPHqN/3+Dx3NFkmIzayk2L1MyZQlvgZb/J1A0fo410dpKrN2SnqFjt8n4JL8fDJE0wIgjFQ==}
 
   /delayed-stream/1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
@@ -8902,8 +8898,8 @@ packages:
       merge-stream: 2.0.0
       supports-color: 7.2.0
 
-  /jiti/1.16.0:
-    resolution: {integrity: sha512-L3BJStEf5NAqNuzrpfbN71dp43mYIcBUlCRea/vdyv5dW/AYa1d4bpelko4SHdY3I6eN9Wzyasxirj1/vv5kmg==}
+  /jiti/1.16.2:
+    resolution: {integrity: sha512-OKBOVWmU3FxDt/UH4zSwiKPuc1nihFZiOD722FuJlngvLz2glX1v2/TJIgoA4+mrpnXxHV6dSAoCvPcYQtoG5A==}
     hasBin: true
 
   /jose/4.11.2:
@@ -9215,6 +9211,11 @@ packages:
 
   /local-pkg/0.4.2:
     resolution: {integrity: sha512-mlERgSPrbxU3BP4qBqAvvwlgW4MTg78iwJdGGnv7kibKjWcJksrG3t6LB5lXI93wXRDvG4NpUgJFmTG4T6rdrg==}
+    engines: {node: '>=14'}
+    dev: true
+
+  /local-pkg/0.4.3:
+    resolution: {integrity: sha512-SFppqq5p42fe2qcZQqqEOiVRXl+WCP1MdT6k7BDEW1j++sp5fIY+/fdRQitvKgB5BrBcmrs5m/L0v2FrU5MY1g==}
     engines: {node: '>=14'}
 
   /locate-path/2.0.0:
@@ -12186,8 +12187,8 @@ packages:
     resolution: {integrity: sha512-1589b7oGa8ILBYpta7TndM5mLHLzHUqBfhszeZxuUBrjO/RoQ52VGVWsS3w0C0GLNxO9RPmqkf6BmIvBApaRdA==}
     dependencies:
       '@antfu/utils': 0.5.2
-      defu: 6.1.1
-      jiti: 1.16.0
+      defu: 6.1.2
+      jiti: 1.16.2
 
   /underscore/1.13.6:
     resolution: {integrity: sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==}
