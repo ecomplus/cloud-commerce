@@ -10,13 +10,16 @@ import StickyHeader from '@@sf/components/StickyHeader.vue';
       md:grid-cols-none md:auto-cols-max"
       data-header
     >
-      <slot name="aside">
-        <div class="md:hidden" data-header-aside>
+      <slot name="sidenav-toggle">
+        <div class="md:hidden">
           <button
-            class="text-base-500 text-3xl px-2"
+            class="px-2"
             :aria-label="$t.i19toggleMenu"
+            data-sidenav-toggle
           >
-            <i class="i-menu"></i>
+            <slot name="sidenav-toggle-content">
+              <i class="i-menu text-base-500 text-3xl"></i>
+            </slot>
           </button>
         </div>
       </slot>
@@ -29,29 +32,35 @@ import StickyHeader from '@@sf/components/StickyHeader.vue';
         >
           <slot name="search-button">
             <button
-              class="hover:text-primary px-2 py-1"
+              class="px-2 py-1"
               :aria-label="$t.i19searchProducts"
               data-header-search-button
             >
-              <i class="i-search w-7 h-7"></i>
+              <slot name="search-button-content">
+                <i class="i-search hover:text-primary w-7 h-7"></i>
+              </slot>
             </button>
           </slot>
           <slot name="account-button">
             <button
-              class="hidden sm:block hover:text-primary px-2 py-1"
+              class="hidden sm:block px-2 py-1"
               :aria-label="$t.i19myAccount"
               data-header-account-button
             >
-              <i class="i-account w-7 h-7"></i>
+              <slot name="account-button-content">
+                <i class="i-account hover:text-primary w-7 h-7"></i>
+              </slot>
             </button>
           </slot>
           <slot name="cart-button">
             <button
-              class="hover:text-primary px-2 py-1"
+              class="px-2 py-1"
               :aria-label="$t.i19openCart"
               data-header-cart-button
             >
-              <i class="i-shopping-cart w-7 h-7"></i>
+              <slot name="cart-button-content">
+                <i class="i-shopping-cart hover:text-primary w-7 h-7"></i>
+              </slot>
             </button>
           </slot>
         </div>
