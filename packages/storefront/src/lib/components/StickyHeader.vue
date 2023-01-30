@@ -6,8 +6,12 @@ import {
   reactive,
   onMounted,
 } from 'vue';
-import debounce from 'lodash/debounce';
-import { promiseTimeout, useTimeout, useScroll } from '@vueuse/core';
+import {
+  promiseTimeout,
+  useTimeout,
+  useDebounceFn,
+  useScroll,
+} from '@vueuse/core';
 import useComponentVariant from '@@sf/composables/use-component-variant';
 
 export interface Props {
@@ -36,7 +40,7 @@ if (!import.meta.env.SSR) {
     if (isAllLoaded) {
       fixHeight();
     }
-    window.addEventListener('resize', debounce(fixHeight, 300));
+    window.addEventListener('resize', useDebounceFn(fixHeight, 300));
   });
 }
 const { y } = !import.meta.env.SSR ? useScroll(document) : { y: ref(0) };
