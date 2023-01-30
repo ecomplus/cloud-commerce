@@ -5,7 +5,7 @@ import StickyHeader from '@@sf/components/StickyHeader.vue';
 <template>
   <StickyHeader>
     <div
-      class="container mx-auto px-1 lg:pl-3
+      class="container lg:max-w-7xl mx-auto px-1 lg:pl-3
       grid grid-flow-col grid-cols-3 justify-between items-center
       md:grid-cols-none md:auto-cols-max"
       data-header
