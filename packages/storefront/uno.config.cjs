@@ -75,6 +75,7 @@ const genUnoCSSConfig = (themeOptions = {}) => {
     preflights,
     rules,
     shortcuts: [
+      [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
       ...brandIconsShortcuts.map((brand) => {
         return typeof brand === 'string'
           ? { [`i-${brand}`]: `i-${brandIcons}:${brand}` }
@@ -88,7 +89,6 @@ const genUnoCSSConfig = (themeOptions = {}) => {
       ...Object.keys(iconAliases).map((alias) => {
         return { [`i-${alias}`]: `i-${generalIcons}:${iconAliases[alias]}` };
       }),
-      [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
     ],
     theme: {
       ...theme,
