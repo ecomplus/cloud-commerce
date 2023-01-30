@@ -35,6 +35,7 @@
     "@cloudcommerce/app-infinitepay": "workspace:*",
     "@cloudcommerce/app-jadlog": "workspace:*",
     "@cloudcommerce/app-loyalty-points": "workspace:*",
+    "@cloudcommerce/app-melhor-envio": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
     "@cloudcommerce/app-paghiper": "workspace:*",
