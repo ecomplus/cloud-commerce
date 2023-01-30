@@ -4,13 +4,13 @@ import {
   onMounted,
   onBeforeUnmount,
   ref,
+  computed,
   watch,
   toRef,
   nextTick,
   provide,
 } from 'vue';
-import debounce from 'lodash/debounce';
-import { useElementHover } from '@vueuse/core';
+import { useDebounceFn, useElementHover, useScroll } from '@vueuse/core';
 import { carouselKey } from './_injection-keys';
 import CarouselControl from './CarouselControl.vue';
 
@@ -20,58 +20,30 @@ export interface Props {
   autoplay?: number; // milliseconds
 }
 
-const approximatelyEqual = (v1, v2, epsilon) => {
-  return Math.abs(v1 - v2) <= epsilon;
-};
-const SCROLL_DEBOUNCE = 100;
-const RESIZE_DEBOUNCE = 410;
-
 const props = withDefaults(defineProps<Props>(), {
   as: 'ul',
   modelValue: 1,
 });
 const emit = defineEmits([
   'update:modelValue',
-  'bound-left',
-  'bound-right',
 ]);
-
-const currentPage = ref(props.modelValue - 1);
+const currentIndex = ref(props.modelValue - 1);
 watch(toRef(props, 'modelValue'), (modelValue) => {
-  currentPage.value = modelValue - 1;
+  currentIndex.value = modelValue - 1;
 });
-watch(currentPage, (current, previous) => {
+watch(currentIndex, (current, previous) => {
   if (current !== previous) {
     emit('update:modelValue', current + 1);
   }
 });
 const wrapper = ref<HTMLElement>(null);
-const isBoundLeft = ref(true);
-const isBoundRight = ref(false);
+const { x: currentPos, isScrolling, arrivedState } = useScroll(wrapper);
+const isBoundLeft = computed(() => arrivedState.left);
+const isBoundRight = computed(() => arrivedState.right);
 const slidesWidth = ref([]);
 const wrapperScrollWidth = ref(0);
 const wrapperVisibleWidth = ref(0);
-const currentPos = ref(0);
-const maxPages = ref(0);
-let onResizeFn: (...args: any[]) => void;
-let onScrollFn: (...args: any[]) => void;
-const calcBounds = () => {
-  // Find the closest point, with 5px approximate.
-  const _isBoundLeft = approximatelyEqual(currentPos.value, 0, 5);
-  const _isBoundRight = approximatelyEqual(
-    wrapperScrollWidth.value - wrapperVisibleWidth.value,
-    currentPos.value,
-    5,
-  );
-  if (_isBoundLeft) {
-    emit('bound-left', true);
-  }
-  isBoundLeft.value = _isBoundLeft;
-  if (_isBoundRight) {
-    emit('bound-right', true);
-  }
-  isBoundRight.value = _isBoundRight;
-};
+const indexCount = ref(0);
 const calcWrapperWidth = () => {
   wrapperScrollWidth.value = wrapper.value.scrollWidth;
   wrapperVisibleWidth.value = wrapper.value.offsetWidth;
@@ -84,48 +56,27 @@ const calcSlidesWidth = () => {
   }));
 };
 const calcNextWidth = (direction) => {
-  const nextSlideIndex = direction > 0 ? currentPage.value : currentPage.value + direction;
-  const width = slidesWidth.value[nextSlideIndex].width || 0;
+  const nextSlideIndex = direction > 0
+    ? currentIndex.value : currentIndex.value + direction;
+  const width = slidesWidth.value[nextSlideIndex]?.width || 0;
   if (!width) {
     return 0;
   }
   return width * direction;
 };
-const calcCurrentPage = () => {
-  const getCurrentPage = slidesWidth.value.findIndex((slide) => {
+const calcCurrentIndex = () => {
+  const getCurrentIndex = slidesWidth.value.findIndex((slide: HTMLElement) => {
     // Find the closest point, with 5px approximate.
-    return approximatelyEqual(slide.offsetLeft, currentPos.value, 5);
+    return Math.abs(slide.offsetLeft - currentPos.value) <= 5;
   });
-  if (getCurrentPage !== -1 && getCurrentPage !== -2) {
-    currentPage.value = getCurrentPage || 0;
+  if (getCurrentIndex > -1) {
+    currentIndex.value = getCurrentIndex || 0;
   }
 };
-const calcCurrentPosition = () => {
-  currentPos.value = wrapper.value.scrollLeft || 0;
-};
-const calcMaxPages = () => {
+const calcIndexCount = () => {
   const maxPos = wrapperScrollWidth.value - wrapperVisibleWidth.value;
-  maxPages.value = slidesWidth.value
-    .findIndex(({ offsetLeft }) => (offsetLeft >= maxPos));
-};
-const calcOnInit = () => {
-  if (!wrapper.value) {
-    return;
-  }
-  calcWrapperWidth();
-  calcSlidesWidth();
-  calcCurrentPosition();
-  calcCurrentPage();
-  calcBounds();
-  calcMaxPages();
-};
-const calcOnScroll = () => {
-  if (!wrapper.value) {
-    return;
-  }
-  calcCurrentPosition();
-  calcCurrentPage();
-  calcBounds();
+  indexCount.value = slidesWidth.value
+    .findIndex(({ offsetLeft }) => (offsetLeft >= maxPos - 5));
 };
 let autoplayTimer = null;
 const restartAutoplay = () => {
@@ -140,13 +91,13 @@ const restartAutoplay = () => {
 const changeSlide = (direction: number) => {
   if (direction < 0) {
     if (isBoundLeft.value) {
-      calcMaxPages();
-      currentPage.value = maxPages.value - 1;
+      calcIndexCount();
+      currentIndex.value = indexCount.value - 1;
       changeSlide(1);
       return;
     }
   } else if (isBoundRight.value) {
-    currentPage.value = 1;
+    currentIndex.value = 1;
     changeSlide(-1);
     return;
   }
@@ -156,35 +107,48 @@ const changeSlide = (direction: number) => {
     restartAutoplay();
   }
 };
+watch(isScrolling, (_isScrolling: boolean) => {
+  if (_isScrolling) {
+    clearTimeout(autoplayTimer);
+  } else {
+    calcCurrentIndex();
+    restartAutoplay();
+  }
+});
 const carousel = ref(null);
 const isHovered = useElementHover(carousel);
-watch(isHovered, (_isHovered) => {
+watch(isHovered, (_isHovered: boolean) => {
   if (_isHovered) {
     clearTimeout(autoplayTimer);
   } else {
     restartAutoplay();
   }
 });
+const calcOnInit = () => {
+  if (!wrapper.value) {
+    return;
+  }
+  calcWrapperWidth();
+  calcSlidesWidth();
+  calcCurrentIndex();
+  calcIndexCount();
+};
+const onResize = useDebounceFn(calcOnInit, 400);
 onMounted(() => {
   calcOnInit();
   if (!import.meta.env.SSR) {
-    // Assign to new variable and keep reference for removeEventListener (Avoid Memory Leaks)
-    onScrollFn = debounce(calcOnScroll, SCROLL_DEBOUNCE);
-    onResizeFn = debounce(calcOnInit, RESIZE_DEBOUNCE);
-    wrapper.value.addEventListener('scroll', onScrollFn);
-    window.addEventListener('resize', onResizeFn);
     nextTick(() => {
       [...wrapper.value.children].forEach((slide: HTMLElement) => {
         slide.setAttribute('tabindex', '0');
       });
     });
     restartAutoplay();
+    window.addEventListener('resize', onResize);
   }
 });
 onBeforeUnmount(() => {
   if (!import.meta.env.SSR) {
-    wrapper.value.removeEventListener('scroll', onScrollFn);
-    window.removeEventListener('resize', onResizeFn);
+    window.removeEventListener('resize', onResize);
   }
   clearTimeout(autoplayTimer);
 });
@@ -204,7 +168,13 @@ provide(carouselKey, {
     <!-- @slot Slot for Arrows -->
     <slot
       name="controls"
-      v-bind="{ changeSlide, isBoundLeft, isBoundRight }"
+      v-bind="{
+        changeSlide,
+        isBoundLeft,
+        isBoundRight,
+        currentPage: currentIndex + 1,
+        pageCount: indexCount + 1,
+      }"
     >
       <CarouselControl :direction="-1">
         <slot name="previous" />
