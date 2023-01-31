@@ -115,7 +115,7 @@ const handleApiEvent: ApiEventHandler = async ({
           manualQueue.shift();
         }
       } else {
-        isCart = evName === 'carts-customerSet' || evName === 'carts-new';
+        isCart = evName === 'carts-delayed';
         docId = apiDoc._id;
       }
 
@@ -127,14 +127,9 @@ const handleApiEvent: ApiEventHandler = async ({
           if (doc.completed || doc.available === false) {
             return null;
           }
-          const abandonedCartDelay = 3 * 1000 * 60;
-          if (Date.now() - new Date(doc.created_at).getTime() >= abandonedCartDelay) {
-            const customerId = doc.customers && apiDoc.customers[0];
-            if (customerId) {
-              customer = (await api.get(`customers/${customerId}`)).data;
-            }
-          } else {
-            return null;
+          const customerId = doc.customers && apiDoc.customers[0];
+          if (customerId) {
+            customer = (await api.get(`customers/${customerId}`)).data;
           }
         } else {
           doc = (await api.get(`orders/${docId}`)).data;
