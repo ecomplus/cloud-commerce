@@ -1,7 +1,7 @@
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 
-const firestoreColl = 'melhorEnvioAppTracking';
+const firestoreColl = 'melhorEnvioTracking';
 
 export type Lable = {
   id: string,
