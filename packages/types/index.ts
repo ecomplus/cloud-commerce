@@ -48,6 +48,7 @@ type ApiEventName = 'orders-new'
   | 'products-priceSet'
   | 'carts-new'
   | 'carts-customerSet'
+  | 'carts-delayed'
   | 'customers-new'
   | 'applications-dataSet';
 

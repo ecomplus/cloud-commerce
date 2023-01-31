@@ -13,7 +13,7 @@ const parseEventName = (
   const [resource, actionName] = evName.split('-');
   const params: ApiConfig['params'] = { ...baseApiEventsFilter };
   const bodySet: { [key: string]: any } = {};
-  if (actionName === 'new') {
+  if (actionName === 'new' || actionName === 'delayed') {
     params.action = 'create';
   } else {
     switch (resource) {
@@ -174,7 +174,11 @@ export default async () => {
             messageId: `${resourceId}_${apiEvent.timestamp}`,
             json,
           };
-          tryPubSubPublish(topicName, messageObj);
+          const delayCartMs = parseInt(process.env.DELAY_CART_MS || '5000', 10);
+
+          setTimeout(() => {
+            tryPubSubPublish(topicName, messageObj);
+          }, listenedEventName === 'carts-delayed' ? delayCartMs : 0);
         }
       });
     });
