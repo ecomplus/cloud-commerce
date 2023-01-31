@@ -1,5 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { i19myAccount, i19openCart, i19searchProducts } from '@@i18n';
 import StickyHeader from '@@sf/components/StickyHeader.vue';
+
+const buttons = ref({
+  search: {
+    icon: 'i-search',
+    onClick: () => {},
+    label: i19searchProducts,
+  },
+  account: {
+    icon: 'i-account',
+    onClick: () => {},
+    label: i19myAccount,
+  },
+  cart: {
+    icon: 'i-shopping-cart',
+    onClick: () => {},
+    label: i19openCart,
+  },
+});
 </script>
 
 <template>
@@ -11,12 +31,8 @@ import StickyHeader from '@@sf/components/StickyHeader.vue';
       data-header
     >
       <slot name="sidenav-toggle">
-        <div class="md:hidden">
-          <button
-            class="px-2"
-            :aria-label="$t.i19toggleMenu"
-            data-sidenav-toggle
-          >
+        <div class="md:hidden" data-sidenav-toggle>
+          <button class="px-2" :aria-label="$t.i19toggleMenu">
             <slot name="sidenav-toggle-content">
               <i class="i-menu text-base-500 text-3xl"></i>
             </slot>
@@ -27,39 +43,26 @@ import StickyHeader from '@@sf/components/StickyHeader.vue';
       <slot name="nav" />
       <slot name="buttons">
         <div
-          class="flex justify-end items-center lg:gap-1 text-base-800"
+          class="px-2 flex justify-end items-center gap-3 lg:gap-4 text-base-800"
           data-header-buttons
         >
-          <slot name="search-button">
+          <slot
+            name="button"
+            v-for="({ icon, onClick, label }, name) in buttons"
+            :key="name"
+            v-bind="{ name, icon, onClick }"
+          >
             <button
-              class="px-2 py-1"
-              :aria-label="$t.i19searchProducts"
-              data-header-search-button
+              :class="name === 'account' ? 'hidden sm:block' : null"
+              :aria-label="label"
+              @click="onClick"
+              :data-header-button="name"
             >
-              <slot name="search-button-content">
-                <i class="i-search hover:text-primary w-7 h-7"></i>
-              </slot>
-            </button>
-          </slot>
-          <slot name="account-button">
-            <button
-              class="hidden sm:block px-2 py-1"
-              :aria-label="$t.i19myAccount"
-              data-header-account-button
-            >
-              <slot name="account-button-content">
-                <i class="i-account hover:text-primary w-7 h-7"></i>
-              </slot>
-            </button>
-          </slot>
-          <slot name="cart-button">
-            <button
-              class="px-2 py-1"
-              :aria-label="$t.i19openCart"
-              data-header-cart-button
-            >
-              <slot name="cart-button-content">
-                <i class="i-shopping-cart hover:text-primary w-7 h-7"></i>
+              <slot name="button-content" v-bind="{ name, icon }">
+                <i
+                  :class="icon"
+                  class="hover:text-primary w-7 h-7 hover:scale-110 active:scale-125"
+                ></i>
               </slot>
             </button>
           </slot>

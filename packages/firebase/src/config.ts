@@ -36,6 +36,10 @@ const googleAnalyticsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const melhorEnvioEvents: ApiEventName[] = [
+  'orders-anyStatusSet',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -125,6 +129,10 @@ const mergeConfig = {
     },
     pagHiper: {
       appId: 1251,
+    },
+    melhorEnvio: {
+      appId: 1236,
+      events: melhorEnvioEvents,
     },
   },
   cmsSettings,

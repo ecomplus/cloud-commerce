@@ -1,0 +1,36 @@
+{
+  "name": "@cloudcommerce/app-melhor-envio",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce app to integrate Melhor Envio",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./events": "./lib/melhor-envio-events.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/melhor-envio"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/melhor-envio#readme",
+  "scripts": {
+    "build": "sh ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
+    "axios": "^1.2.5",
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*",
+    "@firebase/app-types": "^0.9.0"
+  }
+}

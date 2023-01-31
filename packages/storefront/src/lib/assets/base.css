@@ -7,6 +7,7 @@
   --font-mono: var(--custom-font-mono, ui-monospace),
     SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-family: var(--font-sans);
+  --transition-fast: 75ms linear;
   --transition: .15s ease-in-out;
   --transition-slow: .25s ease-in-out;
   --transition-slower: .45s ease-in-out;
@@ -27,6 +28,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root {
+    --transition-fast: 0s;
     --transition: 0s;
     --transition-slow: 0s;
     --transition-slower: .15s linear;
