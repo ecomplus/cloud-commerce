@@ -40,6 +40,8 @@ inputs:
     description: 'App: Optional Galax Pay partner hash'
   datafrete-operator-token:
     description: 'App: Random token (https://randomkeygen.com/) to validate Datafrete webhooks'
+  delay-cart-ms:
+    description: 'Events: Delay to send late cart event'
 
 outputs: {}
 
@@ -92,6 +94,7 @@ runs:
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
         DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
+        DELAY_CART_MS: ${{ inputs.delay-cart-ms }}
 
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
@@ -113,6 +116,7 @@ runs:
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
+        DELAY_CART_MS=$DELAY_CART_MS
         " > functions/.env
         GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
 
