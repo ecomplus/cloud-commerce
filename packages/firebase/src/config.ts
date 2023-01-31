@@ -36,11 +36,14 @@ const googleAnalyticsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const melhorEnvioEvents: ApiEventName[] = [
+  'orders-anyStatusSet',
+];
+
 const webhooksAppEvents: ApiEventName[] = [
   'applications-dataSet',
   'orders-anyStatusSet',
-  'carts-new',
-  'carts-customerSet',
+  'carts-delayed',
 ];
 
 const {
@@ -132,6 +135,10 @@ const mergeConfig = {
     },
     pagHiper: {
       appId: 1251,
+    },
+    melhorEnvio: {
+      appId: 1236,
+      events: melhorEnvioEvents,
     },
     webhooksApp: {
       appId: 123113,
