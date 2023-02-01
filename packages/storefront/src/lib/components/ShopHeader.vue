@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { i19myAccount, i19openCart, i19searchProducts } from '@@i18n';
+import Drawer from '@@sf/components/Drawer.vue';
 import StickyHeader from '@@sf/components/StickyHeader.vue';
 
 const buttons = ref({
@@ -20,6 +21,7 @@ const buttons = ref({
     label: i19openCart,
   },
 });
+const isSidenavOpen = ref(false);
 </script>
 
 <template>
@@ -32,11 +34,18 @@ const buttons = ref({
     >
       <slot name="sidenav-toggle">
         <div class="md:hidden" data-sidenav-toggle>
-          <button class="px-2" :aria-label="$t.i19toggleMenu">
+          <button
+            class="px-2 my-1"
+            :aria-label="$t.i19toggleMenu"
+            @click="isSidenavOpen = !isSidenavOpen"
+          >
             <slot name="sidenav-toggle-content">
               <i class="i-menu text-base-500 text-3xl"></i>
             </slot>
           </button>
+          <Drawer v-model="isSidenavOpen" class="-ml-1 lg:-ml-3">
+            MENU
+          </Drawer>
         </div>
       </slot>
       <slot name="logo" />
