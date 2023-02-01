@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/ecomplus/cloud-commerce/compare/v0.2.3...v0.3.0) (2023-02-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** CSS var `--content-max-width` no more set, <main> width no more limited by default
+
+### Features
+
+* **i18n:** Add `i19buyTogether` `i19buyTogetherWith` `i19report` `i19toggleMenu` ([a963273](https://github.com/ecomplus/cloud-commerce/commit/a9632736c9ae917d286e3507cbb76c6541ea9a2e))
+* **melhor-envio:**  Ceate app to integrate Melhor Envio ([#111](https://github.com/ecomplus/cloud-commerce/issues/111)) ([a9ac8d3](https://github.com/ecomplus/cloud-commerce/commit/a9ac8d30178305ecb6145b27ed9197b6a951ef72))
+* **storefront:** Add `isFloating` option (prop) to global `Fade` component ([666509a](https://github.com/ecomplus/cloud-commerce/commit/666509a00fadc707d587ef0929e1ec0732ad1de2))
+* **storefront:** Add `slide` and `controls` slot to `PitchBar` ([88c60fa](https://github.com/ecomplus/cloud-commerce/commit/88c60fa08c1a55e84ebd0ac27c292f23168271b5))
+* **storefront:** Add new `--transition-fast` root CSS var ([3d85ae2](https://github.com/ecomplus/cloud-commerce/commit/3d85ae266e435c73f29dc45f4cc9b2224a123ca5))
+* **storefront:** Add new `Drawer` component ([53f0131](https://github.com/ecomplus/cloud-commerce/commit/53f0131cc9bc9b21c6edb4add95fa205b870bd0b))
+* **storefront:** Add new `StickyHeader.vue` (almost) headless component ([a9987b3](https://github.com/ecomplus/cloud-commerce/commit/a9987b3ae7b4ec84c110f7e841550d22474dcbf7))
+* **storefront:** Defining custom `<d-md>` tag  for responsive tricks in /content JSON ([5108aaf](https://github.com/ecomplus/cloud-commerce/commit/5108aaf6b2c18470a35916df80794972e1a04701))
+* **storefront:** Starting with `ShopHeader.vue` component ([c078cc1](https://github.com/ecomplus/cloud-commerce/commit/c078cc18eb0b7225faee0d4b64d5a0309a0e0ddc))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#110](https://github.com/ecomplus/cloud-commerce/issues/110)) ([ffc310c](https://github.com/ecomplus/cloud-commerce/commit/ffc310c38bd1aa9facceffa4eb2c1665dde867fd))
+* **storefront:** Fix `Carousel` index calc with 5px approximate ([32763ab](https://github.com/ecomplus/cloud-commerce/commit/32763abd38bd4790056c0d4431fefc3b3a700eb8))
+* **storefront:** Fix `Fade` to clear inline height/width on transition after enter ([3a8f75e](https://github.com/ecomplus/cloud-commerce/commit/3a8f75e299dc8f15526068485c04a0017965b66f))
+* **storefront:** Update `useComponentVariant` composable to ignore `modelValue` ([ef7ab8f](https://github.com/ecomplus/cloud-commerce/commit/ef7ab8f4038a5179fe36a163250b8b25739ae4ce))
+* **storefront:** Update UnoCSS config with correct shortcuts order ([1993e42](https://github.com/ecomplus/cloud-commerce/commit/1993e4232b36963f2aacf1d5dbace3b5fc8f31a6))
+
+
+* **storefront:** Removing `--content-max-width` from base.css ([a214b3e](https://github.com/ecomplus/cloud-commerce/commit/a214b3e43e6f38b18bbfe621536b2db42d1c47c8))
+
 ### [0.2.3](https://github.com/ecomplus/cloud-commerce/compare/v0.2.2...v0.2.3) (2023-01-26)
 
 
