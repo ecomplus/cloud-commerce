@@ -128,7 +128,17 @@ export default async () => {
       if (isOrdersOnly) {
         return;
       }
-      if (lastNonOrdersTimestamp) {
+      if (listenedEventName === 'carts-delayed') {
+        // defines the limits for getting events with predefined delay
+        const delayCart = process.env.DELAY_CART_MIN
+          ? parseInt(process.env.DELAY_CART_MIN, 10)
+          : (1000 * 60 * 5);
+
+        params['timestamp>'] = new Date((lastNonOrdersTimestamp || lastRunTimestamp) - delayCart)
+          .toISOString();
+
+        params['timestamp<'] = new Date(timestamp - delayCart).toISOString();
+      } else if (lastNonOrdersTimestamp) {
         params['timestamp>'] = new Date(lastNonOrdersTimestamp).toISOString();
       }
     }
@@ -174,11 +184,7 @@ export default async () => {
             messageId: `${resourceId}_${apiEvent.timestamp}`,
             json,
           };
-          const delayCartMs = parseInt(process.env.DELAY_CART_MS || '5000', 10);
-
-          setTimeout(() => {
-            tryPubSubPublish(topicName, messageObj);
-          }, listenedEventName === 'carts-delayed' ? delayCartMs : 0);
+          tryPubSubPublish(topicName, messageObj);
         }
       });
     });
