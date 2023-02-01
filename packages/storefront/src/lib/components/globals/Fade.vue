@@ -105,7 +105,7 @@ const onEnter = (el: HTMLElement) => {
 };
 const onAfterEnter = (el: HTMLElement) => {
   if (props.slide) {
-    el.style[isSlideY.value ? 'height' : 'width'] = 'auto';
+    el.style[isSlideY.value ? 'height' : 'width'] = null;
   }
 };
 const onLeave = (el: HTMLElement) => {
