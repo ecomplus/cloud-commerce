@@ -12,7 +12,8 @@ export interface Props {
 ---
 
 <body>
+  <div id="teleported-top"></div>
   <slot />
   <slot name="before-body-end" />
-  <div id="teleported"></div>
+  <div id="teleported-bottom"></div>
 </body>

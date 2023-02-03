@@ -33,6 +33,7 @@ if (header.pitch_bar) {
 }
 const logoSrc = header.logo || settings.logo;
 const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
+const { categories } = apiState;
 ---
 
 <Fragment>
@@ -41,7 +42,7 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     {pitchBar.slides.length === 1 && <PitchBar {...pitchBar} />}
   </slot>
   <slot name="sticky-header">
-    <ShopHeader client:load>
+    <ShopHeader categories={categories} client:load>
       <Fragment slot="logo">
         <slot name="logo">
           <a href="/">
