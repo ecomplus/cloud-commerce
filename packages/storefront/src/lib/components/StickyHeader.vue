@@ -19,13 +19,23 @@ export interface Props {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits([
+  'set:is-sticky',
+  'set:height',
+  'set:static-y',
+]);
 const header = ref<HTMLElement | null>(null);
 const { ready, start } = useTimeout(100, { controls: true, immediate: false });
 const height = ref(0);
+const staticY = ref(0);
 if (!import.meta.env.SSR) {
   onMounted(() => {
     const fixHeight = () => {
       height.value = header.value.offsetHeight;
+      staticY.value = height.value
+        + window.pageYOffset + header.value.getBoundingClientRect().top;
+      emit('set:height', height.value);
+      emit('set:static-y', staticY.value);
       start();
     };
     const imgs = header.value.getElementsByTagName('IMG');
@@ -44,16 +54,17 @@ if (!import.meta.env.SSR) {
   });
 }
 const { y } = !import.meta.env.SSR ? useScroll(document) : { y: ref(0) };
-const isSticky = computed(() => ready.value && y.value > height.value * 1.5);
+const isSticky = computed(() => ready.value && y.value > staticY.value * 1.2);
 const transition = ref('none');
-watch(isSticky, async (isSetSticky) => {
-  if (!isSetSticky) {
+watch(isSticky, async (_isSticky) => {
+  if (!_isSticky) {
     start();
     transition.value = 'none';
   } else {
     await promiseTimeout(300);
     transition.value = 'opacity var(--transition-slow), transform var(--transition)';
   }
+  emit('set:is-sticky', _isSticky);
 });
 const isScrollUp = ref(false);
 watch(y, (newY, oldY) => {
@@ -67,12 +78,11 @@ const componentVariant = useComponentVariant(reactive({
 </script>
 
 <template>
-  <div :style="isSticky ? `height: ${height}px` : null"></div>
   <header
     ref="header"
     class="z-50 top-0 will-change-transform"
     :class="{
-      'sticky bg-white/80 backdrop-blur-md shadow py-2 md:py-3': isSticky,
+      'sticky py-2 md:py-3': isSticky,
       'opacity-0 -translate-y-full': isSticky && (!isScrollUp || isShownOnScrollDown),
       'py-3 sm:py-4 md:py-5': !isSticky,
     }"
@@ -80,5 +90,8 @@ const componentVariant = useComponentVariant(reactive({
     :data-sticky-header="componentVariant"
   >
     <slot/>
+    <Teleport to="#teleported-top">
+      <div :style="isSticky ? `height: ${height}px` : null"></div>
+    </Teleport>
   </header>
 </template>
