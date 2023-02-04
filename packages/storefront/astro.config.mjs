@@ -1,4 +1,4 @@
-import { lstatSync, readFileSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync } from 'node:fs';
 import { join as joinPath } from 'path';
 import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
@@ -136,6 +136,10 @@ const _vitePWAOptions = {
   },
 };
 
+// @@components tries ~/components with fallback to @@sf/components
+const localComponentsDir = joinPath(process.cwd(), 'src/components');
+const libComponentsDir = joinPath(__dirname, 'src/lib/components');
+
 const genAstroConfig = ({
   site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
@@ -188,7 +192,7 @@ const genAstroConfig = ({
       },
     ],
     resolve: {
-      preserveSymlinks: lstatSync(joinPath(process.cwd(), 'src/components')).isSymbolicLink(),
+      preserveSymlinks: lstatSync(localComponentsDir).isSymbolicLink(),
       alias: [
         { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
         { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
@@ -196,6 +200,18 @@ const genAstroConfig = ({
         { find: 'content', replacement: joinPath(process.cwd(), 'content') },
         { find: '/img', replacement: joinPath(process.cwd(), 'public/img') },
         { find: '/assets', replacement: joinPath(process.cwd(), 'public/assets') },
+        {
+          find: '@@components',
+          replacement: libComponentsDir,
+          customResolver: (libComponentPath) => {
+            const componentPath = libComponentPath.replace(libComponentsDir, '');
+            const localReplacement = joinPath(localComponentsDir, componentPath);
+            if (existsSync(localReplacement)) {
+              return localReplacement;
+            }
+            return libComponentPath;
+          },
+        },
       ],
     },
   },
