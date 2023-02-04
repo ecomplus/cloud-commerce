@@ -24,7 +24,7 @@ const countValidSlides = computed(() => {
 </script>
 
 <template>
-  <div class="bg-base-100" data-pitch-bar>
+  <div data-pitch-bar>
     <div class="container md:w-2/3 mx-auto px-3 py-1">
       <Carousel :autoplay="countValidSlides > 1 ? 7000 : null">
         <li v-for="(slide, i) in slides" :key="i">
@@ -39,7 +39,7 @@ const countValidSlides = computed(() => {
               <span
                 v-if="parsedContents[i]"
                 v-html="parsedContents[i]"
-                class="prose text-sm text-base-800"
+                class="prose text-sm"
                 data-pitch-bar-slide
               ></span>
             </slot>
@@ -49,14 +49,14 @@ const countValidSlides = computed(() => {
           <slot name="controls" v-bind="{ countValidSlides }">
             <div
               v-show="countValidSlides > 1"
-              class="text-xl leading-none text-base-400"
+              class="text-xl leading-none"
               data-pitch-bar-controls
             >
               <CarouselControl
                 :direction="-1"
-                class="pr-2 bg-base-100 hover:text-base-700"
+                class="pr-2 opacity-40 hover:opacity-80"
               />
-              <CarouselControl class="pl-2 bg-base-100 hover:text-base-700" />
+              <CarouselControl class="pl-2 opacity-40 hover:opacity-80" />
             </div>
           </slot>
         </template>
