@@ -5,7 +5,6 @@ import {
   computed,
   watch,
 } from 'vue';
-import useComponentVariant from '@@sf/composables/use-component-variant';
 
 export interface Props {
   modelValue?: boolean;
@@ -62,7 +61,6 @@ const isFixed = computed(() => {
 const isPlacementX = computed(() => {
   return props.placement === 'start' || props.placement === 'end';
 });
-const componentVariant = useComponentVariant(props, ['placement']);
 </script>
 
 <template>
@@ -76,7 +74,7 @@ const componentVariant = useComponentVariant(props, ['placement']);
         isFixed ? `top-0 left-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
       ]"
       :open="modelValue"
-      :data-drawer="componentVariant"
+      :data-drawer="placement"
     >
       <div class="relative">
         <button
