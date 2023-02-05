@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/ecomplus/cloud-commerce/compare/v0.3.0...v0.4.0) (2023-02-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Prices component no more available, must be set on local store src/components/
+* **storefront:** Removing all styled components to be set on store src, keeping only atomics headless components. Using composables for shop components.
+
+### Features
+
+* **storefront:** Add `logo-picture` slot to pages header Astro component (layout) ([1fe3e48](https://github.com/ecomplus/cloud-commerce/commit/1fe3e486e1b74d326fc60fadb62f8010e88e5fcb))
+* **storefront:** Edit `StickyHeader` to be easly (classes) editable ([f526480](https://github.com/ecomplus/cloud-commerce/commit/f52648057bbb7627f7fbb34f4a083dc51f0de9b8))
+
+
+### Bug Fixes
+
+* **storefront:** Setting `#teleported-top` and `#teleported-bottom` divs for teleports instead ([6197557](https://github.com/ecomplus/cloud-commerce/commit/61975578b3dc2c7588c152ab553aa154172a350c))
+* **storefront:** Stop `Drawer` from removing header backdrop by default ([b026bc7](https://github.com/ecomplus/cloud-commerce/commit/b026bc7bd7e12e70b70768fc820ccbf2d88730e6))
+
+
+* **storefront:** Removing `PitchBar` in favor of new `usePitchBar` composable ([f9e4551](https://github.com/ecomplus/cloud-commerce/commit/f9e45518f05bb0f603487b3637f60f0558d625fe))
+* **storefront:** Removing `Prices` component in favor of `usePrices` composable ([101e778](https://github.com/ecomplus/cloud-commerce/commit/101e7783c28fc8418827481196f241397399d792))
+
 ## [0.3.0](https://github.com/ecomplus/cloud-commerce/compare/v0.2.3...v0.3.0) (2023-02-01)
 
 
