@@ -8,7 +8,6 @@
       "@@sf/*": ["./src/lib/*"],
       "~/*": ["./src/*"],
       "content/*": ["./content/*"],
-      "@@components/*": ["./src/components/*", "./src/lib/components/*"],
     },
     "types": ["vite-plugin-pwa/info"]
   }
