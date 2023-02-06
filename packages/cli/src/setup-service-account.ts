@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fetch, $, fs } from 'zx';
-import authGoogle from './auth-gcp';
+import getGoogleAcessToken from './auth-gcp';
 
 const serviceAccountId = 'cloud-commerce-gh-actions';
 const getAccountEmail = (projectId: string) => {
@@ -9,7 +9,7 @@ const getAccountEmail = (projectId: string) => {
 
 // https://console.cloud.google.com/apis/library/iam.googleapis.com?hl=pt-br&cloudshell=true
 
-const request = async (
+const requestApi = async (
   projectId: string,
   accessToken: string,
   options?: {
@@ -46,25 +46,25 @@ const request = async (
 };
 
 const createServiceAccount = async (projectId: string, accessToken: string) => {
-  const bodyCreateAccount = {
+  const body = JSON.stringify({
     accountId: serviceAccountId,
     serviceAccount: {
       description: 'A service account with permission to deploy Cloud Commerce from the GitHub repository to Firebase',
       displayName: 'Cloud Commerce GH Actions',
     },
-  };
+  });
 
-  const data = await request(
+  const { uniqueId } = await requestApi(
     projectId,
     accessToken,
-    { method: 'POST', body: JSON.stringify(bodyCreateAccount) },
+    { method: 'POST', body },
   );
-  return data.uniqueId;
+  return uniqueId;
 };
 
 const checkServiceAccountExists = async (projectId: string, accessToken: string) => {
   // https://cloud.google.com/iam/docs/creating-managing-service-accounts?hl=pt-br#listing
-  const { accounts: listAccounts } = await request(projectId, accessToken);
+  const { accounts: listAccounts } = await requestApi(projectId, accessToken);
 
   const account = listAccounts
     && listAccounts.find(({ email }) => email === getAccountEmail(projectId));
@@ -72,13 +72,14 @@ const checkServiceAccountExists = async (projectId: string, accessToken: string)
   return account?.uniqueId;
 };
 
-const checkAllPolicyAccount = async (projectId: string, accessToken: string) => {
+const checkAllAccountPolicy = async (projectId: string, accessToken: string) => {
   // https://cloud.google.com/iam/docs/granting-changing-revoking-access?hl=pt-br#view-access
   // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:getIamPolicy
-  const version = 3;
+
+  const version = 3; // according to the reference use the most recent
   const baseURL = `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`;
 
-  const data = await request(
+  const data = await requestApi(
     projectId,
     accessToken,
     {
@@ -153,7 +154,7 @@ const checkAllPolicyAccount = async (projectId: string, accessToken: string) => 
   if (mustUpdatePolicy) {
     Object.assign(data, { version, bindings });
     // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:setIamPolicy
-    await request(
+    await requestApi(
       projectId,
       accessToken,
       {
@@ -172,8 +173,7 @@ const createServiceAccountKey = async (
   accessToken: string,
   pwd: string,
 ) => {
-  // POST https://iam.googleapis.com/v1/projects/PROJECT_ID/serviceAccounts/SA_NAME@PROJECT_ID.iam.gserviceaccount.com/keys
-  const data = await request(
+  const { privateKeyData } = await requestApi(
     projectId,
     accessToken,
     {
@@ -183,20 +183,19 @@ const createServiceAccountKey = async (
   );
   const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
 
-  await $`echo '${data.privateKeyData}' | base64 --decode > ${pathFileKey}`;
+  await $`echo '${privateKeyData}' | base64 --decode > ${pathFileKey}`;
   return JSON.stringify(fs.readJSONSync(pathFileKey));
 };
 
 const getAccessTokenGCPAndSetIAM = async (projectId: string, pwd: string) => {
   try {
-    const accessToken = await authGoogle(projectId, pwd);
+    const accessToken = await getGoogleAcessToken(projectId, pwd);
     if (accessToken) {
       let accountId: string = await checkServiceAccountExists(projectId, accessToken);
       if (!accountId) {
         accountId = await createServiceAccount(projectId, accessToken);
       }
-
-      await checkAllPolicyAccount(projectId, accessToken);
+      await checkAllAccountPolicy(projectId, accessToken);
     }
     return accessToken;
   } catch (e) {

@@ -4,7 +4,6 @@ import {
   fs,
   question,
   echo,
-  chalk,
 } from 'zx';
 
 // https://developers.google.com/identity/protocols/oauth2/service-account?hl=pt-br
@@ -22,8 +21,6 @@ export default async (projectId: string, pwd: string) => {
   await fs.ensureDir(path.join(pwd, '.cloudcommerce'));
   const pathAccountKeys = path.join(pwd, '.cloudcommerce', 'account-keys.json');
   const accountKeys = await readFile(pathAccountKeys);
-
-  await echo`${chalk.bold('Account Keys:')} ${chalk.bgMagenta(JSON.stringify(accountKeys) || '')}\n`;
 
   if (!accountKeys || !accountKeys?.clientId
     || !accountKeys?.clientSecret || !accountKeys?.refreshToken) {
