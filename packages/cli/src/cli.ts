@@ -11,6 +11,10 @@ import login from './login';
 import build from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
 import createGhSecrets from './setup-gh';
+import {
+  getAccessTokenGCPAndSetIAM,
+  createServiceAccountKey as createServiceAccountKeyApi,
+} from './setup-service-account';
 
 const {
   FIREBASE_PROJECT_ID,
@@ -124,8 +128,17 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
-    let serviceAccountJSON : string | null = null;
-    if (argv.gcloud !== false) {
+    let serviceAccountJSON: string | null = null;
+    if (argv.googleapi !== false) {
+      try {
+        const accessToken = await getAccessTokenGCPAndSetIAM(projectId as string, pwd);
+        if (projectId && accessToken) {
+          serviceAccountJSON = await createServiceAccountKeyApi(projectId, accessToken, pwd);
+        }
+      } catch (e) {
+        //
+      }
+    } else if (argv.gcloud !== false) {
       try {
         await siginGcloudAndSetIAM(projectId as string, pwd);
         serviceAccountJSON = await createServiceAccountKey(projectId as string, pwd);
