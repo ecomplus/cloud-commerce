@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "google-auth-library": "^8.7.0",
     "libsodium-wrappers": "^0.7.10",
     "md5": "^2.3.0",
     "zx": "^7.1.1"
