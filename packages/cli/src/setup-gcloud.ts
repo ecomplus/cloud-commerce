@@ -14,7 +14,6 @@ const getAccountEmail = (projectId: string) => {
 
 const requestApi = async (
   projectId: string,
-  accessToken: string,
   options?: {
     baseURL?: string,
     url?: string,
@@ -31,7 +30,7 @@ const requestApi = async (
     {
       method: options?.method || 'GET',
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${gcpAccessToken}`,
         'Content-Type': 'application/json; charset=utf-8',
       },
       body,
@@ -49,11 +48,11 @@ const requestApi = async (
 };
 
 const getAcessTokenGCP = async () => {
-  await echo`-- Get the Google administrator account credentials:
+  await echo`-- Get the Google Cloud account credentials:
   1. Access https://shell.cloud.google.com/?fromcloudshell=true&show=terminal
   2. Execute 'gcloud auth application-default print-access-token' in cloud shell`;
 
-  return question('\n  accessToken: ');
+  return question('Google Cloud access token: ');
 };
 
 const checkServiceAccountExists = async (projectId: string) => {
@@ -64,7 +63,7 @@ const checkServiceAccountExists = async (projectId: string) => {
       hasServiceAccount = !/not_?found/i.test(stderr);
     } else {
       // https://cloud.google.com/iam/docs/creating-managing-service-accounts?hl=pt-br#listing
-      const { accounts: listAccounts } = await requestApi(projectId, gcpAccessToken);
+      const { accounts: listAccounts } = await requestApi(projectId);
       const accountFound = listAccounts
         && listAccounts.find(({ email }) => email === getAccountEmail(projectId));
 
@@ -111,7 +110,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
 
   if (!serviceAccount && haveGcloud) {
     await $`gcloud iam service-accounts create ${serviceAccountId} \
-      --description="${description}" --display-name="${displayName} "`;
+      --description=${description} --display-name=${displayName}`;
   } else if (!serviceAccount && gcpAccessToken) {
     //
     const body = JSON.stringify({
@@ -122,24 +121,24 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
       },
     });
 
-    await requestApi(projectId, gcpAccessToken, { method: 'POST', body });
+    await requestApi(projectId, { method: 'POST', body });
   }
 
   await fs.ensureDir(path.join(pwd, '.cloudcommerce'));
   const pathPolicyIAM = path.join(pwd, '.cloudcommerce', 'policyIAM.json');
-  let data;
+  let policyIAM: Record<string, any> = {};
   const version = 3; // according to the reference use the most recent
   const baseURL = `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`;
 
   if (haveGcloud) {
     await $`gcloud projects get-iam-policy ${projectId} --format json > ${pathPolicyIAM}`;
+    policyIAM = fs.readJSONSync(pathPolicyIAM);
   } else if (gcpAccessToken) {
     // https://cloud.google.com/iam/docs/granting-changing-revoking-access?hl=pt-br#view-access
     // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:getIamPolicy
 
-    data = await requestApi(
+    policyIAM = await requestApi(
       projectId,
-      gcpAccessToken,
       {
         baseURL,
         url: ':getIamPolicy',
@@ -148,9 +147,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
       },
     );
   }
-  const policyIAM = haveGcloud ? fs.readJSONSync(pathPolicyIAM) : data;
   let { bindings } = policyIAM;
-
   if (!bindings) {
     bindings = [];
   }
@@ -190,16 +187,15 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     fs.writeJSONSync(pathPolicyIAM, policyIAM);
     return $`gcloud projects set-iam-policy ${projectId} ${pathPolicyIAM}`;
   } if (mustUpdatePolicy && gcpAccessToken) {
-    Object.assign(data, { version, bindings });
+    Object.assign(policyIAM, { version, bindings });
     // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:setIamPolicy
     return requestApi(
       projectId,
-      gcpAccessToken,
       {
         baseURL,
         url: ':setIamPolicy',
         method: 'POST',
-        body: JSON.stringify({ policy: data }),
+        body: JSON.stringify({ policy: policyIAM }),
       },
     );
   }
@@ -209,23 +205,20 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
 
 const createServiceAccountKey = async (projectId: string, pwd: string) => {
   try {
+    const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
     if (!gcpAccessToken) {
-      const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
       await $`gcloud iam service-accounts keys create ${pathFileKey} \
       --iam-account=${getAccountEmail(projectId)}`;
-      return JSON.stringify(fs.readJSONSync(pathFileKey));
+    } else {
+      const { privateKeyData } = await requestApi(
+        projectId,
+        {
+          url: `/${getAccountEmail(projectId)}/keys`,
+          method: 'POST',
+        },
+      );
+      await $`echo '${privateKeyData}' | base64 --decode > ${pathFileKey}`;
     }
-    const { privateKeyData } = await requestApi(
-      projectId,
-      gcpAccessToken,
-      {
-        url: `/${getAccountEmail(projectId)}/keys`,
-        method: 'POST',
-      },
-    );
-    const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
-
-    await $`echo '${privateKeyData}' | base64 --decode > ${pathFileKey}`;
     return JSON.stringify(fs.readJSONSync(pathFileKey));
   } catch (e) {
     return null;
