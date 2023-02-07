@@ -50,7 +50,8 @@ const requestApi = async (
 const getAcessTokenGCP = async () => {
   await echo`-- Get the Google Cloud account credentials:
   1. Access https://shell.cloud.google.com/?fromcloudshell=true&show=terminal
-  2. Execute 'gcloud auth application-default print-access-token' in cloud shell`;
+  2. Execute 'gcloud auth application-default print-access-token' in cloud shell
+`;
 
   return question('Google Cloud access token: ');
 };
