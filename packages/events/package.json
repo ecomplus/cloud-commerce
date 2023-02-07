@@ -38,7 +38,7 @@
     "@cloudcommerce/app-paghiper": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",
     "@cloudcommerce/app-tiny-erp": "workspace:*",
-    "@cloudcommerce/app-webhooks": "workspace:^0.0.0",
+    "@cloudcommerce/app-webhooks": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.2.1",
