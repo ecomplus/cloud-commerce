@@ -5,7 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import config from '@cloudcommerce/firebase/lib/config';
 import GalaxpayAxios from '../galaxpay/auth/create-access';
 
-const collectionSubscription = getFirestore().collection('subscriptions');
+const collectionSubscription = getFirestore().collection('galaxpaySubscriptions');
 
 const handleApiEvent: ApiEventHandler = async ({
   evName,

@@ -1,6 +1,7 @@
 import type { TrackingDoc } from './database';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
 import db from './database';
 import updateOrderfulfilllment from './update-fulfillments';
 import fetchTrackingEvents from './fetch-tracking-code';
@@ -9,7 +10,7 @@ import removeDeliveredToFirestore from './remove-delivered';
 const getConfig = async () => {
   try {
     const app = (await api.get(
-      'applications?app_id=1244&fields=hidden_data',
+      `applications?app_id=${config.get().apps.frenet.appId}&fields=hidden_data`,
     )).data.result;
 
     return app[0].hidden_data;
