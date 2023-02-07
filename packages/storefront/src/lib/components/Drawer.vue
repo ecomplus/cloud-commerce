@@ -92,6 +92,15 @@ const isPlacementX = computed(() => {
         </button>
         <slot />
       </div>
+      <Teleport to="#teleported-top">
+        <Fade>
+          <div
+            v-if="modelValue"
+            class="fixed top-0 left-0 w-screen h-screen bg-black/50 z-40"
+            data-drawer-backdrop
+          ></div>
+        </Fade>
+      </Teleport>
     </dialog>
   </Fade>
 </template>
