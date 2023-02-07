@@ -135,7 +135,6 @@ export default async () => {
           const delayMs = process.env.API_EVENTS_DELAYED_MS
             ? (parseInt(process.env.API_EVENTS_DELAYED_MS, 10))
             : (1000 * 60 * 5);
-
           params['timestamp>'] = new Date(lastNonOrdersTimestamp - delayMs).toISOString();
           params['timestamp<'] = new Date(timestamp - delayMs).toISOString();
         } else {

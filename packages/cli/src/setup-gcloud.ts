@@ -22,9 +22,9 @@ const requestApi = async (
   },
 ) => {
   const body = options?.body;
-  let url = options?.baseURL || `https://iam.googleapis.com/v1/projects/${projectId}/serviceAccounts`;
+  let url = options?.baseURL
+    || `https://iam.googleapis.com/v1/projects/${projectId}/serviceAccounts`;
   url += options?.url || '';
-
   const data = await (await fetch(
     url,
     {
@@ -39,20 +39,18 @@ const requestApi = async (
   const { error } = data;
   if (error) {
     let msgErr = 'Unexpected error in request';
-    msgErr = error.message ? `code: ${error.code} - ${error.message}` : msgErr;
+    msgErr = error.message ? `Code: ${error.code} - ${error.message}` : msgErr;
     const err = new Error(msgErr);
     throw err;
   }
-
   return data;
 };
 
-const getAcessTokenGCP = async () => {
+const getGcpAccessToken = async () => {
   await echo`-- Get the Google Cloud account credentials:
   1. Access https://shell.cloud.google.com/?fromcloudshell=true&show=terminal
-  2. Execute 'gcloud auth application-default print-access-token' in cloud shell
+  2. Execute \`gcloud auth application-default print-access-token\` in Cloud Shell
 `;
-
   return question('Google Cloud access token: ');
 };
 
@@ -67,30 +65,69 @@ const checkServiceAccountExists = async (projectId: string) => {
       const { accounts: listAccounts } = await requestApi(projectId);
       const accountFound = listAccounts
         && listAccounts.find(({ email }) => email === getAccountEmail(projectId));
-
       hasServiceAccount = Boolean(accountFound);
     }
-  } catch (e) {
+  } catch {
     return null;
   }
   return hasServiceAccount;
 };
 
 const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
-  let haveGcloud = false;
+  let hasGcloud: boolean;
   try {
-    haveGcloud = Boolean(await $`command -v gcloud`);
-  } catch (e) {
-    //
+    hasGcloud = Boolean(await $`command -v gcloud`);
+  } catch {
+    hasGcloud = false;
   }
-
-  if (haveGcloud) {
+  if (hasGcloud) {
     if (/no credential/i.test((await $`gcloud auth list`).stderr)) {
       await $`gcloud auth login`;
     }
     await $`gcloud config set project ${projectId}`;
   } else {
-    gcpAccessToken = await getAcessTokenGCP();
+    gcpAccessToken = await getGcpAccessToken();
+  }
+
+  const serviceAccount = await checkServiceAccountExists(projectId);
+  if (!serviceAccount) {
+    const description = 'A service account with permission to deploy Cloud Commerce'
+      + ' from the GitHub repository to Firebase';
+    const displayName = 'Cloud Commerce GH Actions';
+    if (hasGcloud) {
+      await $`gcloud iam service-accounts create ${serviceAccountId} \
+        --description=${description} --display-name=${displayName}`;
+    } else if (gcpAccessToken) {
+      const body = JSON.stringify({
+        accountId: serviceAccountId,
+        serviceAccount: {
+          description,
+          displayName,
+        },
+      });
+      await requestApi(projectId, { method: 'POST', body });
+    }
+  }
+  await fs.ensureDir(path.join(pwd, '.cloudcommerce'));
+  const pathPolicyIAM = path.join(pwd, '.cloudcommerce', 'policyIAM.json');
+  let policyIAM: Record<string, any> = {};
+  const version = 3; // most recent
+  const baseURL = `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`;
+  if (hasGcloud) {
+    await $`gcloud projects get-iam-policy ${projectId} --format json > ${pathPolicyIAM}`;
+    policyIAM = fs.readJSONSync(pathPolicyIAM);
+  } else if (gcpAccessToken) {
+    // https://cloud.google.com/iam/docs/granting-changing-revoking-access?hl=pt-br#view-access
+    // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:getIamPolicy
+    policyIAM = await requestApi(
+      projectId,
+      {
+        baseURL,
+        url: ':getIamPolicy',
+        method: 'POST',
+        body: JSON.stringify({ options: { requestedPolicyVersion: version } }),
+      },
+    );
   }
 
   const roles = [
@@ -105,54 +142,10 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     'roles/serviceusage.apiKeysViewer',
     'roles/serviceusage.serviceUsageAdmin',
   ];
-  const serviceAccount = await checkServiceAccountExists(projectId);
-  const description = 'A service account with permission to deploy Cloud Commerce from the GitHub repository to Firebase';
-  const displayName = 'Cloud Commerce GH Actions';
-
-  if (!serviceAccount && haveGcloud) {
-    await $`gcloud iam service-accounts create ${serviceAccountId} \
-      --description=${description} --display-name=${displayName}`;
-  } else if (!serviceAccount && gcpAccessToken) {
-    //
-    const body = JSON.stringify({
-      accountId: serviceAccountId,
-      serviceAccount: {
-        description,
-        displayName,
-      },
-    });
-
-    await requestApi(projectId, { method: 'POST', body });
-  }
-
-  await fs.ensureDir(path.join(pwd, '.cloudcommerce'));
-  const pathPolicyIAM = path.join(pwd, '.cloudcommerce', 'policyIAM.json');
-  let policyIAM: Record<string, any> = {};
-  const version = 3; // according to the reference use the most recent
-  const baseURL = `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`;
-
-  if (haveGcloud) {
-    await $`gcloud projects get-iam-policy ${projectId} --format json > ${pathPolicyIAM}`;
-    policyIAM = fs.readJSONSync(pathPolicyIAM);
-  } else if (gcpAccessToken) {
-    // https://cloud.google.com/iam/docs/granting-changing-revoking-access?hl=pt-br#view-access
-    // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:getIamPolicy
-
-    policyIAM = await requestApi(
-      projectId,
-      {
-        baseURL,
-        url: ':getIamPolicy',
-        method: 'POST',
-        body: JSON.stringify({ options: { requestedPolicyVersion: version } }),
-      },
-    );
-  }
   let { bindings } = policyIAM;
   if (!bindings) {
     bindings = [];
   }
-
   let mustUpdatePolicy = false;
   roles.forEach((role) => {
     const roleFound = bindings.find((binding) => binding.role === role);
@@ -184,23 +177,24 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
       }
     }
   });
-  if (mustUpdatePolicy && haveGcloud) {
-    fs.writeJSONSync(pathPolicyIAM, policyIAM);
-    return $`gcloud projects set-iam-policy ${projectId} ${pathPolicyIAM}`;
-  } if (mustUpdatePolicy && gcpAccessToken) {
-    Object.assign(policyIAM, { version, bindings });
-    // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:setIamPolicy
-    return requestApi(
-      projectId,
-      {
-        baseURL,
-        url: ':setIamPolicy',
-        method: 'POST',
-        body: JSON.stringify({ policy: policyIAM }),
-      },
-    );
+  if (mustUpdatePolicy) {
+    if (hasGcloud) {
+      fs.writeJSONSync(pathPolicyIAM, policyIAM);
+      return $`gcloud projects set-iam-policy ${projectId} ${pathPolicyIAM}`;
+    } if (gcpAccessToken) {
+      Object.assign(policyIAM, { version, bindings });
+      // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:setIamPolicy
+      return requestApi(
+        projectId,
+        {
+          baseURL,
+          url: ':setIamPolicy',
+          method: 'POST',
+          body: JSON.stringify({ policy: policyIAM }),
+        },
+      );
+    }
   }
-
   return null;
 };
 
