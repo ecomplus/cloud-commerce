@@ -1,11 +1,9 @@
 ---
-import type { Categories } from '@cloudcommerce/api/types';
 import type CmsHeader from '@@sf/types/cms-header';
-import type CmsContacts from '@@sf/types/cms-contacts';
 import type { PageContext } from '@@sf/ssr-context';
 import Picture from '@@sf/ssr/Picture.astro';
-import PitchBar, { Props as PitchBarProps } from '@@sf/components/PitchBar.vue';
-import ShopHeader from '@@sf/components/ShopHeader.vue';
+import PitchBar, { type Props as PitchBarProps } from '~/components/PitchBar.vue';
+import ShopHeader, { type Props as ShopHeaderProps } from '@@sf/components/ShopHeader.vue';
 
 export interface Props {
   pageContext: PageContext;
@@ -31,7 +29,9 @@ if (header.pitch_bar) {
     html: header.marketing_stripe.text,
   }];
 }
-const logoSrc = header.logo || settings.logo;
+const shopHeader: ShopHeaderProps = {
+  categories: apiState.categories,
+};
 const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
 ---
 
@@ -41,19 +41,21 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     {pitchBar.slides.length === 1 && <PitchBar {...pitchBar} />}
   </slot>
   <slot name="sticky-header">
-    <ShopHeader client:load>
+    <ShopHeader {...shopHeader} client:load>
       <Fragment slot="logo">
         <slot name="logo">
           <a href="/">
             <LogoHeading>
-              <Picture
-                src={logoSrc}
-                alt={settings.name}
-                widths={[300]}
-                sizes="150px"
-                fetchpriority="high"
-                class="hover:drop-shadow-sm"
-              />
+              <slot name="logo-picture">
+                <Picture
+                  src={header.logo || settings.logo}
+                  alt={settings.name}
+                  widths={[300]}
+                  sizes="150px"
+                  fetchpriority="high"
+                  class="hover:drop-shadow-sm"
+                />
+              </slot>
             </LogoHeading>
           </a>
         </slot>
@@ -61,14 +63,3 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     </ShopHeader>
   </slot>
 </Fragment>
-
-<style is:global>
-/*
-[data-pitch-bar] {
-  @apply bg-slate-300;
-}
-[data-pitch-bar-controls] > * {
-  @apply bg-slate-300;
-}
-*/
-</style>

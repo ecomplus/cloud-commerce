@@ -4,12 +4,14 @@ import { computed } from 'vue';
 export interface Props {
   speed?: 'default' | 'slow' | 'slower',
   slide?: 'down' | 'left' | 'right' | 'up',
+  isFloating?: boolean,
   isLeaveTo?: boolean,
   isEnterFrom?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
   speed: 'default',
+  isFloating: false,
   isLeaveTo: true,
   isEnterFrom: true,
 });
@@ -50,32 +52,28 @@ const isSlideY = computed(() => {
   return props.slide === 'down' || props.slide === 'up';
 });
 const height = computed(() => {
+  if (props.isFloating) return null;
   return isSlideY.value ? 0 : 'auto';
 });
 const width = computed(() => {
+  if (props.isFloating) return null;
   return props.slide && !isSlideY.value ? 0 : 'auto';
 });
 const enterFromHeight = computed(() => {
   return props.isEnterFrom ? height.value : 'auto';
 });
-const leaveToHeight = computed(() => {
-  return props.isLeaveTo ? height.value : 'auto';
-});
 const enterFromWidth = computed(() => {
   return props.isEnterFrom ? width.value : 'auto';
-});
-const leaveToWidth = computed(() => {
-  return props.isLeaveTo ? width.value : 'auto';
 });
 const willChange = computed(() => {
   let properties = 'opacity';
   if (transform.value !== 'none') properties += ', transform';
-  if (height.value !== 'auto') properties += ', height';
-  if (width.value !== 'auto') properties += ', width';
+  if (height.value === 0) properties += ', height';
+  if (width.value === 0) properties += ', width';
   return properties;
 });
 const onEnter = (el: HTMLElement) => {
-  if (props.slide) {
+  if (props.slide && !props.isFloating && props.isEnterFrom) {
     if (isSlideY.value) {
       el.style.width = getComputedStyle(el).width;
       el.style.height = 'auto';
@@ -104,12 +102,12 @@ const onEnter = (el: HTMLElement) => {
   }
 };
 const onAfterEnter = (el: HTMLElement) => {
-  if (props.slide) {
-    el.style[isSlideY.value ? 'height' : 'width'] = 'auto';
+  if (props.slide && !props.isFloating && props.isEnterFrom) {
+    el.style[isSlideY.value ? 'height' : 'width'] = null;
   }
 };
 const onLeave = (el: HTMLElement) => {
-  if (props.slide) {
+  if (props.slide && !props.isFloating && props.isLeaveTo) {
     if (isSlideY.value) {
       el.style.height = getComputedStyle(el).height;
     } else {
@@ -165,7 +163,5 @@ const onLeave = (el: HTMLElement) => {
 .sf-fade-leave-to {
   opacity: v-bind(leaveToOpacity);
   transform: v-bind(leaveToTransform);
-  height: v-bind(leaveToHeight);
-  width: v-bind(leaveToWidth);
 }
 </style>

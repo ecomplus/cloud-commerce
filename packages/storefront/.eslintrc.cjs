@@ -11,7 +11,7 @@ module.exports = {
     'global-require': 'off',
     'import/no-dynamic-require': 'off',
     'vue/multi-word-component-names': ['error', {
-      ignores: ['Fade', 'Carousel', 'Prices'],
+      ignores: ['Fade', 'Carousel', 'Drawer', 'Prices'],
     }],
   },
 };

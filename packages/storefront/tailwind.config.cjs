@@ -47,7 +47,7 @@ let defaultThemeOptions = {
     menu: 'bars-3-bottom-left',
     search: 'magnifying-glass',
     account: 'user-circle',
-    'x-mark': 'x-mark',
+    close: 'x-mark',
   },
 };
 if (globalThis.storefront_theme_options) {

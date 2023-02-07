@@ -12,6 +12,9 @@ export interface Props {
 ---
 
 <body>
+  <div id="teleported-overlap" class="relative z-50"></div>
+  <div id="teleported-top" class="relative z-0"></div>
   <slot />
   <slot name="before-body-end" />
+  <div id="teleported-bottom" class="relative z-0"></div>
 </body>
