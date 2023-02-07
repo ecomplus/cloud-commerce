@@ -124,7 +124,7 @@ ECOM_STORE_ID=${storeId}
         //
       }
     }
-    let serviceAccountJSON : string | null = null;
+    let serviceAccountJSON: string | null = null;
     if (argv.gcloud !== false) {
       try {
         await siginGcloudAndSetIAM(projectId as string, pwd);
