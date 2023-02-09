@@ -559,6 +559,25 @@ importers:
       '@cloudcommerce/types': link:../../types
       '@firebase/app-types': 0.9.0
 
+  packages/apps/webhooks:
+    specifiers:
+      '@cloudcommerce/api': workspace:*
+      '@cloudcommerce/firebase': workspace:*
+      '@cloudcommerce/types': workspace:*
+      '@firebase/app-types': ^0.9.0
+      axios: ^1.2.6
+      firebase-admin: ^11.5.0
+      firebase-functions: ^4.2.0
+    dependencies:
+      '@cloudcommerce/api': link:../../api
+      '@cloudcommerce/firebase': link:../../firebase
+      axios: 1.3.2
+      firebase-admin: 11.5.0
+      firebase-functions: 4.2.1_firebase-admin@11.5.0
+    devDependencies:
+      '@cloudcommerce/types': link:../../types
+      '@firebase/app-types': 0.9.0
+
   packages/cli:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -618,6 +637,7 @@ importers:
       '@cloudcommerce/app-paghiper': workspace:*
       '@cloudcommerce/app-pix': workspace:*
       '@cloudcommerce/app-tiny-erp': workspace:*
+      '@cloudcommerce/app-webhooks': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
       '@firebase/app-types': ^0.9.0
@@ -640,6 +660,7 @@ importers:
       '@cloudcommerce/app-paghiper': link:../apps/paghiper
       '@cloudcommerce/app-pix': link:../apps/pix
       '@cloudcommerce/app-tiny-erp': link:../apps/tiny-erp
+      '@cloudcommerce/app-webhooks': link:../apps/webhooks
       '@cloudcommerce/firebase': link:../firebase
       firebase-admin: 11.5.0
       firebase-functions: 4.2.1_firebase-admin@11.5.0
@@ -868,52 +889,52 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.4.0
+      '@cloudcommerce/cli': ^0.4.1
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.4.0
+      '@cloudcommerce/firebase': ^0.4.1
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.4.0
-      '@cloudcommerce/firebase': ^0.4.0
+      '@cloudcommerce/events': ^0.4.1
+      '@cloudcommerce/firebase': ^0.4.1
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.4.0
-      '@cloudcommerce/modules': ^0.4.0
+      '@cloudcommerce/firebase': ^0.4.1
+      '@cloudcommerce/modules': ^0.4.1
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.4.0
-      '@cloudcommerce/passport': ^0.4.0
+      '@cloudcommerce/firebase': ^0.4.1
+      '@cloudcommerce/passport': ^0.4.1
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.13.1
+      '@astrojs/image': ^0.14.1
       '@astrojs/node': ^5.0.3
-      '@cloudcommerce/api': ^0.4.0
-      '@cloudcommerce/firebase': ^0.4.0
-      '@cloudcommerce/i18n': ^0.4.0
-      '@cloudcommerce/ssr': ^0.4.0
-      '@cloudcommerce/storefront': ^0.4.0
-      '@cloudcommerce/types': ^0.4.0
+      '@cloudcommerce/api': ^0.4.1
+      '@cloudcommerce/firebase': ^0.4.1
+      '@cloudcommerce/i18n': ^0.4.1
+      '@cloudcommerce/ssr': ^0.4.1
+      '@cloudcommerce/storefront': ^0.4.1
+      '@cloudcommerce/types': ^0.4.1
     dependencies:
-      '@astrojs/image': 0.13.1
+      '@astrojs/image': 0.14.1
       '@astrojs/node': 5.0.3
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -925,16 +946,16 @@ importers:
 
   store/storefront:
     specifiers:
-      '@astrojs/image': ^0.13.1
+      '@astrojs/image': ^0.14.1
       '@astrojs/node': ^5.0.3
-      '@cloudcommerce/api': ^0.4.0
-      '@cloudcommerce/firebase': ^0.4.0
-      '@cloudcommerce/i18n': ^0.4.0
-      '@cloudcommerce/ssr': ^0.4.0
-      '@cloudcommerce/storefront': ^0.4.0
-      '@cloudcommerce/types': ^0.4.0
+      '@cloudcommerce/api': ^0.4.1
+      '@cloudcommerce/firebase': ^0.4.1
+      '@cloudcommerce/i18n': ^0.4.1
+      '@cloudcommerce/ssr': ^0.4.1
+      '@cloudcommerce/storefront': ^0.4.1
+      '@cloudcommerce/types': ^0.4.1
     dependencies:
-      '@astrojs/image': 0.13.1
+      '@astrojs/image': 0.14.1
       '@astrojs/node': 5.0.3
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
@@ -1007,26 +1028,6 @@ packages:
       slash: 4.0.0
       web-streams-polyfill: 3.2.1
 
-  /@astrojs/image/0.13.1:
-    resolution: {integrity: sha512-H+3I0i8KU+oTc3HsVncE8VGEQkEJEXXi79EnK7nRBf6WS8pWAjVaGBKXkk7jZQv8rM/Qc+Bnvl+lGLQCF1ziOA==}
-    peerDependencies:
-      astro: ^2.0.4
-      sharp: '>=0.31.0'
-    peerDependenciesMeta:
-      astro:
-        optional: true
-      sharp:
-        optional: true
-    dependencies:
-      '@altano/tiny-async-pool': 1.0.2
-      http-cache-semantics: 4.1.0
-      image-size: 1.0.2
-      kleur: 4.1.5
-      magic-string: 0.27.0
-      mime: 3.0.0
-      slash: 4.0.0
-    dev: false
-
   /@astrojs/image/0.14.0_astro@2.0.6+sharp@0.31.3:
     resolution: {integrity: sha512-prrBz2jZ8bsHm9uNlgeuf+jxQ4jHUD08h7+GXQv1DGfbYQuXQaupJlAg2/hJHmzE5lEvDCL0OYKTXAJ03Gorpw==}
     peerDependencies:
@@ -1046,6 +1047,25 @@ packages:
       magic-string: 0.27.0
       mime: 3.0.0
       sharp: 0.31.3
+    dev: false
+
+  /@astrojs/image/0.14.1:
+    resolution: {integrity: sha512-tRswPnPJVqStGXh+5mWtvh7+qi+jABcGkm9BFdP2Hh8Ya8KAgO0ICPjDG3Fppcz5G2JIZ50B3ajXiyWuuRIQJw==}
+    peerDependencies:
+      astro: ^2.0.7
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
+      http-cache-semantics: 4.1.0
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.27.0
+      mime: 3.0.0
     dev: false
 
   /@astrojs/language-server/0.28.3:
@@ -3751,29 +3771,11 @@ packages:
     transitivePeerDependencies:
       - encoding
 
-  /@firebase/component/0.6.1:
-    resolution: {integrity: sha512-yvKthG0InjFx9aOPnh6gk0lVNfNVEtyq3LwXgZr+hOwD0x/CtXq33XCpqv0sQj5CA4FdMy8OO+y9edI+ZUw8LA==}
-    dependencies:
-      '@firebase/util': 1.9.0
-      tslib: 2.4.1
-    dev: false
-
   /@firebase/component/0.6.3:
     resolution: {integrity: sha512-rnhq5SOsB5nuJphZF50iwqnBiuuyg9kdnlUn1rBrKfu7/cUVJZF5IG1cWrL0rXXyiZW1WBI/J2pmTvVO8dStGQ==}
     dependencies:
       '@firebase/util': 1.9.2
       tslib: 2.4.1
-
-  /@firebase/database-compat/0.3.1:
-    resolution: {integrity: sha512-sI7LNh0C8PCq9uUKjrBKLbZvqHTSjsf2LeZRxin+rHVegomjsOAYk9OzYwxETWh3URhpMkCM8KcTl7RVwAldog==}
-    dependencies:
-      '@firebase/component': 0.6.1
-      '@firebase/database': 0.14.1
-      '@firebase/database-types': 0.10.1
-      '@firebase/logger': 0.4.0
-      '@firebase/util': 1.9.0
-      tslib: 2.4.1
-    dev: false
 
   /@firebase/database-compat/0.3.3:
     resolution: {integrity: sha512-r+L9jTbvsnb7sD+xz6UKU39DgBWqB2pyjzPNdBeriGC9Ssa2MAZe0bIqjCQg51RRXYc/aa/zK1Q2/4uesZeVgQ==}
@@ -3785,29 +3787,11 @@ packages:
       '@firebase/util': 1.9.2
       tslib: 2.4.1
 
-  /@firebase/database-types/0.10.1:
-    resolution: {integrity: sha512-UgUx9VakTHbP2WrVUdYrUT2ofTFVfWjGW2O1fwuvvMyo6WSnuSyO5nB1u0cyoMPvO25dfMIUVerfK7qFfwGL3Q==}
-    dependencies:
-      '@firebase/app-types': 0.9.0
-      '@firebase/util': 1.9.0
-    dev: false
-
   /@firebase/database-types/0.10.3:
     resolution: {integrity: sha512-Hu34CDhHYZsd2eielr0jeaWrTJk8Hz0nd7WsnYDnXtQX4i49ppgPesUzPdXVBdIBLJmT0ZZRvT7qWHknkOT+zg==}
     dependencies:
       '@firebase/app-types': 0.9.0
       '@firebase/util': 1.9.2
-
-  /@firebase/database/0.14.1:
-    resolution: {integrity: sha512-iX6/p7hoxUMbYAGZD+D97L05xQgpkslF2+uJLZl46EdaEfjVMEwAdy7RS/grF96kcFZFg502LwPYTXoIdrZqOA==}
-    dependencies:
-      '@firebase/auth-interop-types': 0.2.1
-      '@firebase/component': 0.6.1
-      '@firebase/logger': 0.4.0
-      '@firebase/util': 1.9.0
-      faye-websocket: 0.11.4
-      tslib: 2.4.1
-    dev: false
 
   /@firebase/database/0.14.3:
     resolution: {integrity: sha512-J76W6N7JiVkLaAtPyjaGRkrsIu9pi6iZikuGGtGjqvV19vkn7oiL4Hbo5uTYCMd4waTUWoL9iI08eX184W+5GQ==}
@@ -4060,12 +4044,6 @@ packages:
       tslib: 2.4.1
     transitivePeerDependencies:
       - encoding
-
-  /@firebase/util/1.9.0:
-    resolution: {integrity: sha512-oeoq/6Sr9btbwUQs5HPfeww97bf7qgBbkknbDTXpRaph2LZ23O9XLCE5tJy856SBmGQfO4xBZP8dyryLLM2nSQ==}
-    dependencies:
-      tslib: 2.4.1
-    dev: false
 
   /@firebase/util/1.9.2:
     resolution: {integrity: sha512-9l0uMGPGw3GsoD5khjMmYCCcMq/OR/OOSViiWMN+s2Q0pxM+fYzrii1H+r8qC/uoMjSVXomjLZt0vZIyryCqtQ==}
@@ -4776,10 +4754,6 @@ packages:
 
   /@types/node/18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
-
-  /@types/node/18.11.18:
-    resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
-    dev: false
 
   /@types/node/18.11.19:
     resolution: {integrity: sha512-YUgMWAQBWLObABqrvx8qKO1enAvBUdjZOAWQ5grBAkp5LQv45jBvYKZ3oFS9iKRCQyFjqw6iuEa1vmFqtxYLZw==}
@@ -7878,9 +7852,9 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       '@fastify/busboy': 1.1.0
-      '@firebase/database-compat': 0.3.1
-      '@firebase/database-types': 0.10.1
-      '@types/node': 18.11.18
+      '@firebase/database-compat': 0.3.3
+      '@firebase/database-types': 0.10.3
+      '@types/node': 18.11.19
       jsonwebtoken: 9.0.0
       jwks-rsa: 3.0.1
       node-forge: 1.3.1
