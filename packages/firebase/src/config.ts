@@ -33,7 +33,6 @@ const googleAnalyticsEvents: ApiEventName[] = [
 const melhorEnvioEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
-
 const webhooksAppEvents: ApiEventName[] = [
   'applications-dataSet',
   'orders-anyStatusSet',

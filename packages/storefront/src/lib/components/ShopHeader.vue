@@ -43,10 +43,11 @@ const sidenavHeight = computed(() => {
 <template>
   <header
     ref="header"
-    class="top-0 z-50"
-    :class="isSticky
-      ? 'bg-white/80 backdrop-blur-md shadow py-2 md:py-3'
-      : 'bg-white py-3 sm:py-4 md:py-5'"
+    class="top-0 z-50 transition-colors"
+    :class="[
+      isSticky && !isSidenavOpen ? 'bg-white/80' : 'bg-white',
+      isSticky ? 'backdrop-blur-md shadow py-2 md:py-3' : 'py-3 sm:py-4 md:py-5',
+    ]"
   >
     <div class="container lg:max-w-7xl mx-auto px-1 lg:pl-3
       grid grid-flow-col grid-cols-3 justify-between items-center
@@ -101,10 +102,10 @@ const sidenavHeight = computed(() => {
       v-model="isSidenavOpen"
       :has-close-button="false"
       position="absolute"
-      class="mt-3"
-      :style="{ height: `calc(100vh - ${sidenavHeight}px)` }"
+      class="mt-2 -z-1"
+      :style="{ height: `calc(100vh - ${sidenavHeight}px + .5rem)` }"
     >
-      <ShopSidenav class="pt-6" :categories="categories" />
+      <ShopSidenav class="bg-white pt-6" :categories="categories" />
     </Drawer>
   </header>
 </template>
