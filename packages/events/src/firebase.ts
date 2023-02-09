@@ -28,3 +28,5 @@ export * from '@cloudcommerce/app-google-analytics';
 export * from '@cloudcommerce/app-paghiper/webhook';
 
 export * from '@cloudcommerce/app-melhor-envio/events';
+
+export * from '@cloudcommerce/app-webhooks';

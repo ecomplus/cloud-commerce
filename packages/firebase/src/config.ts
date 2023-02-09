@@ -34,6 +34,12 @@ const melhorEnvioEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
 
+const webhooksAppEvents: ApiEventName[] = [
+  'applications-dataSet',
+  'orders-anyStatusSet',
+  'carts-delayed',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -127,6 +133,10 @@ const mergeConfig = {
     melhorEnvio: {
       appId: 1236,
       events: melhorEnvioEvents,
+    },
+    webhooksApp: {
+      appId: 123113,
+      events: webhooksAppEvents,
     },
   },
   cmsSettings,
