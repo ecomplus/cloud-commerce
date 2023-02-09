@@ -45,7 +45,7 @@ const requestApi = async (
   const { error } = data;
   if (error) {
     let msgErr = 'Unexpected error in request';
-    msgErr = error.message ? `code: ${error.code} - ${error.message}` : msgErr;
+    msgErr = error.message ? `Code: ${error.code} - ${error.message}` : msgErr;
     const err = new Error(msgErr);
     throw err;
   }
