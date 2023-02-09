@@ -31,7 +31,7 @@ const sendWebhook = async (
   const url = options && options.webhook_uri;
   if (url && !urls.includes(url) && (!isCart || options.send_carts)) {
     urls.push(url);
-    logger.log(`Event for Store ${isCart ? 'cart' : 'order'} => ${url}`);
+    logger.log(`Event ${isCart ? 'cart' : 'order'} => ${url}`);
 
     if (
       options.skip_pending === true
