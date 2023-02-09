@@ -834,11 +834,6 @@ exports.params = {
       'maxLength': 200,
       'description': 'Code to identify the affiliate that referred the customer'
     },
-    'browser_ip': {
-      'type': 'string',
-      'maxLength': 50,
-      'description': 'IP address of the browser used by the customer when placing the order'
-    },
     'channel_id': {
       'type': 'integer',
       'minimum': 10000,

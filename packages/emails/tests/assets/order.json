@@ -4,7 +4,7 @@
   "utm": {
       "campaign": "adwords_example"
   },
-  "browser_ip": "8.8.8.8",
+  "client_ip": "8.8.8.8",
   "channel_id": "10001",
   "domain": "www.sampleshop.com.br",
   "opened_at": "2017-11-19T13:10:00.612Z",

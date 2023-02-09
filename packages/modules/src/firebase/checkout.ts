@@ -32,9 +32,8 @@ export default async (req: Request, res: Response) => {
 
   const validate = ajv.compile(checkoutSchema.params);
   const checkoutBody = req.body as CheckoutBody;
-  if (!req.body.browser_ip && req.ip) {
-    req.body.browser_ip = req.ip;
-  }
+  req.body.client_ip = req.ip;
+  req.body.client_user_agent = req.get('user-agent') || '';
   if (!validate(checkoutBody)) {
     return sendRequestError(res, '@checkout', validate.errors);
   }
@@ -79,7 +78,8 @@ export default async (req: Request, res: Response) => {
       const fields = [
         'utm',
         'affiliate_code',
-        'browser_ip',
+        'client_ip',
+        'client_user_agent',
         'channel_id',
         'channel_type',
         'domain',

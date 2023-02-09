@@ -598,10 +598,15 @@ const schema = {
       'maxLength': 200,
       'description': 'Code to identify the affiliate that referred the customer'
     },
-    'browser_ip': {
+    'client_ip': {
       'type': 'string',
       'maxLength': 50,
       'description': 'IP address of the browser used by the customer when placing the order'
+    },
+    'client_user_agent': {
+      'type': 'string',
+      'maxLength': 255,
+      'description': 'User-Agent of the browser (if any) used by the customer'
     },
     'channel_id': {
       'type': 'integer',

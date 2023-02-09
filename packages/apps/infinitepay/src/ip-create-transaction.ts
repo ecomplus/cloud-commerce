@@ -209,7 +209,7 @@ export default async (appData: AppModuleBody) => {
       }
     }
 
-    const payerIp = params.browser_ip;
+    const payerIp = params.client_ip;
     const hash = Buffer.from(params?.credit_card?.hash || '', 'base64').toString();
     dataHash = JSON.parse(hash);
 
