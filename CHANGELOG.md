@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/ecomplus/cloud-commerce/compare/v0.4.0...v0.4.1) (2023-02-09)
+
+
+### Features
+
+* **app-webhooks:** Create app for general carts/orders webhooks ([#112](https://github.com/ecomplus/cloud-commerce/issues/112)) ([25f6c6b](https://github.com/ecomplus/cloud-commerce/commit/25f6c6b46ef91ffa16516a2adc1ecd451df52cb0))
+* **cli:** Create GCP service account with REST API if no `gcloud` CLI available ([#119](https://github.com/ecomplus/cloud-commerce/issues/119)) ([3cda825](https://github.com/ecomplus/cloud-commerce/commit/3cda8256a0996b65ca480633690051eb06ebaa32))
+* **events:** Start handling delayed events, add `carts-delayed` ([#115](https://github.com/ecomplus/cloud-commerce/issues/115)) ([3e488db](https://github.com/ecomplus/cloud-commerce/commit/3e488dbdaa140b2be521b9f1f059c0ce5e364850))
+* **storefront:** Adding `Drawer` component backdrop ([6739153](https://github.com/ecomplus/cloud-commerce/commit/6739153e0b63145a2a5a965d638e8ba7ca6a1e6a))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#116](https://github.com/ecomplus/cloud-commerce/issues/116)) ([f4f886d](https://github.com/ecomplus/cloud-commerce/commit/f4f886ded7a50f10553133fe375dc5df0c68fcbb))
+* **modules:** Properly handling IP and User-Agent on checkout ([addf5aa](https://github.com/ecomplus/cloud-commerce/commit/addf5aae43c2083364c577fd671636b99247d388))
+* **storefront:** Set default teleported divs z-index ([85c8bb6](https://github.com/ecomplus/cloud-commerce/commit/85c8bb60f98a3a70e1cef0a9139fd6e6852e4279))
+
 ## [0.4.0](https://github.com/ecomplus/cloud-commerce/compare/v0.3.0...v0.4.0) (2023-02-05)
 
 
