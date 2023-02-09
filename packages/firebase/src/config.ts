@@ -9,33 +9,27 @@ const tinyErpEvents: ApiEventName[] = [
   'products-priceSet',
   'applications-dataSet',
 ];
-
 const emailsEvents: ApiEventName[] = [
   'orders-new',
   'orders-anyStatusSet',
 ];
-
 const galaxPayEvents: ApiEventName[] = [
   'orders-cancelled',
 ];
-
 const loyaltyPointsEvents: ApiEventName[] = [
   'orders-new',
   'orders-anyStatusSet',
 ];
-
 const frenetEvents: ApiEventName[] = [
   'orders-new',
 ];
 const fbConversionsEvents: ApiEventName[] = [
   'orders-new',
-  'carts-new',
+  'carts-customerSet',
 ];
-
 const googleAnalyticsEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
-
 const melhorEnvioEvents: ApiEventName[] = [
   'orders-anyStatusSet',
 ];
