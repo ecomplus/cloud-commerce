@@ -4,6 +4,7 @@ import {
   fs,
   question,
   echo,
+  fetch,
 } from 'zx';
 
 let gcpAccessToken: string | undefined;
@@ -13,26 +14,30 @@ const getAccountEmail = (projectId: string) => {
 };
 
 const requestApi = async (
-  projectId: string,
-  options?: {
-    baseURL?: string,
+  options: {
+    baseURL: string,
     url?: string,
-    method: string,
+    method?: string,
     body?: string,
+    headers?: { [x: string]: string }
+    accessToken?: string
   },
 ) => {
   const body = options?.body;
-  let url = options?.baseURL || `https://iam.googleapis.com/v1/projects/${projectId}/serviceAccounts`;
+  let url = options.baseURL;
   url += options?.url || '';
+
+  const headers = {
+    ...options?.headers,
+    Authorization: `Bearer ${options?.accessToken || gcpAccessToken}`,
+    'Content-Type': 'application/json; charset=utf-8',
+  };
 
   const data = await (await fetch(
     url,
     {
       method: options?.method || 'GET',
-      headers: {
-        Authorization: `Bearer ${gcpAccessToken}`,
-        'Content-Type': 'application/json; charset=utf-8',
-      },
+      headers,
       body,
     },
   )).json() as any;
@@ -49,11 +54,13 @@ const requestApi = async (
 
 const getAcessTokenGCP = async () => {
   await echo`-- Get the Google Cloud account credentials:
-  1. Access https://shell.cloud.google.com/?fromcloudshell=true&show=terminal
-  2. Execute 'gcloud auth application-default print-access-token' in cloud shell
+  1. Access https://auth-cloud-commerce.web.app/auth
+  2. Copy and paste the generated token
 `;
 
-  return question('Google Cloud access token: ');
+  const credencialsBase64 = await question('Google Cloud access token: ');
+  const credentials = JSON.parse(Buffer.from(credencialsBase64, 'base64').toString());
+  return credentials.access_token;
 };
 
 const checkServiceAccountExists = async (projectId: string) => {
@@ -64,7 +71,8 @@ const checkServiceAccountExists = async (projectId: string) => {
       hasServiceAccount = !/not_?found/i.test(stderr);
     } else {
       // https://cloud.google.com/iam/docs/creating-managing-service-accounts?hl=pt-br#listing
-      const { accounts: listAccounts } = await requestApi(projectId);
+      const baseURL = `https://iam.googleapis.com/v1/projects/${projectId}/serviceAccounts`;
+      const { accounts: listAccounts } = await requestApi({ baseURL });
       const accountFound = listAccounts
         && listAccounts.find(({ email }) => email === getAccountEmail(projectId));
 
@@ -77,9 +85,11 @@ const checkServiceAccountExists = async (projectId: string) => {
 };
 
 const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
+  const baseURL = `https://iam.googleapis.com/v1/projects/${projectId}/serviceAccounts`;
+
   let haveGcloud = false;
   try {
-    haveGcloud = Boolean(await $`command -v gcloud`);
+    haveGcloud = Boolean(await $`command -v t`);
   } catch (e) {
     //
   }
@@ -122,14 +132,13 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
       },
     });
 
-    await requestApi(projectId, { method: 'POST', body });
+    await requestApi({ baseURL, method: 'POST', body });
   }
 
   await fs.ensureDir(path.join(pwd, '.cloudcommerce'));
   const pathPolicyIAM = path.join(pwd, '.cloudcommerce', 'policyIAM.json');
   let policyIAM: Record<string, any> = {};
   const version = 3; // according to the reference use the most recent
-  const baseURL = `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`;
 
   if (haveGcloud) {
     await $`gcloud projects get-iam-policy ${projectId} --format json > ${pathPolicyIAM}`;
@@ -139,9 +148,8 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:getIamPolicy
 
     policyIAM = await requestApi(
-      projectId,
       {
-        baseURL,
+        baseURL: `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`,
         url: ':getIamPolicy',
         method: 'POST',
         body: JSON.stringify({ options: { requestedPolicyVersion: version } }),
@@ -191,9 +199,8 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     Object.assign(policyIAM, { version, bindings });
     // POST https://cloudresourcemanager.googleapis.com/API_VERSION/RESOURCE_TYPE/RESOURCE_ID:setIamPolicy
     return requestApi(
-      projectId,
       {
-        baseURL,
+        baseURL: `https://cloudresourcemanager.googleapis.com/v1/projects/${projectId}`,
         url: ':setIamPolicy',
         method: 'POST',
         body: JSON.stringify({ policy: policyIAM }),
@@ -205,6 +212,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
 };
 
 const createServiceAccountKey = async (projectId: string, pwd: string) => {
+  const baseURL = `https://iam.googleapis.com/v1/projects/${projectId}/serviceAccounts`;
   try {
     const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
     if (!gcpAccessToken) {
@@ -212,8 +220,8 @@ const createServiceAccountKey = async (projectId: string, pwd: string) => {
       --iam-account=${getAccountEmail(projectId)}`;
     } else {
       const { privateKeyData } = await requestApi(
-        projectId,
         {
+          baseURL,
           url: `/${getAccountEmail(projectId)}/keys`,
           method: 'POST',
         },
@@ -231,4 +239,6 @@ export default siginGcloudAndSetIAM;
 export {
   siginGcloudAndSetIAM,
   createServiceAccountKey,
+  requestApi,
+  getAcessTokenGCP,
 };
