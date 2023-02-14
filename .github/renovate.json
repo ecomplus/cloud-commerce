@@ -9,5 +9,5 @@
     "dependencies"
   ],
   "dependencyDashboard": false,
-  "ignoreDeps": ["node", "pnpm"]
+  "ignoreDeps": ["node", "pnpm", "turbo"]
 }
