@@ -33,7 +33,10 @@ export default async (req: Request, res: Response) => {
   const validate = ajv.compile(checkoutSchema.params);
   const checkoutBody = req.body as CheckoutBody;
   req.body.client_ip = req.ip;
-  req.body.client_user_agent = req.get('user-agent') || '';
+  const userAgent = req.get('user-agent');
+  req.body.client_user_agent = userAgent === 'string'
+    ? userAgent.substring(0, 255)
+    : '';
   if (!validate(checkoutBody)) {
     return sendRequestError(res, '@checkout', validate.errors);
   }
