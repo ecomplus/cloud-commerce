@@ -40,10 +40,6 @@ let defaultThemeOptions = {
   iconAliases: {
     'shopping-cart': 'shopping-bag',
     cashback: 'arrow-uturn-left',
-    'chevron-right': 'chevron-right',
-    'chevron-left': 'chevron-left',
-    'chevron-up': 'chevron-up',
-    'chevron-down': 'chevron-down',
     menu: 'bars-3-bottom-left',
     search: 'magnifying-glass',
     account: 'user-circle',
