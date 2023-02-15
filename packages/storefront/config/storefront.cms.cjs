@@ -13,12 +13,33 @@ module.exports = () => {
   const dirContent = resolvePath(baseDir, 'content');
 
   const cms = (filename) => {
-    if (filename.endsWith('/')) {
-      const dirColl = resolvePath(dirContent, filename);
-      return fs.readdirSync(dirColl).map((_filename) => _filename.replace('.json', ''));
+    // MUST be sync for 'settings'
+    // Async with other content to support external CMS integration
+    const loadLocal = () => {
+      if (filename.endsWith('/')) {
+        const dirColl = resolvePath(dirContent, filename);
+        return new Promise((resolve) => {
+          resolve(fs.readdirSync(dirColl).map((file) => file.replace('.json', '')));
+        });
+      }
+      const filepath = resolvePath(dirContent, `${filename}.json`);
+      const content = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+      return filename === 'settings'
+        ? content
+        : new Promise((resolve) => { resolve(content); });
+    };
+    const handler = globalThis.storefront_cms_handler;
+    if (typeof handler === 'function') {
+      try {
+        const content = handler({ dirContent, filename, loadLocal });
+        if (content) {
+          return content;
+        }
+      } catch {
+        //
+      }
     }
-    const filepath = resolvePath(dirContent, `${filename}.json`);
-    return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+    return loadLocal();
   };
 
   let settings;

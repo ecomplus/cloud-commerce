@@ -1,7 +1,7 @@
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type CmsSettings from './types/cms-settings';
+import type { CMS, CmsSettings } from './cms';
 import { EventEmitter } from 'node:events';
 import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
@@ -18,8 +18,7 @@ type StorefrontConfig = {
   settings: CmsSettings,
   dirContent: string,
   // eslint-disable-next-line no-unused-vars
-  cms: <T extends string>(filename: T) => T extends `${string}/`
-    ? Array<string> : Record<string, any>,
+  cms: CMS,
 };
 
 const emitter = new EventEmitter();
@@ -88,7 +87,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
   ];
   if (slug) {
     if (cmsCollection) {
-      cmsContent = config.cms(`${cmsCollection}/${slug}`);
+      cmsContent = await config.cms(`${cmsCollection}/${slug}`);
     } else {
       apiFetchings[0] = api.get(`slugs/${slug}`, apiOptions);
     }

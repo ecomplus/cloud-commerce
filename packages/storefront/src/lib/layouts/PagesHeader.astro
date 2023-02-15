@@ -1,7 +1,5 @@
 ---
-import type CmsHeader from '@@sf/types/cms-header';
 import type { PageContext } from '@@sf/ssr-context';
-import Picture from '@@sf/ssr/Picture.astro';
 import PitchBar, { type Props as PitchBarProps } from '~/components/PitchBar.vue';
 import ShopHeader, { type Props as ShopHeaderProps } from '~/components/ShopHeader.vue';
 
@@ -14,20 +12,13 @@ const {
   pageContext: {
     isHomepage,
     apiState,
-    settings,
     cms,
   },
 } = Astro.props as Props;
-const header = cms('header') as CmsHeader &
-  { marketing_stripe?: { text: string, link: string }, logo?: string };
+const cmsHeader = await cms('header');
 const pitchBar: PitchBarProps = { slides: [] };
-if (header.pitch_bar) {
-  pitchBar.slides = header.pitch_bar;
-} else if (header.marketing_stripe) {
-  pitchBar.slides = [{
-    href: header.marketing_stripe.link,
-    html: header.marketing_stripe.text,
-  }];
+if (cmsHeader.pitch_bar) {
+  pitchBar.slides = cmsHeader.pitch_bar;
 }
 const shopHeader: ShopHeaderProps = {
   categories: apiState.categories,
@@ -40,22 +31,13 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     {pitchBar.slides.length > 1 && <PitchBar {...pitchBar} client:idle />}
     {pitchBar.slides.length === 1 && <PitchBar {...pitchBar} />}
   </slot>
-  <slot name="sticky-header">
+  <slot name="sticky-cmsHeader">
     <ShopHeader {...shopHeader} client:load>
       <Fragment slot="logo">
         <slot name="logo">
           <a href="/">
             <LogoHeading>
-              <slot name="logo-picture">
-                <Picture
-                  src={header.logo || settings.logo}
-                  alt={settings.name}
-                  widths={[300]}
-                  sizes="150px"
-                  fetchpriority="high"
-                  class="hover:drop-shadow-sm"
-                />
-              </slot>
+              <slot name="logo-picture" />
             </LogoHeading>
           </a>
         </slot>

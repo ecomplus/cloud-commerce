@@ -1,5 +1,4 @@
 ---
-import type CmsCode from '@@sf/types/cms-code';
 import type { PageContext } from '@@sf/ssr-context';
 import BaseHead from '@@sf/layouts/BaseHead.astro';
 import BaseStateJson from '@@sf/layouts/BaseStateJson.astro';
@@ -12,7 +11,7 @@ export interface Props {
 
 const { pageContext, title } = Astro.props as Props;
 const { cms } = pageContext;
-const cmsCustomCode = cms('code') as CmsCode;
+const cmsCustomCode = await cms('code');
 ---
 
 <head>

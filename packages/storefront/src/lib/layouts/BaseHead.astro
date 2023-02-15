@@ -33,7 +33,7 @@ const favicon = settings.icon
     })).src
   : '/favicon.ico';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
-const cmsSocial = cms('social') as CmsSocial;
+const cmsSocial = await cms('social') as CmsSocial;
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
 let ogImage: string | undefined;
 if (apiDoc) {
