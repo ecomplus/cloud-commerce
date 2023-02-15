@@ -76,7 +76,7 @@ const isPlacementX = computed(() => {
       :open="modelValue"
       :data-drawer="placement"
     >
-      <div class="relative">
+      <div class="relative h-full">
         <button
           v-if="hasCloseButton"
           type="button"
