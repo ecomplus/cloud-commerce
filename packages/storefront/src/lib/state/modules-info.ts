@@ -156,7 +156,7 @@ const parsePhrase = <T extends keyof typeof modulesInfo>(
   formatValue: (x: any) => string = formatMoney,
 ) => {
   return computed(() => {
-    const searchString = `{{${varName}}}`;
+    const searchString = `{${varName}}`;
     const index = phrase.indexOf(searchString);
     if (index > -1) {
       const fieldValue = modulesInfo[modName][varName];
