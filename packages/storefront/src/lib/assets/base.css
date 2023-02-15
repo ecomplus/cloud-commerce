@@ -100,3 +100,9 @@ d-md {
     display: inline;
   }
 }
+
+/* Fix Safari issue related to <summary> / <details> arrow */
+details > summary.list-none::-webkit-details-marker,
+details > summary.list-none::marker {
+  display: none;
+}
