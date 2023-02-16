@@ -23,7 +23,9 @@ module.exports = () => {
         });
       }
       const filepath = resolvePath(dirContent, `${filename}.json`);
-      const content = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+      const content = fs.existsSync(filepath)
+        ? JSON.parse(fs.readFileSync(filepath, 'utf8'))
+        : null;
       return filename === 'settings'
         ? content
         : new Promise((resolve) => { resolve(content); });
