@@ -19,7 +19,10 @@ module.exports = () => {
       if (filename.endsWith('/')) {
         const dirColl = resolvePath(dirContent, filename);
         return new Promise((resolve) => {
-          resolve(fs.readdirSync(dirColl).map((file) => file.replace('.json', '')));
+          const slugs = fs.existsSync(dirColl)
+            ? fs.readdirSync(dirColl).map((file) => file.replace('.json', ''))
+            : [];
+          resolve(slugs);
         });
       }
       const filepath = resolvePath(dirContent, `${filename}.json`);
