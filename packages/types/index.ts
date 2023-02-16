@@ -97,6 +97,13 @@ type CmsSettings = {
   currency: string,
   currency_symbol: string,
   country_code: string,
+  whatsapp?: string,
+  instagram?: string,
+  facebook?: string,
+  twitter?: string,
+  youtube?: string,
+  tiktok?: string,
+  pinterest?: string,
   modules?: {
     list_payments?: {
       installments_option?: Partial<ListPaymentsResponse['installments_option']>,
