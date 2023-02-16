@@ -17,8 +17,8 @@ const cmsCustomCode = await cms('code');
 <head>
   <BaseHead pageContext={pageContext} title={title} />
   <BaseStateJson pageContext={pageContext} />
-  {cmsCustomCode.css && <style>{cmsCustomCode.css}</style>}
-  {cmsCustomCode.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
+  {cmsCustomCode?.css && <style>{cmsCustomCode.css}</style>}
+  {cmsCustomCode?.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
   <slot name="base-head-scripts">
     <script src="../scripts/modules-info-preset"></script>
   </slot>
@@ -26,7 +26,7 @@ const cmsCustomCode = await cms('code');
 </head>
 <BaseBody pageContext={pageContext}>
   <slot />
-  {cmsCustomCode.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
+  {cmsCustomCode?.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
   <slot name="base-body-scripts">
     <script src="../scripts/session-utm"></script>
   </slot>

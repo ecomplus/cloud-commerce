@@ -1,5 +1,4 @@
 ---
-import type CmsSocial from '@@sf/types/cms-social';
 import type { PageContext } from '@@sf/ssr-context';
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg } from '@ecomplus/utils';
@@ -33,7 +32,7 @@ const favicon = settings.icon
     })).src
   : '/favicon.ico';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
-const cmsSocial = await cms('social') as CmsSocial;
+const cmsMetatags = await cms('metatags');
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
 let ogImage: string | undefined;
 if (apiDoc) {
@@ -41,9 +40,9 @@ if (apiDoc) {
   ogImage = picture && picture.url;
 }
 if (!ogImage) {
-  if (cmsSocial.og_image) {
-    ogImage = cmsSocial.og_image.charAt(0) === '/'
-      ? `https://${domain}${cmsSocial.og_image}` : cmsSocial.og_image;
+  if (cmsMetatags?.og_image) {
+    ogImage = cmsMetatags.og_image.charAt(0) === '/'
+      ? `https://${domain}${cmsMetatags.og_image}` : cmsMetatags.og_image;
   }
 } else {
   ogImage = ogImage.replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com');
@@ -69,9 +68,10 @@ if (!ogImage) {
 <meta property="og:type" content="website">
 <meta property="og:locale" content={ogLocale}>
 {ogImage && <meta property="og:image" content={ogImage} />}
-{cmsSocial.fb_app_id && <meta property="fb:app_id" content={cmsSocial.fb_app_id} />}
+{cmsMetatags?.fb_app_id && <meta property="fb:app_id" content={cmsMetatags.fb_app_id} />}
 <meta name="twitter:card" content="summary">
-{cmsSocial.twitter_username && <meta name="twitter:site" content={cmsSocial.twitter_username} />}
+{cmsMetatags?.twitter_username &&
+  <meta name="twitter:site" content={cmsMetatags.twitter_username} />}
 <meta name="ecom-store-id" content={String(storeId)}>
 {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
 <script>

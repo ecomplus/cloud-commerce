@@ -17,7 +17,7 @@ const {
 } = Astro.props as Props;
 const cmsHeader = await cms('header');
 const pitchBar: PitchBarProps = { slides: [] };
-if (cmsHeader.pitch_bar) {
+if (cmsHeader?.pitch_bar) {
   pitchBar.slides = cmsHeader.pitch_bar;
 }
 const shopHeader: ShopHeaderProps = {
@@ -31,7 +31,7 @@ const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
     {pitchBar.slides.length > 1 && <PitchBar {...pitchBar} client:idle />}
     {pitchBar.slides.length === 1 && <PitchBar {...pitchBar} />}
   </slot>
-  <slot name="sticky-cmsHeader">
+  <slot name="sticky-header">
     <ShopHeader {...shopHeader} client:load>
       <Fragment slot="logo">
         <slot name="logo">
