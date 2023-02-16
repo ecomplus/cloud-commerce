@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/ecomplus/cloud-commerce/compare/v0.4.1...v0.5.0) (2023-02-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `cms` function is no more always sync
+
+### Features
+
+* **storefront:** Return `categoryTrees` and getters on `useShopHeader` ([b19cc85](https://github.com/ecomplus/cloud-commerce/commit/b19cc85c7b82c26ea09da17035830abd01331101))
+* **storefront:** Starting new `useShopHeader` composable ([5b83e21](https://github.com/ecomplus/cloud-commerce/commit/5b83e21f9a0a2b2c1d540c46bc9e50bbd93f2bbd))
+* **storefront:** Update `cms()` to return promise excepting to settings ([a4e011a](https://github.com/ecomplus/cloud-commerce/commit/a4e011aa649f591929181f442f1851a141057b67))
+* **types:** Add social network links and Whatsapp number to `CmsSettings` (optionals) ([eeb7fb2](https://github.com/ecomplus/cloud-commerce/commit/eeb7fb2ee11a4f487e74fc6949f89344a43b43f9))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#123](https://github.com/ecomplus/cloud-commerce/issues/123)) ([cb11bc0](https://github.com/ecomplus/cloud-commerce/commit/cb11bc0f6b336f06351252c6294d1ffe1a5c547b))
+* **modules:** Limit `client_user_agent` from header to 355 chars ([9992da0](https://github.com/ecomplus/cloud-commerce/commit/9992da0fdd2d7ca4cdb89873f90fffa8f528dd86))
+* **storefront:** Fix `Drawer` relative container height ([e939f91](https://github.com/ecomplus/cloud-commerce/commit/e939f91f4ad52b8e7e54614402b62dea91dd2878))
+* **storefront:** Fix CMS result typedefs ([c56f09f](https://github.com/ecomplus/cloud-commerce/commit/c56f09fd3278813da9ef3a75f17aff03ba85b15e))
+* **storefront:** Making content files optional excepting settings ([96ce212](https://github.com/ecomplus/cloud-commerce/commit/96ce212d0871363a7b1a196a000bc3160987a9fc))
+* **storefront:** Prevent error throw on CMS collection list if dir not exists ([179e20d](https://github.com/ecomplus/cloud-commerce/commit/179e20dcaf8f64112ea92dbd12fbcba74f5a7c90))
+* **storefront:** Update `PagesHeader` layout to import store src `ShopHeader` component ([6322160](https://github.com/ecomplus/cloud-commerce/commit/63221600b7ab25e7dd5f9f8d01d0a3bb32503c5a))
+
 ### [0.4.1](https://github.com/ecomplus/cloud-commerce/compare/v0.4.0...v0.4.1) (2023-02-09)
 
 
