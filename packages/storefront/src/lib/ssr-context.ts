@@ -27,11 +27,6 @@ const getConfig: () => StorefrontConfig = _getConfig;
 declare global {
   // eslint-disable-next-line
   var api_prefetch_endpoints: ApiEndpoint[];
-  // eslint-disable-next-line
-  var storefront: {
-    settings: Partial<CmsSettings>,
-    onLoad: (callback: (...args: any[]) => void) => void,
-  };
 }
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = ['categories'];
@@ -70,7 +65,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
   const config = getConfig();
   globalThis.storefront.settings = config.settings;
   let cmsContent: Record<string, any> | undefined;
-  let apiResource: string | undefined;
+  let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: {
     categories?: CategoriesList,
@@ -132,6 +127,13 @@ const loadPageContext = async (Astro: AstroGlobal, {
     setResponseCache(Astro, 180, 300);
   } else {
     setResponseCache(Astro, 120, 300);
+  }
+  if (apiDoc) {
+    globalThis.storefront.context = {
+      resource: apiResource,
+      doc: apiDoc as any,
+      timestamp: Date.now(),
+    };
   }
   const pageContext = {
     ...config,

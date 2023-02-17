@@ -1,5 +1,13 @@
 /// <reference types="./src/vue-globals" />
 
+type DocCleanupFields = 'body_html'
+  | 'body_text'
+  | 'meta_title'
+  | 'meta_description'
+  | 'i18n'
+  | 'metafields'
+  | 'hidden_metafields';
+
 interface Window {
   firebaseConfig?: {
     apiKey: string,
@@ -16,10 +24,22 @@ interface Window {
   ECOM_CURRENCY_SYMBOL: string;
   ECOM_COUNTRY_CODE: string;
   storefront?: {
-    settings: import('./src/lib/types/cms-settings').default,
+    settings: import('./src/lib/cms').CmsSettings,
     context?: {
-      resource: string,
-      doc: Record<string, any>,
+      resource: 'products',
+      doc: Omit<import('@cloudcommerce/api/types').ProductSet, DocCleanupFields>,
+      timestamp: number,
+    } | {
+      resource: 'categories',
+      doc: Omit<import('@cloudcommerce/api/types').CategorySet, DocCleanupFields>,
+      timestamp: number,
+    } | {
+      resource: 'brands',
+      doc: Omit<import('@cloudcommerce/api/types').BrandSet, DocCleanupFields>,
+      timestamp: number,
+    } | {
+      resource: 'collections',
+      doc: Omit<import('@cloudcommerce/api/types').CollectionSet, DocCleanupFields>,
       timestamp: number,
     },
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,

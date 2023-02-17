@@ -2,6 +2,7 @@
 /// <reference types="vite-plugin-pwa/client" />
 /// <reference types="vue/ref-macros" />
 /// <reference types="../client" />
+/// <reference types="../server" />
 
 /* eslint-disable import/newline-after-import */
 
