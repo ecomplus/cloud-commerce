@@ -44,6 +44,7 @@ let defaultThemeOptions = {
     search: 'magnifying-glass',
     account: 'user-circle',
     close: 'x-mark',
+    logout: 'arrow-right-on-rectangle',
   },
 };
 if (globalThis.storefront_theme_options) {
