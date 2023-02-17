@@ -90,8 +90,11 @@ const fetchCustomer = async () => {
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   if (user) {
-    if (!customerName.value && user.displayName) {
+    if (user.displayName && !customerName.value) {
       session.customer.display_name = user.displayName;
+    }
+    if (user.email && (!customerEmail.value || user.emailVerified)) {
+      session.customer.main_email = user.email;
     }
     if (user.emailVerified) {
       const isEmailChanged = user.email !== customerEmail.value;
@@ -101,7 +104,6 @@ onAuthStateChanged(firebaseAuth, async (user) => {
           await fetchCustomer();
         }
       }
-      session.customer.main_email = user.email;
     }
   } else {
     logout();
