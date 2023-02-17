@@ -1,7 +1,20 @@
 import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  onAuthStateChanged,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
+  // updateProfile,
+} from 'firebase/auth';
 
-const app = initializeApp(window.firebaseConfig);
+const firebaseApp = initializeApp(window.firebaseConfig);
 
-export default app;
+export default firebaseApp;
 
-export const firebaseApp = app;
+export {
+  firebaseApp,
+  getAuth,
+  onAuthStateChanged,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
+};
