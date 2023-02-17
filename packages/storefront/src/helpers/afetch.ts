@@ -1,6 +1,6 @@
 type FetchParams = Parameters<typeof fetch>;
 
-export default (url: FetchParams[0], init?: FetchParams[1], timeout = 10000) => {
+const afetch = (url: FetchParams[0], init?: FetchParams[1], timeout = 10000) => {
   let abortController: AbortController | undefined;
   let timer;
   if (timeout) {
@@ -28,3 +28,5 @@ export default (url: FetchParams[0], init?: FetchParams[1], timeout = 10000) => 
   });
   return promise;
 };
+
+export default afetch;

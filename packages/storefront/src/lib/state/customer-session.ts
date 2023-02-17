@@ -3,6 +3,7 @@ import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
 import { computed } from 'vue';
+import requestIdleCallback from '../../helpers/idle-callback';
 import useStorage from './use-storage';
 
 const storageKey = 'SESSION';
@@ -82,10 +83,10 @@ const fetchCustomer = async () => {
 };
 
 let isAuthInitialized = false;
-const initializeFirebaseAuth = () => {
+const initializeFirebaseAuth = (canWaitIdle = !window.location.pathname.startsWith('/app/')) => {
   if (import.meta.env.SSR || isAuthInitialized) return;
   isAuthInitialized = true;
-  import('../scripts/firebase-app')
+  const runImport = () => import('../scripts/firebase-app')
     .then(({
       getAuth,
       onAuthStateChanged,
@@ -125,6 +126,11 @@ const initializeFirebaseAuth = () => {
       }
     })
     .catch(console.error);
+  if (canWaitIdle) {
+    requestIdleCallback(runImport);
+  } else {
+    runImport();
+  }
 };
 
 export default session;

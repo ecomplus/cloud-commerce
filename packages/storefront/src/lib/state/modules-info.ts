@@ -8,6 +8,7 @@ import { formatMoney } from '@ecomplus/utils';
 import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
 import utm from '@@sf/scripts/session-utm';
 import afetch from '../../helpers/afetch';
+import requestIdleCallback from '../../helpers/idle-callback';
 
 const emptyInfo = {
   list_payments: {},
@@ -140,11 +141,7 @@ if (!import.meta.env.SSR) {
         .catch(console.error);
     });
   };
-  if (typeof window.requestIdleCallback === 'function') {
-    window.requestIdleCallback(fetchInfo);
-  } else {
-    setTimeout(fetchInfo, 300);
-  }
+  requestIdleCallback(fetchInfo);
 }
 
 export default modulesInfo;
