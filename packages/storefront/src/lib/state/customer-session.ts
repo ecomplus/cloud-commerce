@@ -12,6 +12,7 @@ import {
 import useStorage from './use-storage';
 import '../scripts/firebase-app';
 
+const firebaseAuth = getAuth();
 const storageKey = 'SESSION';
 const emptySession = {
   customer: {
@@ -44,18 +45,8 @@ const customerEmail = computed({
   },
 });
 
-const firebaseAuth = getAuth();
-if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const email = urlParams.get('email');
-  if (email) {
-    signInWithEmailLink(firebaseAuth, email, window.location.href)
-      .catch(console.error);
-  }
-}
-
 const isLogged = computed(() => {
-  return isAuthenticated.value || !!firebaseAuth.currentUser;
+  return isAuthenticated.value || !!firebaseAuth.currentUser?.emailVerified;
 });
 const logout = () => {
   session.auth = emptySession.auth;
@@ -99,6 +90,9 @@ const fetchCustomer = async () => {
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   if (user) {
+    if (!customerName.value && user.displayName) {
+      session.customer.display_name = user.displayName;
+    }
     if (user.emailVerified) {
       const isEmailChanged = user.email !== customerEmail.value;
       if (isEmailChanged || !isAuthenticated.value) {
@@ -107,11 +101,21 @@ onAuthStateChanged(firebaseAuth, async (user) => {
           await fetchCustomer();
         }
       }
+      session.customer.main_email = user.email;
     }
   } else {
     logout();
   }
 });
+if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const email = urlParams.get('email');
+  if (email) {
+    signInWithEmailLink(firebaseAuth, email, window.location.href)
+      .then(() => window.localStorage.removeItem('emailForSignIn'))
+      .catch(console.error);
+  }
+}
 
 export default session;
 
