@@ -32,7 +32,7 @@ if (apiDoc) {
     apiDoc.price = getPrice(apiDoc);
   }
   const slimDocRegex = globalThis.storefront_slim_doc_regex
-    || /body|meta|records|description|i18n/;
+    || /body_|meta_|metafields|_records|i18n/;
   const minifyApiDoc = (nestedDoc: any) => {
     if (typeof nestedDoc === 'object' && nestedDoc) {
       if (Array.isArray(nestedDoc)) {
