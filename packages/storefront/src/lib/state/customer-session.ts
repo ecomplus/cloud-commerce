@@ -1,18 +1,10 @@
 import type { Customers } from '@cloudcommerce/api/types';
+import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
 import { computed } from 'vue';
-import {
-  getAuth,
-  onAuthStateChanged,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-  // updateProfile,
-} from 'firebase/auth';
 import useStorage from './use-storage';
-import '../scripts/firebase-app';
 
-const firebaseAuth = getAuth();
 const storageKey = 'SESSION';
 const emptySession = {
   customer: {
@@ -45,8 +37,9 @@ const customerEmail = computed({
   },
 });
 
+let firebaseAuth: Auth;
 const isLogged = computed(() => {
-  return isAuthenticated.value || !!firebaseAuth.currentUser?.emailVerified;
+  return isAuthenticated.value || !!firebaseAuth?.currentUser?.emailVerified;
 });
 const logout = () => {
   session.auth = emptySession.auth;
@@ -88,36 +81,51 @@ const fetchCustomer = async () => {
   return data;
 };
 
-onAuthStateChanged(firebaseAuth, async (user) => {
-  if (user) {
-    if (user.displayName && !customerName.value) {
-      session.customer.display_name = user.displayName;
-    }
-    if (user.email && (!customerEmail.value || user.emailVerified)) {
-      session.customer.main_email = user.email;
-    }
-    if (user.emailVerified) {
-      const isEmailChanged = user.email !== customerEmail.value;
-      if (isEmailChanged || !isAuthenticated.value) {
-        await authenticate();
-        if (isEmailChanged || !customerName.value) {
-          await fetchCustomer();
+let isAuthInitialized = false;
+const initializeFirebaseAuth = () => {
+  if (import.meta.env.SSR || isAuthInitialized) return;
+  isAuthInitialized = true;
+  import('../scripts/firebase-app')
+    .then(({
+      getAuth,
+      onAuthStateChanged,
+      isSignInWithEmailLink,
+      signInWithEmailLink,
+    }) => {
+      firebaseAuth = getAuth();
+      onAuthStateChanged(firebaseAuth, async (user) => {
+        if (user) {
+          if (user.displayName && !customerName.value) {
+            session.customer.display_name = user.displayName;
+          }
+          if (user.email && (!customerEmail.value || user.emailVerified)) {
+            session.customer.main_email = user.email;
+          }
+          if (user.emailVerified) {
+            const isEmailChanged = user.email !== customerEmail.value;
+            if (isEmailChanged || !isAuthenticated.value) {
+              await authenticate();
+              if (isEmailChanged || !customerName.value) {
+                await fetchCustomer();
+              }
+            }
+          }
+        } else {
+          logout();
+        }
+      });
+      if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+        if (email) {
+          signInWithEmailLink(firebaseAuth, email, window.location.href)
+            .then(() => window.localStorage.removeItem('emailForSignIn'))
+            .catch(console.error);
         }
       }
-    }
-  } else {
-    logout();
-  }
-});
-if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const email = urlParams.get('email');
-  if (email) {
-    signInWithEmailLink(firebaseAuth, email, window.location.href)
-      .then(() => window.localStorage.removeItem('emailForSignIn'))
-      .catch(console.error);
-  }
-}
+    })
+    .catch(console.error);
+};
 
 export default session;
 
@@ -132,4 +140,5 @@ export {
   authenticate,
   getAccessToken,
   fetchCustomer,
+  initializeFirebaseAuth,
 };
