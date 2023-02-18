@@ -4,12 +4,10 @@ import {
   i19accessMyAccount,
   i19createAnAccount,
   i19enterWithPassword,
-  i19hello,
   i19iForgotMyPassword,
   i19password,
   i19sendLoginCodeByEmail,
   i19signUp,
-  i19visitor,
 } from '@@i18n';
 import {
   getAuth,
@@ -22,9 +20,20 @@ import {
   isLogged,
 } from '@@sf/state/customer-session';
 
-const emit = defineEmits(['login', 'logout']);
+// eslint-disable-next-line no-spaced-func, func-call-spacing
+const emit = defineEmits<{
+  (e: 'set:is-logged', value: boolean): void
+  (e: 'set:email', value: string): void
+  (e: 'set:customer-name', value: string): void
+}>();
 watch(isLogged, (_isLogged) => {
-  emit(_isLogged ? 'login' : 'logout');
+  emit('set:is-logged', _isLogged);
+  emit('set:customer-name', customerName.value);
+}, {
+  immediate: true,
+});
+watch(email, (_email) => {
+  emit('set:email', _email);
 }, {
   immediate: true,
 });
@@ -58,11 +67,6 @@ const submitLogin = async () => {
 </script>
 
 <template>
-  <slot name="greetings" v-bind="{ customerName }">
-    <div class="text-xl font-medium mb-5">
-      {{ `${i19hello} ${customerName || i19visitor}` }}
-    </div>
-  </slot>
   <form
     class="login-form text-base"
     @submit.prevent="submitLogin"
