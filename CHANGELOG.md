@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/ecomplus/cloud-commerce/compare/v0.6.1...v0.6.2) (2023-02-19)
+
+
+### Bug Fixes
+
+* **storefront:** Fix state `useStorage` to prevent _localStorage is not defined_ ([94b5f6a](https://github.com/ecomplus/cloud-commerce/commit/94b5f6a31b3b6d0acaefd0879ef54b2bc5b37f6c))
+
 ### [0.6.1](https://github.com/ecomplus/cloud-commerce/compare/v0.6.0...v0.6.1) (2023-02-19)
 
 ## [0.6.0](https://github.com/ecomplus/cloud-commerce/compare/v0.5.0...v0.6.0) (2023-02-19)
