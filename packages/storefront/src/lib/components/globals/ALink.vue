@@ -9,11 +9,11 @@ export interface Props {
 const props = defineProps<Props>();
 const linkTarget = computed(() => {
   if (props.target) return props.target;
-  if (props.href.startsWith('http') && globalThis.storefront.settings) {
+  if (props.href.startsWith('http')) {
     const domain = globalThis.storefront.settings.domain || window.location.host;
     if (props.href.startsWith(`https://${domain}`)) return null;
   }
-  return null;
+  return '_blank';
 });
 </script>
 
