@@ -1,6 +1,13 @@
 import { reactive, watch } from 'vue';
 
-export default <T extends {}>(key: string, initialValue: T, storage = localStorage) => {
+const useStorage = <T extends {}>(
+  key: string,
+  initialValue: T,
+  storage = globalThis.localStorage,
+) => {
+  if (!storage) {
+    return reactive<T>(initialValue);
+  }
   let persistedValue: T | undefined | null;
   const sessionJson = storage.getItem(key);
   if (sessionJson) {
@@ -17,3 +24,5 @@ export default <T extends {}>(key: string, initialValue: T, storage = localStora
   });
   return state;
 };
+
+export default useStorage;
