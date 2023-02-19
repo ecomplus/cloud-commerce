@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/ecomplus/cloud-commerce/compare/v0.5.0...v0.6.0) (2023-02-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `ADrawer` and `LoginDrawer` components no more exists
+* **storefront:** Importing `@@sf/state/customer-session` does not start Firebase Auth automatically anymore, must call `initializeFirebaseAuth`
+
+### Features
+
+* **storefront:** Add `@@sf/browser-env` to exporting booleans for navigator and screen detection ([1281ad5](https://github.com/ecomplus/cloud-commerce/commit/1281ad50b6d23e7336dde1d5e5d4519ddeddcfa7))
+* **storefront:** Add `@@sf/server-data` exporting `settings` and `apiContext` SSRred objects ([40ac1db](https://github.com/ecomplus/cloud-commerce/commit/40ac1db1a30ceb818a019ef21606c7541ceb229c))
+* **storefront:** Also set `globalThis.storefront.context` on SSR context ([2c2fe64](https://github.com/ecomplus/cloud-commerce/commit/2c2fe642a1c07f32a5ee9851cf9c9dfde77e854a))
+* **storefront:** New `SocialNetworkIcon` and `SocialNetworkLink` components ([9702da6](https://github.com/ecomplus/cloud-commerce/commit/9702da68bac461a085c58de143ddf1b5d0c120c7))
+
+
+### Bug Fixes
+
+* **storefront:** Auto set customer session email from Firebase if empty, even if not verified ([f1741a9](https://github.com/ecomplus/cloud-commerce/commit/f1741a9696b1bfa3f253aa05404a5c57f5387c7c))
+* **storefront:** Fix `ALink` global component to target _blank on external host ([dffe5d8](https://github.com/ecomplus/cloud-commerce/commit/dffe5d81c6b7261aab3c4bda22b94e337f65e013))
+* **storefront:** Fixing default context API doc minifier regex ([711413f](https://github.com/ecomplus/cloud-commerce/commit/711413f993a087395078aca723483e3ffa4e5aae))
+* **storefront:** Make customer session state SSR friendly ([7dd8dff](https://github.com/ecomplus/cloud-commerce/commit/7dd8dff3680a112f9e9afd348b3a8696466056ff))
+* **storefront:** Update customer session state `isLogged` with email verified only ([d5ada3a](https://github.com/ecomplus/cloud-commerce/commit/d5ada3a130b7082d328611071178d4b92e4721cc))
+
+
+* **storefront:** Removing not intended to use `ADrawer` (=> `Drawer`) and `LoginDrawer` components ([0254f4c](https://github.com/ecomplus/cloud-commerce/commit/0254f4c82a76048b71e29bdcfeffa37b6992793d))
+
 ## [0.5.0](https://github.com/ecomplus/cloud-commerce/compare/v0.4.1...v0.5.0) (2023-02-16)
 
 
