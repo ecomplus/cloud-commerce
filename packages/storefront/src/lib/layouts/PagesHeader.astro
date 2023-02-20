@@ -22,6 +22,9 @@ if (cmsHeader?.pitch_bar) {
 }
 const shopHeader: ShopHeaderProps = {
   categories: apiState.categories,
+  menuCategorySlugs: cmsHeader.inline_menu_categories?.featured,
+  menuRandomCategories: cmsHeader.inline_menu_categories?.random,
+  isAlphabeticalSortSubmenu: cmsHeader.alphabetical_sort_submenu,
 };
 const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
 ---

@@ -6,8 +6,8 @@ import useStickyHeader from '@@sf/composables/use-sticky-header';
 export interface Props {
   header: Ref<HTMLElement>;
   categories: CategoriesList;
-  featuredMainCategories?: string[];
-  randomMainCategories?: number;
+  menuCategorySlugs?: string[];
+  menuRandomCategories?: number;
   isAlphabeticalSortSubmenu?: boolean;
 }
 
@@ -58,8 +58,13 @@ const filterSubcategories = (
   return subcategories;
 };
 
-const useShopHeader = (props: Props) => {
-  const { header, featuredMainCategories } = props;
+const useShopHeader = ({
+  header,
+  categories,
+  menuCategorySlugs,
+  menuRandomCategories = 7,
+  isAlphabeticalSortSubmenu,
+}: Props) => {
   const {
     isSticky,
     staticHeight,
@@ -68,12 +73,12 @@ const useShopHeader = (props: Props) => {
   const positionY = computed(() => {
     return isSticky.value ? header.value.offsetHeight : staticY.value;
   });
-  const mainCategories = filterMainCategories(props.categories, featuredMainCategories);
+  const mainCategories = filterMainCategories(categories, menuCategorySlugs);
   const getSubcategories = (parentCategory: CategoriesList[0]) => {
     return filterSubcategories(
-      props.categories,
+      categories,
       parentCategory,
-      !!props.isAlphabeticalSortSubmenu,
+      !!isAlphabeticalSortSubmenu,
     );
   };
   const getCategoryTree = (parentCategory: CategoriesList[0]): CategoryTree => {
@@ -87,10 +92,10 @@ const useShopHeader = (props: Props) => {
   const categoryTrees = mainCategories.map(getCategoryTree);
   let countRandom = 0;
   const inlineMenuTrees = categoryTrees.filter(({ slug }) => {
-    if (featuredMainCategories?.includes(slug)) {
+    if (menuCategorySlugs?.includes(slug)) {
       return true;
     }
-    if (countRandom < props.randomMainCategories) {
+    if (countRandom < menuRandomCategories) {
       countRandom += 1;
       return true;
     }
