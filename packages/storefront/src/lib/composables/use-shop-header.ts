@@ -1,13 +1,14 @@
 import type { Ref } from 'vue';
 import type { CategoriesList } from '@cloudcommerce/api/types';
-import type { CmsHeader } from '@@sf/cms';
 import { ref, computed } from 'vue';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
 
 export interface Props {
   header: Ref<HTMLElement>;
   categories: CategoriesList;
-  cmsHeader?: CmsHeader;
+  featuredMainCategories?: string[];
+  randomMainCategories?: number;
+  isAlphabeticalSortSubmenu?: boolean;
 }
 
 type CategoryTree = CategoriesList[0] & {
@@ -58,7 +59,7 @@ const filterSubcategories = (
 };
 
 const useShopHeader = (props: Props) => {
-  const { header } = props;
+  const { header, featuredMainCategories } = props;
   const {
     isSticky,
     staticHeight,
@@ -67,13 +68,12 @@ const useShopHeader = (props: Props) => {
   const positionY = computed(() => {
     return isSticky.value ? header.value.offsetHeight : staticY.value;
   });
-  const categoriesList = props.cmsHeader?.categories_list;
-  const mainCategories = filterMainCategories(props.categories, categoriesList?.featured);
+  const mainCategories = filterMainCategories(props.categories, featuredMainCategories);
   const getSubcategories = (parentCategory: CategoriesList[0]) => {
     return filterSubcategories(
       props.categories,
       parentCategory,
-      !!props.cmsHeader?.alphabetical_order_submenu,
+      !!props.isAlphabeticalSortSubmenu,
     );
   };
   const getCategoryTree = (parentCategory: CategoriesList[0]): CategoryTree => {
@@ -87,10 +87,10 @@ const useShopHeader = (props: Props) => {
   const categoryTrees = mainCategories.map(getCategoryTree);
   let countRandom = 0;
   const inlineMenuTrees = categoryTrees.filter(({ slug }) => {
-    if (categoriesList?.featured.includes(slug)) {
+    if (featuredMainCategories?.includes(slug)) {
       return true;
     }
-    if (countRandom < categoriesList?.random) {
+    if (countRandom < props.randomMainCategories) {
       countRandom += 1;
       return true;
     }
