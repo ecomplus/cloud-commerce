@@ -715,6 +715,84 @@ importers:
     dependencies:
       '@cloudcommerce/api': link:../api
 
+  store:
+    specifiers:
+      '@cloudcommerce/cli': ^0.6.2
+    dependencies:
+      '@cloudcommerce/cli': link:../packages/cli
+
+  store/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.6.2
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.6.2
+      '@cloudcommerce/firebase': ^0.6.2
+    dependencies:
+      '@cloudcommerce/events': link:../../../packages/events
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+
+  store/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.6.2
+      '@cloudcommerce/modules': ^0.6.2
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../packages/modules
+
+  store/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.6.2
+      '@cloudcommerce/passport': ^0.6.2
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../packages/passport
+
+  store/functions/ssr:
+    specifiers:
+      '@astrojs/image': ^0.14.1
+      '@astrojs/node': ^5.0.3
+      '@cloudcommerce/api': ^0.6.2
+      '@cloudcommerce/firebase': ^0.6.2
+      '@cloudcommerce/i18n': ^0.6.2
+      '@cloudcommerce/ssr': ^0.6.2
+      '@cloudcommerce/storefront': ^0.6.2
+      '@cloudcommerce/types': ^0.6.2
+    dependencies:
+      '@astrojs/image': 0.14.1
+      '@astrojs/node': 5.0.3
+      '@cloudcommerce/api': link:../../../packages/api
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../packages/storefront
+      '@cloudcommerce/types': link:../../../packages/types
+
+  store/storefront:
+    specifiers:
+      '@astrojs/image': ^0.14.1
+      '@astrojs/node': ^5.0.3
+      '@cloudcommerce/api': ^0.6.2
+      '@cloudcommerce/firebase': ^0.6.2
+      '@cloudcommerce/i18n': ^0.6.2
+      '@cloudcommerce/ssr': ^0.6.2
+      '@cloudcommerce/storefront': ^0.6.2
+      '@cloudcommerce/types': ^0.6.2
+    dependencies:
+      '@astrojs/image': 0.14.1
+      '@astrojs/node': 5.0.3
+      '@cloudcommerce/api': link:../../packages/api
+      '@cloudcommerce/firebase': link:../../packages/firebase
+      '@cloudcommerce/ssr': link:../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../packages/i18n
+      '@cloudcommerce/storefront': link:../../packages/storefront
+      '@cloudcommerce/types': link:../../packages/types
+
 packages:
 
   /@altano/tiny-async-pool/1.0.2:
@@ -771,6 +849,25 @@ packages:
 
   /@astrojs/compiler/1.1.0:
     resolution: {integrity: sha512-C4kTwirys+HafufMqaxCbML2wqkGaXJM+5AekXh/v1IIOnMIdcEON9GBYsG6qa8aAmLhZ58aUZGPhzcA3Dx7Uw==}
+    dev: false
+
+  /@astrojs/image/0.14.1:
+    resolution: {integrity: sha512-tRswPnPJVqStGXh+5mWtvh7+qi+jABcGkm9BFdP2Hh8Ya8KAgO0ICPjDG3Fppcz5G2JIZ50B3ajXiyWuuRIQJw==}
+    peerDependencies:
+      astro: ^2.0.7
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
+      http-cache-semantics: 4.1.0
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.27.0
+      mime: 3.0.0
     dev: false
 
   /@astrojs/image/0.15.0_astro@2.0.14+sharp@0.31.3:
@@ -834,6 +931,21 @@ packages:
       unified: 10.1.2
       unist-util-visit: 4.1.1
       vfile: 5.3.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@astrojs/node/5.0.3:
+    resolution: {integrity: sha512-zjyTE7ZWkwmJGbg1r7lOQJqRREqDV+yu2Qb4VTiJ8zek9ts4JD3syKRXXJxf9W2lhtIOMbukDmupIa+0Hkxq/w==}
+    peerDependencies:
+      astro: ^2.0.6
+    peerDependenciesMeta:
+      astro:
+        optional: true
+    dependencies:
+      '@astrojs/webapi': 2.0.0
+      send: 0.18.0
+      server-destroy: 1.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
