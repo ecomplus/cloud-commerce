@@ -29,7 +29,9 @@ declare global {
   var api_prefetch_endpoints: ApiEndpoint[];
 }
 if (!globalThis.api_prefetch_endpoints) {
-  globalThis.api_prefetch_endpoints = ['categories'];
+  globalThis.api_prefetch_endpoints = [
+    'categories?fields=_id,name,slug,icon,pictures.0',
+  ];
 }
 if (!globalThis.storefront) {
   globalThis.storefront = {
