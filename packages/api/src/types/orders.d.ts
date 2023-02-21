@@ -1160,26 +1160,10 @@ export interface Orders {
      * Product or variation picture for this cart item
      */
     picture?: {
-      /**
-       * Image size variation
-       *
-       * This interface was referenced by `undefined`'s JSON-Schema definition
-       * via the `patternProperty` "^small|normal|big|zoom|custom$".
-       */
-      [k: string]: {
-        /**
-         * Image link
-         */
-        url: string;
-        /**
-         * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
-         */
-        size?: string;
-        /**
-         * Alternative text, HTML alt tag (important for SEO)
-         */
-        alt?: string;
-      };
+      normal?: PictureSize;
+      big?: PictureSize1;
+      zoom?: PictureSize2;
+      small?: PictureSize3;
     };
     /**
      * Item customization fields
@@ -1650,4 +1634,72 @@ export interface Address2 {
      */
     number: string;
   };
+}
+/**
+ * Default image size variant
+ */
+export interface PictureSize {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
+}
+/**
+ * Image big size variant
+ */
+export interface PictureSize1 {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
+}
+/**
+ * Image zoom size variant
+ */
+export interface PictureSize2 {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
+}
+/**
+ * Image small size variant
+ */
+export interface PictureSize3 {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
 }

@@ -802,17 +802,20 @@ export interface Products {
    *
    * @maxItems 50
    */
-  pictures?: (
-    | {
-        [k: string]: unknown;
-      }
-    | {
-        [k: string]: unknown;
-      }
-    | {
-        [k: string]: unknown;
-      }
-  )[];
+  pictures?: {
+    /**
+     * Picture ID (ObjectID) [auto]
+     */
+    _id?: string;
+    /**
+     * Tag to identify object, use only lowercase letters, digits and underscore
+     */
+    tag?: string;
+    normal?: PictureSize;
+    big?: PictureSize1;
+    zoom?: PictureSize2;
+    small?: PictureSize3;
+  }[];
   /**
    * List of videos related to your product
    *
@@ -1350,4 +1353,72 @@ export interface Products {
    * Optional notes with additional info about this product
    */
   notes?: string;
+}
+/**
+ * Default image size variant
+ */
+export interface PictureSize {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
+}
+/**
+ * Image big size variant
+ */
+export interface PictureSize1 {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
+}
+/**
+ * Image zoom size variant
+ */
+export interface PictureSize2 {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
+}
+/**
+ * Image small size variant
+ */
+export interface PictureSize3 {
+  /**
+   * Image link
+   */
+  url: string;
+  /**
+   * Image size (width x height) in px, such as 100x50 (100px width, 50px height)
+   */
+  size?: string;
+  /**
+   * Alternative text, HTML alt tag (important for SEO)
+   */
+  alt?: string;
 }
