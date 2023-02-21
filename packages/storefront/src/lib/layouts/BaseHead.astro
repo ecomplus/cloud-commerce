@@ -73,8 +73,10 @@ if (!ogImage) {
 {cmsMetatags?.twitter_username &&
   <meta name="twitter:site" content={cmsMetatags.twitter_username} />}
 <meta name="ecom-store-id" content={String(storeId)}>
-{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
 <script>
   import { registerSW } from 'virtual:pwa-register';
   registerSW({ immediate: true });
 </script>
+{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+{(!pwaInfo && !import.meta.env.DEV) &&
+  <link rel="manifest" href="/manifest.webmanifest" />}
