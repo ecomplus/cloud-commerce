@@ -7,9 +7,7 @@ export interface Props {
 }
 
 const useShopHeaderSubmenu = (props: Props) => {
-  const categoryPicture = computed(() => {
-    return props.categoryTree.icon || props.categoryTree.pictures?.[0];
-  });
+  const categoryPicture = computed(() => props.categoryTree.pictures?.[0]);
   const subcategoriesWithChild = computed(() => {
     return props.categoryTree.subcategories
       .filter(({ subcategories }) => subcategories.length);
