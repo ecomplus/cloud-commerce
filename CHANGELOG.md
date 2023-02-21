@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/ecomplus/cloud-commerce/compare/v0.6.2...v0.6.3) (2023-02-21)
+
+
+### Features
+
+* **storefront:** Add new `useShopHeaderSubmenu` composable ([f2a73d3](https://github.com/ecomplus/cloud-commerce/commit/f2a73d36da2d069c05a9607d71a57bc834f704ac))
+* **storefront:** Edit default SSR prefetch endpoint to also get categories first picture field ([fd81185](https://github.com/ecomplus/cloud-commerce/commit/fd81185fc0b8b33b16bed6a61730e6fb6fe25677))
+* **storefront:** Update `useShopHeader` to handle CMS header config for categories ([ccbf0a9](https://github.com/ecomplus/cloud-commerce/commit/ccbf0a9667d5eb6bbe52afe03c1bbfacf7314f67))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#125](https://github.com/ecomplus/cloud-commerce/issues/125)) ([884f1f4](https://github.com/ecomplus/cloud-commerce/commit/884f1f451f6bd4d5ac95cd734544e24a90bd5037))
+* **storefront:** Fixing `useShopHeaderSubmenu` returned `categoryPicture` ([32ba21b](https://github.com/ecomplus/cloud-commerce/commit/32ba21bf5679bfccba2d439ccfecb113340956e3))
+* **storefront:** Support parameters on API prefetch endpoints keeping only resource on `apiState` ([03c66df](https://github.com/ecomplus/cloud-commerce/commit/03c66dfe8e9c5a5a332a11cbc18d6a608cf2c788))
+
 ### [0.6.2](https://github.com/ecomplus/cloud-commerce/compare/v0.6.1...v0.6.2) (2023-02-19)
 
 
