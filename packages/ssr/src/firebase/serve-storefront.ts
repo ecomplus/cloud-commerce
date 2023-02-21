@@ -41,6 +41,7 @@ export default (req: Request, res: Response) => {
   global.ssr_handler(req, res, async (err: any) => {
     if (err) {
       res.set('X-SSR-Error', err.message);
+      res.set('X-SSR-Error-Stack', err.stack);
       fallback(err);
       return;
     }
@@ -49,8 +50,8 @@ export default (req: Request, res: Response) => {
       const data = await readFile(local);
       setStatusAndCache(200, 'public, max-age=60, s-maxage=600')
         .send(data);
-    } catch {
-      fallback(err, 404);
+    } catch (e) {
+      fallback(e, 404);
     }
   });
 };
