@@ -18,11 +18,14 @@ const { changeSlide } = inject(carouselKey);
     :aria-label="direction > 0 ? $t.i19next : $t.i19previous"
     @click="changeSlide(direction)"
     :data-carousel-control="direction > 0 ? 'next' : 'previous'"
+    class="group"
   >
     <slot>
       <i
         class="m-0"
-        :class="direction > 0 ? 'i-chevron-right' : 'i-chevron-left'"
+        :class="direction > 0
+          ? 'i-chevron-right group-active:translate-x-1'
+          : 'i-chevron-left group-active:-translate-x-1'"
       ></i>
     </slot>
   </button>
