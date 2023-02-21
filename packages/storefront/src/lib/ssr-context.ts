@@ -30,7 +30,7 @@ declare global {
 }
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = [
-    'categories?fields=_id,name,slug,icon,pictures.0',
+    'categories?fields=_id,name,slug,parent,icon,pictures.0',
   ];
 }
 if (!globalThis.storefront) {
@@ -97,7 +97,7 @@ const loadPageContext = async (Astro: AstroGlobal, {
       apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
     }
     prefetchResponses.forEach(({ config: { endpoint }, data }) => {
-      apiState[endpoint] = data.result || data;
+      apiState[endpoint.replace(/\?.*$/, '')] = data.result || data;
     });
   } catch (err: any) {
     const error: ApiError = err;
