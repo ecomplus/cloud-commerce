@@ -616,7 +616,7 @@ importers:
       '@ecomplus/utils': 1.5.0-rc.3
       '@firebase/app-types': ^0.9.0
       '@headlessui/vue': ^1.7.10
-      '@vueuse/core': 9.12.0
+      '@vueuse/core': 9.12.0 || ^9.13.1
       astro: ^2.0.14
       firebase-admin: ^11.5.0
       firebase-functions: ^4.2.1
@@ -663,7 +663,7 @@ importers:
       '@iconify-json/heroicons': ^1.1.10
       '@iconify-json/logos': ^1.1.23
       '@vite-pwa/astro': ^0.0.3
-      '@vueuse/core': 9.12.0
+      '@vueuse/core': 9.12.0 || ^9.13.1
       astro: ^2.0.14
       chroma-js: ^2.4.2
       dotenv: ^16.0.3
@@ -717,52 +717,52 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.6.2
+      '@cloudcommerce/cli': ^0.6.3
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.2
+      '@cloudcommerce/firebase': ^0.6.3
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.6.2
-      '@cloudcommerce/firebase': ^0.6.2
+      '@cloudcommerce/events': ^0.6.3
+      '@cloudcommerce/firebase': ^0.6.3
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.2
-      '@cloudcommerce/modules': ^0.6.2
+      '@cloudcommerce/firebase': ^0.6.3
+      '@cloudcommerce/modules': ^0.6.3
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.2
-      '@cloudcommerce/passport': ^0.6.2
+      '@cloudcommerce/firebase': ^0.6.3
+      '@cloudcommerce/passport': ^0.6.3
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.14.1
+      '@astrojs/image': ^0.15.0
       '@astrojs/node': ^5.0.3
-      '@cloudcommerce/api': ^0.6.2
-      '@cloudcommerce/firebase': ^0.6.2
-      '@cloudcommerce/i18n': ^0.6.2
-      '@cloudcommerce/ssr': ^0.6.2
-      '@cloudcommerce/storefront': ^0.6.2
-      '@cloudcommerce/types': ^0.6.2
+      '@cloudcommerce/api': ^0.6.3
+      '@cloudcommerce/firebase': ^0.6.3
+      '@cloudcommerce/i18n': ^0.6.3
+      '@cloudcommerce/ssr': ^0.6.3
+      '@cloudcommerce/storefront': ^0.6.3
+      '@cloudcommerce/types': ^0.6.3
     dependencies:
-      '@astrojs/image': 0.14.1
+      '@astrojs/image': 0.15.0
       '@astrojs/node': 5.0.3
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -774,16 +774,16 @@ importers:
 
   store/storefront:
     specifiers:
-      '@astrojs/image': ^0.14.1
+      '@astrojs/image': ^0.15.0
       '@astrojs/node': ^5.0.3
-      '@cloudcommerce/api': ^0.6.2
-      '@cloudcommerce/firebase': ^0.6.2
-      '@cloudcommerce/i18n': ^0.6.2
-      '@cloudcommerce/ssr': ^0.6.2
-      '@cloudcommerce/storefront': ^0.6.2
-      '@cloudcommerce/types': ^0.6.2
+      '@cloudcommerce/api': ^0.6.3
+      '@cloudcommerce/firebase': ^0.6.3
+      '@cloudcommerce/i18n': ^0.6.3
+      '@cloudcommerce/ssr': ^0.6.3
+      '@cloudcommerce/storefront': ^0.6.3
+      '@cloudcommerce/types': ^0.6.3
     dependencies:
-      '@astrojs/image': 0.14.1
+      '@astrojs/image': 0.15.0
       '@astrojs/node': 5.0.3
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
@@ -851,10 +851,10 @@ packages:
     resolution: {integrity: sha512-C4kTwirys+HafufMqaxCbML2wqkGaXJM+5AekXh/v1IIOnMIdcEON9GBYsG6qa8aAmLhZ58aUZGPhzcA3Dx7Uw==}
     dev: false
 
-  /@astrojs/image/0.14.1:
-    resolution: {integrity: sha512-tRswPnPJVqStGXh+5mWtvh7+qi+jABcGkm9BFdP2Hh8Ya8KAgO0ICPjDG3Fppcz5G2JIZ50B3ajXiyWuuRIQJw==}
+  /@astrojs/image/0.15.0:
+    resolution: {integrity: sha512-Dw47TNCF1dkX3gM1jEmtov4aLR/N5XNzTyToRv99OJZmAAY7J19DN+FUaCHYj3gsiF9N5FekhgOeKu1v4A5DgA==}
     peerDependencies:
-      astro: ^2.0.7
+      astro: ^2.0.12
       sharp: '>=0.31.0'
     peerDependenciesMeta:
       astro:
