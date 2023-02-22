@@ -2,6 +2,7 @@ import type { App } from 'vue';
 import { i18n, formatMoney } from '@ecomplus/utils';
 import Fade from '@@sf/components/globals/Fade.vue';
 import ALink from '@@sf/components/globals/ALink.vue';
+import AImg from '@@sf/components/globals/AImg.vue';
 
 const formatPercentage = (value: number, digits = 1) => {
   return Number.isInteger(value) ? `${value}%` : `${value.toFixed(digits)}%`;
@@ -22,6 +23,7 @@ export default (app: App) => {
   });
   app.component('Fade', Fade);
   app.component('ALink', ALink);
+  app.component('AImg', AImg);
 };
 
 export type FormatPercentage = typeof formatPercentage;

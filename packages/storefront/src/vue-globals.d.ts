@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Fade: typeof import('@@sf/components/globals/Fade.vue')['default'];
     ALink: typeof import('@@sf/components/globals/ALink.vue')['default'];
+    AImg: typeof import('@@sf/components/globals/AImg.vue')['default'];
   }
 }
 
