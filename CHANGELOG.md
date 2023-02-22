@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/ecomplus/cloud-commerce/compare/v0.6.3...v0.6.4) (2023-02-22)
+
+
+### Features
+
+* **api:** Improved product and cart/order item picture object typedef ([aa2f206](https://github.com/ecomplus/cloud-commerce/commit/aa2f20628599321951fe4992f8babdb753b4ce57))
+* **storefront:** Add new `AImg` global Vue component ([ac4be0b](https://github.com/ecomplus/cloud-commerce/commit/ac4be0bd710fbb380bac16958f073648e999e0fb))
+
+
+### Bug Fixes
+
+* **ssr:** Fix handling not found routes ([7749baa](https://github.com/ecomplus/cloud-commerce/commit/7749baad91308d8b39fa5dc548cf46058f307136))
+* **storefront:** Ensure Web App Manifest <link> ([d17dcb4](https://github.com/ecomplus/cloud-commerce/commit/d17dcb46e72c651d8a2e0ad46143785c25f081a2))
+
 ### [0.6.3](https://github.com/ecomplus/cloud-commerce/compare/v0.6.2...v0.6.3) (2023-02-21)
 
 
