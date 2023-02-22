@@ -72,6 +72,16 @@ const willChange = computed(() => {
   if (width.value === 0) properties += ', width';
   return properties;
 });
+const setInitialStyles = (el: HTMLElement) => {
+  el.style.setProperty('--fade-will-change', willChange.value);
+  el.style.setProperty('--fade-duration', duration.value);
+  el.style.setProperty('--fade-enter-opacity', String(enterFromOpacity.value));
+  el.style.setProperty('--fade-enter-transform', String(enterFromTransform.value));
+  el.style.setProperty('--fade-enter-height', String(enterFromHeight.value));
+  el.style.setProperty('--fade-enter-width', String(enterFromWidth.value));
+  el.style.setProperty('--fade-leave-opacity', String(leaveToOpacity.value));
+  el.style.setProperty('--fade-leave-transform', String(leaveToTransform.value));
+};
 const onEnter = (el: HTMLElement) => {
   if (props.slide && !props.isFloating && props.isEnterFrom) {
     if (isSlideY.value) {
@@ -126,7 +136,9 @@ const onLeave = (el: HTMLElement) => {
 <template>
   <Transition
     name="sf-fade"
+    @before-enter="setInitialStyles"
     @enter="onEnter"
+    @before-leave="setInitialStyles"
     @after-enter="onAfterEnter"
     @leave="onLeave"
   >
@@ -135,33 +147,26 @@ const onLeave = (el: HTMLElement) => {
 </template>
 
 <style>
-.sf-fade-enter-active,
-.sf-fade-leave-active {
-  transition: opacity var(--duration), transform var(--duration),
-    height var(--duration), width var(--duration);
-  overflow: hidden;
-}
-</style>
-
-<style scoped>
-* {
-  will-change: v-bind(willChange);
+[class*="sf-fade-"] {
+  will-change: var(--fade-will-change);
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 .sf-fade-enter-active,
 .sf-fade-leave-active {
-  --duration: v-bind(duration);
+  transition: opacity var(--fade-duration), transform var(--fade-duration),
+    height var(--fade-duration), width var(--fade-duration);
+  overflow: hidden;
 }
 .sf-fade-enter-from {
-  opacity: v-bind(enterFromOpacity);
-  transform: v-bind(enterFromTransform);
-  height: v-bind(enterFromHeight);
-  width: v-bind(enterFromWidth);
+  opacity: var(--fade-enter-opacity);
+  transform: var(--fade-enter-transform);
+  height: var(--fade-enter-height);
+  width: var(--fade-enter-width);
 }
 .sf-fade-leave-to {
-  opacity: v-bind(leaveToOpacity);
-  transform: v-bind(leaveToTransform);
+  opacity: var(--fade-leave-opacity);
+  transform: var(--fade-leave-transform);
 }
 </style>
