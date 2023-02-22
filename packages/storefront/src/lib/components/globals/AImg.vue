@@ -24,6 +24,7 @@ export interface Props {
     tag?: string;
   };
   loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -40,10 +41,11 @@ const dimensions = computed(() => {
 });
 const attrs = computed<ImgHTMLAttributes>(() => ({
   ...props,
-  width: dimensions.value.width || null,
-  height: dimensions.value.height || null,
   src: image.value.url,
   alt: image.value.alt,
+  width: dimensions.value.width || null,
+  height: dimensions.value.height || null,
+  decoding: props.decoding || (dimensions.value.height ? 'async' : null),
   picture: null,
 }));
 </script>
