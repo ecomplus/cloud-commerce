@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.5](https://github.com/ecomplus/cloud-commerce/compare/v0.6.4...v0.6.5) (2023-02-24)
+
+
+### Bug Fixes
+
+* **cli:** Do not deploy with `--force` if other options passed ([5cda086](https://github.com/ecomplus/cloud-commerce/commit/5cda086c8e96f59fb0828a4c655041b5308342ca))
+* **firebase:** Update config `ssrFunctionOptions` to 1GiB runtime by default ([f337537](https://github.com/ecomplus/cloud-commerce/commit/f3375370800d6a63b5f815674cb9796e3ac01e01))
+* **storefront:** Global `Fade` transition component should not have scoped CSS ([cf57779](https://github.com/ecomplus/cloud-commerce/commit/cf57779437c3509aeec2b90dadbaf1dd55f3d45e))
+* **storefront:** Reset `Carousel` scroll on window resize ([f66e883](https://github.com/ecomplus/cloud-commerce/commit/f66e883638ea3aab684810704093594776a37142))
+
 ### [0.6.4](https://github.com/ecomplus/cloud-commerce/compare/v0.6.3...v0.6.4) (2023-02-22)
 
 
