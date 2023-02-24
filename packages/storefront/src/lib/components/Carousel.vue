@@ -133,7 +133,10 @@ const calcOnInit = () => {
   calcCurrentIndex();
   calcIndexCount();
 };
-const onResize = useDebounceFn(calcOnInit, 400);
+const onResize = useDebounceFn(() => {
+  wrapper.value.scrollLeft = 0;
+  calcOnInit();
+}, 400);
 onMounted(() => {
   calcOnInit();
   if (!import.meta.env.SSR) {
@@ -161,8 +164,13 @@ provide(carouselKey, {
 </script>
 
 <template>
-  <div ref="carousel" data-carousel>
-    <component :is="as" ref="wrapper" data-carousel-wrapper>
+  <div ref="carousel" class="relative" data-carousel>
+    <component
+      :is="as"
+      ref="wrapper"
+      class="flex overflow-x-scroll overflow-y-hidden list-none m-0 p-0"
+      data-carousel-wrapper
+    >
       <slot />
     </component>
     <!-- @slot Slot for Arrows -->
@@ -187,44 +195,21 @@ provide(carouselKey, {
 </template>
 
 <style>
-[data-carousel] {
-  position: relative;
-}
 [data-carousel-wrapper] {
-  display: flex;
-  overflow-x: scroll;
-  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 [data-carousel-wrapper]::-webkit-scrollbar {
   display: none;
 }
 [data-carousel-wrapper] > * {
-  flex: 0 0 100%;
-  height: 100%;
   scroll-snap-align: start;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   outline: none;
 }
 [data-carousel-control] {
-  position: absolute;
-  top: 0;
-  bottom: 0;
   z-index: 1;
-}
-[data-carousel-control=previous] {
-  left: 0;
-}
-[data-carousel-control=next] {
-  right: 0;
 }
 </style>

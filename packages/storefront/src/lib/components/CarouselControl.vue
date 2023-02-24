@@ -17,8 +17,9 @@ const { changeSlide } = inject(carouselKey);
     type="button"
     :aria-label="direction > 0 ? $t.i19next : $t.i19previous"
     @click="changeSlide(direction)"
+    class="group absolute top-0"
+    :class="direction > 0 ? 'right-0' : 'left-0'"
     :data-carousel-control="direction > 0 ? 'next' : 'previous'"
-    class="group"
   >
     <slot>
       <i
