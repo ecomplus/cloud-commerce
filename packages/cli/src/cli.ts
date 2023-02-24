@@ -59,7 +59,7 @@ export default async () => {
     return opts;
   }, '');
   const $firebase = (cmd: string) => {
-    if (cmd === 'deploy') {
+    if (cmd === 'deploy' && !options) {
       return $`firebase --project=${projectId} ${cmd}${options} --force`;
     }
     return $`firebase --project=${projectId} ${cmd}${options}`;
