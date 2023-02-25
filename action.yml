@@ -160,13 +160,13 @@ runs:
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
         " > functions/.env
         if [ -z "$DEPLOY_CODEBASE" ]; then
+          GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
+        else
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy -- \
             --only functions --codebase $DEPLOY_CODEBASE
           if [ $DEPLOY_CODEBASE == "ssr" ]; then
             npx firebase deploy --only hosting
           fi
-        else
-          GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
         fi
 
     - if: github.event_name == 'pull_request'
