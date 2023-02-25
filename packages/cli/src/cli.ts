@@ -51,20 +51,19 @@ if (projectId) {
 export default async () => {
   await fs.copy(path.join(__dirname, '..', 'config'), pwd);
 
-  const options = Object.keys(argv).reduce((opts, key) => {
+  const options = Object.keys(argv).reduce((opts: string[], key) => {
     if (key !== '_' && argv[key] !== false) {
       if (argv[key] !== true || (key !== 'codebase' && key !== 'only')) {
-        // eslint-disable-next-line no-param-reassign
-        opts += ` --${key} ${argv[key]}`;
+        opts.push(`--${key}`, argv[key]);
       }
     }
     return opts;
-  }, '');
+  }, []);
   const $firebase = (cmd: string) => {
-    if (cmd === 'deploy' && !options) {
-      return $`firebase --project=${projectId} ${cmd}${options} --force`;
+    if (cmd === 'deploy' && !options.length) {
+      return $`firebase --project=${projectId} ${cmd} --force`;
     }
-    return $`firebase --project=${projectId} ${cmd}${options}`;
+    return $`firebase --project=${projectId} ${cmd} ${options}`;
   };
 
   if (argv._.includes('serve')) {
