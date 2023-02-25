@@ -1,6 +1,7 @@
 dist
 packages/*/lib
 packages/apps/*/lib
+packages/apps/*/assets/*.min.js
 
 policyIAM.json
 serviceAccountKey.json
