@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 import type { CategoriesList } from '@cloudcommerce/api/types';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
 
 export interface Props {
@@ -101,7 +101,6 @@ const useShopHeader = ({
     }
     return false;
   });
-  const isSidenavOpen = ref(false);
   return {
     isSticky,
     staticHeight,
@@ -112,7 +111,6 @@ const useShopHeader = ({
     getCategoryTree,
     categoryTrees,
     inlineMenuTrees,
-    isSidenavOpen,
   };
 };
 
