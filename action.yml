@@ -88,28 +88,24 @@ runs:
           ssr:
             - 'functions/ssr/**'
     
-    - if: steps.changes.outputs.core != 'true'
+    - if: steps.changes.outputs.core != 'true' && steps.changes.outputs.events != 'true'
       shell: bash
       env:
         DEPLOY_CODEBASE: ${{ inputs.deploy-codebase }}
-        CHS_EVENTS: ${{ steps.changes.outputs.events }}
         CHS_MODULES: ${{ steps.changes.outputs.modules }}
         CHS_PASSPORT: ${{ steps.changes.outputs.passport }}
         CHS_SSR: ${{ steps.changes.outputs.ssr }}
       run: |
         if [ -z "$DEPLOY_CODEBASE" ]; then
-          deploy_codebase=$(node -p "\
-            const changes = ['$CHS_SSR', '$CHS_MODULES', '$CHS_EVENTS', '$CHS_PASSPORT']; \
-            let codebase = ''; \
-            if (changes.filter(v => v === 'true').length === 1) { \
-              switch (changes.findIndex(v => v === 'true')) {\
-                case 0: codebase = 'ssr'; break; \
-                case 1: codebase = 'modules'; break; \
-                case 2: codebase = 'events'; break; \
-                case 3: codebase = 'passport'; break; \
-              } \
-            } \
-            codebase;")
+          if [ $CHS_SSR == 'true' ]; then
+            if [ $CHS_MODULES != 'true' ] && [ $CHS_PASSPORT != 'true' ]; then
+              deploy_codebase="ssr"
+            fi
+          elif [ $CHS_MODULES == 'true' ] && [ $CHS_PASSPORT != 'true' ]; then
+            deploy_codebase="modules"
+          elif [ $CHS_MODULES != 'true' ] && [ $CHS_PASSPORT == 'true' ]; then
+            deploy_codebase="passport"
+          fi
         else
           deploy_codebase=$DEPLOY_CODEBASE
         fi
@@ -163,7 +159,7 @@ runs:
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
         else
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy -- \
-            --only functions --codebase $DEPLOY_CODEBASE
+            --only functions:$DEPLOY_CODEBASE
           if [ $DEPLOY_CODEBASE == "ssr" ]; then
             npx firebase deploy --only hosting
           fi
