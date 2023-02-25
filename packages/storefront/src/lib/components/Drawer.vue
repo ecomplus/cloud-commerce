@@ -34,15 +34,19 @@ const escClickListener = (ev: KeyboardEvent) => {
     close();
   }
 };
+const scrollbarWidth = ref(0);
 watch(toRef(props, 'modelValue'), async (isOpen) => {
   if (isOpen) {
+    scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth.value}px`;
     setTimeout(() => {
       document.addEventListener('click', outsideClickListener, { passive: true });
       document.addEventListener('keydown', escClickListener, { passive: true });
     }, 500);
   } else {
     document.body.style.overflow = null;
+    document.body.style.paddingRight = null;
     document.removeEventListener('click', outsideClickListener);
     document.removeEventListener('keydown', escClickListener);
   }
@@ -51,8 +55,8 @@ const slideTo = computed(() => {
   switch (props.placement) {
     case 'start': return 'left';
     case 'end': return 'right';
-    case 'top': return 'up';
-    default: return 'down';
+    case 'top': return 'down';
+    default: return 'up';
   }
 });
 const isFixed = computed(() => {
@@ -68,11 +72,15 @@ const isPlacementX = computed(() => {
     <dialog
       v-if="modelValue"
       ref="drawer"
-      class="w-screen max-w-sm shadow p-0 m-0 z-50"
+      class="w-screen shadow p-0 m-0 z-50"
       :class="[
         position,
         isFixed ? `top-0 left-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
+        isPlacementX ? 'max-w-sm' : null,
       ]"
+      :style="{
+        maxWidth: !isPlacementX ? `calc(100vw - ${scrollbarWidth}px)` : null,
+      }"
       :open="modelValue"
       :data-drawer="placement"
     >
