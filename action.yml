@@ -158,10 +158,12 @@ runs:
         if [ -z "$DEPLOY_CODEBASE" ]; then
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
         else
-          GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy -- \
-            --only functions:$DEPLOY_CODEBASE
           if [ $DEPLOY_CODEBASE == "ssr" ]; then
-            npx firebase deploy --only hosting
+            GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy -- \
+              --only functions:$DEPLOY_CODEBASE,hosting
+          else
+            GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy -- \
+              --only functions:$DEPLOY_CODEBASE
           fi
         fi
 
