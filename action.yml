@@ -88,30 +88,28 @@ runs:
           ssr:
             - 'functions/ssr/**'
     
-    - shell: bash
+    - if: steps.changes.outputs.core != 'true'
+      shell: bash
       env:
         DEPLOY_CODEBASE: ${{ inputs.deploy-codebase }}
-        CHS_CORE: ${{ steps.changes.outputs.core }}
         CHS_EVENTS: ${{ steps.changes.outputs.events }}
         CHS_MODULES: ${{ steps.changes.outputs.modules }}
         CHS_PASSPORT: ${{ steps.changes.outputs.passport }}
         CHS_SSR: ${{ steps.changes.outputs.ssr }}
       run: |
         if [ -z "$DEPLOY_CODEBASE" ]; then
-          if [ -z "$CHS_CORE" ]; then
-            deploy_codebase=$(node -p "\
-              const changes = ['$CHS_SSR', '$CHS_MODULES', '$CHS_EVENTS', '$CHS_PASSPORT']; \
-              let codebase = ''; \
-              if (changes.filter(v => v === 'true').length === 1) { \
-                switch (changes.findIndex(v => v === 'true')) {\
-                  case 0: codebase = 'ssr'; break; \
-                  case 1: codebase = 'modules'; break; \
-                  case 2: codebase = 'events'; break; \
-                  case 3: codebase = 'passport'; break; \
-                } \
+          deploy_codebase=$(node -p "\
+            const changes = ['$CHS_SSR', '$CHS_MODULES', '$CHS_EVENTS', '$CHS_PASSPORT']; \
+            let codebase = ''; \
+            if (changes.filter(v => v === 'true').length === 1) { \
+              switch (changes.findIndex(v => v === 'true')) {\
+                case 0: codebase = 'ssr'; break; \
+                case 1: codebase = 'modules'; break; \
+                case 2: codebase = 'events'; break; \
+                case 3: codebase = 'passport'; break; \
               } \
-              codebase;")
-          fi
+            } \
+            codebase;")
         else
           deploy_codebase=$DEPLOY_CODEBASE
         fi
