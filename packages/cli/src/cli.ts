@@ -51,14 +51,14 @@ if (projectId) {
 export default async () => {
   await fs.copy(path.join(__dirname, '..', 'config'), pwd);
 
-  const options = Object.keys(argv).reduce((opts: string[], key) => {
+  const options: string[] = [];
+  Object.keys(argv).forEach((key) => {
     if (key !== '_' && argv[key] !== false) {
       if (argv[key] !== true || (key !== 'codebase' && key !== 'only')) {
-        opts.push(`--${key}`, argv[key]);
+        options.push(`--${key}`, argv[key]);
       }
     }
-    return opts;
-  }, []);
+  });
   const $firebase = (cmd: string) => {
     if (cmd === 'deploy' && !options.length) {
       return $`firebase --project=${projectId} ${cmd} --force`;
