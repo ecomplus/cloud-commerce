@@ -717,36 +717,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.6.5
+      '@cloudcommerce/cli': ^0.6.6
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.5
+      '@cloudcommerce/firebase': ^0.6.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.6.5
-      '@cloudcommerce/firebase': ^0.6.5
+      '@cloudcommerce/events': ^0.6.6
+      '@cloudcommerce/firebase': ^0.6.6
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.5
-      '@cloudcommerce/modules': ^0.6.5
+      '@cloudcommerce/firebase': ^0.6.6
+      '@cloudcommerce/modules': ^0.6.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.5
-      '@cloudcommerce/passport': ^0.6.5
+      '@cloudcommerce/firebase': ^0.6.6
+      '@cloudcommerce/passport': ^0.6.6
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -755,12 +755,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.5
-      '@cloudcommerce/firebase': ^0.6.5
-      '@cloudcommerce/i18n': ^0.6.5
-      '@cloudcommerce/ssr': ^0.6.5
-      '@cloudcommerce/storefront': ^0.6.5
-      '@cloudcommerce/types': ^0.6.5
+      '@cloudcommerce/api': ^0.6.6
+      '@cloudcommerce/firebase': ^0.6.6
+      '@cloudcommerce/i18n': ^0.6.6
+      '@cloudcommerce/ssr': ^0.6.6
+      '@cloudcommerce/storefront': ^0.6.6
+      '@cloudcommerce/types': ^0.6.6
     dependencies:
       '@astrojs/image': 0.15.1
       '@astrojs/node': 5.0.4
@@ -776,12 +776,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.5
-      '@cloudcommerce/firebase': ^0.6.5
-      '@cloudcommerce/i18n': ^0.6.5
-      '@cloudcommerce/ssr': ^0.6.5
-      '@cloudcommerce/storefront': ^0.6.5
-      '@cloudcommerce/types': ^0.6.5
+      '@cloudcommerce/api': ^0.6.6
+      '@cloudcommerce/firebase': ^0.6.6
+      '@cloudcommerce/i18n': ^0.6.6
+      '@cloudcommerce/ssr': ^0.6.6
+      '@cloudcommerce/storefront': ^0.6.6
+      '@cloudcommerce/types': ^0.6.6
     dependencies:
       '@astrojs/image': 0.15.1
       '@astrojs/node': 5.0.4
