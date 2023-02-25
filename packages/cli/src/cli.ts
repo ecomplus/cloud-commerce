@@ -53,8 +53,10 @@ export default async () => {
 
   const options = Object.keys(argv).reduce((opts, key) => {
     if (key !== '_' && argv[key] !== false) {
-      // eslint-disable-next-line no-param-reassign
-      opts += ` --${key} ${argv[key]}`;
+      if (argv[key] !== true || (key !== 'codebase' && key !== 'only')) {
+        // eslint-disable-next-line no-param-reassign
+        opts += ` --${key} ${argv[key]}`;
+      }
     }
     return opts;
   }, '');
