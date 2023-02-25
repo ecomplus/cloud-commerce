@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.6](https://github.com/ecomplus/cloud-commerce/compare/v0.6.5...v0.6.6) (2023-02-25)
+
+
+### Bug Fixes
+
+* **cli:** Fix passing deploy options to command arguments with zx ([46e838f](https://github.com/ecomplus/cloud-commerce/commit/46e838ff9bf59116c05329e188a6661275f95493))
+* **cli:** Prevent passing --only and --codebase args as true ([9266111](https://github.com/ecomplus/cloud-commerce/commit/92661117b1842d6e7dfa74d507426343d5c920b4))
+* **storefront:** Fix `Drawer` vertical placement slide and handle scrollbar width ([7c6b916](https://github.com/ecomplus/cloud-commerce/commit/7c6b91602597274d962887951824590cef4ced28))
+
 ### [0.6.5](https://github.com/ecomplus/cloud-commerce/compare/v0.6.4...v0.6.5) (2023-02-24)
 
 
