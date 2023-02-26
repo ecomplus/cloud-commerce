@@ -121,6 +121,11 @@ type CmsSettings = {
       available_extra_discount?: Partial<ApplyDiscountResponse['available_extra_discount']>,
     },
   },
+  cart_url?: string,
+  checkout_url?: string,
+  account_url?: string,
+  orders_url?: string,
+  favorites_url?: string,
 };
 
 export type {
