@@ -1,3 +1,4 @@
+import type { ApiEndpoint } from '@cloudcommerce/api';
 import type {
   ProductSet,
   CategorySet,
@@ -29,6 +30,10 @@ declare global {
     },
     onLoad: (callback: (...args: any[]) => void) => void,
   };
+  // eslint-disable-next-line
+  var api_prefetch_endpoints: undefined | ApiEndpoint[];
+  // eslint-disable-next-line
+  var storefront_slim_doc_regex: undefined | RegExp;
 }
 
 export { };
