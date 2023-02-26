@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.7](https://github.com/ecomplus/cloud-commerce/compare/v0.6.6...v0.6.7) (2023-02-26)
+
+
+### Features
+
+* **storefront:** Add new `AccountLink` atomic component ([5f07602](https://github.com/ecomplus/cloud-commerce/commit/5f07602231664a2b116684da33c615c50f436585))
+* **storefront:** Update pages header layout to pass `serviceLinks` prop from CMS ([8c6c8a6](https://github.com/ecomplus/cloud-commerce/commit/8c6c8a65309d6c148e176e62c8f26a0b61287667))
+* **types:** Add optional app links to `CmsSettings` object typedef ([ad3cf2e](https://github.com/ecomplus/cloud-commerce/commit/ad3cf2e88125357bf0644ed7d84798aad394240d))
+
+
+### Bug Fixes
+
+* **apps:** Remove wrong .gitignore to publish minified assets to npm ([1ac4df9](https://github.com/ecomplus/cloud-commerce/commit/1ac4df963bad38df7b41695b06f1cea7e32da088))
+
 ### [0.6.6](https://github.com/ecomplus/cloud-commerce/compare/v0.6.5...v0.6.6) (2023-02-25)
 
 
