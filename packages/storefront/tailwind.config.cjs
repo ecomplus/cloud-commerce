@@ -45,6 +45,7 @@ let defaultThemeOptions = {
     account: 'user-circle',
     close: 'x-mark',
     logout: 'arrow-right-on-rectangle',
+    favorites: 'heart',
   },
 };
 if (globalThis.storefront_theme_options) {
