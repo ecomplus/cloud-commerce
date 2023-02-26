@@ -1,9 +1,10 @@
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
+import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { CMS, CmsSettings } from './cms';
 import { EventEmitter } from 'node:events';
-import api, { ApiError, ApiEndpoint } from '@cloudcommerce/api';
+import api from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
 
 type StorefrontConfig = {
@@ -24,10 +25,6 @@ type StorefrontConfig = {
 const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
 
-declare global {
-  // eslint-disable-next-line
-  var api_prefetch_endpoints: ApiEndpoint[];
-}
 if (!globalThis.api_prefetch_endpoints) {
   globalThis.api_prefetch_endpoints = [
     'categories?fields=_id,name,slug,parent,icon,pictures.0',
