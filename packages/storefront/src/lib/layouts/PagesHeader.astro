@@ -25,6 +25,7 @@ const shopHeader: ShopHeaderProps = {
   menuCategorySlugs: cmsHeader.inline_menu_categories?.featured,
   menuRandomCategories: cmsHeader.inline_menu_categories?.random,
   isAlphabeticalSortSubmenu: cmsHeader.alphabetical_sort_submenu,
+  serviceLinks: cmsHeader.service_links,
 };
 const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
 ---
