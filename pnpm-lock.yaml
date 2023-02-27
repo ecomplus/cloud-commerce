@@ -46,6 +46,100 @@ importers:
       vitest: 0.28.5
       zx: 7.2.0
 
+  ecomplus-stores/monocard:
+    specifiers:
+      '@cloudcommerce/cli': ^0.6.7
+    dependencies:
+      '@cloudcommerce/cli': link:../../packages/cli
+
+  ecomplus-stores/monocard/functions/core:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.6.7
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/monocard/functions/events:
+    specifiers:
+      '@cloudcommerce/events': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+    dependencies:
+      '@cloudcommerce/events': link:../../../../packages/events
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+
+  ecomplus-stores/monocard/functions/modules:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/modules': ^0.6.7
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/modules': link:../../../../packages/modules
+
+  ecomplus-stores/monocard/functions/passport:
+    specifiers:
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/passport': ^0.6.7
+    dependencies:
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/passport': link:../../../../packages/passport
+
+  ecomplus-stores/monocard/functions/ssr:
+    specifiers:
+      '@astrojs/image': ^0.15.1
+      '@astrojs/node': ^5.0.4
+      '@cloudcommerce/api': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/i18n': ^0.6.7
+      '@cloudcommerce/ssr': ^0.6.7
+      '@cloudcommerce/storefront': ^0.6.7
+      '@cloudcommerce/types': ^0.6.7
+      '@iconify-json/arcticons': ^1.1.43
+      '@iconify-json/wpf': ^1.1.4
+      lottie-web: ^5.10.2
+      lozad: ^1.16.0
+    dependencies:
+      '@astrojs/image': 0.15.1
+      '@astrojs/node': 5.0.4
+      '@cloudcommerce/api': link:../../../../packages/api
+      '@cloudcommerce/firebase': link:../../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../../packages/storefront
+      '@cloudcommerce/types': link:../../../../packages/types
+      '@iconify-json/arcticons': 1.1.43
+      '@iconify-json/wpf': 1.1.4
+      lottie-web: 5.10.2
+      lozad: 1.16.0
+
+  ecomplus-stores/monocard/storefront:
+    specifiers:
+      '@astrojs/image': ^0.15.1
+      '@astrojs/node': ^5.0.4
+      '@cloudcommerce/api': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/i18n': ^0.6.7
+      '@cloudcommerce/ssr': ^0.6.7
+      '@cloudcommerce/storefront': ^0.6.7
+      '@cloudcommerce/types': ^0.6.7
+      '@iconify-json/arcticons': ^1.1.43
+      '@iconify-json/wpf': ^1.1.4
+      lottie-web: ^5.10.2
+      lozad: ^1.16.0
+    dependencies:
+      '@astrojs/image': 0.15.1
+      '@astrojs/node': 5.0.4
+      '@cloudcommerce/api': link:../../../packages/api
+      '@cloudcommerce/firebase': link:../../../packages/firebase
+      '@cloudcommerce/ssr': link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n': link:../../../packages/i18n
+      '@cloudcommerce/storefront': link:../../../packages/storefront
+      '@cloudcommerce/types': link:../../../packages/types
+      '@iconify-json/arcticons': 1.1.43
+      '@iconify-json/wpf': 1.1.4
+      lottie-web: 5.10.2
+      lozad: 1.16.0
+
   packages/__skeleton:
     specifiers:
       '@cloudcommerce/api': workspace:*
@@ -717,36 +811,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': workspace:^0.6.7
+      '@cloudcommerce/cli': ^0.6.7
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': workspace:^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': workspace:^0.6.7
-      '@cloudcommerce/firebase': workspace:^0.6.7
+      '@cloudcommerce/events': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': workspace:^0.6.7
-      '@cloudcommerce/modules': workspace:^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/modules': ^0.6.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': workspace:^0.6.7
-      '@cloudcommerce/passport': workspace:^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/passport': ^0.6.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -755,12 +849,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': workspace:^0.6.7
-      '@cloudcommerce/firebase': workspace:^0.6.7
-      '@cloudcommerce/i18n': workspace:^0.6.7
-      '@cloudcommerce/ssr': workspace:^0.6.7
-      '@cloudcommerce/storefront': workspace:^0.6.7
-      '@cloudcommerce/types': workspace:^0.6.7
+      '@cloudcommerce/api': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/i18n': ^0.6.7
+      '@cloudcommerce/ssr': ^0.6.7
+      '@cloudcommerce/storefront': ^0.6.7
+      '@cloudcommerce/types': ^0.6.7
     dependencies:
       '@astrojs/image': 0.15.1
       '@astrojs/node': 5.0.4
@@ -776,12 +870,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': workspace:^0.6.7
-      '@cloudcommerce/firebase': workspace:^0.6.7
-      '@cloudcommerce/i18n': workspace:^0.6.7
-      '@cloudcommerce/ssr': workspace:^0.6.7
-      '@cloudcommerce/storefront': workspace:^0.6.7
-      '@cloudcommerce/types': workspace:^0.6.7
+      '@cloudcommerce/api': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/i18n': ^0.6.7
+      '@cloudcommerce/ssr': ^0.6.7
+      '@cloudcommerce/storefront': ^0.6.7
+      '@cloudcommerce/types': ^0.6.7
     dependencies:
       '@astrojs/image': 0.15.1
       '@astrojs/node': 5.0.4
@@ -3681,6 +3775,12 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
+  /@iconify-json/arcticons/1.1.43:
+    resolution: {integrity: sha512-/SQw14TfldgmB+8URdYW2iCvI+KzqxgsQuSKXwtlma5kP/D//GfwzF+5iCSXSwaQvHW+be9ZruSYY+tw5vKekA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/fa6-brands/1.1.10:
     resolution: {integrity: sha512-vFjv7kPks7YfT6qtQWMTtMb4jSo/tvj18AklcsYGCW+1eRjuiiluVwLDDqrrKA+Xx0L5TsCEHckp79BC5FCq2g==}
     dependencies:
@@ -3699,9 +3799,14 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/wpf/1.1.4:
+    resolution: {integrity: sha512-IGyPNDvOwr17GwjOPo0QzDvVeaKRyLkZcwmLYE7rMv8yzvD1HDzo7+o97wGOg2TkLGsdYuuHkf+wz1MBQU3akQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils/2.1.4:
     resolution: {integrity: sha512-7vzsYIvxv5Hng0MNEtSSnyMBD/+zqnORqmKiYsSgpMBGSz1r93URgBZHPYCZ1/gpoaVstYW4/SVLGCMJBNMCLQ==}
@@ -8514,10 +8619,18 @@ packages:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
     dev: false
 
+  /lottie-web/5.10.2:
+    resolution: {integrity: sha512-d0PFIGiwuMsJYaF4uPo+qG8dEorlI+xFI2zrrFtE1bGO4WoLIz+NjremxEq1swpR7juR10aeOtmNh3d6G3ub0A==}
+    dev: true
+
   /loupe/2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
     dependencies:
       get-func-name: 2.0.0
+    dev: true
+
+  /lozad/1.16.0:
+    resolution: {integrity: sha512-JBr9WjvEFeKoyim3svo/gsQPTkgG/mOHJmDctZ/+U9H3ymUuvEkqpn8bdQMFsvTMcyRJrdJkLv0bXqGm0sP72w==}
     dev: true
 
   /lru-cache/4.0.2:
