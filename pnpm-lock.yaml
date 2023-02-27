@@ -935,6 +935,25 @@ packages:
     resolution: {integrity: sha512-L3/JrdNwBFKcoDeStmRgJWvI2t/5nNJm7HnGjDy4e8BH3qKv8iQYdpvuQjeYRA00k6I1lxZGBm/0wU+Lg7HPiQ==}
     dev: false
 
+  /@astrojs/image/0.15.1:
+    resolution: {integrity: sha512-5+ZBHEfwcx8BbJbAatnW1fyFLWQW4n6jUkDRB5eLbo+yKZv8gwlpPBPpo7cqiY6kUtEisZHVsVYdCTe22KDZgQ==}
+    peerDependencies:
+      astro: ^2.0.15
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
+      http-cache-semantics: 4.1.1
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.27.0
+      mime: 3.0.0
+    dev: false
+
   /@astrojs/image/0.15.1_astro@2.0.16+sharp@0.31.3:
     resolution: {integrity: sha512-5+ZBHEfwcx8BbJbAatnW1fyFLWQW4n6jUkDRB5eLbo+yKZv8gwlpPBPpo7cqiY6kUtEisZHVsVYdCTe22KDZgQ==}
     peerDependencies:
@@ -996,6 +1015,21 @@ packages:
       unified: 10.1.2
       unist-util-visit: 4.1.2
       vfile: 5.3.7
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@astrojs/node/5.0.4:
+    resolution: {integrity: sha512-pBD0cpQM4fDzwBBxyX7r7jTsYo/oXbUwAvHRB0OQGXsWjYvqqa8KQvNwQwYXXpNxCwgtpVtkdg4tV4mv1hSpWQ==}
+    peerDependencies:
+      astro: ^2.0.15
+    peerDependenciesMeta:
+      astro:
+        optional: true
+    dependencies:
+      '@astrojs/webapi': 2.0.2
+      send: 0.18.0
+      server-destroy: 1.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
