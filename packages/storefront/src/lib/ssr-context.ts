@@ -50,7 +50,7 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
   Astro.response.headers.set(headerName, cacheControl);
 };
 
-const loadPageContext = async (Astro: AstroGlobal, {
+const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   cmsCollection,
   apiPrefetchEndpoints = globalThis.api_prefetch_endpoints,
 }: {
