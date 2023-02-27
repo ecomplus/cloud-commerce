@@ -25,8 +25,8 @@
     "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/image": "^0.15.0",
-    "@astrojs/node": "^5.0.3",
+    "@astrojs/image": "^0.15.1",
+    "@astrojs/node": "^5.0.4",
     "@astrojs/partytown": "^1.0.3",
     "@astrojs/prefetch": "^0.1.2",
     "@astrojs/vue": "^2.0.1",
@@ -35,13 +35,13 @@
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.3",
     "@fastify/deepmerge": "^1.3.0",
-    "@headlessui/vue": "^1.7.10",
+    "@headlessui/vue": "^1.7.11",
     "@iconify-json/fa6-brands": "^1.1.10",
     "@iconify-json/heroicons": "^1.1.10",
     "@iconify-json/logos": "^1.1.23",
     "@vite-pwa/astro": "^0.0.3",
-    "@vueuse/core": "9.12.0 || ^9.13.1",
-    "astro": "^2.0.14",
+    "@vueuse/core": "9.12.0",
+    "astro": "^2.0.16",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.0.3",
     "firebase": "^9.17.1",
@@ -49,13 +49,13 @@
     "semver": "^7.3.8",
     "sharp": "^0.31.3",
     "tailwindcss": "^3.2.7",
-    "unocss": "^0.50.0",
-    "vite": "^4.1.3",
+    "unocss": "^0.50.1",
+    "vite": "^4.1.4",
     "vite-plugin-pwa": "^0.14.4",
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.0",
     "@cloudcommerce/types": "workspace:*"
   }
 }
