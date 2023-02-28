@@ -126,6 +126,7 @@ type CmsSettings = {
   account_url?: string,
   orders_url?: string,
   favorites_url?: string,
+  metafields?: Record<string, string>,
 };
 
 export type {
