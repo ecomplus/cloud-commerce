@@ -19,6 +19,8 @@ export default (app: App) => {
       };
       app.config.globalProperties.$money = formatMoney;
       app.config.globalProperties.$percentage = formatPercentage;
+      app.config.globalProperties.$settings = globalThis.storefront.settings;
+      app.config.globalProperties.$context = globalThis.storefront.context;
     },
   });
   app.component('Fade', Fade);

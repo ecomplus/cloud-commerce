@@ -18,6 +18,8 @@ declare module '@vue/runtime-core' {
     };
     $money: typeof import('@ecomplus/utils')['formatMoney'];
     $percentage: FormatPercentage;
+    $settings: typeof globalThis.storefront.settings;
+    $context: typeof globalThis.storefront.context;
   }
 
   export interface GlobalComponents {
