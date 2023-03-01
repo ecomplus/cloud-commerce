@@ -1,5 +1,5 @@
 import { join as joinPath } from 'node:path';
-import { fs } from 'zx';
+import { $, fs } from 'zx';
 
 const copyFunctionsConfig = async () => {
   const functionsDir = joinPath(process.cwd(), 'functions');
@@ -28,4 +28,14 @@ const copyFunctionsConfig = async () => {
   }
 };
 
-export default copyFunctionsConfig;
+const buildCodebase = async (codebase?: string) => {
+  copyFunctionsConfig();
+  if (codebase === 'ssr') {
+    await $`npm --prefix "functions/ssr" run build 2>ssr-build-warns.log &&
+      printf '\n--- // ---\n' && cat ssr-build-warns.log`;
+  }
+};
+
+export default buildCodebase;
+
+export { buildCodebase, copyFunctionsConfig };

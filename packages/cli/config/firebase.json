@@ -25,7 +25,7 @@
       "codebase": "passport"
     },
     {
-      "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build && npm run build -- --codebase ssr",
+      "predeploy": "npm run build -- --codebase ssr",
       "source": "functions/ssr",
       "codebase": "ssr"
     }

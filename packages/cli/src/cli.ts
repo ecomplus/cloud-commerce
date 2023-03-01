@@ -67,7 +67,9 @@ export default async () => {
   };
 
   if (argv._.includes('serve')) {
-    await build();
+    if (argv.build !== false) {
+      await build(argv.codebase);
+    }
     return $firebase('emulators:start').catch(async (err: any) => {
       await echo`
 Try killing open emulators with: 
@@ -87,7 +89,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
     return $firebase('functions:log');
   }
   if (argv._.includes('build')) {
-    return build();
+    return build(argv.codebase);
   }
   if (argv._.includes('deploy')) {
     return $firebase('deploy');
@@ -116,7 +118,7 @@ ECOM_STORE_ID=${storeId}
         JSON.stringify({ storeId }, null, 2),
       );
 
-      await build();
+      await build(argv.codebase);
       try {
         await $`git add .firebaserc functions/config.json`;
         await $`git commit -m "Setup store [skip ci]"`;
