@@ -54,6 +54,7 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "astro",
+        "vue",
         "@babel/core"
       ]
     }
