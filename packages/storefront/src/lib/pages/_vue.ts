@@ -8,10 +8,10 @@ const formatPercentage = (value: number, digits = 1) => {
   return Number.isInteger(value) ? `${value}%` : `${value.toFixed(digits)}%`;
 };
 
-export default (app: App) => {
+const createApp = (app: App) => {
   app.use({
     // eslint-disable-next-line no-shadow
-    install: (app, options) => {
+    install: (app: App, options: Record<string, any>) => {
       // @ts-ignore
       app.config.globalProperties.$t = (dict, lang) => {
         // @ts-ignore
@@ -27,5 +27,7 @@ export default (app: App) => {
   app.component('ALink', ALink);
   app.component('AImg', AImg);
 };
+
+export default createApp;
 
 export type FormatPercentage = typeof formatPercentage;
