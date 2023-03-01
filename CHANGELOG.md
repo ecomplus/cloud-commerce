@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8](https://github.com/ecomplus/cloud-commerce/compare/v0.6.7...v0.6.8) (2023-03-01)
+
+
+### Features
+
+* **storefront:** Add `$settings` and `$context` to Vue app global properties ([5b0c49d](https://github.com/ecomplus/cloud-commerce/commit/5b0c49dbcbf5733722ef9579537617467c119680))
+* **types:** Add optional `metafields?: Record<string, string>` to CMS settings type ([b73231a](https://github.com/ecomplus/cloud-commerce/commit/b73231a13291e0d80824b7b65722b38e8f8527d8))
+
+
+### Bug Fixes
+
+* **deps:** Update `@vite-pwa/astro` and `vitest` ([#126](https://github.com/ecomplus/cloud-commerce/issues/126)) ([25b4b8d](https://github.com/ecomplus/cloud-commerce/commit/25b4b8daaf8df3472810f0ed7ca7f41f12596d04))
+* **deps:** Update all non-major dependencies ([47c18d0](https://github.com/ecomplus/cloud-commerce/commit/47c18d0ae02f248b82f106752b86d1c068c04128))
+* **storefront:** Fix typedef for `loadPageContext` with Astro v2.0.16 ([b45affb](https://github.com/ecomplus/cloud-commerce/commit/b45affb18ea20b1f56664b3f4dbd212a18c853e0))
+* **storefront:** Set <img> height/width on Astro <Picture> with local image ([596846d](https://github.com/ecomplus/cloud-commerce/commit/596846d85c9232efda7bdc79c6336fa47ccce0f5))
+
 ### [0.6.7](https://github.com/ecomplus/cloud-commerce/compare/v0.6.6...v0.6.7) (2023-02-26)
 
 
