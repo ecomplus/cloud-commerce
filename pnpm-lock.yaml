@@ -48,36 +48,36 @@ importers:
 
   ecomplus-stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.6.7
+      '@cloudcommerce/cli': ^0.6.10
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.10
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.6.7
-      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/events': ^0.6.10
+      '@cloudcommerce/firebase': ^0.6.10
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/modules': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/modules': ^0.6.10
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/passport': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/passport': ^0.6.10
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
@@ -86,16 +86,16 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.7
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/i18n': ^0.6.7
-      '@cloudcommerce/ssr': ^0.6.7
-      '@cloudcommerce/storefront': ^0.6.7
-      '@cloudcommerce/types': ^0.6.7
+      '@cloudcommerce/api': ^0.6.10
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/i18n': ^0.6.10
+      '@cloudcommerce/ssr': ^0.6.10
+      '@cloudcommerce/storefront': ^0.6.10
+      '@cloudcommerce/types': ^0.6.10
       '@fontsource/inter': ^4.5.15
       '@iconify-json/ri': ^1.1.5
       '@iconify-json/wpf': ^1.1.4
-      '@vueuse/motion': 2.0.0-beta.12
+      '@vueuse/motion': 2.0.0-beta.22
       lottie-web: ^5.10.2
       lozad: ^1.16.0
     dependencies:
@@ -104,7 +104,7 @@ importers:
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
-      '@vueuse/motion': 2.0.0-beta.12
+      '@vueuse/motion': 2.0.0-beta.22
     devDependencies:
       '@cloudcommerce/i18n': link:../../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../../packages/storefront
@@ -119,16 +119,16 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.7
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/i18n': ^0.6.7
-      '@cloudcommerce/ssr': ^0.6.7
-      '@cloudcommerce/storefront': ^0.6.7
-      '@cloudcommerce/types': ^0.6.7
+      '@cloudcommerce/api': ^0.6.10
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/i18n': ^0.6.10
+      '@cloudcommerce/ssr': ^0.6.10
+      '@cloudcommerce/storefront': ^0.6.10
+      '@cloudcommerce/types': ^0.6.10
       '@fontsource/inter': ^4.5.15
       '@iconify-json/ri': ^1.1.5
       '@iconify-json/wpf': ^1.1.4
-      '@vueuse/motion': 2.0.0-beta.12
+      '@vueuse/motion': 2.0.0-beta.22
       lottie-web: ^5.10.2
       lozad: ^1.16.0
     dependencies:
@@ -137,7 +137,7 @@ importers:
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
-      '@vueuse/motion': 2.0.0-beta.12
+      '@vueuse/motion': 2.0.0-beta.22
     devDependencies:
       '@cloudcommerce/i18n': link:../../../packages/i18n
       '@cloudcommerce/storefront': link:../../../packages/storefront
@@ -819,36 +819,36 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.6.7
+      '@cloudcommerce/cli': ^0.6.10
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.10
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.6.7
-      '@cloudcommerce/firebase': ^0.6.7
+      '@cloudcommerce/events': ^0.6.10
+      '@cloudcommerce/firebase': ^0.6.10
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/modules': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/modules': ^0.6.10
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/passport': ^0.6.7
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/passport': ^0.6.10
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
@@ -857,12 +857,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.7
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/i18n': ^0.6.7
-      '@cloudcommerce/ssr': ^0.6.7
-      '@cloudcommerce/storefront': ^0.6.7
-      '@cloudcommerce/types': ^0.6.7
+      '@cloudcommerce/api': ^0.6.10
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/i18n': ^0.6.10
+      '@cloudcommerce/ssr': ^0.6.10
+      '@cloudcommerce/storefront': ^0.6.10
+      '@cloudcommerce/types': ^0.6.10
     dependencies:
       '@astrojs/image': 0.15.1
       '@astrojs/node': 5.0.4
@@ -878,12 +878,12 @@ importers:
     specifiers:
       '@astrojs/image': ^0.15.1
       '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.7
-      '@cloudcommerce/firebase': ^0.6.7
-      '@cloudcommerce/i18n': ^0.6.7
-      '@cloudcommerce/ssr': ^0.6.7
-      '@cloudcommerce/storefront': ^0.6.7
-      '@cloudcommerce/types': ^0.6.7
+      '@cloudcommerce/api': ^0.6.10
+      '@cloudcommerce/firebase': ^0.6.10
+      '@cloudcommerce/i18n': ^0.6.10
+      '@cloudcommerce/ssr': ^0.6.10
+      '@cloudcommerce/storefront': ^0.6.10
+      '@cloudcommerce/types': ^0.6.10
     dependencies:
       '@astrojs/image': 0.15.1
       '@astrojs/node': 5.0.4
@@ -1102,6 +1102,8 @@ packages:
       vue: ^3.2.30
     peerDependenciesMeta:
       astro:
+        optional: true
+      vue:
         optional: true
     dependencies:
       '@vitejs/plugin-vue': 4.0.0_vite@4.1.4+vue@3.2.47
@@ -3758,6 +3760,9 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       vue: ^3.2.0
+    peerDependenciesMeta:
+      vue:
+        optional: true
     dependencies:
       vue: 3.2.47
     dev: false
@@ -4392,10 +4397,6 @@ packages:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
     dev: false
 
-  /@types/web-bluetooth/0.0.14:
-    resolution: {integrity: sha512-5d2RhCard1nQUC3aHcq/gHzWYO6K0WJmAbjO7mQJgCQKtZpgXxv1rOM6O/dBDhDYYVutk1sciOgNSe+5YyfM8A==}
-    dev: false
-
   /@types/web-bluetooth/0.0.16:
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
     dev: false
@@ -4717,6 +4718,9 @@ packages:
     peerDependencies:
       vite: ^4.0.0
       vue: ^3.0.0
+    peerDependenciesMeta:
+      vue:
+        optional: true
     dependencies:
       '@babel/core': 7.21.0
       '@babel/plugin-transform-typescript': 7.21.0_@babel+core@7.21.0
@@ -4733,6 +4737,9 @@ packages:
     peerDependencies:
       vite: ^4.0.0
       vue: ^3.2.25
+    peerDependenciesMeta:
+      vue:
+        optional: true
     dependencies:
       vite: 4.1.4
       vue: 3.2.47
@@ -4878,6 +4885,9 @@ packages:
     resolution: {integrity: sha512-dN9gc1i8EvmP9RCzvneONXsKfBRgqFeFZLurmHOveL7oH6HiFXJw5OGu294n1nHc/HMgTy6LulU/tv5/A7f/LA==}
     peerDependencies:
       vue: 3.2.47
+    peerDependenciesMeta:
+      vue:
+        optional: true
     dependencies:
       '@vue/compiler-ssr': 3.2.47
       '@vue/shared': 3.2.47
@@ -4888,21 +4898,16 @@ packages:
     resolution: {integrity: sha512-BHGyyGN3Q97EZx0taMQ+OLNuZcW3d37ZEVmEAyeoA9ERdGvm9Irc/0Fua8SNyOtV1w6BS4q25wbMzJujO9HIfQ==}
     dev: false
 
-  /@vueuse/core/8.9.4:
-    resolution: {integrity: sha512-B/Mdj9TK1peFyWaPof+Zf/mP9XuGAngaJZBwPaXBvU3aCTZlx3ltlrFFFyMV4iGBwsjSCeUCgZrtkEj9dS2Y3Q==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.0
-      vue: ^2.6.0 || ^3.2.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      vue:
-        optional: true
+  /@vueuse/core/9.12.0:
+    resolution: {integrity: sha512-h/Di8Bvf6xRcvS/PvUVheiMYYz3U0tH3X25YxONSaAUBa841ayMwxkuzx/DGUMCW/wHWzD8tRy2zYmOC36r4sg==}
     dependencies:
-      '@types/web-bluetooth': 0.0.14
-      '@vueuse/metadata': 8.9.4
-      '@vueuse/shared': 8.9.4
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 9.12.0
+      '@vueuse/shared': 9.12.0
       vue-demi: 0.13.11
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /@vueuse/core/9.12.0_vue@3.2.47:
@@ -4917,45 +4922,36 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/metadata/8.9.4:
-    resolution: {integrity: sha512-IwSfzH80bnJMzqhaapqJl9JRIiyQU0zsRGEgnxN6jhq7992cPUJIRfV+JHRIZXjYqbwt07E1gTEp0R0zPJ1aqw==}
-    dev: false
-
   /@vueuse/metadata/9.12.0:
     resolution: {integrity: sha512-9oJ9MM9lFLlmvxXUqsR1wLt1uF7EVbP5iYaHJYqk+G2PbMjY6EXvZeTjbdO89HgoF5cI6z49o2zT/jD9SVoNpQ==}
     dev: false
 
-  /@vueuse/motion/2.0.0-beta.12:
-    resolution: {integrity: sha512-cAZqXexLX6xo+H1N1Mv+wBSSqG4wB+BdjIuHQ50jwlelXCDxSi8gj0K/9nDS+aUZtWh6YMwS6UGCKg58jMVglA==}
+  /@vueuse/motion/2.0.0-beta.22:
+    resolution: {integrity: sha512-xPRm8i2WVhLQW4TgAC4z5Os4WOQZ8O2IwBIlWLf14W8cluQPiMcZ72miLjTknPVg1S7/vGTcZzSp2L2HDxoipQ==}
     peerDependencies:
-      '@vue/composition-api': ^1.4.1
-      vue: ^2.0.0 || >=3.0.0-rc.0
+      '@nuxt/kit': ^3.0.0-rc.9
     peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      vue:
+      '@nuxt/kit':
         optional: true
     dependencies:
-      '@vueuse/core': 8.9.4
-      '@vueuse/shared': 8.9.4
+      '@vueuse/core': 9.12.0
+      '@vueuse/shared': 9.12.0
+      csstype: 3.1.1
       framesync: 6.1.2
       popmotion: 11.0.5
       style-value-types: 5.1.2
-      vue-demi: 0.13.11
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
-  /@vueuse/shared/8.9.4:
-    resolution: {integrity: sha512-wt+T30c4K6dGRMVqPddexEVLa28YwxW5OFIPmzUHICjphfAuBFTTdDoyqREZNDOFJZ44ARH1WWQNCUK8koJ+Ag==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.0
-      vue: ^2.6.0 || ^3.2.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      vue:
-        optional: true
+  /@vueuse/shared/9.12.0:
+    resolution: {integrity: sha512-TWuJLACQ0BVithVTRbex4Wf1a1VaRuSpVeyEd4vMUWl54PzlE0ciFUshKCXnlLuD0lxIaLK4Ypj3NXYzZh4+SQ==}
     dependencies:
       vue-demi: 0.13.11
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /@vueuse/shared/9.12.0_vue@3.2.47:
@@ -6092,6 +6088,10 @@ packages:
 
   /csstype/2.6.21:
     resolution: {integrity: sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==}
+    dev: false
+
+  /csstype/3.1.1:
+    resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
     dev: false
 
   /currency-codes/1.5.1:
@@ -12168,6 +12168,8 @@ packages:
       vue: ^3.0.0-0 || ^2.6.0
     peerDependenciesMeta:
       '@vue/composition-api':
+        optional: true
+      vue:
         optional: true
     dependencies:
       vue: 3.2.47
