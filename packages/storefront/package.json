@@ -47,7 +47,6 @@
     "firebase": "^9.17.1",
     "image-size": "^1.0.2",
     "semver": "^7.3.8",
-    "sharp": "^0.31.3",
     "tailwindcss": "^3.2.7",
     "unocss": "^0.50.3",
     "vite": "^4.1.4",

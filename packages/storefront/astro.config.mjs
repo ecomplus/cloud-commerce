@@ -82,7 +82,7 @@ const _vitePWAOptions = {
       urlPattern: /^\/_image$/,
       handler: 'StaleWhileRevalidate',
       options: {
-        cacheName: 'sharp-images',
+        cacheName: 'optim-images',
         expiration: {
           maxEntries: 50,
           maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
@@ -146,9 +146,7 @@ const genAstroConfig = ({
   }),
   outDir: isSSG ? './dist/client' : './dist',
   integrations: [
-    image({
-      serviceEntryPoint: '@astrojs/image/sharp',
-    }),
+    image(),
     vue({
       appEntrypoint: '/src/pages/_vue',
       template: {
