@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.11](https://github.com/ecomplus/cloud-commerce/compare/v0.6.10...v0.6.11) (2023-03-01)
+
+
+### Bug Fixes
+
+* **cli:** Prevent breaking Firebase deploy on SSR warnings ([91dd0cb](https://github.com/ecomplus/cloud-commerce/commit/91dd0cb3adff8886260a0eb9ba31e077e9bb54ca))
+* **ssr:** Fixing `@vueuse/core` dependency semver ([a6351f9](https://github.com/ecomplus/cloud-commerce/commit/a6351f9c376c1eda16ada092595a88ad1e1fe882))
+
 ### [0.6.10](https://github.com/ecomplus/cloud-commerce/compare/v0.6.9...v0.6.10) (2023-03-01)
 
 ### [0.6.9](https://github.com/ecomplus/cloud-commerce/compare/v0.6.8...v0.6.9) (2023-03-01)
