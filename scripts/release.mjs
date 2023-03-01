@@ -38,7 +38,7 @@ if (argv.publish) {
     await spinner('give npm registry a time...', () => $`sleep 9`);
     const functions = await listFolders(`${pwd}/store/functions`);
     if (canUpdateStores) {
-      YAML.parse(fs.readFileSync(`${pwd}/pnpm-workspace.yaml`))
+      YAML.parse(fs.readFileSync(`${pwd}/pnpm-workspace.yaml`, 'utf8'))
         .packages.forEach((workspaceFolder) => {
           if (/ecomplus-stores\/[^/]+$/.test(workspaceFolder)) {
             const [, store] = workspaceFolder.split('/');
