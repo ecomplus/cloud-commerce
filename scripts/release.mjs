@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 /* eslint-disable no-console, no-await-in-loop, import/no-unresolved */
-/* global $, quiet, fs, cd, globby, argv */
+/* global $, quiet, fs, cd, globby, YAML, argv */
 import { retry, spinner } from 'zx/experimental';
 
 const listFolders = async (parentPath) => {
@@ -36,10 +36,15 @@ if (argv.publish) {
   await retry(10, '1s', async () => {
     await spinner('give npm registry a time...', () => $`sleep 9`);
     const functions = await listFolders(`${pwd}/store/functions`);
-    let storesDirs = [`${pwd}/store`];
+    const storesDirs = [`${pwd}/store`];
     if (canUpdateStores) {
-      storesDirs = storesDirs.concat((await listFolders(`${pwd}/ecomplus-stores`))
-        .map((store) => `${pwd}/ecomplus-stores/${store}`));
+      YAML.parse(fs.readFileSync(`${pwd}/pnpm-workspace.yaml`))
+        .packages.forEach((workspaceFolder) => {
+          if (/ecomplus-stores\/[^/]+$/.test(workspaceFolder)) {
+            const [, store] = workspaceFolder.split('/');
+            storesDirs.push(`${pwd}/ecomplus-stores/${store}`);
+          }
+        });
     }
     const {
       dependencies: ssrDependencies,
