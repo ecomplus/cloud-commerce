@@ -101,6 +101,11 @@ d-md {
   }
 }
 
+/* Preset width auto for responsive images (for Astro <Picture/>) */
+:where(img[sizes], source[sizes] + img) {
+  width: auto;
+}
+
 /* Fix Safari issue related to <summary> / <details> arrow */
 details > summary.list-none::-webkit-details-marker,
 details > summary.list-none::marker {
