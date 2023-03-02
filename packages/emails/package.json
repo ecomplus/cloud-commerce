@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/emails",
   "type": "module",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "E-Com Plus Cloud Commerce",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
