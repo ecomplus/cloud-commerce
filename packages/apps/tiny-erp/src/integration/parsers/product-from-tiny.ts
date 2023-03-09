@@ -33,24 +33,24 @@ const tryImageUpload = (originImgUrl: string, product: Products) => new Promise(
         'X-My-ID': authenticationId,
         'X-API-Key': apiKey,
       },
-    }).then(({ data, status }) => {
-      if (data.picture) {
-        Object.keys(data.picture).forEach((imgSize) => {
-          if (data.picture[imgSize]) {
-            if (!data.picture[imgSize].url) {
-              delete data.picture[imgSize];
+    }).then(({ data: { picture }, status }) => {
+      if (picture) {
+        Object.keys(picture).forEach((imgSize) => {
+          if (picture[imgSize]) {
+            if (!picture[imgSize].url) {
+              delete picture[imgSize];
               return;
             }
-            if (data.picture[imgSize].size !== undefined) {
-              delete data.picture[imgSize].size;
+            if (picture[imgSize].size !== undefined) {
+              delete picture[imgSize].size;
             }
-            data.picture[imgSize].alt = `${product.name} (${imgSize})`;
+            picture[imgSize].alt = `${product.name} (${imgSize})`;
           }
         });
-        if (Object.keys(data.picture).length) {
+        if (Object.keys(picture).length) {
           return resolve({
             _id: ecomUtils.randomObjectId(),
-            ...data.picture,
+            ...picture,
           });
         }
       }

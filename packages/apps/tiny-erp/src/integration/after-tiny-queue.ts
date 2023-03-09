@@ -35,8 +35,8 @@ export default async (queueEntry, appData, application, payload) => {
           }, 2000);
         }
         if (config) {
-          const { url, method, data } = config;
-          notes += `\n\n-- Request -- \n${method} ${url} \n${JSON.stringify(data)}`;
+          const { url, method, data: reqData } = config;
+          notes += `\n\n-- Request -- \n${method} ${url} \n${JSON.stringify(reqData)}`;
         }
         // @ts-ignore
       } else if (payload.isConfigError === true) {

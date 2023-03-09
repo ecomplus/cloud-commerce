@@ -1,9 +1,20 @@
-/* eslint-disable no-nested-ternary */
 import type { Products } from '@cloudcommerce/types';
 import ecomUtils from '@ecomplus/utils';
 
 export default async (product: Products, originalTinyProduct, appData) => {
   const hasVariations = product.variations && product.variations.length;
+  let unidade: string = originalTinyProduct?.unidade;
+  if (!unidade) {
+    if (
+      product.measurement
+      && product.measurement.unit !== 'oz'
+      && product.measurement.unit !== 'ct'
+    ) {
+      unidade = product.measurement.unit.substring(0, 3).toUpperCase();
+    } else {
+      unidade = 'UN';
+    }
+  }
   const tinyProduct: Record<string, any> = {
     sequencia: 1,
     origem: 0,
@@ -12,11 +23,7 @@ export default async (product: Products, originalTinyProduct, appData) => {
     classe_produto: hasVariations ? 'V' : 'S',
     codigo: product.sku,
     nome: ecomUtils.name(product, 'pt_br').substring(0, 120),
-    unidade: originalTinyProduct && originalTinyProduct.unidade
-      ? originalTinyProduct.unidade
-      : product.measurement && product.measurement.unit !== 'oz' && product.measurement.unit !== 'ct'
-        ? product.measurement.unit.substring(0, 3).toUpperCase()
-        : 'UN',
+    unidade,
   };
 
   if (ecomUtils.onPromotion(product)) {
@@ -63,9 +70,12 @@ export default async (product: Products, originalTinyProduct, appData) => {
   if (dimensions) {
     Object.keys(dimensions).forEach((side) => {
       if (dimensions[side] && dimensions[side].value) {
-        let field = side === 'width' ? 'largura'
-          : side === 'height' ? 'altura'
-            : 'comprimento';
+        let field: string;
+        if (side === 'width') {
+          field = 'largura';
+        } else {
+          field = side === 'height' ? 'altura' : 'comprimento';
+        }
         field += '_embalagem';
         tinyProduct[field] = dimensions[side].value;
         if (dimensions[side].unit === 'mm') {
@@ -124,8 +134,8 @@ export default async (product: Products, originalTinyProduct, appData) => {
       Object.keys(variation.specifications).forEach((gridId) => {
         const gridOptions = variation.specifications[gridId];
         if (gridOptions && gridOptions.length) {
-          gridOptions.forEach(({ text }, i) => {
-            tinyVariation.grade[i === 0 ? gridId : `${gridId}_${(i + 1)}`] = text;
+          gridOptions.forEach(({ text }, ii) => {
+            tinyVariation.grade[ii === 0 ? gridId : `${gridId}_${(ii + 1)}`] = text;
           });
         }
       });

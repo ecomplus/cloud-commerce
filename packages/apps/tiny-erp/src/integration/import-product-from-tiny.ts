@@ -6,10 +6,10 @@ import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-from-tiny';
 
 export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) => {
-  const [sku, productId] = String(queueEntry.nextId).split(';:');
+  const [queueSku, queueProductId] = String(queueEntry.nextId).split(';:');
   let product: Products | null = null;
   try {
-    product = (await api.get(`products/${(productId || `sku:${sku}`)}`)).data;
+    product = (await api.get(`products/${(queueProductId || `sku:${queueSku}`)}`)).data;
   } catch (err: any) {
     if (err.statusCode !== 404) {
       throw err;
@@ -20,13 +20,13 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
   if (product) {
     const { variations } = product;
     hasVariations = Boolean(variations && variations.length);
-    const variation = variations?.find((variation) => sku === variation.sku);
+    const variation = variations?.find(({ sku }) => queueSku === sku);
     if (variation) {
       variationId = variation._id;
     } else {
-      logger.info(`SKU not found ${sku}`);
+      logger.info(`SKU not found ${queueSku}`);
       if (!isHiddenQueue && !appData.update_product) {
-        const msg = sku
+        const msg = queueSku
           + ' corresponde a um produto com variações,'
           + ' especifique o SKU da variação para importar.';
         const err: any = new Error(msg);
@@ -37,10 +37,10 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
     }
   }
 
-  const handleTinyStock = ({ produto, tipo }, tinyProduct?) => {
-    let quantity = Number(produto.saldo) || Number(produto.estoqueAtual);
-    if (produto.saldoReservado) {
-      quantity -= Number(produto.saldoReservado);
+  const handleTinyStock = ({ produto: produtoSaldo, tipo }, tinyProduct?) => {
+    let quantity = Number(produtoSaldo.saldo) || Number(produtoSaldo.estoqueAtual);
+    if (produtoSaldo.saldoReservado) {
+      quantity -= Number(produtoSaldo.saldoReservado);
     }
     if (product && (!appData.update_product || variationId)) {
       if (!Number.isNaN(quantity)) {
@@ -77,15 +77,15 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
           return null;
         }
         // @ts-ignore
-        return parseProduct(produto, method === 'POST').then((product: Products) => {
+        return parseProduct(produto, method === 'POST').then((parsedProduct: Products) => {
           if (!Number.isNaN(quantity)) {
-            product.quantity = quantity >= 0 ? quantity : 0;
+            parsedProduct.quantity = quantity >= 0 ? quantity : 0;
           }
           logger.info(`${method} ${endpoint}`);
           const promise = api({
             method,
             endpoint,
-            data: product,
+            data: parsedProduct,
           });
 
           if (Array.isArray(produto.variacoes) && produto.variacoes.length) {
@@ -129,19 +129,19 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
   };
 
   logger.info(JSON.stringify({
-    sku,
-    productId,
+    queueSku,
+    queueProductId,
     hasVariations,
     variationId,
   }));
   const { tinyStockUpdate } = queueEntry;
-  if (tinyStockUpdate && isHiddenQueue && productId) {
+  if (tinyStockUpdate && isHiddenQueue && queueProductId) {
     return handleTinyStock(tinyStockUpdate as any);
   }
-  return postTiny('/produtos.pesquisa.php', { pesquisa: sku })
+  return postTiny('/produtos.pesquisa.php', { pesquisa: queueSku })
     .then(({ produtos }) => {
       if (Array.isArray(produtos)) {
-        let tinyProduct = produtos.find(({ produto }) => sku === String(produto.codigo));
+        let tinyProduct = produtos.find(({ produto }) => queueSku === String(produto.codigo));
         if (tinyProduct) {
           tinyProduct = tinyProduct.produto;
           if (!hasVariations || variationId) {
@@ -154,7 +154,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
           return handleTinyStock({ produto: {} } as any, tinyProduct);
         }
       }
-      const msg = `SKU ${sku} não encontrado no Tiny`;
+      const msg = `SKU ${queueSku} não encontrado no Tiny`;
       const err: any = new Error(msg);
       err.isConfigError = true;
       throw new Error(err);
