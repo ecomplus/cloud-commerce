@@ -87,9 +87,10 @@ export default async (apiDoc, queueEntry) => {
   if (typeof tinyOrderNumber === 'string' && tinyOrderNumber.startsWith('id:')) {
     return getTinyOrder(tinyOrderNumber.substring(3));
   }
-  return postTiny('/pedidos.pesquisa.php', {
-    numero: tinyOrderNumber,
-  }).then(({ pedidos }) => {
+  const filter = typeof tinyOrderNumber === 'string' && tinyOrderNumber.startsWith('ecom:')
+    ? { numeroEcommerce: tinyOrderNumber.substring(5) }
+    : { numero: tinyOrderNumber };
+  return postTiny('/pedidos.pesquisa.php', filter).then(({ pedidos }) => {
     const tinyOrder = pedidos.find(({ pedido }) => {
       return Number(tinyOrderNumber) === Number(pedido.numero);
     });
