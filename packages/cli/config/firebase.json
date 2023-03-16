@@ -109,7 +109,7 @@
         ]
       },
       {
-        "source": "**/*.?????*.@(js|css|webp|avif)",
+        "source": "/_astro/**",
         "headers": [
           {
             "key": "Cache-Control",
