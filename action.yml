@@ -136,7 +136,7 @@ runs:
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
-        printf "DEPLOY_RAND=$RANDOM.$RANDOM
+        printf "DEPLOY_RAND=$RANDOM$RANDOM
         ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
         ECOM_API_KEY=$ECOM_API_KEY
         ECOM_STORE_ID=$ECOM_STORE_ID
@@ -172,7 +172,7 @@ runs:
       env:
         ECOM_STORE_ID: ${{ env.ecom_store_id }}
       run: |
-        printf "DEPLOY_RAND=$RANDOM.$RANDOM
+        printf "DEPLOY_RAND=$RANDOM$RANDOM
         ECOM_STORE_ID=$ECOM_STORE_ID
         " > functions/ssr/.env
         if [ ! -f ".firebaserc" ]; then
