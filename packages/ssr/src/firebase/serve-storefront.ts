@@ -1,6 +1,7 @@
 import type { Request, Response } from 'firebase-functions';
 import { join as joinPath } from 'path';
 import { readFile } from 'fs/promises';
+import logger from 'firebase-functions/logger';
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
@@ -11,6 +12,7 @@ export default (req: Request, res: Response) => {
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, defaultCache: string) => {
+    if (res.headersSent) return res;
     return res.status(status)
       .set('X-SSR-ID', `v1/${Date.now()}`)
       .set(
@@ -40,6 +42,12 @@ export default (req: Request, res: Response) => {
   */
   global.ssr_handler(req, res, async (err: any) => {
     if (err) {
+      if (res.headersSent) {
+        logger.error(err);
+        res.end();
+        return;
+      }
+      logger.warn(err);
       res.set('X-SSR-Error', err.message);
       res.set('X-SSR-Error-Stack', err.stack);
       fallback(err);
