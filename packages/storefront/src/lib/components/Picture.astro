@@ -1,16 +1,11 @@
 ---
-import type {
-  PictureComponentLocalImageProps,
-  PictureComponentRemoteImageProps,
-} from '@astrojs/image/components/';
+import type { PictureComponentRemoteImageProps } from '@astrojs/image/components/';
 import { resolve as resolvePath } from 'path';
 import imageSize from 'image-size';
 import { getPicture } from '@astrojs/image';
 
-type PictureProps = PictureComponentLocalImageProps | PictureComponentRemoteImageProps;
-
-export type Props = Omit<PictureProps, 'aspectRatio'> & {
-  aspectRatio?: PictureProps['aspectRatio'],
+export type Props = Omit<PictureComponentRemoteImageProps, 'aspectRatio'> & {
+  aspectRatio?: PictureComponentRemoteImageProps['aspectRatio'],
   fetchpriority?: 'high' | 'low' | 'auto',
 };
 
