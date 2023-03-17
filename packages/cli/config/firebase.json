@@ -23,22 +23,7 @@
     {
       "predeploy": "npm run build -- --codebase ssr",
       "source": "functions/ssr",
-      "codebase": "ssr",
-      "ignore": [
-        ".git",
-        ".runtimeconfig.json",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "node_modules",
-        ".turbo",
-        "_astro",
-        "dist/client",
-        "functions/ssr/dist/client",
-        "/public",
-        "functions/ssr/public",
-        "/src",
-        "functions/ssr/src"
-      ]
+      "codebase": "ssr"
     }
   ],
   "hosting": {
