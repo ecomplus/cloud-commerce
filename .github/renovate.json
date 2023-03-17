@@ -1,7 +1,6 @@
 {
   "extends": [
     "config:base",
-    "group:allNonMajor",
     "schedule:earlyMondays"
   ],
   "rangeStrategy": "bump",
@@ -9,5 +8,38 @@
     "dependencies"
   ],
   "dependencyDashboard": false,
-  "ignoreDeps": ["node", "pnpm", "turbo", "@vueuse/core"]
+  "ignoreDeps": [
+    "node",
+    "pnpm",
+    "turbo",
+    "@vueuse/core"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Non-major dependencies",
+      "groupSlug": "many-minor-patch",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "excludePackageNames": [
+        "astro"
+      ],
+      "excludePackagePrefixes": [
+        "@astrojs/"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
+    },
+    {
+      "groupName": "Astro",
+      "matchPackageNames": [
+        "astro"
+      ],
+      "matchPackagePrefixes": [
+        "@astrojs/"
+      ]
+    }
+  ]
 }
