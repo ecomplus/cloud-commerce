@@ -144,7 +144,7 @@ const genAstroConfig = ({
   adapter: isSSG ? undefined : node({
     mode: 'middleware',
   }),
-  outDir: isSSG ? './dist/client' : './dist',
+  outDir: process.env.BUILD_OUT_DIR || (isSSG ? './dist/client' : './dist'),
   integrations: [
     image(),
     vue({
