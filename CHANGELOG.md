@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/ecomplus/cloud-commerce/compare/v0.7.1...v0.8.0) (2023-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Imported image assets cant be used with `@@sf/components/Picture.astro` anymore
+
+Preparing to https://github.com/ecomplus/cloud-commerce/issues/129
+
+### Features
+
+* **storefront:** New `Picture.runtime.astro` dealing with pre-compiled images :tada: ([c77b910](https://github.com/ecomplus/cloud-commerce/commit/c77b91062d0ef10ac94a355f458b2f150e7d1958))
+
+
+* **storefront:** Custom <Picture> component should accept string src ("remote") only ([65c9539](https://github.com/ecomplus/cloud-commerce/commit/65c9539bbbccfe32653b56e56c4dc1b1f9c12323))
+
 ### [0.7.1](https://github.com/ecomplus/cloud-commerce/compare/v0.7.0...v0.7.1) (2023-03-17)
 
 
