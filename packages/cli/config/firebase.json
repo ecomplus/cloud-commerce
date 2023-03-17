@@ -31,7 +31,13 @@
         "firebase-debug.*.log",
         "node_modules",
         ".turbo",
-        "_astro"
+        "_astro",
+        "dist/client",
+        "functions/ssr/dist/client",
+        "/public",
+        "functions/ssr/public",
+        "/src",
+        "functions/ssr/src"
       ]
     }
   ],
