@@ -27,7 +27,17 @@
     {
       "predeploy": "npm run build -- --codebase ssr",
       "source": "functions/ssr",
-      "codebase": "ssr"
+      "codebase": "ssr",
+      "ignore": [
+        ".git",
+        ".runtimeconfig.json",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "node_modules",
+        ".turbo",
+        "dist/client",
+        "**/dist/client/"
+      ]
     }
   ],
   "hosting": {
@@ -110,6 +120,15 @@
       },
       {
         "source": "/_astro/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/_image",
         "headers": [
           {
             "key": "Cache-Control",
