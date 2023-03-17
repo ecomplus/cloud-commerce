@@ -72,7 +72,7 @@ if (argv.publish) {
             for (let i = 0; i < astroPkgs.length; i++) {
               const astroPkg = astroPkgs[i];
               const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
-              await $`npm i --save ${dep}`;
+              await $`npm i --save --save-exact ${dep}`;
             }
           }
         }
