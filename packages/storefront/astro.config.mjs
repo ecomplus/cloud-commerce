@@ -5,8 +5,6 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
 import image from '@astrojs/image';
-// import partytown from '@astrojs/partytown';
-// import prefetch from '@astrojs/prefetch';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
@@ -16,6 +14,8 @@ const __dirname = new URL('.', import.meta.url).pathname;
 dotenv.config();
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
+const outDir = process.env.BUILD_OUT_DIR || (isSSG ? './dist/client' : './dist');
+const isToServerless = !isSSG && process.env.DEPLOY_RUNTIME === 'serverless';
 const deployRand = process.env.DEPLOY_RAND || '_';
 
 const {
@@ -136,17 +136,27 @@ const _vitePWAOptions = {
   },
 };
 
+const viteAlias = [];
+if (isToServerless) {
+  viteAlias.push({
+    find: '@@sf/components/Picture.astro',
+    replacement: joinPath(__dirname, 'src/serverless/Picture.runtime.astro'),
+  });
+}
+viteAlias.push(
+  { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
+  { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
+  { find: '~', replacement: joinPath(process.cwd(), 'src') },
+  { find: 'content', replacement: joinPath(process.cwd(), 'content') },
+  { find: '/img', replacement: joinPath(process.cwd(), 'public/img') },
+  { find: '/assets', replacement: joinPath(process.cwd(), 'public/assets') },
+);
+
 const genAstroConfig = ({
   site = `https://${domain}`,
   vitePWAOptions = _vitePWAOptions,
-} = {}) => ({
-  output: isSSG ? 'static' : 'server',
-  adapter: isSSG ? undefined : node({
-    mode: 'middleware',
-  }),
-  outDir: process.env.BUILD_OUT_DIR || (isSSG ? './dist/client' : './dist'),
-  integrations: [
-    image(),
+} = {}) => {
+  const integrations = [
     vue({
       appEntrypoint: '/src/pages/_vue',
       template: {
@@ -155,49 +165,53 @@ const genAstroConfig = ({
         },
       },
     }),
-    // partytown(),
-    // prefetch(),
     UnoCSS({
       injectReset: false,
       injectEntry: false,
     }),
     AstroPWA(vitePWAOptions),
-  ],
-  site,
-  vite: {
-    plugins: [
-      {
-        name: 'vue-i18n',
-        transform(code, id) {
-          if (!/\.vue$/.test(id)) {
-            return;
-          }
-          // eslint-disable-next-line consistent-return
-          return code.replace(/\$t\.i19([a-z][\w$]+)/g, (match, p1) => {
-            try {
-              const text = readFileSync(joinPath(dictionaryDir, lang, `i19${p1}.txt`));
-              return `'${text}'`;
-            } catch (e) {
-              console.error(e);
-              return match;
+  ];
+  if (!isToServerless) {
+    integrations.push(image({
+      serviceEntryPoint: '@astrojs/image/sharp',
+    }));
+  }
+  return {
+    output: isSSG ? 'static' : 'server',
+    adapter: isSSG ? undefined : node({
+      mode: 'middleware',
+    }),
+    outDir,
+    integrations,
+    site,
+    vite: {
+      plugins: [
+        {
+          name: 'vue-i18n',
+          transform(code, id) {
+            if (!/\.vue$/.test(id)) {
+              return;
             }
-          });
+            // eslint-disable-next-line consistent-return
+            return code.replace(/\$t\.i19([a-z][\w$]+)/g, (match, p1) => {
+              try {
+                const text = readFileSync(joinPath(dictionaryDir, lang, `i19${p1}.txt`));
+                return `'${text}'`;
+              } catch (e) {
+                console.error(e);
+                return match;
+              }
+            });
+          },
         },
-      },
-    ],
-    resolve: {
-      preserveSymlinks: lstatSync(joinPath(process.cwd(), 'src/components')).isSymbolicLink(),
-      alias: [
-        { find: '@@i18n', replacement: `@cloudcommerce/i18n/src/${lang}.ts` },
-        { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
-        { find: '~', replacement: joinPath(process.cwd(), 'src') },
-        { find: 'content', replacement: joinPath(process.cwd(), 'content') },
-        { find: '/img', replacement: joinPath(process.cwd(), 'public/img') },
-        { find: '/assets', replacement: joinPath(process.cwd(), 'public/assets') },
       ],
+      resolve: {
+        preserveSymlinks: lstatSync(joinPath(process.cwd(), 'src/components')).isSymbolicLink(),
+        alias: viteAlias,
+      },
     },
-  },
-});
+  };
+};
 
 const astroConfig = genAstroConfig();
 

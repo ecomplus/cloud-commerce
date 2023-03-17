@@ -3,6 +3,9 @@
   "type": "module",
   "version": "0.7.1",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
+  "bin": {
+    "storefront": "./scripts/build-prod.sh"
+  },
   "main": "src/index.js",
   "repository": {
     "type": "git",
@@ -20,6 +23,7 @@
     "start": "astro dev --host",
     "build": "astro build",
     "build:static": "BUILD_OUTPUT=static astro build",
+    "build:prod": "sh scripts/build-prod.sh",
     "preview": "astro preview",
     "astro": "astro",
     "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
@@ -27,8 +31,6 @@
   "dependencies": {
     "@astrojs/image": "^0.16.0",
     "@astrojs/node": "^5.1.0",
-    "@astrojs/partytown": "^1.1.0",
-    "@astrojs/prefetch": "^0.2.0",
     "@astrojs/vue": "^2.1.0",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
@@ -46,7 +48,9 @@
     "dotenv": "^16.0.3",
     "firebase": "^9.17.2",
     "image-size": "^1.0.2",
+    "mime": "^3.0.0",
     "semver": "^7.3.8",
+    "sharp": "^0.31.3",
     "tailwindcss": "^3.2.7",
     "unocss": "^0.50.4",
     "vite": "^4.1.4",
