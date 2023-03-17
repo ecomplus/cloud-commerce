@@ -2,7 +2,6 @@
 import type { PageContext } from '@@sf/ssr-context';
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg } from '@ecomplus/utils';
-import { getImage as transformImage } from '@@sf/ssr/image';
 
 export interface Props {
   pageContext: PageContext;
@@ -23,13 +22,8 @@ const state = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;
 const description = state.meta_description || state.short_description || settings.description;
 const favicon = settings.icon
-  ? (await transformImage({
-      src: settings.icon,
-      width: 32,
-      height: 32,
-      format: 'png',
-      isLowResolution: true,
-    })).src
+  ? '/_image?f=png&w=32&h=32&format=png'
+    + `&href=${encodeURIComponent(settings.icon)}&V=${import.meta.env.DEPLOY_RAND}`
   : '/favicon.ico';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
 const cmsMetatags = await cms('metatags');
