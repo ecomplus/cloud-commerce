@@ -48,50 +48,50 @@ importers:
 
   ecomplus-stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.6.13
+      '@cloudcommerce/cli': ^0.7.0
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.13
+      '@cloudcommerce/firebase': ^0.7.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.6.13
-      '@cloudcommerce/firebase': ^0.6.13
+      '@cloudcommerce/events': ^0.7.0
+      '@cloudcommerce/firebase': ^0.7.0
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/modules': ^0.6.13
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/modules': ^0.7.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/passport': ^0.6.13
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/passport': ^0.7.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
 
   ecomplus-stores/monocard/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.15.1
-      '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.13
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/i18n': ^0.6.13
-      '@cloudcommerce/ssr': ^0.6.13
-      '@cloudcommerce/storefront': ^0.6.13
-      '@cloudcommerce/types': ^0.6.13
+      '@astrojs/image': ^0.16.1
+      '@astrojs/node': ^5.1.0
+      '@cloudcommerce/api': ^0.7.0
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/i18n': ^0.7.0
+      '@cloudcommerce/ssr': ^0.7.0
+      '@cloudcommerce/storefront': ^0.7.0
+      '@cloudcommerce/types': ^0.7.0
       '@fontsource/inter': ^4.5.15
       '@iconify-json/ri': ^1.1.5
       '@iconify-json/wpf': ^1.1.4
@@ -99,7 +99,7 @@ importers:
       lottie-web: ^5.10.2
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/image': 0.15.1
+      '@astrojs/image': 0.16.1
       '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
@@ -117,14 +117,14 @@ importers:
 
   ecomplus-stores/monocard/storefront:
     specifiers:
-      '@astrojs/image': ^0.15.1
-      '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.13
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/i18n': ^0.6.13
-      '@cloudcommerce/ssr': ^0.6.13
-      '@cloudcommerce/storefront': ^0.6.13
-      '@cloudcommerce/types': ^0.6.13
+      '@astrojs/image': ^0.16.1
+      '@astrojs/node': ^5.1.0
+      '@cloudcommerce/api': ^0.7.0
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/i18n': ^0.7.0
+      '@cloudcommerce/ssr': ^0.7.0
+      '@cloudcommerce/storefront': ^0.7.0
+      '@cloudcommerce/types': ^0.7.0
       '@fontsource/inter': ^4.5.15
       '@iconify-json/ri': ^1.1.5
       '@iconify-json/wpf': ^1.1.4
@@ -132,7 +132,7 @@ importers:
       lottie-web: ^5.10.2
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/image': 0.15.1
+      '@astrojs/image': 0.16.1
       '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -815,52 +815,52 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.6.13
+      '@cloudcommerce/cli': ^0.7.0
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.13
+      '@cloudcommerce/firebase': ^0.7.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.6.13
-      '@cloudcommerce/firebase': ^0.6.13
+      '@cloudcommerce/events': ^0.7.0
+      '@cloudcommerce/firebase': ^0.7.0
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/modules': ^0.6.13
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/modules': ^0.7.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/passport': ^0.6.13
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/passport': ^0.7.0
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/image': ^0.15.1
-      '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.13
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/i18n': ^0.6.13
-      '@cloudcommerce/ssr': ^0.6.13
-      '@cloudcommerce/storefront': ^0.6.13
-      '@cloudcommerce/types': ^0.6.13
+      '@astrojs/image': ^0.16.1
+      '@astrojs/node': ^5.1.0
+      '@cloudcommerce/api': ^0.7.0
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/i18n': ^0.7.0
+      '@cloudcommerce/ssr': ^0.7.0
+      '@cloudcommerce/storefront': ^0.7.0
+      '@cloudcommerce/types': ^0.7.0
     dependencies:
-      '@astrojs/image': 0.15.1
+      '@astrojs/image': 0.16.1
       '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -872,16 +872,16 @@ importers:
 
   store/storefront:
     specifiers:
-      '@astrojs/image': ^0.15.1
-      '@astrojs/node': ^5.0.4
-      '@cloudcommerce/api': ^0.6.13
-      '@cloudcommerce/firebase': ^0.6.13
-      '@cloudcommerce/i18n': ^0.6.13
-      '@cloudcommerce/ssr': ^0.6.13
-      '@cloudcommerce/storefront': ^0.6.13
-      '@cloudcommerce/types': ^0.6.13
+      '@astrojs/image': ^0.16.1
+      '@astrojs/node': ^5.1.0
+      '@cloudcommerce/api': ^0.7.0
+      '@cloudcommerce/firebase': ^0.7.0
+      '@cloudcommerce/i18n': ^0.7.0
+      '@cloudcommerce/ssr': ^0.7.0
+      '@cloudcommerce/storefront': ^0.7.0
+      '@cloudcommerce/types': ^0.7.0
     dependencies:
-      '@astrojs/image': 0.15.1
+      '@astrojs/image': 0.16.1
       '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
@@ -939,25 +939,6 @@ packages:
     resolution: {integrity: sha512-O8yPCyuq+PU9Fjht2tIW6WzSWiq8qDF1e8uAX2x+SOGFzKqOznp52UlDG2mSf+ekf0Z3R34sb64O7SgX+asTxg==}
     dev: false
 
-  /@astrojs/image/0.15.1:
-    resolution: {integrity: sha512-5+ZBHEfwcx8BbJbAatnW1fyFLWQW4n6jUkDRB5eLbo+yKZv8gwlpPBPpo7cqiY6kUtEisZHVsVYdCTe22KDZgQ==}
-    peerDependencies:
-      astro: ^2.0.15
-      sharp: '>=0.31.0'
-    peerDependenciesMeta:
-      astro:
-        optional: true
-      sharp:
-        optional: true
-    dependencies:
-      '@altano/tiny-async-pool': 1.0.2
-      http-cache-semantics: 4.1.1
-      image-size: 1.0.2
-      kleur: 4.1.5
-      magic-string: 0.27.0
-      mime: 3.0.0
-    dev: false
-
   /@astrojs/image/0.16.0_astro@2.1.2:
     resolution: {integrity: sha512-9nZSA6/3ucdj5/M774CX0qtPtNZVGJeH6uTL4/4rYJgOZTFfr5CEGNmY9MIyayIYvatvG3VXyRGInLKEo4bXsg==}
     peerDependencies:
@@ -971,6 +952,25 @@ packages:
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
       astro: 2.1.2
+      http-cache-semantics: 4.1.1
+      image-size: 1.0.2
+      kleur: 4.1.5
+      magic-string: 0.27.0
+      mime: 3.0.0
+    dev: false
+
+  /@astrojs/image/0.16.1:
+    resolution: {integrity: sha512-NI5wscxJC0qmvAqnNT79vucQcBP1ZzhVMd8iqy/bhjoccxEgFFvqLIUa88Tf/br3eyhHfN95FDIqNTOs4K3HSg==}
+    peerDependencies:
+      astro: ^2.1.3
+      sharp: '>=0.31.0'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+      sharp:
+        optional: true
+    dependencies:
+      '@altano/tiny-async-pool': 1.0.2
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
