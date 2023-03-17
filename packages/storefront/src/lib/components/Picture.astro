@@ -3,17 +3,46 @@ import type {
   PictureComponentLocalImageProps,
   PictureComponentRemoteImageProps,
 } from '@astrojs/image/components/';
+import { resolve as resolvePath } from 'path';
+import imageSize from 'image-size';
 import { getPicture } from '@astrojs/image';
-import { warnForMissingAlt } from '@astrojs/image/components/';
 
-export type Props = PictureComponentLocalImageProps | PictureComponentRemoteImageProps;
+type PictureProps = PictureComponentLocalImageProps | PictureComponentRemoteImageProps;
+
+export type Props = Omit<PictureProps, 'aspectRatio'> & {
+  aspectRatio?: PictureProps['aspectRatio'],
+  fetchpriority?: 'high' | 'low' | 'auto',
+};
+
+const tryImageSize = (src: string) => {
+  let dimensions: { width?: number, height?: number } = {};
+  if (typeof src === 'string' && src.startsWith('/')) {
+    const { STOREFRONT_BASE_DIR } = import.meta.env;
+    try {
+      dimensions = imageSize(resolvePath(STOREFRONT_BASE_DIR, `public${src}`));
+    } catch (e) {
+      dimensions = {};
+    }
+  }
+  return dimensions;
+};
+
+const getAspectRatio = (src: string | { width?: number, height?: number }) => {
+  if (typeof src === 'string') {
+    src = tryImageSize(src);
+  }
+  if (src.width) {
+    return src.height ? src.width / src.height : 1;
+  }
+  return 0;
+};
 
 const {
   src,
   alt,
   sizes,
   widths,
-  aspectRatio,
+  aspectRatio: propAspectRatio,
   fit,
   background,
   position,
@@ -23,8 +52,14 @@ const {
   ...attrs
 } = Astro.props;
 
-if (alt === undefined || alt === null) {
-  warnForMissingAlt();
+let aspectRatio = propAspectRatio;
+if ((!attrs.width || !attrs.height) && !aspectRatio && typeof src === 'string') {
+  const { width, height } = tryImageSize(src);
+  if (height) {
+    aspectRatio = getAspectRatio({ width, height });
+    attrs.width = width;
+    attrs.height = height;
+  }
 }
 
 const { image, sources } = await getPicture({
@@ -37,12 +72,23 @@ const { image, sources } = await getPicture({
   position,
   alt,
 });
-
+const imgSrc = `${image.src}&V=${process.env.DEPLOY_RAND}`;
+delete image.src;
 delete image.width;
 delete image.height;
 ---
 
 <picture>
-  {sources.map((attrs) => <source {...attrs} sizes={sizes} />)}
-  <img {...image} loading={loading} decoding={decoding} {...attrs} />
+  {sources.map((attrs) => <source
+    type={attrs.type}
+    srcset={attrs.srcset.replace(/\s(\w+)$/, `&V=${process.env.DEPLOY_RAND} $1`)}
+    sizes={sizes}
+  />)}
+  <img
+    {...image}
+    loading={loading}
+    decoding={decoding}
+    src={imgSrc}
+    {...attrs}
+  />
 </picture>
