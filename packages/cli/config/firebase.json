@@ -1,8 +1,4 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
   "functions": [
     {
       "predeploy": "npm run build -- --codebase core",
@@ -35,8 +31,7 @@
         "firebase-debug.*.log",
         "node_modules",
         ".turbo",
-        "dist/client",
-        "**/dist/client/"
+        "_astro"
       ]
     }
   ],
@@ -138,6 +133,10 @@
       }
     ],
     "cleanUrls": true
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   },
   "storage": {
     "rules": "storage.rules"
