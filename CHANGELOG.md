@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/ecomplus/cloud-commerce/compare/v0.6.13...v0.7.0) (2023-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Imports  `@@sf/ssr/*` no more working
+
+### Features
+
+* **tiny:** Updating with https://github.com/ecomplus/app-tiny-erp ([259ae68](https://github.com/ecomplus/cloud-commerce/commit/259ae688d23e2094f6d41194aeaa1494aaf39c5b))
+
+
+### Bug Fixes
+
+* **deps:** Update all non-major dependencies ([#130](https://github.com/ecomplus/cloud-commerce/issues/130)) ([876775e](https://github.com/ecomplus/cloud-commerce/commit/876775e253b14719e8bc73d389c2bb6fa475be9b))
+* **deps:** Update all non-major dependencies ([#131](https://github.com/ecomplus/cloud-commerce/issues/131)) ([9b63c62](https://github.com/ecomplus/cloud-commerce/commit/9b63c620e8732905dd501fa574fd5341ac0d6157))
+* **storefront:** Moved `@@sf/components/Picture` with fixed vwesioned src ([fb1254b](https://github.com/ecomplus/cloud-commerce/commit/fb1254b96b05c4d9d900bc4ffb067f0de0132042))
+
+
+* **storefront:** Removing `lib/ssr` dir and `image` module ([a66c1f5](https://github.com/ecomplus/cloud-commerce/commit/a66c1f502a2a1a47a84f8cfe270ec9f0236ac369))
+
 ### [0.6.13](https://github.com/ecomplus/cloud-commerce/compare/v0.6.12...v0.6.13) (2023-03-02)
 
 ### [0.6.12](https://github.com/ecomplus/cloud-commerce/compare/v0.6.11...v0.6.12) (2023-03-02)
