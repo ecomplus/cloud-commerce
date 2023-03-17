@@ -1,0 +1,90 @@
+---
+import type { PictureComponentRemoteImageProps } from '@astrojs/image/components/';
+import { join as joinPath } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { getPicture } from './get-picture';
+
+export type Props = Omit<PictureComponentRemoteImageProps, 'aspectRatio'> & {
+  aspectRatio?: PictureComponentRemoteImageProps['aspectRatio'],
+  fetchpriority?: 'high' | 'low' | 'auto',
+};
+
+type OriginalImage = { filepath: string, width: number, height: number };
+const originalImages: OriginalImage[] = [];
+const manifestFilepath = joinPath(process.cwd(), 'dist/server/images.src.csv');
+readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
+  const [filepath, width, height] = line.split(',');
+  originalImages.push({
+    filepath,
+    width: Number(width),
+    height: Number(height),
+  });
+});
+
+const tryImageSize = (src: string) => {
+  let dimensions: { width?: number, height?: number } = {};
+  if (typeof src === 'string' && src.startsWith('/')) {
+    const originalImage = originalImages.find(({ filepath }) => {
+      return new RegExp(`^/${filepath}\\??.*`).test(src);
+    });
+    if (originalImage) {
+      const { width, height } = originalImage;
+      dimensions = { width, height };
+    }
+  }
+  return dimensions;
+};
+
+const getAspectRatio = (src: string | { width?: number, height?: number }) => {
+  if (typeof src === 'string') {
+    src = tryImageSize(src);
+  }
+  if (src.width) {
+    return src.height ? src.width / src.height : 1;
+  }
+  return 0;
+};
+
+const {
+  src,
+  alt,
+  sizes,
+  widths,
+  aspectRatio: propAspectRatio,
+  fit,
+  background,
+  position,
+  formats = ['avif', 'webp'],
+  loading = 'lazy',
+  decoding = 'async',
+  ...attrs
+} = Astro.props;
+
+let aspectRatio = propAspectRatio;
+if ((!attrs.width || !attrs.height) && !aspectRatio && typeof src === 'string') {
+  const { width, height } = tryImageSize(src);
+  if (height) {
+    aspectRatio = getAspectRatio({ width, height });
+    attrs.width = width;
+    attrs.height = height;
+  }
+}
+
+const { image, sources } = await getPicture({
+  src,
+  widths,
+  formats,
+  aspectRatio,
+  fit,
+  background,
+  position,
+  alt,
+});
+delete image.width;
+delete image.height;
+---
+
+<picture>
+  {sources.map((attrs) => <source {...attrs} sizes={sizes} />)}
+  <img {...image} loading={loading} decoding={decoding} {...attrs} />
+</picture>
