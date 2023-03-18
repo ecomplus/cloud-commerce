@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.3](https://github.com/ecomplus/cloud-commerce/compare/v0.8.2...v0.8.3) (2023-03-18)
+
+
+### Features
+
+* **ssr:** Simple fallback to /_image route reading images manifest ([3fb19b0](https://github.com/ecomplus/cloud-commerce/commit/3fb19b06452082f270e9e3c853e53efe1eaa4b51))
+* **storefront:** Add hidden icon (if set) on body with <Picture> to pre-compile [[#129](https://github.com/ecomplus/cloud-commerce/issues/129)] ([a4838f0](https://github.com/ecomplus/cloud-commerce/commit/a4838f00310674a0da747a21e596c57ad5107826))
+
+
+### Bug Fixes
+
+* **ssr:** Edit /_image route fallback to just return original href if no built image found ([6d38140](https://github.com/ecomplus/cloud-commerce/commit/6d381400648309b39089faa80c5c4a9d32c5b8c2))
+* **storefront:** Prevent fatal error with unmatched built image ([b4dc6f8](https://github.com/ecomplus/cloud-commerce/commit/b4dc6f8acf47ac49e310a8b0b4377c236120e238))
+* **storefront:** Use `STOREFRONT_BASE_DIR` if set to read images manifest files ([bee44a7](https://github.com/ecomplus/cloud-commerce/commit/bee44a73a1f56a5594458100bd42ff959bb7a462))
+
 ### [0.8.2](https://github.com/ecomplus/cloud-commerce/compare/v0.8.1...v0.8.2) (2023-03-17)
 
 
