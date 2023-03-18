@@ -35,11 +35,15 @@ const getImage = async ({ src, width, format }: ImageOptions) => {
   if (!builtImage) {
     builtImage = builtImages.find(matchFilename);
   }
-  return {
-    src: `/_astro/${builtImage.filename}`,
-    width: builtImage.width,
-    height: builtImage.height,
-  };
+  if (builtImage) {
+    return {
+      src: `/_astro/${builtImage.filename}`,
+      width: builtImage.width,
+      height: builtImage.height,
+    };
+  }
+  console.warn(`Could not match built ${format} image for ${src} ${width}px`);
+  return { src, width };
 };
 
 export default getImage;
