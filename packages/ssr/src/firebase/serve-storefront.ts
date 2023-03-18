@@ -70,7 +70,7 @@ export default (req: Request, res: Response) => {
           if (builtImage) {
             return res.redirect(301, `/_astro/${builtImage.filename}`);
           }
-          return res.sendStatus(404);
+          return res.redirect(302, href);
         })();
         return;
       }
