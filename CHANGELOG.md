@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.4](https://github.com/ecomplus/cloud-commerce/compare/v0.8.3...v0.8.4) (2023-03-18)
+
+
+### Features
+
+* **storefront:** Update custom `<Picture>` to support lazy load libs with `hasImg={false}` prop ([be9bbdc](https://github.com/ecomplus/cloud-commerce/commit/be9bbdc46635717b52dd23ab0f5daec11c3a37a8))
+
+
+### Bug Fixes
+
+* **storefront:** Fix built (fav)icon format to png only ([e02b3cc](https://github.com/ecomplus/cloud-commerce/commit/e02b3cc0e35d7330c4c317e1a7d70e0032844afc))
+
 ### [0.8.3](https://github.com/ecomplus/cloud-commerce/compare/v0.8.2...v0.8.3) (2023-03-18)
 
 
