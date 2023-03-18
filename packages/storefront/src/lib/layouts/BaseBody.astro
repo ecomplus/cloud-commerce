@@ -11,7 +11,7 @@ export interface Props {
   pageContext: PageContext;
 }
 
-const { settings: { icon } } = Astro.props.pageContext;
+const { settings } = Astro.props.pageContext;
 ---
 
 <body>
@@ -20,14 +20,16 @@ const { settings: { icon } } = Astro.props.pageContext;
   <slot />
   <slot name="before-body-end" />
   <div id="teleported-bottom" class="relative z-0"></div>
-  {icon &&
+  {settings.icon &&
     <Picture
-      src={icon}
+      src={settings.icon}
       alt="Icon"
+      formats={['png']}
       widths={[32, 192, 512]}
       sizes="32px"
       class="hidden absolute"
       style="bottom: -1000px"
+      hasImg={false}
     />
   }
 </body>
