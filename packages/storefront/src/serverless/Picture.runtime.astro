@@ -9,9 +9,11 @@ export type Props = Omit<PictureComponentRemoteImageProps, 'aspectRatio'> & {
   fetchpriority?: 'high' | 'low' | 'auto',
 };
 
+const { STOREFRONT_BASE_DIR } = process.env;
+const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 type OriginalImage = { filepath: string, width: number, height: number };
 const originalImages: OriginalImage[] = [];
-const manifestFilepath = joinPath(process.cwd(), 'dist/server/images.src.csv');
+const manifestFilepath = joinPath(baseDir, 'dist/server/images.src.csv');
 readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
   const [filepath, width, height] = line.split(',');
   originalImages.push({

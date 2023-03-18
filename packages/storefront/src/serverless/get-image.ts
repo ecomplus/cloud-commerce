@@ -2,9 +2,11 @@ import type { OutputFormat } from '@astrojs/image/dist/loaders/';
 import { join as joinPath } from 'node:path';
 import { readFileSync } from 'node:fs';
 
+const { STOREFRONT_BASE_DIR } = process.env;
+const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
-const manifestFilepath = joinPath(process.cwd(), 'dist/server/images.dist.csv');
+const manifestFilepath = joinPath(baseDir, 'dist/server/images.dist.csv');
 readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
   const [filename, width, height] = line.split(',');
   builtImages.push({
