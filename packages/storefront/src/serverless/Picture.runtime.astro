@@ -7,6 +7,7 @@ import { getPicture } from './get-picture';
 export type Props = Omit<PictureComponentRemoteImageProps, 'aspectRatio'> & {
   aspectRatio?: PictureComponentRemoteImageProps['aspectRatio'],
   fetchpriority?: 'high' | 'low' | 'auto',
+  hasImg?: boolean,
 };
 
 const { STOREFRONT_BASE_DIR } = process.env;
@@ -59,6 +60,7 @@ const {
   formats = ['avif', 'webp'],
   loading = 'lazy',
   decoding = 'async',
+  hasImg = true,
   ...attrs
 } = Astro.props;
 
@@ -84,9 +86,17 @@ const { image, sources } = await getPicture({
 });
 delete image.width;
 delete image.height;
+
+const pictureAttrs: Partial<typeof attrs & { alt: string }> = {};
+if (!hasImg) {
+  pictureAttrs['data-alt'] = alt;
+  Object.assign(pictureAttrs, attrs);
+  delete pictureAttrs.width;
+  delete pictureAttrs.height;
+}
 ---
 
-<picture>
+<picture {...pictureAttrs}>
   {sources.map((attrs) => <source {...attrs} sizes={sizes} />)}
-  <img {...image} loading={loading} decoding={decoding} {...attrs} />
+  {hasImg && <img {...image} loading={loading} decoding={decoding} {...attrs} />}
 </picture>

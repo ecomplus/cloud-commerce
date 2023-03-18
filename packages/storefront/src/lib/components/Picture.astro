@@ -7,6 +7,7 @@ import { getPicture } from '@astrojs/image';
 export type Props = Omit<PictureComponentRemoteImageProps, 'aspectRatio'> & {
   aspectRatio?: PictureComponentRemoteImageProps['aspectRatio'],
   fetchpriority?: 'high' | 'low' | 'auto',
+  hasImg?: boolean,
 };
 
 const tryImageSize = (src: string) => {
@@ -44,6 +45,7 @@ const {
   formats = ['avif', 'webp'],
   loading = 'lazy',
   decoding = 'async',
+  hasImg = true,
   ...attrs
 } = Astro.props;
 
@@ -71,19 +73,29 @@ const imgSrc = `${image.src}&V=${process.env.DEPLOY_RAND}`;
 delete image.src;
 delete image.width;
 delete image.height;
+
+const pictureAttrs: Partial<typeof attrs & { alt: string }> = {};
+if (!hasImg) {
+  pictureAttrs['data-alt'] = alt;
+  Object.assign(pictureAttrs, attrs);
+  delete pictureAttrs.width;
+  delete pictureAttrs.height;
+}
 ---
 
-<picture>
+<picture {...pictureAttrs}>
   {sources.map((attrs) => <source
     type={attrs.type}
     srcset={attrs.srcset.replace(/\s(\w+)$/, `&V=${process.env.DEPLOY_RAND} $1`)}
     sizes={sizes}
   />)}
-  <img
-    {...image}
-    loading={loading}
-    decoding={decoding}
-    src={imgSrc}
-    {...attrs}
-  />
+  {hasImg &&
+    <img
+      {...image}
+      loading={loading}
+      decoding={decoding}
+      src={imgSrc}
+      {...attrs}
+    />
+  }
 </picture>
