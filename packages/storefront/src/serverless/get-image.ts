@@ -27,9 +27,9 @@ type ImageOptions = Record<string, any> & {
 };
 const getImage = async ({ src, width, format }: ImageOptions) => {
   const filename = src.replace(/^.*\//, '').replace(/.\w+(\?.*)?$/, '');
+  const filenameRegExp = new RegExp(`[_.][a-z0-9]+\\.${format}$`, 'i');
   const matchFilename = (_builtImage: BuiltImage) => {
-    return filename === _builtImage.filename
-      .replace(new RegExp(`[_.][a-z0-9]+\\.${format}$`, 'i'), '');
+    return filename === _builtImage.filename.replace(filenameRegExp, '');
   };
   let builtImage = builtImages.find((_builtImage) => {
     return _builtImage.width >= width && matchFilename(_builtImage);
