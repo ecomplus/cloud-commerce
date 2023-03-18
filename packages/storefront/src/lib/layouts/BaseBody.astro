@@ -5,10 +5,13 @@ import '@@sf/assets/base.css';
 import '@@sf/assets/forms.css';
 import '@@sf/assets/tooltip.css';
 import 'uno.css';
+import Picture from '@@sf/components/Picture.astro';
 
 export interface Props {
   pageContext: PageContext;
 }
+
+const { settings: { icon } } = Astro.props.pageContext;
 ---
 
 <body>
@@ -17,4 +20,14 @@ export interface Props {
   <slot />
   <slot name="before-body-end" />
   <div id="teleported-bottom" class="relative z-0"></div>
+  {icon &&
+    <Picture
+      src={icon}
+      alt="Icon"
+      widths={[32, 192, 512]}
+      sizes="32px"
+      class="hidden absolute"
+      style="bottom: -1000px"
+    />
+  }
 </body>
