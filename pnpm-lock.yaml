@@ -225,7 +225,7 @@ importers:
       '@cloudcommerce/emails': workspace:*
       '@cloudcommerce/firebase': workspace:*
       '@cloudcommerce/types': workspace:*
-      '@ecomplus/transactional-mails': ^1.11.1
+      '@ecomplus/transactional-mails': ^2.0.0
       '@firebase/app-types': ^0.9.0
       firebase-admin: ^11.5.0
       firebase-functions: ^3.24.1
@@ -233,7 +233,7 @@ importers:
       '@cloudcommerce/api': link:../../api
       '@cloudcommerce/emails': link:../../emails
       '@cloudcommerce/firebase': link:../../firebase
-      '@ecomplus/transactional-mails': 1.11.1
+      '@ecomplus/transactional-mails': 2.0.0
       firebase-admin: 11.5.0
       firebase-functions: 3.24.1_firebase-admin@11.5.0
     devDependencies:
@@ -2660,14 +2660,14 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@ecomplus/transactional-mails/1.11.1:
-    resolution: {integrity: sha512-Y59rKzm08HgAGZAmyvH1c75oCb0BzgnkWNct9EcuAN26WL2c0xX2Jz8HWrV+rIYqz/t/i+qpU6GgSkCu9JoNuQ==}
+  /@ecomplus/transactional-mails/2.0.0:
+    resolution: {integrity: sha512-Am1mmk+/bQhJ8Tn4vtrnhaYfAvIrZY1AHHRQeP4NTkzXilo0CtZ3igItpDrXigOFaOPqBoH7u+COlKRrUqbS9g==}
     dependencies:
       '@ecomplus/utils': 1.4.1
-      ejs: 3.1.8
+      ejs: 3.1.9
       intl: 1.2.5
-      intl-locales-supported: 1.8.12
-      sass: 1.58.3
+      intl-locales-supported: 1.8.11
+      sass: 1.59.3
     dev: false
 
   /@ecomplus/utils/1.4.1:
@@ -6488,14 +6488,6 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
-  /ejs/3.1.8:
-    resolution: {integrity: sha512-/sXZeMlhS0ArkfX2Aw780gJzXSMPnKjtspYZv+f3NiKLlubezAHDU5+9xz6gd3/NhG3txQCo6xlglmTS+oTGEQ==}
-    engines: {node: '>=0.10.0'}
-    hasBin: true
-    dependencies:
-      jake: 10.8.5
-    dev: false
-
   /ejs/3.1.9:
     resolution: {integrity: sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==}
     engines: {node: '>=0.10.0'}
@@ -8112,9 +8104,8 @@ packages:
       has: 1.0.3
       side-channel: 1.0.4
 
-  /intl-locales-supported/1.8.12:
-    resolution: {integrity: sha512-FJPl7p1LYO/C+LpwlDcvVpq7AeFTdFgwnq1JjdNYKjb51xkIxssXRR8LaA0fJFogjwRRztqw1ahgSJMSZsSFdw==}
-    deprecated: bad publish
+  /intl-locales-supported/1.8.11:
+    resolution: {integrity: sha512-J+RhLNDxEvaNPdsoWz2KKlLSqU0MfV4Pd6zS1Yx/tN/KGN5QYe4Z2+ifJod95LlaA4K6qogwrSzm/WyTNOV6RA==}
     dev: false
 
   /intl/1.2.5:
@@ -10777,8 +10768,8 @@ packages:
       suf-log: 2.5.3
     dev: false
 
-  /sass/1.58.3:
-    resolution: {integrity: sha512-Q7RaEtYf6BflYrQ+buPudKR26/lH+10EmO9bBqbmPh/KeLqv8bjpTNqxe71ocONqXq+jYiCbpPUmQMS+JJPk4A==}
+  /sass/1.59.3:
+    resolution: {integrity: sha512-QCq98N3hX1jfTCoUAsF3eyGuXLsY7BCnCEg9qAact94Yc21npG2/mVOqoDvE0fCbWDqiM4WlcJQla0gWG2YlxQ==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
