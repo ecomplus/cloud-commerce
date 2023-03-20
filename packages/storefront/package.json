@@ -46,19 +46,19 @@
     "astro": "2.1.2",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.0.3",
-    "firebase": "^9.17.2",
+    "firebase": "^9.18.0",
     "image-size": "^1.0.2",
     "mime": "^3.0.0",
     "semver": "^7.3.8",
     "sharp": "^0.31.3",
     "tailwindcss": "^3.2.7",
-    "unocss": "^0.50.4",
-    "vite": "^4.1.4",
+    "unocss": "^0.50.6",
+    "vite": "^4.2.1",
     "vite-plugin-pwa": "^0.14.4",
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
+    "@babel/core": "^7.21.3",
     "@cloudcommerce/types": "workspace:*"
   }
 }
