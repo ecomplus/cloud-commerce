@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: Akryum/release-tag@8eeb62bcf949a368763f4057c34e7eb834467122
+      - uses: Akryum/release-tag@9f5abbc6a6a26200fa0e504679ea2fedf745d46b
         id: release_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
