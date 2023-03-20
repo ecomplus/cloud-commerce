@@ -32,10 +32,10 @@
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@commitlint/rules": "^17.4.4",
-    "@types/node": "^18.15.1",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "esbuild": "^0.17.11",
+    "@types/node": "^18.15.3",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "esbuild": "^0.17.12",
     "eslint": "^8.36.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -46,9 +46,9 @@
     "turbo": "1.6.3",
     "typescript": "^4.9.5",
     "uglify-js": "^3.17.4",
-    "vite": "^4.1.4",
-    "vitest": "^0.29.2",
-    "zx": "^7.2.0"
+    "vite": "^4.2.1",
+    "vitest": "^0.29.3",
+    "zx": "^7.2.1"
   },
   "pnpm": {
     "peerDependencyRules": {
