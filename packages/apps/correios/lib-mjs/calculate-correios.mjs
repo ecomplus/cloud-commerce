@@ -303,9 +303,9 @@ export default async ({ params, application }) => {
           let label = serviceName || `Correios ${Codigo}`;
           if (Array.isArray(config.services)) {
             for (let i = 0; i < config.services.length; i++) {
-              const service = config.services[i];
-              if (service && service.service_code === Codigo && service.label) {
-                label = service.label;
+              const _service = config.services[i];
+              if (_service && _service.service_code === Codigo && _service.label) {
+                label = _service.label;
               }
             }
           }
