@@ -1,0 +1,52 @@
+---
+import { join as joinPath } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { getBuiltPicture } from './get-built-picture';
+import { type PictureProps, useSSRPicture } from './use-ssr-picture';
+
+export type Props = PictureProps;
+
+const { STOREFRONT_BASE_DIR } = process.env;
+const baseDir = STOREFRONT_BASE_DIR || process.cwd();
+type OriginalImage = { filepath: string, width: number, height: number };
+const originalImages: OriginalImage[] = [];
+const manifestFilepath = joinPath(baseDir, 'dist/server/images.src.csv');
+readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
+  const [filepath, width, height] = line.split(',');
+  originalImages.push({
+    filepath,
+    width: Number(width),
+    height: Number(height),
+  });
+});
+
+const tryImageSize = (src: string) => {
+  let dimensions: { width?: number, height?: number } = {};
+  if (typeof src === 'string' && src.startsWith('/')) {
+    const originalImage = originalImages.find(({ filepath }) => {
+      return new RegExp(`^/${filepath}\\??.*`).test(src);
+    });
+    if (originalImage) {
+      const { width, height } = originalImage;
+      dimensions = { width, height };
+    }
+  }
+  return dimensions;
+};
+
+const {
+  sizes,
+  sources,
+  pictureAttrs,
+  imgAttrs,
+} = await useSSRPicture({
+  ...Astro.props,
+  tryImageSize,
+  getPicture: getBuiltPicture,
+});
+---
+
+<picture {...pictureAttrs}>
+  {sources.map((attrs) => <source {...attrs} sizes={sizes} />)}
+  {imgAttrs && <img {...imgAttrs} />}
+</picture>

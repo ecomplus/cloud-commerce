@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'astro/types';
 // import type { ImageMetadata } from '@astrojs/image/dist/vite-plugin-astro-image';
 import type { OutputFormat, TransformOptions } from '@astrojs/image/dist/loaders/';
 import mime from 'mime';
-import getImage from './get-image';
+import getBuiltImage from './get-built-image';
 
 function removeQueryString(src: string) {
   const index = src.lastIndexOf('?');
@@ -76,7 +76,7 @@ async function resolveFormats({ src, formats }: GetPictureParams) {
   return Array.from(unique).filter(Boolean);
 }
 
-export async function getPicture(params: GetPictureParams): Promise<GetPictureResult> {
+export async function getBuiltPicture(params: GetPictureParams): Promise<GetPictureResult> {
   const {
     src,
     alt,
@@ -103,7 +103,7 @@ export async function getPicture(params: GetPictureParams): Promise<GetPictureRe
   async function getSource(format: OutputFormat) {
     const imgs = await Promise.all(
       widths.map(async (width) => {
-        const img = await getImage({
+        const img = await getBuiltImage({
           src,
           alt,
           format,

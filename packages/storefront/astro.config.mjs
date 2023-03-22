@@ -140,7 +140,7 @@ const viteAlias = [];
 if (isToServerless) {
   viteAlias.push({
     find: '@@sf/components/Picture.astro',
-    replacement: joinPath(__dirname, 'src/serverless/Picture.runtime.astro'),
+    replacement: joinPath(__dirname, 'src/images/Picture.runtime.astro'),
   });
 }
 viteAlias.push(

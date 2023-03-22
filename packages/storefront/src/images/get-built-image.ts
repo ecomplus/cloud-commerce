@@ -25,7 +25,7 @@ type ImageOptions = Record<string, any> & {
   width: number,
   format: OutputFormat,
 };
-const getImage = async ({ src, width, format }: ImageOptions) => {
+const getBuiltImage = async ({ src, width, format }: ImageOptions) => {
   const filename = src.replace(/^.*\//, '').replace(/.\w+(\?.*)?$/, '');
   const filenameRegExp = new RegExp(`[_.][a-z0-9]+\\.${format}$`, 'i');
   const matchFilename = (_builtImage: BuiltImage) => {
@@ -48,6 +48,6 @@ const getImage = async ({ src, width, format }: ImageOptions) => {
   return { src, width };
 };
 
-export default getImage;
+export default getBuiltImage;
 
-export { getImage };
+export { getBuiltImage };
