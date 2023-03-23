@@ -67,26 +67,32 @@ const useSSRPicture = async (params: UsePictureParams) => {
   let sizes: string = propSizes || '';
   if (!sizes && attrs.class) {
     const classNames = attrs.class.split(' ');
-    const baseClassRegex = /^max-w-\[(\w+)\]$/;
-    const baseClassName = classNames.find((_class) => baseClassRegex.test(_class));
-    if (baseClassName) {
-      // max-w-[100px] => 100px
-      sizes = baseClassName.replace(baseClassRegex, '$1');
-    }
+    const classRegex = /^(\w+:)?max-w-\[(\w+)\]$/;
+    let nextSize: string;
     [
+      [''],
       ['sm', 640],
       ['md', 768],
       ['lg', 1024],
       ['xl', 1280],
       ['2xl', 1536],
-    ].forEach(([breakpoint, minWidth]) => {
-      const classRegex = new RegExp(`^${breakpoint}:max-w-\\[(\\w+)\\]$`);
-      const className = classNames.find((_class) => classRegex.test(_class));
+    ].forEach(([breakpoint, minWidth]: [string, number | undefined]) => {
+      const className = classNames.find((_class) => {
+        return _class.startsWith(breakpoint ? `${breakpoint}:max-w-[` : 'max-w-[');
+      });
       if (className) {
-        if (sizes) sizes += ', ';
-        sizes += `(min-width: ${minWidth}px) ${className.replace(classRegex, '$1')}`;
+        if (nextSize) {
+          // max-w-50px sm:max-w-[... => (max-width: 639px) 50px...
+          if (sizes) sizes += ', ';
+          sizes += `(max-width: ${(minWidth - 1)}px) ${nextSize}`;
+        }
+        nextSize = className.replace(classRegex, '$2');
       }
     });
+    if (nextSize) {
+      if (sizes) sizes += ', ';
+      sizes += nextSize;
+    }
   }
   if (!sizes && widths.length === 1) {
     sizes = `${(widths[0] / 2)}px`;
