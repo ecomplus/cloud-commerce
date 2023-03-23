@@ -84,7 +84,6 @@ importers:
 
   ecomplus-stores/monocard/functions/ssr:
     specifiers:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': ^0.8.5
       '@cloudcommerce/firebase': ^0.8.5
       '@cloudcommerce/i18n': ^0.8.5
@@ -98,7 +97,6 @@ importers:
       lottie-web: ^5.10.2
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../../../packages/api
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../../packages/ssr
@@ -115,7 +113,6 @@ importers:
 
   ecomplus-stores/monocard/storefront:
     specifiers:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': ^0.8.5
       '@cloudcommerce/firebase': ^0.8.5
       '@cloudcommerce/i18n': ^0.8.5
@@ -129,7 +126,6 @@ importers:
       lottie-web: ^5.10.2
       lozad: ^1.16.0
     dependencies:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -843,7 +839,6 @@ importers:
 
   store/functions/ssr:
     specifiers:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': ^0.8.5
       '@cloudcommerce/firebase': ^0.8.5
       '@cloudcommerce/i18n': ^0.8.5
@@ -851,7 +846,6 @@ importers:
       '@cloudcommerce/storefront': ^0.8.5
       '@cloudcommerce/types': ^0.8.5
     dependencies:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/ssr': link:../../../packages/ssr
@@ -862,7 +856,6 @@ importers:
 
   store/storefront:
     specifiers:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': ^0.8.5
       '@cloudcommerce/firebase': ^0.8.5
       '@cloudcommerce/i18n': ^0.8.5
@@ -870,7 +863,6 @@ importers:
       '@cloudcommerce/storefront': ^0.8.5
       '@cloudcommerce/types': ^0.8.5
     dependencies:
-      '@astrojs/node': 5.1.0
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
       '@cloudcommerce/ssr': link:../../packages/ssr
@@ -988,21 +980,6 @@ packages:
       unified: 10.1.2
       unist-util-visit: 4.1.2
       vfile: 5.3.7
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@astrojs/node/5.1.0:
-    resolution: {integrity: sha512-O0u++oE8S9vVR0xPW5qqJzPla76UEYF+cZV2EuyVKgQRaXRXVgFsqHRxBICf79tP18fk8STxd6pqel6R1CWEUw==}
-    peerDependencies:
-      astro: ^2.1.0
-    peerDependenciesMeta:
-      astro:
-        optional: true
-    dependencies:
-      '@astrojs/webapi': 2.1.0
-      send: 0.18.0
-      server-destroy: 1.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
