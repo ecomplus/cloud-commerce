@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.5](https://github.com/ecomplus/cloud-commerce/compare/v0.8.4...v0.8.5) (2023-03-23)
+
+
+### Features
+
+* **storefront:** Make <Picture> `sizes` optional and parse it from `.max-w-[]` classes or `widths` ([cf1eb58](https://github.com/ecomplus/cloud-commerce/commit/cf1eb5825e8074f0099eb8725cb507f9ac90d934))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#133](https://github.com/ecomplus/cloud-commerce/issues/133)) ([97d058b](https://github.com/ecomplus/cloud-commerce/commit/97d058b57c017a980ecc8599bd11fc7d8d6d938c))
+* **emails:** Bump `@ecomplus/transactional-mails` to v2 ([ad920af](https://github.com/ecomplus/cloud-commerce/commit/ad920afe5ff76310f6ecd7365ca60ad4dcf10809))
+* **storefront:** Prefer setting <Picture> sources sizes by max-width media queries ([8e377bb](https://github.com/ecomplus/cloud-commerce/commit/8e377bb6ac438397930a17f8e88e60198c1c03cd))
+* **storefront:** Remove `width: auto;` on <Picture> images to fix CLS errors ([4df40be](https://github.com/ecomplus/cloud-commerce/commit/4df40be5e47b897b21988346a07086ca457dec16))
+
 ### [0.8.4](https://github.com/ecomplus/cloud-commerce/compare/v0.8.3...v0.8.4) (2023-03-18)
 
 

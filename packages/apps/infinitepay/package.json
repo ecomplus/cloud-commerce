@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-infinitepay",
   "type": "module",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "E-Com Plus Cloud Commerce app to integrate InfinitePay",
   "main": "lib/infinitepay.js",
   "exports": {
