@@ -49,7 +49,7 @@ if (argv.publish) {
     const {
       dependencies: ssrDependencies,
     } = JSON.parse(fs.readFileSync(`${pwd}/packages/ssr/package.json`));
-    const astroPkgs = [];
+    const astroPkgs = ['astro'];
     Object.keys(ssrDependencies).forEach((dep) => {
       if (dep.startsWith('@astrojs/')) {
         astroPkgs.push(dep);
