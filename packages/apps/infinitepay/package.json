@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/infinitepay#readme",
   "scripts": {
-    "build": "sh scripts/build.sh"
+    "build": "bash scripts/build.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

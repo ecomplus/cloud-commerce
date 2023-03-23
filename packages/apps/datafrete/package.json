@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/datafrete#readme",
   "scripts": {
-    "build": "sh ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/emails#readme",
   "scripts": {
-    "build": "sh ../../scripts/build-lib.sh",
+    "build": "bash ../../scripts/build-lib.sh",
     "test:smtp": "tsc -p ../../tsconfig.test.json && vitest smtp",
     "test:sendgrid": "tsc -p ../../tsconfig.test.json && vitest sendgrid"
   },

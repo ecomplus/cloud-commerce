@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/i18n#readme",
   "scripts": {
-    "build": "sh ../../scripts/build-lib.sh && npx zx ./scripts/build-txt.mjs"
+    "build": "bash ../../scripts/build-lib.sh && npx zx ./scripts/build-txt.mjs"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"

@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/modules#readme",
   "scripts": {
-    "build": "sh ../../scripts/build-lib.sh",
-    "build:types": "sh scripts/build-types.sh"
+    "build": "bash ../../scripts/build-lib.sh",
+    "build:types": "bash scripts/build-types.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

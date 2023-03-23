@@ -23,10 +23,10 @@
     "start": "astro dev --host",
     "build": "astro build",
     "build:static": "BUILD_OUTPUT=static astro build",
-    "build:prod": "sh scripts/build-prod.sh",
+    "build:prod": "bash scripts/build-prod.sh",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare-monorepo": "sh scripts/prepare-monorepo.sh"
+    "prepare-monorepo": "bash scripts/prepare-monorepo.sh"
   },
   "dependencies": {
     "@astrojs/image": "0.16.0",
