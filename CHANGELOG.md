@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.6](https://github.com/ecomplus/cloud-commerce/compare/v0.8.5...v0.8.6) (2023-03-24)
+
+
+### Bug Fixes
+
+* **storefront:** Keep <Picture> images without version suffix on static build ([61d147f](https://github.com/ecomplus/cloud-commerce/commit/61d147f035f970efe5ef2a4bfe4dff4cf60abf40))
+* **storefront:** Using `import.meta.env` in place of `process.env` for not-node env support ([ad5e0cb](https://github.com/ecomplus/cloud-commerce/commit/ad5e0cb1d499ba6a48092f239f51f6d613179408))
+
 ### [0.8.5](https://github.com/ecomplus/cloud-commerce/compare/v0.8.4...v0.8.5) (2023-03-23)
 
 
