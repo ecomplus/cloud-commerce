@@ -6,11 +6,13 @@ import { type PictureProps, useSSRPicture } from '../../images/use-ssr-picture';
 
 export type Props = PictureProps;
 
-const deployRand = process.env.DEPLOY_RAND || '_';
+const deployRand = import.meta.env.DEPLOY_RAND;
+const versionSuffix = import.meta.env.BUILD_OUTPUT !== 'static' && deployRand
+  ? `&V=${deployRand}`
+  : '';
 
 const getImageFilepath = (src: string) => {
-  const { STOREFRONT_BASE_DIR } = import.meta.env;
-  return resolvePath(STOREFRONT_BASE_DIR, `public${src}`);
+  return resolvePath(import.meta.env.STOREFRONT_BASE_DIR, `public${src}`);
 };
 const tryImageSize = (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
@@ -35,15 +37,16 @@ const {
   getPicture,
 });
 if (imgAttrs) {
-  imgAttrs.src += `&V=${deployRand}`;
+  imgAttrs.src += versionSuffix;
 }
 ---
 
 <picture {...pictureAttrs}>
-  {sources.map((attrs) => <source
-    type={attrs.type}
-    srcset={attrs.srcset.replace(/\s(\w+)$/, `&V=${deployRand} $1`)}
-    sizes={sizes}
-  />)}
+  {sources.map((attrs) => {
+    if (versionSuffix) {
+      attrs.srcset = attrs.srcset.replace(/\s(\w+)$/, `${versionSuffix} $1`);
+    }
+    return <source {...attrs} sizes={sizes} />
+  })}
   {imgAttrs && <img {...imgAttrs} />}
 </picture>
