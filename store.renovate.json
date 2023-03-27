@@ -11,35 +11,29 @@
   "rangeStrategy": "bump",
   "packageRules": [
     {
+      "groupName": "Many non-major",
+      "matchPackagePatterns": [
+        "*"
+      ],
       "excludePackagePrefixes": [
-        "@ecomplus",
-        "@cloudcommerce"
+        "@ecomplus/",
+        "@cloudcommerce/",
+        "@astrojs/"
+      ],
+      "excludePackageNames": [
+        "astro"
       ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "lockFileMaintenance"
-      ],
-      "groupName": "Many non-major"
+      ]
     },
     {
-      "matchPackagePrefixes": [
-        "@cloudcommerce"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "schedule": [
-        "after 11am and before 4pm every weekday"
-      ],
-      "semanticCommitType": "fix",
+      "groupName": "Cloud Commerce bump non-major",
       "automerge": true,
-      "groupName": "Cloud Commerce bump non-major"
-    },
-    {
       "matchPackagePrefixes": [
-        "@ecomplus"
+        "@cloudcommerce/"
       ],
       "matchUpdateTypes": [
         "minor",
@@ -48,8 +42,30 @@
       "schedule": [
         "after 11am and before 4pm every weekday"
       ],
-      "semanticCommitType": "fix",
-      "groupName": "@ecomplus non-major"
+      "semanticCommitType": "fix"
+    },
+    {
+      "groupName": "@ecomplus non-major",
+      "matchPackagePrefixes": [
+        "@ecomplus/"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "schedule": [
+        "after 11am and before 4pm every weekday"
+      ],
+      "semanticCommitType": "fix"
+    },
+    {
+      "groupName": "Astro",
+      "matchPackageNames": [
+        "astro"
+      ],
+      "matchPackagePrefixes": [
+        "@astrojs/"
+      ]
     }
   ],
   "ignoreDeps": ["node", "@astrojs/image", "@astrojs/node"]
