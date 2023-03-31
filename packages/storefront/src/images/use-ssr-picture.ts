@@ -126,6 +126,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
     pictureAttrs,
     imgAttrs: !hasImg ? null : {
       ...image,
+      alt,
       loading,
       decoding,
       ...attrs,
