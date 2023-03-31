@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.7](https://github.com/ecomplus/cloud-commerce/compare/v0.8.6...v0.8.7) (2023-03-31)
+
+
+### Bug Fixes
+
+* **storefront:** Ensure alt attr on <Picture> img ([d55c572](https://github.com/ecomplus/cloud-commerce/commit/d55c5724599d4494a4a5fa9859df101b5f2a26ac))
+
 ### [0.8.6](https://github.com/ecomplus/cloud-commerce/compare/v0.8.5...v0.8.6) (2023-03-24)
 
 
