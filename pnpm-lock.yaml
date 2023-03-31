@@ -48,48 +48,48 @@ importers:
 
   ecomplus-stores/monocard:
     specifiers:
-      '@cloudcommerce/cli': ^0.8.6
+      '@cloudcommerce/cli': ^0.8.7
     dependencies:
       '@cloudcommerce/cli': link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.8.6
+      '@cloudcommerce/firebase': ^0.8.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.8.6
-      '@cloudcommerce/firebase': ^0.8.6
+      '@cloudcommerce/events': ^0.8.7
+      '@cloudcommerce/firebase': ^0.8.7
     dependencies:
       '@cloudcommerce/events': link:../../../../packages/events
       '@cloudcommerce/firebase': link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/modules': ^0.8.6
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/modules': ^0.8.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/modules': link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/passport': ^0.8.6
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/passport': ^0.8.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../../packages/firebase
       '@cloudcommerce/passport': link:../../../../packages/passport
 
   ecomplus-stores/monocard/functions/ssr:
     specifiers:
-      '@cloudcommerce/api': ^0.8.6
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/i18n': ^0.8.6
-      '@cloudcommerce/ssr': ^0.8.6
-      '@cloudcommerce/storefront': ^0.8.6
-      '@cloudcommerce/types': ^0.8.6
+      '@cloudcommerce/api': ^0.8.7
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/i18n': ^0.8.7
+      '@cloudcommerce/ssr': ^0.8.7
+      '@cloudcommerce/storefront': ^0.8.7
+      '@cloudcommerce/types': ^0.8.7
       '@fontsource/inter': ^4.5.15
       '@iconify-json/ri': ^1.1.5
       '@iconify-json/wpf': ^1.1.4
@@ -113,12 +113,12 @@ importers:
 
   ecomplus-stores/monocard/storefront:
     specifiers:
-      '@cloudcommerce/api': ^0.8.6
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/i18n': ^0.8.6
-      '@cloudcommerce/ssr': ^0.8.6
-      '@cloudcommerce/storefront': ^0.8.6
-      '@cloudcommerce/types': ^0.8.6
+      '@cloudcommerce/api': ^0.8.7
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/i18n': ^0.8.7
+      '@cloudcommerce/ssr': ^0.8.7
+      '@cloudcommerce/storefront': ^0.8.7
+      '@cloudcommerce/types': ^0.8.7
       '@fontsource/inter': ^4.5.15
       '@iconify-json/ri': ^1.1.5
       '@iconify-json/wpf': ^1.1.4
@@ -803,48 +803,48 @@ importers:
 
   store:
     specifiers:
-      '@cloudcommerce/cli': ^0.8.6
+      '@cloudcommerce/cli': ^0.8.7
     dependencies:
       '@cloudcommerce/cli': link:../packages/cli
 
   store/functions/core:
     specifiers:
-      '@cloudcommerce/firebase': ^0.8.6
+      '@cloudcommerce/firebase': ^0.8.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/events:
     specifiers:
-      '@cloudcommerce/events': ^0.8.6
-      '@cloudcommerce/firebase': ^0.8.6
+      '@cloudcommerce/events': ^0.8.7
+      '@cloudcommerce/firebase': ^0.8.7
     dependencies:
       '@cloudcommerce/events': link:../../../packages/events
       '@cloudcommerce/firebase': link:../../../packages/firebase
 
   store/functions/modules:
     specifiers:
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/modules': ^0.8.6
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/modules': ^0.8.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/modules': link:../../../packages/modules
 
   store/functions/passport:
     specifiers:
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/passport': ^0.8.6
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/passport': ^0.8.7
     dependencies:
       '@cloudcommerce/firebase': link:../../../packages/firebase
       '@cloudcommerce/passport': link:../../../packages/passport
 
   store/functions/ssr:
     specifiers:
-      '@cloudcommerce/api': ^0.8.6
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/i18n': ^0.8.6
-      '@cloudcommerce/ssr': ^0.8.6
-      '@cloudcommerce/storefront': ^0.8.6
-      '@cloudcommerce/types': ^0.8.6
+      '@cloudcommerce/api': ^0.8.7
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/i18n': ^0.8.7
+      '@cloudcommerce/ssr': ^0.8.7
+      '@cloudcommerce/storefront': ^0.8.7
+      '@cloudcommerce/types': ^0.8.7
     dependencies:
       '@cloudcommerce/api': link:../../../packages/api
       '@cloudcommerce/firebase': link:../../../packages/firebase
@@ -856,12 +856,12 @@ importers:
 
   store/storefront:
     specifiers:
-      '@cloudcommerce/api': ^0.8.6
-      '@cloudcommerce/firebase': ^0.8.6
-      '@cloudcommerce/i18n': ^0.8.6
-      '@cloudcommerce/ssr': ^0.8.6
-      '@cloudcommerce/storefront': ^0.8.6
-      '@cloudcommerce/types': ^0.8.6
+      '@cloudcommerce/api': ^0.8.7
+      '@cloudcommerce/firebase': ^0.8.7
+      '@cloudcommerce/i18n': ^0.8.7
+      '@cloudcommerce/ssr': ^0.8.7
+      '@cloudcommerce/storefront': ^0.8.7
+      '@cloudcommerce/types': ^0.8.7
     dependencies:
       '@cloudcommerce/api': link:../../packages/api
       '@cloudcommerce/firebase': link:../../packages/firebase
