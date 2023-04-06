@@ -944,7 +944,7 @@ importers:
         version: 9.12.0(vue@3.2.47)
       astro:
         specifier: 2.1.9
-        version: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+        version: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       firebase-admin:
         specifier: ^11.5.0
         version: 11.5.0
@@ -969,7 +969,7 @@ importers:
     dependencies:
       '@astrojs/image':
         specifier: 0.16.4
-        version: 0.16.4(astro@2.1.9)(sharp@0.32.0)
+        version: 0.16.4(astro@2.1.9)(sharp@0.31.3)
       '@astrojs/node':
         specifier: 5.1.0
         version: 5.1.0(astro@2.1.9)
@@ -1011,7 +1011,7 @@ importers:
         version: 9.12.0(vue@3.2.47)
       astro:
         specifier: 2.1.9
-        version: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+        version: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1031,8 +1031,8 @@ importers:
         specifier: ^7.3.8
         version: 7.3.8
       sharp:
-        specifier: ^0.32.0
-        version: 0.32.0
+        specifier: ^0.31.3
+        version: 0.31.3
       tailwindcss:
         specifier: ^3.3.1
         version: 3.3.1(postcss@8.4.21)(ts-node@10.9.1)
@@ -1193,7 +1193,7 @@ packages:
     resolution: {integrity: sha512-VxSj3gh/UTB/27rkRCT7SvyGjWtuxUO7Jf7QqDduch7j/gr/uA5P/Q5I/4zIIrZjy2yQAKyKLoox2QI2mM/BSA==}
     dev: false
 
-  /@astrojs/image@0.16.4(astro@2.1.9)(sharp@0.32.0):
+  /@astrojs/image@0.16.4(astro@2.1.9)(sharp@0.31.3):
     resolution: {integrity: sha512-oNTzECuUEQxrWZ5YZlQOd6vr/KfdMF5vLi7EarduG6mUfqmbHkbOA3LVM1hpcKA8IFp5iadNWn99teS8ZcIFRg==}
     peerDependencies:
       astro: ^2.1.9
@@ -1205,13 +1205,13 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+      astro: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
       magic-string: 0.27.0
       mime: 3.0.0
-      sharp: 0.32.0
+      sharp: 0.31.3
     dev: false
 
   /@astrojs/language-server@0.28.3:
@@ -1241,7 +1241,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/prism': 2.1.1
-      astro: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+      astro: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -1267,7 +1267,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/webapi': 2.1.0
-      astro: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+      astro: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1313,7 +1313,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.0.1(vite@4.2.1)(vue@3.2.47)
       '@vue/babel-plugin-jsx': 1.1.1(@babel/core@7.21.4)
       '@vue/compiler-sfc': 3.2.47
-      astro: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+      astro: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       vue: 3.2.47
     transitivePeerDependencies:
       - '@babel/core'
@@ -4772,7 +4772,7 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 2.1.9(@types/node@18.15.11)(sharp@0.32.0)
+      astro: 2.1.9(@types/node@18.15.11)(sharp@0.31.3)
       vite-plugin-pwa: 0.14.7(vite@4.2.1)(workbox-build@6.5.4)(workbox-window@6.5.4)
     dev: false
 
@@ -5225,7 +5225,7 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro@2.1.9(@types/node@18.15.11)(sharp@0.32.0):
+  /astro@2.1.9(@types/node@18.15.11)(sharp@0.31.3):
     resolution: {integrity: sha512-UkbG0lgue1b/t4yMI+AkAGEfdOwcPS2RUYQ/QIurtKjP6W5gtKQveRTBuHH7iwiBziH+z8Ecc5/OAALoXSvMlQ==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
@@ -5275,7 +5275,7 @@ packages:
       rehype: 12.0.1
       semver: 7.3.8
       server-destroy: 1.0.1
-      sharp: 0.32.0
+      sharp: 0.31.3
       shiki: 0.11.1
       slash: 4.0.0
       string-width: 5.1.2
@@ -9416,8 +9416,8 @@ packages:
       semver: 7.3.8
     dev: false
 
-  /node-addon-api@6.0.0:
-    resolution: {integrity: sha512-GyHvgPvUXBvAkXa0YvYnhilSB1A+FRYMpIVggKzPZqdaZfevZOuzfWzyvgzOwRLHBeo/MMswmJFsrNF4Nw1pmA==}
+  /node-addon-api@5.1.0:
+    resolution: {integrity: sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==}
     dev: false
 
   /node-domexception@1.0.0:
@@ -10728,14 +10728,14 @@ packages:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
     dev: false
 
-  /sharp@0.32.0:
-    resolution: {integrity: sha512-yLAypVcqj1toSAqRSwbs86nEzfyZVDYqjuUX8grhFpeij0DDNagKJXELS/auegDBRDg1XBtELdOGfo2X1cCpeA==}
+  /sharp@0.31.3:
+    resolution: {integrity: sha512-XcR4+FCLBFKw1bdB+GEhnUNXNXvnt0tDo4WsBsraKymuo/IAuPuCBVAL2wIkUw2r/dwFW5Q5+g66Kwl2dgDFVg==}
     engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.1
-      node-addon-api: 6.0.0
+      node-addon-api: 5.1.0
       prebuild-install: 7.1.1
       semver: 7.3.8
       simple-get: 4.0.1
