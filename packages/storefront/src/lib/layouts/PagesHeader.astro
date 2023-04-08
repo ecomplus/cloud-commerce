@@ -15,7 +15,10 @@ const {
     cms,
   },
 } = Astro.props as Props;
-const cmsHeader = await cms('header');
+const {
+  header: cmsHeader,
+  service_links: cmsServiceLinks,
+} = await cms('layout');
 const pitchBar: PitchBarProps = { slides: [] };
 if (cmsHeader?.pitch_bar) {
   pitchBar.slides = cmsHeader.pitch_bar;
@@ -25,7 +28,7 @@ const shopHeader: ShopHeaderProps = {
   menuCategorySlugs: cmsHeader.inline_menu_categories?.featured,
   menuRandomCategories: cmsHeader.inline_menu_categories?.random,
   isAlphabeticalSortSubmenu: cmsHeader.alphabetical_sort_submenu,
-  serviceLinks: cmsHeader.service_links,
+  serviceLinks: cmsServiceLinks,
 };
 const LogoHeading = Astro.props.logoHeading || (isHomepage ? 'h1' : 'h2');
 ---
