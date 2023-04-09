@@ -2,7 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { CMS, CmsSettings } from './cms';
+import type { CMS, CmsSettings, CmsHome } from './cms';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 import _getConfig from '../../storefront.config.mjs';
@@ -60,10 +60,9 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   const startedAt = Date.now();
   const urlPath = Astro.url.pathname;
   const isHomepage = urlPath === '/';
-  const { slug } = Astro.params;
   const config = getConfig();
   globalThis.storefront.settings = config.settings;
-  let cmsContent: Record<string, any> | undefined;
+  let cmsContent: CmsHome | Record<string, any> | undefined;
   let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: {
@@ -79,11 +78,16 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     null, // fetch by slug
     ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint, apiOptions)),
   ];
-  if (slug) {
-    if (cmsCollection) {
-      cmsContent = await config.cms(`${cmsCollection}/${slug}`);
-    } else {
-      apiFetchings[0] = api.get(`slugs/${slug}`, apiOptions);
+  if (isHomepage) {
+    cmsContent = await config.cms('home');
+  } else {
+    const { slug } = Astro.params;
+    if (slug) {
+      if (cmsCollection) {
+        cmsContent = await config.cms(`${cmsCollection}/${slug}`);
+      } else {
+        apiFetchings[0] = api.get(`slugs/${slug}`, apiOptions);
+      }
     }
   }
   try {
