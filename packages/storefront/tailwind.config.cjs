@@ -132,6 +132,7 @@ const genTailwindConfig = (themeOptions = {}) => {
     iconAliases,
   } = deepmerge(defaultThemeOptions, themeOptions);
   const config = {
+    content: ['./src/**/*.{vue,astro,tsx,jsx,md,html,svelte}'],
     theme: {
       extend: {
         colors: {
