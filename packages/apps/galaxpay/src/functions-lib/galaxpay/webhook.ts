@@ -248,9 +248,32 @@ const handleWehook = async (req: Request, res: Response) => {
             // Update value Subscription in GalaxPay
 
             //   logger.log('plan-> ', JSON.stringify(plan));
-            // not update subscripton canceled
+            // subscripton is paid
             if (checkStatusPaid(galaxPayTransactionStatus) && order.items) {
-              await updateValueSubscription(app, originalOrderId, order.amount, order.items, plan);
+              const oldSubscriptionValue = docSubscription.data()?.value
+                || ({ ...order.amount }.total * 100);
+
+              const newValue = checkAmountItemsOrder(
+                { ...order.amount },
+                [...order.items],
+                { ...plan },
+              );
+              if (newValue && newValue !== oldSubscriptionValue) {
+                await updateValueSubscription(
+                  app,
+                  originalOrderId,
+                  order.amount,
+                  order.items,
+                  plan,
+                );
+
+                collectionSubscription.doc(originalOrderId)
+                  .set({
+                    updatedAt: new Date().toISOString(),
+                    value: newValue,
+                  }, { merge: true })
+                  .catch(logger.error);
+              }
             }
             //   logger.log('ORDER: ', JSON.stringify(order.amount), ' **');
             // logger.log('> order ', order)
@@ -288,11 +311,11 @@ const handleWehook = async (req: Request, res: Response) => {
             }
           } else {
             /*
-                add order, because recurrence creates all transactions in the
-                first transaction when quantity is non-zero,search for the order by ID,
-                if not found, create the transaction, and if found, check if it will be
-                necessary to update the transaction status
-              */
+                  add order, because recurrence creates all transactions in the
+                  first transaction when quantity is non-zero,search for the order by ID,
+                  if not found, create the transaction, and if found, check if it will be
+                  necessary to update the transaction status
+                */
             const transactionId = String(gerateId(GalaxPayTransaction.galaxPayId));
 
             const { result } = await findOrderByTransactionId(transactionId);
