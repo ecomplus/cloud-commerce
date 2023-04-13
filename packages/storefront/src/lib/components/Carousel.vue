@@ -49,15 +49,17 @@ const calcWrapperWidth = () => {
   wrapperVisibleWidth.value = wrapper.value.offsetWidth;
 };
 const calcSlidesWidth = () => {
-  const childNodes = [...wrapper.value.children];
+  let childNodes = [...wrapper.value.children];
+  if (childNodes.length === 1 && childNodes[0].tagName.endsWith('SLOT')) {
+    childNodes = [...childNodes[0].children];
+  }
   slidesWidth.value = childNodes.map((node: HTMLElement) => ({
     offsetLeft: node.offsetLeft,
     width: node.offsetWidth,
   }));
 };
 const calcNextWidth = (direction) => {
-  const nextSlideIndex = direction > 0
-    ? currentIndex.value : currentIndex.value + direction;
+  const nextSlideIndex = currentIndex.value + direction;
   const width = slidesWidth.value[nextSlideIndex]?.width || 0;
   if (!width) {
     return 0;
