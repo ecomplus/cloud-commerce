@@ -13,7 +13,7 @@ import {
 } from '@vueuse/core';
 
 export interface Props {
-  header: Ref<HTMLElement>;
+  header: Ref<HTMLElement | null>;
   canSetStyles?: boolean;
   canCreateHeightDiv?: boolean;
   isShownOnScrollDown?: boolean;
@@ -38,11 +38,11 @@ const useStickyHeader = (props: Props) => {
   const isSticky = computed(() => ready.value && y.value > staticY.value * 1.2);
   const transition = ref('none');
   watch(isSticky, async (_isSticky) => {
-    if (canSetStyles) {
-      header.value.style.position = _isSticky ? 'sticky' : null;
+    if (canSetStyles && header.value) {
+      header.value.style.position = _isSticky ? 'sticky' : '';
     }
     if (heightDiv) {
-      heightDiv.style.height = _isSticky ? `${staticHeight.value}px` : null;
+      heightDiv.style.height = _isSticky ? `${staticHeight.value}px` : '';
     }
     if (!_isSticky) {
       start();
@@ -58,10 +58,12 @@ const useStickyHeader = (props: Props) => {
   });
   if (!import.meta.env.SSR) {
     onMounted(() => {
+      if (!header.value) throw new Error('<header> (props.header) not set');
       const fixHeight = () => {
-        staticHeight.value = header.value.offsetHeight;
+        const headerElm = header.value as HTMLElement;
+        staticHeight.value = headerElm.offsetHeight;
         staticY.value = staticHeight.value
-          + window.pageYOffset + header.value.getBoundingClientRect().top;
+          + window.pageYOffset + headerElm.getBoundingClientRect().top;
         start();
       };
       const imgs = header.value.getElementsByTagName('IMG');
@@ -80,22 +82,23 @@ const useStickyHeader = (props: Props) => {
       if (canSetStyles) {
         header.value.style.willChange = 'transform';
         watch([isSticky, isScrollUp], ([_isSticky, _isScrollUp]) => {
-          let opacity: string | null = null;
-          let transform: string | null = null;
+          let opacity: string = '';
+          let transform: string = '';
           if (_isSticky && (!_isScrollUp || isShownOnScrollDown)) {
             opacity = '0';
             transform = 'translateY(-100%)';
           }
-          header.value.style.opacity = opacity;
-          header.value.style.transform = transform;
+          const headerElm = header.value as HTMLElement;
+          headerElm.style.opacity = opacity;
+          headerElm.style.transform = transform;
         });
         watch(transition, (_transition) => {
-          header.value.style.transition = _transition;
+          (header.value as HTMLElement).style.transition = _transition;
         });
       }
       if (canCreateHeightDiv) {
         heightDiv = document.createElement('div');
-        header.value.parentElement.insertBefore(heightDiv, header.value);
+        header.value.parentElement?.insertBefore(heightDiv, header.value);
       }
     });
   }

@@ -36,24 +36,26 @@ watch(currentIndex, (current, previous) => {
     emit('update:modelValue', current + 1);
   }
 });
-const wrapper = ref<HTMLElement>(null);
+const wrapper = ref<HTMLElement | null>(null);
 const { x: currentPos, isScrolling, arrivedState } = useScroll(wrapper);
 const isBoundLeft = computed(() => arrivedState.left);
 const isBoundRight = computed(() => arrivedState.right);
-const slidesWidth = ref([]);
+const slidesWidth = ref<{ offsetLeft: number; width: number; }[]>([]);
 const wrapperScrollWidth = ref(0);
 const wrapperVisibleWidth = ref(0);
 const indexCount = ref(0);
 const calcWrapperWidth = () => {
+  if (!wrapper.value) return;
   wrapperScrollWidth.value = wrapper.value.scrollWidth;
   wrapperVisibleWidth.value = wrapper.value.offsetWidth;
 };
 const calcSlidesWidth = () => {
-  let childNodes = [...wrapper.value.children];
+  if (!wrapper.value) return;
+  let childNodes = [...wrapper.value.children] as HTMLElement[];
   if (childNodes.length === 1 && childNodes[0].tagName.endsWith('SLOT')) {
-    childNodes = [...childNodes[0].children];
+    childNodes = [...childNodes[0].children] as HTMLElement[];
   }
-  slidesWidth.value = childNodes.map((node: HTMLElement) => ({
+  slidesWidth.value = childNodes.map((node) => ({
     offsetLeft: node.offsetLeft,
     width: node.offsetWidth,
   }));
@@ -67,7 +69,7 @@ const calcNextWidth = (direction) => {
   return width * direction;
 };
 const calcCurrentIndex = () => {
-  const getCurrentIndex = slidesWidth.value.findIndex((slide: HTMLElement) => {
+  const getCurrentIndex = slidesWidth.value.findIndex((slide) => {
     // Find the closest point, with 5px approximate.
     return Math.abs(slide.offsetLeft - currentPos.value) <= 5;
   });
@@ -80,7 +82,7 @@ const calcIndexCount = () => {
   indexCount.value = slidesWidth.value
     .findIndex(({ offsetLeft }) => (offsetLeft >= maxPos - 5));
 };
-let autoplayTimer = null;
+let autoplayTimer: ReturnType<typeof setTimeout> | undefined;
 const restartAutoplay = () => {
   if (props.autoplay) {
     clearTimeout(autoplayTimer);
@@ -105,7 +107,7 @@ const changeSlide = (direction: number) => {
   }
   const nextSlideWidth = calcNextWidth(direction);
   if (nextSlideWidth) {
-    wrapper.value.scrollBy({ left: nextSlideWidth, behavior: 'smooth' });
+    wrapper.value?.scrollBy({ left: nextSlideWidth, behavior: 'smooth' });
     restartAutoplay();
   }
 };
@@ -136,6 +138,7 @@ const calcOnInit = () => {
   calcIndexCount();
 };
 const onResize = useDebounceFn(() => {
+  if (!wrapper.value) return;
   wrapper.value.scrollLeft = 0;
   calcOnInit();
 }, 400);
@@ -143,7 +146,8 @@ onMounted(() => {
   calcOnInit();
   if (!import.meta.env.SSR) {
     nextTick(() => {
-      [...wrapper.value.children].forEach((slide: HTMLElement) => {
+      if (!wrapper.value) return;
+      [...wrapper.value.children].forEach((slide) => {
         slide.setAttribute('tabindex', '0');
       });
     });

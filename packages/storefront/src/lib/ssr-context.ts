@@ -18,7 +18,6 @@ type StorefrontConfig = {
   primaryColor: CmsSettings['primary_color'],
   secondaryColor: CmsSettings['secondary_color'],
   settings: CmsSettings,
-  dirContent: string,
   cms: CMS,
 };
 

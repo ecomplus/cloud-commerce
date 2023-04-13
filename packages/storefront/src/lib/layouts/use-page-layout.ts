@@ -22,7 +22,7 @@ const usePageLayout = async ({ pageContext }: Props) => {
     pitchBar.slides = cmsHeader.pitch_bar;
   }
   const shopHeader: ShopHeaderProps = {
-    categories: apiState.categories,
+    categories: apiState.categories || [],
     menuCategorySlugs: cmsHeader.inline_menu_categories?.featured,
     menuRandomCategories: cmsHeader.inline_menu_categories?.random,
     isAlphabeticalSortSubmenu: cmsHeader.alphabetical_sort_submenu,

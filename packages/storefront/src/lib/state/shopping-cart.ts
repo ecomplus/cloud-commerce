@@ -12,19 +12,20 @@ const cart = useStorage<CartSet>(storageKey, emptyCart);
 
 const cartItems = computed(() => {
   return cart.items.map((item) => {
-    item.final_price = item.kit_product?.price && item.kit_product.pack_quantity
+    let finalPrice = item.kit_product?.price && item.kit_product.pack_quantity
       ? item.kit_product.price / item.kit_product.pack_quantity
       : item.price;
     if (Array.isArray(item.customizations)) {
       item.customizations.forEach((customization) => {
         if (customization.add_to_price) {
           const { type, addition } = customization.add_to_price;
-          item.final_price += type === 'fixed'
+          finalPrice += type === 'fixed'
             ? addition
             : item.price * (addition / 100);
         }
       });
     }
+    item.final_price = finalPrice;
     const min = item.min_quantity || 1;
     const max = item.max_quantity;
     if (
@@ -41,7 +42,7 @@ const cartItems = computed(() => {
 });
 const subtotal = computed(() => {
   return cartItems.value.reduce((acc, item) => {
-    return acc + (item.quantity * item.final_price);
+    return acc + (item.quantity * (item.final_price || item.price));
   }, 0);
 });
 const shoppingCart = computed({

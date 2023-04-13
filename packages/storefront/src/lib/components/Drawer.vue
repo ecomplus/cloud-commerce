@@ -23,9 +23,9 @@ const emit = defineEmits([
   'update:modelValue',
 ]);
 const close = () => emit('update:modelValue', false);
-const drawer = ref(null);
+const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
-  if (!drawer.value?.contains(ev.target)) {
+  if (!drawer.value?.contains(ev.target as Node)) {
     close();
   }
 };
@@ -45,8 +45,8 @@ watch(toRef(props, 'modelValue'), async (isOpen) => {
       document.addEventListener('keydown', escClickListener, { passive: true });
     }, 500);
   } else {
-    document.body.style.overflow = null;
-    document.body.style.paddingRight = null;
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
     document.removeEventListener('click', outsideClickListener);
     document.removeEventListener('keydown', escClickListener);
   }
@@ -79,7 +79,7 @@ const isPlacementX = computed(() => {
         isPlacementX ? 'max-w-sm' : null,
       ]"
       :style="{
-        maxWidth: !isPlacementX ? `calc(100vw - ${scrollbarWidth}px)` : null,
+        maxWidth: !isPlacementX ? `calc(100vw - ${scrollbarWidth}px)` : undefined,
       }"
       :open="modelValue"
       :data-drawer="placement"

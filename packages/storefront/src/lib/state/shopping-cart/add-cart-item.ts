@@ -3,18 +3,14 @@ import { randomObjectId } from '@ecomplus/utils';
 
 type CartItem = CartSet['items'][0];
 
-const matchItemsFlags = (item: CartItem, newItem: CartItem) => {
-  if (!item.flags && !newItem.flags) {
+const matchItemsFlags = (item: CartItem, { flags: newItemFlags }: CartItem) => {
+  if (!item.flags && !newItemFlags) {
     return true;
   }
-  if (
-    !item.flags
-    || !newItem.flags
-    || item.flags.length !== newItem.flags.length
-  ) {
+  if (!item.flags || !newItemFlags || item.flags.length !== newItemFlags.length) {
     return false;
   }
-  return item.flags.every((flag) => newItem.flags.includes(flag));
+  return item.flags.every((flag) => newItemFlags.includes(flag));
 };
 
 const addCartItem = (cart: CartSet, newItem: CartItem): null | CartItem => {
@@ -47,7 +43,7 @@ const addCartItem = (cart: CartSet, newItem: CartItem): null | CartItem => {
       }
     }
   }
-  const itemCopy = { ...newItem };
+  const itemCopy: CartItem = { ...newItem };
   if (
     !newItem._id
     || newItem._id === newItem.variation_id
@@ -56,9 +52,11 @@ const addCartItem = (cart: CartSet, newItem: CartItem): null | CartItem => {
     itemCopy._id = randomObjectId();
   }
   if (newItem.customizations) {
+    const customizationsCopy: Exclude<CartItem['customizations'], undefined> = [];
     newItem.customizations.forEach((customization, i) => {
-      itemCopy.customizations[i] = { ...customization };
+      customizationsCopy[i] = { ...customization };
     });
+    itemCopy.customizations = customizationsCopy;
   }
   items.push(itemCopy);
   return itemCopy;

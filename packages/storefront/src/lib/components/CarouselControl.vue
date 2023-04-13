@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { carouselKey } from './_injection-keys';
+import { type CarouselInject, carouselKey } from './_injection-keys';
 
 export interface Props {
   direction?: number;
@@ -9,7 +9,7 @@ export interface Props {
 withDefaults(defineProps<Props>(), {
   direction: 1,
 });
-const { changeSlide } = inject(carouselKey);
+const { changeSlide } = inject(carouselKey) as CarouselInject;
 </script>
 
 <template>

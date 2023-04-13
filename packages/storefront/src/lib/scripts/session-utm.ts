@@ -3,7 +3,12 @@ let utm: { [k: string]: string } = {};
 
 if (!import.meta.env.SSR) {
   const storageKey = 'ecomUtm';
-  utm = JSON.parse(sessionStorage.getItem(storageKey)) || {};
+  const storedValue = sessionStorage.getItem(storageKey);
+  try {
+    utm = (storedValue && JSON.parse(storedValue)) || {};
+  } catch {
+    utm = {};
+  }
 
   let isCurrentUrl;
   const urlParams = new URLSearchParams(window.location.search);

@@ -37,8 +37,11 @@ const getModulesInfoPreset = (settingsModules = globalThis.storefront.settings.m
     }
 
     const settingsShipping = settingsModules.calculate_shipping;
-    if (settingsShipping && settingsShipping.free_shipping_from_value) {
-      modulesInfoPreset.calculate_shipping = settingsShipping;
+    const freeShippingFromValue = settingsShipping?.free_shipping_from_value;
+    if (typeof freeShippingFromValue === 'number') {
+      modulesInfoPreset.calculate_shipping = {
+        free_shipping_from_value: freeShippingFromValue,
+      };
     }
   }
   return modulesInfoPreset;

@@ -95,10 +95,10 @@ const onEnter = (el: HTMLElement) => {
     el.style.visibility = 'hidden';
     // eslint-disable-next-line no-shadow
     const { width, height } = getComputedStyle(el);
-    el.style.width = isSlideY.value ? null : '0';
-    el.style.height = isSlideY.value ? '0' : null;
-    el.style.position = null;
-    el.style.visibility = null;
+    el.style.width = isSlideY.value ? '' : '0';
+    el.style.height = isSlideY.value ? '0' : '';
+    el.style.position = '';
+    el.style.visibility = '';
     // Force repaint to make sure the animation is triggered correctly
     // eslint-disable-next-line no-unused-expressions
     getComputedStyle(el)[isSlideY.value ? 'height' : 'width'];
@@ -113,7 +113,7 @@ const onEnter = (el: HTMLElement) => {
 };
 const onAfterEnter = (el: HTMLElement) => {
   if (props.slide && !props.isFloating && props.isEnterFrom) {
-    el.style[isSlideY.value ? 'height' : 'width'] = null;
+    el.style[isSlideY.value ? 'height' : 'width'] = '';
   }
 };
 const onLeave = (el: HTMLElement) => {

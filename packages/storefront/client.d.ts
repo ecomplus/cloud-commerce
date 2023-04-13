@@ -9,7 +9,7 @@ type DocCleanupFields = 'body_html'
   | 'hidden_metafields';
 
 interface Window {
-  firebaseConfig?: {
+  firebaseConfig: {
     apiKey: string,
     authDomain: string,
     projectId: string,
