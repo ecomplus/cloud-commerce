@@ -31,7 +31,7 @@ declare global {
     onLoad: (callback: (...args: any[]) => void) => void,
   };
   // eslint-disable-next-line
-  var api_prefetch_endpoints: undefined | ApiEndpoint[];
+  var api_prefetch_endpoints: ApiEndpoint[];
   // eslint-disable-next-line
   var storefront_slim_doc_regex: undefined | RegExp;
 }

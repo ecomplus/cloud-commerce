@@ -5,6 +5,7 @@ import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { CMS, CmsSettings, CmsHome } from './cms';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
+// @ts-ignore
 import _getConfig from '../../storefront.config.mjs';
 
 type StorefrontConfig = {
@@ -18,7 +19,6 @@ type StorefrontConfig = {
   secondaryColor: CmsSettings['secondary_color'],
   settings: CmsSettings,
   dirContent: string,
-  // eslint-disable-next-line no-unused-vars
   cms: CMS,
 };
 
@@ -62,13 +62,13 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.storefront.settings = config.settings;
-  let cmsContent: CmsHome | Record<string, any> | undefined;
+  let cmsContent: CmsHome | Record<string, any> | null | undefined;
   let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: {
     categories?: CategoriesList,
     brands?: BrandsList,
-    [k: string]: Record<string, any>,
+    [k: string]: Record<string, any> | undefined,
   } = {};
   const apiOptions = {
     fetch,
@@ -95,10 +95,15 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     if (slugResponse) {
       apiResource = slugResponse.data.resource;
       apiDoc = slugResponse.data.doc;
-      apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
+      if (apiDoc) {
+        apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
+      }
     }
-    prefetchResponses.forEach(({ config: { endpoint }, data }) => {
-      apiState[endpoint.replace(/\?.*$/, '')] = data.result || data;
+    prefetchResponses.forEach((response) => {
+      if (response) {
+        const { config: { endpoint }, data } = response;
+        apiState[endpoint.replace(/\?.*$/, '')] = data.result || data;
+      }
     });
   } catch (err: any) {
     const error: ApiError = err;
@@ -133,7 +138,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   }
   if (apiDoc) {
     globalThis.storefront.context = {
-      resource: apiResource,
+      resource: apiResource as Exclude<typeof apiResource, undefined>,
       doc: apiDoc as any,
       timestamp: Date.now(),
     };
@@ -145,6 +150,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     apiResource,
     apiDoc,
     apiState,
+    getContent: config.cms,
   };
   emitter.emit('load', pageContext);
   return pageContext;
