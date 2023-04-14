@@ -10,7 +10,7 @@ import removeDeliveredToFirestore from './remove-delivered';
 const getConfig = async () => {
   try {
     const app = (await api.get(
-      `applications?app_id=${config.get().apps.frenet}&fields=hidden_data`,
+      `applications?app_id=${config.get().apps.frenet.appId}&fields=hidden_data`,
     )).data.result;
 
     return app[0].hidden_data;

@@ -11,7 +11,7 @@ export default async () => {
   try {
     // logger.log('# Check abandoned carts');
     const [application] = (await api.get(
-      `applications?app_id=${config.get().apps.emails}&fields=hidden_data,data`,
+      `applications?app_id=${config.get().apps.emails.appId}&fields=hidden_data,data`,
     )).data.result;
 
     const store = getStore();
