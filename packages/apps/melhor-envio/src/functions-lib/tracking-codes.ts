@@ -9,7 +9,7 @@ import db, { Lable } from './database';
 const getConfig = async () => {
   try {
     const app = (await api.get(
-      `applications?app_id=${config.get().apps.melhorEnvio}&fields=hidden_data`,
+      `applications?app_id=${config.get().apps.melhorEnvio.appId}&fields=hidden_data`,
     )).data.result;
 
     return app[0].hidden_data;
