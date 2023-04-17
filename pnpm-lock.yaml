@@ -68,65 +68,65 @@ importers:
   ecomplus-stores/monocard:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/cli
 
   ecomplus-stores/monocard/functions/core:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/events:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/firebase
 
   ecomplus-stores/monocard/functions/modules:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/monocard/functions/passport:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/monocard/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/ssr
       '@vueuse/motion':
         specifier: 2.0.0-beta.22
         version: 2.0.0-beta.22
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../../packages/types
       '@fontsource/inter':
         specifier: ^4.5.15
@@ -147,26 +147,26 @@ importers:
   ecomplus-stores/monocard/storefront:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/ssr
       '@vueuse/motion':
         specifier: 2.0.0-beta.22
         version: 2.0.0-beta.22
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/types
       '@fontsource/inter':
         specifier: ^4.5.15
@@ -1065,84 +1065,84 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../packages/cli
 
   store/functions/core:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/firebase
 
   store/functions/events:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/firebase
 
   store/functions/modules:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/modules
 
   store/functions/passport:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../../packages/types
 
   store/storefront:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.8.7
+        specifier: ^0.9.0
         version: link:../../packages/types
 
 packages:
