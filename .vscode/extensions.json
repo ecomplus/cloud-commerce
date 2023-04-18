@@ -4,6 +4,7 @@
     "astro-build.astro-vscode",
     "vue.volar",
     "florianthievent.rules",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "yoavbls.pretty-ts-errors"
   ]
 }
