@@ -60,8 +60,15 @@ const calcSlidesWidth = () => {
     width: node.offsetWidth,
   }));
 };
-const calcNextWidth = (direction) => {
-  const nextSlideIndex = currentIndex.value + direction;
+const calcNextWidth = (direction: number) => {
+  let nextSlideIndex = currentIndex.value + direction;
+  if (nextSlideIndex >= slidesWidth.value.length) {
+    nextSlideIndex = 0;
+    direction = -direction;
+  } else if (nextSlideIndex < 0) {
+    nextSlideIndex = slidesWidth.value.length - 1;
+    direction = -direction;
+  }
   const width = slidesWidth.value[nextSlideIndex]?.width || 0;
   if (!width) {
     return 0;
@@ -93,18 +100,6 @@ const restartAutoplay = () => {
   }
 };
 const changeSlide = (direction: number) => {
-  if (direction < 0) {
-    if (isBoundLeft.value) {
-      calcIndexCount();
-      currentIndex.value = indexCount.value - 1;
-      changeSlide(1);
-      return;
-    }
-  } else if (isBoundRight.value) {
-    currentIndex.value = 1;
-    changeSlide(-1);
-    return;
-  }
   const nextSlideWidth = calcNextWidth(direction);
   if (nextSlideWidth) {
     wrapper.value?.scrollBy({ left: nextSlideWidth, behavior: 'smooth' });
