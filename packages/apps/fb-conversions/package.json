@@ -22,8 +22,8 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "facebook-nodejs-business-sdk": "^15.0.2",
-    "firebase-admin": "^11.6.0",
-    "firebase-functions": "^4.2.1"
+    "firebase-admin": "^11.7.0",
+    "firebase-functions": "^4.3.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
