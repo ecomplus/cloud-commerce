@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/ecomplus/cloud-commerce/compare/v0.9.0...v0.9.1) (2023-04-19)
+
+
+### Bug Fixes
+
+* **cli:** Faster `dev` without precedent build ([d39b680](https://github.com/ecomplus/cloud-commerce/commit/d39b6802c7d6391ff77dd7fd3a3f2f42f3e5d03e))
+* **config:** Prevent breaks on dev env without Store ID ([b8357b3](https://github.com/ecomplus/cloud-commerce/commit/b8357b3cad494172a5836411c8661014e26f099e))
+* **deps:** Update all non-major dependencies ([83ab6b3](https://github.com/ecomplus/cloud-commerce/commit/83ab6b3ad579e709f796d0eb155a64049f52bceb))
+* **storefront:** Fixing <Carousel> component rewind ([afcd662](https://github.com/ecomplus/cloud-commerce/commit/afcd6625e059fd3f0ee98fc6003349eefdbc0df9))
+
 ## [0.9.0](https://github.com/ecomplus/cloud-commerce/compare/v0.8.7...v0.9.0) (2023-04-17)
 
 
