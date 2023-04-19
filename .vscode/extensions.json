@@ -5,6 +5,7 @@
     "vue.volar",
     "florianthievent.rules",
     "bradlc.vscode-tailwindcss",
-    "yoavbls.pretty-ts-errors"
+    "yoavbls.pretty-ts-errors",
+    "redhat.vscode-yaml"
   ]
 }
