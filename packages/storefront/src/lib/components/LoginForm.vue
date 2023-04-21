@@ -33,7 +33,7 @@ watch(isLogged, (_isLogged) => {
   immediate: true,
 });
 watch(email, (_email) => {
-  emit('set:email', _email);
+  emit('set:email', _email as string);
 }, {
   immediate: true,
 });
@@ -47,6 +47,7 @@ watch(isSignUp, (_isSignUp) => {
 const password = ref('');
 const submitLogin = async () => {
   const firebaseAuth = getAuth();
+  if (!email.value) return;
   window.localStorage.setItem('emailForSignIn', email.value);
   try {
     if (isLinkSignIn.value) {
@@ -59,7 +60,7 @@ const submitLogin = async () => {
     } else {
       await signInWithEmailAndPassword(firebaseAuth, email.value, password.value);
     }
-  } catch (error) {
+  } catch (error: any) {
     console.warn(error.code);
     console.error(error);
   }

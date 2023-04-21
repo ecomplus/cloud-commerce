@@ -12,23 +12,28 @@ export default () => {
   process.env.STOREFRONT_BASE_DIR = baseDir;
   const dirContent = resolvePath(baseDir, 'content');
 
+  const cmsCache = {};
   const cms = (filename) => {
     // MUST be sync for 'settings'
     // Async with other content to support external CMS integration
     const loadLocal = () => {
-      if (filename.endsWith('/')) {
-        const dirColl = resolvePath(dirContent, filename);
-        return new Promise((resolve) => {
-          const slugs = fs.existsSync(dirColl)
-            ? fs.readdirSync(dirColl).map((file) => file.replace('.json', ''))
-            : [];
-          resolve(slugs);
-        });
+      let content = cmsCache[filename];
+      if (!content) {
+        if (filename.endsWith('/')) {
+          const dirColl = resolvePath(dirContent, filename);
+          return new Promise((resolve) => {
+            const slugs = fs.existsSync(dirColl)
+              ? fs.readdirSync(dirColl).map((file) => file.replace('.json', ''))
+              : [];
+            resolve(slugs);
+          });
+        }
+        const filepath = resolvePath(dirContent, `${filename}.json`);
+        content = fs.existsSync(filepath)
+          ? JSON.parse(fs.readFileSync(filepath, 'utf8'))
+          : null;
+        cmsCache[filename] = content;
       }
-      const filepath = resolvePath(dirContent, `${filename}.json`);
-      const content = fs.existsSync(filepath)
-        ? JSON.parse(fs.readFileSync(filepath, 'utf8'))
-        : null;
       return filename === 'settings'
         ? content
         : new Promise((resolve) => { resolve(content); });

@@ -31,11 +31,11 @@ const description = state.meta_description || state.short_description || setting
 const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
 const shortcutIcon = settings.icon ? getIconUrl(192) : null;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
-const cmsMetatags = await cms('metatags');
+const { metatags: cmsMetatags } = await cms('layout');
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
 let ogImage: string | undefined;
 if (apiDoc) {
-  const picture = getImg(state, null, 'zoom');
+  const picture = getImg(state, undefined, 'zoom');
   ogImage = picture && picture.url;
 }
 if (!ogImage) {

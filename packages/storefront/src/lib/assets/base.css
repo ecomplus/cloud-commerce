@@ -11,8 +11,10 @@
   --transition: .15s ease-in-out;
   --transition-slow: .25s ease-in-out;
   --transition-slower: .45s ease-in-out;
-  --c-on-dark: rgb(255, 255, 255);
-  --c-on-light: rgb(0, 0, 0);
+  --rgb-on-dark: 255, 255, 255;
+  --c-on-dark: rgb(var(--rgb-on-dark));
+  --rgb-on-light: 0, 0, 0;
+  --c-on-light: rgb(var(--rgb-on-light));
   --c-background: #fff;
   --c-on-background: theme('colors.base.800');
   --un-prose-body: theme('colors.base.700');

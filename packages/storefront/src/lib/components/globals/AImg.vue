@@ -40,13 +40,12 @@ const dimensions = computed(() => {
   return getImgSizes(image.value) as { width: number, height: number };
 });
 const attrs = computed<ImgHTMLAttributes>(() => ({
-  ...props,
   src: image.value.url,
   alt: image.value.alt,
-  width: dimensions.value.width || null,
-  height: dimensions.value.height || null,
-  decoding: props.decoding || (dimensions.value.height ? 'async' : null),
-  picture: null,
+  width: dimensions.value.width || undefined,
+  height: dimensions.value.height || undefined,
+  loading: props.loading,
+  decoding: props.decoding || (dimensions.value.height ? 'async' : undefined),
 }));
 </script>
 

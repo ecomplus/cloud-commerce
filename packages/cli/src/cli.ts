@@ -8,7 +8,7 @@ import {
   chalk,
 } from 'zx';
 import login from './login';
-import build from './build';
+import build, { prepareCodebases } from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
 import createGhSecrets from './setup-gh';
 
@@ -17,6 +17,9 @@ const {
   GOOGLE_APPLICATION_CREDENTIALS,
   GITHUB_TOKEN,
 } = process.env;
+
+// https://github.com/google/zx/issues/124
+process.env.FORCE_COLOR = '3';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const pwd = process.cwd();
@@ -176,7 +179,7 @@ Finish by saving the following secrets to your GitHub repository:
   }
 
   if (argv._.includes('dev') || !argv._.length) {
-    await $`npm run build -- --codebase ssr`;
+    await prepareCodebases();
     return $`npm --prefix "${path.join(pwd, 'functions/ssr')}" run dev`;
   }
   return $`echo 'Hello from @cloudcommerce/cli'`;

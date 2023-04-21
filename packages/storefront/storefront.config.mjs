@@ -25,9 +25,17 @@ export default () => {
       const mergeConfig = JSON.parse(readFileSync(configFilepath), 'utf8');
       if (mergeConfig.storeId) {
         storeId = mergeConfig.storeId;
-        config.set({ storeId });
       }
-    } catch { /* */ }
+    } catch {
+      //
+    }
+    if (!storeId && import.meta.env.DEV === true) {
+      storeId = 1011;
+      console.warn('> `storeId` is not set, using fallback 1011 for dev only\n');
+    }
+    if (storeId) {
+      config.set({ storeId });
+    }
   }
   const {
     lang,

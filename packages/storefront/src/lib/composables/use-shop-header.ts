@@ -1,27 +1,44 @@
 import type { Ref } from 'vue';
-import type { CategoriesList } from '@cloudcommerce/api/types';
+import type { ResourceId, Categories, CategoriesList } from '@cloudcommerce/api/types';
 import { computed } from 'vue';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
 
 export interface Props {
-  header: Ref<HTMLElement>;
+  header: Ref<HTMLElement | null>;
   categories: CategoriesList;
   menuCategorySlugs?: string[];
   menuRandomCategories?: number;
   isAlphabeticalSortSubmenu?: boolean;
 }
 
-type CategoryTree = CategoriesList[0] & {
-  subcategories: Array<CategoryTree>,
+type MainCategory = Partial<Categories> & {
+  _id: ResourceId,
+  name: string,
+  slug: string,
+  parent: undefined,
+};
+type Subcategory = Partial<Categories> & {
+  _id: ResourceId,
+  name: string,
+  slug: string,
+  parent: Exclude<Categories['parent'], undefined>,
+};
+
+export type SubcategoryTree = Subcategory & {
+  subcategories: Array<SubcategoryTree>,
+};
+
+export type CategoryTree = MainCategory & {
+  subcategories: Array<SubcategoryTree>,
 };
 
 const filterMainCategories = (
   categories: CategoriesList,
   featuredSlugs?: string[],
 ) => {
-  const mainCategories = categories.filter(({ slug, parent }) => {
-    return slug && !parent;
-  });
+  const mainCategories = categories.filter(({ name, slug, parent }) => {
+    return name && slug && !parent;
+  }) as Array<MainCategory>;
   if (featuredSlugs?.length) {
     mainCategories.sort((a, b) => {
       const indexA = featuredSlugs.indexOf(a.slug);
@@ -42,13 +59,13 @@ const filterSubcategories = (
   parentCategory: CategoriesList[0],
   isAlphabeticalSort = false,
 ) => {
-  const subcategories = categories.filter(({ slug, parent }) => {
-    if (slug && parent) {
+  const subcategories = categories.filter(({ name, slug, parent }) => {
+    if (name && slug && parent) {
       return parent._id === parentCategory._id
         || (parent.slug && parent.slug === parentCategory.slug);
     }
     return false;
-  });
+  }) as Array<Subcategory>;
   if (isAlphabeticalSort) {
     subcategories.sort((a, b) => {
       if (a.name < b.name) return -1;
@@ -71,7 +88,7 @@ const useShopHeader = ({
     staticY,
   } = useStickyHeader({ header });
   const positionY = computed(() => {
-    return isSticky.value ? header.value.offsetHeight : staticY.value;
+    return isSticky.value ? header.value?.offsetHeight : staticY.value;
   });
   const mainCategories = filterMainCategories(categories, menuCategorySlugs);
   const getSubcategories = (parentCategory: CategoriesList[0]) => {
@@ -81,7 +98,8 @@ const useShopHeader = ({
       !!isAlphabeticalSortSubmenu,
     );
   };
-  const getCategoryTree = (parentCategory: CategoriesList[0]): CategoryTree => {
+  const getCategoryTree = <T extends CategoriesList[0]>(parentCategory: T):
+  T & { subcategories: SubcategoryTree[] } => {
     return {
       ...parentCategory,
       subcategories: getSubcategories(parentCategory).map((subcategory) => {
@@ -121,5 +139,3 @@ export {
   filterMainCategories,
   filterSubcategories,
 };
-
-export type { CategoryTree };

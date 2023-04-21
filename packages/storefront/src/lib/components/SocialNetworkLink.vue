@@ -12,8 +12,8 @@ export interface Props {
 }
 
 const props = defineProps<Props>();
-const fixedHref = computed(() => {
-  let href = props.href || socialNetworks[props.network];
+const fixedHref = computed<string>(() => {
+  let href = props.href || socialNetworks[props.network] || '';
   if (props.network === 'whatsapp') {
     const tel = href.replace(/[^+\d]/g, '');
     // eslint-disable-next-line prefer-template

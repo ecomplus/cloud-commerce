@@ -34,9 +34,13 @@ Object.keys(onBrandColors).forEach((colorLabel) => {
     return `rgb(${colorCSSVars[varName]})` === cssRGB
       && new RegExp(`${colorName}-\\d`).test(varName);
   });
-  colorCSSVars[`rgb-on-${colorLabel}`] = colorCSSVar
-    ? `var(--${colorCSSVar})`
-    : cssRGB.substring(4).replace(')', '');
+  if (colorCSSVar) {
+    colorCSSVars[`rgb-on-${colorLabel}`] = colorCSSVar;
+  } else {
+    colorCSSVars[`rgb-on-${colorLabel}`] = cssRGB.startsWith('rgb')
+      ? cssRGB.substring(4).replace(')', '')
+      : cssRGB.replace('--c-', '--rgb-');
+  }
 });
 
 const genUnoCSSConfig = (themeOptions = {}) => {
@@ -106,7 +110,7 @@ const genUnoCSSConfig = (themeOptions = {}) => {
         on: Object.keys(onBrandColors).reduce((onColors, colorLabel) => {
           return {
             ...onColors,
-            colorLabel: `rgb(var(--rgb-on-${colorLabel}))`,
+            [colorLabel]: `rgb(var(--rgb-on-${colorLabel}))`,
           };
         }, {}),
       },

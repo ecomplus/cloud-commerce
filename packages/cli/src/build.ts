@@ -39,3 +39,5 @@ const buildCodebase = async (codebase?: string) => {
 export default buildCodebase;
 
 export { buildCodebase, copyFunctionsConfig };
+
+export const prepareCodebases = copyFunctionsConfig;

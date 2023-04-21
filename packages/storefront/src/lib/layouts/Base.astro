@@ -11,7 +11,7 @@ export interface Props {
 
 const { pageContext, title } = Astro.props as Props;
 const { cms } = pageContext;
-const cmsCustomCode = await cms('code');
+const { custom_code: cmsCustomCode } = await cms('layout');
 ---
 
 <head>

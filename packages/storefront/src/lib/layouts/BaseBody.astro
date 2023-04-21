@@ -16,10 +16,10 @@ const { settings } = Astro.props.pageContext;
 
 <body>
   <div id="teleported-overlap" class="relative z-50"></div>
-  <div id="teleported-top" class="relative z-0"></div>
+  <div id="teleported-top" class="relative z-10"></div>
   <slot />
   <slot name="before-body-end" />
-  <div id="teleported-bottom" class="relative z-0"></div>
+  <div id="teleported-bottom" class="relative z-10"></div>
   {settings.icon &&
     <Picture
       src={settings.icon}

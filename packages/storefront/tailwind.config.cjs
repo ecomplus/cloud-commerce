@@ -92,9 +92,13 @@ Object.keys(brandColors).forEach((colorName) => {
     chroma(hex).luminance(0.15), // 700
     chroma(hex).luminance(0.10), // 800
     chroma(hex).luminance(0.05), // 900
-  ]).colors(10);
+    chroma(hex).luminance(0.02), // 950
+  ]).colors(11);
   scale.forEach((sHex, index) => {
-    const palleteIndex = index === 0 ? '50' : (100 * index).toString();
+    let palleteIndex;
+    if (index === 0) palleteIndex = '50';
+    else if (index === scale.length - 1) palleteIndex = '950';
+    else palleteIndex = (100 * index).toString();
     pallete[palleteIndex] = chroma(sHex).css();
   });
   brandColorsPalletes[colorName] = pallete;
@@ -104,8 +108,10 @@ Object.keys(brandColors).forEach((colorName) => {
     const lightness = colorVariants[tone].get('lab.l');
     if (lightness > 90) {
       onBrandColors[label] = pallete['800'];
-    } else if (lightness > 75) {
+    } else if (lightness > 76) {
       onBrandColors[label] = pallete['900'];
+    } else if (lightness > 67) {
+      onBrandColors[label] = pallete['950'];
     } else {
       onBrandColors[label] = `var(--c-on-${(lightness > 60 ? 'light' : 'dark')})`;
     }
@@ -126,6 +132,7 @@ const genTailwindConfig = (themeOptions = {}) => {
     iconAliases,
   } = deepmerge(defaultThemeOptions, themeOptions);
   const config = {
+    content: ['./src/**/*.{vue,astro,tsx,jsx,md,html,svelte}'],
     theme: {
       extend: {
         colors: {

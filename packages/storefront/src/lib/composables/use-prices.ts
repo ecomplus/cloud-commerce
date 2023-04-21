@@ -10,10 +10,13 @@ export interface Props {
   isAmountTotal?: boolean;
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
-  loyaltyPointsProgram?: ListPaymentsResponse['loyalty_points_programs']['k'];
+  loyaltyPointsProgram?: Exclude<ListPaymentsResponse['loyalty_points_programs'], undefined>['k'];
 }
 
-const getPriceWithDiscount = (price: number, discount: Props['discountOption']) => {
+const getPriceWithDiscount = (
+  price: number,
+  discount: Exclude<Props['discountOption'], undefined>,
+) => {
   const { type, value } = discount;
   let priceWithDiscount: number;
   if (value) {
@@ -134,7 +137,7 @@ const usePrices = (props: Props) => {
       const programIds = Object.keys(pointsPrograms);
       for (let i = 0; i < programIds.length; i++) {
         const program = pointsPrograms[programIds[i]];
-        if (program && program.earn_percentage > 0) {
+        if (program?.earn_percentage && program.earn_percentage > 0) {
           return program;
         }
       }

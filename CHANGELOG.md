@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/ecomplus/cloud-commerce/compare/v0.9.0...v0.9.1) (2023-04-19)
+
+
+### Bug Fixes
+
+* **cli:** Faster `dev` without precedent build ([d39b680](https://github.com/ecomplus/cloud-commerce/commit/d39b6802c7d6391ff77dd7fd3a3f2f42f3e5d03e))
+* **config:** Prevent breaks on dev env without Store ID ([b8357b3](https://github.com/ecomplus/cloud-commerce/commit/b8357b3cad494172a5836411c8661014e26f099e))
+* **deps:** Update all non-major dependencies ([83ab6b3](https://github.com/ecomplus/cloud-commerce/commit/83ab6b3ad579e709f796d0eb155a64049f52bceb))
+* **storefront:** Fixing <Carousel> component rewind ([afcd662](https://github.com/ecomplus/cloud-commerce/commit/afcd6625e059fd3f0ee98fc6003349eefdbc0df9))
+
+## [0.9.0](https://github.com/ecomplus/cloud-commerce/compare/v0.8.7...v0.9.0) (2023-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `tsconfig.json` updated with `astro/tsconfigs/strict`, may have to fix null/undefined checks
+* **storefront:** Import `@@sf/components/ProductCard.vue` throws error
+* **storefront:** Import `@@sf/layouts/PagesLayout.astro` no more working
+* **storefront:** Expecting new `content/layout.json` for layout base and header to work properly
+
+### Features
+
+* **storefront:** Add `getContent` alias to `cms` function on SSR page context ([78b608a](https://github.com/ecomplus/cloud-commerce/commit/78b608a2487c9c1a9ec0f3f35889f0a450a4808e))
+* **storefront:** Add tailwind new 950 colors ([124b85b](https://github.com/ecomplus/cloud-commerce/commit/124b85b8d778fa3b69b568364d7be0f3d5b492ee))
+* **storefront:** Bump VueUse to v10 ([b5251dd](https://github.com/ecomplus/cloud-commerce/commit/b5251dda1afbc7ac9bb67c19a221f2a8468aa75a))
+* **storefront:** New `HeroPicture.astro` component optimize hero images with common abstractions ([296b6a0](https://github.com/ecomplus/cloud-commerce/commit/296b6a0f4ac0954f4d3f3568d205fd9cd5c4263d))
+* **storefront:** New `useHeroSlider` composable to abstract hero slider component common handlers ([1a7b7cb](https://github.com/ecomplus/cloud-commerce/commit/1a7b7cbe6aa2775467498b39fe55fd9ff8e698f2))
+* **storefront:** New `useHomeMain` and `useHeroSection` layout composables ([f5f7633](https://github.com/ecomplus/cloud-commerce/commit/f5f76334c63c673a35ef8e601d438a07280485c0))
+* **storefront:** Update custom <Picture> to also parse `.max-w-screen-*` classes to sizes attr ([78b9234](https://github.com/ecomplus/cloud-commerce/commit/78b92349b41188aaaed649d6d21b2a9caae3e9ba))
+* **storefront:** Update Tailwind config adding new 950 tone to brands colors ([0f6ff72](https://github.com/ecomplus/cloud-commerce/commit/0f6ff724278065d6b613ba7ee181db20b19743d1))
+
+
+### Bug Fixes
+
+* **apps:** Properly using IDs from config to read apps data ([#144](https://github.com/ecomplus/cloud-commerce/issues/144)) ([d047561](https://github.com/ecomplus/cloud-commerce/commit/d0475613c0bc32855326b92ae50fd91eb28a3db8))
+* **deps:** Update Astro to v2.2.0 ([97c810d](https://github.com/ecomplus/cloud-commerce/commit/97c810d1d62abb627fa78ac187f6de8f0503910d))
+* **deps:** Update Astro to v2.3.0 ([#148](https://github.com/ecomplus/cloud-commerce/issues/148)) ([93d9624](https://github.com/ecomplus/cloud-commerce/commit/93d9624d365b1975ae749601bcead5a929b0f06c))
+* **deps:** Update dependency astro to v2.2.1 ([#143](https://github.com/ecomplus/cloud-commerce/issues/143)) ([537f4eb](https://github.com/ecomplus/cloud-commerce/commit/537f4eb160e9287767e4e7a20b1b3ba49e289a49))
+* **deps:** Update non-major dependencies ([#140](https://github.com/ecomplus/cloud-commerce/issues/140)) ([b826d54](https://github.com/ecomplus/cloud-commerce/commit/b826d54750181125ae34399023b25bc546c95e08))
+* **deps:** Update non-major dependencies ([#142](https://github.com/ecomplus/cloud-commerce/issues/142)) ([6f687a8](https://github.com/ecomplus/cloud-commerce/commit/6f687a8b8a80e0bd6191c3a94d50380658bd8629))
+* **galaxpay:** Double check transaction status and handle Galaxpay cancel webhooks ([#145](https://github.com/ecomplus/cloud-commerce/issues/145)) ([4ac1c92](https://github.com/ecomplus/cloud-commerce/commit/4ac1c923f0b34a94badeba268baba8e85673f28c))
+* **storefront:** Fix UnoCSS config generating brand colors foregrounds (on-*) ([76e4b9d](https://github.com/ecomplus/cloud-commerce/commit/76e4b9dcc72a85025a1df72aa9fec9c5fe14ec96))
+* **storefront:** Fix Vue global <Carousel> to work with Astro slots ([0a0dc70](https://github.com/ecomplus/cloud-commerce/commit/0a0dc7089c1802059ec5454ccc180018c45e216e))
+* **storefront:** Fixing default Vue to teleport elements z-index (.z-10) ([ca8629a](https://github.com/ecomplus/cloud-commerce/commit/ca8629ae7c35aaa2d5d13c7cf728897ec5470be3))
+* **storefront:** Fixing Vue global custom properties (`$settings` and `$context`) typedef ([e17e3e7](https://github.com/ecomplus/cloud-commerce/commit/e17e3e7e78a59cb8c7d78f5aedfa8db072a3911d))
+* **storefront:** General null/undefined fixes using TS strict mode ([f06af89](https://github.com/ecomplus/cloud-commerce/commit/f06af89d6c75396970feba4a071f151697443bfe))
+* **storefront:** Properly setting `cmsContent` on home page context ([feb78a4](https://github.com/ecomplus/cloud-commerce/commit/feb78a404a8cf17f770a24a87ee1756c54968082))
+* **storefront:** Update Astro to v2.1.9 ([#141](https://github.com/ecomplus/cloud-commerce/issues/141)) ([6d61253](https://github.com/ecomplus/cloud-commerce/commit/6d612536a15f35ddbac87091af95d2b9b889a22d))
+
+
+* **storefront:** Edit CMS function type to fixed expected filenames ([33ffcc3](https://github.com/ecomplus/cloud-commerce/commit/33ffcc36d113c278a8318c0a7d0a0fe43686d11a))
+* **storefront:** Remove `PagesLayout.astro` in favor of `use-page-layout` composable ([7955a6f](https://github.com/ecomplus/cloud-commerce/commit/7955a6fec9d622188e05152a1c507e20c6996af3))
+* **storefront:** Removing test-only (yet) `ProductCard` component ([c3181c4](https://github.com/ecomplus/cloud-commerce/commit/c3181c40a9b5fa3594602e9f9978592ba500b1de))
+
+### [0.8.7](https://github.com/ecomplus/cloud-commerce/compare/v0.8.6...v0.8.7) (2023-03-31)
+
+
+### Bug Fixes
+
+* **storefront:** Ensure alt attr on <Picture> img ([d55c572](https://github.com/ecomplus/cloud-commerce/commit/d55c5724599d4494a4a5fa9859df101b5f2a26ac))
+
 ### [0.8.6](https://github.com/ecomplus/cloud-commerce/compare/v0.8.5...v0.8.6) (2023-03-24)
 
 

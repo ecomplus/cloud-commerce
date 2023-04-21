@@ -49,8 +49,18 @@ const logout = () => {
   firebaseAuth.signOut();
 };
 
+const throwNoAuth = (msg = 'Not authenticated') => {
+  const err: any = new Error(msg);
+  err.isNoAuth = true;
+  throw err;
+};
+
 const authenticate = async () => {
-  const authToken = await firebaseAuth.currentUser.getIdToken();
+  const authToken = await firebaseAuth.currentUser?.getIdToken();
+  if (!authToken) {
+    throwNoAuth('Can\'t get Firebase user ID token');
+    return;
+  }
   const { domain } = window.storefront.settings;
   try {
     const resAuth = await fetch(`https://${domain}/api/passport/token`, {
@@ -70,12 +80,14 @@ const getAccessToken = async () => {
   if (!isAuthenticated.value) {
     await authenticate();
   }
+  if (!session.auth) return throwNoAuth();
   return session.auth.access_token;
 };
 
 const fetchCustomer = async () => {
   const accessToken = await getAccessToken();
-  const { data } = await api.get(`customers/${session.auth.customer_id}`, {
+  const auth = session.auth as Exclude<typeof session.auth, null>;
+  const { data } = await api.get(`customers/${auth.customer_id}`, {
     accessToken,
   });
   session.customer = data;

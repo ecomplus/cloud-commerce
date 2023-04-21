@@ -11,7 +11,7 @@ const linkTarget = computed(() => {
   if (props.target) return props.target;
   if (props.href.startsWith('http')) {
     const domain = globalThis.storefront.settings.domain || window.location.host;
-    if (props.href.startsWith(`https://${domain}`)) return null;
+    if (props.href.startsWith(`https://${domain}`)) return undefined;
   }
   return '_blank';
 });
@@ -21,6 +21,6 @@ const linkTarget = computed(() => {
   <a
     :href="href"
     :target="linkTarget"
-    :rel="linkTarget === '_blank' ? 'noopener' : null"
+    :rel="linkTarget === '_blank' ? 'noopener' : undefined"
   ><slot /></a>
 </template>

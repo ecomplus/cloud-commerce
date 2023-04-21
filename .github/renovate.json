@@ -11,8 +11,7 @@
   "ignoreDeps": [
     "node",
     "pnpm",
-    "turbo",
-    "@vueuse/core"
+    "turbo"
   ],
   "packageRules": [
     {

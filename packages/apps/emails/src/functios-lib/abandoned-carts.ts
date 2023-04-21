@@ -3,6 +3,7 @@ import api from '@cloudcommerce/api';
 import transactionalMails from '@ecomplus/transactional-mails';
 import { getFirestore } from 'firebase-admin/firestore';
 import email from '@cloudcommerce/emails';
+import config from '@cloudcommerce/firebase/lib/config';
 import triggerActions from './trigger-actions';
 import { getStore } from './utils';
 
@@ -10,7 +11,7 @@ export default async () => {
   try {
     // logger.log('# Check abandoned carts');
     const [application] = (await api.get(
-      'applications?app_id=1243&fields=hidden_data,data',
+      `applications?app_id=${config.get().apps.emails.appId}&fields=hidden_data,data`,
     )).data.result;
 
     const store = getStore();
