@@ -18,6 +18,9 @@ const {
   GITHUB_TOKEN,
 } = process.env;
 
+// https://github.com/google/zx/issues/124
+process.env.FORCE_COLOR = '3';
+
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const pwd = process.cwd();
 
