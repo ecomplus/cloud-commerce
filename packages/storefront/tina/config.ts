@@ -41,7 +41,7 @@ export default defineConfig({
         ui: {
           router: (/* { document } */) => {
             // navigate to the post that was clicked
-            return '/';
+            return '/~preview/';
           },
         },
       },
