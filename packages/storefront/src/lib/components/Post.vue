@@ -99,7 +99,7 @@ export default defineComponent<
     async fetchPost() {
       this.loading = true
       this.data = await client.queries.post({
-        relativePath: 'hello-world.md',
+        relativePath: 'hello-tinacms.md',
       })
     },
   },
