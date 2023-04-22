@@ -57,7 +57,11 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   apiPrefetchEndpoints?: ApiPrefetchEndpoints;
 } = {}) => {
   const startedAt = Date.now();
-  const urlPath = Astro.url.pathname;
+  let urlPath = Astro.url.pathname;
+  const isPreview = urlPath.startsWith('/~preview');
+  if (isPreview) {
+    urlPath = urlPath.replace('/~preview', '');
+  }
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.storefront.settings = config.settings;
@@ -150,6 +154,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     apiDoc,
     apiState,
     getContent: config.cms,
+    isPreview,
   };
   emitter.emit('load', pageContext);
   return pageContext;
