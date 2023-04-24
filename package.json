@@ -56,7 +56,8 @@
         "astro",
         "vue",
         "@nuxt/kit",
-        "@babel/core"
+        "@babel/core",
+        "sharp"
       ]
     }
   }
