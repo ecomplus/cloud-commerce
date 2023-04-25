@@ -32,9 +32,9 @@
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
     "@commitlint/rules": "^17.6.1",
-    "@types/node": "^18.16.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
+    "@types/node": "^18.16.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
     "esbuild": "^0.17.18",
     "eslint": "^8.39.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -46,7 +46,7 @@
     "turbo": "1.6.3",
     "typescript": "^5.0.4",
     "uglify-js": "^3.17.4",
-    "vite": "^4.3.1",
+    "vite": "^4.3.2",
     "vitest": "^0.30.1",
     "zx": "^7.2.1"
   },
@@ -56,9 +56,11 @@
         "astro",
         "vue",
         "@nuxt/kit",
-        "@babel/core",
-        "sharp"
-      ]
+        "@babel/core"
+      ],
+      "allowedVersions": {
+        "sharp": "0.32"
+      }
     }
   }
 }
