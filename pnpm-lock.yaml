@@ -310,8 +310,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       facebook-nodejs-business-sdk:
-        specifier: ^15.0.2
-        version: 15.0.2
+        specifier: ^16.0.2
+        version: 16.0.2
       firebase-admin:
         specifier: ^11.7.0
         version: 11.7.0
@@ -7016,8 +7016,8 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: false
 
-  /facebook-nodejs-business-sdk@15.0.2:
-    resolution: {integrity: sha512-5TG64d3SuodpL8YLicj2DymppvnL+SxMEN/1z8UlXvPYIt3kuJwb/YxyQCAAVwRPUANKqN1xlwRXTwt1BvyGdA==}
+  /facebook-nodejs-business-sdk@16.0.2:
+    resolution: {integrity: sha512-0mIy9l3eagFc98BCYa9xOEk3hh4isq1G00eXeVmHP0CUKSmRF0jpumMuBnuygOc+65WKB+krvdEdmzx0rXR3tQ==}
     dependencies:
       currency-codes: 1.5.1
       iso-3166-1: 2.1.1
