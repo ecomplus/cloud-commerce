@@ -44,4 +44,5 @@ interface Window {
     },
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
+  isCMSPreview?: boolean;
 }
