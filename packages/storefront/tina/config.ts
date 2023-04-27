@@ -1,12 +1,17 @@
 import { defineConfig } from 'tinacms';
 
-// Your hosting provider likely exposes this as an environment variable
-const branch = process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || 'main';
+const {
+  GIT_BRANCH,
+  TINA_CLIENT_ID,
+  TINA_TOKEN,
+} = process.env;
+
+/* eslint-disable consistent-return */
 
 export default defineConfig({
-  branch,
-  clientId: null, // Get this from tina.io
-  token: null, // Get this from tina.io
+  clientId: TINA_CLIENT_ID || null, // Get this from tina.io
+  token: TINA_TOKEN || null, // Get this from tina.io
+  branch: GIT_BRANCH || 'main',
   build: {
     outputFolder: 'admin',
     publicFolder: 'public',
@@ -19,6 +24,65 @@ export default defineConfig({
   },
   schema: {
     collections: [
+      {
+        label: 'Layout',
+        name: 'layout',
+        path: 'src/content',
+        match: {
+          include: 'layout',
+        },
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            label: 'Cabeçalho',
+            name: 'header',
+            type: 'object',
+            fields: [
+              {
+                label: 'Pitch bar',
+                name: 'pitch_bar',
+                type: 'object',
+                list: true,
+                fields: [
+                  {
+                    label: 'Link',
+                    name: 'href',
+                    type: 'string',
+                    ui: {
+                      validate: (val: string) => {
+                        if (val && !val.startsWith('/') && !/^https?:\/\//.test(val)) {
+                          return 'Preencha com um URL válido, '
+                            + 'links para páginas da loja devem começar com /';
+                        }
+                      },
+                    },
+                  },
+                  {
+                    label: 'Conteúdo',
+                    name: 'html',
+                    type: 'rich-text',
+                  },
+                ],
+                ui: {
+                  itemProps: (item) => {
+                    return {
+                      label: item?.href
+                        ? `Slide ${item?.href}`
+                        : 'Slide sem link',
+                    };
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
       {
         name: 'post',
         label: 'Posts',

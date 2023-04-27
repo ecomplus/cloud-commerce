@@ -1,0 +1,14 @@
+{
+  "header": {
+    "pitch_bar": [
+      {
+        "href": "/promotion",
+        "html": "Aproveite nossos descontos de até 60%!\n"
+      },
+      {
+        "href": "",
+        "html": "**Frete grátis** <d-md>para todo Brasil</d-md> a partir de {free\\_shipping\\_from\\_value}\n"
+      }
+    ]
+  }
+}
