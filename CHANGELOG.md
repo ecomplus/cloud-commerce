@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/ecomplus/cloud-commerce/compare/v0.9.1...v0.10.0) (2023-04-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Many functions moved to v1 on https://github.com/ecomplus/cloud-commerce/commit/95287ac527ac9e9c86095a00a5c895a487d77265
+
+### Features
+
+* **storefront:** Foundation for Tina CMS ([#136](https://github.com/ecomplus/cloud-commerce/issues/136)) ([3774453](https://github.com/ecomplus/cloud-commerce/commit/3774453201b2e0b931ea8a2187677f7f5a5ad91e))
+
+
+### Bug Fixes
+
+* **cli:** Colored subprocess outputs ([e619e9f](https://github.com/ecomplus/cloud-commerce/commit/e619e9f55c141d67ab8d424f6d3e90982eee7db6))
+* **storefront:** Edit config to prevent breaks on dev env without Store ID ([e3cb69c](https://github.com/ecomplus/cloud-commerce/commit/e3cb69cf7045d5d3cd7bf6d2e7eb0d5f2b41db00))
+
+
+* Changelog ([8bd8f9f](https://github.com/ecomplus/cloud-commerce/commit/8bd8f9f45be009ca29a59d2245837b0bed706491))
 
 ### [0.9.1](https://github.com/ecomplus/cloud-commerce/compare/v0.9.0...v0.9.1) (2023-04-19)
 
