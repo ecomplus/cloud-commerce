@@ -17,6 +17,7 @@ const {
     currencySymbol,
     domain,
     settings,
+    isPreview,
   },
 } = Astro.props as Props;
 
@@ -55,6 +56,10 @@ window.storefront.context = ${JSON.stringify({
   doc: minifyApiDoc({ ...apiDoc }),
   timestamp: Date.now(),
 })};`;
+}
+if (isPreview) {
+  inlineClientJS += `
+window.isCMSPreview = true;`;
 }
 
 const inlineJSONLd = JSON.stringify({
