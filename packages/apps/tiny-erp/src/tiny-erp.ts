@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import '@cloudcommerce/firebase/lib/init';
-import { onRequest } from 'firebase-functions/v2/https';
+import functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import {
   createAppEventsFunction,
@@ -11,6 +11,7 @@ import handleApiEvent from './event-to-tiny';
 import handleTinyWebhook from './tiny-webhook';
 
 const { httpsFunctionOptions } = config.get();
+const { region } = httpsFunctionOptions;
 
 export const tinyerp = {
   onStoreEvent: createAppEventsFunction(
@@ -18,7 +19,8 @@ export const tinyerp = {
     handleApiEvent as ApiEventHandler,
   ),
 
-  webhook: onRequest(httpsFunctionOptions, (req, res) => {
-    handleTinyWebhook(req, res);
-  }),
+  webhook: functions
+    .region(region)
+    .runWith(httpsFunctionOptions)
+    .https.onRequest(handleTinyWebhook),
 };

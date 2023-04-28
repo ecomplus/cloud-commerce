@@ -12,23 +12,26 @@ export default async (req: Request, res: Response) => {
   const endpoint = url.split('/')[1];
 
   if (endpoint !== 'token') {
-    return res.sendStatus(404);
+    res.sendStatus(404);
+    return;
   }
   const firebaseAuthToken = req.headers.authorization?.split(' ')[1];
   if (!firebaseAuthToken) {
-    return res.sendStatus(401);
+    res.sendStatus(401);
+    return;
   }
   try {
     const authCustomerApi = await authenticateCustomer(firebaseAuthToken);
     if (authCustomerApi !== null) {
-      return res.send(authCustomerApi);
+      res.send(authCustomerApi);
+      return;
     }
-    return res.status(401).json({
+    res.status(401).json({
       status: 401,
       error: 'Invalid Firebase Auth token, unauthorized',
     });
   } catch (err) {
     logger.error(err);
-    return res.sendStatus((err as ApiError).statusCode || 500);
+    res.sendStatus((err as ApiError).statusCode || 500);
   }
 };

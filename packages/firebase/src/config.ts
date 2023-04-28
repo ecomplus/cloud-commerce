@@ -42,10 +42,12 @@ const webhooksAppEvents: ApiEventName[] = [
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
+  DEPLOY_MEMORY,
   SSR_DEPLOY_REGION,
   SSR_DEPLOY_MEMORY,
   SSR_DEPLOY_TIMEOUT_SECONDS,
   SSR_DEPLOY_MIN_INSTANCES,
+  MODULES_DEPLOY_MEMORY,
 } = process.env;
 
 let cmsSettingsFile = SETTINGS_FILEPATH && existsSync(SETTINGS_FILEPATH)
@@ -60,12 +62,16 @@ const mergeConfig = {
   hello: 'from @cloudcommerce/firebase',
   httpsFunctionOptions: {
     region: DEPLOY_REGION || 'southamerica-east1',
+    memory: (DEPLOY_MEMORY as '128MB' | '256MB' | '512MB' | '1GB' | '2GB') || '256MB',
   },
   ssrFunctionOptions: {
     region: SSR_DEPLOY_REGION || 'us-central1',
-    memory: (SSR_DEPLOY_MEMORY as '256MiB' | '512MiB' | '1GiB' | '2GiB') || '1GiB',
+    memory: (SSR_DEPLOY_MEMORY as '128MB' | '256MB' | '512MB' | '1GB' | '2GB' | '4GB') || '1GB',
     timeoutSeconds: SSR_DEPLOY_TIMEOUT_SECONDS ? Number(SSR_DEPLOY_TIMEOUT_SECONDS) : 10,
     minInstances: SSR_DEPLOY_MIN_INSTANCES ? Number(SSR_DEPLOY_MIN_INSTANCES) : 0,
+  },
+  modulesFunctionOptions: {
+    memory: (MODULES_DEPLOY_MEMORY as '256MiB' | '512MiB' | '1GiB' | '2GiB') || '512MiB',
   },
   apps: {
     discounts: {

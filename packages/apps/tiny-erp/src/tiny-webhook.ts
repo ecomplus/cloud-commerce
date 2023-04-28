@@ -31,7 +31,8 @@ export default async (req: Request, res: Response) => {
           ...application.hidden_data,
         };
         if (appData.tiny_api_token !== tinyToken) {
-          return res.sendStatus(401);
+          res.sendStatus(401);
+          return;
         }
         process.env.TINY_ERP_TOKEN = tinyToken;
       }
@@ -90,11 +91,13 @@ export default async (req: Request, res: Response) => {
             parseTinyItem(variacao.id ? variacao : variacao.variacao);
           });
         }
-        return res.status(200).send(mapeamentos);
+        res.status(200).send(mapeamentos);
+        return;
       }
-      return res.sendStatus(200);
+      res.sendStatus(200);
+      return;
     }
     logger.warn('< Invalid Tiny Webhook body', req.body);
   }
-  return res.sendStatus(403);
+  res.sendStatus(403);
 };
