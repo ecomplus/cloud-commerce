@@ -1,8 +1,10 @@
 /content
 /public
+/src/content
 /src/pages
 /src/layouts
 /src/main
 /src/components
 /src/scripts
 /src/assets
+/tina

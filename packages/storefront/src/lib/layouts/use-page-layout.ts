@@ -1,7 +1,7 @@
 import type { PageContext } from '@@sf/ssr-context';
 import type { CmsLayout } from '@@sf/cms';
-import type { Props as PitchBarProps } from '@@sf/composables/use-pitch-bar';
 import type { Props as UseShopHeaderProps } from '@@sf/composables/use-shop-header';
+import { parseLayoutContent } from '@@sf/composables/use-pitch-bar';
 
 type ShopHeaderProps = Omit<UseShopHeaderProps, 'header'> & {
   serviceLinks?: CmsLayout['service_links'],
@@ -13,14 +13,12 @@ export interface Props {
 
 const usePageLayout = async ({ pageContext }: Props) => {
   const { apiState, cms } = pageContext;
+  const cmsLayout = await cms('layout');
   const {
     header: cmsHeader,
     service_links: cmsServiceLinks,
-  } = await cms('layout');
-  const pitchBar: PitchBarProps = { slides: [] };
-  if (cmsHeader?.pitch_bar) {
-    pitchBar.slides = cmsHeader.pitch_bar;
-  }
+  } = cmsLayout;
+  const pitchBar = parseLayoutContent(cmsLayout);
   const shopHeader: ShopHeaderProps = {
     categories: apiState.categories || [],
     menuCategorySlugs: cmsHeader.inline_menu_categories?.featured,
@@ -38,4 +36,4 @@ export default usePageLayout;
 
 export { usePageLayout };
 
-export type { PitchBarProps, ShopHeaderProps };
+export type { ShopHeaderProps };
