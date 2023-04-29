@@ -2,7 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { CMS, CmsSettings, CmsHome } from './cms';
+import type { CMS, SettingsContent, CmsHome } from './cms';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 // @ts-ignore
@@ -14,10 +14,10 @@ type StorefrontConfig = {
   countryCode: BaseConfig['countryCode'],
   currency: BaseConfig['currency'],
   currencySymbol: BaseConfig['currencySymbol'],
-  domain: CmsSettings['domain'],
-  primaryColor: CmsSettings['primary_color'],
-  secondaryColor: CmsSettings['secondary_color'],
-  settings: CmsSettings,
+  domain: SettingsContent['domain'],
+  primaryColor: SettingsContent['primary_color'],
+  secondaryColor: SettingsContent['secondary_color'],
+  settings: SettingsContent,
   cms: CMS,
 };
 
@@ -171,7 +171,7 @@ type PageContext = Awaited<ReturnType<typeof loadPageContext>>;
 
 export type {
   StorefrontConfig,
-  CmsSettings,
+  SettingsContent,
   ApiPrefetchEndpoints,
   PageContext,
 };

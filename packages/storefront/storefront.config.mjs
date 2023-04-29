@@ -16,7 +16,7 @@ export default () => {
     settings,
     cms,
   } = getCMS();
-  config.set({ cmsSettings: settings });
+  config.set({ settingsContent: settings });
 
   let { storeId } = config.get();
   if (!storeId) {

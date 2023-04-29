@@ -1,4 +1,4 @@
-import type { CmsSettings } from '@cloudcommerce/types';
+import type { SettingsContent } from '@cloudcommerce/types';
 import Deepmerge from '@fastify/deepmerge';
 import {
   DEFAULT_LANG,
@@ -13,7 +13,7 @@ type BaseConfig = {
   currencySymbol: string,
   countryCode: string,
   storeId: number,
-  cmsSettings?: CmsSettings,
+  settingsContent?: SettingsContent,
 };
 
 // @ts-ignore
@@ -44,12 +44,12 @@ export default {
     };
   },
   set(config: Partial<BaseConfig>) {
-    const { cmsSettings } = config;
-    if (cmsSettings) {
-      config.lang = config.lang || cmsSettings.lang;
-      config.currency = config.currency || cmsSettings.currency;
-      config.currencySymbol = config.currencySymbol || cmsSettings.currency_symbol;
-      config.countryCode = config.currencySymbol || cmsSettings.country_code;
+    const { settingsContent } = config;
+    if (settingsContent) {
+      config.lang = config.lang || settingsContent.lang;
+      config.currency = config.currency || settingsContent.currency;
+      config.currencySymbol = config.currencySymbol || settingsContent.currency_symbol;
+      config.countryCode = config.currencySymbol || settingsContent.country_code;
     }
     self.config = deepmerge(self.config, config);
     if (config.storeId) {

@@ -23,17 +23,17 @@ const toCamelCase = (status: string) => {
 };
 
 const getStore = () => {
-  const { cmsSettings } = config.get();
+  const { settingsContent } = config.get();
   return {
-    lang: cmsSettings.lang,
-    domain: cmsSettings.domain,
-    name: cmsSettings.name,
-    corporate_name: cmsSettings.corporate_name || cmsSettings.name,
-    contact_email: cmsSettings.email,
+    lang: settingsContent.lang,
+    domain: settingsContent.domain,
+    name: settingsContent.name,
+    corporate_name: settingsContent.corporate_name || settingsContent.name,
+    contact_email: settingsContent.email,
     logo: {
-      url: `https://${cmsSettings.domain}${cmsSettings.logo}`,
+      url: `https://${settingsContent.domain}${settingsContent.logo}`,
     },
-    address: cmsSettings.address,
+    address: settingsContent.address,
   };
 };
 

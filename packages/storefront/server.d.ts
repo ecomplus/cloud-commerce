@@ -5,12 +5,12 @@ import type {
   BrandSet,
   CollectionSet,
 } from '@cloudcommerce/api/types';
-import type { CmsSettings } from './src/lib/cms';
+import type { SettingsContent } from './src/lib/cms';
 
 declare global {
   // eslint-disable-next-line
   var storefront: {
-    settings: Partial<CmsSettings>,
+    settings: Partial<SettingsContent>,
     context?: {
       resource: 'products',
       doc: ProductSet,

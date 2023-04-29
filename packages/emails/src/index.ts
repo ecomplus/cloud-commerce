@@ -55,7 +55,7 @@ const sendEmail = (
     html,
   } = emailData;
 
-  const { cmsSettings } = config.get();
+  const { settingsContent } = config.get();
 
   if (!templateId && !template && !html) {
     throw new Error('TemplateId, template or html not found');
@@ -72,14 +72,14 @@ const sendEmail = (
     sender,
     bcc,
     from: {
-      name: MAIL_SENDER_NAME || cmsSettings.name,
+      name: MAIL_SENDER_NAME || settingsContent.name,
       email: MAIL_SENDER,
     },
   };
 
   if (MAIL_REPLY_TO) {
     emailHeaders.replyTo = {
-      name: MAIL_SENDER_NAME || cmsSettings.name,
+      name: MAIL_SENDER_NAME || settingsContent.name,
       email: MAIL_REPLY_TO,
     };
   }

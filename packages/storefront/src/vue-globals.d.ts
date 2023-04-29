@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@vue/runtime-core';
 import type { FormatPercentage } from '@@sf/pages/_vue';
-import type { CmsSettings } from '@@sf/cms';
+import type { SettingsContent } from '@@sf/cms';
 
 type Dictionary = Omit<typeof import('@@i18n'),
   'i19StoreApiResources' | 'i19ApiActions' | 'i19TransactionsType' | 'i19StateRegister' |
@@ -19,7 +19,7 @@ declare module '@vue/runtime-core' {
     };
     $money: typeof import('@ecomplus/utils')['formatMoney'];
     $percentage: FormatPercentage;
-    $settings: Partial<CmsSettings>;
+    $settings: Partial<SettingsContent>;
     $context: typeof window.storefront.context;
   }
 

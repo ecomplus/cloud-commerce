@@ -24,7 +24,7 @@ interface Window {
   ECOM_CURRENCY_SYMBOL: string;
   ECOM_COUNTRY_CODE: string;
   storefront?: {
-    settings: import('./src/lib/cms').CmsSettings,
+    settings: import('./src/lib/cms').SettingsContent,
     context?: {
       resource: 'products',
       doc: Omit<import('@cloudcommerce/api/types').ProductSet, DocCleanupFields>,

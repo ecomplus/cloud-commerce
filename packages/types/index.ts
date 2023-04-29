@@ -79,7 +79,7 @@ type AppModuleBody = {
   application: Applications,
 };
 
-type CmsSettings = {
+type SettingsContent = {
   domain: string,
   name: string,
   description: string,
@@ -169,5 +169,5 @@ export type {
   CreateTransactionParams,
   CreateTransactionResponse,
   CheckoutBody,
-  CmsSettings,
+  SettingsContent,
 };

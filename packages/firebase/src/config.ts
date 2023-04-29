@@ -1,4 +1,4 @@
-import type { ApiEventName, CmsSettings } from '@cloudcommerce/types';
+import type { ApiEventName, SettingsContent } from '@cloudcommerce/types';
 import { join as joinPath } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import config, { BaseConfig } from '@cloudcommerce/config';
@@ -50,13 +50,13 @@ const {
   MODULES_DEPLOY_MEMORY,
 } = process.env;
 
-let cmsSettingsFile = SETTINGS_FILEPATH && existsSync(SETTINGS_FILEPATH)
+let settingsContentFile = SETTINGS_FILEPATH && existsSync(SETTINGS_FILEPATH)
   ? SETTINGS_FILEPATH
   : joinPath(process.cwd(), 'content/settings.json');
-if (!existsSync(cmsSettingsFile)) {
-  cmsSettingsFile = joinPath(process.cwd(), 'functions/ssr/content/settings.json');
+if (!existsSync(settingsContentFile)) {
+  settingsContentFile = joinPath(process.cwd(), 'functions/ssr/content/settings.json');
 }
-const cmsSettings: CmsSettings = JSON.parse(readFileSync(cmsSettingsFile, 'utf-8'));
+const settingsContent: SettingsContent = JSON.parse(readFileSync(settingsContentFile, 'utf-8'));
 
 const mergeConfig = {
   hello: 'from @cloudcommerce/firebase',
@@ -144,7 +144,7 @@ const mergeConfig = {
       events: webhooksAppEvents,
     },
   },
-  cmsSettings,
+  settingsContent,
 };
 config.set(mergeConfig);
 
