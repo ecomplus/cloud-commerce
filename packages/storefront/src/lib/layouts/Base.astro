@@ -10,15 +10,15 @@ export interface Props {
 }
 
 const { pageContext, title } = Astro.props as Props;
-const { cms } = pageContext;
-const { custom_code: cmsCustomCode } = await cms('layout');
+const { getContent } = pageContext;
+const { custom_code: customCodeContent } = await getContent('layout');
 ---
 
 <head>
   <BaseHead pageContext={pageContext} title={title} />
   <BaseStateJson pageContext={pageContext} />
-  {cmsCustomCode?.css && <style>{cmsCustomCode.css}</style>}
-  {cmsCustomCode?.html_head && <Fragment set:html={cmsCustomCode.html_head} />}
+  {customCodeContent?.css && <style>{customCodeContent.css}</style>}
+  {customCodeContent?.html_head && <Fragment set:html={customCodeContent.html_head} />}
   <slot name="base-head-scripts">
     <script src="../scripts/modules-info-preset"></script>
   </slot>
@@ -26,7 +26,7 @@ const { custom_code: cmsCustomCode } = await cms('layout');
 </head>
 <BaseBody pageContext={pageContext}>
   <slot />
-  {cmsCustomCode?.html_body && <Fragment set:html={cmsCustomCode.html_body} />}
+  {customCodeContent?.html_body && <Fragment set:html={customCodeContent.html_body} />}
   <slot name="base-body-scripts">
     <script src="../scripts/session-utm"></script>
   </slot>

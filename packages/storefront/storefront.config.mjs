@@ -14,7 +14,7 @@ export default () => {
     primaryColor,
     secondaryColor,
     settings,
-    cms,
+    getContent,
   } = getCMS();
   config.set({ settingsContent: settings });
 
@@ -54,6 +54,6 @@ export default () => {
     primaryColor,
     secondaryColor,
     settings,
-    cms,
+    getContent,
   };
 };

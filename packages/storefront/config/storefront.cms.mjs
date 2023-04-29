@@ -12,12 +12,12 @@ export default () => {
   process.env.STOREFRONT_BASE_DIR = baseDir;
   const dirContent = resolvePath(baseDir, 'content');
 
-  const cmsCache = {};
-  const cms = (filename) => {
+  const contentCache = {};
+  const getContent = (filename) => {
     // MUST be sync for 'settings'
     // Async with other content to support external CMS integration
     const loadLocal = () => {
-      let content = cmsCache[filename];
+      let content = contentCache[filename];
       if (!content) {
         if (filename.endsWith('/')) {
           const dirColl = resolvePath(dirContent, filename);
@@ -32,7 +32,7 @@ export default () => {
         content = fs.existsSync(filepath)
           ? JSON.parse(fs.readFileSync(filepath, 'utf8'))
           : null;
-        cmsCache[filename] = content;
+        contentCache[filename] = content;
       }
       return filename === 'settings'
         ? content
@@ -54,7 +54,7 @@ export default () => {
 
   let settings;
   try {
-    settings = cms('settings');
+    settings = getContent('settings');
   } catch (e) {
     settings = {};
   }
@@ -67,6 +67,6 @@ export default () => {
     primaryColor,
     secondaryColor,
     settings,
-    cms,
+    getContent,
   };
 };

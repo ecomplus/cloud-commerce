@@ -2,7 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { CMS, SettingsContent, HomeContent } from './content';
+import type { ContentGetter, SettingsContent, HomeContent } from './content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 // @ts-ignore
@@ -18,7 +18,7 @@ type StorefrontConfig = {
   primaryColor: SettingsContent['primary_color'],
   secondaryColor: SettingsContent['secondary_color'],
   settings: SettingsContent,
-  cms: CMS,
+  getContent: ContentGetter,
 };
 
 const emitter = new EventEmitter();
@@ -50,10 +50,10 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
 };
 
 const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
-  cmsCollection,
+  contentCollection,
   apiPrefetchEndpoints = globalThis.api_prefetch_endpoints,
 }: {
-  cmsCollection?: string;
+  contentCollection?: string;
   apiPrefetchEndpoints?: ApiPrefetchEndpoints;
 } = {}) => {
   const startedAt = Date.now();
@@ -82,12 +82,12 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint, apiOptions)),
   ];
   if (isHomepage) {
-    cmsContent = await config.cms('home');
+    cmsContent = await config.getContent('home');
   } else {
     const { slug } = Astro.params;
     if (slug) {
-      if (cmsCollection) {
-        cmsContent = await config.cms(`${cmsCollection}/${slug}`);
+      if (contentCollection) {
+        cmsContent = await config.getContent(`${contentCollection}/${slug}`);
       } else {
         apiFetchings[0] = api.get(`slugs/${slug}`, apiOptions);
       }
@@ -153,7 +153,6 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     apiResource,
     apiDoc,
     apiState,
-    getContent: config.cms,
     isPreview,
   };
   emitter.emit('load', pageContext);

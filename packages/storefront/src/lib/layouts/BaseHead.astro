@@ -22,16 +22,16 @@ const {
   domain,
   primaryColor,
   settings,
-  cms,
+  getContent,
 } = Astro.props.pageContext;
 
-const state = apiDoc || cmsContent || {};
+const state: Record<string, any> = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;
 const description = state.meta_description || state.short_description || settings.description;
 const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
 const shortcutIcon = settings.icon ? getIconUrl(192) : null;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
-const { metatags: cmsMetatags } = await cms('layout');
+const { metatags: metatagsContent } = await getContent('layout');
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
 let ogImage: string | undefined;
 if (apiDoc) {
@@ -39,9 +39,9 @@ if (apiDoc) {
   ogImage = picture && picture.url;
 }
 if (!ogImage) {
-  if (cmsMetatags?.og_image) {
-    ogImage = cmsMetatags.og_image.charAt(0) === '/'
-      ? `https://${domain}${cmsMetatags.og_image}` : cmsMetatags.og_image;
+  if (metatagsContent?.og_image) {
+    ogImage = metatagsContent.og_image.charAt(0) === '/'
+      ? `https://${domain}${metatagsContent.og_image}` : metatagsContent.og_image;
   }
 } else {
   ogImage = ogImage.replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com');
@@ -69,11 +69,11 @@ if (!ogImage) {
 <meta property="og:type" content="website">
 <meta property="og:locale" content={ogLocale}>
 {ogImage && <meta property="og:image" content={ogImage} />}
-{cmsMetatags?.fb_app_id &&
-  <meta property="fb:app_id" content={cmsMetatags.fb_app_id} />}
+{metatagsContent?.fb_app_id &&
+  <meta property="fb:app_id" content={metatagsContent.fb_app_id} />}
 <meta name="twitter:card" content="summary">
-{cmsMetatags?.twitter_username &&
-  <meta name="twitter:site" content={cmsMetatags.twitter_username} />}
+{metatagsContent?.twitter_username &&
+  <meta name="twitter:site" content={metatagsContent.twitter_username} />}
 <meta name="ecom-store-id" content={String(storeId)}>
 <script>
   import { registerSW } from 'virtual:pwa-register';

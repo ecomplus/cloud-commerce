@@ -13,11 +13,11 @@ export interface Props {
 const useHeroSection = async ({ pageContext }: Props) => {
   const { cmsContent } = pageContext;
   const heroSlider: HeroSliderProps = { slides: [] };
-  const cmsHero: HomeContent['hero'] | undefined = cmsContent?.hero;
-  if (cmsHero) {
-    heroSlider.autoplay = cmsHero.autoplay;
+  const heroContent: HomeContent['hero'] | undefined = cmsContent?.hero;
+  if (heroContent) {
+    heroSlider.autoplay = heroContent.autoplay;
     const now = Date.now();
-    cmsHero.slides?.forEach(({
+    heroContent.slides?.forEach(({
       img,
       start,
       end,

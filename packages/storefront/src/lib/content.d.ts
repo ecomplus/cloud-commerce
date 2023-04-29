@@ -13,7 +13,7 @@ export type ContentFilenames = 'settings'
   | `${string}/`
   | `${string}/${string}`;
 
-export type CMS = <T extends ContentFilenames>(filename: T) =>
+export type ContentGetter = <T extends ContentFilenames>(filename: T) =>
   T extends `${string}/` ? Promise<Array<string>> :
   T extends 'settings' ? SettingsContent :
   T extends 'layout' ? Promise<LayoutContent> :
