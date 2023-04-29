@@ -58,6 +58,7 @@ const _vitePWAOptions = {
     navigateFallback: '/404',
     globDirectory: 'dist/client',
     globPatterns: ['**/!(cms*|admin*).{js,css}'],
+    globIgnores: ['admin/**/*'],
     ignoreURLParametersMatching: [/.*/],
     runtimeCaching: [{
       urlPattern: /^\/$/,
