@@ -1,10 +1,10 @@
 import type { PageContext } from '@@sf/ssr-context';
-import type { CmsLayout } from '@@sf/cms';
+import type { LayoutContent } from '@@sf/content';
 import type { Props as UseShopHeaderProps } from '@@sf/composables/use-shop-header';
 import { parseLayoutContent } from '@@sf/composables/use-pitch-bar';
 
 type ShopHeaderProps = Omit<UseShopHeaderProps, 'header'> & {
-  serviceLinks?: CmsLayout['service_links'],
+  serviceLinks?: LayoutContent['service_links'],
 };
 
 export interface Props {

@@ -1,5 +1,5 @@
 import type { PageContext } from '@@sf/ssr-context';
-import type { CmsHome } from '@@sf/cms';
+import type { HomeContent } from '@@sf/content';
 import type { Props as UseHeroSliderProps } from '@@sf/composables/use-hero-slider';
 
 export type HeroSliderProps = Omit<UseHeroSliderProps, 'slides'> & {
@@ -13,7 +13,7 @@ export interface Props {
 const useHeroSection = async ({ pageContext }: Props) => {
   const { cmsContent } = pageContext;
   const heroSlider: HeroSliderProps = { slides: [] };
-  const cmsHero: CmsHome['hero'] | undefined = cmsContent?.hero;
+  const cmsHero: HomeContent['hero'] | undefined = cmsContent?.hero;
   if (cmsHero) {
     heroSlider.autoplay = cmsHero.autoplay;
     const now = Date.now();

@@ -1,11 +1,11 @@
 import type { SettingsContent as _SettingsContent } from '@cloudcommerce/types';
 
 export type SettingsContent = _SettingsContent &
-  Omit<typeof import('content/settings.json'), keyof _SettingsContent>;
+  Omit<typeof import('content/settings.json'), Exclude<keyof _SettingsContent, 'metafields'>>;
 
-export type CmsLayout = typeof import('content/layout.json');
+export type LayoutContent = typeof import('content/layout.json');
 
-export type CmsHome = typeof import('content/home.json');
+export type HomeContent = typeof import('content/home.json');
 
 export type ContentFilenames = 'settings'
   | 'layout'
@@ -16,6 +16,6 @@ export type ContentFilenames = 'settings'
 export type CMS = <T extends ContentFilenames>(filename: T) =>
   T extends `${string}/` ? Promise<Array<string>> :
   T extends 'settings' ? SettingsContent :
-  T extends 'layout' ? Promise<CmsLayout> :
-  T extends 'home' ? Promise<CmsHome> :
+  T extends 'layout' ? Promise<LayoutContent> :
+  T extends 'home' ? Promise<HomeContent> :
   Promise<Record<string, any> | null>;

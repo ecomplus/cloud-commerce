@@ -1,4 +1,4 @@
-import type { CmsLayout } from '@@sf/cms';
+import type { LayoutContent } from '@@sf/content';
 import { computed } from 'vue';
 import { parseShippingPhrase } from '@@sf/state/modules-info';
 import { useCMSPreview } from '@@sf/state/use-cms-preview';
@@ -11,7 +11,7 @@ export interface Props {
   }>;
 }
 
-const parseLayoutContent = (layoutContent: CmsLayout) => {
+const parseLayoutContent = (layoutContent: LayoutContent) => {
   const pitchBar: Props = { slides: [] };
   if (layoutContent.header?.pitch_bar) {
     pitchBar.slides = layoutContent.header.pitch_bar;

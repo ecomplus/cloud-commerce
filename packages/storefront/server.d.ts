@@ -5,7 +5,7 @@ import type {
   BrandSet,
   CollectionSet,
 } from '@cloudcommerce/api/types';
-import type { SettingsContent } from './src/lib/cms';
+import type { SettingsContent } from './src/lib/content';
 
 declare global {
   // eslint-disable-next-line

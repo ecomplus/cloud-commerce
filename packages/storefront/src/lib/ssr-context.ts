@@ -2,7 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { CMS, SettingsContent, CmsHome } from './cms';
+import type { CMS, SettingsContent, HomeContent } from './content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 // @ts-ignore
@@ -65,7 +65,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.storefront.settings = config.settings;
-  let cmsContent: CmsHome | Record<string, any> | null | undefined;
+  let cmsContent: HomeContent | Record<string, any> | null | undefined;
   let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: {

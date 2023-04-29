@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@vue/runtime-core';
 import type { FormatPercentage } from '@@sf/pages/_vue';
-import type { SettingsContent } from '@@sf/cms';
+import type { SettingsContent } from '@@sf/content';
 
 type Dictionary = Omit<typeof import('@@i18n'),
   'i19StoreApiResources' | 'i19ApiActions' | 'i19TransactionsType' | 'i19StateRegister' |
