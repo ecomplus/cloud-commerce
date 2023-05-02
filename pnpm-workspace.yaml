@@ -3,8 +3,6 @@ packages:
   - 'packages/apps/*'
   - 'docs'
   - 'store'
-  - 'store/*'
   - 'store/functions/*'
   - 'ecomplus-stores/monocard'
-  - 'ecomplus-stores/monocard/*'
   - 'ecomplus-stores/monocard/functions/*'

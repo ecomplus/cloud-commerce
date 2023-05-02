@@ -47,8 +47,8 @@ importers:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.16.3)(typescript@5.0.4)
       turbo:
-        specifier: 1.6.3
-        version: 1.6.3
+        specifier: ^1.9.3
+        version: 1.9.3
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
@@ -64,6 +64,125 @@ importers:
       zx:
         specifier: ^7.2.1
         version: 7.2.1
+
+  ecomplus-stores/monocard:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.10.0
+        version: link:../../packages/cli
+
+  ecomplus-stores/monocard/functions/core:
+    dependencies:
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../../packages/firebase
+
+  ecomplus-stores/monocard/functions/events:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.10.0
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../../packages/firebase
+
+  ecomplus-stores/monocard/functions/modules:
+    dependencies:
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.10.0
+        version: link:../../../../packages/modules
+
+  ecomplus-stores/monocard/functions/passport:
+    dependencies:
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.10.0
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/monocard/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.10.0
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.10.0
+        version: link:../../../../packages/ssr
+      '@vueuse/motion':
+        specifier: 2.0.0-beta.22
+        version: 2.0.0-beta.22
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.10.0
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.10.0
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.10.0
+        version: link:../../../../packages/types
+      '@fontsource/inter':
+        specifier: ^4.5.15
+        version: 4.5.15
+      '@iconify-json/ri':
+        specifier: ^1.1.8
+        version: 1.1.8
+      '@iconify-json/wpf':
+        specifier: ^1.1.4
+        version: 1.1.4
+      lottie-web:
+        specifier: ^5.11.0
+        version: 5.11.0
+      lozad:
+        specifier: ^1.16.0
+        version: 1.16.0
+
+  ecomplus-stores/monocard/storefront:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.10.0
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.10.0
+        version: link:../../../packages/ssr
+      '@vueuse/motion':
+        specifier: 2.0.0-beta.22
+        version: 2.0.0-beta.22
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.10.0
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.10.0
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.10.0
+        version: link:../../../packages/types
+      '@fontsource/inter':
+        specifier: ^4.5.15
+        version: 4.5.15
+      '@iconify-json/ri':
+        specifier: ^1.1.8
+        version: 1.1.8
+      '@iconify-json/wpf':
+        specifier: ^1.1.4
+        version: 1.1.4
+      lottie-web:
+        specifier: ^5.11.0
+        version: 5.11.0
+      lozad:
+        specifier: ^1.16.0
+        version: 1.16.0
 
   packages/__skeleton:
     dependencies:
@@ -957,6 +1076,89 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.10.0
+        version: link:../packages/cli
+
+  store/functions/core:
+    dependencies:
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../packages/firebase
+
+  store/functions/events:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.10.0
+        version: link:../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../packages/firebase
+
+  store/functions/modules:
+    dependencies:
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.10.0
+        version: link:../../../packages/modules
+
+  store/functions/passport:
+    dependencies:
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.10.0
+        version: link:../../../packages/passport
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.10.0
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.10.0
+        version: link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.10.0
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.10.0
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.10.0
+        version: link:../../../packages/types
+
+  store/storefront:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.10.0
+        version: link:../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.10.0
+        version: link:../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.10.0
+        version: link:../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.10.0
+        version: link:../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.10.0
+        version: link:../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.10.0
+        version: link:../../packages/types
 
 packages:
 
@@ -3881,6 +4083,10 @@ packages:
       - '@types/react'
     dev: false
 
+  /@fontsource/inter@4.5.15:
+    resolution: {integrity: sha512-FzleM9AxZQK2nqsTDtBiY0PMEVWvnKnuu2i09+p6DHvrHsuucoV2j0tmw+kAT3L4hvsLdAIDv6MdGehsPIdT+Q==}
+    dev: true
+
   /@formatjs/ecma402-abstract@1.14.3:
     resolution: {integrity: sha512-SlsbRC/RX+/zg4AApWIFNDdkLtFbkq3LNoZWXZCE/nHVKqoIJyaoQyge/I0Y38vLxowUn9KTtXgusLD91+orbg==}
     dependencies:
@@ -4494,9 +4700,20 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/ri@1.1.8:
+    resolution: {integrity: sha512-yykDISjVwFxvuQ/XJhko8gf848DTUlxa/Sa71iVJ5xWgMzCN7gC5cAKs17RNUufZadAiiauK2odX5hlUkR3CNQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/wpf@1.1.4:
+    resolution: {integrity: sha512-IGyPNDvOwr17GwjOPo0QzDvVeaKRyLkZcwmLYE7rMv8yzvD1HDzo7+o97wGOg2TkLGsdYuuHkf+wz1MBQU3akQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.5:
     resolution: {integrity: sha512-6MvDI+I6QMvXn5rK9KQGdpEE4mmLTcuQdLZEiX5N+uZB+vc4Yw9K1OtnOgkl8mp4d9X0UrILREyZgF1NUwUt+Q==}
@@ -9701,12 +9918,56 @@ packages:
       - vue
     dev: false
 
+  /@vueuse/core@9.13.0:
+    resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 9.13.0
+      '@vueuse/shared': 9.13.0
+      vue-demi: 0.14.0(vue@3.2.47)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/metadata@10.1.0:
     resolution: {integrity: sha512-cM28HjDEw5FIrPE9rgSPFZvQ0ZYnOLAOr8hl1XM6tFl80U3WAR5ROdnAqiYybniwP5gt9MKKAJAqd/ab2aHkqg==}
     dev: false
 
+  /@vueuse/metadata@9.13.0:
+    resolution: {integrity: sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==}
+    dev: false
+
+  /@vueuse/motion@2.0.0-beta.22:
+    resolution: {integrity: sha512-xPRm8i2WVhLQW4TgAC4z5Os4WOQZ8O2IwBIlWLf14W8cluQPiMcZ72miLjTknPVg1S7/vGTcZzSp2L2HDxoipQ==}
+    peerDependencies:
+      '@nuxt/kit': ^3.0.0-rc.9
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+    dependencies:
+      '@vueuse/core': 9.13.0
+      '@vueuse/shared': 9.13.0
+      csstype: 3.1.2
+      framesync: 6.1.2
+      popmotion: 11.0.5
+      style-value-types: 5.1.2
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/shared@10.1.0(vue@3.2.47):
     resolution: {integrity: sha512-2X52ogu12i9DkKOQ01yeb/BKg9UO87RNnpm5sXkQvyORlbq8ONS5l39MYkjkeVWWjdT0teJru7a2S41dmHmqjQ==}
+    dependencies:
+      vue-demi: 0.14.0(vue@3.2.47)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared@9.13.0:
+    resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
     dependencies:
       vue-demi: 0.14.0(vue@3.2.47)
     transitivePeerDependencies:
@@ -13231,6 +13492,12 @@ packages:
       map-cache: 0.2.2
     dev: false
 
+  /framesync@6.1.2:
+    resolution: {integrity: sha512-jBTqhX6KaQVDyus8muwZbBeGGP0XgujBRbQ7gM7BRdS3CadCZIHiawyzYLnafYcvZIh5j8WE7cxZKFn7dXhu9g==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
@@ -13962,6 +14229,10 @@ packages:
   /heap-js@2.2.0:
     resolution: {integrity: sha512-G3uM72G9F/zo9Hph/T7m4ZZVlVu5bx2f5CiCS78TBHz2mNIXnB5KRdEEYssXZJ7ldLDqID29bZ1D5ezCKQD2Zw==}
     engines: {node: '>=10.0.0'}
+    dev: false
+
+  /hey-listen@1.0.8:
+    resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
 
   /history@5.3.0:
@@ -15398,6 +15669,10 @@ packages:
       js-tokens: 4.0.0
     dev: false
 
+  /lottie-web@5.11.0:
+    resolution: {integrity: sha512-9vSt0AtdOH98GKDXwD5LPfFg9Pcmxt5+1BllAbudKM5iqPxpJnJUfuGaP45OyudDrESCOBgsjnntVUTygBNlzw==}
+    dev: true
+
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
     dependencies:
@@ -15415,6 +15690,10 @@ packages:
     dependencies:
       tslib: 2.5.0
     dev: false
+
+  /lozad@1.16.0:
+    resolution: {integrity: sha512-JBr9WjvEFeKoyim3svo/gsQPTkgG/mOHJmDctZ/+U9H3ymUuvEkqpn8bdQMFsvTMcyRJrdJkLv0bXqGm0sP72w==}
+    dev: true
 
   /lru-cache@4.0.2:
     resolution: {integrity: sha512-uQw9OqphAGiZhkuPlpFGmdTU2tEuhxTourM/19qGJrxBPHAr/f8BT1a0i/lOclESnGatdJG/UCkP9kZB/Lh1iw==}
@@ -17341,6 +17620,15 @@ packages:
       mlly: 1.2.0
       pathe: 1.1.0
     dev: true
+
+  /popmotion@11.0.5:
+    resolution: {integrity: sha512-la8gPM1WYeFznb/JqF4GiTkRRPZsfaj2+kCxqQgr2MJylMmIKUwBfWW8Wa5fml/8gmtlD5yI01MP1QCZPWmppA==}
+    dependencies:
+      framesync: 6.1.2
+      hey-listen: 1.0.8
+      style-value-types: 5.1.2
+      tslib: 2.4.0
+    dev: false
 
   /posix-character-classes@0.1.1:
     resolution: {integrity: sha512-xTgYBc3fuo7Yt7JbiuFxSYGToMoz8fLoE6TC9Wx1P/u+LfeThMOAqmuyECnlBaaJb+u1m9hHiXUEtwW4OzfUJg==}
@@ -19749,6 +20037,13 @@ packages:
     resolution: {integrity: sha512-78Jv8kYJdjbvRwwijtCevYADfsI0lGzYJe4mMFdceO8l75DFFDoqBhR1jVDicDRRaX4//g1u9wKeo+ztc2h1Rw==}
     dev: false
 
+  /style-value-types@5.1.2:
+    resolution: {integrity: sha512-Vs9fNreYF9j6W2VvuDTP7kepALi7sk0xtk2Tu8Yxi9UoajJdEVpNpCov0HsLTqXvNGKX+Uv09pkozVITi1jf3Q==}
+    dependencies:
+      hey-listen: 1.0.8
+      tslib: 2.4.0
+    dev: false
+
   /sucrase@3.32.0:
     resolution: {integrity: sha512-ydQOU34rpSyj2TGyz4D2p8rbktIOZ8QY9s+DGLvFU1i5pWJE8vkpruCjGCMHsdXwnD7JDcS+noSwM/a7zyNFDQ==}
     engines: {node: '>=8'}
@@ -20311,65 +20606,65 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /turbo-darwin-64@1.6.3:
-    resolution: {integrity: sha512-QmDIX0Yh1wYQl0bUS0gGWwNxpJwrzZU2GIAYt3aOKoirWA2ecnyb3R6ludcS1znfNV2MfunP+l8E3ncxUHwtjA==}
+  /turbo-darwin-64@1.9.3:
+    resolution: {integrity: sha512-0dFc2cWXl82kRE4Z+QqPHhbEFEpUZho1msHXHWbz5+PqLxn8FY0lEVOHkq5tgKNNEd5KnGyj33gC/bHhpZOk5g==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.6.3:
-    resolution: {integrity: sha512-75DXhFpwE7CinBbtxTxH08EcWrxYSPFow3NaeFwsG8aymkWXF+U2aukYHJA6I12n9/dGqf7yRXzkF0S/9UtdyQ==}
+  /turbo-darwin-arm64@1.9.3:
+    resolution: {integrity: sha512-1cYbjqLBA2zYE1nbf/qVnEkrHa4PkJJbLo7hnuMuGM0bPzh4+AnTNe98gELhqI1mkTWBu/XAEeF5u6dgz0jLNA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.6.3:
-    resolution: {integrity: sha512-O9uc6J0yoRPWdPg9THRQi69K6E2iZ98cRHNvus05lZbcPzZTxJYkYGb5iagCmCW/pq6fL4T4oLWAd6evg2LGQA==}
+  /turbo-linux-64@1.9.3:
+    resolution: {integrity: sha512-UuBPFefawEwpuxh5pM9Jqq3q4C8M0vYxVYlB3qea/nHQ80pxYq7ZcaLGEpb10SGnr3oMUUs1zZvkXWDNKCJb8Q==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.6.3:
-    resolution: {integrity: sha512-dCy667qqEtZIhulsRTe8hhWQNCJO0i20uHXv7KjLHuFZGCeMbWxB8rsneRoY+blf8+QNqGuXQJxak7ayjHLxiA==}
+  /turbo-linux-arm64@1.9.3:
+    resolution: {integrity: sha512-vUrNGa3hyDtRh9W0MkO+l1dzP8Co2gKnOVmlJQW0hdpOlWlIh22nHNGGlICg+xFa2f9j4PbQlWTsc22c019s8Q==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.6.3:
-    resolution: {integrity: sha512-lKRqwL3mrVF09b9KySSaOwetehmGknV9EcQTF7d2dxngGYYX1WXoQLjFP9YYH8ZV07oPm+RUOAKSCQuDuMNhiA==}
+  /turbo-windows-64@1.9.3:
+    resolution: {integrity: sha512-0BZ7YaHs6r+K4ksqWus1GKK3W45DuDqlmfjm/yuUbTEVc8szmMCs12vugU2Zi5GdrdJSYfoKfEJ/PeegSLIQGQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.6.3:
-    resolution: {integrity: sha512-BXY1sDPEA1DgPwuENvDCD8B7Hb0toscjus941WpL8CVd10hg9pk/MWn9CNgwDO5Q9ks0mw+liDv2EMnleEjeNA==}
+  /turbo-windows-arm64@1.9.3:
+    resolution: {integrity: sha512-QJUYLSsxdXOsR1TquiOmLdAgtYcQ/RuSRpScGvnZb1hY0oLc7JWU0llkYB81wVtWs469y8H9O0cxbKwCZGR4RQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.6.3:
-    resolution: {integrity: sha512-FtfhJLmEEtHveGxW4Ye/QuY85AnZ2ZNVgkTBswoap7UMHB1+oI4diHPNyqrQLG4K1UFtCkjOlVoLsllUh/9QRw==}
+  /turbo@1.9.3:
+    resolution: {integrity: sha512-ID7mxmaLUPKG/hVkp+h0VuucB1U99RPCJD9cEuSEOdIPoSIuomcIClEJtKamUsdPLhLCud+BvapBNnhgh58Nzw==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.6.3
-      turbo-darwin-arm64: 1.6.3
-      turbo-linux-64: 1.6.3
-      turbo-linux-arm64: 1.6.3
-      turbo-windows-64: 1.6.3
-      turbo-windows-arm64: 1.6.3
+      turbo-darwin-64: 1.9.3
+      turbo-darwin-arm64: 1.9.3
+      turbo-linux-64: 1.9.3
+      turbo-linux-arm64: 1.9.3
+      turbo-windows-64: 1.9.3
+      turbo-windows-arm64: 1.9.3
     dev: true
 
   /tweetnacl@0.14.5:
