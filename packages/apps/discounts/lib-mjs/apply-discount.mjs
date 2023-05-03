@@ -352,7 +352,7 @@ export default async ({ params, application }) => {
           ) {
             // list orders to check discount usage limits
             // eslint-disable-next-line prefer-template
-            const endpoint = 'orders?fields=_id'
+            const endpoint = 'orders?fields=status'
               + `&extra_discount.app.label${(discountRule.case_insensitive ? '%=' : '=')}`
               + encodeURIComponent(label);
             const usageLimits = [{
@@ -372,7 +372,9 @@ export default async ({ params, application }) => {
                   // send Store API request to list orders with filters
                   // eslint-disable-next-line no-await-in-loop
                   const { data } = await api.get(`${endpoint}${query}`);
-                  countOrders = data.result.length;
+                  countOrders = data.result
+                    .filter(({ status }) => status !== 'cancelled')
+                    .length;
                 } catch (err) {
                   return {
                     error: 'CANT_CHECK_USAGE_LIMITS',
