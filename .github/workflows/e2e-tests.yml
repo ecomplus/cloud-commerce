@@ -1,0 +1,76 @@
+name: Deploy
+
+on:
+  pull_request:
+    paths:
+      - "packages/apps/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/e2e-tests.yml"
+
+jobs:
+  deploy:
+    name: Tests Apps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.3.0
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - uses: actions/cache@v3
+        name: Setup npm cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install firebase global
+        run: npm i -g firebase-tools@11.22.0
+
+      - name: Clone store repository
+        run: git clone https://github.com/ecomplus/store
+
+      - name: Install and test store
+        env:
+          ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
+          ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
+          ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+        run: |
+          cd store && npm i && bash scripts/install.sh
+          cd storefront && npm run build && cd ..
+          npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500 && npm run serve &
+          sleep 50 
+          curl -X GET -I http://localhost:5000/api/modules/list_payments/schema
+          pkill npm
