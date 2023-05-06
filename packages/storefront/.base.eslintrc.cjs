@@ -90,4 +90,12 @@ module.exports = {
       { ignoreEOLComments: true },
     ],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.mts', '*.cts', '*.tsx', '*.vue', '*.astro'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
 };
