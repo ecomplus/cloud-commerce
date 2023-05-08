@@ -43,8 +43,8 @@
     "@headlessui/vue": "^1.7.13",
     "@iconify-json/fa6-brands": "^1.1.11",
     "@iconify-json/heroicons": "^1.1.10",
-    "@iconify-json/logos": "^1.1.25",
-    "@tinacms/cli": "^1.5.9",
+    "@iconify-json/logos": "^1.1.27",
+    "@tinacms/cli": "^1.5.11",
     "@vite-pwa/astro": "^0.0.5",
     "@vueuse/core": "10.1.0",
     "astro": "2.3.3",
@@ -59,14 +59,14 @@
     "semver": "^7.5.0",
     "sharp": "^0.32.1",
     "tailwindcss": "^3.3.2",
-    "tinacms": "^1.5.2",
-    "unocss": "^0.51.8",
-    "vite": "^4.3.3",
+    "tinacms": "^1.5.4",
+    "unocss": "^0.51.12",
+    "vite": "^4.3.5",
     "vite-plugin-pwa": "^0.14.7",
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.5",
+    "@babel/core": "^7.21.8",
     "@cloudcommerce/types": "workspace:*"
   }
 }
