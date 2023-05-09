@@ -3,7 +3,6 @@ name: Deploy
 on:
   pull_request:
     paths:
-      - ".github/workflows/e2e-tests.yml"
       - "packages/**"
       - "!packages/storefront"
       - "!packages/passort"
