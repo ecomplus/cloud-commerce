@@ -3,26 +3,50 @@ name: Deploy
 on:
   pull_request:
     paths:
-      - "packages/apps/**"
+      - ".github/workflows/e2e-tests.yml"
+      - "packages/**"
+      - "!packages/storefront"
+      - "!packages/passort"
+      - "!packages/!18n"
+      - "!packages/__skeleton"
   push:
     branches:
       - main
     paths:
       - ".github/workflows/e2e-tests.yml"
+      - "packages/**"
+      - "!packages/storefront"
+      - "!packages/passort"
+      - "!packages/!18n"
+      - "!packages/__skeleton"
 
 jobs:
-  deploy:
+  setup:
     name: Tests Apps
     runs-on: ubuntu-latest
+    if: |
+      github.event.head_commit.message != 'Initial commit' &&
+      !contains(github.event.head_commit.message, '[skip ci]')
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Checkout Store
+        uses: actions/checkout@v3
+        with:
+          repository: ecomplus/store
+          path: store
+
+      # check which files have been updated
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.3.0
+          node-version: 18
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -31,46 +55,110 @@ jobs:
           version: 7
           run_install: false
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
+      - name: Get version
+        id: get-version
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+          json=$(cat package.json)
+          version=$(echo "$json" | jq .version)
+          name=$(echo "$json" | jq .name)
+          echo "VERSION=${name//\"/}-${version//\"/}" >> $GITHUB_OUTPUT
+
+      - name: Install firebase-tools
+        run: |
+          npm install -g firebase-tools
 
       - uses: actions/cache@v3
-        name: Setup pnpm cache
+        name: Setup cache build
+        env:
+          cache-name: packages-build-${{ steps.get-version.outputs.VERSION }}
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: |
+            node_modules/**
+            packages/**
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-build-${{ env.cache-name }}
 
-      - uses: actions/cache@v3
-        name: Setup npm cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      # If you can't find the libraries then install and compile everything
+      # and check if the update was in any app, module or ssr.
+      - name: build and create npm link
+        run: |
+          if [ ! -d packages/modules/lib/ ]; then
+            pnpm install --no-frozen-lockfile 
+            pnpm build
+          fi
 
-      - name: Install dependencies
-        run: pnpm install
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ "$file" == *"packages/modules"* ]]; then
+              cd packages/modules
+              npm link
+              cd ../../
 
-      - name: Install firebase global
-        run: npm i -g firebase-tools@11.22.0
+              cd packages/firebase
+              npm link
+              cd ../../
 
-      - name: Clone store repository
-        run: git clone https://github.com/ecomplus/store
+              cd store/functions/modules
+              npm link --save @cloudcommerce/modules
+              npm link --save @cloudcommerce/firebase
+              cd ../../../
+            fi
 
-      - name: Install and test store
+            if [[ "$file" == *"packages/apps"* ]]; then
+              cd packages/modules
+              npm link
+              cd ../../
+
+              cd packages/firebase
+              npm link
+              cd ../../
+
+              cd packages/events
+              npm link
+              cd ../../
+              
+              cd store/functions/modules
+              npm link --save @cloudcommerce/modules
+              npm link --save @cloudcommerce/firebase
+              cd ../../../
+
+              cd store/functions/events
+              npm link --save @cloudcommerce/events
+              npm link --save @cloudcommerce/firebase
+              cd ../../../
+
+            fi
+
+            if [[ "$file" == *"packages/ssr"* ]]; then
+              cd packages/ssr
+              npm link
+              cd ../../
+
+              cd store/functions/ssr
+              npm link --save @cloudcommerce/ssr
+              npm link --save @cloudcommerce/firebase
+              npm link --save @cloudcommerce/api
+              cd ../../../
+            fi
+          done
+
+        # TODO:
+        # other changes that need to be compiled and changed in the store
+
+      - name: Install and build store
         env:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: |
-          cd store && npm i && bash scripts/install.sh
+          cd store
+          npm i && bash scripts/install.sh
+          npm run build
           cd storefront && npm run build && cd ..
-          npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500 && npm run serve &
-          sleep 50 
+          npx firebase --project=test emulators:start --only functions,hosting,firestore &
+
+      - name: Tests store requests
+        run: |
+          sleep 10
           curl -X GET -I http://localhost:5000/api/modules/list_payments/schema
-          pkill npm
