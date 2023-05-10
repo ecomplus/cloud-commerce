@@ -83,19 +83,29 @@ jobs:
       # and check if the update was in any app, module or ssr.
       - name: build and create npm link
         run: |
+          moduleRun="false"
+          eventsRun="false"
+          firebaseRun="false"
+          ssrRun="false"
+          appsRun="false"
+
           if [ ! -d packages/modules/lib/ ]; then
             pnpm install --no-frozen-lockfile 
             pnpm build
           fi
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [[ "$file" == *"packages/modules"* ]]; then
+            if [[ "$file" == *"packages/modules"* && "$moduleRun"=="false" ]]; then
+              module="true"
               cd packages/modules
+              pnpm build
               npm link
               cd ../../
 
               cd packages/firebase
+              pnpm build
               npm link
+              firebase="true"
               cd ../../
 
               cd store/functions/modules
@@ -104,16 +114,51 @@ jobs:
               cd ../../../
             fi
 
-            if [[ "$file" == *"packages/apps"* ]]; then
+            if [[ "$file" == *"packages/firebase"* && "$firebaseRun"=="false" ]]; then
+              cd packages/firebase
+              pnpm build
+              npm link
+              firebase="true"
+              cd ../../
+
+              cd store/functions/modules
+              npm link --save @cloudcommerce/firebase
+              cd ../../../
+
+              cd store/functions/events
+              npm link --save @cloudcommerce/firebase
+              cd ../../../
+
+              cd store/functions/ssr
+              npm link --save @cloudcommerce/firebase
+              cd ../../../
+            fi
+
+            if [[ "$file" == *"packages/events"* && "$eventsRun"=="false" ]]; then
+              cd packages/events
+              pnpm build
+              npm link
+              events="true"
+              cd ../../
+
+              cd store/functions/events
+              npm link --save @cloudcommerce/events
+              cd ../../../
+            fi
+
+            if [[ "$file" == *"packages/apps"* && "$appsRun" == "false" ]]; then
               cd packages/modules
+              pnpm build
               npm link
               cd ../../
 
               cd packages/firebase
+              pnpm build
               npm link
               cd ../../
 
               cd packages/events
+              pnpm build
               npm link
               cd ../../
               
@@ -126,10 +171,10 @@ jobs:
               npm link --save @cloudcommerce/events
               npm link --save @cloudcommerce/firebase
               cd ../../../
-
+              apps="true"
             fi
 
-            if [[ "$file" == *"packages/ssr"* ]]; then
+            if [[ "$file" == *"packages/ssr"* && "$ssrRun" == "false" ]]; then
               cd packages/ssr
               npm link
               cd ../../
