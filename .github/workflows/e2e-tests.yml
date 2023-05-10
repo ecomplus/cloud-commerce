@@ -74,7 +74,8 @@ jobs:
         with:
           path: |
             node_modules/**
-            packages/**
+            packages/**/lib/**
+            packages/**/node_modules/**
           key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}
@@ -206,4 +207,6 @@ jobs:
       - name: Tests store requests
         run: |
           sleep 10
-          curl -X GET -I http://localhost:5000/api/modules/list_payments/schema
+          cd packages/modules
+          npm run test:e2e
+          cd ../../
