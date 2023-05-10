@@ -96,7 +96,7 @@ jobs:
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             if [[ "$file" == *"packages/modules"* && "$moduleRun"=="false" ]]; then
-              module="true"
+              moduleRun="true"
               cd packages/modules
               pnpm build
               npm link
@@ -105,7 +105,7 @@ jobs:
               cd packages/firebase
               pnpm build
               npm link
-              firebase="true"
+              firebaseRun="true"
               cd ../../
 
               cd store/functions/modules
@@ -118,7 +118,7 @@ jobs:
               cd packages/firebase
               pnpm build
               npm link
-              firebase="true"
+              firebaseRun="true"
               cd ../../
 
               cd store/functions/modules
@@ -138,7 +138,7 @@ jobs:
               cd packages/events
               pnpm build
               npm link
-              events="true"
+              eventsRun="true"
               cd ../../
 
               cd store/functions/events
@@ -171,7 +171,7 @@ jobs:
               npm link --save @cloudcommerce/events
               npm link --save @cloudcommerce/firebase
               cd ../../../
-              apps="true"
+              appsRun="true"
             fi
 
             if [[ "$file" == *"packages/ssr"* && "$ssrRun" == "false" ]]; then
@@ -184,6 +184,7 @@ jobs:
               npm link --save @cloudcommerce/firebase
               npm link --save @cloudcommerce/api
               cd ../../../
+              ssrRun="true"
             fi
           done
 
