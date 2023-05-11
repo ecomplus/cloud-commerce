@@ -96,7 +96,7 @@ jobs:
           fi
 
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [[ "$file" == *"packages/modules"* && "$moduleRun"=="false" ]]; then
+            if [[ "$file" == *"packages/modules"* && "$moduleRun" == "false" ]]; then
               moduleRun="true"
               cd packages/modules
               pnpm build
@@ -115,7 +115,7 @@ jobs:
               cd ../../../
             fi
 
-            if [[ "$file" == *"packages/firebase"* && "$firebaseRun"=="false" ]]; then
+            if [[ "$file" == *"packages/firebase"* && "$firebaseRun" == "false" ]]; then
               cd packages/firebase
               pnpm build
               npm link
@@ -135,7 +135,7 @@ jobs:
               cd ../../../
             fi
 
-            if [[ "$file" == *"packages/events"* && "$eventsRun"=="false" ]]; then
+            if [[ "$file" == *"packages/events"* && "$eventsRun" == "false" ]]; then
               cd packages/events
               pnpm build
               npm link
