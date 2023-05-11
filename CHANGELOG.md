@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/ecomplus/cloud-commerce/compare/v0.10.0...v0.11.0) (2023-05-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Previously duplicated function `pageContext.cms` removed in favor of `pageContext.getContent` only
+* **types:** Export `CmsSettings` no more existing from `@cloudcommerce/types`
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#152](https://github.com/ecomplus/cloud-commerce/issues/152)) ([9e27ab8](https://github.com/ecomplus/cloud-commerce/commit/9e27ab8855b457b2ae7efa5c7e923d50fe17f207))
+* **discounts:** Do not count cancelled order on count for max usages ([c668701](https://github.com/ecomplus/cloud-commerce/commit/c668701b327cd31981dbb4ddd3a38e7e3502d560))
+* **storefront:** Explicit ignore /admin/ folder on Workbox precache ([1eae550](https://github.com/ecomplus/cloud-commerce/commit/1eae55035e968158da15b683a733e141f8b40547))
+* **storefront:** Fix `SettingsContent` metafields typedef [[#149](https://github.com/ecomplus/cloud-commerce/issues/149)] ([5d6ea94](https://github.com/ecomplus/cloud-commerce/commit/5d6ea94957f0b9a44acc4925f9c356e91e15ebd6))
+* **storefront:** Update Astro to v2.3.3 ([#153](https://github.com/ecomplus/cloud-commerce/issues/153)) ([0e6523d](https://github.com/ecomplus/cloud-commerce/commit/0e6523d10f7f2b86753bd3e1b4927d5947ded552))
+
+
+* **storefront:** Renaming "CMS" things to "content" ([a48653d](https://github.com/ecomplus/cloud-commerce/commit/a48653d0281123531ee2d4146046ecae81abb89f))
+* **types:** Renaming `CmsSettings` to `SettingsContent` ([3fe4f7a](https://github.com/ecomplus/cloud-commerce/commit/3fe4f7a0a1e3e3b082e7942ae26bf5c993077094))
+
 ## [0.10.0](https://github.com/ecomplus/cloud-commerce/compare/v0.9.1...v0.10.0) (2023-04-28)
 
 
