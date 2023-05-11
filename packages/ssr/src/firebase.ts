@@ -4,16 +4,18 @@ import { initializeApp } from 'firebase-admin/app';
 initializeApp();
 
 import functions from 'firebase-functions/v1';
+import { onRequest } from 'firebase-functions/v2/https';
 import config from '@cloudcommerce/firebase/lib/config';
 import serveStorefront from './firebase/serve-storefront';
 
 const { httpsFunctionOptions, ssrFunctionOptions } = config.get();
 const { region } = httpsFunctionOptions;
 
-export const ssr = functions
-  .region(ssrFunctionOptions.region || region)
-  .runWith(ssrFunctionOptions)
-  .https.onRequest(serveStorefront);
+export const ssr = onRequest({
+  concurrency: 80,
+  ...ssrFunctionOptions,
+  memory: '1GiB',
+}, serveStorefront);
 
 export const feeds = functions
   .region(region)
