@@ -961,62 +961,62 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../packages/cli
 
   store/functions/core:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/firebase
 
   store/functions/events:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/firebase
 
   store/functions/modules:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/modules
 
   store/functions/passport:
     dependencies:
       '@cloudcommerce/firebase':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.10.0
+        specifier: ^0.11.0
         version: link:../../../packages/types
 
 packages:
