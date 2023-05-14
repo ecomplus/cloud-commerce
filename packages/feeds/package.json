@@ -1,0 +1,33 @@
+{
+  "name": "@cloudcommerce/feeds",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce catalog feeds",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./firebase": "./lib/firebase.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/feeds"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/feeds#readme",
+  "scripts": {
+    "build": "bash ../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:^"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*",
+    "@firebase/app-types": "^0.9.0"
+  }
+}
