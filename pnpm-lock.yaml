@@ -657,10 +657,16 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:^
+        version: link:../firebase
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../types
+      '@firebase/app-types':
+        specifier: ^0.9.0
+        version: 0.9.0
 
   packages/firebase:
     dependencies:
@@ -782,8 +788,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       json-schema-to-typescript:
-        specifier: ^12.0.0
-        version: 12.0.0
+        specifier: ^13.0.1
+        version: 13.0.1
 
   packages/passport:
     dependencies:
@@ -967,67 +973,6 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
-
-  store:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.11.0
-        version: link:../packages/cli
-
-  store/functions/core:
-    dependencies:
-      '@cloudcommerce/firebase':
-        specifier: ^0.11.0
-        version: link:../../../packages/firebase
-
-  store/functions/events:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.11.0
-        version: link:../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.11.0
-        version: link:../../../packages/firebase
-
-  store/functions/modules:
-    dependencies:
-      '@cloudcommerce/firebase':
-        specifier: ^0.11.0
-        version: link:../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.11.0
-        version: link:../../../packages/modules
-
-  store/functions/passport:
-    dependencies:
-      '@cloudcommerce/firebase':
-        specifier: ^0.11.0
-        version: link:../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.11.0
-        version: link:../../../packages/passport
-
-  store/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.11.0
-        version: link:../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.11.0
-        version: link:../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.11.0
-        version: link:../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.11.0
-        version: link:../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.11.0
-        version: link:../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.11.0
-        version: link:../../../packages/types
 
 packages:
 
@@ -15028,8 +14973,8 @@ packages:
   /json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
-  /json-schema-to-typescript@12.0.0:
-    resolution: {integrity: sha512-Uk/BDIAo8vqepPBhM86UhNMHgCv7JulicNj/BgnQPHE1fGCoej0UTtcEYzXU/uk6lSvbZCf7pccW+dnNMrr5rg==}
+  /json-schema-to-typescript@13.0.1:
+    resolution: {integrity: sha512-VU+Spn84eLJyt8R0Bmg2soTwHQFgvrGrU7V8mXbhqWFdEYCFekSYk4JcpCzx0i/WzjEVJKAU7r0y0PVYT14E6Q==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -15046,7 +14991,7 @@ packages:
       minimist: 1.2.8
       mkdirp: 1.0.4
       mz: 2.7.0
-      prettier: 2.8.7
+      prettier: 2.8.8
     dev: true
 
   /json-schema-traverse@0.4.1:
@@ -17567,17 +17512,10 @@ packages:
       synckit: 0.8.5
     dev: false
 
-  /prettier@2.8.7:
-    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: true
-
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: false
 
   /pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
