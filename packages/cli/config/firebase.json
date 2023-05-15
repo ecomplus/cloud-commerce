@@ -1,24 +1,14 @@
 {
   "functions": [
     {
-      "predeploy": "npm run build -- --codebase core",
-      "source": "functions/core",
-      "codebase": "core"
+      "predeploy": "npm run build -- --codebase many",
+      "source": "functions/many",
+      "codebase": "many"
     },
     {
-      "predeploy": "npm run build -- --codebase events",
-      "source": "functions/events",
-      "codebase": "events"
-    },
-    {
-      "predeploy": "npm run build -- --codebase modules",
-      "source": "functions/modules",
-      "codebase": "modules"
-    },
-    {
-      "predeploy": "npm run build -- --codebase passport",
-      "source": "functions/passport",
-      "codebase": "passport"
+      "predeploy": "npm run build -- --codebase with-apps",
+      "source": "functions/with-apps",
+      "codebase": "with-apps"
     },
     {
       "predeploy": "npm run build -- --codebase ssr",
