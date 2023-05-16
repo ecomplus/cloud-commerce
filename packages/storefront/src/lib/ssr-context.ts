@@ -24,13 +24,13 @@ type StorefrontConfig = {
 const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
 
-if (!globalThis.api_prefetch_endpoints) {
-  globalThis.api_prefetch_endpoints = [
+if (!globalThis.$apiPrefetchEndpoints) {
+  globalThis.$apiPrefetchEndpoints = [
     'categories?fields=_id,name,slug,parent,icon,pictures.0',
   ];
 }
-if (!globalThis.storefront) {
-  globalThis.storefront = {
+if (!globalThis.$storefront) {
+  globalThis.$storefront = {
     settings: {},
     onLoad(callback: (...args: any[]) => void) {
       emitter.on('load', callback);
@@ -51,7 +51,7 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
 
 const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   contentCollection,
-  apiPrefetchEndpoints = globalThis.api_prefetch_endpoints,
+  apiPrefetchEndpoints = globalThis.$apiPrefetchEndpoints,
 }: {
   contentCollection?: string;
   apiPrefetchEndpoints?: ApiPrefetchEndpoints;
@@ -64,7 +64,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   }
   const isHomepage = urlPath === '/';
   const config = getConfig();
-  globalThis.storefront.settings = config.settings;
+  globalThis.$storefront.settings = config.settings;
   let cmsContent: HomeContent | Record<string, any> | null | undefined;
   let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
@@ -140,7 +140,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     setResponseCache(Astro, 120, 300);
   }
   if (apiDoc) {
-    globalThis.storefront.context = {
+    globalThis.$storefront.context = {
       resource: apiResource as Exclude<typeof apiResource, undefined>,
       doc: apiDoc as any,
       timestamp: Date.now(),

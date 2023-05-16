@@ -48,13 +48,13 @@ const closeTinaConnection = ({
   }
 };
 
-const useCMSPreview = <T extends {
+const useCmsPreview = <T extends {
   data: Record<string, any>,
   variables: Record<string, any>,
   query: string,
 }>(fetchData: (client: TinaClient) => Promise<T>) => {
   const liveContent = shallowReactive<T['data']>({});
-  if (!import.meta.env.SSR && window.isCMSPreview) {
+  if (!import.meta.env.SSR && window.$isCmsPreview) {
     import('react-dom/server').then(async ({ default: ReactDOMServer }) => {
       const { TinaMarkdown } = await import('tinacms/dist/rich-text');
       const deepParseData = (data: Record<string, any>) => {
@@ -92,10 +92,10 @@ const useCMSPreview = <T extends {
   return { liveContent };
 };
 
-export default useCMSPreview;
+export default useCmsPreview;
 
 export {
-  useCMSPreview,
+  useCmsPreview,
   getTinaUpdates,
   closeTinaConnection,
 };

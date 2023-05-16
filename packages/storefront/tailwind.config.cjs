@@ -48,15 +48,15 @@ let defaultThemeOptions = {
     favorites: 'heart',
   },
 };
-if (globalThis.storefront_theme_options) {
-  defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.storefront_theme_options);
+if (globalThis.$storefrontThemeOptions) {
+  defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.$storefrontThemeOptions);
 }
 
 const { primaryColor, secondaryColor } = getCMS();
 const brandColors = {
   primary: primaryColor,
   secondary: secondaryColor || primaryColor,
-  ...globalThis.storefront_brand_colors,
+  ...globalThis.$storefrontBrandColors,
 };
 const brandColorsPalletes = {};
 const onBrandColors = {};
@@ -208,8 +208,8 @@ const genTailwindConfig = (themeOptions = {}) => {
       },
     ],
   };
-  if (globalThis.storefront_tailwind_config) {
-    return deepmerge(config, globalThis.storefront_tailwind_config);
+  if (globalThis.$storefrontTailwindConfig) {
+    return deepmerge(config, globalThis.$storefrontTailwindConfig);
   }
   return config;
 };

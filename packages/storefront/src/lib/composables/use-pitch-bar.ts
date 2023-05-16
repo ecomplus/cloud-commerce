@@ -1,7 +1,7 @@
 import type { LayoutContent } from '@@sf/content';
 import { computed } from 'vue';
 import { parseShippingPhrase } from '@@sf/state/modules-info';
-import { useCMSPreview } from '@@sf/state/use-cms-preview';
+import { useCmsPreview } from '@@sf/state/use-cms-preview';
 
 export interface Props {
   slides: Array<{
@@ -20,7 +20,7 @@ const parseLayoutContent = (layoutContent: LayoutContent) => {
 };
 
 const usePitchBar = (props: Props) => {
-  const { liveContent } = useCMSPreview(async (tinaClient) => {
+  const { liveContent } = useCmsPreview(async (tinaClient) => {
     return tinaClient.queries.layout({ relativePath: 'layout.json' });
   });
   const parsedContents = computed(() => {

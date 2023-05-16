@@ -1,10 +1,25 @@
-import type { Resource, ApiEventName, AppEventsPayload } from '@cloudcommerce/types';
+import type {
+  Resource,
+  ApiEventName,
+  AppEventsPayload,
+  EventsResult,
+} from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import config from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
+
+declare global {
+  // eslint-disable-next-line
+  var $transformApiEvents: undefined | (
+    <T extends Resource>(
+      resource: T,
+      result: EventsResult<`events/${T}`>['result'],
+    ) => Promise<EventsResult<`events/${T}`>['result']>
+  );
+}
 
 const parseEventName = (
   evName: ApiEventName,
@@ -146,19 +161,16 @@ export default async () => {
       params,
     });
     /*
-    global.api_events_middleware = async (
-      resource: string,
-      result: EventsResult,
-    }) => {
+    global.$transformApiEvents = async (resource: string, result: EventsResult) => {
       if (resource === 'orders') {
         await axios.port(url, result);
       }
       return result;
     };
     */
-    const middleware = global.api_events_middleware;
-    if (typeof middleware === 'function') {
-      result = await middleware(resource, result);
+    const { $transformApiEvents } = global;
+    if (typeof $transformApiEvents === 'function') {
+      result = await $transformApiEvents(resource, result);
     }
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {

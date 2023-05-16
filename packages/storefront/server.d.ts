@@ -1,3 +1,5 @@
+/* eslint-disable vars-on-top, no-var */
+
 import type { ApiEndpoint } from '@cloudcommerce/api';
 import type {
   ProductSet,
@@ -8,8 +10,7 @@ import type {
 import type { SettingsContent } from './src/lib/content';
 
 declare global {
-  // eslint-disable-next-line
-  var storefront: {
+  var $storefront: {
     settings: Partial<SettingsContent>,
     context?: {
       resource: 'products',
@@ -30,10 +31,13 @@ declare global {
     },
     onLoad: (callback: (...args: any[]) => void) => void,
   };
-  // eslint-disable-next-line
-  var api_prefetch_endpoints: ApiEndpoint[];
-  // eslint-disable-next-line
-  var storefront_slim_doc_regex: undefined | RegExp;
+  var $apiPrefetchEndpoints: ApiEndpoint[];
+  var $storefrontSlimDocRegex: undefined | RegExp;
+  // @TODO
+  var $storefrontCmsHandler: undefined | any;
+  var $storefrontThemeOptions: undefined | any;
+  var $storefrontBrandColors: undefined | any;
+  var $storefrontTailwindConfig: undefined | any;
 }
 
 export { };

@@ -1,10 +1,10 @@
-type ModulesInfoPreset = typeof window.storefront.modulesInfoPreset;
+type ModulesInfoPreset = typeof window.$storefront.modulesInfoPreset;
 
 const checkObjNotNull = (obj: { [k: string]: any }) => {
   return Object.values(obj).filter((val) => val).length;
 };
 
-const getModulesInfoPreset = (settingsModules = globalThis.storefront.settings.modules) => {
+const getModulesInfoPreset = (settingsModules = globalThis.$storefront.settings.modules) => {
   const modulesInfoPreset: ModulesInfoPreset = {};
   if (settingsModules) {
     const settingsPayments = settingsModules.list_payments;
@@ -49,12 +49,12 @@ const getModulesInfoPreset = (settingsModules = globalThis.storefront.settings.m
 
 const loadingGlobalInfoPreset: Promise<ModulesInfoPreset> = new Promise((resolve) => {
   if (import.meta.env.SSR) {
-    global.storefront.onLoad(() => {
+    global.$storefront.onLoad(() => {
       resolve(getModulesInfoPreset());
     });
   } else {
-    window.storefront.modulesInfoPreset = getModulesInfoPreset();
-    resolve(window.storefront.modulesInfoPreset);
+    window.$storefront.modulesInfoPreset = getModulesInfoPreset();
+    resolve(window.$storefront.modulesInfoPreset);
   }
 });
 
