@@ -25,9 +25,7 @@ const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
 
 if (!globalThis.$apiPrefetchEndpoints) {
-  globalThis.$apiPrefetchEndpoints = [
-    'categories?fields=_id,name,slug,parent,icon,pictures.0',
-  ];
+  globalThis.$apiPrefetchEndpoints = ['categories'];
 }
 if (!globalThis.$storefront) {
   globalThis.$storefront = {
