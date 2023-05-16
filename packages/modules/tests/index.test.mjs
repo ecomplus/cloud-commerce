@@ -16,7 +16,6 @@ describe('Test Schemas', async () => {
     const req = await fetch(`${baseUrl}/calculate_shipping/schema`);
     assert.strictEqual(req.status, 200);
   });
-
   test('create_transaction', async (t) => {
     const req = await fetch(`${baseUrl}/create_transaction/schema`);
     assert.strictEqual(req.status, 200);
