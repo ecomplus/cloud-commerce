@@ -20,7 +20,6 @@ describe('Test Schemas', async () => {
     const req = await fetch(`${baseUrl}/create_transaction/schema`);
     assert.strictEqual(req.status, 200);
   });
-
   test('list_payments', async (t) => {
     const req = await fetch(`${baseUrl}/list_payments/schema`);
     assert.strictEqual(req.status, 200);
