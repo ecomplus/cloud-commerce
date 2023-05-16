@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  accountUrl: globalThis.storefront.settings.account_url || '/app/account',
+  accountUrl: globalThis.$storefront.settings.account_url || '/app/account',
   returnUrl: globalThis.location?.href,
 });
 const href = computed(() => {
@@ -22,7 +22,7 @@ const href = computed(() => {
     }
     return `${url}return_url=${props.returnUrl}`;
   }
-  const { settings } = globalThis.storefront;
+  const { settings } = globalThis.$storefront;
   if (props.to === 'orders' && settings.orders_url) {
     return settings.orders_url;
   }

@@ -7,15 +7,19 @@ export type LayoutContent = typeof import('content/layout.json');
 
 export type HomeContent = typeof import('content/home.json');
 
-export type ContentFilenames = 'settings'
+export type ContentFilename = 'settings'
   | 'layout'
   | 'home'
   | `${string}/`
   | `${string}/${string}`;
 
-export type ContentGetter = <T extends ContentFilenames>(filename: T) =>
-  T extends `${string}/` ? Promise<Array<string>> :
+export type ContentData<T extends ContentFilename> =
+  T extends `${string}/` ? Array<string> :
   T extends 'settings' ? SettingsContent :
-  T extends 'layout' ? Promise<LayoutContent> :
-  T extends 'home' ? Promise<HomeContent> :
-  Promise<Record<string, any> | null>;
+  T extends 'layout' ? LayoutContent :
+  T extends 'home' ? HomeContent :
+  Record<string, any> | null;
+
+export type ContentGetter = <T extends ContentFilename>(filename: T) =>
+  T extends 'settings' ? ContentData<T> :
+  Promise<ContentData<T>>;

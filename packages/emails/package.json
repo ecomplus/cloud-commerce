@@ -1,8 +1,8 @@
 {
   "name": "@cloudcommerce/emails",
   "type": "module",
-  "version": "0.10.0",
-  "description": "E-Com Plus Cloud Commerce",
+  "version": "0.12.1",
+  "description": "E-Com Plus Cloud Commerce email sender",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
@@ -25,7 +25,7 @@
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.4.0",
     "ejs": "^3.1.9",
-    "nodemailer": "^6.9.1"
+    "nodemailer": "^6.9.2"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",

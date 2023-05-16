@@ -927,6 +927,21 @@ export interface Orders {
       link?: string;
     };
     /**
+     * Account deposit data, if payment was done with account deposit
+     */
+    account_deposit?: {
+      /**
+       * Date and time of expiration, in ISO 8601 standard representation
+       */
+      valid_thru?: string;
+      /**
+       * Information notes to payment
+       *
+       * @maxItems 5
+       */
+      text_lines?: string[];
+    };
+    /**
      * If paid with loyalty points, specify how many points and what program was consumed
      */
     loyalty_points?: {

@@ -1,7 +1,7 @@
 const {
   settings,
   context: apiContext,
-} = globalThis.storefront;
+} = globalThis.$storefront;
 
 const networkNames = [
   'whatsapp',

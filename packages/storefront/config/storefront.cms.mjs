@@ -38,7 +38,7 @@ export default () => {
         ? content
         : new Promise((resolve) => { resolve(content); });
     };
-    const handler = globalThis.storefront_cms_handler;
+    const handler = globalThis.$storefrontCmsHandler;
     if (typeof handler === 'function') {
       try {
         const content = handler({ dirContent, filename, loadLocal });

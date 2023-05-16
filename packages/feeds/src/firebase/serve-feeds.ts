@@ -3,7 +3,8 @@ import type { Request, Response } from 'firebase-functions';
 export default (req: Request, res: Response) => {
   const { method } = req;
   if (method !== 'GET') {
-    return res.sendStatus(405);
+    res.sendStatus(405);
+    return;
   }
-  return res.sendStatus(201);
+  res.sendStatus(202);
 };

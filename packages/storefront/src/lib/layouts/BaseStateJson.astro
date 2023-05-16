@@ -27,12 +27,12 @@ window.ECOM_LANG = '${lang}';
 window.ECOM_CURRENCY = '${currency}';
 window.ECOM_CURRENCY_SYMBOL = '${currencySymbol}';
 window.ECOM_COUNTRY_CODE = '${countryCode}';
-window.storefront = ${JSON.stringify({ settings })};`;
+window.$storefront = ${JSON.stringify({ settings })};`;
 if (apiDoc) {
   if (typeof apiDoc.price === 'number') {
     apiDoc.price = getPrice(apiDoc);
   }
-  const slimDocRegex = globalThis.storefront_slim_doc_regex
+  const slimDocRegex = globalThis.$storefrontSlimDocRegex
     || /body_|meta_|metafields|_records|i18n/;
   const minifyApiDoc = (nestedDoc: any) => {
     if (typeof nestedDoc === 'object' && nestedDoc) {
@@ -51,7 +51,7 @@ if (apiDoc) {
     return nestedDoc;
   };
   inlineClientJS += `
-window.storefront.context = ${JSON.stringify({
+window.$storefront.context = ${JSON.stringify({
   resource: apiResource,
   doc: minifyApiDoc({ ...apiDoc }),
   timestamp: Date.now(),
@@ -59,7 +59,7 @@ window.storefront.context = ${JSON.stringify({
 }
 if (isPreview) {
   inlineClientJS += `
-window.isCMSPreview = true;`;
+window.$isCmsPreview = true;`;
 }
 
 const inlineJSONLd = JSON.stringify({

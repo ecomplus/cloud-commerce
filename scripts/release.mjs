@@ -61,20 +61,18 @@ if (argv.publish) {
         const codebase = functions[iii];
         cd(`${storeDir}/functions/${codebase}`);
         await $`rm -rf node_modules package-lock.json`;
-        await $`npm i --save @cloudcommerce/firebase@${version}`;
-        if (codebase !== 'core') {
-          await $`npm i --save @cloudcommerce/${codebase}@${version}`;
-          if (codebase === 'ssr') {
-            await $`npm i --save @cloudcommerce/api@${version}`;
-            await $`npm i --save-dev @cloudcommerce/storefront@${version}`;
-            await $`npm i --save-dev @cloudcommerce/i18n@${version}`;
-            await $`npm i --save-dev @cloudcommerce/types@${version}`;
-            for (let i = 0; i < astroPkgs.length; i++) {
-              const astroPkg = astroPkgs[i];
-              const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
-              await $`npm i --save --save-exact ${dep}`;
-            }
+        if (codebase === 'ssr') {
+          await $`npm i --save @cloudcommerce/{firebase,ssr,api}@${version}`;
+          await $`npm i --save-dev @cloudcommerce/{storefront,i18n,types}@${version}`;
+          for (let i = 0; i < astroPkgs.length; i++) {
+            const astroPkg = astroPkgs[i];
+            const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
+            await $`npm i --save --save-exact ${dep}`;
           }
+        } else if (codebase === 'many') {
+          await $`npm i --save @cloudcommerce/{firebase,feeds,passport}@${version}`;
+        } else {
+          await $`npm i --save @cloudcommerce/{firebase,modules,events}@${version}`;
         }
         await $`rm -rf node_modules`;
       }

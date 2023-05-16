@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-emails",
   "type": "module",
-  "version": "0.10.0",
+  "version": "0.12.1",
   "description": "E-Com Plus Cloud Commerce default transactional email app",
   "main": "lib/index.js",
   "repository": {
@@ -23,7 +23,7 @@
     "@cloudcommerce/emails": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/transactional-mails": "^2.0.0",
-    "firebase-admin": "^11.7.0",
+    "firebase-admin": "^11.8.0",
     "firebase-functions": "^3.24.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
-const firebaseApp = initializeApp(window.firebaseConfig);
+const firebaseApp = initializeApp(window.$firebaseConfig);
 
 export default firebaseApp;
 

@@ -5,11 +5,13 @@ initializeApp();
 
 import { onRequest } from 'firebase-functions/v2/https';
 import config from '@cloudcommerce/firebase/lib/config';
-import serveStorefront from './firebase/serve-storefront';
+import serveFeeds from './firebase/serve-feeds';
 
 const { ssrFunctionOptions } = config.get();
 
-export const ssr = onRequest({
+export const feeds = onRequest({
   concurrency: 80,
   ...ssrFunctionOptions,
-}, serveStorefront);
+  memory: '512MiB',
+  timeoutSeconds: 120,
+}, serveFeeds);

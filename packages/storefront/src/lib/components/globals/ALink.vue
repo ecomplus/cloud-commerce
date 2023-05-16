@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 const linkTarget = computed(() => {
   if (props.target) return props.target;
   if (props.href.startsWith('http')) {
-    const domain = globalThis.storefront.settings.domain || window.location.host;
+    const domain = globalThis.$storefront.settings.domain || window.location.host;
     if (props.href.startsWith(`https://${domain}`)) return undefined;
   }
   return '_blank';

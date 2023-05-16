@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "0.10.0",
+  "version": "0.12.1",
   "description": "E-Com Plus Cloud Commerce storefront with Astro",
   "bin": {
     "storefront": "./scripts/build-prod.sh"
@@ -20,20 +20,17 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/storefront#readme",
   "scripts": {
     "dev": "astro dev",
-    "dev:cms": "tinacms dev -c \"astro dev\"",
-    "start": "tinacms build && astro dev --host",
+    "start": "astro dev --host",
     "build": "astro build",
     "build:static": "BUILD_OUTPUT=static astro build",
     "build:prod": "bash scripts/build-prod.sh",
-    "build:cms": "tinacms build",
-    "build:all": "concurrently \"npm run build:prod\" \"npm run build:cms\"",
     "preview": "astro preview",
     "astro": "astro",
     "prepare-monorepo": "bash scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/image": "0.16.6",
-    "@astrojs/node": "5.1.2",
+    "@astrojs/image": "0.16.8",
+    "@astrojs/node": "5.1.3",
     "@astrojs/vue": "2.1.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
@@ -43,30 +40,27 @@
     "@headlessui/vue": "^1.7.13",
     "@iconify-json/fa6-brands": "^1.1.11",
     "@iconify-json/heroicons": "^1.1.10",
-    "@iconify-json/logos": "^1.1.25",
-    "@tinacms/cli": "^1.5.9",
+    "@iconify-json/logos": "^1.1.29",
     "@vite-pwa/astro": "^0.0.5",
-    "@vueuse/core": "10.1.0",
-    "astro": "2.3.3",
+    "@vueuse/core": "10.1.2",
+    "astro": "2.4.5",
     "chroma-js": "^2.4.2",
-    "concurrently": "^8.0.1",
     "dotenv": "^16.0.3",
-    "firebase": "^9.21.0",
+    "firebase": "^9.22.0",
     "image-size": "^1.0.2",
     "mime": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "semver": "^7.5.0",
+    "semver": "^7.5.1",
     "sharp": "^0.32.1",
     "tailwindcss": "^3.3.2",
-    "tinacms": "^1.5.2",
-    "unocss": "^0.51.8",
-    "vite": "^4.3.3",
+    "unocss": "^0.51.13",
+    "vite": "^4.3.6",
     "vite-plugin-pwa": "^0.14.7",
-    "vue": "^3.2.47"
+    "vue": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.5",
+    "@babel/core": "^7.21.8",
     "@cloudcommerce/types": "workspace:*"
   }
 }

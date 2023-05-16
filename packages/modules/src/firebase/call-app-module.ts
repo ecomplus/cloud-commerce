@@ -5,6 +5,19 @@ import config from '@cloudcommerce/firebase/lib/config';
 // Blacklist urls to prevent consecultive errors
 const blacklist = {};
 
+declare global {
+  // eslint-disable-next-line
+  var $appModuleMiddlewares: Record<string,
+    (
+      data: AppModuleBody,
+      next: (_data: AppModuleBody) => Promise<any>,
+    ) => Promise<any>
+  >;
+}
+if (!global.$appModuleMiddlewares) {
+  global.$appModuleMiddlewares = {};
+}
+
 export default async (
   appId: number,
   modName: AppModuleName,
@@ -30,7 +43,7 @@ export default async (
   };
 
   // eslint-disable-next-line no-unused-vars
-  let internalModuleFn: undefined | ((_data?: AppModuleBody) => Promise<any>);
+  let internalModuleFn: undefined | ((_data: AppModuleBody) => Promise<any>);
   if (modName === 'apply_discount') {
     if (appId === apps.discounts.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -171,17 +184,14 @@ export default async (
   }
   if (internalModuleFn) {
     /*
-    global.app1_apply_discount_middleware = async (
-      data: any,
-      next: () => Promise<any>,
-    ) => {
-      if (data.params.x === 'sample') {
+    global.$appModuleMiddlewares['123'] = async (data, next) => {
+      if (data.module === 'create_transaction' && data.params.x === 'sample') {
         return {};
       }
       return next(data);
     };
     */
-    const middleware = global[`app${appId}_${modName}_middleware`];
+    const middleware = global.$appModuleMiddlewares[String(appId)];
     try {
       let appResponse: any;
       if (typeof middleware === 'function') {

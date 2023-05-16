@@ -3,6 +3,15 @@ import { join as joinPath } from 'path';
 import { readFile } from 'fs/promises';
 import logger from 'firebase-functions/logger';
 
+declare global {
+  // eslint-disable-next-line
+  var $renderStorefront: (
+    req: Request,
+    res: Response,
+    next: (err: any) => Promise<void>,
+  ) => Promise<any>;
+}
+
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
@@ -14,15 +23,11 @@ export default (req: Request, res: Response) => {
   res.set('X-XSS-Protection', '1; mode=block');
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
-  const setStatusAndCache = (status: number, defaultCache: string) => {
+  const setStatusAndCache = (status: number, cacheControl: string) => {
     if (res.headersSent) return res;
     return res.status(status)
       .set('X-SSR-ID', `v1/${Date.now()}`)
-      .set(
-        'Cache-Control',
-        (typeof global.cache_control === 'function' && global.cache_control(status))
-          || defaultCache,
-      );
+      .set('Cache-Control', cacheControl);
   };
 
   const fallback = (err: any, status = 500) => {
@@ -81,10 +86,10 @@ export default (req: Request, res: Response) => {
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
-  import { handler as ssrHandler } from '../dist/server/entry.mjs';
-  global.ssr_handler = ssrHandler;
+  import { handler as renderStorefront } from '../dist/server/entry.mjs';
+  global.$renderStorefront = renderStorefront;
   */
-  global.ssr_handler(req, res, async (err: any) => {
+  global.$renderStorefront(req, res, async (err: any) => {
     if (err) {
       if (res.headersSent) {
         logger.error(err);

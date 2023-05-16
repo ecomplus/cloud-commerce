@@ -61,7 +61,7 @@ const authenticate = async () => {
     throwNoAuth('Can\'t get Firebase user ID token');
     return;
   }
-  const { domain } = window.storefront.settings;
+  const { domain } = window.$storefront.settings;
   try {
     const resAuth = await fetch(`https://${domain}/api/passport/token`, {
       method: 'POST',

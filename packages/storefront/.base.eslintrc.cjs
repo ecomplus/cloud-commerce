@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     'airbnb-base',
   ],
   parserOptions: {
@@ -90,4 +90,12 @@ module.exports = {
       { ignoreEOLComments: true },
     ],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.mts', '*.cts', '*.tsx', '*.vue', '*.astro'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
 };

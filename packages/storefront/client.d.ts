@@ -9,7 +9,7 @@ type DocCleanupFields = 'body_html'
   | 'hidden_metafields';
 
 interface Window {
-  firebaseConfig: {
+  $firebaseConfig: {
     apiKey: string,
     authDomain: string,
     projectId: string,
@@ -23,7 +23,7 @@ interface Window {
   ECOM_CURRENCY: string;
   ECOM_CURRENCY_SYMBOL: string;
   ECOM_COUNTRY_CODE: string;
-  storefront?: {
+  $storefront?: {
     settings: import('./src/lib/content').SettingsContent,
     context?: {
       resource: 'products',
@@ -44,5 +44,5 @@ interface Window {
     },
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
-  isCMSPreview?: boolean;
+  $isCmsPreview?: boolean;
 }

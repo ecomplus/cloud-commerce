@@ -1,26 +1,16 @@
-import { shallowReactive } from 'vue';
+import type { ContentFilename, ContentData } from '../content';
+import { shallowRef } from 'vue';
 
-type TinaClient = typeof import('~/../tina/__generated__/client')['client'];
-
-function getTinaUpdates<T extends object>({
-  data,
-  query,
-  variables,
-  cb,
-}: {
-  query: string,
-  variables: object,
-  data: T,
-  cb: (newData: T) => void,
-}) {
+function getCmsUpdates<T extends ContentFilename>(
+  filename: T,
+  cb: (newData: NonNullable<ContentData<T>>) => void,
+) {
   if (!import.meta.env.SSR) {
-    const id = btoa(JSON.stringify({ query }));
+    const id = btoa(JSON.stringify({ filename }));
     window.parent.postMessage(
       JSON.parse(JSON.stringify({
         type: 'open',
-        data,
-        query,
-        variables,
+        filename,
         id,
       })),
       window.location.origin,
@@ -33,69 +23,16 @@ function getTinaUpdates<T extends object>({
   }
 }
 
-const closeTinaConnection = ({
-  query,
-  id,
-}: {
-  query: string
-  id?: string
-}) => {
-  if (!import.meta.env.SSR) {
-    window.parent.postMessage(
-      { type: 'close', id: id || btoa(JSON.stringify({ query })) },
-      window.location.origin,
-    );
-  }
-};
-
-const useCMSPreview = <T extends {
-  data: Record<string, any>,
-  variables: Record<string, any>,
-  query: string,
-}>(fetchData: (client: TinaClient) => Promise<T>) => {
-  const liveContent = shallowReactive<T['data']>({});
-  if (!import.meta.env.SSR && window.isCMSPreview) {
-    import('react-dom/server').then(async ({ default: ReactDOMServer }) => {
-      const { TinaMarkdown } = await import('tinacms/dist/rich-text');
-      const deepParseData = (data: Record<string, any>) => {
-        Object.keys(data).forEach((field) => {
-          if (typeof data[field] === 'object' && data[field]) {
-            if (Array.isArray(data[field])) {
-              data[field].forEach((nested: any) => deepParseData(nested));
-            } if (data[field].type === 'root' && Array.isArray(data[field].children)) {
-              data[field] = ReactDOMServer.renderToString(TinaMarkdown({
-                content: data[field],
-              }));
-            } else {
-              deepParseData(data[field]);
-            }
-          }
-        });
-        return data;
-      };
-      // eslint-disable-next-line import/extensions
-      const { client } = await import('~/../tina/__generated__/client');
-      const data = await fetchData(client);
-      getTinaUpdates({
-        cb: (newData) => {
-          Object.assign(liveContent, deepParseData(newData));
-        },
-        data: data.data,
-        query: data.query,
-        variables: data.variables,
-      });
-      window.addEventListener('beforeunload', () => {
-        closeTinaConnection({ query: data.query });
-      }, { capture: true });
+const useCmsPreview = <T extends ContentFilename>(filename: T) => {
+  const liveContent = shallowRef<NonNullable<ContentData<T>> | null>(null);
+  if (!import.meta.env.SSR && window.$isCmsPreview) {
+    getCmsUpdates(filename, (newData) => {
+      liveContent.value = newData;
     });
   }
   return { liveContent };
 };
 
-export default useCMSPreview;
+export default useCmsPreview;
 
-export {
-  useCMSPreview,
-  getTinaUpdates,
-  closeTinaConnection,
-};
+export { useCmsPreview, getCmsUpdates };
