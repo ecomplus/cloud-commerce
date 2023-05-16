@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/ecomplus/cloud-commerce/compare/v0.11.0...v0.12.0) (2023-05-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **types:** Many global vars renamed, especially `$renderStorefront` required for SSR
+* **api:** No more `/fetch-polyfill` export
+
+### Features
+
+* **api:** Updated `orders` interface with `transactions.account_deposit` optional object ([13ad5c6](https://github.com/ecomplus/cloud-commerce/commit/13ad5c694344568216b096072ea1c3a8fe7af9cd))
+* **deps:** Update astro to v2.4.5 ([#158](https://github.com/ecomplus/cloud-commerce/issues/158)) ([f32f936](https://github.com/ecomplus/cloud-commerce/commit/f32f93643fb775449a1749c2c797bb8fad7adbc3))
+* **types:** Properly declaring many global vars ([d10923a](https://github.com/ecomplus/cloud-commerce/commit/d10923a2e2d0b00fbc5a9e038950a3e5dadb3ac3))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#159](https://github.com/ecomplus/cloud-commerce/issues/159)) ([1dc410a](https://github.com/ecomplus/cloud-commerce/commit/1dc410aa3354ec9cb55fda00b0ac418281ec0d02))
+
+
+* **api:** Removing not used `fetch-polyfill` ([d701895](https://github.com/ecomplus/cloud-commerce/commit/d701895ef2aa03e5a066a84cdc7ba6dfc84cae9c))
+
 ## [0.11.0](https://github.com/ecomplus/cloud-commerce/compare/v0.10.0...v0.11.0) (2023-05-11)
 
 
