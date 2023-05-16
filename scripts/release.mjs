@@ -69,9 +69,10 @@ if (argv.publish) {
             const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
             await $`npm i --save --save-exact ${dep}`;
           }
+        } else if (codebase === 'many') {
+          await $`npm i --save @cloudcommerce/{firebase,feeds,passport}@${version}`;
         } else {
-          const { dependencies } = JSON.parse(fs.readFileSync('./package.json'));
-          await $`npm i --save ${[...Object.keys(dependencies), ''].join(`@${version} `)}`;
+          await $`npm i --save @cloudcommerce/{firebase,modules,events}@${version}`;
         }
         await $`rm -rf node_modules`;
       }
