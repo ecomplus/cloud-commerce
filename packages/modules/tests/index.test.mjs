@@ -1,8 +1,7 @@
 import assert from 'node:assert';
 import test, { describe } from 'node:test';
 
-const baseUrl = 'http://127.0.0.1:5000/api/modules';
-// const apiUrl = 'https://dev.ecomplus.io/v2';
+const baseUrl = 'http://127.0.0.1:5001/ecom2-002/southamerica-east1/modules';
 
 describe('Test Schemas', async () => {
   test('@checkout', async (t) => {

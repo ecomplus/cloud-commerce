@@ -5,6 +5,8 @@ on:
     paths:
       - "packages/**"
       - "!packages/storefront"
+      - "!packages/ssr"
+      - "!packages/feeds"
       - "!packages/passort"
       - "!packages/!18n"
       - "!packages/__skeleton"
@@ -15,6 +17,8 @@ on:
       - ".github/workflows/e2e-tests.yml"
       - "packages/**"
       - "!packages/storefront"
+      - "!packages/ssr"
+      - "!packages/feeds"
       - "!packages/passort"
       - "!packages/!18n"
       - "!packages/__skeleton"
@@ -37,172 +41,56 @@ jobs:
           repository: ecomplus/store
           path: store
 
-      # check which files have been updated
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
         with:
-          version: 7
-          run_install: false
+          path: |
+            node_modules/**
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
-      - name: Get version
-        id: get-version
-        shell: bash
+      - name: Install pnpm
         run: |
-          json=$(cat package.json)
-          version=$(echo "$json" | jq .version)
-          name=$(echo "$json" | jq .name)
-          echo "VERSION=${name//\"/}-${version//\"/}" >> $GITHUB_OUTPUT
+          pnpm install
+
+      - name: Setup build cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            packages/**/lib/**
+            packages/**/**/lib/**
+          key: ${{ runner.os }}-pnpm-build-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-build-
+
+      - name: Build root
+        run: pnpm build
 
       - name: Install firebase-tools
         run: |
           npm install -g firebase-tools
 
-      - uses: actions/cache@v3
-        name: Cache according to version
-        env:
-          cache-name: packages-build-${{ steps.get-version.outputs.VERSION }}
-        with:
-          path: |
-            node_modules/**
-            packages/**/lib/**
-            packages/**/node_modules/**
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}
-
-      # If you can't find the libraries then install and compile everything
-      # and check if the update was in any app, module or ssr.
-      - name: Check for changed files and run build
-        run: |
-          moduleRun="false"
-          eventsRun="false"
-          firebaseRun="false"
-          ssrRun="false"
-          appsRun="false"
-
-          if [ ! -d packages/modules/lib/ ]; then
-            pnpm install --no-frozen-lockfile 
-            pnpm build
-          fi
-
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [[ "$file" == *"packages/modules"* && "$moduleRun" == "false" ]]; then
-              moduleRun="true"
-              cd packages/modules
-              pnpm build
-              npm link
-              cd ../../
-
-              cd packages/firebase
-              pnpm build
-              npm link
-              firebaseRun="true"
-              cd ../../
-
-              cd store/functions/modules
-              npm link --save @cloudcommerce/modules
-              npm link --save @cloudcommerce/firebase
-              cd ../../../
-            fi
-
-            if [[ "$file" == *"packages/firebase"* && "$firebaseRun" == "false" ]]; then
-              cd packages/firebase
-              pnpm build
-              npm link
-              firebaseRun="true"
-              cd ../../
-
-              cd store/functions/modules
-              npm link --save @cloudcommerce/firebase
-              cd ../../../
-
-              cd store/functions/events
-              npm link --save @cloudcommerce/firebase
-              cd ../../../
-
-              cd store/functions/ssr
-              npm link --save @cloudcommerce/firebase
-              cd ../../../
-            fi
-
-            if [[ "$file" == *"packages/events"* && "$eventsRun" == "false" ]]; then
-              cd packages/events
-              pnpm build
-              npm link
-              eventsRun="true"
-              cd ../../
-
-              cd store/functions/events
-              npm link --save @cloudcommerce/events
-              cd ../../../
-            fi
-
-            if [[ "$file" == *"packages/apps"* && "$appsRun" == "false" ]]; then
-              cd packages/modules
-              pnpm build
-              npm link
-              cd ../../
-
-              cd packages/firebase
-              pnpm build
-              npm link
-              cd ../../
-
-              cd packages/events
-              pnpm build
-              npm link
-              cd ../../
-              
-              cd store/functions/modules
-              npm link --save @cloudcommerce/modules
-              npm link --save @cloudcommerce/firebase
-              cd ../../../
-
-              cd store/functions/events
-              npm link --save @cloudcommerce/events
-              npm link --save @cloudcommerce/firebase
-              cd ../../../
-              appsRun="true"
-            fi
-
-            if [[ "$file" == *"packages/ssr"* && "$ssrRun" == "false" ]]; then
-              cd packages/ssr
-              npm link
-              cd ../../
-
-              cd store/functions/ssr
-              npm link --save @cloudcommerce/ssr
-              npm link --save @cloudcommerce/firebase
-              npm link --save @cloudcommerce/api
-              cd ../../../
-              ssrRun="true"
-            fi
-          done
-
-        # TODO:
-        # other changes that need to be compiled and changed in the store
-
-      - name: Install, build and emulate store
+      - name: Build store and initialize emulators
         env:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: |
           cd store
-          npm i && bash scripts/install.sh
           npm run build
-          cd storefront && npm run build && cd ..
-          npx firebase --project=test emulators:start --only functions,hosting,firestore &
+          npx firebase --project=ecom2-002 emulators:start --only functions &
 
       - name: Run tests
         run: |
