@@ -62,8 +62,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install pnpm
-        run: |
-          pnpm install
+        run: pnpm fix-install
 
       - name: Build root
         run: pnpm build
