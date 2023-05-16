@@ -20,13 +20,10 @@ const parseLayoutContent = (layoutContent: LayoutContent) => {
 };
 
 const usePitchBar = (props: Props) => {
-  const { liveContent } = useCmsPreview(async (tinaClient) => {
-    return tinaClient.queries.layout({ relativePath: 'layout.json' });
-  });
+  const { liveContent } = useCmsPreview('layout');
   const parsedContents = computed(() => {
-    const slides = liveContent.layout
-      // @ts-ignore
-      ? parseLayoutContent(liveContent.layout).slides
+    const slides = liveContent.value
+      ? parseLayoutContent(liveContent.value).slides
       : props.slides;
     return slides.map(({ html }) => {
       return parseShippingPhrase(html).value
