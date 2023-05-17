@@ -48,14 +48,14 @@ jobs:
           run_install: false
 
       - name: Get pnpm store directory
-        id: pnpm-cache
+        id: pnpm-paths
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          path: ${{ steps.pnpm-paths.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
@@ -76,10 +76,14 @@ jobs:
             ${{ runner.os }}-turbo-
 
       - shell: bash
+        env:
+          ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
+          ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
+          ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: pnpm build
-      
-      - name: Get npm global directory
-        id: npm-cache
+
+      - name: Get npm global directories
+        id: npm-paths
         shell: bash
         run: |
           lib_path=$(npm list -g | head -1)
@@ -87,33 +91,30 @@ jobs:
           echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
-        id: npm-cache-hit
+        id: npm-g-cache
         with:
           path: |
-            ${{ steps.npm-cache.outputs.LIB_PATH }}
-            ${{ steps.npm-cache.outputs.BIN_PATH }}
+            ${{ steps.npm-paths.outputs.LIB_PATH }}
+            ${{ steps.npm-paths.outputs.BIN_PATH }}
             ~/.npm-global/bin
           key: ${{ runner.os }}-npm-globals-firebase-tools-12.0.1
 
-      - if: steps.npm-cache-hit.outputs.cache-hit != 'true'
+      - if: steps.npm-g-cache.outputs.cache-hit != 'true'
         shell: bash
         run: npm install -g firebase-tools@12.0.1
 
-      - name: Build store and initialize emulators
+      - name: Initialize Firebase emulators
         shell: bash
+        working-directory: store
         env:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: |
-          cd store
-          npm run build
           firebase --project=ecom2-002 emulators:start --only functions &
 
       - name: Run tests
         shell: bash
         run: |
           sleep 10
-          cd packages/modules
-          npm run test:e2e
-          cd ../../
+          pnpm test:e2e
