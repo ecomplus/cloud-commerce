@@ -41,7 +41,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
       
       - uses: pnpm/action-setup@v2
         with:
@@ -78,9 +77,22 @@ jobs:
 
       - shell: bash
         run: pnpm build
+      
+      - name: Get npm global directory
+        id: npm-cache
+        shell: bash
+        run: |
+          echo "GLOBAL_PATH=$(npm list -g | head -1)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.npm-cache.outputs.GLOBAL_PATH }}
+          key: ${{ runner.os }}-npm-global-firebase-tools-12.0.1
+          restore-keys: |
+            ${{ runner.os }}-npm-global-
 
       - shell: bash
-        run: npm install -g firebase-tools
+        run: npm install -g firebase-tools@12.0.1
 
       - name: Build store and initialize emulators
         shell: bash
