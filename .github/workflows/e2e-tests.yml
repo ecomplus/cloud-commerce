@@ -41,12 +41,24 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      
+
       - uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
-          cache: 'pnpm'
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - shell: bash
         run: bash scripts/pre-install.sh && pnpm install --frozen-lockfile
@@ -70,14 +82,16 @@ jobs:
         id: npm-cache
         shell: bash
         run: |
-          echo "GLOBAL_PATH=$(npm list -g | head -1)" >> $GITHUB_OUTPUT
+          lib_path=$(npm list -g | head -1)
+          echo "LIB_PATH=$lib_path" >> $GITHUB_OUTPUT
+          echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         id: npm-cache-hit
         with:
           path: |
-            ${{ steps.npm-cache.outputs.GLOBAL_PATH }}
-            ${{ steps.npm-cache.outputs.GLOBAL_PATH }}/../bin
+            ${{ steps.npm-cache.outputs.LIB_PATH }}
+            ${{ steps.npm-cache.outputs.BIN_PATH }}
             ~/.npm-global/bin
           key: ${{ runner.os }}-npm-globals-firebase-tools-12.0.1
 
