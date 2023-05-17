@@ -1,4 +1,4 @@
-name: Tests
+name: E2E tests
 
 on:
   pull_request:
@@ -46,7 +46,7 @@ jobs:
         with:
           version: 8
           run_install: false
-      
+
       - id: pnpm-cache
         shell: bash
         run: |
@@ -62,8 +62,17 @@ jobs:
       - shell: bash
         run: pnpm fix-install
 
+      - uses: actions/cache@v3
+        with:
+          path: |
+            **/.turbo
+            **/.cache/turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
       - shell: bash
-        run: pnpm build --force
+        run: pnpm build
 
       - shell: bash
         run: npm install -g firebase-tools
