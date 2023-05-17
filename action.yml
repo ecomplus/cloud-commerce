@@ -54,23 +54,55 @@ runs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
 
-    - shell: bash
+    - uses: actions/cache@v3
+      id: npm-cache
+      with:
+        path: |
+          **/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+
+    - if: steps.npm-cache.outputs.cache-hit != 'true'
+      shell: bash
       run: npm ci --omit=dev
 
-    - if: github.event_name == 'push'
+    - name: Get npm global directories
+      id: npm-paths
       shell: bash
-      run: npm i --location=global firebase-tools@12
+      run: |
+        lib_path=$(npm list -g | head -1)
+        echo "LIB_PATH=$lib_path" >> $GITHUB_OUTPUT
+        echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
-    - shell: bash
+    - uses: actions/cache@v3
+      id: npm-g-cache
+      with:
+        path: |
+          ${{ steps.npm-paths.outputs.LIB_PATH }}
+          ${{ steps.npm-paths.outputs.BIN_PATH }}
+          ~/.npm-global/bin
+        key: ${{ runner.os }}-npm-g-firebase-tools-12.0.1
+
+    - if: ${{ github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: npm i --location=global firebase-tools@12.0.1
+
+    - if: steps.npm-cache.outputs.cache-hit != 'true'
+      name: Install functions dependencies
+      shell: bash
       working-directory: functions
-      env:
-        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
       run: |
         for d in */ ; do
           cd $d
           npm ci
           cd ..
         done
+
+    - name: Set ECOM_STORE_ID and GITHUB_REF env
+      shell: bash
+      working-directory: functions
+      env:
+        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
+      run: |
         echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
         echo "git_branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
@@ -85,7 +117,8 @@ runs:
           ssr:
             - 'functions/ssr/**'
     
-    - shell: bash
+    - name: Check functions codebase to deploy
+      shell: bash
       env:
         DEPLOY_CODEBASE: ${{ inputs.deploy-codebase }}
         CHS_MANY: ${{ steps.changes.outputs.many }}
@@ -166,6 +199,7 @@ runs:
         fi
 
     - if: github.event_name == 'pull_request'
+      name: Build storefront static
       shell: bash
       env:
         ECOM_STORE_ID: ${{ env.ecom_store_id }}
