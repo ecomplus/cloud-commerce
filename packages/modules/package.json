@@ -21,7 +21,8 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/modules#readme",
   "scripts": {
     "build": "bash ../../scripts/build-lib.sh",
-    "build:types": "bash scripts/build-types.sh"
+    "build:types": "bash scripts/build-types.sh",
+    "test:e2e": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
