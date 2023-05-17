@@ -28,7 +28,6 @@ jobs:
     name: Test apps
     runs-on: ubuntu-latest
     if: |
-      github.event.head_commit.message != 'Initial commit' &&
       !contains(github.event.head_commit.message, '[skip ci]')
 
     steps:
@@ -39,30 +38,38 @@ jobs:
           repository: ecomplus/store
           path: store
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
       - uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      
+      - id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         with:
-          path: |
-            node_modules/**
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - run: pnpm fix-install
+      - shell: bash
+        run: pnpm fix-install
 
-      - run: pnpm build
+      - shell: bash
+        run: pnpm build --force
 
-      - run: npm install -g firebase-tools
+      - shell: bash
+        run: npm install -g firebase-tools
 
       - name: Build store and initialize emulators
+        shell: bash
         env:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
@@ -73,6 +80,7 @@ jobs:
           npx firebase --project=ecom2-002 emulators:start --only functions &
 
       - name: Run tests
+        shell: bash
         run: |
           sleep 10
           cd packages/modules
