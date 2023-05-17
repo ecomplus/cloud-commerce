@@ -54,12 +54,12 @@ runs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
 
+    - shell: bash
+      run: npm ci --omit=dev
+
     - if: github.event_name == 'push'
       shell: bash
       run: npm i --location=global firebase-tools@12
-
-    - shell: bash
-      run: npm ci --omit=dev
 
     - shell: bash
       working-directory: functions
