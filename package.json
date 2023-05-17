@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -16,6 +16,7 @@
     "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build --filter='!./ecomplus-stores/**'",
     "test": "turbo run test --filter='!./ecomplus-stores/**'",
+    "test:e2e": "turbo run test:e2e --filter='./packages/**'",
     "release": "bash scripts/version-and-release.sh",
     "store:run": "pnpm build && npm --prefix \"store\" run",
     "start": "pnpm store:run start",
