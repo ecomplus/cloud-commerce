@@ -67,6 +67,9 @@ jobs:
           path: |
             **/.turbo
             **/.cache/turbo
+            packages/*/lib
+            packages/apps/*/lib
+            packages/apps/*/assets/*.min.js
           key: ${{ runner.os }}-turbo-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-turbo-
