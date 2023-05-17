@@ -1,4 +1,4 @@
-name: Deploy
+name: Tests
 
 on:
   pull_request:
@@ -25,35 +25,30 @@ on:
 
 jobs:
   setup:
-    name: Tests Apps
+    name: Test apps
     runs-on: ubuntu-latest
     if: |
       github.event.head_commit.message != 'Initial commit' &&
       !contains(github.event.head_commit.message, '[skip ci]')
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Checkout Store
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           repository: ecomplus/store
           path: store
 
       - uses: pnpm/action-setup@v2
-        name: Install pnpm
         with:
           version: 8
           run_install: false
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: |
             node_modules/**
@@ -61,15 +56,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install pnpm
-        run: pnpm fix-install
+      - run: pnpm fix-install
 
-      - name: Build root
-        run: pnpm build
+      - run: pnpm build
 
-      - name: Install firebase-tools
-        run: |
-          npm install -g firebase-tools
+      - run: npm install -g firebase-tools
 
       - name: Build store and initialize emulators
         env:
