@@ -46,22 +46,10 @@ jobs:
         with:
           version: 8
           run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          cache: 'pnpm'
 
       - shell: bash
-        run: pnpm fix-install
+        run: pnpm install --frozen-lockfile
 
       - uses: actions/cache@v3
         with:
@@ -89,8 +77,9 @@ jobs:
         with:
           path: |
             ${{ steps.npm-cache.outputs.GLOBAL_PATH }}
+            ${{ steps.npm-cache.outputs.GLOBAL_PATH }}/../bin
             ~/.npm-global/bin
-          key: ${{ runner.os }}-npm-global-firebase-tools-12.0.1
+          key: ${{ runner.os }}-npm-globals-firebase-tools-12.0.1
 
       - if: steps.npm-cache-hit.outputs.cache-hit != 'true'
         shell: bash
@@ -105,7 +94,7 @@ jobs:
         run: |
           cd store
           npm run build
-          npx firebase --project=ecom2-002 emulators:start --only functions &
+          firebase --project=ecom2-002 emulators:start --only functions &
 
       - name: Run tests
         shell: bash
