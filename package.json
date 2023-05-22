@@ -60,7 +60,8 @@
         "@babel/core"
       ],
       "allowedVersions": {
-        "sharp": "0.32"
+        "sharp": "0.32",
+        "vite-plugin-pwa": "0.15"
       }
     }
   }
