@@ -1,6 +1,6 @@
-import * as fs from 'fs';
-import url from 'url';
-import { join as joinPath } from 'path';
+import * as fs from 'node:fs';
+import url from 'node:url';
+import { join as joinPath } from 'node:path';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 

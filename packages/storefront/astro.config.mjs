@@ -1,5 +1,5 @@
 import { lstatSync, readFileSync } from 'node:fs';
-import { join as joinPath } from 'path';
+import { join as joinPath } from 'node:path';
 import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';

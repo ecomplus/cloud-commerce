@@ -1,6 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
-import { join as joinPath } from 'path';
-import { readFile } from 'fs/promises';
+import { join as joinPath } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
 
 declare global {
