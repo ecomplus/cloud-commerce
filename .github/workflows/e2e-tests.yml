@@ -28,7 +28,8 @@ jobs:
     name: Test apps
     runs-on: ubuntu-latest
     if: |
-      !contains(github.event.head_commit.message, '[skip ci]')
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.head_commit.message, '(deps):')
 
     steps:
       - uses: actions/checkout@v3
