@@ -88,6 +88,11 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     if (slug) {
       if (contentCollection) {
         cmsContent = await config.getContent(`${contentCollection}/${slug}`);
+      } else if (slug.startsWith('api/')) {
+        const err: any = new Error('/api/* routes not implemented on SSR directly');
+        Astro.response.status = 501;
+        err.responseHTML = `<head></head><body>${err.message}</body>`;
+        throw err;
       } else {
         apiFetchings[0] = api.get(`slugs/${slug}`);
       }
