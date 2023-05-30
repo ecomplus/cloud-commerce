@@ -24,6 +24,12 @@ type StorefrontConfig = {
 const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
 
+if (!globalThis.$apiMergeConfig) {
+  globalThis.$apiMergeConfig = {
+    isNoAuth: true,
+    canCache: true,
+  };
+}
 if (!globalThis.$apiPrefetchEndpoints) {
   globalThis.$apiPrefetchEndpoints = ['categories'];
 }
@@ -71,13 +77,9 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     brands?: BrandsList,
     [k: string]: Record<string, any> | undefined,
   } = {};
-  const apiOptions = {
-    fetch,
-    isNoAuth: true,
-  };
   const apiFetchings = [
     null, // fetch by slug
-    ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint, apiOptions)),
+    ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint)),
   ];
   if (isHomepage) {
     cmsContent = await config.getContent('home');
@@ -87,7 +89,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
       if (contentCollection) {
         cmsContent = await config.getContent(`${contentCollection}/${slug}`);
       } else {
-        apiFetchings[0] = api.get(`slugs/${slug}`, apiOptions);
+        apiFetchings[0] = api.get(`slugs/${slug}`);
       }
     }
   }
