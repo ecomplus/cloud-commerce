@@ -9,6 +9,8 @@ import type {
 
 declare global {
   // eslint-disable-next-line
+  var $apiMergeConfig: Partial<Config> | undefined;
+  // eslint-disable-next-line
   var __apiCache: Record<string, {
     timestamp: number,
     res: Response & { data: any },
@@ -113,11 +115,16 @@ const setMiddleware = (middleware: typeof def.middleware) => {
   def.middleware = middleware;
 };
 
-const api = async <T extends Config & { body?: any, data?: any }>(config: T, retries = 0):
-Promise<Response & {
+const api = async <T extends Config & { body?: any, data?: any }>(
+  requestConfig: T,
+  _retries = 0,
+): Promise<Response & {
   config: Config,
   data: ResponseBody<T>,
 }> => {
+  const config = globalThis.$apiMergeConfig
+    ? { ...globalThis.$apiMergeConfig, ...requestConfig }
+    : requestConfig;
   const { url, headers } = def.middleware(config);
   const {
     method = 'get',
@@ -125,8 +132,7 @@ Promise<Response & {
     maxRetries = 3,
     cacheMaxAge = 600000, // 10 minutes
   } = config;
-  const canCache = method === 'get'
-    && (config.canCache || (config.canCache === undefined && _env.SSR));
+  const canCache = method === 'get' && config.canCache;
   let cacheKey: string | undefined;
   if (canCache) {
     cacheKey = `${url}${JSON.stringify(headers)}`;
@@ -177,11 +183,11 @@ Promise<Response & {
       return { ...res, config };
     }
     const { status } = response;
-    if (maxRetries < retries && (status === 429 || status >= 500)) {
+    if (maxRetries < _retries && (status === 429 || status >= 500)) {
       const retryAfter = response.headers.get('retry-after');
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          api(config, retries + 1).then(resolve).catch(reject);
+          api(requestConfig, _retries + 1).then(resolve).catch(reject);
         }, (retryAfter && parseInt(retryAfter, 10)) || 5000);
       });
     }
@@ -208,23 +214,27 @@ const post = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'post' }>,
   config?: E extends 'login' | 'authenticate' ? AbstractedConfig : C,
-) => api({
+) => {
+  return api({
     ...config,
     method: 'post',
     endpoint,
     body,
   });
+};
 
 const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedConfig>(
   endpoint: E,
   body: RequestBody<{ endpoint: E, method: 'put' }>,
   config?: C,
-) => api({
+) => {
+  return api({
     ...config,
     method: 'put',
     endpoint,
     body,
   });
+};
 
 const patch = (endpoint: Endpoint, body: any, config?: AbstractedConfig) => api({
   ...config,
