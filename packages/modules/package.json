@@ -30,7 +30,7 @@
     "@cloudcommerce/app-custom-shipping": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-discounts": "workspace:*",
-    "@cloudcommerce/app-flash-courier": "workspace:^0.0.0",
+    "@cloudcommerce/app-flash-courier": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-infinitepay": "workspace:*",
