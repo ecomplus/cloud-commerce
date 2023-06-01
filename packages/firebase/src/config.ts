@@ -143,6 +143,9 @@ const mergeConfig = {
       appId: 123113,
       events: webhooksAppEvents,
     },
+    flashCourier: {
+      appId: 104136,
+    },
   },
   settingsContent,
 };
