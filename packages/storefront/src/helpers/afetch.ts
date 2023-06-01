@@ -2,11 +2,11 @@ type FetchParams = Parameters<typeof fetch>;
 
 const afetch = (url: FetchParams[0], init?: FetchParams[1], timeout = 10000) => {
   let abortController: AbortController | undefined;
-  let timer;
+  let timer: NodeJS.Timeout | undefined;
   if (timeout) {
     abortController = new AbortController();
     timer = setTimeout(() => {
-      abortController.abort();
+      (abortController as AbortController).abort();
     }, timeout);
   }
   if (init?.body && typeof init.body === 'object') {

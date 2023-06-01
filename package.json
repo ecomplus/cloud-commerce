@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "0.12.1",
+  "version": "0.14.1",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -16,6 +16,7 @@
     "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build --filter='!./ecomplus-stores/**'",
     "test": "turbo run test --filter='!./ecomplus-stores/**'",
+    "test:e2e": "turbo run test:e2e --filter='./packages/**'",
     "release": "bash scripts/version-and-release.sh",
     "store:run": "pnpm build && npm --prefix \"store\" run",
     "start": "pnpm store:run start",
@@ -32,22 +33,22 @@
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
     "@commitlint/rules": "^17.6.1",
-    "@types/node": "^18.16.9",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
+    "@types/node": "^18.16.16",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
     "esbuild": "^0.17.19",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-vue": "^9.12.0",
+    "eslint-plugin-vue": "^9.14.1",
     "husky": "^8.0.3",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.1",
-    "turbo": "^1.9.5",
+    "turbo": "^1.9.9",
     "typescript": "^5.0.4",
     "uglify-js": "^3.17.4",
-    "vite": "^4.3.6",
-    "vitest": "^0.31.0",
+    "vite": "^4.3.9",
+    "vitest": "^0.31.1",
     "zx": "^7.2.2"
   },
   "pnpm": {
@@ -59,7 +60,8 @@
         "@babel/core"
       ],
       "allowedVersions": {
-        "sharp": "0.32"
+        "sharp": "0.32",
+        "vite-plugin-pwa": "0.15"
       }
     }
   }

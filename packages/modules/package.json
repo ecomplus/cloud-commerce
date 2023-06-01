@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/modules",
   "type": "module",
-  "version": "0.12.1",
+  "version": "0.14.1",
   "description": "E-Com Plus Cloud Commerce modules API",
   "main": "lib/index.cjs",
   "exports": {
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/modules#readme",
   "scripts": {
     "build": "bash ../../scripts/build-lib.sh",
-    "build:types": "bash scripts/build-types.sh"
+    "build:types": "bash scripts/build-types.sh",
+    "test:e2e": "node --test tests/modules.test.mjs"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

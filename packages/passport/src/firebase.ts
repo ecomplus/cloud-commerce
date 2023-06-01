@@ -1,4 +1,3 @@
-import '@cloudcommerce/firebase/lib/init';
 import functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import servePassportApi from './firebase/serve-passport-api';

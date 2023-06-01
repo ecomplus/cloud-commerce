@@ -3,9 +3,9 @@ import type {
   ListPaymentsParams,
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
-import * as path from 'path';
-import * as fs from 'fs';
-import url from 'url';
+import * as path from 'node:path';
+import * as fs from 'node:fs';
+import url from 'node:url';
 import addInstallments from './functions-lib/add-installments';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]

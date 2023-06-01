@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.1](https://github.com/ecomplus/cloud-commerce/compare/v0.14.0...v0.14.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* **feeds:** Use default functions (non-SSR) region to deploy ([ca2d141](https://github.com/ecomplus/cloud-commerce/commit/ca2d14187abcf9e8425060e3986d1df4ab67901b))
+
+## [0.14.0](https://github.com/ecomplus/cloud-commerce/compare/v0.12.1...v0.14.0) (2023-05-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **firebase:** Must add `import '@cloudcommerce/firebase/lib/init';` on all codebases except ssr
+
+### Bug Fixes
+
+* **firebase:** Do not run app init on all functions sources excepting SSR ([010e722](https://github.com/ecomplus/cloud-commerce/commit/010e7227e12951709f1b0a8c30766957c0e36aa0))
+
 ### [0.12.1](https://github.com/ecomplus/cloud-commerce/compare/v0.12.0...v0.12.1) (2023-05-16)
 
 ## [0.12.0](https://github.com/ecomplus/cloud-commerce/compare/v0.11.0...v0.12.0) (2023-05-16)
