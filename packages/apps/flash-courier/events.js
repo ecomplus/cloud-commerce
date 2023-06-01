@@ -1,1 +1,1 @@
-export * from './lib/melhor-envio-events';
+export * from './lib/flash-courier-events';
