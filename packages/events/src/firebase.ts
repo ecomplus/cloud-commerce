@@ -30,3 +30,5 @@ export * from '@cloudcommerce/app-paghiper/webhook';
 export * from '@cloudcommerce/app-melhor-envio/events';
 
 export * from '@cloudcommerce/app-webhooks';
+
+export * from '@cloudcommerce/app-flash-courier/events';
