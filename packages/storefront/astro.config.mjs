@@ -185,6 +185,10 @@ const genAstroConfig = ({
     outDir,
     integrations,
     site,
+    compressHTML: isToServerless,
+    experimental: {
+      inlineStylesheets: 'never',
+    },
     vite: {
       plugins: [
         {
