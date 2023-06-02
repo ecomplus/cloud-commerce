@@ -1,0 +1,1 @@
+Please refer to GitHub [repository releases](https://github.com/ecomplus/cloud-commerce/releases) or monorepo unified [CHANGELOG.md](https://github.com/ecomplus/cloud-commerce/blob/main/CHANGELOG.md).
