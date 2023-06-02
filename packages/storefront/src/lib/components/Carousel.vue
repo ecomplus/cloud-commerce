@@ -169,7 +169,13 @@ provide(carouselKey, {
     <component
       :is="as"
       ref="wrapper"
-      class="flex overflow-x-scroll overflow-y-hidden list-none m-0 p-0"
+      class="flex overflow-x-scroll overflow-y-hidden list-none m-0 p-0
+        snap-x snap-mandatory scroll-smooth
+        [&>*]:snap-start [&>*]:outline-none"
+      style="
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;"
       data-carousel-wrapper
     >
       <slot />
@@ -194,23 +200,3 @@ provide(carouselKey, {
     </slot>
   </div>
 </template>
-
-<style>
-[data-carousel-wrapper] {
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: none;
-}
-[data-carousel-wrapper]::-webkit-scrollbar {
-  display: none;
-}
-[data-carousel-wrapper] > * {
-  scroll-snap-align: start;
-  outline: none;
-}
-[data-carousel-control] {
-  z-index: 1;
-}
-</style>

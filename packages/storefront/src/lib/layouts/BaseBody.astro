@@ -33,3 +33,10 @@ const { settings } = Astro.props.pageContext;
     />
   }
 </body>
+
+<style is:global>
+  /* <Carousel> */
+  [data-carousel-wrapper]::-webkit-scrollbar {
+    display: none;
+  }
+</style>
