@@ -39,6 +39,11 @@ const webhooksAppEvents: ApiEventName[] = [
   'carts-delayed',
 ];
 
+const affilateProgramEvents: ApiEventName[] = [
+  'orders-anyStatusSet',
+  'customers-new',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -142,6 +147,10 @@ const mergeConfig = {
     webhooksApp: {
       appId: 123113,
       events: webhooksAppEvents,
+    },
+    affilateProgram: {
+      appId: 119753,
+      events: affilateProgramEvents,
     },
   },
   settingsContent,
