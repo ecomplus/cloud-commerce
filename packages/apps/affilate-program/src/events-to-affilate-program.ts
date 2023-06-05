@@ -17,7 +17,7 @@ const handleApiEvent: ApiEventHandler = async ({
   const isOrder = evName === 'orders-anyStatusSet';
   const isCustomer = evName === 'customers-new' && apiDoc?.affiliate_code;
 
-  const firestore = getFirestore().collection('AffilateProgramOrders');
+  const firestore = getFirestore().collection('affilateProgramOrders');
 
   if (
     (Array.isArray(appData.ignore_events)
@@ -81,10 +81,9 @@ const handleApiEvent: ApiEventHandler = async ({
       return null;
     }
 
-    logger.info(`[wh] ${isOrder ? 'Orders' : 'Customers'}`);
+    logger.info(`${isOrder ? 'Orders' : 'Customers'}`);
     try {
       if (isCustomer && appData.points_on_signup) {
-        logger.info('[wh] customer signup');
         const referralCustomer = (await api.get(`customers/${referralId}`)).data;
 
         if (!referralCustomer?.enabled) {
@@ -112,7 +111,6 @@ const handleApiEvent: ApiEventHandler = async ({
       }
 
       if (isOrder && isPaid && appData.points_on_referral) {
-        logger.info('[wh] order paid');
         if (appData.min_subtotal_to_earn > orderSubtotal) {
           return null;
         }
@@ -129,7 +127,7 @@ const handleApiEvent: ApiEventHandler = async ({
         if (referralCustomer.doc_number === buyerCustomer.doc_number) {
           return null;
         }
-        logger.info(`[wh] order ${orderId} paid by ${buyerId} validated`);
+        logger.info(`Order ${orderId} paid by ${buyerId} validated`);
 
         const docRef = firestore.doc(`${orderId}`);
         if (!appData.on_all_orders) {
@@ -156,15 +154,15 @@ const handleApiEvent: ApiEventHandler = async ({
           {
             name: 'Afiliado',
             program_id: 'affiliates0',
-            earned_points: appData.points_on_referral,
-            active_points: appData.points_on_referral,
+            earned_points: earnedPoints,
+            active_points: earnedPoints,
             ratio: 1,
           },
         );
         await docRef.set({
           buyerId,
           referralId: buyerCustomer.affiliate_code,
-          earnedPoints: appData.points_on_referral,
+          earnedPoints,
           t: Timestamp.fromDate(new Date()),
         });
       }
