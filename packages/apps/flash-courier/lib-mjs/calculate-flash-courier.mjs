@@ -1,5 +1,4 @@
 import axios from 'axios';
-import getDeadline from './get-deadline.mjs';
 
 export default async ({ params, application }) => {
   const appData = {
@@ -217,12 +216,6 @@ export default async ({ params, application }) => {
     response.shipping_services.forEach((service, i) => {
       if (!service.shipping_line.delivery_time.days) {
         // express deadline on first (cheaper) service
-        const isExpress = response.shipping_services.length > 1 && i === 0;
-        service.shipping_line.delivery_time.days = getDeadline(
-          originZip,
-          destinationZip,
-          isExpress,
-        );
         if (i > 1) {
           service.shipping_line.delivery_time.days += (i - 1);
         }
