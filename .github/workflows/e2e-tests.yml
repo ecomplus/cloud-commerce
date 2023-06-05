@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "packages/**"
+      - "!package.json"
       - "!packages/storefront"
       - "!packages/ssr"
       - "!packages/feeds"
@@ -16,6 +17,7 @@ on:
     paths:
       - ".github/workflows/e2e-tests.yml"
       - "packages/**"
+      - "!package.json"
       - "!packages/storefront"
       - "!packages/ssr"
       - "!packages/feeds"
