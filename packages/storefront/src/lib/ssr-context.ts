@@ -2,7 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { ContentGetter, SettingsContent, HomeContent } from './content';
+import type { ContentGetter, SettingsContent, PageContent } from './content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 import _getConfig from '../../config/storefront.config.mjs';
@@ -68,7 +68,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.$storefront.settings = config.settings;
-  let cmsContent: HomeContent | Record<string, any> | null | undefined;
+  let cmsContent: PageContent | Record<string, any> | null | undefined;
   let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: {
@@ -81,7 +81,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint)),
   ];
   if (isHomepage) {
-    cmsContent = await config.getContent('home');
+    cmsContent = await config.getContent('pages/home');
   } else {
     const { slug } = Astro.params;
     if (slug) {
