@@ -52,7 +52,7 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
   Astro.response.headers.set(headerName, cacheControl);
 };
 
-const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
+const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   contentCollection,
   apiPrefetchEndpoints = globalThis.$apiPrefetchEndpoints,
 }: {
@@ -150,7 +150,7 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
       timestamp: Date.now(),
     };
   }
-  const pageContext = {
+  const routeContext = {
     ...config,
     isHomepage,
     cmsContent,
@@ -159,22 +159,22 @@ const loadPageContext = async (Astro: Readonly<AstroGlobal>, {
     apiState,
     isPreview,
   };
-  emitter.emit('load', pageContext);
-  return pageContext;
+  emitter.emit('load', routeContext);
+  return routeContext;
 };
 
-export default loadPageContext;
+export default loadRouteContext;
 
 export {
   getConfig,
-  loadPageContext,
+  loadRouteContext,
 };
 
-type PageContext = Awaited<ReturnType<typeof loadPageContext>>;
+type RouteContext = Awaited<ReturnType<typeof loadRouteContext>>;
 
 export type {
   StorefrontConfig,
   SettingsContent,
   ApiPrefetchEndpoints,
-  PageContext,
+  RouteContext,
 };

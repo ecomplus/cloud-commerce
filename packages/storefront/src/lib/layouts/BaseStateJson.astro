@@ -1,13 +1,13 @@
 ---
-import type { PageContext } from '@@sf/ssr-context';
+import type { RouteContext } from '@@sf/ssr-context';
 import { price as getPrice } from '@ecomplus/utils';
 
 export interface Props {
-  pageContext: PageContext;
+  routeContext: RouteContext;
 }
 
 const {
-  pageContext: {
+  routeContext: {
     storeId,
     apiResource,
     apiDoc,

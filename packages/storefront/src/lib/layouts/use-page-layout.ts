@@ -1,4 +1,4 @@
-import type { PageContext } from '@@sf/ssr-context';
+import type { RouteContext } from '@@sf/ssr-context';
 import type { LayoutContent } from '@@sf/content';
 import type { Props as UseShopHeaderProps } from '@@sf/composables/use-shop-header';
 import { parseLayoutContent } from '@@sf/composables/use-pitch-bar';
@@ -8,11 +8,11 @@ type ShopHeaderProps = Omit<UseShopHeaderProps, 'header'> & {
 };
 
 export interface Props {
-  pageContext: PageContext;
+  routeContext: RouteContext;
 }
 
-const usePageLayout = async ({ pageContext }: Props) => {
-  const { apiState, getContent } = pageContext;
+const usePageLayout = async ({ routeContext }: Props) => {
+  const { apiState, getContent } = routeContext;
   const layoutContent = await getContent('layout');
   const {
     header: headerContent,

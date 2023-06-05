@@ -1,10 +1,10 @@
 ---
-import type { PageContext } from '@@sf/ssr-context';
+import type { RouteContext } from '@@sf/ssr-context';
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg } from '@ecomplus/utils';
 
 export interface Props {
-  pageContext: PageContext;
+  routeContext: RouteContext;
   title?: string;
 }
 
@@ -23,7 +23,7 @@ const {
   primaryColor,
   settings,
   getContent,
-} = Astro.props.pageContext;
+} = Astro.props.routeContext;
 
 const state: Record<string, any> = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;

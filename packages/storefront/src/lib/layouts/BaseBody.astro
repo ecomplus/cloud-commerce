@@ -1,5 +1,5 @@
 ---
-import type { PageContext } from '@@sf/ssr-context';
+import type { RouteContext } from '@@sf/ssr-context';
 import '@@sf/assets/preflight.css';
 import '@@sf/assets/base.css';
 import '@@sf/assets/forms.css';
@@ -8,10 +8,10 @@ import 'uno.css';
 import Picture from '@@sf/components/Picture.astro';
 
 export interface Props {
-  pageContext: PageContext;
+  routeContext: RouteContext;
 }
 
-const { settings } = Astro.props.pageContext;
+const { settings } = Astro.props.routeContext;
 ---
 
 <body>
