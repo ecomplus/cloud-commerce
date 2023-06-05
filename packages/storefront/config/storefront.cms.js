@@ -1,7 +1,4 @@
-const fs = require('fs');
-const { resolve: resolvePath } = require('path');
-
-module.exports = () => {
+global.__storefrontCMS = (fs, resolvePath) => {
   const { STOREFRONT_BASE_DIR } = process.env;
   let baseDir;
   if (STOREFRONT_BASE_DIR) {
@@ -28,11 +25,15 @@ module.exports = () => {
             resolve(slugs);
           });
         }
+        // @TODO: Also parse Markdown with front matter
         const filepath = resolvePath(dirContent, `${filename}.json`);
         content = fs.existsSync(filepath)
           ? JSON.parse(fs.readFileSync(filepath, 'utf8'))
           : null;
-        contentCache[filename] = content;
+        if (!filename.includes('/')) {
+          // Caching root content only (not collections)
+          contentCache[filename] = content;
+        }
       }
       return filename === 'settings'
         ? content

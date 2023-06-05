@@ -8,7 +8,7 @@ import image from '@astrojs/image';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
-import getConfig from './storefront.config.mjs';
+import getConfig from './config/storefront.config.mjs';
 
 const __dirname = new URL('.', import.meta.url).pathname;
 dotenv.config();

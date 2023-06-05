@@ -5,8 +5,7 @@ import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { ContentGetter, SettingsContent, HomeContent } from './content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
-// @ts-ignore
-import _getConfig from '../../storefront.config.mjs';
+import _getConfig from '../../config/storefront.config.mjs';
 
 type StorefrontConfig = {
   storeId: BaseConfig['storeId'],
