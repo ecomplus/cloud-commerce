@@ -1,4 +1,4 @@
-import type { Products, CheckoutBody } from '@cloudcommerce/types';
+import type { ResourceId, Products, CheckoutBody } from '@cloudcommerce/types';
 import type { Items, Item } from '../../types';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
@@ -248,7 +248,7 @@ export default async (
       const kitProductId = item.kit_product._id;
       try {
       // eslint-disable-next-line no-await-in-loop
-        const kitProduct = (await api.get(`products/${kitProductId as string}`, {
+        const kitProduct = (await api.get(`products/${kitProductId}`, {
           isNoAuth: true,
         })).data;
 
@@ -266,7 +266,7 @@ export default async (
       // GET public product object
       try {
         // eslint-disable-next-line no-await-in-loop
-        const product = (await api.get(`products/${item.product_id}`, {
+        const product = (await api.get(`products/${item.product_id as ResourceId}`, {
           isNoAuth: true,
         })).data;
 

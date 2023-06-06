@@ -1,7 +1,6 @@
-/* eslint-disable no-undef */
 /* eslint-disable import/prefer-default-export */
 import type { Request, Response } from 'firebase-functions';
-import type { Orders } from '@cloudcommerce/types';
+import type { ResourceId, Orders } from '@cloudcommerce/types';
 import '@cloudcommerce/firebase/lib/init';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
@@ -11,7 +10,7 @@ import config from '@cloudcommerce/firebase/lib/config';
 import cryptoJS from 'crypto-js';
 
 type DocTransactionPix = {
-  orderId: string;
+  orderId: ResourceId;
   secret: string;
   transactionReference: number;
 }
@@ -80,10 +79,10 @@ const handler = async (req: Request, res: Response) => {
     // console.log('>Has Pix: ', hasPix, ' <');
     const pixId = req.body.transaction_identification;
     if (pixId) {
-      let orderId: string;
+      let orderId: ResourceId;
       let secret: string;
       let transactionReference: number;
-      let order: Orders | undefined;
+      let order: Orders;
       try {
         const pixInfo = await getTransactionPix(collectionTransactions, pixId);
         orderId = pixInfo.orderId;

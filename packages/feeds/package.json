@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/firebase": "workspace:^"
+    "@cloudcommerce/firebase": "workspace:*"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",

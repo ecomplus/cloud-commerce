@@ -1,4 +1,4 @@
-import type { ListPaymentsResponse } from '@cloudcommerce/types/modules/list_payments:response';
+import type { ListPaymentsResponse } from '@cloudcommerce/types';
 
 const standardMonthlyInterest = [
   4.20,
