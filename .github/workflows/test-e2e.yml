@@ -1,4 +1,4 @@
-name: E2E tests
+name: Run E2E tests
 
 on:
   pull_request:
@@ -15,8 +15,9 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/e2e-tests.yml"
+      - ".github/workflows/test-e2e.yml"
       - "packages/**"
+      - "pnpm-lock.yaml"
       - "!package.json"
       - "!packages/storefront"
       - "!packages/ssr"
@@ -26,12 +27,11 @@ on:
       - "!packages/__skeleton"
 
 jobs:
-  setup:
-    name: Test apps
+  test:
     runs-on: ubuntu-latest
     if: |
       !contains(github.event.head_commit.message, '[skip ci]') &&
-      !contains(github.event.head_commit.message, '(deps):')
+      !contains(github.event.head_commit.author.name, '[bot]')
 
     steps:
       - uses: actions/checkout@v3
