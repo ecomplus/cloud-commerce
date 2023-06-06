@@ -186,7 +186,7 @@ const genAstroConfig = ({
     integrations,
     site,
     compressHTML: isToServerless,
-    experimental: {
+    build: {
       inlineStylesheets: 'never',
     },
     vite: {
