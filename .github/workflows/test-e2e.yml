@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - "packages/**"
-      - "!package.json"
-      - "!packages/storefront"
-      - "!packages/ssr"
-      - "!packages/feeds"
-      - "!packages/passort"
-      - "!packages/!18n"
-      - "!packages/__skeleton"
+      - "!**/package.json"
+      - "!packages/storefront/**"
+      - "!packages/ssr/**"
+      - "!packages/feeds/**"
+      - "!packages/passort/**"
+      - "!packages/i18n/**"
+      - "!packages/__skeleton/**"
   push:
     branches:
       - main
@@ -18,13 +18,13 @@ on:
       - ".github/workflows/test-e2e.yml"
       - "packages/**"
       - "pnpm-lock.yaml"
-      - "!package.json"
-      - "!packages/storefront"
-      - "!packages/ssr"
-      - "!packages/feeds"
-      - "!packages/passort"
-      - "!packages/!18n"
-      - "!packages/__skeleton"
+      - "!**/package.json"
+      - "!packages/storefront/**"
+      - "!packages/ssr/**"
+      - "!packages/feeds/**"
+      - "!packages/passort/**"
+      - "!packages/i18n/**"
+      - "!packages/__skeleton/**"
 
 jobs:
   test:
