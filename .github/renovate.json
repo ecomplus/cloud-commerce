@@ -28,7 +28,19 @@
       "matchUpdateTypes": [
         "minor",
         "patch"
-      ]
+      ],
+      "matchCurrentVersion": "!/^0/"
+    },
+    {
+      "groupName": "Non-major dependencies",
+      "groupSlug": "many-minor-patch",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "matchCurrentVersion": "/^0/"
     },
     {
       "groupName": "Astro",
