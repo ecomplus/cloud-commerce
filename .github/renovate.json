@@ -20,7 +20,8 @@
         "*"
       ],
       "excludePackageNames": [
-        "astro"
+        "astro",
+        "typescript"
       ],
       "excludePackagePrefixes": [
         "@astrojs/"
