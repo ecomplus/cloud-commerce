@@ -1,22 +1,20 @@
 ---
-import type { RouteContext } from '@@sf/ssr-context';
 import BaseHead from '@@sf/layouts/BaseHead.astro';
 import BaseStateJson from '@@sf/layouts/BaseStateJson.astro';
 import BaseBody from '@@sf/layouts/BaseBody.astro';
 
 export interface Props {
-  routeContext: RouteContext;
   title?: string;
 }
 
-const { routeContext, title } = Astro.props as Props;
-const { getContent } = routeContext;
+const { title } = Astro.props as Props;
+const { getContent } = Astro.locals.routeContext;
 const { custom_code: customCodeContent } = await getContent('layout');
 ---
 
 <head>
-  <BaseHead routeContext={routeContext} title={title} />
-  <BaseStateJson routeContext={routeContext} />
+  <BaseHead title={title} />
+  <BaseStateJson />
   {customCodeContent?.css && <style>{customCodeContent.css}</style>}
   {customCodeContent?.html_head && <Fragment set:html={customCodeContent.html_head} />}
   <slot name="base-head-scripts">
@@ -24,7 +22,7 @@ const { custom_code: customCodeContent } = await getContent('layout');
   </slot>
   <slot name="before-head-end" />
 </head>
-<BaseBody routeContext={routeContext}>
+<BaseBody>
   <slot />
   {customCodeContent?.html_body && <Fragment set:html={customCodeContent.html_body} />}
   <slot name="base-body-scripts">

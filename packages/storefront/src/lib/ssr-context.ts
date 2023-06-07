@@ -159,6 +159,7 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
     apiState,
     isPreview,
   };
+  Astro.locals.routeContext = routeContext;
   emitter.emit('load', routeContext);
   return routeContext;
 };

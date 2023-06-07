@@ -7,9 +7,16 @@ import type {
   BrandSet,
   CollectionSet,
 } from '@cloudcommerce/api/types';
-import type { SettingsContent } from './src/lib/content';
+import type { RouteContext } from '@@sf/ssr-context';
+import type { SettingsContent } from '@@sf/content';
 
 declare global {
+  namespace App {
+    interface Locals {
+      routeContext: RouteContext,
+    }
+  }
+
   var $storefront: {
     settings: Partial<SettingsContent>,
     context?: {
