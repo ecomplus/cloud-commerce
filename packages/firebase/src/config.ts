@@ -154,11 +154,12 @@ const mergeConfig = {
     },
   },
   settingsContent,
+  metafields: {},
 };
 config.set(mergeConfig);
 
 export default config as {
-  get(): BaseConfig & typeof mergeConfig;
+  get(): BaseConfig & typeof mergeConfig & { metafields: Record<string, any> };
   // eslint-disable-next-line
   set(config: any): void;
 };
