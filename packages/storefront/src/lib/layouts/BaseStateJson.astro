@@ -1,25 +1,18 @@
 ---
-import type { PageContext } from '@@sf/ssr-context';
 import { price as getPrice } from '@ecomplus/utils';
 
-export interface Props {
-  pageContext: PageContext;
-}
-
 const {
-  pageContext: {
-    storeId,
-    apiResource,
-    apiDoc,
-    lang,
-    countryCode,
-    currency,
-    currencySymbol,
-    domain,
-    settings,
-    isPreview,
-  },
-} = Astro.props as Props;
+  storeId,
+  apiResource,
+  apiDoc,
+  lang,
+  countryCode,
+  currency,
+  currencySymbol,
+  domain,
+  settings,
+  isPreview,
+} = Astro.locals.routeContext;
 
 let inlineClientJS = `
 window.ECOM_STORE_ID = ${storeId};

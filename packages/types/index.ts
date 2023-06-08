@@ -126,7 +126,7 @@ type SettingsContent = {
   account_url?: string,
   orders_url?: string,
   favorites_url?: string,
-  metafields?: Record<string, string>,
+  metafields?: Record<string, any>,
 };
 
 export type {

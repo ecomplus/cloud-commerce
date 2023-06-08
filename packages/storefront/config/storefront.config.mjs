@@ -1,7 +1,7 @@
-import { readFileSync } from 'node:fs';
-import { join as joinPath } from 'node:path';
+import fs from 'node:fs';
+import { join as joinPath, resolve as resolvePath } from 'node:path';
 import config from '@cloudcommerce/config';
-import getCMS from './config/storefront.cms.mjs';
+import './storefront.cms.js';
 
 export default () => {
   const { VITE_ECOM_STORE_ID } = import.meta.env || process.env;
@@ -15,14 +15,14 @@ export default () => {
     secondaryColor,
     settings,
     getContent,
-  } = getCMS();
+  } = global.__storefrontCMS(fs, resolvePath);
   config.set({ settingsContent: settings });
 
   let { storeId } = config.get();
   if (!storeId) {
     const configFilepath = joinPath(process.cwd(), 'config.json');
     try {
-      const mergeConfig = JSON.parse(readFileSync(configFilepath), 'utf8');
+      const mergeConfig = JSON.parse(fs.readFileSync(configFilepath), 'utf8');
       if (mergeConfig.storeId) {
         storeId = mergeConfig.storeId;
       }

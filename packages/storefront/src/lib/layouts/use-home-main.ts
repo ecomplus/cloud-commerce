@@ -1,13 +1,13 @@
-import type { PageContext } from '@@sf/ssr-context';
+import type { RouteContext } from '@@sf/ssr-context';
 import useHeroSection from '@@sf/layouts/sections/use-hero-section';
 
 export interface Props {
-  pageContext: PageContext;
+  routeContext: RouteContext;
 }
 
-const useHomeMain = async ({ pageContext }: Props) => {
+const useHomeMain = async ({ routeContext }: Props) => {
   return {
-    ...(await useHeroSection({ pageContext })),
+    ...(await useHeroSection({ routeContext })),
   };
 };
 

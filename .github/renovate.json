@@ -20,7 +20,8 @@
         "*"
       ],
       "excludePackageNames": [
-        "astro"
+        "astro",
+        "typescript"
       ],
       "excludePackagePrefixes": [
         "@astrojs/"
@@ -28,7 +29,22 @@
       "matchUpdateTypes": [
         "minor",
         "patch"
-      ]
+      ],
+      "matchCurrentVersion": "!/^0/"
+    },
+    {
+      "groupName": "Non-major dependencies",
+      "groupSlug": "many-minor-patch",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "excludePackagePrefixes": [
+        "@astrojs/"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "matchCurrentVersion": "/^0/"
     },
     {
       "groupName": "Astro",

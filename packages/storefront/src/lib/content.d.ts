@@ -5,11 +5,10 @@ export type SettingsContent = _SettingsContent &
 
 export type LayoutContent = typeof import('content/layout.json');
 
-export type HomeContent = typeof import('content/home.json');
+export type PageContent = typeof import('content/pages/home.json');
 
 export type ContentFilename = 'settings'
   | 'layout'
-  | 'home'
   | `${string}/`
   | `${string}/${string}`;
 
@@ -17,7 +16,7 @@ export type ContentData<T extends ContentFilename> =
   T extends `${string}/` ? Array<string> :
   T extends 'settings' ? SettingsContent :
   T extends 'layout' ? LayoutContent :
-  T extends 'home' ? HomeContent :
+  T extends `pages/${string}` ? PageContent :
   Record<string, any> | null;
 
 export type ContentGetter = <T extends ContentFilename>(filename: T) =>

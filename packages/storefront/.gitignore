@@ -1,3 +1,4 @@
+.astro
 /content
 /public
 /src/content
@@ -7,4 +8,3 @@
 /src/components
 /src/scripts
 /src/assets
-/tina

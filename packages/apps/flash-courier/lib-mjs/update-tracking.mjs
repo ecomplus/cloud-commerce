@@ -1,12 +1,11 @@
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
-import getEnv from '@cloudcommerce/firebase/lib/env';
 import axios from 'axios';
 
 // eslint-disable-next-line no-async-promise-executor
 export default new Promise(async (resolve, reject) => {
-  const { storeId } = getEnv();
+  const { metafields } = config.get();
   let appData;
   try {
     const app = (await api.get(
@@ -77,7 +76,9 @@ export default new Promise(async (resolve, reject) => {
               clienteId: Number(clientId),
               cttId: cctIds.split(',').map((id) => Number(id.trim())),
               numEncCli: orders.map(({ number }) => {
-                if (storeId === 51301) return `MONO-${number}`;
+                if (metafields.flashCourierNumberPrefix) {
+                  return `${metafields.flashCourierNumberPrefix}${number}`;
+                }
                 return String(number);
               }),
             },

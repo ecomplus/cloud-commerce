@@ -1,12 +1,6 @@
 ---
-import type { PageContext } from '@@sf/ssr-context';
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg } from '@ecomplus/utils';
-
-export interface Props {
-  pageContext: PageContext;
-  title?: string;
-}
 
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
 const getIconUrl = (size: number) => {
@@ -23,7 +17,7 @@ const {
   primaryColor,
   settings,
   getContent,
-} = Astro.props.pageContext;
+} = Astro.locals.routeContext;
 
 const state: Record<string, any> = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;

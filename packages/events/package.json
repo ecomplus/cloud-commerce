@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-affilate-program": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
     "@cloudcommerce/app-fb-conversions": "workspace:*",
@@ -41,7 +42,7 @@
     "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/app-webhooks": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "firebase-admin": "^11.8.0",
+    "firebase-admin": "^11.9.0",
     "firebase-functions": "^4.4.0",
     "source-map-support": "^0.5.21"
   },

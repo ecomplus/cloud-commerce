@@ -1158,11 +1158,11 @@ export interface Orders {
     /**
      * Product ID
      */
-    product_id: string;
+    product_id: string & { length: 24 };
     /**
      * ID to specify the variation added to cart, if product has variations
      */
-    variation_id?: string;
+    variation_id?: string & { length: 24 };
     /**
      * Product or variation unique reference code
      */

@@ -30,4 +30,6 @@ export * from '@cloudcommerce/app-melhor-envio/events';
 
 export * from '@cloudcommerce/app-webhooks';
 
+export * from '@cloudcommerce/app-affilate-program';
+
 export * from '@cloudcommerce/app-flash-courier/events';

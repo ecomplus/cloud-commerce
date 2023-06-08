@@ -1,3 +1,4 @@
+import type { ResourceId } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 
 const parseStatus = (status: number) => {
@@ -17,7 +18,7 @@ const parseStatus = (status: number) => {
 };
 
 const updateFulfillments = async (
-  orderId: string,
+  orderId: ResourceId,
   trackingCode: string,
   eventType: number,
   eventDate: Date,

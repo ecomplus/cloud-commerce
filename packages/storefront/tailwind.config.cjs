@@ -1,7 +1,9 @@
+const fs = require('fs');
+const { resolve: resolvePath } = require('path');
 const deepmerge = require('@fastify/deepmerge')();
 const colors = require('tailwindcss/colors');
 const chroma = require('chroma-js');
-const getCMS = require('./config/storefront.cms.cjs');
+require('./config/storefront.cms.js');
 
 let defaultThemeOptions = {
   baseColor: 'slate',
@@ -52,7 +54,7 @@ if (globalThis.$storefrontThemeOptions) {
   defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.$storefrontThemeOptions);
 }
 
-const { primaryColor, secondaryColor } = getCMS();
+const { primaryColor, secondaryColor } = global.__storefrontCMS(fs, resolvePath);
 const brandColors = {
   primary: primaryColor,
   secondary: secondaryColor || primaryColor,

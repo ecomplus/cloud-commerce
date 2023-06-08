@@ -150,8 +150,8 @@ export default async ({ params, application }) => {
 
     flashcourierResult.products.forEach((flashcourierProduto) => {
       Object.keys(flashcourierProduto).forEach((label) => {
-        let price; let
-          days;
+        let price;
+        let days;
         if (typeof flashcourierProduto[label] === 'object') {
           price = parseFloat(flashcourierProduto[label].preco);
           const minDays = parseInt(flashcourierProduto[label].prazo_min, 10);
@@ -159,6 +159,7 @@ export default async ({ params, application }) => {
           days = Math.ceil((minDays + maxDays) / 2);
         } else {
           price = parseFloat(flashcourierProduto[label]);
+          days = 7;
         }
         const shippingLine = {
           from: {
@@ -212,14 +213,6 @@ export default async ({ params, application }) => {
         return 1;
       }
       return -1;
-    });
-    response.shipping_services.forEach((service, i) => {
-      if (!service.shipping_line.delivery_time.days) {
-        // express deadline on first (cheaper) service
-        if (i > 1) {
-          service.shipping_line.delivery_time.days += (i - 1);
-        }
-      }
     });
   } else {
     return {

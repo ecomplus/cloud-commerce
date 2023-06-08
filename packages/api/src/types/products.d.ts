@@ -1240,7 +1240,7 @@ export interface Products {
      *
      * @maxItems 100
      */
-    product_ids: string[];
+    product_ids: Array<string & { length: 24 }>;
     /**
      * Tag to identify object, use only lowercase letters, digits and underscore
      */

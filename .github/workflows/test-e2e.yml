@@ -1,35 +1,37 @@
-name: E2E tests
+name: Run E2E tests
 
 on:
   pull_request:
     paths:
       - "packages/**"
-      - "!packages/storefront"
-      - "!packages/ssr"
-      - "!packages/feeds"
-      - "!packages/passort"
-      - "!packages/!18n"
-      - "!packages/__skeleton"
+      - "!**/package.json"
+      - "!packages/storefront/**"
+      - "!packages/ssr/**"
+      - "!packages/feeds/**"
+      - "!packages/passort/**"
+      - "!packages/i18n/**"
+      - "!packages/__skeleton/**"
   push:
     branches:
       - main
     paths:
-      - ".github/workflows/e2e-tests.yml"
+      - ".github/workflows/test-e2e.yml"
       - "packages/**"
-      - "!packages/storefront"
-      - "!packages/ssr"
-      - "!packages/feeds"
-      - "!packages/passort"
-      - "!packages/!18n"
-      - "!packages/__skeleton"
+      - "pnpm-lock.yaml"
+      - "!**/package.json"
+      - "!packages/storefront/**"
+      - "!packages/ssr/**"
+      - "!packages/feeds/**"
+      - "!packages/passort/**"
+      - "!packages/i18n/**"
+      - "!packages/__skeleton/**"
 
 jobs:
-  setup:
-    name: Test apps
+  test:
     runs-on: ubuntu-latest
     if: |
       !contains(github.event.head_commit.message, '[skip ci]') &&
-      !contains(github.event.head_commit.message, '(deps):')
+      !contains(github.event.head_commit.author.name, '[bot]')
 
     steps:
       - uses: actions/checkout@v3
@@ -98,11 +100,11 @@ jobs:
             ${{ steps.npm-paths.outputs.LIB_PATH }}
             ${{ steps.npm-paths.outputs.BIN_PATH }}
             ~/.npm-global/bin
-          key: ${{ runner.os }}-npm-globals-firebase-tools-12.0.1
+          key: ${{ runner.os }}-npm-globals-firebase-tools-12.3.1
 
       - if: steps.npm-g-cache.outputs.cache-hit != 'true'
         shell: bash
-        run: npm install -g firebase-tools@12.0.1
+        run: npm install -g firebase-tools@12.3.1
 
       - name: Initialize Firebase emulators
         shell: bash

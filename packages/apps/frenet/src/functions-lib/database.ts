@@ -1,10 +1,11 @@
+import type { ResourceId } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 
 const firestoreColl = 'frenetTrackingCodes';
 
 const save = (
-  orderId: string,
+  orderId: ResourceId,
   trackingStatus: string,
   trackingCode: string,
   serviceCode?: string,
@@ -150,7 +151,7 @@ const db = {
 export default db;
 
 export type TrackingDoc = {
-  orderId: string,
+  orderId: ResourceId,
   trackingStatus: string,
   trackingCode: string,
   serviceCode: string,

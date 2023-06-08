@@ -42,6 +42,8 @@ module.exports = {
           'firebase-admin/auth',
           '@astrojs/[^/]+$',
           'astro/config',
+          'astro/middleware',
+          'astro:content',
           'unocss/astro',
           '@@.*',
           'content/.*',
