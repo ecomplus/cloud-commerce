@@ -28,6 +28,7 @@
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
     "@cloudcommerce/app-fb-conversions": "workspace:*",
+    "@cloudcommerce/app-flash-courier": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-google-analytics": "workspace:*",

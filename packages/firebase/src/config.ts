@@ -152,6 +152,9 @@ const mergeConfig = {
       appId: 119753,
       events: affilateProgramEvents,
     },
+    flashCourier: {
+      appId: 104136,
+    },
   },
   settingsContent,
   metafields: {},

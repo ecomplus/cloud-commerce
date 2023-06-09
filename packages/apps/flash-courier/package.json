@@ -1,0 +1,33 @@
+{
+  "name": "@cloudcommerce/app-flash-courier",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce app to integrate Flash Courier",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./events": "./lib/melhor-envio-events.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/app-flash-courier"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/app-flash-courier#readme",
+  "scripts": {
+    "build": "bash ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
+    "axios": "^1.4.0"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}
