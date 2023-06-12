@@ -1,5 +1,5 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import type { Customers, Endpoint, Orders } from '@cloudcommerce/api/types';
+import type { ResourceId, Customers, Orders } from '@cloudcommerce/api/types';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
@@ -14,10 +14,10 @@ const handleApiEvent: ApiEventHandler = async ({
   const resourceId = apiEvent.resource_id;
   const key = `${evName}_${resourceId}`;
 
-  const isOrder = evName === 'orders-anyStatusSet';
-  const isCustomer = evName === 'customers-new' && apiDoc?.affiliate_code;
+  const isOrder = evName.startsWith('orders-');
+  const isCustomer = evName.startsWith('customers-');
 
-  const firestore = getFirestore().collection('affilateProgramOrders');
+  const firestoreColl = getFirestore().collection('affilateProgramOrders');
 
   if (
     (Array.isArray(appData.ignore_events)
@@ -28,15 +28,13 @@ const handleApiEvent: ApiEventHandler = async ({
     return null;
   }
 
-  let newCustomerId: string | undefined;
+  let newCustomerId: ResourceId | undefined;
   let newCustomerEmail: string | undefined;
-  let referralId: string | undefined;
-
+  let referralId: ResourceId | undefined;
   if (isCustomer) {
     const customer = apiDoc as Customers;
-
     newCustomerId = customer._id;
-    referralId = customer.affiliate_code;
+    referralId = customer.affiliate_code as ResourceId;
     newCustomerEmail = customer.main_email;
     if (!newCustomerId || !newCustomerEmail || !referralId) {
       return null;
@@ -47,7 +45,7 @@ const handleApiEvent: ApiEventHandler = async ({
   }
 
   let orderId: string | undefined;
-  let buyerId: string | undefined;
+  let buyerId: ResourceId | undefined;
   let orderSubtotal: number | undefined;
   let orderStatus: string | undefined;
   let isPaid: boolean | undefined;
@@ -85,7 +83,6 @@ const handleApiEvent: ApiEventHandler = async ({
     try {
       if (isCustomer && appData.points_on_signup) {
         const referralCustomer = (await api.get(`customers/${referralId}`)).data;
-
         if (!referralCustomer?.enabled) {
           return null;
         }
@@ -93,7 +90,7 @@ const handleApiEvent: ApiEventHandler = async ({
           return null;
         }
         // save new customer points
-        const pointsEndpoint = `customers/${newCustomerId}/loyalty_points_entries` as Endpoint;
+        const pointsEndpoint = `customers/${newCustomerId}/loyalty_points_entries` as `customers/${ResourceId}/string`;
         const d = new Date();
         d.setDate(d.getDate() + 120);
         const validThru = d.toISOString();
@@ -129,7 +126,7 @@ const handleApiEvent: ApiEventHandler = async ({
         }
         logger.info(`Order ${orderId} paid by ${buyerId} validated`);
 
-        const docRef = firestore.doc(`${orderId}`);
+        const docRef = firestoreColl.doc(`${orderId}`);
         if (!appData.on_all_orders) {
           // check if points not already paid for this order
           const docSnapshot = await docRef.get();
@@ -148,7 +145,7 @@ const handleApiEvent: ApiEventHandler = async ({
         if (!(earnedPoints > 0)) {
           return null;
         }
-        const pointsEndpoint = `/customers/${buyerCustomer.affiliate_code}/loyalty_points_entries` as Endpoint;
+        const pointsEndpoint = `/customers/${buyerCustomer.affiliate_code}/loyalty_points_entries`;
         await api.post(
           pointsEndpoint,
           {
