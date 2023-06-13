@@ -1,5 +1,7 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import type { Carts, Customers, Orders } from '@cloudcommerce/api/types';
+import type {
+  Carts, Customers, Orders, ResourceId,
+} from '@cloudcommerce/api/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import axios from 'axios';
@@ -23,9 +25,9 @@ const sendWebhook = async (
   doc: Record<string, any>,
   urls: any[],
   manualQueue: any[] | null,
-  appId: string,
+  appId: ResourceId,
   customer?: Customers,
-  docId?: string,
+  docId?: ResourceId,
   isCart?: boolean,
 ) => {
   const url = options && options.webhook_uri;
@@ -100,9 +102,9 @@ const handleApiEvent: ApiEventHandler = async ({
 
   try {
     if (appData.webhooks) {
-      let docId: string | undefined;
+      let docId = apiDoc._id as ResourceId;
       let manualQueue: any[] | null = null;
-      let isCart: boolean | undefined;
+      const isCart = evName === 'carts-delayed';
 
       if (evName === 'applications-dataSet') {
         const body = appData;
@@ -110,13 +112,10 @@ const handleApiEvent: ApiEventHandler = async ({
           manualQueue = body.manual_queue;
           const nextId = manualQueue[0];
           if (typeof nextId === 'string' && /[a-f0-9]{24}/.test(nextId)) {
-            docId = nextId.trim();
+            docId = nextId.trim() as ResourceId;
           }
           manualQueue.shift();
         }
-      } else {
-        isCart = evName === 'carts-delayed';
-        docId = apiDoc._id;
       }
 
       if (docId) {
