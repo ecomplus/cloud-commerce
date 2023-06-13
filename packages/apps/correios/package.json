@@ -16,7 +16,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/correios#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test:e2e": "node  --test tests/calculate-shipping.test.mjs"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
