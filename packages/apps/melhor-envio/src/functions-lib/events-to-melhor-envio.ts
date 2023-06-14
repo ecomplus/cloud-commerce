@@ -1,4 +1,4 @@
-import type { Orders } from '@cloudcommerce/types';
+import type { Orders, ResourceId, ResourceAndId } from '@cloudcommerce/api/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import meClient from '../../lib-mjs/functions/client-melhor-envio.mjs';
@@ -17,7 +17,7 @@ const handleApiEvent = async ({
   apiDoc,
   app,
 }) => {
-  const resourceId = apiEvent.resource_id;
+  const resourceId = apiEvent.resource_id as ResourceId;
   logger.info('>> ', resourceId, ' - Action: ', apiEvent.action);
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };
@@ -62,12 +62,16 @@ const handleApiEvent = async ({
 
         // logger.log(`>> Etiquetas salvas no db para futuros rastreio #${storeId} ${resourceId}`);
         // updates hidden_metafields with the generated tag id
-        const bodyHiddenMetaField = {
-          namespace: 'app-melhor-envio',
-          field: metafieldName,
-          value: data.id,
-        } as any; // TODO: type amount
-        await api.post(`orders/${resourceId}/hidden_metafields`, bodyHiddenMetaField);
+
+        // TODO: set type for partial body in post method
+        await api.post(
+          `orders/${resourceId}/hidden_metafields` as `${ResourceAndId}/string`,
+          {
+            namespace: 'app-melhor-envio',
+            field: metafieldName,
+            value: data.id,
+          },
+        );
 
         if (typeof data.tracking === 'string' && data.tracking.length) {
           let shippingLine = order.shipping_lines?.find(({ app: application }) => application
@@ -103,13 +107,16 @@ const handleApiEvent = async ({
 
       if (data) {
         // update order hidden_metafields
-        const bodyHiddenMetaField = {
-          namespace: 'app-melhor-envio',
-          field: 'melhor_envio_label_error',
-          value: JSON.stringify(data).substring(0, 255),
-        } as any;
 
-        await api.post(`orders/${resourceId}/hidden_metafields`, bodyHiddenMetaField);
+        // TODO: set type for partial body in post method
+        await api.post(
+          `orders/${resourceId}/hidden_metafields` as `${ResourceAndId}/string`,
+          {
+            namespace: 'app-melhor-envio',
+            field: 'melhor_envio_label_error',
+            value: JSON.stringify(data).substring(0, 255),
+          },
+        );
 
         if (
           data.error
