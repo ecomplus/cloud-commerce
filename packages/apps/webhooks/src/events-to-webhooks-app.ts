@@ -1,6 +1,9 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import type {
-  Carts, Customers, Orders, ResourceId,
+  Carts,
+  Customers,
+  Orders,
+  ResourceId,
 } from '@cloudcommerce/api/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
