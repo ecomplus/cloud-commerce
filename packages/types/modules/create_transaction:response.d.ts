@@ -149,6 +149,21 @@ export interface CreateTransactionResponse {
       ratio?: number;
     };
     /**
+     * Account deposit data, if payment was done with account deposit
+     */
+    account_deposit?: {
+      /**
+       * Date and time of expiration, in ISO 8601 standard representation
+       */
+      valid_thru?: string;
+      /**
+       * Information notes to payment
+       *
+       * @maxItems 5
+       */
+      text_lines?: string[];
+    };
+    /**
      * Currency ID specific for this transaction, if different of order currency ID
      */
     currency_id?: string;

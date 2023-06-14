@@ -834,6 +834,28 @@ exports.response = {
           },
           'description': 'If paid with loyalty points, specify how many points and what program was consumed'
         },
+        'account_deposit': {
+          'type': 'object',
+          'additionalProperties': false,
+          'properties': {
+            'valid_thru': {
+              'type': 'string',
+              'format': 'date-time',
+              'description': 'Date and time of expiration, in ISO 8601 standard representation'
+            },
+            'text_lines': {
+              'type': 'array',
+              'maxItems': 5,
+              'items': {
+                'type': 'string',
+                'maxLength': 255,
+                'description': 'Phrase or paragraph'
+              },
+              'description': 'Information notes to payment'
+            }
+          },
+          'description': 'Account deposit data, if payment was done with account deposit'
+        },
         'currency_id': {
           'type': 'string',
           'pattern': '^[A-Z]{3}$',

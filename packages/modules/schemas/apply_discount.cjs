@@ -215,6 +215,12 @@ const schema = {
           'type': 'string',
           'maxLength': 50,
           'description': 'The name of this Customer, suitable for display'
+        },
+        'doc_number': {
+          'type': 'string',
+          'maxLength': 19,
+          'pattern': '^[0-9]+$',
+          'description': 'Responsible person or organization document number (only numbers)'
         }
       },
       'description': 'Customer object summary'
