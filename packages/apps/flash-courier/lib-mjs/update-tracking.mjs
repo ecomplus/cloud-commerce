@@ -106,27 +106,21 @@ export default new Promise(async (resolve, reject) => {
               const { eventoId } = hawb.historico[hawb.historico.length - 1];
               let status;
               switch (eventoId) {
-                case '1400':
+                case '1100':
                   status = 'ready_for_shipping';
                   break;
-                case '2000':
-                case '2200':
-                case '3000':
-                case '4100':
+                case '1400':
                   status = 'shipped';
                   break;
-                case '2500':
                 case '4250':
                 case '4300':
                 case '5000':
                   status = 'delivered';
                   break;
-                case '2400':
-                case '2600':
+                case '6100':
                   status = 'returned';
                   break;
                 default:
-                  break;
               }
               if (
                 status
