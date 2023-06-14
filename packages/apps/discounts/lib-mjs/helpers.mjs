@@ -65,8 +65,10 @@ const getValidDiscountRules = (discountRules, params, items) => {
           if (rule.discount && rule.discount.value) {
             if (rule.discount.type === 'percentage') {
               value *= rule.discount.value / 100;
+            } else if (rule.discount_kit_subtotal) {
+              value = rule.discount.value;
             } else {
-              value += rule.discount.value;
+              value = Math.min(value, rule.discount.value);
             }
           }
           rule.discount = {
@@ -88,7 +90,7 @@ const getValidDiscountRules = (discountRules, params, items) => {
   return [];
 };
 
-const matchDiscountRule = (discountRules, params) => {
+const matchDiscountRule = (discountRules, params = {}) => {
   // try to match a promotion
   if (params.discount_coupon) {
     // match only by discount coupon
