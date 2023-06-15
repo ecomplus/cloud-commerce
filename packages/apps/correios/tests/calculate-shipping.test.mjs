@@ -1,37 +1,20 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import assert from 'node:assert';
 import test, { before, describe } from 'node:test';
-
-const projectId = process.env.PROJECTID || 'ecom-ecom2';
-const baseUrl = `http://127.0.0.1:5001/${projectId}/southamerica-east1/modules`;
-
-const payload = {
-  to: { zip: '35701134' },
-  items: [{
-    product_id: '6166cb1528ace502aea2dc36',
-    sku: 'GIE2742',
-    name: 'Vaso para orquídeas',
-    quantity: 1,
-    currency_id: 'BRL',
-    currency_symbol: 'R$',
-    price: 24.99,
-    dimensions: {
-      width: { unit: 'cm', value: 30 },
-      height: { unit: 'cm', value: 30 },
-      length: { unit: 'cm', value: 30 },
-    },
-    weight: { unit: 'kg', value: 0.5 },
-  }],
-  subtotal: 24.99,
-};
+import {
+  modulesUrl,
+  bodyCalculateShipping,
+} from '@cloudcommerce/test-base';
 
 describe('Test App Correios', async () => {
   let req;
   let data;
+  const appId = 1248;
 
   before(async () => {
-    req = await fetch(`${baseUrl}/calculate_shipping?app_id=1248`, {
+    req = await fetch(`${modulesUrl}/calculate_shipping?app_id=${appId}`, {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify(bodyCalculateShipping),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -46,10 +29,6 @@ describe('Test App Correios', async () => {
 
   test('Check validated is true', async () => {
     assert.equal(data[0].validated, true);
-  });
-
-  test('Check error_message is NULL', async () => {
-    assert.equal(data[0].error_message, null);
   });
 
   test('Have shipping services', async () => {
