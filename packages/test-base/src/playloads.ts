@@ -1,5 +1,5 @@
 const bodyCalculateShipping = {
-  to: { zip: '35701134' },
+  to: { zip: '35701000' },
   items: [{
     product_id: '6166cb1528ace502aea2dc36',
     sku: 'GIE2742',

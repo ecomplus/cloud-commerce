@@ -28,9 +28,6 @@ if (!projectId) {
 
 const modulesUrl = `http://127.0.0.1:5001/${projectId}/${region}/modules`;
 const passportUrl = `http://127.0.0.1:5001/${projectId}/${region}/passport`;
-// const logger = console;
-// logger.log('>> ', modulesUrl);
-// logger.log('>> ', passportUrl);
 
 export {
   modulesUrl,
