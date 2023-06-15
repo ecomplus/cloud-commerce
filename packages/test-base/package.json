@@ -1,0 +1,27 @@
+{
+  "name": "@cloudcommerce/test-base",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce basic setup for testing",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/test-base"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/test-base#readme",
+  "scripts": {
+    "build": "bash ../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}
