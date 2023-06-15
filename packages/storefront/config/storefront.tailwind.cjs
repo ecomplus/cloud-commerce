@@ -214,13 +214,20 @@ const genTailwindConfig = (themeOptions = {}) => {
   try {
     const styleCSSFile = resolvePath(process.env.STOREFRONT_BASE_DIR, 'src/assets/style.css');
     const styleCSS = fs.readFileSync(styleCSSFile, 'utf8');
-    // '.ui-btn { color:green }; .ui-title { font-size: 18px }'.split(/\.ui-/i)
-    // => [ "", "btn { color:green }; ", "title { font-size: 18px }" ]
-    styleCSS.split(/\.ui-/i).forEach((partCSS, i) => {
+    // '.ui-btn { color: green }; .ui-title { font-size: 18px }'.split(/\.ui-/i)
+    // => [ "", "btn { color: green }; ", "title { font-size: 18px }" ]
+    styleCSS.split(/[.=]ui-/i).forEach((partCSS, i) => {
       if (i === 0) return;
       const elName = partCSS.replace(/[^\w-].*/ig, '');
-      if (elName && !uiElNames.includes(elName)) {
-        uiElNames.push(elName);
+      if (elName && !uiElNames.find((el) => el.elName === elName)) {
+        let [, styles] = partCSS.split(/[{}]/);
+        styles = styles.replace(/\n/g, ' ').trim().replace(/\s\s/g, ' ');
+        // .ui-btn -> .ui-btn-primary
+        const parentEl = uiElNames.find((el) => elName.startsWith(`${el.elName}-`));
+        if (parentEl) {
+          styles = `${parentEl.styles} ${styles}`;
+        }
+        uiElNames.push({ elName, styles });
       }
     });
   } catch {
@@ -228,9 +235,9 @@ const genTailwindConfig = (themeOptions = {}) => {
   }
   if (uiElNames.length) {
     config.plugins.push(({ addUtilities }) => {
-      addUtilities(uiElNames.reduce((utilities, elName) => {
+      addUtilities(uiElNames.reduce((utilities, { elName, styles }) => {
         utilities[`.ui-${elName}`] = {
-          '--ui': `${elName} /* Consistent UI element from assets/style.css */`,
+          [`--${elName}`]: `"${styles}" /* Consistent UI element from assets/style.css */`,
         };
         return utilities;
       }, {}));
