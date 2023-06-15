@@ -8,6 +8,6 @@ export const flashcourier = {
   cronTrackingCodes: functions.region(config.get().httpsFunctionOptions.region).pubsub
     .schedule('19 * * * *')
     .onRun(() => {
-      return handleTrackingCodes;
+      return handleTrackingCodes();
     }),
 };
