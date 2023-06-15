@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/packages/apps/mercadopago#readme",
   "scripts": {
-    "build": "bash scripts/build.sh"
+    "build": "bash scripts/build.sh",
+    "test:e2e": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
@@ -30,6 +31,7 @@
     "firebase-functions": "^4.4.0"
   },
   "devDependencies": {
+    "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.0"
   }
