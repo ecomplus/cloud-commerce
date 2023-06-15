@@ -344,10 +344,33 @@ export default async ({ params, application }) => {
           if (discountRule.description) {
             response.discount_rule.description = discountRule.description;
           }
+          if (!checkOpenPromotion(discountRule)) {
+            // check for additional open discount
+            const {
+              discountRule: openDiscountRule,
+              discountMatchEnum: openDiscountMatchEnum,
+            } = matchDiscountRule(discountRules, {});
+            if (
+              openDiscountRule
+              && openDiscountRule.cumulative_discount !== false
+              && openDiscountRule.discount.min_amount
+            ) {
+              let checkAmount = params.amount[openDiscountRule.discount.amount_field || 'total'];
+              if (checkAmount) {
+                // subtract current discount to validate cumulative open discount min amount
+                if (response.discount_rule) {
+                  checkAmount -= response.discount_rule.extra_discount.value;
+                }
+                if (openDiscountRule.discount.min_amount <= checkAmount) {
+                  addDiscount(openDiscountRule.discount, openDiscountMatchEnum);
+                }
+              }
+            }
+          }
 
           const { customer } = params;
           if (
-            customer && customer._id
+            customer && (customer._id || customer.doc_number)
             && (discountRule.usage_limit > 0 || discountRule.total_usage_limit > 0)
           ) {
             // list orders to check discount usage limits
@@ -357,7 +380,9 @@ export default async ({ params, application }) => {
               + encodeURIComponent(label);
             const usageLimits = [{
               // limit by customer
-              query: `&buyers._id=${customer._id}`,
+              query: customer.doc_number
+                ? `&buyers.doc_number=${customer.doc_number}`
+                : `&buyers._id=${customer._id}`,
               max: discountRule.usage_limit,
             }, {
               // total limit

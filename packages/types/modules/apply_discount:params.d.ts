@@ -150,5 +150,9 @@ export interface ApplyDiscountParams {
      * The name of this Customer, suitable for display
      */
     display_name?: string;
+    /**
+     * Responsible person or organization document number (only numbers)
+     */
+    doc_number?: string;
   };
 }

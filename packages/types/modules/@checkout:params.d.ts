@@ -364,6 +364,10 @@ export interface CheckoutBody {
      * Registered company name or responsible fullname
      */
     corporate_name?: string;
+    /**
+     * ID of customer who invited the new customer, if he was invited by another account
+     */
+    referral?: string;
   };
 }
 /**

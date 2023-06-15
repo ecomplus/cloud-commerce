@@ -6,7 +6,7 @@
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
-    "./events": "./lib/melhor-envio-events.js"
+    "./events": "./lib/flash-courier-events.js"
   },
   "repository": {
     "type": "git",

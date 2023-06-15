@@ -9,5 +9,11 @@
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow": "/.github/workflows/**/*.yml",
     "https://json.schemastore.org/github-action": "/action.yml"
+  },
+  "tailwindCSS.experimental.configFile": {
+    "packages/storefront/tailwind.config.cjs": "packages/**",
+    "store/functions/ssr/tailwind.config.cjs": "store/**",
+    "ecomplus-stores/monocard/functions/ssr/tailwind.config.cjs": "ecomplus-stores/monocard/**",
+    "ecomplus-stores/tia-sonia/functions/ssr/tailwind.config.cjs": "ecomplus-stores/tia-sonia/**"
   }
 }

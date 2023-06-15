@@ -145,28 +145,3 @@ const onLeave = (el: HTMLElement) => {
     <slot />
   </Transition>
 </template>
-
-<style>
-[class*="sf-fade-"] {
-  will-change: var(--fade-will-change);
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-.sf-fade-enter-active,
-.sf-fade-leave-active {
-  transition: opacity var(--fade-duration), transform var(--fade-duration),
-    height var(--fade-duration), width var(--fade-duration);
-  overflow: hidden;
-}
-.sf-fade-enter-from {
-  opacity: var(--fade-enter-opacity);
-  transform: var(--fade-enter-transform);
-  height: var(--fade-enter-height);
-  width: var(--fade-enter-width);
-}
-.sf-fade-leave-to {
-  opacity: var(--fade-leave-opacity);
-  transform: var(--fade-leave-transform);
-}
-</style>

@@ -1014,6 +1014,11 @@ exports.params = {
           'type': 'string',
           'maxLength': 255,
           'description': 'Registered company name or responsible fullname'
+        },
+        'referral': {
+          'type': 'string',
+          'pattern': '^[a-f0-9]{24}$',
+          'description': 'ID of customer who invited the new customer, if he was invited by another account'
         }
       },
       'description': 'Customer object'
