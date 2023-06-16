@@ -216,18 +216,26 @@ const genTailwindConfig = (themeOptions = {}) => {
     const styleCSS = fs.readFileSync(styleCSSFile, 'utf8');
     // '.ui-btn { color: green }; .ui-title { font-size: 18px }'.split(/\.ui-/i)
     // => [ "", "btn { color: green }; ", "title { font-size: 18px }" ]
-    styleCSS.split(/[.=]ui-/i).forEach((partCSS, i) => {
+    styleCSS.split(/[.=]ui-/).forEach((partCSS, i) => {
       if (i === 0) return;
-      const elName = partCSS.replace(/[^\w-].*/ig, '');
-      if (elName && !uiElNames.find((el) => el.elName === elName)) {
+      const elName = partCSS.replace(/[^\w-].*/g, '');
+      if (elName) {
         let [, styles] = partCSS.split(/[{}]/);
-        styles = styles.replace(/\n/g, ' ').trim().replace(/\s\s/g, ' ');
+        if (!styles && /,[\n\s]+$/.test(partCSS)) {
+          styles = styleCSS.split(partCSS)[1]?.split(/[{}]/)[1];
+        }
+        styles = styles?.replace(/\n/g, ' ').trim().replace(/\s\s/g, ' ') || '';
         // .ui-btn -> .ui-btn-primary
         const parentEl = uiElNames.find((el) => elName.startsWith(`${el.elName}-`));
         if (parentEl) {
           styles = `${parentEl.styles} ${styles}`;
         }
-        uiElNames.push({ elName, styles });
+        const uiEl = uiElNames.find((el) => el.elName === elName);
+        if (!uiEl) {
+          uiElNames.push({ elName, styles });
+        } else {
+          uiEl.styles += ` ${styles}`;
+        }
       }
     });
   } catch {
