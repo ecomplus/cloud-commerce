@@ -214,13 +214,28 @@ const genTailwindConfig = (themeOptions = {}) => {
   try {
     const styleCSSFile = resolvePath(process.env.STOREFRONT_BASE_DIR, 'src/assets/style.css');
     const styleCSS = fs.readFileSync(styleCSSFile, 'utf8');
-    // '.ui-btn { color:green }; .ui-title { font-size: 18px }'.split(/\.ui-/i)
-    // => [ "", "btn { color:green }; ", "title { font-size: 18px }" ]
-    styleCSS.split(/\.ui-/i).forEach((partCSS, i) => {
+    // '.ui-btn { color: green }; .ui-title { font-size: 18px }'.split(/\.ui-/i)
+    // => [ "", "btn { color: green }; ", "title { font-size: 18px }" ]
+    styleCSS.split(/[.=]ui-/).forEach((partCSS, i) => {
       if (i === 0) return;
-      const elName = partCSS.replace(/[^\w-].*/ig, '');
-      if (elName && !uiElNames.includes(elName)) {
-        uiElNames.push(elName);
+      const elName = partCSS.replace(/[^\w-].*/g, '');
+      if (elName) {
+        let [, styles] = partCSS.split(/[{}]/);
+        if (!styles && /,[\n\s]+$/.test(partCSS)) {
+          styles = styleCSS.split(partCSS)[1]?.split(/[{}]/)[1];
+        }
+        styles = styles?.replace(/\n/g, ' ').trim().replace(/\s\s/g, ' ') || '';
+        // .ui-btn -> .ui-btn-primary
+        const parentEl = uiElNames.find((el) => elName.startsWith(`${el.elName}-`));
+        if (parentEl) {
+          styles = `${parentEl.styles} ${styles}`;
+        }
+        const uiEl = uiElNames.find((el) => el.elName === elName);
+        if (!uiEl) {
+          uiElNames.push({ elName, styles });
+        } else {
+          uiEl.styles += ` ${styles}`;
+        }
       }
     });
   } catch {
@@ -228,9 +243,9 @@ const genTailwindConfig = (themeOptions = {}) => {
   }
   if (uiElNames.length) {
     config.plugins.push(({ addUtilities }) => {
-      addUtilities(uiElNames.reduce((utilities, elName) => {
+      addUtilities(uiElNames.reduce((utilities, { elName, styles }) => {
         utilities[`.ui-${elName}`] = {
-          '--ui': `${elName} /* Consistent UI element from assets/style.css */`,
+          [`--${elName}`]: `"${styles}" /* Consistent UI element from assets/style.css */`,
         };
         return utilities;
       }, {}));
