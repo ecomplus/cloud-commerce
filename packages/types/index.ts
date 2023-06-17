@@ -24,6 +24,8 @@ import type {
   Resource,
   ResourceId,
   ResourceListResult,
+  SearchItems,
+  SearchResult,
   EventsResult,
 } from '@cloudcommerce/api/types';
 import type { ApplyDiscountParams } from './modules/apply_discount:params';
@@ -155,6 +157,8 @@ export type {
   Resource,
   ResourceId,
   ResourceListResult,
+  SearchItems,
+  SearchResult,
   EventsResult,
   ApiEventName,
   AppEventsPayload,
