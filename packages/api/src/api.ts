@@ -8,13 +8,15 @@ import type {
 } from './types';
 
 declare global {
-  // eslint-disable-next-line
+  /* eslint-disable no-var, vars-on-top */
+  // @ts-ignore
   var $apiMergeConfig: Partial<Config> | undefined;
   // eslint-disable-next-line
   var __apiCache: Record<string, {
     timestamp: number,
     res: Response & { data: any },
   }>;
+  /* eslint-enable no-var */
 }
 if (!globalThis.__apiCache) {
   globalThis.__apiCache = {};

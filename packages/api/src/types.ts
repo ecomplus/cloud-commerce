@@ -28,6 +28,11 @@ type ResourceAndId = `${Resource}/${ResourceId}`;
 
 type ResourceOpQuery = Resource | `${Resource}?${string}`;
 
+type SearchOpQuery = 'search/v1'
+  | `search/v1?${string}`
+  | 'search/_els'
+  | `search/_els?${string}`;
+
 type EventsEndpoint = `events/${Resource}`
   | `events/${ResourceAndId}`
   | 'events/me';
@@ -36,7 +41,7 @@ type Endpoint = ResourceOpQuery
   | ResourceAndId
   | `${ResourceAndId}/${string}`
   | `slugs/${string}`
-  | 'search/v1'
+  | SearchOpQuery
   | EventsEndpoint
   | 'login'
   | 'authenticate'
@@ -110,6 +115,65 @@ type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
   },
 };
 
+type SearchItems = Array<{
+  _id: ResourceId
+  sku: Products['sku'],
+  name: Products['name'],
+  slug: Products['slug'],
+  available: Products['available'],
+  visible: Products['visible'],
+  price: Products['price'],
+  base_price: Products['base_price'],
+  quantity: Products['quantity'],
+  min_quantity: Products['min_quantity'],
+  inventory: Products['inventory'],
+  measurement: Products['measurement'],
+  condition: Products['condition'],
+  warranty: Products['warranty'],
+  pictures?: Array<Exclude<Products['pictures'], undefined>[0]['normal']>,
+  has_variations: boolean,
+}>;
+
+type SearchResult<TEndpoint extends SearchOpQuery | 'v1' | 'els'> =
+  TEndpoint extends 'search/v1' | `search/v1?${string}` | 'v1' ? {
+    result: SearchItems,
+    meta: BaseListResultMeta & {
+      count?: number,
+      sort: Array<{
+        field: string,
+        order: 1 | -1,
+      }>,
+      query: { [key: string]: any },
+      buckets?: {
+        prices?: Array<{
+          min: null | number,
+          max: null | number,
+          avg: null | number,
+          count: number,
+        }>,
+        'brands/name'?: {
+          [key: string]: number,
+        },
+        'categories/name'?: {
+          [key: string]: number,
+        },
+        specs?: {
+          [key: string]: number,
+        },
+      },
+    },
+  } :
+  TEndpoint extends 'search/_els' | `search/_els?${string}` | 'els' ? {
+    hits: {
+      hits: SearchItems,
+      total: number,
+      max_score: null,
+    },
+    aggregations: Record<string, any>,
+    took: number,
+  } :
+  never;
+
 type EventFieldsByEndpoint<TEndpoint extends EventsEndpoint> =
   TEndpoint extends `events/${Resource}` ? {
     resource_id: ResourceId,
@@ -161,6 +225,7 @@ type ResponseBody<TConfig extends Config> =
   TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
   TConfig['endpoint'] extends `authentications/${ResourceId}` ? Authentications :
   TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint']> :
+  TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint']> :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
@@ -250,6 +315,8 @@ export type {
   Method,
   Config,
   ResourceListResult,
+  SearchItems,
+  SearchResult,
   EventsResult,
   ResponseBody,
   RequestBody,
