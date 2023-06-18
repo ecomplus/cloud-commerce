@@ -132,6 +132,7 @@ type SearchItems = Array<{
   warranty: Products['warranty'],
   pictures?: Array<Exclude<Products['pictures'], undefined>[0]['normal']>,
   has_variations: boolean,
+  _score: number,
 }>;
 
 type SearchResult<TEndpoint extends SearchOpQuery | 'v1' | 'els'> =
