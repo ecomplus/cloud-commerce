@@ -22,10 +22,10 @@ if (!globalThis.__apiCache) {
   globalThis.__apiCache = {};
 }
 
-// @ts-ignore
-const _env: Record<string, string> = import.meta.env
-  || (typeof process === 'object' && process?.env)
-  || globalThis;
+const _env = (
+  (typeof process === 'object' && process?.env)
+  || globalThis
+) as Record<string, any>;
 
 class ApiError extends Error {
   config: Config;
