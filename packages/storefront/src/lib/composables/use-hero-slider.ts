@@ -36,3 +36,5 @@ const useHeroSlider = (props: Props) => {
 };
 
 export default useHeroSlider;
+
+export { useHeroSlider };

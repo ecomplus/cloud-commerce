@@ -182,3 +182,5 @@ const usePrices = (props: Props) => {
 };
 
 export default usePrices;
+
+export { usePrices };

@@ -51,3 +51,5 @@ const useShopHeaderSubmenu = (props: Props) => {
 };
 
 export default useShopHeaderSubmenu;
+
+export { useShopHeaderSubmenu };

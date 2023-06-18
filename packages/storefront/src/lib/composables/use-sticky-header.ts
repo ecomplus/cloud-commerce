@@ -112,3 +112,5 @@ const useStickyHeader = (props: Props) => {
 };
 
 export default useStickyHeader;
+
+export { useStickyHeader };
