@@ -1,5 +1,4 @@
 import type { RouteContext } from '@@sf/ssr-context';
-import type { PageContent } from '@@sf/content';
 import type { Props as UseHeroSliderProps } from '@@sf/composables/use-hero-slider';
 
 export type HeroSliderProps = Omit<UseHeroSliderProps, 'slides'> & {
@@ -13,7 +12,7 @@ export interface Props {
 const useHeroSection = async ({ routeContext }: Props) => {
   const { cmsContent } = routeContext;
   const heroSlider: HeroSliderProps = { slides: [] };
-  const heroContent: PageContent['hero'] | undefined = cmsContent?.hero;
+  const heroContent = cmsContent?.hero;
   if (heroContent) {
     heroSlider.autoplay = heroContent.autoplay;
     const now = Date.now();
