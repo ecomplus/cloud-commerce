@@ -68,7 +68,7 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.$storefront.settings = config.settings;
-  let cmsContent: PageContent | Record<string, any> | null | undefined;
+  let cmsContent: PageContent | null | undefined;
   let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
   let apiDoc: Record<string, any> | undefined;
   const apiState: {
