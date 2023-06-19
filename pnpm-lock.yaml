@@ -868,7 +868,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 5.2.0
-        version: 5.2.0(astro@2.6.3)
+        version: 5.2.0(astro@2.6.5)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -888,8 +888,8 @@ importers:
         specifier: 10.2.0
         version: 10.2.0(vue@3.3.4)
       astro:
-        specifier: 2.6.3
-        version: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+        specifier: 2.6.5
+        version: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       firebase-admin:
         specifier: ^11.9.0
         version: 11.9.0
@@ -914,13 +914,13 @@ importers:
     dependencies:
       '@astrojs/image':
         specifier: 0.17.0
-        version: 0.17.0(astro@2.6.3)(sharp@0.32.1)
+        version: 0.17.0(astro@2.6.5)(sharp@0.32.1)
       '@astrojs/node':
         specifier: 5.2.0
-        version: 5.2.0(astro@2.6.3)
+        version: 5.2.0(astro@2.6.5)
       '@astrojs/vue':
         specifier: 2.2.1
-        version: 2.2.1(astro@2.6.3)(vite@4.3.9)(vue@3.3.4)
+        version: 2.2.1(astro@2.6.5)(vite@4.3.9)(vue@3.3.4)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -950,13 +950,13 @@ importers:
         version: 1.1.33
       '@vite-pwa/astro':
         specifier: ^0.1.1
-        version: 0.1.1(astro@2.6.3)(vite-plugin-pwa@0.16.4)
+        version: 0.1.1(astro@2.6.5)(vite-plugin-pwa@0.16.4)
       '@vueuse/core':
         specifier: 10.2.0
         version: 10.2.0(vue@3.3.4)
       astro:
-        specifier: 2.6.3
-        version: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+        specifier: 2.6.5
+        version: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1056,7 +1056,7 @@ packages:
     resolution: {integrity: sha512-aXAxapNWZwGN41P+Am/ma/2kAzKOhMNaY6YuvLkUHFv+UZkmDHD6F0fE1sQA2Up0bLjgPQa1VQzoAaii5tZWaA==}
     dev: false
 
-  /@astrojs/image@0.17.0(astro@2.6.3)(sharp@0.32.1):
+  /@astrojs/image@0.17.0(astro@2.6.5)(sharp@0.32.1):
     resolution: {integrity: sha512-YSolAMFtABhmgLH5BCeGX5e7QKApgSI1XcxO+HLqHFayQKVQ9r6fwslodTjzQkqxgcWEcQKF4nFR4Sq3hAq6YQ==}
     peerDependencies:
       astro: ^2.6.0
@@ -1068,7 +1068,7 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+      astro: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
@@ -1101,7 +1101,7 @@ packages:
       vscode-uri: 3.0.7
     dev: false
 
-  /@astrojs/markdown-remark@2.2.1(astro@2.6.3):
+  /@astrojs/markdown-remark@2.2.1(astro@2.6.5):
     resolution: {integrity: sha512-VF0HRv4GpC1XEMLnsKf6jth7JSmlt9qpqP0josQgA2eSpCIAC/Et+y94mgdBIZVBYH/yFnMoIxgKVe93xfO2GA==}
     peerDependencies:
       astro: ^2.5.0
@@ -1110,7 +1110,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+      astro: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -1127,7 +1127,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@5.2.0(astro@2.6.3):
+  /@astrojs/node@5.2.0(astro@2.6.5):
     resolution: {integrity: sha512-WWrQuxvdrD2Jd9np8vpS8/zCNEm0JnGv+oaojXzbfW36R8/09L827t/acYxLuguLufiV3U16QAqEwpS8VFS9TA==}
     peerDependencies:
       astro: ^2.6.0
@@ -1136,7 +1136,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/webapi': 2.2.0
-      astro: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+      astro: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1166,7 +1166,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@2.2.1(astro@2.6.3)(vite@4.3.9)(vue@3.3.4):
+  /@astrojs/vue@2.2.1(astro@2.6.5)(vite@4.3.9)(vue@3.3.4):
     resolution: {integrity: sha512-fq+RKFAKpIRcobF/803kMJWv/lobf9IIk6K5As5fWE/eYTpykkgHtxd+zDnf7d4I2V7K9XLKV06Oi6Q+oTJmDw==}
     engines: {node: '>=16.12.0'}
     peerDependencies:
@@ -1182,7 +1182,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.0.1(vite@4.3.9)(vue@3.3.4)
       '@vue/babel-plugin-jsx': 1.1.1(@babel/core@7.22.1)
       '@vue/compiler-sfc': 3.3.4
-      astro: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+      astro: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -4598,7 +4598,7 @@ packages:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.1.1(astro@2.6.3)(vite-plugin-pwa@0.16.4):
+  /@vite-pwa/astro@0.1.1(astro@2.6.5)(vite-plugin-pwa@0.16.4):
     resolution: {integrity: sha512-ZImC5fFMekgXyyCEsed5y6R9srFhNfFqwNrOhpi9klOn0nju1eCwHKGodJGK9B4gjxZo35dc5lS5FHFinTOBcw==}
     peerDependencies:
       astro: ^1.6.0 || ^2.0.0
@@ -4607,7 +4607,7 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 2.6.3(@types/node@18.16.18)(sharp@0.32.1)
+      astro: 2.6.5(@types/node@18.16.18)(sharp@0.32.1)
       vite-plugin-pwa: 0.16.4(vite@4.3.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
     dev: false
 
@@ -5055,8 +5055,8 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro@2.6.3(@types/node@18.16.18)(sharp@0.32.1):
-    resolution: {integrity: sha512-gJoBX+t11qAeYDjterGEaQZx7qqlGOigWhE0zkcEBv4zy7l4IpKx6nGGUNzD/l8x6WomZxkdZROsOsiEaWSJmQ==}
+  /astro@2.6.5(@types/node@18.16.18)(sharp@0.32.1):
+    resolution: {integrity: sha512-5q/DAP3i1hM7DC6KfhhMFEiGjUPSjLHc/Df66DgIF2YMu747PvI4zPrzODJWkTB6WM9gHZfslg3ild/hKF7lxg==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     peerDependencies:
@@ -5068,7 +5068,7 @@ packages:
       '@astrojs/compiler': 1.4.1
       '@astrojs/internal-helpers': 0.1.0
       '@astrojs/language-server': 1.0.0
-      '@astrojs/markdown-remark': 2.2.1(astro@2.6.3)
+      '@astrojs/markdown-remark': 2.2.1(astro@2.6.5)
       '@astrojs/telemetry': 2.1.1
       '@astrojs/webapi': 2.2.0
       '@babel/core': 7.22.1
