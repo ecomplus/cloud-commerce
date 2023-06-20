@@ -1,4 +1,4 @@
-import type { Orders, Customers } from '@cloudcommerce/types';
+import type { Orders, Customers, ResourceId } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
@@ -15,7 +15,7 @@ const responsePubSub = (response: string) => {
   return null;
 };
 
-const haveEarnedPoints = (pointsList: Customers['loyalty_points_entries'], orderId: string) => {
+const haveEarnedPoints = (pointsList: Customers['loyalty_points_entries'], orderId: ResourceId) => {
   if (pointsList) {
     let hasEarned = false;
     for (let i = 0; i < pointsList.length; i++) {
