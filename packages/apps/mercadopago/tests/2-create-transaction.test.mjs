@@ -3,18 +3,23 @@ import assert from 'node:assert';
 import test, { before, describe } from 'node:test';
 import {
   modulesUrl,
-  bodyListPayments,
+  bodyCreateTransaction,
 } from '@cloudcommerce/test-base';
 
-describe('Test App mercadoPago', async () => {
+describe('Test App mercadoPago with PIX', async () => {
   let req;
   let data;
   const appId = 111223;
-
   before(async () => {
-    req = await fetch(`${modulesUrl}/list_payments?app_id=${appId}`, {
+    const paymentMethodCreditCard = {
+      code: 'account_deposit',
+      name: 'Pix - Mercado Pago',
+    };
+    bodyCreateTransaction.payment_method = paymentMethodCreditCard;
+
+    req = await fetch(`${modulesUrl}/create_transaction?app_id=${appId}`, {
       method: 'POST',
-      body: JSON.stringify(bodyListPayments),
+      body: JSON.stringify(bodyCreateTransaction),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -29,5 +34,9 @@ describe('Test App mercadoPago', async () => {
 
   test('Check validated is true', async () => {
     assert.equal(data[0].validated, true);
+  });
+
+  test('Have transaction', async () => {
+    assert.notEqual(data[0].response.transaction, undefined);
   });
 });
