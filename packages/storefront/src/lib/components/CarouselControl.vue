@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { type CarouselInject, carouselKey } from './_injection-keys';
+import { type CarouselInject, carouselKey } from '@@sf/components/_injection-keys';
 
 export interface Props {
   direction?: number;

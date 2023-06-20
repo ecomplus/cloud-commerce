@@ -11,8 +11,8 @@ import {
   provide,
 } from 'vue';
 import { useDebounceFn, useElementHover, useScroll } from '@vueuse/core';
-import { carouselKey } from './_injection-keys';
-import CarouselControl from './CarouselControl.vue';
+import { carouselKey } from '@@sf/components/_injection-keys';
+import CarouselControl from '@@sf/components/CarouselControl.vue';
 
 export interface Props {
   as?: string;
