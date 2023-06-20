@@ -9,7 +9,7 @@ export interface Props {
   routeContext: RouteContext;
 }
 
-const useHeroSection = async ({ routeContext }: Props) => {
+const usePageHero = async ({ routeContext }: Props) => {
   const { cmsContent } = routeContext;
   const heroSlider: HeroSliderProps = { slides: [] };
   const heroContent = cmsContent?.hero;
@@ -42,6 +42,6 @@ const useHeroSection = async ({ routeContext }: Props) => {
   };
 };
 
-export default useHeroSection;
+export default usePageHero;
 
-export { useHeroSection };
+export { usePageHero };

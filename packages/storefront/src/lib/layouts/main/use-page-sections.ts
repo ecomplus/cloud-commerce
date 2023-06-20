@@ -8,7 +8,7 @@ export interface Props {
   routeContext: RouteContext;
 }
 
-const useSections = async ({ routeContext }: Props) => {
+const usePageSections = async ({ routeContext }: Props) => {
   const sectionsContent = routeContext.cmsContent?.sections;
   const sections: Array<
     { type: 'product-shelf', props: ProductShelfProps }
@@ -80,6 +80,6 @@ const useSections = async ({ routeContext }: Props) => {
   };
 };
 
-export default useSections;
+export default usePageSections;
 
-export { useSections };
+export { usePageSections };
