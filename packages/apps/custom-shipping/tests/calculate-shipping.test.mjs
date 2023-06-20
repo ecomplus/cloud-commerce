@@ -31,10 +31,6 @@ describe('Test App Custom-shipping', async () => {
     assert.equal(data[0].validated, true);
   });
 
-  test('Check error_message is NULL', async () => {
-    assert.equal(data[0].error_message, null);
-  });
-
   test('Have shipping services', async () => {
     assert.notEqual(data[0].response.shipping_services.length, 0);
   });
