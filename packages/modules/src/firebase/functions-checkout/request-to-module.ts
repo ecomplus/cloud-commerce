@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 import type { AxiosError } from 'axios';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';

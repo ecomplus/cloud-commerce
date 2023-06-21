@@ -1,7 +1,6 @@
 import type { Response } from 'firebase-functions';
 import type {
   CheckoutBodyWithItems,
-  BodyOrder,
   Payment,
   PaymentGateways,
   PaymentMethod,
@@ -10,17 +9,18 @@ import type {
   ShippingSerive,
   ShippingLine,
 } from '../../types/index';
+import type { OrderSet } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 
-type BodyResouce = {[key:string]:any}
+type BodyResouce = { [key: string]: any }
 
 const sendError = (
-  res:Response,
+  res: Response,
   status: number,
   errorCode: string | number,
   message: string,
-  userMessage?: {[key:string]:string},
-  moreInfo?:string,
+  userMessage?: { [key: string]: string },
+  moreInfo?: string,
 ) => {
   return res.status(status)
     .send({
@@ -35,7 +35,7 @@ const sendError = (
 const fixAmount = (
   amount: Amount,
   body: CheckoutBodyWithItems,
-  orderBody: BodyOrder,
+  orderBody: OrderSet,
 ) => {
   Object.keys(amount).forEach((field) => {
     if (amount[field] > 0 && field !== 'total') {
@@ -55,12 +55,12 @@ const fixAmount = (
 };
 
 const getValidResults = (
-  results: {[key:string]:any} [],
-  checkProp?:string,
+  results: { [key: string]: any }[],
+  checkProp?: string,
 ) => {
   // results array returned from module
   // see ./#applications.js
-  const validResults: {[key:string]:any}[] = [];
+  const validResults: { [key: string]: any }[] = [];
   if (Array.isArray(results)) {
     for (let i = 0; i < results.length; i++) {
       const result = results[i];
@@ -86,20 +86,20 @@ const getValidResults = (
 
 const handleListPayments = (
   body: CheckoutBodyWithItems,
-  listPayment: {[key:string]:any},
+  listPayment: { [key: string]: any },
   paymentsBody: Payment,
-  amount:Amount,
-  orderBody: BodyOrder,
+  amount: Amount,
+  orderBody: OrderSet,
 ) => {
   for (let i = 0; i < listPayment.length; i++) {
     const result = listPayment[i];
     // treat list payments response
     const { response } = result;
     if (response && response.payment_gateways) {
-    // check chosen payment method code and name
+      // check chosen payment method code and name
       const paymentMethod: PaymentMethod = paymentsBody.transaction.payment_method;
       let paymentMethodCode: PaymentMethod['code'];
-      let paymentMethodName:PaymentMethod['name'];
+      let paymentMethodName: PaymentMethod['name'];
       if (paymentMethod) {
         paymentMethodCode = paymentMethod.code;
         paymentMethodName = paymentMethod.name;
@@ -110,12 +110,12 @@ const handleListPayments = (
         (paymentGatewayFound: PaymentGateways[number]) => {
           const paymentMethodFound = paymentGatewayFound.payment_method;
           return !paymentMethodCode
-        || (paymentMethodFound && paymentMethodFound.code === paymentMethodCode);
+            || (paymentMethodFound && paymentMethodFound.code === paymentMethodCode);
         },
       );
       let paymentGateway: PaymentGateways[number] | undefined;
       if (possibleGateways.length > 1 && paymentMethodName) {
-      // prefer respective method name
+        // prefer respective method name
         paymentGateway = possibleGateways.find(
           (paymentGatewayFound: PaymentGateways[number]) => {
             return paymentGatewayFound.payment_method.name === paymentMethodName;
@@ -150,7 +150,7 @@ const handleListPayments = (
         // add to order body
         orderBody.payment_method_label = paymentGateway.label || '';
 
-      // finally start creating new order
+        // finally start creating new order
       }
     }
   }
@@ -160,8 +160,8 @@ const handleListPayments = (
 const handleShippingServices = (
   body: CheckoutBodyWithItems,
   listShipping: BodyResouce,
-  amount:Amount,
-  orderBody: BodyOrder,
+  amount: Amount,
+  orderBody: OrderSet,
 ) => {
   for (let i = 0; i < listShipping.length; i++) {
     const result = listShipping[i];
@@ -199,7 +199,7 @@ const handleShippingServices = (
           let maxProductionDays = 0;
           if (orderBody.items) {
             orderBody.items.forEach(
-              (item:Item) => {
+              (item: Item) => {
                 const productionTime = item.production_time;
                 if (productionTime) {
                   let productionDays = productionTime.days;
@@ -244,8 +244,8 @@ const handleShippingServices = (
 const handleApplyDiscount = (
   body: CheckoutBodyWithItems,
   listDiscount: BodyResouce,
-  amount:Amount,
-  orderBody: BodyOrder,
+  amount: Amount,
+  orderBody: OrderSet,
 ) => {
   // simulate request to apply discount endpoint to get extra discount value
   for (let i = 0; i < listDiscount.length; i++) {
@@ -273,7 +273,7 @@ const handleApplyDiscount = (
 
         if (response.freebie_product_ids) {
           // mark items provided for free
-          orderBody.items.forEach((item) => {
+          orderBody.items?.forEach((item) => {
             if (!item.flags) {
               item.flags = [];
             }

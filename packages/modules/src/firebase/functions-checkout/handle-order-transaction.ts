@@ -1,7 +1,7 @@
 import type { Response } from 'firebase-functions';
-import type { Orders, ResourceId } from '@cloudcommerce/types';
+import type { Orders, OrderSet, ResourceId } from '@cloudcommerce/types';
 import type {
-  Amount, BodyOrder,
+  Amount,
   PaymentHistory,
   OrderPaymentHistory,
   TransactionOrder,
@@ -47,7 +47,7 @@ const checkoutRespond = async (
   });
 };
 
-const newOrder = async (orderBody: BodyOrder) => {
+const newOrder = async (orderBody: OrderSet) => {
   try {
     const orderId = (await api.post('orders', orderBody)).data._id;
     return new Promise<{ order: Orders | null, err?: any }>((resolve) => {
