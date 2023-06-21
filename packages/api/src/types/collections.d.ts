@@ -80,7 +80,7 @@ export interface Collections {
    *
    * @maxItems 3000
    */
-  products?: string[];
+  products?: Array<string & { length: 24 }>;
   /**
    * Collection icon image
    */
@@ -107,7 +107,7 @@ export interface Collections {
     /**
      * Picture ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Tag to identify object, use only lowercase letters, digits and underscore
      */

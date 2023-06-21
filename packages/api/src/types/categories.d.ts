@@ -86,7 +86,7 @@ export interface Categories {
     /**
      * Parent category ID (ObjectID)
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Parent category name
      */
@@ -139,7 +139,7 @@ export interface Categories {
     /**
      * Picture ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Tag to identify object, use only lowercase letters, digits and underscore
      */

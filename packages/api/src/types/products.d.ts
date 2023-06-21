@@ -280,7 +280,7 @@ export interface Products {
     /**
      * Brand ID (ObjectID)
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Brand name
      */
@@ -333,7 +333,7 @@ export interface Products {
     /**
      * Category ID (ObjectID)
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Category name
      */
@@ -366,7 +366,7 @@ export interface Products {
       /**
        * Parent category ID (ObjectID)
        */
-      _id?: string;
+      _id?: string & { length: 24 };
       /**
        * Parent category name
        */
@@ -423,7 +423,7 @@ export interface Products {
     /**
      * Grid ID (ObjectID)
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Grid title
      */
@@ -806,7 +806,7 @@ export interface Products {
     /**
      * Picture ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Tag to identify object, use only lowercase letters, digits and underscore
      */
@@ -853,7 +853,7 @@ export interface Products {
     /**
      * Variation ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Item unique reference code
      */
@@ -1165,7 +1165,7 @@ export interface Products {
     /**
      * ID of one of the preferred product picture for this variation
      */
-    picture_id?: string;
+    picture_id?: string & { length: 24 };
     /**
      * Flags to associate additional info
      *
@@ -1215,12 +1215,12 @@ export interface Products {
     /**
      * Optional variation ID (ObjectID) if `has_variations` is true
      */
-    variation_id?: string;
+    variation_id?: string & { length: 24 };
   }[];
   /**
    * Parent product ID, if this product is contained or represented by another
    */
-  parent_item_id?: string;
+  parent_item_id?: string & { length: 24 };
   /**
    * Lists of related products
    *
