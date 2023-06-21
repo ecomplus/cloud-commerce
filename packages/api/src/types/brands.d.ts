@@ -105,7 +105,7 @@ export interface Brands {
     /**
      * Picture ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Tag to identify object, use only lowercase letters, digits and underscore
      */

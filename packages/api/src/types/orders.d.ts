@@ -339,7 +339,7 @@ export interface Orders {
     /**
      * Shipping line ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     from: Address;
     to: Address1;
     /**
@@ -388,7 +388,7 @@ export interface Orders {
       /**
        * Application ID (ObjectID)
        */
-      _id?: string;
+      _id?: string & { length: 24 };
       /**
        * Name of shipping method shown to customers
        */
@@ -688,7 +688,7 @@ export interface Orders {
     /**
      * Transaction ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Date and time of transaction creation, in ISO 8601 standard representation [auto]
      */
@@ -789,7 +789,7 @@ export interface Orders {
       /**
        * Application ID (ObjectID)
        */
-      _id?: string;
+      _id?: string & { length: 24 };
       /**
        * Name of payment method shown to customers
        */
@@ -1062,7 +1062,7 @@ export interface Orders {
     /**
      * Payment status ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * ID of transaction related with this event
      */
@@ -1108,11 +1108,11 @@ export interface Orders {
     /**
      * Fulfillment status ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * ID of shipping line related with this event
      */
-    shipping_line_id?: string;
+    shipping_line_id?: string & { length: 24 };
     /**
      * Date and time of the event, in ISO 8601 standard representation [auto]
      */
@@ -1154,7 +1154,7 @@ export interface Orders {
     /**
      * Order item ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Product ID
      */
@@ -1197,7 +1197,7 @@ export interface Orders {
         /**
          * Option ID (ObjectID) if it was predefined (not custom value created by customer)
          */
-        _id?: string;
+        _id?: string & { length: 24 };
         /**
          * Option text value displayed for the client
          */
@@ -1254,7 +1254,7 @@ export interface Orders {
         /**
          * Selected variation ID (ObjectID) if any
          */
-        variation_id?: string;
+        variation_id?: string & { length: 24 };
         /**
          * Kit item quantity
          */
@@ -1320,7 +1320,7 @@ export interface Orders {
       /**
        * Application ID (ObjectID)
        */
-      _id?: string;
+      _id?: string & { length: 24 };
       /**
        * Name of the discount rule, can be the coupon or campaign name
        */

@@ -44,7 +44,7 @@ export interface Grids {
     /**
      * Option ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Option text value displayed for the client
      */

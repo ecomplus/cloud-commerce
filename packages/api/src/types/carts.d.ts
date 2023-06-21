@@ -85,7 +85,7 @@ export interface Carts {
     /**
      * Cart item ID (ObjectID) [auto]
      */
-    _id?: string;
+    _id?: string & { length: 24 };
     /**
      * Product ID
      */
@@ -128,7 +128,7 @@ export interface Carts {
         /**
          * Option ID (ObjectID) if it was predefined (not custom value created by customer)
          */
-        _id?: string;
+        _id?: string & { length: 24 };
         /**
          * Option text value displayed for the client
          */

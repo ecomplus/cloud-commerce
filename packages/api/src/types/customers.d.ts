@@ -346,7 +346,7 @@ export interface Customers {
     /**
      * Points origin order ID (ObjectID)
      */
-    order_id?: string;
+    order_id?: string & { length: 24 };
   }[];
   /**
    * The total amount of money that this customer has spent at the store
