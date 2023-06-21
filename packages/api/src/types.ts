@@ -115,7 +115,7 @@ type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
   },
 };
 
-type SearchItems = Array<{
+type SearchItem = {
   _id: ResourceId
   sku: Products['sku'],
   name: Products['name'],
@@ -133,11 +133,11 @@ type SearchItems = Array<{
   pictures?: Array<Exclude<Products['pictures'], undefined>[0]['normal']>,
   has_variations: boolean,
   _score: number,
-}>;
+};
 
 type SearchResult<TEndpoint extends SearchOpQuery | 'v1' | 'els'> =
   TEndpoint extends 'search/v1' | `search/v1?${string}` | 'v1' ? {
-    result: SearchItems,
+    result: SearchItem[],
     meta: BaseListResultMeta & {
       count?: number,
       sort: Array<{
@@ -166,7 +166,7 @@ type SearchResult<TEndpoint extends SearchOpQuery | 'v1' | 'els'> =
   } :
   TEndpoint extends 'search/_els' | `search/_els?${string}` | 'els' ? {
     hits: {
-      hits: SearchItems,
+      hits: SearchItem[],
       total: number,
       max_score: null,
     },
@@ -316,7 +316,7 @@ export type {
   Method,
   Config,
   ResourceListResult,
-  SearchItems,
+  SearchItem,
   SearchResult,
   EventsResult,
   ResponseBody,

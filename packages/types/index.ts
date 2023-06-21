@@ -24,7 +24,7 @@ import type {
   Resource,
   ResourceId,
   ResourceListResult,
-  SearchItems,
+  SearchItem,
   SearchResult,
   EventsResult,
 } from '@cloudcommerce/api/types';
@@ -157,7 +157,7 @@ export type {
   Resource,
   ResourceId,
   ResourceListResult,
-  SearchItems,
+  SearchItem,
   SearchResult,
   EventsResult,
   ApiEventName,

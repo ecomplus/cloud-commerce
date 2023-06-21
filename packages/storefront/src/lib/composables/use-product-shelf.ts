@@ -1,5 +1,5 @@
-import type { ResourceId, Collections, SearchItems } from '@cloudcommerce/types';
-import { ref, computed } from 'vue';
+import type { ResourceId, Collections, SearchItem } from '@cloudcommerce/types';
+import { ref, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
 
@@ -12,24 +12,20 @@ export interface Props {
   isShuffle?: boolean;
   limit?: number;
   page?: number;
-  products?: SearchItems;
+  products?: SearchItem[];
 }
 
 const useProductShelf = (props: Props) => {
   const title = ref<string | null>(props.title || '');
   const titleLink = ref<string | null>(props.titleLink || '');
   const isFetching = ref(false);
-  const fetching = ref<Promise<any> | null>(null);
+  let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
-  const _products = ref<SearchItems>([]);
-  const products = computed(() => {
-    if (props.products) return props.products;
-    return _products.value;
-  });
+  const products = shallowReactive<SearchItem[]>(props.products || []);
 
   if (!props.products) {
     isFetching.value = true;
-    fetching.value = (async () => {
+    fetching = (async () => {
       let searchQuery = props.searchQuery || '';
       let collection: Collections | undefined;
       if (props.collectionId) {
@@ -71,7 +67,7 @@ const useProductShelf = (props: Props) => {
             data.result[i] = t;
           }
         }
-        _products.value = data.result;
+        data.result.forEach((item) => products.push(item));
       } catch (err: any) {
         console.error(err);
         fetchError.value = err;

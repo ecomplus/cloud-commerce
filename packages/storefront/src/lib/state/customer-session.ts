@@ -19,7 +19,7 @@ const session = useStorage<{
   auth: null | {
     access_token: string,
     expires: string,
-    customer_id: string,
+    customer_id: Customers['_id'],
   },
 }>(storageKey, emptySession);
 

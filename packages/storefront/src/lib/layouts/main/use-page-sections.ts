@@ -1,6 +1,7 @@
 import type { ResourceId } from '@cloudcommerce/types';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseProductShelf } from '@@sf/composables/use-product-shelf';
+import { useProductShelf } from '@@sf/composables/use-product-shelf';
 
 export type ProductShelfProps = UseProductShelf;
 
@@ -14,7 +15,7 @@ const usePageSections = async ({ routeContext }: Props) => {
     { type: 'product-shelf', props: ProductShelfProps }
   > = [];
   if (sectionsContent) {
-    sectionsContent.forEach(({ type, ...sectionContent }) => {
+    await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }) => {
       if (type === 'product-shelf') {
         const {
           collection_id: collectionIdAndInfo,
@@ -60,6 +61,17 @@ const usePageSections = async ({ routeContext }: Props) => {
           }
           titleLink = path;
         }
+        const props = {
+          ...rest,
+          collectionId,
+          searchQuery,
+          sort,
+          title: isHeadless ? null : title,
+          titleLink,
+          isShuffle,
+        };
+        const { fetching, products } = useProductShelf(props);
+        await fetching;
         sections.push({
           type,
           props: {
@@ -70,10 +82,11 @@ const usePageSections = async ({ routeContext }: Props) => {
             title: isHeadless ? null : title,
             titleLink,
             isShuffle,
+            products,
           },
         });
       }
-    });
+    }));
   }
   return {
     sections,
