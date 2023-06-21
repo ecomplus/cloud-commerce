@@ -131,7 +131,7 @@ const createTransaction = async (
           },
           payment_method: originalTransaction.payment_method,
           app: originalTransaction.app,
-          _id: transactionId,
+          _id: transactionId as ResourceId,
           notes: `Parcela #${quantity} referente à ${subscriptionLabel} ${periodicity}`,
           custom_fields: originalTransaction.custom_fields,
         },
