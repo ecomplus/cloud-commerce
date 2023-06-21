@@ -1,4 +1,4 @@
-import type { ResourceId, Collections, SearchItems } from '@cloudcommerce/types';
+import type { ResourceId, Collections, SearchItem } from '@cloudcommerce/types';
 import { ref, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
@@ -12,7 +12,7 @@ export interface Props {
   isShuffle?: boolean;
   limit?: number;
   page?: number;
-  products?: SearchItems;
+  products?: SearchItem[];
 }
 
 const useProductShelf = (props: Props) => {
@@ -21,7 +21,7 @@ const useProductShelf = (props: Props) => {
   const isFetching = ref(false);
   let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
-  const products = shallowReactive<SearchItems>(props.products || []);
+  const products = shallowReactive<SearchItem[]>(props.products || []);
 
   if (!props.products) {
     isFetching.value = true;
