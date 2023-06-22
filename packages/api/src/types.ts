@@ -129,7 +129,9 @@ type SearchItem = {
   measurement: Products['measurement'],
   condition: Products['condition'],
   warranty: Products['warranty'],
-  pictures?: Array<Exclude<Products['pictures'], undefined>[0]['normal']>,
+  pictures?: Array<{
+    normal: Exclude<Exclude<Products['pictures'], undefined>[0]['normal'], undefined>,
+  }>,
   has_variations: boolean,
   _score: number,
 };
