@@ -34,4 +34,12 @@ describe('Test App Correios', async () => {
   test('Have shipping services', async () => {
     assert.equal(data[0].response.shipping_services.length > 0, true);
   });
+
+  test('Has PAC shipping services', async () => {
+    assert.equal((data[0].response.shipping_services.find((service) => service.label === 'PAC')).label, 'PAC');
+  });
+
+  test('Has SEDEX shipping services', async () => {
+    assert.equal((data[0].response.shipping_services.find((service) => service.label === 'SEDEX')).label, 'SEDEX');
+  });
 });
