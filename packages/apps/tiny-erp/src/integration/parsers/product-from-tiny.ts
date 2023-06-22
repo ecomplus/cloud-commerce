@@ -1,4 +1,4 @@
-import type { Products } from '@cloudcommerce/types';
+import type { ResourceId, Products } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import FormData from 'form-data';
@@ -170,7 +170,7 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
 
           if (specTexts.length) {
             product.variations?.push({
-              _id: ecomUtils.randomObjectId(),
+              _id: ecomUtils.randomObjectId() as ResourceId,
               name: `${name} / ${specTexts.join(' / ')}`.substring(0, 100),
               sku: codigo,
               specifications,
@@ -189,7 +189,7 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
           if (url) {
             product.pictures?.push({
               normal: { url },
-              _id: ecomUtils.randomObjectId(),
+              _id: ecomUtils.randomObjectId() as ResourceId,
             });
           }
         }
