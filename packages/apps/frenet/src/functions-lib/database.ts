@@ -24,7 +24,7 @@ const save = (
 });
 
 const get = async (
-  orderId: string,
+  orderId: ResourceId,
   trackingCode: string,
 ) => new Promise((resolve, reject) => {
   getFirestore().doc(`${firestoreColl}/${trackingCode}`)

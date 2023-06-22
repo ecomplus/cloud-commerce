@@ -68,7 +68,7 @@ const newOrder = async (orderBody: OrderSet) => {
 
 const cancelOrder = async (
   staffNotes: string,
-  orderId: string & {length: 24},
+  orderId: Orders['_id'],
   isOrderCancelled: boolean,
   res: Response,
   usrMsg: { en_us: string, pt_br: string },

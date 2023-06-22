@@ -3,7 +3,6 @@ import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
   CheckoutBodyWithItems,
   Amount,
-  Item,
   Payment,
 } from '../types/index';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -22,12 +21,14 @@ import {
 } from './functions-checkout/utils';
 import createOrder from './functions-checkout/new-order';
 
+type Item = Exclude<OrderSet['items'], undefined>[number]
+
 export default async (req: Request, res: Response) => {
   const { httpsFunctionOptions } = config.get();
   const modulesBaseURL = req.hostname !== 'localhost'
     ? `https://${req.hostname}${req.url.replace(/\/checkout[^/]*/i, '')}`
     : `http://localhost:5001/${process.env.GCLOUD_PROJECT}`
-      + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
+    + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
 
   const validate = ajv.compile(checkoutSchema.params);
   const checkoutBody = req.body as CheckoutBody;
@@ -40,7 +41,7 @@ export default async (req: Request, res: Response) => {
     return sendRequestError(res, '@checkout', validate.errors);
   }
   const { items, ...newBody } = checkoutBody;
-  const newItems = await fixItems(items);
+  const newItems = await fixItems(items) as Exclude<OrderSet['items'], undefined>;
   const amount: Amount = {
     subtotal: 0,
     discount: 0,
@@ -93,7 +94,7 @@ export default async (req: Request, res: Response) => {
         }
       });
       if (orderBody.domain) {
-      // consider default Storefront app routes
+        // consider default Storefront app routes
         if (!orderBody.checkout_link) {
           orderBody.checkout_link = `https://${orderBody.domain}/app/#/checkout/(_id)`;
         }
@@ -135,7 +136,7 @@ export default async (req: Request, res: Response) => {
         listShipping = getValidResults(listShipping, 'shipping_services');
         handleShippingServices(body, listShipping, amount, orderBody);
       } else {
-      // problem with shipping response object
+        // problem with shipping response object
         return sendError(
           res,
           msgErr?.status || 400,

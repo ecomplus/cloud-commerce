@@ -2,6 +2,7 @@ import type {
   Orders,
   Applications,
   ResourceListResult,
+  ResourceId,
 } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions';
 import api from '@cloudcommerce/api';
@@ -70,7 +71,7 @@ const findOrderByTransactionId = (transactionId: string): Promise<ResourceListRe
   });
 };
 
-const findOrderById = async (orderId: string): Promise<Orders> => new Promise((resolve) => {
+const findOrderById = async (orderId: ResourceId): Promise<Orders> => new Promise((resolve) => {
   api.get(`orders/${orderId}`)
     .then(({ data: order }) => {
       resolve(order);
@@ -86,7 +87,7 @@ const createTransaction = async (
   GalaxPayTransaction: { [x: string]: any },
   GalaxPaySubscription: { [x: string]: any },
   GalaxPayTransactionValue: number,
-  originalOrderId: string,
+  originalOrderId: ResourceId,
 ) => {
   if (galaxpayFristTransactionId !== GalaxPayTransaction.galaxPayId) {
     // let body;
@@ -130,7 +131,7 @@ const createTransaction = async (
           },
           payment_method: originalTransaction.payment_method,
           app: originalTransaction.app,
-          _id: transactionId,
+          _id: transactionId as ResourceId,
           notes: `Parcela #${quantity} referente à ${subscriptionLabel} ${periodicity}`,
           custom_fields: originalTransaction.custom_fields,
         },

@@ -12,15 +12,15 @@ import type {
 } from '../../types/index';
 import logger from 'firebase-functions/logger';
 
-type BodyResouce = {[key:string]:any}
+type BodyResouce = { [key: string]: any }
 
 const sendError = (
-  res:Response,
+  res: Response,
   status: number,
   errorCode: string | number,
   message: string,
-  userMessage?: {[key:string]:string},
-  moreInfo?:string,
+  userMessage?: { [key: string]: string },
+  moreInfo?: string,
 ) => {
   return res.status(status)
     .send({
@@ -55,12 +55,12 @@ const fixAmount = (
 };
 
 const getValidResults = (
-  results: {[key:string]:any} [],
-  checkProp?:string,
+  results: { [key: string]: any }[],
+  checkProp?: string,
 ) => {
   // results array returned from module
   // see ./#applications.js
-  const validResults: {[key:string]:any}[] = [];
+  const validResults: { [key: string]: any }[] = [];
   if (Array.isArray(results)) {
     for (let i = 0; i < results.length; i++) {
       const result = results[i];
@@ -86,9 +86,9 @@ const getValidResults = (
 
 const handleListPayments = (
   body: CheckoutBodyWithItems,
-  listPayment: {[key:string]:any},
+  listPayment: { [key: string]: any },
   paymentsBody: Payment,
-  amount:Amount,
+  amount: Amount,
   orderBody: OrderSet,
 ) => {
   for (let i = 0; i < listPayment.length; i++) {
@@ -96,10 +96,10 @@ const handleListPayments = (
     // treat list payments response
     const { response } = result;
     if (response && response.payment_gateways) {
-    // check chosen payment method code and name
+      // check chosen payment method code and name
       const paymentMethod: PaymentMethod = paymentsBody.transaction.payment_method;
       let paymentMethodCode: PaymentMethod['code'];
-      let paymentMethodName:PaymentMethod['name'];
+      let paymentMethodName: PaymentMethod['name'];
       if (paymentMethod) {
         paymentMethodCode = paymentMethod.code;
         paymentMethodName = paymentMethod.name;
@@ -110,12 +110,12 @@ const handleListPayments = (
         (paymentGatewayFound: PaymentGateways[number]) => {
           const paymentMethodFound = paymentGatewayFound.payment_method;
           return !paymentMethodCode
-        || (paymentMethodFound && paymentMethodFound.code === paymentMethodCode);
+            || (paymentMethodFound && paymentMethodFound.code === paymentMethodCode);
         },
       );
       let paymentGateway: PaymentGateways[number] | undefined;
       if (possibleGateways.length > 1 && paymentMethodName) {
-      // prefer respective method name
+        // prefer respective method name
         paymentGateway = possibleGateways.find(
           (paymentGatewayFound: PaymentGateways[number]) => {
             return paymentGatewayFound.payment_method.name === paymentMethodName;
@@ -150,7 +150,7 @@ const handleListPayments = (
         // add to order body
         orderBody.payment_method_label = paymentGateway.label || '';
 
-      // finally start creating new order
+        // finally start creating new order
       }
     }
   }
@@ -160,7 +160,7 @@ const handleListPayments = (
 const handleShippingServices = (
   body: CheckoutBodyWithItems,
   listShipping: BodyResouce,
-  amount:Amount,
+  amount: Amount,
   orderBody: OrderSet,
 ) => {
   for (let i = 0; i < listShipping.length; i++) {
@@ -199,7 +199,7 @@ const handleShippingServices = (
           let maxProductionDays = 0;
           if (orderBody.items) {
             orderBody.items.forEach(
-              (item:Item) => {
+              (item: Item) => {
                 const productionTime = item.production_time;
                 if (productionTime) {
                   let productionDays = productionTime.days;

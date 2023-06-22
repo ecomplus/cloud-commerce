@@ -1,4 +1,4 @@
-import type { ResourceId, Products } from '@cloudcommerce/types';
+import type { Products } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import FormData from 'form-data';
@@ -81,7 +81,7 @@ const tryImageUpload = (originImgUrl: string, product: Products) => new Promise(
 export default (tinyProduct, isNew = true) => new Promise((resolve) => {
   const sku = tinyProduct.codigo || String(tinyProduct.id);
   const name = (tinyProduct.nome || sku).trim();
-  const product: Omit<Products, '_id'| 'store_id' | 'created_at' | 'updated_at'> = {
+  const product: Omit<Products, '_id' | 'store_id' | 'created_at' | 'updated_at'> = {
     available: tinyProduct.situacao === 'A',
     sku,
     name,
@@ -170,7 +170,7 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
 
           if (specTexts.length) {
             product.variations?.push({
-              _id: ecomUtils.randomObjectId() as ResourceId,
+              _id: ecomUtils.randomObjectId(),
               name: `${name} / ${specTexts.join(' / ')}`.substring(0, 100),
               sku: codigo,
               specifications,
@@ -189,7 +189,7 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
           if (url) {
             product.pictures?.push({
               normal: { url },
-              _id: ecomUtils.randomObjectId() as ResourceId,
+              _id: ecomUtils.randomObjectId(),
             });
           }
         }

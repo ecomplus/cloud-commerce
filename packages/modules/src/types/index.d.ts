@@ -1,6 +1,6 @@
 import type {
-  CheckoutBody, 
-  Carts, 
+  CheckoutBody,
+  Carts,
   Orders,
   CalculateShippingResponse,
   ListPaymentsResponse,
@@ -27,8 +27,8 @@ type BodyTransactionOrder = Omit<TransactionOrder, 'status'> & {
   status: StatusTransactionOrder
 }
 
-type OrderPaymentHistory = Pick<Orders,'payments_history'| 'financial_status' | 'amount'>
-type PaymentHistory = Exclude<Pick<Orders,'payments_history'>['payments_history'], undefined>[number]
+type OrderPaymentHistory = Pick<Orders, 'payments_history' | 'financial_status' | 'amount'>
+type PaymentHistory = Exclude<Pick<Orders, 'payments_history'>['payments_history'], undefined>[number]
 
 type CheckoutTransaction = Exclude<CheckoutBody['transaction'], Transaction[]>
 
