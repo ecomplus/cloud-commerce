@@ -32,6 +32,6 @@ describe('Test App Custom-shipping', async () => {
   });
 
   test('Have shipping services', async () => {
-    assert.notEqual(data[0].response.shipping_services.length, 0);
+    assert.equal(data[0].response.shipping_services.length > 0, true);
   });
 });

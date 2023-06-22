@@ -21,6 +21,7 @@ describe('Test App mercadoPago', async () => {
     });
 
     data = (await req.json()).result;
+    console.log('>> ', data[0]);
   });
 
   test('Check Status 200', async () => {
@@ -32,6 +33,6 @@ describe('Test App mercadoPago', async () => {
   });
 
   test('Have payment gateways', async () => {
-    assert.notEqual(data[0].response.payment_gateways.length, 0);
+    assert.equal(data[0].response.payment_gateways.length > 0, true);
   });
 });
