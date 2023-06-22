@@ -1,7 +1,7 @@
 import type { Response } from 'firebase-functions';
+import type { OrderSet } from '@cloudcommerce/types';
 import type {
   CheckoutBodyWithItems,
-  BodyOrder,
   Payment,
   PaymentGateways,
   PaymentMethod,
@@ -35,7 +35,7 @@ const sendError = (
 const fixAmount = (
   amount: Amount,
   body: CheckoutBodyWithItems,
-  orderBody: BodyOrder,
+  orderBody: OrderSet,
 ) => {
   Object.keys(amount).forEach((field) => {
     if (amount[field] > 0 && field !== 'total') {
@@ -89,7 +89,7 @@ const handleListPayments = (
   listPayment: {[key:string]:any},
   paymentsBody: Payment,
   amount:Amount,
-  orderBody: BodyOrder,
+  orderBody: OrderSet,
 ) => {
   for (let i = 0; i < listPayment.length; i++) {
     const result = listPayment[i];
@@ -161,7 +161,7 @@ const handleShippingServices = (
   body: CheckoutBodyWithItems,
   listShipping: BodyResouce,
   amount:Amount,
-  orderBody: BodyOrder,
+  orderBody: OrderSet,
 ) => {
   for (let i = 0; i < listShipping.length; i++) {
     const result = listShipping[i];
@@ -244,8 +244,8 @@ const handleShippingServices = (
 const handleApplyDiscount = (
   body: CheckoutBodyWithItems,
   listDiscount: BodyResouce,
-  amount:Amount,
-  orderBody: BodyOrder,
+  amount: Amount,
+  orderBody: OrderSet,
 ) => {
   // simulate request to apply discount endpoint to get extra discount value
   for (let i = 0; i < listDiscount.length; i++) {
@@ -273,7 +273,7 @@ const handleApplyDiscount = (
 
         if (response.freebie_product_ids) {
           // mark items provided for free
-          orderBody.items.forEach((item) => {
+          orderBody.items?.forEach((item) => {
             if (!item.flags) {
               item.flags = [];
             }

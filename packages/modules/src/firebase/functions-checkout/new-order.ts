@@ -1,7 +1,6 @@
 import type { Response } from 'firebase-functions';
-import type { CheckoutBody } from '@cloudcommerce/types';
+import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
-  BodyOrder,
   Amount,
   CheckoutTransaction,
   TransactionOrder,
@@ -30,7 +29,7 @@ const createOrder = async (
   modulesBaseURL: string,
   amount: Amount,
   checkoutBody: CheckoutBody,
-  orderBody:BodyOrder,
+  orderBody: OrderSet,
   transactions: CheckoutTransaction[],
   dateTime: string,
 ) => {

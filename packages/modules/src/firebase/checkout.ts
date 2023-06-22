@@ -1,8 +1,7 @@
 import type { Request, Response } from 'firebase-functions';
-import type { CheckoutBody } from '@cloudcommerce/types';
+import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
   CheckoutBodyWithItems,
-  BodyOrder,
   Amount,
   Item,
   Payment,
@@ -63,7 +62,7 @@ export default async (req: Request, res: Response) => {
       // start mounting order body
       // https://developers.e-com.plus/docs/api/#/store/orders/orders
       const dateTime = new Date().toISOString();
-      const orderBody: BodyOrder = {
+      const orderBody: OrderSet = {
         opened_at: dateTime,
         buyers: [
           // received customer info
@@ -106,7 +105,7 @@ export default async (req: Request, res: Response) => {
       // count subtotal value
       let subtotal = 0;
       newItems.forEach(
-        (item:Item) => {
+        (item: Item) => {
           subtotal += (item.final_price || item.price * item.quantity);
           // pass each item to prevent object overwrite
           if (orderBody.items) {
