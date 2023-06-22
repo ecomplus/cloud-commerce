@@ -1,4 +1,4 @@
-import type { Products, ResourceId } from '@cloudcommerce/types';
+import type { ResourceId, Products } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import FormData from 'form-data';

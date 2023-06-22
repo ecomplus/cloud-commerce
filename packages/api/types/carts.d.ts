@@ -185,7 +185,7 @@ export interface Carts {
         /**
          * Selected variation ID (ObjectID) if any
          */
-        variation_id?: string;
+        variation_id?: string & { length: 24 };
         /**
          * Kit item quantity
          */

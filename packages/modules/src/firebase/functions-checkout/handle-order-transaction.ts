@@ -1,5 +1,5 @@
 import type { Response } from 'firebase-functions';
-import type { Orders, OrderSet, ResourceId } from '@cloudcommerce/types';
+import type { Orders, OrderSet } from '@cloudcommerce/types';
 import type {
   Amount,
   PaymentHistory,
@@ -12,7 +12,7 @@ import { sendError } from './utils';
 
 const checkoutRespond = async (
   res: Response,
-  orderId: ResourceId,
+  orderId: Orders['_id'],
   orderNumber: number | undefined,
   usrMsg: { en_us: string, pt_br: string },
   transaction?: TransactionOrder,
@@ -68,7 +68,7 @@ const newOrder = async (orderBody: OrderSet) => {
 
 const cancelOrder = async (
   staffNotes: string,
-  orderId: ResourceId,
+  orderId: Orders['_id'],
   isOrderCancelled: boolean,
   res: Response,
   usrMsg: { en_us: string, pt_br: string },
@@ -110,7 +110,7 @@ const cancelOrder = async (
 };
 
 const saveTransaction = (
-  orderId: ResourceId,
+  orderId: Orders['_id'],
   transactionBody: any, // TODO: error type 'status' incompatible
 ) => {
   return new Promise((resolve, reject) => {
@@ -128,7 +128,7 @@ const saveTransaction = (
 };
 
 const addPaymentHistory = async (
-  orderId: ResourceId,
+  orderId: Orders['_id'],
   listPaymentsHistory: PaymentHistory[],
   isFirstTransaction: boolean,
   paymentEntry: PaymentHistory,

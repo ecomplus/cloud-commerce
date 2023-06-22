@@ -1,5 +1,5 @@
 import type { Response } from 'firebase-functions';
-import type { CheckoutBody, OrderSet } from '@cloudcommerce/types';
+import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
   Amount,
   CheckoutTransaction,
