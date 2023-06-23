@@ -6,6 +6,7 @@ import type {
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
+import logger from 'firebase-functions/logger';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']
@@ -24,11 +25,20 @@ export default (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
-  if (!config.mp_public_key || !config.mp_access_token) {
-    // must have configured PayPal app ID and secret
+  if (!process.env.MERCADOPAGO_TOKEN) {
+    const mpAccessToken = config.mp_access_token;
+    if (typeof mpAccessToken === 'string' && mpAccessToken) {
+      process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+    } else {
+      logger.warn('Missing Mercadopago access token');
+    }
+  }
+
+  if (!config.mp_public_key || !process.env.MERCADOPAGO_TOKEN) {
     return {
       error: 'LIST_PAYMENTS_ERR',
-      message: 'MP Public Key or Access Token is unset on app hidden data (merchant must configure the app)',
+      message: 'The public key is not defined in the app '
+        + 'or the MERCADOPAGO_TOKEN is not defined in the environment variables',
     };
   }
 
@@ -133,7 +143,7 @@ export default (data: AppModuleBody) => {
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
           onload_expression: `window.Mercadopago.setPublishableKey("${config.mp_public_key}");
-          ${fs.readFileSync(path.join(__dirname, '../../assets/onload-expression.min.js'), 'utf8')}`,
+          ${fs.readFileSync(path.join(__dirname, '../assets/onload-expression.min.js'), 'utf8')}`,
           cc_brand: {
             function: '_mpBrand',
             is_promise: true,
