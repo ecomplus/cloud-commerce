@@ -6,6 +6,7 @@ import type {
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
+import logger from 'firebase-functions/logger';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']
@@ -24,8 +25,16 @@ export default (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
-  const mpAccessToken = process.env.MERCADOPAGO_TOKEN;
-  if (!config.mp_public_key || !mpAccessToken) {
+  if (!process.env.MERCADOPAGO_TOKEN) {
+    const mpAccessToken = config.mp_access_token;
+    if (typeof mpAccessToken === 'string' && mpAccessToken) {
+      process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+    } else {
+      logger.warn('Missing Mercadopago access token');
+    }
+  }
+
+  if (!config.mp_public_key || !process.env.MERCADOPAGO_TOKEN) {
     return {
       error: 'LIST_PAYMENTS_ERR',
       message: 'The public key is not defined in the app '

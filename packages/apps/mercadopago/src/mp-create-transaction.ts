@@ -144,12 +144,18 @@ export default async (appData: AppModuleBody) => {
   };
   logger.log('>data: ', JSON.stringify(payment));
 
-  const mpAccessToken = process.env.MERCADOPAGO_TOKEN;
-  if (!mpAccessToken) {
-    return {
-      error: 'CREATE_TRANSACTION_ERR',
-      message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
-    };
+  if (!process.env.MERCADOPAGO_TOKEN) {
+    const mpAccessToken = configApp.mp_access_token;
+    if (typeof mpAccessToken === 'string' && mpAccessToken) {
+      process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+    } else {
+      logger.warn('Missing Mercadopago access token');
+      return {
+        status: 409,
+        error: 'CREATE_TRANSACTION_ERR',
+        message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
+      };
+    }
   }
 
   try {
@@ -158,7 +164,7 @@ export default async (appData: AppModuleBody) => {
       url: 'https://api.mercadopago.com/v1/payments',
       method: 'post',
       headers: {
-        Authorization: `Bearer ${mpAccessToken}`,
+        Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
         'Content-Type': 'application/json',
       },
       data: payment,
