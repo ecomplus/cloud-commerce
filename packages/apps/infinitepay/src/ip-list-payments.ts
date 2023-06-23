@@ -23,12 +23,30 @@ export default async (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
+  if (!process.env.INFINITEPAY_ID) {
+    const infinitePayId = configApp.client_id;
+    if (typeof infinitePayId === 'string' && infinitePayId) {
+      process.env.INFINITEPAY_ID = infinitePayId;
+    } else {
+      logger.warn('Missing InfinitePay Client ID');
+    }
+  }
+
+  if (!process.env.INFINITEPAY_SECRET) {
+    const infinitePaySecret = configApp.client_secret;
+    if (typeof infinitePaySecret === 'string' && infinitePaySecret) {
+      process.env.INFINITEPAY_SECRET = infinitePaySecret;
+    } else {
+      logger.warn('Missing InfinitePay Client Secret');
+    }
+  }
+
   const disableLinkPayment = configApp.payment_link ? configApp.payment_link.disable : false;
 
   if (!configApp.infinitepay_user && !disableLinkPayment) {
     return responseError(409, 'NO_INFINITE_USER', 'Username da InfinitePay não configurado');
   }
-  if ((!configApp.client_id || !configApp.client_secret)) {
+  if ((!process.env.INFINITEPAY_ID || !process.env.INFINITEPAY_SECRET)) {
     return responseError(409, 'NO_INFINITE_KEY', 'Client ID/Client Secrect InfinitePay não configurado');
   }
 
@@ -41,8 +59,8 @@ export default async (data: AppModuleBody) => {
   let tokenJWT: string | undefined;
   try {
     const ipAxios = new IPAxios({
-      clientId: configApp.client_id,
-      clientSecret: configApp.client_secret,
+      clientId: process.env.INFINITEPAY_ID,
+      clientSecret: process.env.INFINITEPAY_SECRET,
       typeScope: 'card',
       isSandbox,
     });

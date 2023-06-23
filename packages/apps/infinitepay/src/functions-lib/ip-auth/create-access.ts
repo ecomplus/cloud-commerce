@@ -7,8 +7,8 @@ import Axios from './create-axios';
 const firestoreColl = 'infinitepayTokens';
 
 type Option = {
-  clientId: string;
-  clientSecret: string;
+  clientId?: string;
+  clientSecret?: string;
   typeScope: string,
   isSandbox?: boolean
 }

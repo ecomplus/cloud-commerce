@@ -29,7 +29,25 @@ export default async (data: AppModuleBody) => {
     payment_gateways: [],
   };
 
-  if (!configApp.galaxpay_id || !configApp.galaxpay_hash) {
+  if (!process.env.GALAXPAY_ID) {
+    const galaxpayId = configApp.galaxpay_id;
+    if (typeof galaxpayId === 'string' && galaxpayId) {
+      process.env.GALAXPAY_ID = galaxpayId;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
+  if (!process.env.GALAXPAY_HASH) {
+    const galaxpayHash = configApp.galaxpay_hash;
+    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+      process.env.GALAXPAY_HASH = galaxpayHash;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
+  if (!process.env.GALAXPAY_ID || !process.env.GALAXPAY_HASH) {
     return responseError(
       409,
       'NO_GALAXPAY_KEYS',
@@ -100,7 +118,7 @@ export default async (data: AppModuleBody) => {
               script_uri: 'https://js.galaxpay.com.br/checkout.min.js',
               onload_expression: `window._galaxPayPublicToken="${configApp.galaxpay_public_token}";
               window._galaxPaySandbox=${isSandbox};
-              ${readFile('../../assets/onload-expression.min.js')}`,
+              ${readFile('../assets/onload-expression.min.js')}`,
               cc_hash: {
                 function: '_galaxyHashcard',
                 is_promise: true,

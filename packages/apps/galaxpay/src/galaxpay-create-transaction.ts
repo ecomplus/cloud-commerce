@@ -52,10 +52,27 @@ export default async (appData: AppModuleBody) => {
     amount: amount.total,
   };
 
+  if (!process.env.GALAXPAY_ID) {
+    const galaxpayId = configApp.galaxpay_id;
+    if (typeof galaxpayId === 'string' && galaxpayId) {
+      process.env.GALAXPAY_ID = galaxpayId;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
+  if (!process.env.GALAXPAY_HASH) {
+    const galaxpayHash = configApp.galaxpay_hash;
+    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+      process.env.GALAXPAY_HASH = galaxpayHash;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
   // setup required `transaction` response object
   const galaxpayAxios = new Galaxpay({
-    galaxpayId: configApp.galaxpay_id,
-    galaxpayHash: configApp.galaxpay_hash,
+    galaxpayId: process.env.GALAXPAY_ID,
+    galaxpayHash: process.env.GALAXPAY_HASH,
   });
 
   // indicates whether the buyer should be redirected to payment link right after checkout

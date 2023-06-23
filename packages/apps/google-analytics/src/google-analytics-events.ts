@@ -37,8 +37,16 @@ const handleApiEvent: ApiEventHandler = async ({
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
+  if (!process.env.GA_API_TOKEN) {
+    const apiSecret = appData.api_secret;
+    if (typeof apiSecret === 'string' && apiSecret) {
+      process.env.GA_API_TOKEN = apiSecret;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
   const measurementId = appData.measurement_id;
-  const apiSecret = appData.api_secret;
 
   const order = apiDoc as Orders;
   const orderId = order._id;
@@ -50,8 +58,10 @@ const handleApiEvent: ApiEventHandler = async ({
 
   if (orderId && order.items) {
     try {
-      if (measurementId && apiSecret && (enabledCustonEvent || enabledRefundEvent)) {
-        const url = `/mp/collect?api_secret=${apiSecret}&measurement_id=${measurementId}`;
+      if (measurementId && process.env.GA_API_TOKEN
+        && (enabledCustonEvent || enabledRefundEvent)) {
+        const url = `/mp/collect?api_secret=${process.env.GA_API_TOKEN}`
+          + `&measurement_id=${measurementId}`;
 
         const items = order.items.map((item) => {
           const eventItem: EventItem = {
