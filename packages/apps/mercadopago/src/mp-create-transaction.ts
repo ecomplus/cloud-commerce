@@ -144,13 +144,21 @@ export default async (appData: AppModuleBody) => {
   };
   logger.log('>data: ', JSON.stringify(payment));
 
+  const mpAccessToken = process.env.MERCADOPAGO_TOKEN;
+  if (!mpAccessToken) {
+    return {
+      error: 'CREATE_TRANSACTION_ERR',
+      message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
+    };
+  }
+
   try {
     // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post
     const { data } = await axios({
       url: 'https://api.mercadopago.com/v1/payments',
       method: 'post',
       headers: {
-        Authorization: `Bearer ${configApp.mp_access_token}`,
+        Authorization: `Bearer ${mpAccessToken}`,
         'Content-Type': 'application/json',
       },
       data: payment,

@@ -24,11 +24,12 @@ export default (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
-  if (!config.mp_public_key || !config.mp_access_token) {
-    // must have configured PayPal app ID and secret
+  const mpAccessToken = process.env.MERCADOPAGO_TOKEN;
+  if (!config.mp_public_key || !mpAccessToken) {
     return {
       error: 'LIST_PAYMENTS_ERR',
-      message: 'MP Public Key or Access Token is unset on app hidden data (merchant must configure the app)',
+      message: 'The public key is not defined in the app '
+        + 'or the MERCADOPAGO_TOKEN is not defined in the environment variables',
     };
   }
 
