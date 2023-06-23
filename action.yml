@@ -42,6 +42,8 @@ inputs:
     description: 'App: Optional Galax Pay partner hash'
   datafrete-operator-token:
     description: 'App: Random token (https://randomkeygen.com/) to validate Datafrete webhooks'
+  mercadopago-token: 
+    description: 'App: Mercadopago API access token'
   frenet-token:
     description: 'App: Frenet API token'
   galaxpay-id:
@@ -175,6 +177,7 @@ runs:
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
         DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
+        MERCADOPAGO_TOKEN: ${{ inputs.mercadopago-token }}
         FRENET_TOKEN: ${{ inputs.frenet-token }}
         GALAXPAY_ID: ${{ inputs.galaxpay-id }}
         GALAXPAY_HASH: ${{ inputs.galaxpay-hash }}
@@ -203,6 +206,7 @@ runs:
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
+        MERCADOPAGO_TOKEN=$MERCADOPAGO_TOKEN
         FRENET_TOKEN:$FRENET_TOKEN
         GALAXPAY_ID=$GALAXPAY_ID
         GALAXPAY_HASH=$GALAXPAY_HASH
