@@ -118,7 +118,7 @@ export default async (data: AppModuleBody) => {
               script_uri: 'https://js.galaxpay.com.br/checkout.min.js',
               onload_expression: `window._galaxPayPublicToken="${configApp.galaxpay_public_token}";
               window._galaxPaySandbox=${isSandbox};
-              ${readFile('../assets/onload-expression.min.js')}`,
+              ${readFile('../../assets/onload-expression.min.js')}`,
               cc_hash: {
                 function: '_galaxyHashcard',
                 is_promise: true,
