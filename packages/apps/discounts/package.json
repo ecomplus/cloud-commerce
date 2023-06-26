@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@ecomplus/utils": "1.5.0-rc.4"
+    "@ecomplus/utils": "1.5.0-rc.5"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

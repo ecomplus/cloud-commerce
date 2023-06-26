@@ -27,7 +27,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
-    "@ecomplus/utils": "1.5.0-rc.4",
+    "@ecomplus/utils": "1.5.0-rc.5",
     "@headlessui/vue": "^1.7.14",
     "@vueuse/core": "10.2.0",
     "astro": "2.7.0",

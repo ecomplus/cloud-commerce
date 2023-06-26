@@ -145,8 +145,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       '@ecomplus/utils':
-        specifier: 1.5.0-rc.4
-        version: 1.5.0-rc.4
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
       axios:
         specifier: ^1.4.0
         version: 1.4.0
@@ -170,8 +170,8 @@ importers:
         specifier: workspace:*
         version: link:../../api
       '@ecomplus/utils':
-        specifier: 1.5.0-rc.4
-        version: 1.5.0-rc.4
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -521,8 +521,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       '@ecomplus/utils':
-        specifier: 1.5.0-rc.4
-        version: 1.5.0-rc.4
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
       axios:
         specifier: ^1.4.0
         version: 1.4.0
@@ -808,8 +808,8 @@ importers:
         specifier: workspace:*
         version: link:../firebase
       '@ecomplus/utils':
-        specifier: 1.5.0-rc.4
-        version: 1.5.0-rc.4
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
       ajv:
         specifier: ^8.12.0
         version: 8.12.0
@@ -879,8 +879,8 @@ importers:
         specifier: workspace:*
         version: link:../i18n
       '@ecomplus/utils':
-        specifier: 1.5.0-rc.4
-        version: 1.5.0-rc.4
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
       '@headlessui/vue':
         specifier: ^1.7.14
         version: 1.7.14(vue@3.3.4)
@@ -931,8 +931,8 @@ importers:
         specifier: workspace:*
         version: link:../i18n
       '@ecomplus/utils':
-        specifier: 1.5.0-rc.4
-        version: 1.5.0-rc.4
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
       '@fastify/deepmerge':
         specifier: ^1.3.0
         version: 1.3.0
@@ -3043,8 +3043,8 @@ packages:
       core-js: 3.31.0
     dev: false
 
-  /@ecomplus/utils@1.5.0-rc.4:
-    resolution: {integrity: sha512-uXTbnezvLsYdjDppxwi1TmM71pp7abU8EScYXvSCW9rqw3a53TtQLq1Pg0lOf7F29q+3OHyvwU17UdyKlHjO8Q==}
+  /@ecomplus/utils@1.5.0-rc.5:
+    resolution: {integrity: sha512-WHUT9rQi+9ywx5wzgvShm3Co2E2JE+rVP4lgp9yMOXyKZdwMEBH7RsXntyr/eSkju2ELUp7JHkPaijVFm7E7ZA==}
     optionalDependencies:
       core-js: 3.31.0
     dev: false
