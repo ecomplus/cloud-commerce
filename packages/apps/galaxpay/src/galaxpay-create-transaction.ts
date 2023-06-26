@@ -66,7 +66,7 @@ export default async (appData: AppModuleBody) => {
     if (typeof galaxpayHash === 'string' && galaxpayHash) {
       process.env.GALAXPAY_HASH = galaxpayHash;
     } else {
-      logger.warn('Missing GalaxPay ID');
+      logger.warn('Missing GalaxPay Hash');
     }
   }
   // setup required `transaction` response object

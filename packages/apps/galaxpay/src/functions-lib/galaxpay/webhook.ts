@@ -231,7 +231,7 @@ const handleWehook = async (req: Request, res: Response) => {
               if (typeof galaxpayHash === 'string' && galaxpayHash) {
                 process.env.GALAXPAY_HASH = galaxpayHash;
               } else {
-                logger.warn('Missing GalaxPay ID');
+                logger.warn('Missing GalaxPay Hash');
               }
             }
 
