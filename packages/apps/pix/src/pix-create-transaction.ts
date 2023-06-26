@@ -100,8 +100,31 @@ export default async (appData: AppModuleBody) => {
     baseURL = pixApi.host.startsWith('http') ? pixApi.host : `https://${pixApi.host}`;
   }
   const isGerencianet = Boolean(baseURL && baseURL.indexOf('gerencianet.') > -1);
-  const clientId = pixApi.client_id;
-  const clientSecret = pixApi.client_secret;
+  // const clientId = pixApi.client_id;
+  // const clientSecret = pixApi.client_secret;
+
+  let clientId: string;
+  let clientSecret: string;
+  let tokenData: string;
+
+  if (process.env.PIX_CREDENTIALS) {
+    try {
+      const pixCredentials = JSON.parse(process.env.PIX_CREDENTIALS);
+      clientId = pixCredentials.client_id;
+      clientSecret = pixCredentials.client_secret;
+      tokenData = pixCredentials.authentication;
+    } catch (e) {
+      logger.error(e);
+
+      clientId = pixApi.client_id;
+      clientSecret = pixApi.client_secret;
+      tokenData = pixApi.authentication;
+    }
+  } else {
+    clientId = pixApi.client_id;
+    clientSecret = pixApi.client_secret;
+    tokenData = pixApi.authentication;
+  }
 
   const pix = new Pix({
     clientId,
@@ -109,7 +132,7 @@ export default async (appData: AppModuleBody) => {
     pfx,
     baseURL,
     oauthEndpoint: pixApi.oauth_endpoint,
-    tokenData: pixApi.authorization,
+    tokenData,
   });
 
   let pixCob: { [key: string]: any } | undefined;
