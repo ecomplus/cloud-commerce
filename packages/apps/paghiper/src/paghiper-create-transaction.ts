@@ -134,8 +134,16 @@ export default async (appData: AppModuleBody) => {
     paghiperTransaction.notification_url += '/pix';
   }
 
+  if (!process.env.PAGHIPER_TOKEN) {
+    const pagHiperToken = configApp.paghiper_api_key;
+    if (typeof pagHiperToken === 'string' && pagHiperToken) {
+      process.env.PAGHIPER_TOKEN = pagHiperToken;
+    } else {
+      logger.warn('Missing PagHiper API token');
+    }
+  }
   // use configured PagHiper API key
-  paghiperTransaction.apiKey = configApp.paghiper_api_key;
+  paghiperTransaction.apiKey = process.env.PAGHIPER_TOKEN;
   // merge configured banking billet options
   const options = configApp.banking_billet_options;
   if (typeof options === 'object' && options !== null) {
