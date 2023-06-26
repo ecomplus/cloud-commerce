@@ -23,7 +23,18 @@ export default () => {
     }
 
     if (appData) {
-      const contract = appData.flashcourier_contract;
+      let contract;
+      if (process.env.FLASHCOURIER_CONTRACT) {
+        try {
+          contract = JSON.parse(process.env.FLASHCOURIER_CONTRACT);
+        } catch (e) {
+          logger.error(e);
+          contract = appData.flashcourier_contract;
+        }
+      } else {
+        contract = appData.flashcourier_contract;
+      }
+
       if (contract) {
         const {
           login,
