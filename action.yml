@@ -56,6 +56,20 @@ inputs:
     description: 'App: InifinitePay Client ID'
   infinitepay-secret: 
     description: 'App: InifinitePay Client Secret'
+  fb-graph-token:
+    description: 'App: Facebook Graph token'
+  jadlog-contract-token:
+    description: 'App: Jadlog contract token'
+  pagarme-encry-key: 
+    description: 'App: PagarMe Encryption Key'
+  pagarme-token: 
+    description: 'App: PagarMe API token'
+  paghiper-token: 
+    description: 'App: PagHiper API token'
+  pix-credentials:
+    description: 'App: Pix credentials'
+  flashcourier-contract: 
+    description: 'App: Flash Courier contract'
 
 outputs: {}
 
@@ -184,6 +198,13 @@ runs:
         GA_API_TOKEN: ${{ inputs.ga-api-token }}
         INFINITEPAY_ID: ${{ inputs.infinitepay-id }}
         INFINITEPAY_SECRET: ${{ inputs.infinitepay-secret }}
+        FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
+        JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
+        PAGARME_ENCRYP_KEY: ${{ inputs.pagarme-encry-key }}
+        PAGARME_TOKEN: ${{ inputs.pagarme-token }}     
+        PAGHIPER_TOKEN: ${{ inputs.paghiper-token }}
+        PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
+        FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -213,6 +234,13 @@ runs:
         GA_API_TOKEN=$GA_API_TOKEN
         INFINITEPAY_ID=$INFINITEPAY_ID
         INFINITEPAY_SECRET=$INFINITEPAY_SECRET
+        FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
+        JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
+        PAGARME_ENCRYP_KEY=$PAGARME_ENCRYP_KEY
+        PAGARME_TOKEN=$PAGARME_TOKEN
+        PAGHIPER_TOKEN=$PAGHIPER_TOKEN
+        PIX_CREDENTIALS=$PIX_CREDENTIALS
+        FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         " > functions/.env
         if [ -z "$DEPLOY_CODEBASE" ]; then
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
