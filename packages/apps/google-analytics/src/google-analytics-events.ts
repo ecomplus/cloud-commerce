@@ -42,11 +42,18 @@ const handleApiEvent: ApiEventHandler = async ({
     if (typeof apiSecret === 'string' && apiSecret) {
       process.env.GA_API_TOKEN = apiSecret;
     } else {
-      logger.warn('Missing GalaxPay ID');
+      logger.warn('Missing Google Analytics token');
     }
   }
 
-  const measurementId = appData.measurement_id;
+  if (!process.env.GA_MEASUREMENT_ID) {
+    const measurementId = appData.measurement_id;
+    if (typeof measurementId === 'string' && measurementId) {
+      process.env.GA_MEASUREMENT_ID = measurementId;
+    } else {
+      logger.warn('Missing Google Analytics measurement id');
+    }
+  }
 
   const order = apiDoc as Orders;
   const orderId = order._id;
@@ -58,10 +65,10 @@ const handleApiEvent: ApiEventHandler = async ({
 
   if (orderId && order.items) {
     try {
-      if (measurementId && process.env.GA_API_TOKEN
+      if (process.env.GA_MEASUREMENT_ID && process.env.GA_API_TOKEN
         && (enabledCustonEvent || enabledRefundEvent)) {
         const url = `/mp/collect?api_secret=${process.env.GA_API_TOKEN}`
-          + `&measurement_id=${measurementId}`;
+          + `&measurement_id=${process.env.GA_MEASUREMENT_ID}`;
 
         const items = order.items.map((item) => {
           const eventItem: EventItem = {
