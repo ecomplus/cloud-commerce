@@ -27,7 +27,7 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   loading: 'lazy',
 });
-const image = computed(() => {
+const image = computed<Partial<PictureSize>>(() => {
   if ((props.picture as PictureSize).url) {
     return props.picture as PictureSize;
   }

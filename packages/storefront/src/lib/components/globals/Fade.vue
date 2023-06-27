@@ -136,11 +136,11 @@ const onLeave = (el: HTMLElement) => {
 <template>
   <Transition
     name="sf-fade"
-    @before-enter="setInitialStyles"
-    @enter="onEnter"
-    @before-leave="setInitialStyles"
-    @after-enter="onAfterEnter"
-    @leave="onLeave"
+    @before-enter="(setInitialStyles as any)"
+    @enter="(onEnter as any)"
+    @before-leave="(setInitialStyles as any)"
+    @after-enter="(onAfterEnter as any)"
+    @leave="(onLeave as any)"
   >
     <slot />
   </Transition>
