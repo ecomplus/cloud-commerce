@@ -47,10 +47,16 @@ const handleApiEvent: ApiEventHandler = async ({
     }
   }
 
-  const fbPixelId = appData.fb_pixel_id;
-  // const fbGraphToken = appData.fb_graph_token;
+  if (!process.env.FB_PIXEL_ID) {
+    const fbPixelId = appData.fb_pixel_id;
+    if (typeof fbPixelId === 'string' && fbPixelId) {
+      process.env.FB_PIXEL_ID = fbPixelId;
+    } else {
+      logger.warn('Missing Facebook pixel ID');
+    }
+  }
 
-  if (fbPixelId && process.env.FB_GRAPH_TOKEN) {
+  if (process.env.FB_PIXEL_ID && process.env.FB_GRAPH_TOKEN) {
     FacebookAdsApi.init(process.env.FB_GRAPH_TOKEN);
 
     if (evName === 'orders-new') {
@@ -128,7 +134,7 @@ const handleApiEvent: ApiEventHandler = async ({
           );
 
           const eventsData = [serverEvent];
-          const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, fbPixelId))
+          const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, process.env.FB_PIXEL_ID))
             .setEvents(eventsData);
 
           try {
@@ -210,7 +216,7 @@ const handleApiEvent: ApiEventHandler = async ({
       );
 
       const eventsData = [serverEvent];
-      const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, fbPixelId))
+      const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, process.env.FB_PIXEL_ID))
         .setEvents(eventsData);
 
       try {

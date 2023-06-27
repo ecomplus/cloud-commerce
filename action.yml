@@ -58,6 +58,8 @@ inputs:
     description: 'App: InifinitePay client ID'
   infinitepay-secret: 
     description: 'App: InifinitePay client secret'
+  fb-pixel-id:
+    description: 'App: Facebook pixel ID'
   fb-graph-token:
     description: 'App: Facebook Graph token'
   jadlog-contract-token:
@@ -203,6 +205,7 @@ runs:
         GA_API_TOKEN: ${{ inputs.ga-api-token }}
         INFINITEPAY_ID: ${{ inputs.infinitepay-id }}
         INFINITEPAY_SECRET: ${{ inputs.infinitepay-secret }}
+        FB_PIXEL_ID: ${{ inputs.fb-pixel-id }}
         FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
         JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
         PAGARME_ENCRYPT_KEY: ${{ inputs.pagarme-encrypt-key }}
@@ -241,6 +244,7 @@ runs:
         GA_API_TOKEN=$GA_API_TOKEN
         INFINITEPAY_ID=$INFINITEPAY_ID
         INFINITEPAY_SECRET=$INFINITEPAY_SECRET
+        FB_PIXEL_ID=$FB_PIXEL_ID
         FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
         JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
         PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYP_KEY
