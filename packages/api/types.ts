@@ -1,2 +1,2 @@
 /* eslint-disable */
-export * from './lib/types.d';
+export * from './types.d';

@@ -5,7 +5,7 @@ import type {
   ResponseBody,
   RequestBody,
   ErrorBody,
-} from './types';
+} from '../types.d';
 
 declare global {
   /* eslint-disable no-var, vars-on-top */

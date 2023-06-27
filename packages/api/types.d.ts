@@ -1,14 +1,14 @@
-import type { Products } from '../types/products';
-import type { Categories } from '../types/categories';
-import type { Brands } from '../types/brands';
-import type { Collections } from '../types/collections';
-import type { Grids } from '../types/grids';
-import type { Carts } from '../types/carts';
-import type { Orders } from '../types/orders';
-import type { Customers } from '../types/customers';
-import type { Stores } from '../types/stores';
-import type { Applications } from '../types/applications';
-import type { Authentications } from '../types/authentications';
+import type { Products } from './types/products';
+import type { Categories } from './types/categories';
+import type { Brands } from './types/brands';
+import type { Collections } from './types/collections';
+import type { Grids } from './types/grids';
+import type { Carts } from './types/carts';
+import type { Orders } from './types/orders';
+import type { Customers } from './types/customers';
+import type { Stores } from './types/stores';
+import type { Applications } from './types/applications';
+import type { Authentications } from './types/authentications';
 
 type Resource = 'products'
   | 'categories'
@@ -130,7 +130,7 @@ type SearchItem = {
   condition: Products['condition'],
   warranty: Products['warranty'],
   pictures?: Array<{
-    normal: Exclude<Exclude<Products['pictures'], undefined>[0]['normal'], undefined>,
+    normal?: { url: string, alt?: string, size?: string },
   }>,
   has_variations: boolean,
   _score: number,
