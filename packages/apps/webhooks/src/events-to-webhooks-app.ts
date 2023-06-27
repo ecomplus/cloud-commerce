@@ -49,18 +49,18 @@ const sendWebhook = async (
 
     let headers: { Authorization: string; } | undefined;
 
-    if (!process.env.WEBHOOKAPP_TOKEN) {
+    if (!process.env.WEBHOOKS_TOKEN) {
       const webhookAppToken = options.webhook_token
       if (typeof webhookAppToken === 'string' && webhookAppToken) {
-        process.env.WEBHOOKAPP_TOKEN = webhookAppToken;
+        process.env.WEBHOOKS_TOKEN = webhookAppToken;
       } else {
-        logger.warn('Missing Webhook App token');
+        logger.warn('Missing webhooks token');
       }
     }
 
-    if (process.env.WEBHOOKAPP_TOKEN) {
+    if (process.env.WEBHOOKS_TOKEN) {
       headers = {
-        Authorization: `Bearer ${process.env.WEBHOOKAPP_TOKEN}`,
+        Authorization: `Bearer ${process.env.WEBHOOKS_TOKEN}`,
       };
     }
     const body = {

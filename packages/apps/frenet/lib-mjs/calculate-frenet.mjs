@@ -30,7 +30,6 @@ export default async ({ params, application }) => {
       process.env.FRENET_TOKEN = frenetToken;
     } else {
       logger.warn('Missing Frenet token');
-
       return {
         error: 'FRENET_ERR',
         message: 'Frenet token is unset on app hidden data (calculate unavailable) for this store',
