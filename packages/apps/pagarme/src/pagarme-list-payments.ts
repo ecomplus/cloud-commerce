@@ -44,7 +44,7 @@ export default (data: AppModuleBody) => {
     }
   }
 
-  if (!process.env.PAGARME_ENCRYP_KEY || !process.env.PAGARME_TOKEN) {
+  if (!process.env.PAGARME_ENCRYPT_KEY || !process.env.PAGARME_TOKEN) {
     return {
       error: 'NO_PAGARME_KEYS',
       message: 'Chave de API e/ou criptografia não configurada (lojista deve configurar o aplicativo)',
