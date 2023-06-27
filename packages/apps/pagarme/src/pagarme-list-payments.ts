@@ -26,10 +26,10 @@ export default (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
-  if (!process.env.PAGARME_ENCRYP_KEY) {
-    const parameEncrypKey = configApp.pagarme_encryption_key;
-    if (typeof parameEncrypKey === 'string' && parameEncrypKey) {
-      process.env.PAGARME_ENCRYP_KEY = parameEncrypKey;
+  if (!process.env.PAGARME_ENCRYPT_KEY) {
+    const parameEncryptKey = configApp.pagarme_encryption_key;
+    if (typeof parameEncryptKey === 'string' && parameEncryptKey) {
+      process.env.PAGARME_ENCRYPT_KEY = parameEncryptKey;
     } else {
       logger.warn('Missing PagarMe Encryption key');
     }
@@ -156,7 +156,7 @@ export default (data: AppModuleBody) => {
         // https://github.com/pagarme/pagarme-js
         gateway.js_client = {
           script_uri: 'https://assets.pagar.me/pagarme-js/4.8/pagarme.min.js',
-          onload_expression: `window._pagarmeKey="${process.env.PAGARME_ENCRYP_KEY}";
+          onload_expression: `window._pagarmeKey="${process.env.PAGARME_ENCRYPT_KEY}";
           ${fs.readFileSync(path.join(__dirname, '../assets/onload-expression.min.js'), 'utf8')}`,
           cc_hash: {
             function: '_pagarmeHash',

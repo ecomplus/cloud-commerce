@@ -62,10 +62,10 @@ inputs:
     description: 'App: Facebook Graph token'
   jadlog-contract-token:
     description: 'App: Jadlog contract token'
-  pagarme-encry-key: 
-    description: 'App: PagarMe Encryption Key'
+  pagarme-encrypt-key: 
+    description: 'App: Pagar.me encryption Key'
   pagarme-token: 
-    description: 'App: PagarMe API token'
+    description: 'App: Pagar.me API token'
   paghiper-token: 
     description: 'App: PagHiper API token'
   pix-credentials:
@@ -205,7 +205,7 @@ runs:
         INFINITEPAY_SECRET: ${{ inputs.infinitepay-secret }}
         FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
         JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
-        PAGARME_ENCRYP_KEY: ${{ inputs.pagarme-encry-key }}
+        PAGARME_ENCRYPT_KEY: ${{ inputs.pagarme-encrypt-key }}
         PAGARME_TOKEN: ${{ inputs.pagarme-token }}     
         PAGHIPER_TOKEN: ${{ inputs.paghiper-token }}
         PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
@@ -243,7 +243,7 @@ runs:
         INFINITEPAY_SECRET=$INFINITEPAY_SECRET
         FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
         JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
-        PAGARME_ENCRYP_KEY=$PAGARME_ENCRYP_KEY
+        PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYP_KEY
         PAGARME_TOKEN=$PAGARME_TOKEN
         PAGHIPER_TOKEN=$PAGHIPER_TOKEN
         PIX_CREDENTIALS=$PIX_CREDENTIALS
