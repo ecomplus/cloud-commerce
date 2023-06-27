@@ -4,7 +4,8 @@ import { price as getPrice, onPromotion as checkOnPromotion } from '@ecomplus/ut
 import modulesInfo from '@@sf/state/modules-info';
 
 export interface Props {
-  product?: Partial<Products> & { price: number, final_price?: number };
+  product?: Partial<Products> & { final_price?: number } &
+    ({ price: number } | { final_price: number });
   price?: number;
   basePrice?: number;
   isAmountTotal?: boolean;
