@@ -2,7 +2,7 @@ import type { Orders } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
-import { Endpoint } from '@cloudcommerce/api/lib/types';
+import { Endpoint } from '@cloudcommerce/api/types';
 import config from '@cloudcommerce/firebase/lib/config';
 import Axios from './create-axios';
 
