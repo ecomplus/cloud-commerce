@@ -56,6 +56,8 @@ module.exports = {
     'no-nested-ternary': 'warn',
     'no-await-in-loop': 'warn',
     'no-shadow': 'warn',
+    'quote-props': 'warn',
+    'quotes': 'warn',
     'prefer-template': 'off',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
