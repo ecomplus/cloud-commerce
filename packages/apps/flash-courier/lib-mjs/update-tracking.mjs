@@ -10,7 +10,8 @@ export default () => {
     let appData;
     try {
       const app = (await api.get(
-        `applications?app_id=${config.get().apps.flashCourier.appId}&fields=hidden_data,data`,
+        'applications?limit=1&fields=hidden_data,data'
+          + `&app_id=${config.get().apps.flashCourier.appId}`,
       )).data.result;
 
       appData = {
@@ -64,10 +65,9 @@ export default () => {
           }
           if (!flashcourierToken) return;
 
-          //
           let orders;
           const ordersEndpoint = 'orders?fields=_id,number,fulfillment_status'
-            + '&flags=flashcr-ws'
+            + '&shipping_lines.flags=flashcr-ws'
             + '&fulfillment_status.current!=delivered'
             + `&created_at>=${new Date(Date.now() - 1000 * 60 * 60 * 24 * 60).toISOString()}`;
           try {
@@ -77,6 +77,7 @@ export default () => {
             logger.error(err);
           }
           if (!orders.length) return;
+          logger.info(`[track] ${orders.map(({ number }) => number).join(' ')}`);
           try {
             const { data: { hawbs } } = await axios({
               method: 'post',
@@ -96,13 +97,13 @@ export default () => {
               },
             });
             const requests = [];
-            for (let i = 0; i.length < hawbs.length; i++) {
+            for (let i = 0; i < hawbs.length; i++) {
               const hawb = hawbs[i];
               const order = orders.find(({ number }) => {
-                return Number(hawb.meuNumero.replace(/\D/g, '')) === number;
+                return Number(hawb.codigoCartao.replace(/\D/g, '')) === number;
               });
               if (!order) {
-                logger.warn(`[tracking] cannot match order for ${JSON.stringify(hawb)}`);
+                logger.warn(`[track] cannot match order for ${JSON.stringify(hawb)}`);
               } else {
                 hawb.historico.sort((a, b) => {
                   if (a.ocorrencia && b.ocorrencia) {
@@ -122,13 +123,20 @@ export default () => {
                     status = 'ready_for_shipping';
                     break;
                   case '1400':
+                  case '2000':
+                  case '2200':
+                  case '3000':
+                  case '4100':
                     status = 'shipped';
                     break;
+                  case '2500':
                   case '4250':
                   case '4300':
                   case '5000':
                     status = 'delivered';
                     break;
+                  case '2400':
+                  case '2600':
                   case '6100':
                     status = 'returned';
                     break;
@@ -138,12 +146,19 @@ export default () => {
                   status
                   && (!order.fulfillment_status || order.fulfillment_status.current !== status)
                 ) {
-                  requests.push(
-                    api.post(`orders/${order._id}/fulfillments`, {
-                      status,
-                      flags: ['flashcr'],
-                    }),
-                  );
+                  requests.push(api.post(`orders/${order._id}/fulfillments`, {
+                    status,
+                    flags: ['flashcr'],
+                  }));
+                  if (status === 'shipped') {
+                    const code = hawb.codigoCartao;
+                    requests.push(api.patch(`/orders/${order._id}/shipping_lines/0`, {
+                      tracking_codes: [{
+                        code,
+                        link: `https://www.flashcourier.com.br/rastreio/${code}`,
+                      }],
+                    }));
+                  }
                 }
               }
             }

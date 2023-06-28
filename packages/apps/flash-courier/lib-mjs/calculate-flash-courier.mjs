@@ -67,9 +67,7 @@ export default async ({ params, application }) => {
   if (params.items) {
     // calculate weight and pkg value from items list
     let finalWeight = 0;
-    params.items.forEach(({
-      price, quantity, dimensions, weight,
-    }) => {
+    params.items.forEach(({ quantity, dimensions, weight }) => {
       let physicalWeight = 0;
       let cubicWeight = 1;
 
@@ -174,6 +172,14 @@ export default async ({ params, application }) => {
         } else {
           price = parseFloat(flashcourierProduto[label]);
           days = 7;
+        }
+        if (Array.isArray(appData.services) && appData.services.length) {
+          const service = appData.services.find((_service) => label === _service.service_code);
+          if (service) {
+            label = service.label || label;
+          } else {
+            return;
+          }
         }
         const shippingLine = {
           from: {
