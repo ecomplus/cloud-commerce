@@ -10,27 +10,29 @@ import {
 } from '@ecomplus/utils';
 
 type CartItem = Carts['items'][0];
-type ProductItem = Products | SearchItem | CartItem;
-type PictureSize = Exclude<Exclude<Products['pictures'], undefined>[0]['normal'], undefined>;
+type PictureSize = { url: string; alt?: string; size?: string };
+
+export type ProductItem = Products | SearchItem | CartItem;
 
 export type Props = {
   product?: ProductItem;
   productId?: Products['_id'];
 } & ({ product: ProductItem } | { productId: Products['_id'] });
 
-const useProductCard = (props: Props) => {
+const useProductCard = <T extends ProductItem | undefined = undefined>(props: Props) => {
   const isFetching = ref(false);
   let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
-  const product = shallowReactive<Partial<ProductItem> & { price: number }>({
-    ...props.product,
-    price: getPrice(props.product || {}),
-  });
+  const product = shallowReactive<(T extends undefined ? Partial<SearchItem> : T)
+    & { price: number }>({
+      ...(props.product as Exclude<T, undefined>),
+      price: getPrice(props.product || {}),
+    });
   const title = computed(() => {
     return getName(product);
   });
   const link = computed(() => {
-    const { slug } = (product as SearchItem);
+    const { slug } = (product as Products);
     if (typeof slug === 'string') {
       return `/${slug}`;
     }
@@ -58,11 +60,11 @@ const useProductCard = (props: Props) => {
   });
   const isActive = computed(() => {
     return isInStock.value
-      && (product as SearchItem).available && (product as SearchItem).visible;
+      && (product as Products).available && (product as Products).visible;
   });
   const discountPercentage = computed(() => {
     if (checkOnPromotion(product)) {
-      const basePrice = (product as SearchItem).base_price as number;
+      const basePrice = (product as Products).base_price as number;
       return Math.round(((basePrice - getPrice(product)) * 100) / basePrice);
     }
     return 0;
