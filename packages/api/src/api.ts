@@ -93,20 +93,26 @@ const def = {
     if (params) {
       if (typeof params === 'string') {
         url += `?${params}`;
-      } else if (typeof params === 'object') {
-        const searchParams = new URLSearchParams();
-        Object.keys(params).forEach((key) => {
-          const values = params[key];
-          if (Array.isArray(values)) {
-            values.forEach((value: string | number) => {
-              // https://github.com/microsoft/TypeScript/issues/32951
-              searchParams.append(key, value as string);
-            });
-          } else {
-            searchParams.append(key, values as string);
-          }
-        });
-        url += `?${searchParams.toString()}`;
+      } else {
+        const paramsObj: Exclude<typeof params, string> = params || {};
+        if (config.fields && !paramsObj.fields) {
+          paramsObj.fields = config.fields.join(',');
+        }
+        if (Object.keys(paramsObj).length) {
+          const searchParams = new URLSearchParams();
+          Object.keys(paramsObj).forEach((key) => {
+            const values = paramsObj[key];
+            if (Array.isArray(values)) {
+              values.forEach((value: string | number) => {
+                // https://github.com/microsoft/TypeScript/issues/32951
+                searchParams.append(key, value as string);
+              });
+            } else {
+              searchParams.append(key, values as string);
+            }
+          });
+          url += `?${searchParams.toString()}`;
+        }
       }
     }
     return { url, headers };
@@ -209,8 +215,11 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
   config?: C,
 ): Promise<Response & {
   config: Config,
-  data: ResponseBody<{ endpoint: E }>,
-}> => api({ ...config, endpoint });
+  data: ResponseBody<C & { endpoint: E }>,
+}> => {
+  // @ts-ignore
+  return api({ ...config, endpoint });
+};
 
 const post = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,

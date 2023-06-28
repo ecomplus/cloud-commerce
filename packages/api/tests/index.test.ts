@@ -1,9 +1,9 @@
 /* eslint-disable no-console, import/no-extraneous-dependencies */
 
 import { test, expect } from 'vitest';
-import api, { ApiError } from '../src/api';
+import api, { type ApiError } from '../src/api';
 
-const productId = '618041aa239b7206d3fc06de';
+const productId = '618041aa239b7206d3fc06de' as string & { length: 24 };
 test('Read product and typecheck SKU', async () => {
   const { data } = await api({
     storeId: 1056,
@@ -30,11 +30,16 @@ test('404 with different Store ID from env', async () => {
 });
 
 test('List categories and typecheck result', async () => {
-  const { data } = await api.get('categories');
+  const { data } = await api.get('categories', {
+    fields: ['name'] as const,
+  });
   if (!data.result.length) {
     console.log('Any category found');
   }
   expect(Array.isArray(data.result)).toBe(true);
+  expect(data.result[0].name).toBeTypeOf('string');
+  // @ts-ignore
+  expect(data.result[0].pictures).toBeTypeOf('undefined');
   expect(data.meta).toBeTypeOf('object');
   expect(data.meta.offset).toBeTypeOf('number');
 });

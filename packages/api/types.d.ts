@@ -61,6 +61,7 @@ type Config = {
   lang?: string,
   method?: Method,
   endpoint: Endpoint,
+  fields?: readonly string[],
   params?: Record<string, string | number | boolean | string[] | number[]> | string,
   headers?: Headers | Record<string, string>,
   timeout?: number,
@@ -76,33 +77,156 @@ type BaseListResultMeta = {
   fields: Array<string>,
 };
 
-type ListResultDocs<Document extends any> = Array<Partial<Document> & { _id: ResourceId }>;
-type ProductsList = ListResultDocs<Products>;
-type CategoriesList = ListResultDocs<Categories>;
-type BrandsList = ListResultDocs<Brands>;
-type CollectionsList = ListResultDocs<Collections>;
-type GridsList = ListResultDocs<Grids>;
-type CartsList = ListResultDocs<Carts>;
-type OrdersList = ListResultDocs<Orders>;
-type CustomersList = ListResultDocs<Customers>;
-type StoresList = ListResultDocs<Stores>;
-type ApplicationsList = ListResultDocs<Applications>;
-type AuthenticationsList = ListResultDocs<Authentications>;
+type DocField<T extends string> = T extends `${infer U}.${string}` ? U : T;
+type ListResultDocs<
+  Document extends Record<string, any>,
+  Fields extends string[] | '*' = '*',
+> = Array<Omit<(
+  Fields extends '*' ? Partial<Document> :
+  Pick<Document, Extract<keyof Document, DocField<Fields[number]>>>
+), '_id'> & { _id: ResourceId }>;
+
+type DefaultProductsFields = [
+  'sku',
+  'slug',
+];
+type ProductsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Products, Fields extends null ? DefaultProductsFields : Fields>;
+
+type DefaultCategoriesFields = [
+  'name',
+  'slug',
+  'parent',
+  'icon',
+  'pictures.0',
+];
+type CategoriesList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Categories, Fields extends null ? DefaultCategoriesFields : Fields>;
+
+type DefaultBrandsFields = [
+  'name',
+  'slug',
+  'logo',
+  'pictures.0',
+];
+type BrandsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Brands, Fields extends null ? DefaultBrandsFields : Fields>;
+
+type DefaultCollectionsFields = [
+  'name',
+  'slug',
+  'products',
+  'pictures.0',
+];
+type CollectionsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Collections, Fields extends null ? DefaultCollectionsFields : Fields>;
+
+type DefaultGridsFields = [
+  'title',
+  'grid_id',
+  'options.text',
+  'options.colors',
+];
+type GridsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Grids, Fields extends null ? DefaultGridsFields : Fields>;
+
+type DefaultCartsFields = [
+  'available',
+  'completed',
+  'permalink',
+  'status',
+  'customers',
+  'other_customers',
+  'items.product_id',
+  'items.sku',
+  'items.name',
+  'items.quantity',
+  'items.final_price',
+  'subtotal',
+];
+type CartsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Carts, Fields extends null ? DefaultCartsFields : Fields>;
+
+type DefaultOrdersFields = [
+  'channel_id',
+  'number',
+  'code',
+  'status',
+  'financial_status.updated_at',
+  'financial_status.current',
+  'fulfillment_status.updated_at',
+  'fulfillment_status.current',
+  'amount',
+  'payment_method_label',
+  'shipping_method_label',
+  'buyers._id',
+  'buyers.main_email',
+  'buyers.display_name',
+  'items.product_id',
+  'items.sku',
+  'items.name',
+  'items.quantity',
+];
+type OrdersList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Orders, Fields extends null ? DefaultOrdersFields : Fields>;
+
+type DefaultCustomersFields = [
+  'state',
+  'enabled',
+  'login',
+  'status',
+  'main_email',
+  'accepts_marketing',
+  'display_name',
+  'orders_count',
+  'orders_total_value',
+];
+type CustomersList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Customers, Fields extends null ? DefaultCustomersFields : Fields>;
+
+type DefaultStoresFields = [
+  'store_id',
+  'name',
+  'domain',
+];
+type StoresList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Stores, Fields extends null ? DefaultStoresFields : Fields>;
+
+type DefaultApplicationsFields = [
+  'app_id',
+  'title',
+  'state',
+  'version',
+  'type',
+];
+type ApplicationsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Applications, Fields extends null ? DefaultApplicationsFields : Fields>;
+
+type DefaultAuthenticationsFields = [
+  'username',
+  'email',
+  'app',
+];
+type AuthenticationsList<Fields extends null | string[] | '*' = '*'> =
+  ListResultDocs<Authentications, Fields extends null ? DefaultAuthenticationsFields : Fields>;
 
 type ListEndpoint<TResource extends Resource> = TResource | `${TResource}?${string}`;
-type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
+type ResourceListResult<
+  TEndpoint extends ResourceOpQuery,
+  Fields extends string[] | null = TEndpoint extends Resource ? null : '*',
+> = {
   result:
-    TEndpoint extends ListEndpoint<'products'> ? ProductsList :
-    TEndpoint extends ListEndpoint<'categories'> ? CategoriesList :
-    TEndpoint extends ListEndpoint<'brands'> ? BrandsList :
-    TEndpoint extends ListEndpoint<'collections'> ? CollectionsList :
-    TEndpoint extends ListEndpoint<'grids'> ? GridsList :
-    TEndpoint extends ListEndpoint<'carts'> ? CartsList :
-    TEndpoint extends ListEndpoint<'orders'> ? OrdersList :
-    TEndpoint extends ListEndpoint<'customers'> ? CustomersList :
-    TEndpoint extends ListEndpoint<'stores'> ? StoresList :
-    TEndpoint extends ListEndpoint<'applications'> ? ApplicationsList :
-    TEndpoint extends ListEndpoint<'authentications'> ? AuthenticationsList :
+    TEndpoint extends ListEndpoint<'products'> ? ProductsList<Fields> :
+    TEndpoint extends ListEndpoint<'categories'> ? CategoriesList<Fields> :
+    TEndpoint extends ListEndpoint<'brands'> ? BrandsList<Fields> :
+    TEndpoint extends ListEndpoint<'collections'> ? CollectionsList<Fields> :
+    TEndpoint extends ListEndpoint<'grids'> ? GridsList<Fields> :
+    TEndpoint extends ListEndpoint<'carts'> ? CartsList<Fields> :
+    TEndpoint extends ListEndpoint<'orders'> ? OrdersList<Fields> :
+    TEndpoint extends ListEndpoint<'customers'> ? CustomersList<Fields> :
+    TEndpoint extends ListEndpoint<'stores'> ? StoresList<Fields> :
+    TEndpoint extends ListEndpoint<'applications'> ? ApplicationsList<Fields> :
+    TEndpoint extends ListEndpoint<'authentications'> ? AuthenticationsList<Fields> :
     never,
   meta: BaseListResultMeta & {
     count?: number,
@@ -114,31 +238,46 @@ type ResourceListResult<TEndpoint extends ResourceOpQuery> = {
   },
 };
 
-type SearchItem = {
-  _id: ResourceId
-  sku: Products['sku'],
-  name: Products['name'],
-  slug: Products['slug'],
-  available: Products['available'],
-  visible: Products['visible'],
-  price: Products['price'],
-  base_price: Products['base_price'],
-  quantity: Products['quantity'],
-  min_quantity: Products['min_quantity'],
-  inventory: Products['inventory'],
-  measurement: Products['measurement'],
-  condition: Products['condition'],
-  warranty: Products['warranty'],
-  pictures?: Array<{
-    normal?: { url: string, alt?: string, size?: string },
-  }>,
-  has_variations: boolean,
+interface SearchProducts extends Products {
+  has_variations: boolean;
+  _score: number;
+}
+type DefaultSearchFields = [
+  'sku',
+  'name',
+  'slug',
+  'available',
+  'visible',
+  'price',
+  'base_price',
+  'quantity',
+  'min_quantity',
+  'inventory',
+  'measurement',
+  'condition',
+  'warranty',
+  'pictures.normal',
+  'has_variations',
+];
+
+type SearchItem<Fields extends null | string[] | '*' = '*'> = Omit<(
+  Fields extends '*' ? Partial<SearchProducts> :
+  Pick<
+    SearchProducts,
+    Extract<keyof SearchProducts,
+      DocField<Fields extends null ? DefaultSearchFields[number] : Fields[number]>>
+  >
+), '_id' | '_score'> & {
+  _id: ResourceId,
   _score: number,
 };
 
-type SearchResult<TEndpoint extends SearchOpQuery | 'v1' | 'els'> =
+type SearchResult<
+  TEndpoint extends SearchOpQuery | 'v1' | 'els',
+  Fields extends string[] | null = TEndpoint extends 'search/v1' | 'v1' ? null : '*',
+> =
   TEndpoint extends 'search/v1' | `search/v1?${string}` | 'v1' ? {
-    result: SearchItem[],
+    result: SearchItem<Fields>[],
     meta: BaseListResultMeta & {
       count?: number,
       sort: Array<{
@@ -167,7 +306,7 @@ type SearchResult<TEndpoint extends SearchOpQuery | 'v1' | 'els'> =
   } :
   TEndpoint extends 'search/_els' | `search/_els?${string}` | 'els' ? {
     hits: {
-      hits: SearchItem[],
+      hits: SearchItem<'*'>[],
       total: number,
       max_score: null,
     },
@@ -207,7 +346,14 @@ type EventsResult<TEndpoint extends EventsEndpoint> = {
   meta: BaseListResultMeta,
 };
 
-type ResponseBody<TConfig extends Config> =
+type ResponseBody<
+  TConfig extends Config,
+  ListFields extends string[] | null = TConfig['endpoint'] extends Resource
+    ? TConfig['params']['fields'] extends string ? '*'
+      : TConfig['fields'] extends readonly string[] ? TConfig['fields']
+      : null
+    : '*',
+> =
   TConfig['method'] extends 'post' ?
     TConfig['endpoint'] extends 'login' ? { _id: ResourceId, store_ids: number[], api_key: string } :
     TConfig['endpoint'] extends 'authenticate' ? { my_id: string, access_token: string, expires: string } :
@@ -226,8 +372,8 @@ type ResponseBody<TConfig extends Config> =
   TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
   TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
   TConfig['endpoint'] extends `authentications/${ResourceId}` ? Authentications :
-  TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint']> :
-  TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint']> :
+  TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint'], ListFields> :
+  TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
