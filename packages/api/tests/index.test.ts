@@ -39,9 +39,19 @@ test('List categories and typecheck result', async () => {
   expect(Array.isArray(data.result)).toBe(true);
   expect(data.result[0].name).toBeTypeOf('string');
   // @ts-ignore
-  expect(data.result[0].pictures).toBeTypeOf('undefined');
+  expect(data.result[0].slug).toBeTypeOf('undefined');
   expect(data.meta).toBeTypeOf('object');
   expect(data.meta.offset).toBeTypeOf('number');
+  const { data: data2 } = await api.get('categories', {
+    limit: 1,
+  });
+  expect(data2.result.length).toBe(1);
+  const { data: data3 } = await api.get('categories', {
+    params: {
+      slug: 'this-slug-doesnt-exists-123',
+    },
+  });
+  expect(data3.result.length).toBe(0);
 });
 
 test('401 trying to list API events', async () => {
