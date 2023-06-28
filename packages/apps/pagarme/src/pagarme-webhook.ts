@@ -21,7 +21,15 @@ export const pagarme = {
         const app = (await api.get(
           `applications?app_id=${config.get().apps.pagarMe.appId}&fields=hidden_data`,
         )).data.result;
-        const apiKeyPagame = app[0].hidden_data?.pagarme_api_key;
+
+        if (!process.env.PAGARME_TOKEN) {
+          const pagarmeToken = app[0].hidden_data?.pagarme_api_key;
+          if (typeof pagarmeToken === 'string' && pagarmeToken) {
+            process.env.PAGARME_TOKEN = pagarmeToken;
+          } else {
+            logger.warn('Missing PagarMe API token');
+          }
+        }
 
         // https://docs.pagar.me/docs/gerenciando-postbacks
         const pagarmeTransaction = req.body && req.body.transaction;
@@ -39,7 +47,8 @@ export const pagarme = {
 
             if (headerSignature && !Array.isArray(headerSignature)) {
               const signature = headerSignature.replace('sha1=', '');
-              if (!Pagarme.postback.verifySignature(apiKeyPagame, verifyBody, signature)) {
+              if (!Pagarme.postback
+                .verifySignature(process.env.PAGARME_TOKEN, verifyBody, signature)) {
                 res.sendStatus(403);
               } else {
                 try {

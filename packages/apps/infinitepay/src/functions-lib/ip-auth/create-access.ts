@@ -7,8 +7,8 @@ import Axios from './create-axios';
 const firestoreColl = 'infinitepayTokens';
 
 type Option = {
-  clientId: string;
-  clientSecret: string;
+  clientId?: string;
+  clientSecret?: string;
   typeScope: string,
   isSandbox?: boolean
 }
@@ -55,14 +55,18 @@ export default class IPAxios {
       const handleAuth = () => {
         logger.log('>(App: InfinitePay) Auth ');
 
-        auth(clientId, clientSecret, scope, isSandbox)
-          .then((resp: any) => {
-            authenticate(resp.access_token);
-            if (documentRef) {
-              documentRef.set({ ...resp, isSandbox }).catch(logger.error);
-            }
-          })
-          .catch(reject);
+        if (clientId && clientSecret) {
+          auth(clientId, clientSecret, scope, isSandbox)
+            .then((resp: any) => {
+              authenticate(resp.access_token);
+              if (documentRef) {
+                documentRef.set({ ...resp, isSandbox }).catch(logger.error);
+              }
+            })
+            .catch(reject);
+        } else {
+          reject(new Error('InfinitePay credentials unset'));
+        }
       };
 
       if (documentRef) {

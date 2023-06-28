@@ -25,9 +25,28 @@ const handleApiEvent: ApiEventHandler = async ({
     return null;
   }
   logger.info(`> Webhook ${resourceId} [${evName}] => ${apiDoc}`);
+
+  if (!process.env.GALAXPAY_ID) {
+    const galaxpayId = appData.galaxpay_id;
+    if (typeof galaxpayId === 'string' && galaxpayId) {
+      process.env.GALAXPAY_ID = galaxpayId;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
+  if (!process.env.GALAXPAY_HASH) {
+    const galaxpayHash = appData.galaxpay_hash;
+    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+      process.env.GALAXPAY_HASH = galaxpayHash;
+    } else {
+      logger.warn('Missing GalaxPay Hash');
+    }
+  }
+
   const galaxpayAxios = new GalaxpayAxios({
-    galaxpayId: appData.galaxpay_id,
-    galaxpayHash: appData.galaxpay_hash,
+    galaxpayId: process.env.GALAXPAY_ID,
+    galaxpayHash: process.env.GALAXPAY_HASH,
   });
 
   await galaxpayAxios.preparing;

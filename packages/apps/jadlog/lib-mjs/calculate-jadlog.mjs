@@ -56,8 +56,21 @@ export default async ({ params, application }) => {
     return response;
   }
 
+  if (!process.env.JADLOG_CONTRACT_TOKEN) {
+    const jadlogContractToken = appData.jadlog_contract?.token;
+    if (typeof jadlogContractToken === 'string' && jadlogContractToken) {
+      process.env.JADLOG_CONTRACT_TOKEN = jadlogContractToken;
+    } else {
+      logger.warn('Missing Jadlog contract token');
+
+      return {
+        error: 'JADLOG_ERR',
+        message: 'Jadlog contract token not defined',
+      };
+    }
+  }
   const jadlogContract = appData.jadlog_contract || {};
-  if (!cepori || !jadlogContract.account || !jadlogContract.token) {
+  if (!cepori || !jadlogContract.account || !process.env.JADLOG_CONTRACT_TOKEN) {
     // must have configured origin zip code to continue
     return {
       error: 'CALCULATE_ERR',
@@ -242,7 +255,7 @@ export default async ({ params, application }) => {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          Authorization: `Bearer ${jadlogContract.token}`,
+          Authorization: `Bearer ${process.env.JADLOG_CONTRACT_TOKEN}`,
         },
         timeout: 6000,
       });
@@ -316,9 +329,9 @@ export default async ({ params, application }) => {
                 const rule = appData.shipping_rules[i];
                 if (
                   rule
-                    && (!rule.service_code || rule.service_code === serviceCode)
-                    && checkZipCode(rule)
-                    && !(rule.min_amount > jadlogParams.vldeclarado)
+                  && (!rule.service_code || rule.service_code === serviceCode)
+                  && checkZipCode(rule)
+                  && !(rule.min_amount > jadlogParams.vldeclarado)
                 ) {
                   // valid shipping rule
                   if (rule.free_shipping) {
@@ -368,7 +381,7 @@ export default async ({ params, application }) => {
               break;
             }
             if (!cheapestShippingLine
-                || cheapestShippingLine.total_price > shippingLine.total_price) {
+              || cheapestShippingLine.total_price > shippingLine.total_price) {
               cheapestShippingLine = shippingLine;
             }
           }

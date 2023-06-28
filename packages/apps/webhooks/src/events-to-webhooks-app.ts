@@ -47,12 +47,20 @@ const sendWebhook = async (
 
     logger.log(`> Sending ${isCart ? 'cart' : 'order'} notification`);
 
-    const token = options.webhook_token;
     let headers: { Authorization: string; } | undefined;
 
-    if (token) {
+    if (!process.env.WEBHOOKS_TOKEN) {
+      const webhookAppToken = options.webhook_token
+      if (typeof webhookAppToken === 'string' && webhookAppToken) {
+        process.env.WEBHOOKS_TOKEN = webhookAppToken;
+      } else {
+        logger.warn('Missing webhooks token');
+      }
+    }
+
+    if (process.env.WEBHOOKS_TOKEN) {
       headers = {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${process.env.WEBHOOKS_TOKEN}`,
       };
     }
     const body = {

@@ -128,9 +128,27 @@ export default async (appData: AppModuleBody) => {
   const configApp = { ...application.data, ...application.hidden_data };
   const callbackUrl = `${baseUri}/infinitepay-webhook`;
 
+  if (!process.env.INFINITEPAY_ID) {
+    const infinitePayId = configApp.client_id;
+    if (typeof infinitePayId === 'string' && infinitePayId) {
+      process.env.INFINITEPAY_ID = infinitePayId;
+    } else {
+      logger.warn('Missing InfinitePay Client ID');
+    }
+  }
+
+  if (!process.env.INFINITEPAY_SECRET) {
+    const infinitePaySecret = configApp.client_secret;
+    if (typeof infinitePaySecret === 'string' && infinitePaySecret) {
+      process.env.INFINITEPAY_SECRET = infinitePaySecret;
+    } else {
+      logger.warn('Missing InfinitePay Client Secret');
+    }
+  }
+
   const ipAxios = new IPAxios({
-    clientId: configApp.client_id,
-    clientSecret: configApp.client_secret,
+    clientId: process.env.INFINITEPAY_ID,
+    clientSecret: process.env.INFINITEPAY_SECRET,
     typeScope: 'transactions',
     isSandbox,
   });

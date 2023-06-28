@@ -10,17 +10,23 @@ export default async ({ params, application }) => {
     ...application.hidden_data,
   };
 
-  if (!appData.access_token) {
-    // no Melhor Envio access_token
-    return {
-      status: 409,
-      error: 'CALCULATE_SHIPPING_DISABLED',
-      message: 'Melhor Envio Token is unset on app hidden data',
-    };
+  if (!process.env.MELHORENVIO_TOKEN) {
+    const melhorEnvioToken = appData.access_token;
+    if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
+      process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
+    } else {
+      logger.warn('Missing Melhor Envio token');
+      return {
+        status: 409,
+        error: 'CALCULATE_SHIPPING_DISABLED',
+        message: 'Melhor Envio Token is unset',
+      };
+    }
   }
+
   if (
     appData.skip_no_weight_item
-      && params.items && params.items.find(({ weight }) => weight && !weight.value)
+    && params.items && params.items.find(({ weight }) => weight && !weight.value)
   ) {
     return {
       status: 409,
@@ -76,12 +82,11 @@ export default async ({ params, application }) => {
 
   if (params.items) {
     const intZipCode = parseInt(params.to.zip.replace(/\D/g, ''), 10);
-    const token = appData.access_token;
     const { sandbox } = appData;
 
     if (!appData.merchant_address) {
       // get merchant_address
-      const { data } = await meClient(token, sandbox).get('/');
+      const { data } = await meClient(process.env.MELHORENVIO_TOKEN, sandbox).get('/');
       const merchantAddress = data.address;
 
       // update config.merchant_address
@@ -112,7 +117,8 @@ export default async ({ params, application }) => {
 
     // calculate the shipment
     try {
-      const data = await meClient(token, sandbox).post('/shipment/calculate', schema);
+      const data = await meClient(process.env.MELHORENVIO_TOKEN, sandbox)
+        .post('/shipment/calculate', schema);
 
       let errorMsg;
       data.forEach((service) => {
@@ -167,7 +173,7 @@ export default async ({ params, application }) => {
           };
 
           const servicePkg = (service.packages && service.packages[0])
-          || (service.volumes && service.volumes[0]);
+            || (service.volumes && service.volumes[0]);
 
           if (servicePkg) {
             shippingLine.package = {};
@@ -273,15 +279,15 @@ export default async ({ params, application }) => {
       }
 
       return (!Array.isArray(response.shipping_services) || !response.shipping_services.length)
-        && errorMsg ? {
+        && errorMsg
+        ? {
           status: 400,
           error: 'CALCULATE_ERR_MSG',
           message: errorMsg,
         }
-      // success response with available shipping services
+        // success response with available shipping services
         : response;
     } catch (err) {
-    //
       let message = 'Unexpected Error Try Later';
       if (err.response && err.isAxiosError) {
         const { data, status, config } = err.response;

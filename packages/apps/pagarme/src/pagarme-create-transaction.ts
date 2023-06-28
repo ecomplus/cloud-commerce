@@ -134,7 +134,16 @@ export default async (appData: AppModuleBody) => {
     }
   }
 
-  pagarmeTransaction.api_key = configApp.pagarme_api_key;
+  if (!process.env.PAGARME_TOKEN) {
+    const pagarmeToken = configApp.pagarme_api_key;
+    if (typeof pagarmeToken === 'string' && pagarmeToken) {
+      process.env.PAGARME_TOKEN = pagarmeToken;
+    } else {
+      logger.warn('Missing PagarMe API token');
+    }
+  }
+
+  pagarmeTransaction.api_key = process.env.PAGARME_TOKEN;
   pagarmeTransaction.postback_url = notificationUrl;
   pagarmeTransaction.soft_descriptor = (configApp.soft_descriptor
     || `${params.domain}_PagarMe`).substring(0, 13);

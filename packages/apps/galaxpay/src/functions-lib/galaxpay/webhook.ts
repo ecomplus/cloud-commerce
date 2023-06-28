@@ -217,10 +217,27 @@ const handleWehook = async (req: Request, res: Response) => {
 
           try {
             // check subscription and transaction status before in galaxpay
+            if (!process.env.GALAXPAY_ID) {
+              const galaxpayId = app.hidden_data?.galaxpay_id;
+              if (typeof galaxpayId === 'string' && galaxpayId) {
+                process.env.GALAXPAY_ID = galaxpayId;
+              } else {
+                logger.warn('Missing GalaxPay ID');
+              }
+            }
+
+            if (!process.env.GALAXPAY_HASH) {
+              const galaxpayHash = app.hidden_data?.galaxpay_hash;
+              if (typeof galaxpayHash === 'string' && galaxpayHash) {
+                process.env.GALAXPAY_HASH = galaxpayHash;
+              } else {
+                logger.warn('Missing GalaxPay Hash');
+              }
+            }
 
             const galaxpayAxios = new GalaxpayAxios({
-              galaxpayId: app.hidden_data?.galaxpay_id,
-              galaxpayHash: app.hidden_data?.galaxpay_hash,
+              galaxpayId: process.env.GALAXPAY_ID,
+              galaxpayHash: process.env.GALAXPAY_HASH,
             });
             await galaxpayAxios.preparing;
 

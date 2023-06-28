@@ -38,11 +38,26 @@ const handleApiEvent: ApiEventHandler = async ({
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
-  const fbPixelId = appData.fb_pixel_id;
-  const fbGraphToken = appData.fb_graph_token;
+  if (!process.env.FB_GRAPH_TOKEN) {
+    const fbGraphToken = appData.fb_graph_token;
+    if (typeof fbGraphToken === 'string' && fbGraphToken) {
+      process.env.FB_GRAPH_TOKEN = fbGraphToken;
+    } else {
+      logger.warn('Missing Facebook Graph token');
+    }
+  }
 
-  if (fbPixelId && fbGraphToken) {
-    FacebookAdsApi.init(fbGraphToken);
+  if (!process.env.FB_PIXEL_ID) {
+    const fbPixelId = appData.fb_pixel_id;
+    if (typeof fbPixelId === 'string' && fbPixelId) {
+      process.env.FB_PIXEL_ID = fbPixelId;
+    } else {
+      logger.warn('Missing Facebook pixel ID');
+    }
+  }
+
+  if (process.env.FB_PIXEL_ID && process.env.FB_GRAPH_TOKEN) {
+    FacebookAdsApi.init(process.env.FB_GRAPH_TOKEN);
 
     if (evName === 'orders-new') {
       const order = apiDoc as Orders;
@@ -119,7 +134,7 @@ const handleApiEvent: ApiEventHandler = async ({
           );
 
           const eventsData = [serverEvent];
-          const eventRequest = (new EventRequest(fbGraphToken, fbPixelId))
+          const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, process.env.FB_PIXEL_ID))
             .setEvents(eventsData);
 
           try {
@@ -201,7 +216,7 @@ const handleApiEvent: ApiEventHandler = async ({
       );
 
       const eventsData = [serverEvent];
-      const eventRequest = (new EventRequest(fbGraphToken, fbPixelId))
+      const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, process.env.FB_PIXEL_ID))
         .setEvents(eventsData);
 
       try {

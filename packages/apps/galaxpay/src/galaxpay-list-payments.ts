@@ -29,7 +29,25 @@ export default async (data: AppModuleBody) => {
     payment_gateways: [],
   };
 
-  if (!configApp.galaxpay_id || !configApp.galaxpay_hash) {
+  if (!process.env.GALAXPAY_ID) {
+    const galaxpayId = configApp.galaxpay_id;
+    if (typeof galaxpayId === 'string' && galaxpayId) {
+      process.env.GALAXPAY_ID = galaxpayId;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
+  if (!process.env.GALAXPAY_HASH) {
+    const galaxpayHash = configApp.galaxpay_hash;
+    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+      process.env.GALAXPAY_HASH = galaxpayHash;
+    } else {
+      logger.warn('Missing GalaxPay Hash');
+    }
+  }
+
+  if (!process.env.GALAXPAY_ID || !process.env.GALAXPAY_HASH) {
     return responseError(
       409,
       'NO_GALAXPAY_KEYS',

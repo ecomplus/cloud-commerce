@@ -6,6 +6,7 @@ import type {
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
+import logger from 'firebase-functions/logger';
 import addInstallments from './functions-lib/add-installments';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
@@ -25,7 +26,25 @@ export default (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
-  if (!configApp.pagarme_encryption_key || !configApp.pagarme_api_key) {
+  if (!process.env.PAGARME_ENCRYPT_KEY) {
+    const parameEncryptKey = configApp.pagarme_encryption_key;
+    if (typeof parameEncryptKey === 'string' && parameEncryptKey) {
+      process.env.PAGARME_ENCRYPT_KEY = parameEncryptKey;
+    } else {
+      logger.warn('Missing PagarMe Encryption key');
+    }
+  }
+
+  if (!process.env.PAGARME_TOKEN) {
+    const pagarmeToken = configApp.pagarme_api_key;
+    if (typeof pagarmeToken === 'string' && pagarmeToken) {
+      process.env.PAGARME_TOKEN = pagarmeToken;
+    } else {
+      logger.warn('Missing PagarMe API token');
+    }
+  }
+
+  if (!process.env.PAGARME_ENCRYPT_KEY || !process.env.PAGARME_TOKEN) {
     return {
       error: 'NO_PAGARME_KEYS',
       message: 'Chave de API e/ou criptografia não configurada (lojista deve configurar o aplicativo)',
@@ -137,7 +156,7 @@ export default (data: AppModuleBody) => {
         // https://github.com/pagarme/pagarme-js
         gateway.js_client = {
           script_uri: 'https://assets.pagar.me/pagarme-js/4.8/pagarme.min.js',
-          onload_expression: `window._pagarmeKey="${configApp.pagarme_encryption_key}";
+          onload_expression: `window._pagarmeKey="${process.env.PAGARME_ENCRYPT_KEY}";
           ${fs.readFileSync(path.join(__dirname, '../assets/onload-expression.min.js'), 'utf8')}`,
           cc_hash: {
             function: '_pagarmeHash',

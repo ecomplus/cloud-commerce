@@ -44,13 +44,22 @@ export default async (req: Request, res: Response) => {
   const Apps = (await api.get(
     `applications?app_id=${apps.pagHiper.appId}&fields=hidden_data`,
   )).data.result;
-  const configApp = Apps[0].hidden_data?.paghiper_api_key;
+  const configApp = Apps[0].hidden_data;
+  if (!process.env.PAGHIPER_TOKEN) {
+    const pagHiperToken = configApp?.paghiper_api_key;
+    if (typeof pagHiperToken === 'string' && pagHiperToken) {
+      process.env.PAGHIPER_TOKEN = pagHiperToken;
+    } else {
+      logger.warn('Missing PagHiper API token');
+    }
+  }
+
   try {
-    if (configApp.paghiper_token && configApp.paghiper_api_key === body.apiKey) {
+    if (process.env.PAGHIPER_TOKEN && process.env.PAGHIPER_TOKEN === body.apiKey) {
       // list order IDs for respective transaction code
       const orders = await listOrdersByTransaction(transactionCode);
       const paghiperResponse = await readNotification(
-        { ...body, token: configApp.paghiper_token },
+        { ...body, token: process.env.PAGHIPER_TOKEN },
         isPix,
       );
 

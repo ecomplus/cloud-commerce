@@ -44,6 +44,38 @@ inputs:
     description: 'App: Random token (https://randomkeygen.com/) to validate Datafrete webhooks'
   mercadopago-token: 
     description: 'App: Mercadopago API access token'
+  frenet-token:
+    description: 'App: Frenet API token'
+  galaxpay-id:
+    description: 'App: Galax Pay ID'
+  galaxpay-hash:
+    description: 'App: Galax Pay hash'
+  ga-measurement-id: 
+    description: 'App: Google Analytics API measurement id'
+  ga-api-token:
+    description: 'App: Google Analytics API secret'
+  infinitepay-id: 
+    description: 'App: InifinitePay client ID'
+  infinitepay-secret: 
+    description: 'App: InifinitePay client secret'
+  fb-pixel-id:
+    description: 'App: Facebook pixel ID'
+  fb-graph-token:
+    description: 'App: Facebook Graph token'
+  jadlog-contract-token:
+    description: 'App: Jadlog contract token'
+  pagarme-encrypt-key: 
+    description: 'App: Pagar.me encryption Key'
+  pagarme-token: 
+    description: 'App: Pagar.me API token'
+  paghiper-token: 
+    description: 'App: PagHiper API token'
+  pix-credentials:
+    description: 'App: Pix credentials'
+  flashcourier-contract: 
+    description: 'App: Flash Courier contract'
+  webhooks-token: 
+    description: 'App: Webhooks token'
 
 outputs: {}
 
@@ -166,6 +198,22 @@ runs:
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
         DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
         MERCADOPAGO_TOKEN: ${{ inputs.mercadopago-token }}
+        FRENET_TOKEN: ${{ inputs.frenet-token }}
+        GALAXPAY_ID: ${{ inputs.galaxpay-id }}
+        GALAXPAY_HASH: ${{ inputs.galaxpay-hash }}
+        GA_MEASUREMENT_ID: ${{ inputs.ga-measurement-id }}
+        GA_API_TOKEN: ${{ inputs.ga-api-token }}
+        INFINITEPAY_ID: ${{ inputs.infinitepay-id }}
+        INFINITEPAY_SECRET: ${{ inputs.infinitepay-secret }}
+        FB_PIXEL_ID: ${{ inputs.fb-pixel-id }}
+        FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
+        JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
+        PAGARME_ENCRYPT_KEY: ${{ inputs.pagarme-encrypt-key }}
+        PAGARME_TOKEN: ${{ inputs.pagarme-token }}     
+        PAGHIPER_TOKEN: ${{ inputs.paghiper-token }}
+        PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
+        FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
+        WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -189,6 +237,22 @@ runs:
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
         MERCADOPAGO_TOKEN=$MERCADOPAGO_TOKEN
+        FRENET_TOKEN:$FRENET_TOKEN
+        GALAXPAY_ID=$GALAXPAY_ID
+        GALAXPAY_HASH=$GALAXPAY_HASH
+        GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID
+        GA_API_TOKEN=$GA_API_TOKEN
+        INFINITEPAY_ID=$INFINITEPAY_ID
+        INFINITEPAY_SECRET=$INFINITEPAY_SECRET
+        FB_PIXEL_ID=$FB_PIXEL_ID
+        FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
+        JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
+        PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYP_KEY
+        PAGARME_TOKEN=$PAGARME_TOKEN
+        PAGHIPER_TOKEN=$PAGHIPER_TOKEN
+        PIX_CREDENTIALS=$PIX_CREDENTIALS
+        FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
+        WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
         " > functions/.env
         if [ -z "$DEPLOY_CODEBASE" ]; then
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy

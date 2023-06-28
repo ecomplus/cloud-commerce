@@ -33,28 +33,33 @@ const handleApiEvent = async ({
   try {
     const trackingCode = await db.searchLabel(resourceId);
     if (!trackingCode) {
-      const accessToken = appData.access_token;
-      const { sandbox } = appData;
-      if (!accessToken) {
-        ECHO_SKIP('>> Melhor Envio token not found');
-        return null;
+      if (!process.env.MELHORENVIO_TOKEN) {
+        const melhorEnvioToken = appData.access_token;
+        if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
+          process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
+        } else {
+          logger.warn('Missing Melhor Envio token');
+          return null;
+        }
       }
+
+      const { sandbox } = appData;
 
       const order = apiDoc as Orders;
       if (!appData.enabled_label_purchase || !orderIsValid(order, appData)) {
         ECHO_SKIP();
         return null;
       }
-      const merchantData = await meClient(accessToken, sandbox).get('/')
+      const merchantData = await meClient(process.env.MELHORENVIO_TOKEN, sandbox).get('/')
         .then(({ data }) => data);
 
       const label = newLabel(order, appData, merchantData);
       // logger.log(`>> Comprando etiquetas #${storeId} ${order._id}`);
-      const { data } = await meClient(accessToken, sandbox).post('/cart', label);
+      const { data } = await meClient(process.env.MELHORENVIO_TOKEN, sandbox).post('/cart', label);
       if (data) {
         logger.log(`>> Etiqueta inserida no carrinho com sucesso #${data.id}`);
         if (appData.enabled_label_checkout) {
-          await meClient(accessToken, sandbox).post('/shipment/checkout', { orders: [data.id] });
+          await meClient(process.env.MELHORENVIO_TOKEN, sandbox).post('/shipment/checkout', { orders: [data.id] });
         }
 
         // logger.log(`>> Carrinho finalizado com sucesso #${data.id}`);

@@ -23,8 +23,16 @@ export const mercadopago = {
           const app = (await api.get(
             `applications?app_id=${config.get().apps.mercadoPago.appId}&fields=hidden_data`,
           )).data.result;
-          const accessTokenMp = app[0].hidden_data?.mp_access_token;
-          if (accessTokenMp) {
+          if (!process.env.MERCADOPAGO_TOKEN) {
+            const mpAccessToken = app[0].hidden_data?.mp_access_token;
+            if (typeof mpAccessToken === 'string' && mpAccessToken) {
+              process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+            } else {
+              logger.warn('Missing Mercadopago access token');
+            }
+          }
+
+          if (process.env.MERCADOPAGO_TOKEN) {
             const notification = req.body;
             if (notification.type !== 'payment' || !notification.data || !notification.data.id) {
               res.status(404).send(ECHO_SKIP);
@@ -49,7 +57,7 @@ export const mercadopago = {
                       `https://api.mercadopago.com/v1/payments/${notification.data.id}`,
                       {
                         headers: {
-                          Authorization: `Bearer ${accessTokenMp}`,
+                          Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
                           'Content-Type': 'application/json',
                         },
                       },
