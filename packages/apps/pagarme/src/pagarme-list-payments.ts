@@ -124,6 +124,11 @@ export default (data: AppModuleBody) => {
           label = !isPix ? 'Boleto bancário' : 'Pix';
         }
       }
+      const isDiscountInOneParcel = discount[paymentMethod] === '1 parcela';
+      if (isCreditCard && typeof discount[paymentMethod] === 'string') {
+        discount[paymentMethod] = isDiscountInOneParcel
+          || discount[paymentMethod] === 'Todas as parcelas';
+      }
       const gateway: Gateway = {
         label,
         icon: methodConfig.icon,
@@ -167,7 +172,14 @@ export default (data: AppModuleBody) => {
         if (installments) {
           const installmentsTotal = gateway.discount ? amount.total : initialTotalAmount;
           // list all installment options and default one
-          addInstallments(installmentsTotal, installments, gateway, response);
+          addInstallments(
+            installmentsTotal,
+            installments,
+            gateway,
+            response,
+            initialTotalAmount,
+            isDiscountInOneParcel,
+          );
         }
       }
 

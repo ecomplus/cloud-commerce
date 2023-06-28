@@ -50,11 +50,11 @@ inputs:
     description: 'App: Galax Pay ID'
   galaxpay-hash:
     description: 'App: Galax Pay hash'
-  ga-measurement-id: 
+  ga-measurement-id:
     description: 'App: Google Analytics API measurement id'
   ga-api-token:
     description: 'App: Google Analytics API secret'
-  infinitepay-id: 
+  infinitepay-id:
     description: 'App: InifinitePay client ID'
   infinitepay-secret: 
     description: 'App: InifinitePay client secret'
@@ -66,15 +66,17 @@ inputs:
     description: 'App: Jadlog contract token'
   pagarme-encrypt-key: 
     description: 'App: Pagar.me encryption Key'
-  pagarme-token: 
+  pagarme-token:
     description: 'App: Pagar.me API token'
-  paghiper-token: 
+  pagarme-partner-id:
+    description: 'App: Pagar.me partner ID'
+  paghiper-token:
     description: 'App: PagHiper API token'
   pix-credentials:
     description: 'App: Pix credentials'
-  flashcourier-contract: 
+  flashcourier-contract:
     description: 'App: Flash Courier contract'
-  webhooks-token: 
+  webhooks-token:
     description: 'App: Webhooks token'
 
 outputs: {}
@@ -209,7 +211,8 @@ runs:
         FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
         JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
         PAGARME_ENCRYPT_KEY: ${{ inputs.pagarme-encrypt-key }}
-        PAGARME_TOKEN: ${{ inputs.pagarme-token }}     
+        PAGARME_TOKEN: ${{ inputs.pagarme-token }}
+        PAGARME_PARTNER_ID: ${{ inputs.pagarme-partner-id }}
         PAGHIPER_TOKEN: ${{ inputs.paghiper-token }}
         PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
@@ -249,6 +252,7 @@ runs:
         JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
         PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYP_KEY
         PAGARME_TOKEN=$PAGARME_TOKEN
+        PAGARME_PARTNER_ID=$PAGARME_PARTNER_ID
         PAGHIPER_TOKEN=$PAGHIPER_TOKEN
         PIX_CREDENTIALS=$PIX_CREDENTIALS
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
