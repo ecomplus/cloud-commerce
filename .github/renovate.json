@@ -10,7 +10,8 @@
   "dependencyDashboard": false,
   "ignoreDeps": [
     "node",
-    "pnpm"
+    "pnpm",
+    "turbo"
   ],
   "packageRules": [
     {
