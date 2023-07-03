@@ -871,7 +871,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 5.3.0
-        version: 5.3.0(astro@2.7.0)
+        version: 5.3.0(astro@2.7.3)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -891,8 +891,8 @@ importers:
         specifier: 10.2.1
         version: 10.2.1(vue@3.3.4)
       astro:
-        specifier: 2.7.0
-        version: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+        specifier: 2.7.3
+        version: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       firebase-admin:
         specifier: ^11.9.0
         version: 11.9.0
@@ -916,14 +916,14 @@ importers:
   packages/storefront:
     dependencies:
       '@astrojs/image':
-        specifier: 0.17.1
-        version: 0.17.1(astro@2.7.0)(sharp@0.32.1)
+        specifier: 0.17.2
+        version: 0.17.2(astro@2.7.3)(sharp@0.32.1)
       '@astrojs/node':
         specifier: 5.3.0
-        version: 5.3.0(astro@2.7.0)
+        version: 5.3.0(astro@2.7.3)
       '@astrojs/vue':
         specifier: 2.2.1
-        version: 2.2.1(astro@2.7.0)(vite@4.3.9)(vue@3.3.4)
+        version: 2.2.1(astro@2.7.3)(vite@4.3.9)(vue@3.3.4)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -953,13 +953,13 @@ importers:
         version: 1.1.33
       '@vite-pwa/astro':
         specifier: ^0.1.1
-        version: 0.1.1(astro@2.7.0)(vite-plugin-pwa@0.16.4)
+        version: 0.1.1(astro@2.7.3)(vite-plugin-pwa@0.16.4)
       '@vueuse/core':
         specifier: 10.2.1
         version: 10.2.1(vue@3.3.4)
       astro:
-        specifier: 2.7.0
-        version: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+        specifier: 2.7.3
+        version: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1054,14 +1054,14 @@ packages:
       leven: 3.1.0
     dev: false
 
-  /@astrojs/compiler@1.5.1:
-    resolution: {integrity: sha512-iIGKu/uzB8sJ5VveQf0eHrVPPFEcrvSlp4qShYMOuY2aMmK2RVXQlX9dUjtmBQ+NAokfIOb7fwCutvH+p13l+g==}
+  /@astrojs/compiler@1.5.3:
+    resolution: {integrity: sha512-/HSFkJ+Yv+WUWSq0QVsIlhBKam5VUpGV+s8MvPguC/krHmw4Ww9TIgmfJSvV8/BN0sHJB7pCgf7yInae1zb+TQ==}
     dev: false
 
-  /@astrojs/image@0.17.1(astro@2.7.0)(sharp@0.32.1):
-    resolution: {integrity: sha512-+kb99ZTvl4BpbY6BeIAwJq08aGF/H4V9S6351I2GwIddQYilEQfHQ9b6EVfxoHIE6eSo8bRfUeKFkOmWVppWwA==}
+  /@astrojs/image@0.17.2(astro@2.7.3)(sharp@0.32.1):
+    resolution: {integrity: sha512-hw5vGBlyPwyt9E4ux7eej7dJrcSlTAaMYKYd8OWIJVsFSbV75sXNi+5lwbpNjDLGVIS6Baa4nzayjN5Gxo73MQ==}
     peerDependencies:
-      astro: ^2.7.0
+      astro: ^2.7.3
       sharp: '>=0.31.0 || 0.32'
     peerDependenciesMeta:
       astro:
@@ -1070,7 +1070,7 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+      astro: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
@@ -1079,15 +1079,15 @@ packages:
       sharp: 0.32.1
     dev: false
 
-  /@astrojs/internal-helpers@0.1.0:
-    resolution: {integrity: sha512-OSwvoFkTqVowiyP+codQeQZWoq/HOwY32x17NxDglWoCx2sdyXzplDZoVV4/3odmSEY6/A+48WMl5qkjmP1CXw==}
+  /@astrojs/internal-helpers@0.1.1:
+    resolution: {integrity: sha512-+LySbvFbjv2nO2m/e78suleQOGEru4Cnx73VsZbrQgB2u7A4ddsQg3P2T0zC0e10jgcT+c6nNlKeLpa6nRhQIg==}
     dev: false
 
   /@astrojs/language-server@1.0.0:
     resolution: {integrity: sha512-oEw7AwJmzjgy6HC9f5IdrphZ1GVgfV/+7xQuyf52cpTiRWd/tJISK3MsKP0cDkVlfodmNABNFnAaAWuLZEiiiA==}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 1.5.1
+      '@astrojs/compiler': 1.5.3
       '@jridgewell/trace-mapping': 0.3.18
       '@vscode/emmet-helper': 2.8.7
       events: 3.3.0
@@ -1103,7 +1103,7 @@ packages:
       vscode-uri: 3.0.7
     dev: false
 
-  /@astrojs/markdown-remark@2.2.1(astro@2.7.0):
+  /@astrojs/markdown-remark@2.2.1(astro@2.7.3):
     resolution: {integrity: sha512-VF0HRv4GpC1XEMLnsKf6jth7JSmlt9qpqP0josQgA2eSpCIAC/Et+y94mgdBIZVBYH/yFnMoIxgKVe93xfO2GA==}
     peerDependencies:
       astro: ^2.5.0
@@ -1112,7 +1112,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+      astro: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -1129,7 +1129,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@5.3.0(astro@2.7.0):
+  /@astrojs/node@5.3.0(astro@2.7.3):
     resolution: {integrity: sha512-q7gJEPSZzC4FIRNmq3ks6mw0Jby4irXTfRhbOPOS4HRmbu4FDANnRqnZBOGe96cfBQTgDC3/FhQccDQtx+n4pg==}
     peerDependencies:
       astro: ^2.7.0
@@ -1138,7 +1138,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/webapi': 2.2.0
-      astro: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+      astro: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1168,7 +1168,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@2.2.1(astro@2.7.0)(vite@4.3.9)(vue@3.3.4):
+  /@astrojs/vue@2.2.1(astro@2.7.3)(vite@4.3.9)(vue@3.3.4):
     resolution: {integrity: sha512-fq+RKFAKpIRcobF/803kMJWv/lobf9IIk6K5As5fWE/eYTpykkgHtxd+zDnf7d4I2V7K9XLKV06Oi6Q+oTJmDw==}
     engines: {node: '>=16.12.0'}
     peerDependencies:
@@ -1184,7 +1184,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.0.1(vite@4.3.9)(vue@3.3.4)
       '@vue/babel-plugin-jsx': 1.1.1(@babel/core@7.22.1)
       '@vue/compiler-sfc': 3.3.4
-      astro: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+      astro: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -3979,10 +3979,6 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /@ljharb/has-package-exports-patterns@0.0.2:
-    resolution: {integrity: sha512-4/RWEeXDO6bocPONheFe6gX/oQdP/bEpv0oL4HqjPP5DCenBSt0mHgahppY49N0CpsaqffdwPq+TlX9CYOq2Dw==}
-    dev: false
-
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -4794,7 +4790,7 @@ packages:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.1.1(astro@2.7.0)(vite-plugin-pwa@0.16.4):
+  /@vite-pwa/astro@0.1.1(astro@2.7.3)(vite-plugin-pwa@0.16.4):
     resolution: {integrity: sha512-ZImC5fFMekgXyyCEsed5y6R9srFhNfFqwNrOhpi9klOn0nju1eCwHKGodJGK9B4gjxZo35dc5lS5FHFinTOBcw==}
     peerDependencies:
       astro: ^1.6.0 || ^2.0.0
@@ -4803,7 +4799,7 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 2.7.0(@types/node@18.16.19)(sharp@0.32.1)
+      astro: 2.7.3(@types/node@18.16.19)(sharp@0.32.1)
       vite-plugin-pwa: 0.16.4(vite@4.3.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
     dev: false
 
@@ -5255,8 +5251,8 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro@2.7.0(@types/node@18.16.19)(sharp@0.32.1):
-    resolution: {integrity: sha512-gUYx2R0V7fpZtFRN9f4nE0We95qYhJyAr+VW0nVFqlMMF1of9MzrjjJ+8rIGJ/6RooFK8XAaXWTQMGTok3ZzEA==}
+  /astro@2.7.3(@types/node@18.16.19)(sharp@0.32.1):
+    resolution: {integrity: sha512-DwPvvOYElhCNyAWUlFd17HhTNBx+XXnAZfM/PYHq7RicvC/tG4loBjlYk/Yw7x9wQCkbKjoxVRiNYvmvSUmisw==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     peerDependencies:
@@ -5265,10 +5261,10 @@ packages:
       sharp:
         optional: true
     dependencies:
-      '@astrojs/compiler': 1.5.1
-      '@astrojs/internal-helpers': 0.1.0
+      '@astrojs/compiler': 1.5.3
+      '@astrojs/internal-helpers': 0.1.1
       '@astrojs/language-server': 1.0.0
-      '@astrojs/markdown-remark': 2.2.1(astro@2.7.0)
+      '@astrojs/markdown-remark': 2.2.1(astro@2.7.3)
       '@astrojs/telemetry': 2.1.1
       '@astrojs/webapi': 2.2.0
       '@babel/core': 7.22.5
@@ -5311,10 +5307,8 @@ packages:
       server-destroy: 1.0.1
       sharp: 0.32.1
       shiki: 0.14.2
-      slash: 4.0.0
       string-width: 5.1.2
       strip-ansi: 7.1.0
-      supports-esm: 1.0.0
       tsconfig-resolver: 3.0.1
       typescript: 5.0.4
       unist-util-visit: 4.1.2
@@ -7745,12 +7739,6 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  /has-package-exports@1.3.0:
-    resolution: {integrity: sha512-e9OeXPQnmPhYoJ63lXC4wWe34TxEGZDZ3OQX9XRqp2VwsfLl3bQBy7VehLnd34g3ef8CmYlBLGqEMKXuz8YazQ==}
-    dependencies:
-      '@ljharb/has-package-exports-patterns': 0.0.2
-    dev: false
-
   /has-property-descriptors@1.0.0:
     resolution: {integrity: sha512-62DVLZGoiEBDHQyqG4w9xCuZ7eJEwNmJRWw2VY84Oedb7WFcA27fiEVe8oUQx9hAUJ4ekurquucTGwsyO1XGdQ==}
     dependencies:
@@ -8336,7 +8324,7 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
-      '@babel/parser': 7.22.3
+      '@babel/parser': 7.22.5
       '@jsdoc/salty': 0.2.5
       '@types/markdown-it': 12.2.3
       bluebird: 3.7.2
@@ -10002,7 +9990,7 @@ packages:
     resolution: {integrity: sha512-kt9wk33J7HvFGwFaHb8piwy4zbUmabC8Nu+qCw493jhe96YkpjscqGBPy4nJ9TPy9pd7+kEx1zM81rp+MIdrXg==}
     engines: {node: ^14.15.0 || >=16.0.0, pnpm: '>=7.14.0'}
     dependencies:
-      '@astrojs/compiler': 1.5.1
+      '@astrojs/compiler': 1.5.3
       prettier: 2.8.8
       sass-formatter: 0.7.6
       synckit: 0.8.5
@@ -11175,12 +11163,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       has-flag: 4.0.0
-
-  /supports-esm@1.0.0:
-    resolution: {integrity: sha512-96Am8CDqUaC0I2+C/swJ0yEvM8ZnGn4unoers/LSdE4umhX7mELzqyLzx3HnZAluq5PXIsGMKqa7NkqaeHMPcg==}
-    dependencies:
-      has-package-exports: 1.3.0
-    dev: false
 
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
