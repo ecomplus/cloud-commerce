@@ -51,7 +51,7 @@ importers:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.16.19)(typescript@5.0.4)
       turbo:
-        specifier: ^1.10.6
+        specifier: 1.10.6
         version: 1.10.6
       typescript:
         specifier: ~5.0.4
