@@ -38,7 +38,7 @@ If you want to deploy to a new Firebase project (needed for larger changes):
 
 2. Go to _Creation > Firestore Database_ page (on sidebar) and _create database_:
     - Just bypass with default production mode and rules;
-    - Select region `nam5 (us-central)` (recommended);
+    - Select region `us-east4` (recommended);
 
 3. Firebase free plan doesn't support sending external HTTP requests, so you'll need to upgrade to _Blaze_ (on demand) plan;
 
