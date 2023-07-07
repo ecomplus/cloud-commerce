@@ -70,7 +70,7 @@ const mergeConfig = {
     memory: (DEPLOY_MEMORY as '128MB' | '256MB' | '512MB' | '1GB' | '2GB') || '256MB',
   },
   ssrFunctionOptions: {
-    region: SSR_DEPLOY_REGION || 'us-east4',
+    region: SSR_DEPLOY_REGION || DEPLOY_REGION || 'us-east4',
     memory: (SSR_DEPLOY_MEMORY as '256MiB' | '512MiB' | '1GiB' | '2GiB' | '4GiB') || '1GiB',
     timeoutSeconds: SSR_DEPLOY_TIMEOUT_SECONDS ? Number(SSR_DEPLOY_TIMEOUT_SECONDS) : 10,
     minInstances: SSR_DEPLOY_MIN_INSTANCES ? Number(SSR_DEPLOY_MIN_INSTANCES) : 0,
