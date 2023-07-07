@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.16.0](https://github.com/ecomplus/cloud-commerce/compare/v0.15.1...v0.16.0) (2023-07-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* New Firebase project needed with different region, or regions must be explicitly set
+
+### Bug Fixes
+
+* **firebase:** Set SSR function region with `SSR_DEPLOY_REGION || DEPLOY_REGION` ([a983828](https://github.com/ecomplus/cloud-commerce/commit/a9838285636c9b5304e4595974807cceabe7d8d7)), closes [#164](https://github.com/ecomplus/cloud-commerce/issues/164)
+
+
+* Moving deploy to us-east4 GCP region, all resources on same region [[#164](https://github.com/ecomplus/cloud-commerce/issues/164)] ([64d9a21](https://github.com/ecomplus/cloud-commerce/commit/64d9a21791801050739eebe9c8339eaac5db45e0))
+
 ### [0.15.1](https://github.com/ecomplus/cloud-commerce/compare/v0.15.0...v0.15.1) (2023-07-07)
 
 
