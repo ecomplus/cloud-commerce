@@ -2,6 +2,98 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.15.0](https://github.com/ecomplus/cloud-commerce/compare/v0.14.1...v0.15.0) (2023-07-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `useHeroSection` renamed (moved) to `usePageHero`, `useSections` renamed to `usePageSections`
+* **storefront:** `useHomeMain` removed as it may not be used at all, `Sections.astro` file should import `useSections` directly
+* **storefront:** `import 'uno.css';` must be mannualy imported now for every page
+* **storefront:** New config/storefront.{tailwind|unocss}.cjs files in place of root ones to prevent duplicated (more or less complex) config generations
+* **storefront:** Old (bad named) `preflight.css` file removed
+
+May look to https://unocss.dev/guide/style-reset\#tailwind-compat in a future
+* **storefront:** Removing no more needed `routeContext` prop on many nested Astro components, getting from `Astro.locals` instead
+* **storefront:** Renamed exports `loadPageContext` and type `PageConext` to `loadRouteContext` and `RouteContext` instead
+* **storefront:** Expecing content/pages/home.json instead of content/home.json , `HomeContent` removed from contend.d.ts exports
+
+### Features
+
+* **affilate-program:** Setup app to handle simple affiliate program  ([#167](https://github.com/ecomplus/cloud-commerce/issues/167)) ([7a29529](https://github.com/ecomplus/cloud-commerce/commit/7a29529f326f3e04646d29e9e6a8b3d54e1a170d))
+* **api:** Add `SearchItems` and `SearchResult` types ([4326f7c](https://github.com/ecomplus/cloud-commerce/commit/4326f7c0ff0ccfa23937336c623bf48d4859946b))
+* **api:** Add optional `config.fields` option ([af47797](https://github.com/ecomplus/cloud-commerce/commit/af47797d9f45f2741244b85cd0bb4a1e8f7826f0))
+* **api:** Add optional config common params for list ([97c4e17](https://github.com/ecomplus/cloud-commerce/commit/97c4e179c1501e1a30053bc26ea19f42f0d263f2))
+* **api:** Add optional global `$apiMergeConfig` for all in-context requests (may be overwritten) ([ef88575](https://github.com/ecomplus/cloud-commerce/commit/ef88575b3028ad86ca7b0a14971e10e3c14b880d))
+* **apps:** Many optional env vars for apps credentials ([#179](https://github.com/ecomplus/cloud-commerce/issues/179)) ([881530a](https://github.com/ecomplus/cloud-commerce/commit/881530ae2383bd9ff37d794525f133cdd88d455c))
+* **discounts:** Updating with original app v1.15.1 ([29f97ab](https://github.com/ecomplus/cloud-commerce/commit/29f97ab8aea801422ab2b4afea87aaad44e0b63f))
+* **firebase:** Update config object with new `metafields: Record<string, any>` ([636e7e8](https://github.com/ecomplus/cloud-commerce/commit/636e7e82c82175042c7819f40828f92cb5dc1d19)), closes [#discussion_r1221705606](https://github.com/ecomplus/cloud-commerce/issues/discussion_r1221705606)
+* **flash-courier:** Add app to integrate Flash Courier ([#166](https://github.com/ecomplus/cloud-commerce/issues/166)) ([a157a1c](https://github.com/ecomplus/cloud-commerce/commit/a157a1c5d38e5f77caeee33f4054d33faa76462a))
+* **modules:** Updating schemas with https://github.com/ecomplus/modules-api/releases/tag/v0.12.58 ([e2a803d](https://github.com/ecomplus/cloud-commerce/commit/e2a803d9be83ddd91ff61b137f4c6fe18f7461af))
+* **storefront:** Additional computed within `useProductCard` ([9f20334](https://github.com/ecomplus/cloud-commerce/commit/9f203344423bc011921bd13c79b3470790d1c30c))
+* **storefront:** Additional computed within `useProductCard` ([bf19fa3](https://github.com/ecomplus/cloud-commerce/commit/bf19fa33730eb18be95d56d54424a8ceb521938c))
+* **storefront:** Consistent named exports for all Vue composables ([603e8ec](https://github.com/ecomplus/cloud-commerce/commit/603e8ecbbc8969da268e539a333343721952451f))
+* **storefront:** New `useSections` layout Astro composable ([ae709cd](https://github.com/ecomplus/cloud-commerce/commit/ae709cda9920a3ca008c292ac57f659163eb5190))
+* **storefront:** Set `Astro.locals.routeContext` globally available on Astro components ([79b1111](https://github.com/ecomplus/cloud-commerce/commit/79b1111330d0464c9d8eeeb19b03a9ec2fccf43c))
+* **storefront:** Setup `useProductCard` with fetch if product undefined and minor title i18n parse ([20d8f78](https://github.com/ecomplus/cloud-commerce/commit/20d8f78119158faf3cb4a5b6a8cdacb8acc5b6ea))
+* **storefront:** Setup new `useProductShelf` Vue composable ([507e968](https://github.com/ecomplus/cloud-commerce/commit/507e968dd86e61996e412efd0e4c26f897d3b7a3))
+* **storefront:** Update Astro to v2.6.0 ([35b7ac1](https://github.com/ecomplus/cloud-commerce/commit/35b7ac1fa2cd9d5b0c42e2f43562061b531beec7))
+
+
+### Bug Fixes
+
+* **affiliate-program:** Fix handling orders/customers events ([#173](https://github.com/ecomplus/cloud-commerce/issues/173)) ([07ffc61](https://github.com/ecomplus/cloud-commerce/commit/07ffc61fd13754c117c598f721448a5ebb1ec43b))
+* **api:** Fix `SearchItems` pictures to match partial `Products` picture ([abb0fd9](https://github.com/ecomplus/cloud-commerce/commit/abb0fd918346d757c2228f5af693a6cd6847491e))
+* **api:** Fix `SearchItems` pictures type def ([c98edf6](https://github.com/ecomplus/cloud-commerce/commit/c98edf62a5f6b26a0ca574fa05780c44ea01dc42))
+* **api:** Update `Endpoint` type def to accept doc find by field ([5ca53e7](https://github.com/ecomplus/cloud-commerce/commit/5ca53e7ec316e3bb4d400d8cf2302deecb42745b))
+* **api:** Update `SearchItems` type with `item._score` number ([97b517e](https://github.com/ecomplus/cloud-commerce/commit/97b517e8aff75efa37483bffd8c183e11468ffde))
+* **config:** Stop using `import.meta.env` for global config ([4100f74](https://github.com/ecomplus/cloud-commerce/commit/4100f745416860fb2ea16101749f1063955b9e33))
+* **deps:** Update `@ecomplus/utils` to v1.5.0-rc.4 ([754f3ea](https://github.com/ecomplus/cloud-commerce/commit/754f3ea10ede64370cc0fce9b6fbd83047b4f8e0))
+* **deps:** Update `@ecomplus/utils` to v1.5.0-rc.5 ([8794ca6](https://github.com/ecomplus/cloud-commerce/commit/8794ca65e51b8417a439bc01ab09c64398622fbb))
+* **deps:** Update Astro to v2.5.5 ([3b6037c](https://github.com/ecomplus/cloud-commerce/commit/3b6037ca41df1cbb7cd28dc9548e005ce2466a65)), closes [#issuecomment-1568864726](https://github.com/ecomplus/cloud-commerce/issues/issuecomment-1568864726)
+* **deps:** Update Astro to v2.5.6 with `@astrojs/vue` v2.2.1 ([38c906e](https://github.com/ecomplus/cloud-commerce/commit/38c906eaa93077d736bff733a289fd7f7afc4615))
+* **deps:** Update dependency astro to v2.5.7 ([#169](https://github.com/ecomplus/cloud-commerce/issues/169)) ([b381ebe](https://github.com/ecomplus/cloud-commerce/commit/b381ebe9efbef136f50223dccc2d57a62b67855e))
+* **deps:** Update non-major dependencies ([#162](https://github.com/ecomplus/cloud-commerce/issues/162)) ([76952eb](https://github.com/ecomplus/cloud-commerce/commit/76952eb62884cd11158827eb7269f141556ea998))
+* **deps:** Update non-major dependencies ([#163](https://github.com/ecomplus/cloud-commerce/issues/163)) ([d2ec64f](https://github.com/ecomplus/cloud-commerce/commit/d2ec64f33a35a4722d6f608343e566555ddfbad2))
+* **deps:** Update non-major dependencies ([#168](https://github.com/ecomplus/cloud-commerce/issues/168)) ([7363e85](https://github.com/ecomplus/cloud-commerce/commit/7363e8511fb62b7b601df67efe7363b8f8bb4ef4))
+* **deps:** Update non-major dependencies ([#171](https://github.com/ecomplus/cloud-commerce/issues/171)) ([79c5240](https://github.com/ecomplus/cloud-commerce/commit/79c52409f142dac2f5901da502ae9e55b9e4447d))
+* **deps:** Update non-major dependencies ([#176](https://github.com/ecomplus/cloud-commerce/issues/176)) ([495f0fa](https://github.com/ecomplus/cloud-commerce/commit/495f0fa77a934e42e74f99217686feb3f9587245))
+* **flash-courier:** Fix functions namespace and package exports filename ([11628d6](https://github.com/ecomplus/cloud-commerce/commit/11628d66dfac67a970e75774dd8eb8249a185c7b))
+* **flash-courier:** Update app event function ([#174](https://github.com/ecomplus/cloud-commerce/issues/174)) ([74e5120](https://github.com/ecomplus/cloud-commerce/commit/74e5120a6bb2fa74e1d3aedbb6598a02685e72cd))
+* **flash-courier:** Updating tracking status parses ([d7914ce](https://github.com/ecomplus/cloud-commerce/commit/d7914ce3d82d0425f73035dd24968660751b0e66))
+* **flash-courier:** Updating with legacy v1.3.0 ([b4bffd3](https://github.com/ecomplus/cloud-commerce/commit/b4bffd361e6c9d36bb4a4b685a28e8be365f653b))
+* Many apps type def fixes ([#177](https://github.com/ecomplus/cloud-commerce/issues/177)) [skip ci] ([9194b1e](https://github.com/ecomplus/cloud-commerce/commit/9194b1e577c377eda8d28e2eff29edf367a755ea))
+* **mercadopago:** Fix path for oload expression script on list payments ([#180](https://github.com/ecomplus/cloud-commerce/issues/180)) ([ebd6d5d](https://github.com/ecomplus/cloud-commerce/commit/ebd6d5d62aacd34b86de0e1e97b204018ec3bebf))
+* **modules:** Type fixes with nested IDs and minor syntax updates ([06fb211](https://github.com/ecomplus/cloud-commerce/commit/06fb211c01ad67628f0d5665416e094ad31cec4c))
+* **pagarme:** Update with legacy v1.5.0 ([df2e61d](https://github.com/ecomplus/cloud-commerce/commit/df2e61de9157805d1e5be8eae5a03f91e903afa5))
+* Replacing wrong (out of date) imports from `@cloudcommerce/api/lib/types` ([7e6971c](https://github.com/ecomplus/cloud-commerce/commit/7e6971c5c46a2e14480d37123fc30d663ebe5b76))
+* **storefront:** Caching only root CMS content (not collections) ([ef77ae8](https://github.com/ecomplus/cloud-commerce/commit/ef77ae860f86831828535bcd806f2faab80fe5c3))
+* **storefront:** Fix `useProductCard` composable returned type ([c07a525](https://github.com/ecomplus/cloud-commerce/commit/c07a52555d5ebdce54f5ba29eb2159a5243efe50))
+* **storefront:** Fix global <AImg> prop `picture` typedef ([39ac9e5](https://github.com/ecomplus/cloud-commerce/commit/39ac9e51d309a7b7ffc16f0a59c737c6412878e7))
+* **storefront:** Properly handling product shelf options ([650fc6e](https://github.com/ecomplus/cloud-commerce/commit/650fc6e0179330d3cc0e4a19ddf1d7e63f0a8c91))
+* **storefront:** Removing `uno.css` import to be imported after custom UI classes ([b66f847](https://github.com/ecomplus/cloud-commerce/commit/b66f8479ad4511a5f5f3d535a728ac866a489092))
+* **storefront:** Strict `routeContext.cmsContent` type with page content object ([aaa7355](https://github.com/ecomplus/cloud-commerce/commit/aaa73557bde2757b56993bc71af9633804d62fff))
+* **storefront:** Update `useProductShelf` for easier use on Astro (SSR) composables ([e6e562b](https://github.com/ecomplus/cloud-commerce/commit/e6e562b9aaeb52ab5397cd2474c0732631f40957))
+* **storefront:** Update astro ([#189](https://github.com/ecomplus/cloud-commerce/issues/189)) ([4634f88](https://github.com/ecomplus/cloud-commerce/commit/4634f8833343ed85d8850c238763d681bde65a15))
+* **storefront:** Update astro to v2.7.0 ([#182](https://github.com/ecomplus/cloud-commerce/issues/182)) ([6588688](https://github.com/ecomplus/cloud-commerce/commit/65886887ad3c9fd1e6c41281618b08c048a39165))
+* **storefront:** Update dependency astro to v2.6.3 ([#170](https://github.com/ecomplus/cloud-commerce/issues/170)) ([ce8379d](https://github.com/ecomplus/cloud-commerce/commit/ce8379dd30d4699660331652a18b7d2aa31c3a82))
+* **storefront:** Update global `<ALink>` to keep same window on relative href ([ca15480](https://github.com/ecomplus/cloud-commerce/commit/ca154806666d747b5eef33f6ae521be0ccc8e75d))
+* **tiny-erp:** Type fixes with nested resource IDs and resource find ([165400c](https://github.com/ecomplus/cloud-commerce/commit/165400cdf2d8e314c3b71addfd3b8eec293de228))
+* **types:** Fix Carts interface items nested IDs [skip ci] ([c7c1fa2](https://github.com/ecomplus/cloud-commerce/commit/c7c1fa230f10d7c5936e46ee36590aa356aefd89))
+* **types:** Properly defining nested Object IDs on many resources interfaces ([8a20504](https://github.com/ecomplus/cloud-commerce/commit/8a20504082f33d31645a8eabb0ab3d681c1ae401))
+* **types:** Update CMS settings metafields accept any value ([2fd0597](https://github.com/ecomplus/cloud-commerce/commit/2fd0597d00b4e5149c7b650b0c2e069ff4d22f28))
+
+
+### build
+
+* **storefront:** Read custom `.ui-*` classes from src/assets/style.css for Tailwind IntelliSense ([244a9e7](https://github.com/ecomplus/cloud-commerce/commit/244a9e7023c4643ddb766ff7a6ef4f58baa248bb))
+
+
+* **storefront:** Renaming (SSR) `pageContext` to `routeContext` ([ceffb44](https://github.com/ecomplus/cloud-commerce/commit/ceffb44fd4e43fbdf51fa790019aa4fef4ad4e2a))
+* **storefront:** Renaming `assets/preflight.css` to `assets/reset.css` ([cd01bd9](https://github.com/ecomplus/cloud-commerce/commit/cd01bd93b662f196ffeecb905fc1dd485a387e00))
+* **storefront:** Renaming Astro sections composables ([5cf529c](https://github.com/ecomplus/cloud-commerce/commit/5cf529c2284ebace2e13670ba4dfb38dee79db4b))
+* **storefront:** Using generic `PageContent` typedef instead of previous `HomeContent` ([4f566c9](https://github.com/ecomplus/cloud-commerce/commit/4f566c9fabe39ce7e32cf3bb4d315182da1d08e7))
+
 ### [0.14.1](https://github.com/ecomplus/cloud-commerce/compare/v0.14.0...v0.14.1) (2023-05-17)
 
 
