@@ -71,7 +71,7 @@ export interface Carts {
    *
    * @maxItems 3000
    */
-  customers?: string[];
+  customers?: Array<string & { length: 24 }>;
   /**
    * Whether cart is available for other customers too (anyone)
    */
