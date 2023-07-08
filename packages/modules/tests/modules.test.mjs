@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import test, { describe } from 'node:test';
 
-const baseUrl = 'http://127.0.0.1:5001/ecom2-003/us-east4/modules';
+const baseUrl = 'http://127.0.0.1:5001/ecom2-demo/us-east4/modules';
 
 describe('Test Schemas', async () => {
   test('@checkout', async (/* t */) => {
