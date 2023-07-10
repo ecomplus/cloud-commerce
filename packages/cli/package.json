@@ -29,6 +29,6 @@
     "@cloudcommerce/api": "workspace:*",
     "libsodium-wrappers": "^0.7.11",
     "md5": "^2.3.0",
-    "zx": "^7.2.2"
+    "zx": "^7.2.3"
   }
 }
