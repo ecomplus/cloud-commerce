@@ -99,7 +99,7 @@ export default async (req: Request, res: Response) => {
   }
 
   const startedAt = Date.now();
-  let cacheFindStartedAt: number | undefined;
+  let cacheKeyEndedAt: number | undefined;
   let ssrStartedAt: number | undefined;
   let status: number;
   let headers: OutgoingHttpHeaders = {};
@@ -112,12 +112,13 @@ export default async (req: Request, res: Response) => {
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
   res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
-    _headers['X-Function-Took'] = String(Date.now() - startedAt);
+    const now = Date.now();
+    _headers['X-Function-Took'] = String(now - startedAt);
     if (ssrStartedAt) {
-      _headers['X-SSR-Took'] = String(Date.now() - ssrStartedAt);
+      _headers['X-SSR-Took'] = String(now - ssrStartedAt);
     }
-    if (cacheFindStartedAt) {
-      _headers['X-Cache-Took'] = String(Date.now() - cacheFindStartedAt);
+    if (cacheKeyEndedAt) {
+      _headers['X-Cache-Key-Took'] = String(cacheKeyEndedAt - startedAt);
     }
     if (!res.headersSent) {
       // @ts-ignore
@@ -129,8 +130,7 @@ export default async (req: Request, res: Response) => {
 
   let cacheRef: DocumentReference<any> | undefined | null;
   let isBodySent = false;
-  if (!req.query.__noCache && req.path.charAt(1) !== '~') {
-    cacheFindStartedAt = Date.now();
+  if (!req.query.__noCache && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
     try {
       const firestore = getFirestore();
       const cacheKey = (!req.path || req.path === '/')
@@ -138,6 +138,7 @@ export default async (req: Request, res: Response) => {
         : req.path.slice(1).replace(/\//g, '_');
       cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
       const cacheDoc = await cacheRef.get();
+      cacheKeyEndedAt = Date.now();
       if (cacheDoc.exists) {
         const {
           headers: cachedHeaders,
