@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.4](https://github.com/ecomplus/cloud-commerce/compare/v0.16.3...v0.16.4) (2023-07-11)
+
+
+### Bug Fixes
+
+* **ssr:** Ensure valid Firestore doc path for home SSR cache ([2ae2b4e](https://github.com/ecomplus/cloud-commerce/commit/2ae2b4e5f89a3713bbb318311ce04ffa887740c4))
+
 ### [0.16.3](https://github.com/ecomplus/cloud-commerce/compare/v0.16.2...v0.16.3) (2023-07-11)
 
 
