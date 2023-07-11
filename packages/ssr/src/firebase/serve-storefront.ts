@@ -99,11 +99,11 @@ export default async (req: Request, res: Response) => {
   }
 
   const startedAt = Date.now();
-  let cacheKeyEndedAt: number | undefined;
   let ssrStartedAt: number | undefined;
   let status: number;
   let headers: OutgoingHttpHeaders = {};
   const chunks: any[] = [];
+  let isSSRChunkSent = false;
   /*
   Check Response methods used by Astro Node.js integration:
   https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
@@ -117,9 +117,6 @@ export default async (req: Request, res: Response) => {
     if (ssrStartedAt) {
       _headers['X-SSR-Took'] = String(now - ssrStartedAt);
     }
-    if (cacheKeyEndedAt) {
-      _headers['X-Cache-Key-Took'] = String(cacheKeyEndedAt - startedAt);
-    }
     if (!res.headersSent) {
       // @ts-ignore
       _writeHead.apply(res, arguments);
@@ -129,54 +126,53 @@ export default async (req: Request, res: Response) => {
   };
 
   let cacheRef: DocumentReference<any> | undefined | null;
-  let isBodySent = false;
-  if (!req.query.__noCache && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
-    try {
-      const firestore = getFirestore();
-      const cacheKey = (!req.path || req.path === '/')
-        ? '__home'
-        : req.path.slice(1).replace(/\//g, '_');
-      cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
-      const cacheDoc = await cacheRef.get();
-      cacheKeyEndedAt = Date.now();
-      if (cacheDoc.exists) {
-        const {
-          headers: cachedHeaders,
-          status: cachedStatus,
-          body: cachedBody,
-          __timestamp,
-        } = cacheDoc.data();
-        const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < cacheMaxAge;
-        if (isFresh || isCacheSWR) {
-          cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
-            + __timestamp.toDate().toISOString();
-          res.writeHead(cachedStatus || 200, cachedHeaders);
-          res.send(cachedBody);
-          isBodySent = true;
+  let isCachedBodySent = false;
+  if (req.query.__noCache === undefined && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
+    (async () => {
+      try {
+        const firestore = getFirestore();
+        const cacheKey = (!req.path || req.path === '/')
+          ? '__home'
+          : req.path.slice(1).replace(/\//g, '_');
+        cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
+        const cacheDoc = await cacheRef.get();
+        if (!isSSRChunkSent && cacheDoc.exists) {
+          const {
+            headers: cachedHeaders,
+            status: cachedStatus,
+            body: cachedBody,
+            __timestamp,
+          } = cacheDoc.data();
+          const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < cacheMaxAge;
+          if (isFresh || isCacheSWR) {
+            cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
+              + __timestamp.toDate().toISOString();
+            res.writeHead(cachedStatus || 200, cachedHeaders);
+            res.send(cachedBody);
+            isCachedBodySent = true;
+          }
         }
-        if (isFresh) {
-          return;
-        }
+      } catch (err) {
+        cacheRef = null;
+        logger.warn(err);
       }
-    } catch (err) {
-      cacheRef = null;
-      logger.warn(err);
-    }
+    })();
   }
 
   const _write = res.write;
   // @ts-ignore
   res.write = function write(chunk: any) {
-    if (!isBodySent) {
+    if (!isCachedBodySent) {
       // @ts-ignore
       _write.apply(res, arguments);
+      isSSRChunkSent = true;
     }
     chunks.push(chunk);
   };
   const _end = res.end;
   // @ts-ignore
   res.end = function end() {
-    if (!isBodySent) {
+    if (!isCachedBodySent) {
       // @ts-ignore
       _end.apply(res, arguments);
     }
