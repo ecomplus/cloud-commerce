@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.2](https://github.com/ecomplus/cloud-commerce/compare/v0.16.1...v0.16.2) (2023-07-11)
+
+
+### Bug Fixes
+
+* **ssr:** Use `writeHead` middleware to set X-SSR-Took header ([cdee5c5](https://github.com/ecomplus/cloud-commerce/commit/cdee5c54680ca5f28d48a286f407946781eebc14))
+
 ### [0.16.1](https://github.com/ecomplus/cloud-commerce/compare/v0.16.0...v0.16.1) (2023-07-11)
 
 
