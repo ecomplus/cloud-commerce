@@ -1,5 +1,4 @@
 import type { OutgoingHttpHeaders } from 'node:http';
-import type { Readable } from 'node:stream';
 import type { Request, Response } from 'firebase-functions';
 import type { DocumentReference } from 'firebase-admin/firestore';
 import { join as joinPath } from 'node:path';
@@ -103,7 +102,7 @@ export default async (req: Request, res: Response) => {
   let ssrStartedAt: number | undefined;
   let status: number;
   let headers: OutgoingHttpHeaders = {};
-  const chunks: Readable[] = [];
+  const chunks: any[] = [];
   /*
   Check Response methods used by Astro Node.js integration:
   https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
@@ -125,6 +124,7 @@ export default async (req: Request, res: Response) => {
   };
 
   let cacheRef: DocumentReference<any> | undefined | null;
+  let isBodySent = false;
   if (!req.query.__noCache && req.path.charAt(1) !== '~') {
     try {
       const firestore = getFirestore();
@@ -135,7 +135,7 @@ export default async (req: Request, res: Response) => {
         const {
           headers: cachedHeaders,
           status: cachedStatus,
-          chunks: cachedChunks,
+          body: cachedBody,
           __timestamp,
         } = cacheDoc.data();
         const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < cacheMaxAge;
@@ -143,10 +143,8 @@ export default async (req: Request, res: Response) => {
           cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
             + __timestamp.toDate().toISOString();
           res.writeHead(cachedStatus || 200, cachedHeaders);
-          cachedChunks.forEach((chunk: Readable) => {
-            res.write(chunk);
-          });
-          res.end();
+          res.send(cachedBody);
+          isBodySent = true;
         }
         if (isFresh) {
           return;
@@ -160,8 +158,8 @@ export default async (req: Request, res: Response) => {
 
   const _write = res.write;
   // @ts-ignore
-  res.write = function write(chunk: Readable) {
-    if (!res.headersSent) {
+  res.write = function write(chunk: any) {
+    if (!isBodySent) {
       // @ts-ignore
       _write.apply(res, arguments);
     }
@@ -170,7 +168,7 @@ export default async (req: Request, res: Response) => {
   const _end = res.end;
   // @ts-ignore
   res.end = function end() {
-    if (!res.headersSent) {
+    if (!isBodySent) {
       // @ts-ignore
       _end.apply(res, arguments);
     }
@@ -181,7 +179,7 @@ export default async (req: Request, res: Response) => {
       cacheRef.set({
         headers,
         status,
-        chunks,
+        body: Buffer.concat(chunks).toString('utf8'),
         __timestamp: Timestamp.now(),
       }).catch(logger.warn);
     }
