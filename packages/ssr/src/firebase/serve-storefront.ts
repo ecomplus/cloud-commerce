@@ -99,6 +99,7 @@ export default async (req: Request, res: Response) => {
   }
 
   const startedAt = Date.now();
+  let cacheFindStartedAt: number | undefined;
   let ssrStartedAt: number | undefined;
   let status: number;
   let headers: OutgoingHttpHeaders = {};
@@ -115,6 +116,9 @@ export default async (req: Request, res: Response) => {
     if (ssrStartedAt) {
       _headers['X-SSR-Took'] = String(Date.now() - ssrStartedAt);
     }
+    if (cacheFindStartedAt) {
+      _headers['X-Cache-Took'] = String(Date.now() - cacheFindStartedAt);
+    }
     if (!res.headersSent) {
       // @ts-ignore
       _writeHead.apply(res, arguments);
@@ -126,9 +130,12 @@ export default async (req: Request, res: Response) => {
   let cacheRef: DocumentReference<any> | undefined | null;
   let isBodySent = false;
   if (!req.query.__noCache && req.path.charAt(1) !== '~') {
+    cacheFindStartedAt = Date.now();
     try {
       const firestore = getFirestore();
-      const cacheKey = req.path.slice(1).replace(/\//g, '_') || '__home';
+      const cacheKey = (!req.path || req.path === '/')
+        ? '__home'
+        : req.path.slice(1).replace(/\//g, '_');
       cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
       const cacheDoc = await cacheRef.get();
       if (cacheDoc.exists) {
