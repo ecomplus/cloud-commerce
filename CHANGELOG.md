@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.17.0](https://github.com/ecomplus/cloud-commerce/compare/v0.16.4...v0.17.0) (2023-07-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Route context `apiState.categories` is now undefined by default
+
+### Bug Fixes
+
+* **ssr:** Properly debugging time on X-Cache-Key-Took header ([992cf5d](https://github.com/ecomplus/cloud-commerce/commit/992cf5dbe4687945c67f82d421c5e92cabd239dc))
+
+
+* **storefront:** No API endpoints to prefetch by default (current route slug only) ([4b20ace](https://github.com/ecomplus/cloud-commerce/commit/4b20ace9c828cf674f152803a62c56d2cba66724))
+
 ### [0.16.4](https://github.com/ecomplus/cloud-commerce/compare/v0.16.3...v0.16.4) (2023-07-11)
 
 
