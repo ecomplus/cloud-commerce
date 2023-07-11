@@ -19,7 +19,7 @@ let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
-export default (req: Request, res: Response) => {
+export default async (req: Request, res: Response) => {
   res.set('X-XSS-Protection', '1; mode=block');
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
@@ -85,13 +85,13 @@ export default (req: Request, res: Response) => {
   }
 
   const ssrStartedAt = Date.now();
-  const _end = res.end;
+  const _writeHead = res.writeHead;
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
-  res.end = function resEnd() {
+  res.writeHead = function writeHead() {
     res.set('X-SSR-Took', String(Date.now() - ssrStartedAt));
     // @ts-ignore
-    _end.apply(res, arguments);
+    _writeHead.apply(res, arguments);
   };
 
   /*
