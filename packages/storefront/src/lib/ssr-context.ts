@@ -30,7 +30,7 @@ if (!globalThis.$apiMergeConfig) {
   };
 }
 if (!globalThis.$apiPrefetchEndpoints) {
-  globalThis.$apiPrefetchEndpoints = ['categories'];
+  globalThis.$apiPrefetchEndpoints = [];
 }
 if (!globalThis.$storefront) {
   globalThis.$storefront = {
