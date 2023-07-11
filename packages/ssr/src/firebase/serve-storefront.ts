@@ -20,10 +20,12 @@ const {
   SSR_CACHE_MAXAGE,
   SSR_CACHE_SWR,
 } = process.env;
-const baseDir = STOREFRONT_BASE_DIR || process.cwd();
+
 const cacheMaxAge = SSR_CACHE_MAXAGE ? Number(SSR_CACHE_MAXAGE) : 1000 * 60 * 2;
 const isCacheSWR = SSR_CACHE_SWR ? String(SSR_CACHE_SWR).toLowerCase() === 'true' : true;
+const lockedCacheKeys: string[] = [];
 
+const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
@@ -125,15 +127,17 @@ export default async (req: Request, res: Response) => {
     headers = _headers;
   };
 
+  const cacheKey = (!req.path || req.path === '/')
+    ? '__home'
+    : req.path.slice(1).replace(/\//g, '_');
+  const isSWRLocked = lockedCacheKeys.includes(cacheKey);
   let cacheRef: DocumentReference<any> | undefined | null;
   let isCachedBodySent = false;
+  let gettingCacheDoc: Promise<void> | undefined;
   if (req.query.__noCache === undefined && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
-    (async () => {
+    gettingCacheDoc = (async () => {
       try {
         const firestore = getFirestore();
-        const cacheKey = (!req.path || req.path === '/')
-          ? '__home'
-          : req.path.slice(1).replace(/\//g, '_');
         cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
         const cacheDoc = await cacheRef.get();
         if (!isSSRChunkSent && cacheDoc.exists) {
@@ -143,7 +147,7 @@ export default async (req: Request, res: Response) => {
             body: cachedBody,
             __timestamp,
           } = cacheDoc.data();
-          const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < cacheMaxAge;
+          const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
           if (isFresh || isCacheSWR) {
             cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
               + __timestamp.toDate().toISOString();
@@ -157,6 +161,13 @@ export default async (req: Request, res: Response) => {
         logger.warn(err);
       }
     })();
+  }
+  if (gettingCacheDoc && (!isCacheSWR || isSWRLocked)) {
+    await gettingCacheDoc;
+    if (isCachedBodySent) return;
+  }
+  if (isCacheSWR) {
+    lockedCacheKeys.push(cacheKey);
   }
 
   const _write = res.write;
@@ -186,6 +197,11 @@ export default async (req: Request, res: Response) => {
         body: Buffer.concat(chunks).toString('utf8'),
         __timestamp: Timestamp.now(),
       }).catch(logger.warn);
+    }
+    for (let i = 0; i < lockedCacheKeys.length; i++) {
+      if (lockedCacheKeys[i] === cacheKey) {
+        lockedCacheKeys.splice(i, 1);
+      }
     }
   };
 
