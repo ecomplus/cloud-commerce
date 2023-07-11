@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.1](https://github.com/ecomplus/cloud-commerce/compare/v0.16.0...v0.16.1) (2023-07-11)
+
+
+### Features
+
+* **ssr:** Debug SSR time on new X-SSR-Took response header ([ed333c9](https://github.com/ecomplus/cloud-commerce/commit/ed333c9fba55164b55b32511142859adb1b9923e))
+* **storefront:** Update <Carousel> to support multi-slides per page ([1d07555](https://github.com/ecomplus/cloud-commerce/commit/1d075551c3e4f270ee6896c5fa0b47e916d3b204))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#192](https://github.com/ecomplus/cloud-commerce/issues/192)) ([5bc9102](https://github.com/ecomplus/cloud-commerce/commit/5bc9102debf14e4c32bc9228704ff40138f7558b))
+* **storefront:** Update dependency astro to v2.8.0 ([#193](https://github.com/ecomplus/cloud-commerce/issues/193)) ([058acbc](https://github.com/ecomplus/cloud-commerce/commit/058acbc9ee6b17ad880b8aa7cf1c9dee8975cfe6))
+
 ## [0.16.0](https://github.com/ecomplus/cloud-commerce/compare/v0.15.1...v0.16.0) (2023-07-07)
 
 
