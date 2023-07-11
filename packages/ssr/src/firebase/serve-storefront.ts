@@ -16,8 +16,15 @@ declare global {
   ) => Promise<any>;
 }
 
-const { STOREFRONT_BASE_DIR } = process.env;
+const {
+  STOREFRONT_BASE_DIR,
+  SSR_CACHE_MAXAGE,
+  SSR_CACHE_SWR,
+} = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
+const cacheMaxAge = SSR_CACHE_MAXAGE ? Number(SSR_CACHE_MAXAGE) : 1000 * 60 * 2;
+const isCacheSWR = SSR_CACHE_SWR ? String(SSR_CACHE_SWR).toLowerCase() === 'true' : true;
+
 const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
@@ -121,7 +128,8 @@ export default async (req: Request, res: Response) => {
   if (!req.query.__noCache && req.path.charAt(1) !== '~') {
     try {
       const firestore = getFirestore();
-      cacheRef = firestore.doc(`ssrCache/${req.path.slice(1).replace(/\//g, '_')}`);
+      const cacheKey = req.path.slice(1).replace(/\//g, '_') || '__home';
+      cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
       const cacheDoc = await cacheRef.get();
       if (cacheDoc.exists) {
         const {
@@ -130,14 +138,16 @@ export default async (req: Request, res: Response) => {
           chunks: cachedChunks,
           __timestamp,
         } = cacheDoc.data();
-        const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < 1000 * 60 * 2;
-        cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
-          + __timestamp.toDate().toISOString();
-        res.writeHead(cachedStatus || 200, cachedHeaders);
-        cachedChunks.forEach((chunk: Readable) => {
-          res.write(chunk);
-        });
-        res.end();
+        const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < cacheMaxAge;
+        if (isFresh || isCacheSWR) {
+          cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
+            + __timestamp.toDate().toISOString();
+          res.writeHead(cachedStatus || 200, cachedHeaders);
+          cachedChunks.forEach((chunk: Readable) => {
+            res.write(chunk);
+          });
+          res.end();
+        }
         if (isFresh) {
           return;
         }
