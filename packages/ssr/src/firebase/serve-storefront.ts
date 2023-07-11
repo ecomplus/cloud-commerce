@@ -84,6 +84,16 @@ export default (req: Request, res: Response) => {
     return;
   }
 
+  const ssrStartedAt = Date.now();
+  const _end = res.end;
+  /* eslint-disable prefer-rest-params */
+  // @ts-ignore
+  res.end = function resEnd() {
+    res.set('X-SSR-Took', String(Date.now() - ssrStartedAt));
+    // @ts-ignore
+    _end.apply(res, arguments);
+  };
+
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
