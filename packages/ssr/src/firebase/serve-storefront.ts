@@ -1,6 +1,10 @@
+import type { OutgoingHttpHeaders } from 'node:http';
+import type { Readable } from 'node:stream';
 import type { Request, Response } from 'firebase-functions';
+import type { DocumentReference } from 'firebase-admin/firestore';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 
 declare global {
@@ -20,6 +24,10 @@ type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
 export default async (req: Request, res: Response) => {
+  if (req.path.startsWith('/~partytown')) {
+    res.sendStatus(404);
+    return;
+  }
   res.set('X-XSS-Protection', '1; mode=block');
   const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
 
@@ -84,14 +92,89 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  const ssrStartedAt = Date.now();
+  const startedAt = Date.now();
+  let ssrStartedAt: number | undefined;
+  let status: number;
+  let headers: OutgoingHttpHeaders = {};
+  const chunks: Readable[] = [];
+  /*
+  Check Response methods used by Astro Node.js integration:
+  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
+  */
   const _writeHead = res.writeHead;
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
-  res.writeHead = function writeHead() {
-    res.set('X-SSR-Took', String(Date.now() - ssrStartedAt));
-    // @ts-ignore
-    _writeHead.apply(res, arguments);
+  res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
+    _headers['X-Function-Took'] = String(Date.now() - startedAt);
+    if (ssrStartedAt) {
+      _headers['X-SSR-Took'] = String(Date.now() - ssrStartedAt);
+    }
+    if (!res.headersSent) {
+      // @ts-ignore
+      _writeHead.apply(res, arguments);
+    }
+    status = _status;
+    headers = _headers;
+  };
+
+  let cacheRef: DocumentReference<any> | undefined | null;
+  if (!req.query.__noCache && req.path.charAt(1) !== '~') {
+    try {
+      const firestore = getFirestore();
+      cacheRef = firestore.doc(`ssrCache/${req.path.slice(1).replace(/\//g, '_')}`);
+      const cacheDoc = await cacheRef.get();
+      if (cacheDoc.exists) {
+        const {
+          headers: cachedHeaders,
+          status: cachedStatus,
+          chunks: cachedChunks,
+          __timestamp,
+        } = cacheDoc.data();
+        const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) < 1000 * 60 * 2;
+        cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
+          + __timestamp.toDate().toISOString();
+        res.writeHead(cachedStatus || 200, cachedHeaders);
+        cachedChunks.forEach((chunk: Readable) => {
+          res.write(chunk);
+        });
+        res.end();
+        if (isFresh) {
+          return;
+        }
+      }
+    } catch (err) {
+      cacheRef = null;
+      logger.warn(err);
+    }
+  }
+
+  const _write = res.write;
+  // @ts-ignore
+  res.write = function write(chunk: Readable) {
+    if (!res.headersSent) {
+      // @ts-ignore
+      _write.apply(res, arguments);
+    }
+    chunks.push(chunk);
+  };
+  const _end = res.end;
+  // @ts-ignore
+  res.end = function end() {
+    if (!res.headersSent) {
+      // @ts-ignore
+      _end.apply(res, arguments);
+    }
+    if (!status) {
+      status = res.statusCode;
+    }
+    if (cacheRef && status === 200) {
+      cacheRef.set({
+        headers,
+        status,
+        chunks,
+        __timestamp: Timestamp.now(),
+      }).catch(logger.warn);
+    }
   };
 
   /*
@@ -99,6 +182,7 @@ export default async (req: Request, res: Response) => {
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
   global.$renderStorefront = renderStorefront;
   */
+  ssrStartedAt = Date.now();
   global.$renderStorefront(req, res, async (err: any) => {
     if (err) {
       if (res.headersSent) {
