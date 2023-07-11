@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.3](https://github.com/ecomplus/cloud-commerce/compare/v0.16.2...v0.16.3) (2023-07-11)
+
+
+### Features
+
+* **ssr:** Handle new optional `SSR_CACHE_MAXAGE` and `SSR_CACHE_SWR` (bool) env vars ([f92155a](https://github.com/ecomplus/cloud-commerce/commit/f92155a9374ff9fa1337969c2097f4ebda93cb0f))
+
+
+### Bug Fixes
+
+* **ssr:** Properly write response body even with headers sent ([b4cd667](https://github.com/ecomplus/cloud-commerce/commit/b4cd667fd500bbfd72946423f3f316f3236a86ec))
+
 ### [0.16.2](https://github.com/ecomplus/cloud-commerce/compare/v0.16.1...v0.16.2) (2023-07-11)
 
 
