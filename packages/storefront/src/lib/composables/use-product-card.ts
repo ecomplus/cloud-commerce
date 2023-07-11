@@ -28,6 +28,21 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       ...(props.product as Exclude<T, undefined>),
       price: getPrice(props.product || {}),
     });
+  const { productId } = props;
+  if (!props.product && productId) {
+    isFetching.value = true;
+    fetching = (async () => {
+      try {
+        const { data } = await api.get(`products/${productId}`);
+        Object.assign(product, data);
+      } catch (err: any) {
+        console.error(err);
+        fetchError.value = err;
+      }
+      isFetching.value = false;
+    })();
+  }
+
   const title = computed(() => {
     return getName(product);
   });
@@ -69,21 +84,6 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     }
     return 0;
   });
-
-  const { productId } = props;
-  if (!props.product && productId) {
-    isFetching.value = true;
-    fetching = (async () => {
-      try {
-        const { data } = await api.get(`products/${productId}`);
-        Object.assign(product, data);
-      } catch (err: any) {
-        console.error(err);
-        fetchError.value = err;
-      }
-      isFetching.value = false;
-    })();
-  }
 
   return {
     isFetching,

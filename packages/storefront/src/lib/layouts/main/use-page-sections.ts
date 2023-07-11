@@ -88,6 +88,11 @@ const usePageSections = async ({ routeContext }: Props) => {
       }
     }));
   }
+  /*
+  if (import.meta.env.DEV) {
+    console.log('> Sections loaded');
+  }
+  */
   return {
     sections,
   };
