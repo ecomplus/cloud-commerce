@@ -102,31 +102,15 @@ export default async (req: Request, res: Response) => {
 
   const startedAt = Date.now();
   let ssrStartedAt: number | undefined;
-  let status: number;
-  let headers: OutgoingHttpHeaders = {};
-  const chunks: any[] = [];
-  let isSSRChunkSent = false;
-  /*
-  Check Response methods used by Astro Node.js integration:
-  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
-  */
-  const _writeHead = res.writeHead;
-  /* eslint-disable prefer-rest-params */
-  // @ts-ignore
-  res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
+  const setTimerHeaders = (headers: OutgoingHttpHeaders) => {
     const now = Date.now();
-    _headers['X-Function-Took'] = String(now - startedAt);
+    headers['X-Function-Took'] = String(now - startedAt);
     if (ssrStartedAt) {
-      _headers['X-SSR-Took'] = String(now - ssrStartedAt);
+      headers['X-SSR-Took'] = String(now - ssrStartedAt);
     }
-    if (!res.headersSent) {
-      // @ts-ignore
-      _writeHead.apply(res, arguments);
-    }
-    status = _status;
-    headers = _headers;
   };
 
+  let isSSRChunkSent = false;
   const cacheKey = (!req.path || req.path === '/')
     ? '__home'
     : req.path.slice(1).replace(/\//g, '_');
@@ -143,7 +127,7 @@ export default async (req: Request, res: Response) => {
         if (!isSSRChunkSent && cacheDoc.exists) {
           const {
             headers: cachedHeaders,
-            status: cachedStatus,
+            status: cachedStatus = 200,
             body: cachedBody,
             __timestamp,
           } = cacheDoc.data();
@@ -151,8 +135,11 @@ export default async (req: Request, res: Response) => {
           if (isFresh || isCacheSWR) {
             cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
               + __timestamp.toDate().toISOString();
-            res.writeHead(cachedStatus || 200, cachedHeaders);
-            res.send(cachedBody);
+            setTimerHeaders(cachedHeaders);
+            Object.keys(cachedHeaders).forEach((headerName) => {
+              res.set(headerName, cachedHeaders[headerName]);
+            });
+            res.status(cachedStatus).send(cachedBody);
             isCachedBodySent = true;
           }
         }
@@ -170,6 +157,25 @@ export default async (req: Request, res: Response) => {
     lockedCacheKeys.push(cacheKey);
   }
 
+  let status: number;
+  let headers: OutgoingHttpHeaders = {};
+  const chunks: any[] = [];
+  /*
+  Check Response methods used by Astro Node.js integration:
+  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
+  */
+  const _writeHead = res.writeHead;
+  /* eslint-disable prefer-rest-params */
+  // @ts-ignore
+  res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
+    setTimerHeaders(_headers);
+    if (!res.headersSent) {
+      // @ts-ignore
+      _writeHead.apply(res, arguments);
+    }
+    status = _status;
+    headers = _headers;
+  };
   const _write = res.write;
   // @ts-ignore
   res.write = function write(chunk: any) {
