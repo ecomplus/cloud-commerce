@@ -107,12 +107,6 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
-    if (appId === apps.infinitePay.appId) {
-      internalModuleFn = async (_data: AppModuleBody = data) => {
-        return import('@cloudcommerce/app-infinitepay')
-          .then(({ listPayments }) => listPayments(_data));
-      };
-    }
     if (appId === apps.galaxPay.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-galaxpay')
@@ -153,12 +147,6 @@ export default async (
     if (appId === apps.pix.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-pix')
-          .then(({ createTransaction }) => createTransaction(_data));
-      };
-    }
-    if (appId === apps.infinitePay.appId) {
-      internalModuleFn = async (_data: AppModuleBody = data) => {
-        return import('@cloudcommerce/app-infinitepay')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

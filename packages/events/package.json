@@ -32,7 +32,6 @@
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-google-analytics": "workspace:*",
-    "@cloudcommerce/app-infinitepay": "workspace:*",
     "@cloudcommerce/app-loyalty-points": "workspace:*",
     "@cloudcommerce/app-melhor-envio": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",

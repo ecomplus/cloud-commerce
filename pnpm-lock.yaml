@@ -324,37 +324,6 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
 
-  packages/apps/infinitepay:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: workspace:*
-        version: link:../../api
-      '@cloudcommerce/firebase':
-        specifier: workspace:*
-        version: link:../../firebase
-      axios:
-        specifier: ^1.4.0
-        version: 1.4.0
-      crypto-js:
-        specifier: ^4.1.1
-        version: 4.1.1
-      firebase-admin:
-        specifier: ^11.9.0
-        version: 11.9.0
-      firebase-functions:
-        specifier: ^4.4.1
-        version: 4.4.1(firebase-admin@11.9.0)
-    devDependencies:
-      '@cloudcommerce/types':
-        specifier: workspace:*
-        version: link:../../types
-      '@firebase/app-types':
-        specifier: ^0.9.0
-        version: 0.9.0
-      '@types/crypto-js':
-        specifier: ^4.1.1
-        version: 4.1.1
-
   packages/apps/jadlog:
     dependencies:
       '@cloudcommerce/api':
@@ -650,9 +619,6 @@ importers:
       '@cloudcommerce/app-google-analytics':
         specifier: workspace:*
         version: link:../apps/google-analytics
-      '@cloudcommerce/app-infinitepay':
-        specifier: workspace:*
-        version: link:../apps/infinitepay
       '@cloudcommerce/app-loyalty-points':
         specifier: workspace:*
         version: link:../apps/loyalty-points
@@ -780,9 +746,6 @@ importers:
       '@cloudcommerce/app-galaxpay':
         specifier: workspace:*
         version: link:../apps/galaxpay
-      '@cloudcommerce/app-infinitepay':
-        specifier: workspace:*
-        version: link:../apps/infinitepay
       '@cloudcommerce/app-jadlog':
         specifier: workspace:*
         version: link:../apps/jadlog
@@ -4473,10 +4436,6 @@ packages:
       '@types/node': 18.16.19
     dev: false
 
-  /@types/crypto-js@4.1.1:
-    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
-    dev: true
-
   /@types/debug@4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
@@ -6369,10 +6328,6 @@ packages:
 
   /crypt@0.0.2:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
-    dev: false
-
-  /crypto-js@4.1.1:
-    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
     dev: false
 
   /crypto-random-string@2.0.0:
