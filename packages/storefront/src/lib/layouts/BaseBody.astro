@@ -11,11 +11,11 @@ const { settings } = Astro.locals.routeContext;
 ---
 
 <body>
-  <div id="teleported-overlap" class="relative z-50"></div>
-  <div id="teleported-top" class="relative z-10"></div>
+  <div id="teleported-overlap" class="relative z-[59]"></div>
+  <div id="teleported-top" class="relative z-[19]"></div>
   <slot />
   <slot name="before-body-end" />
-  <div id="teleported-bottom" class="relative z-10"></div>
+  <div id="teleported-bottom" class="relative z-[19]"></div>
   {settings.icon &&
     <Picture
       src={settings.icon}
