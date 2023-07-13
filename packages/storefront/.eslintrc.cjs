@@ -13,6 +13,7 @@ module.exports = {
     'global-require': 'off',
     'import/no-dynamic-require': 'off',
     'import/prefer-default-export': 'warn',
+    'import/extensions': 'off',
     'vue/multi-word-component-names': ['error', {
       ignores: ['Fade', 'Carousel', 'Drawer', 'Prices'],
     }],
