@@ -15,5 +15,6 @@
     "store/functions/ssr/tailwind.config.cjs": "store/**",
     "ecomplus-stores/monocard/functions/ssr/tailwind.config.cjs": "ecomplus-stores/monocard/**",
     "ecomplus-stores/tia-sonia/functions/ssr/tailwind.config.cjs": "ecomplus-stores/tia-sonia/**"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
