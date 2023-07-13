@@ -75,7 +75,9 @@ const isPlacementX = computed(() => {
       class="w-screen shadow p-0 m-0 z-50"
       :class="[
         position,
-        isFixed ? `top-0 left-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
+        isFixed ? `top-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
+        isFixed && placement !== 'end' ? 'left-0' : null,
+        isFixed && placement === 'end' ? 'left-auto right-0' : null,
         isPlacementX ? 'max-w-sm' : null,
       ]"
       :style="{
