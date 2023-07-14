@@ -1,7 +1,12 @@
 import type { Products, ListPaymentsResponse } from '@cloudcommerce/types';
 import { computed } from 'vue';
 import { price as getPrice, onPromotion as checkOnPromotion } from '@ecomplus/utils';
-import modulesInfo from '@@sf/state/modules-info';
+import {
+  installmentsOption,
+  discountOption,
+  loyaltyPointsPrograms,
+  availableExtraDiscount,
+} from '@@sf/state/modules-info';
 
 export interface Props {
   product?: Partial<Products> & { final_price?: number } &
@@ -54,12 +59,9 @@ const usePrices = (props: Props) => {
     }
     return false;
   });
-  const extraDiscount = computed(() => {
-    return modulesInfo.apply_discount.available_extra_discount;
-  });
   const salePrice = computed(() => {
     const price = getPrice(_product.value);
-    const discount = extraDiscount.value;
+    const discount = availableExtraDiscount.value;
     if (discount && (!discount.min_amount || price > discount.min_amount)) {
       return getPriceWithDiscount(price, discount);
     }
@@ -78,7 +80,7 @@ const usePrices = (props: Props) => {
 
   const installmentsObject = computed(() => {
     return props.installmentsOption
-      || modulesInfo.list_payments.installments_option
+      || installmentsOption.value
       || { max_number: 1 };
   });
   const installmentsNumber = computed(() => {
@@ -105,7 +107,7 @@ const usePrices = (props: Props) => {
   });
 
   const discountObject = computed(() => {
-    const discount = props.discountOption || modulesInfo.list_payments.discount_option;
+    const discount = props.discountOption || discountOption.value;
     if (
       discount
       && (!discount.min_amount || discount.min_amount <= salePrice.value)
@@ -133,7 +135,7 @@ const usePrices = (props: Props) => {
     if (props.loyaltyPointsProgram) {
       return props.loyaltyPointsProgram;
     }
-    const pointsPrograms = modulesInfo.list_payments.loyalty_points_programs;
+    const pointsPrograms = loyaltyPointsPrograms.value;
     if (pointsPrograms) {
       const programIds = Object.keys(pointsPrograms);
       for (let i = 0; i < programIds.length; i++) {
