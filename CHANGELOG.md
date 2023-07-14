@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.1](https://github.com/ecomplus/cloud-commerce/compare/v0.18.0...v0.18.1) (2023-07-14)
+
+
+### Bug Fixes
+
+* **ssr:** Never set X-SSR-Took header on responses from cache ([e744ceb](https://github.com/ecomplus/cloud-commerce/commit/e744ceb4f734ae4f8aa0c2d354a6794fd3c70dae))
+
 ## [0.18.0](https://github.com/ecomplus/cloud-commerce/compare/v0.17.0...v0.18.0) (2023-07-14)
 
 
