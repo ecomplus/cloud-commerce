@@ -187,14 +187,6 @@ export default async (req: Request, res: Response) => {
 
   const startedAt = Date.now();
   let ssrStartedAt: number | undefined;
-  const setTimerHeaders = (headers: OutgoingHttpHeaders) => {
-    const now = Date.now();
-    headers['X-Function-Took'] = String(now - startedAt);
-    if (ssrStartedAt) {
-      headers['X-SSR-Took'] = String(now - ssrStartedAt);
-    }
-  };
-
   let isSSRChunkSent = false;
   const cacheKey = (!req.path || req.path === '/')
     ? '__home'
@@ -220,7 +212,7 @@ export default async (req: Request, res: Response) => {
           if (isFresh || isCacheSWR) {
             cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
               + __timestamp.toDate().toISOString();
-            setTimerHeaders(cachedHeaders);
+            cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
             Object.keys(cachedHeaders).forEach((headerName) => {
               res.set(headerName, cachedHeaders[headerName]);
             });
@@ -253,13 +245,19 @@ export default async (req: Request, res: Response) => {
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
   res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
-    setTimerHeaders(_headers);
     if (!res.headersSent) {
       // @ts-ignore
       _writeHead.apply(res, arguments);
     }
     status = _status;
-    headers = _headers;
+    if (_headers) {
+      headers = _headers;
+      const now = Date.now();
+      headers['X-Function-Took'] = String(now - startedAt);
+      if (ssrStartedAt) {
+        headers['X-SSR-Took'] = String(now - ssrStartedAt);
+      }
+    }
   };
   const _write = res.write;
   // @ts-ignore
