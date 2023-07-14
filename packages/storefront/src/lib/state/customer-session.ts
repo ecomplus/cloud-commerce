@@ -6,7 +6,7 @@ import { computed } from 'vue';
 import requestIdleCallback from '../../helpers/idle-callback';
 import useStorage from './use-storage';
 
-const storageKey = 'SESSION';
+const storageKey = 'ecomSession';
 const emptySession = {
   customer: {
     display_name: '',

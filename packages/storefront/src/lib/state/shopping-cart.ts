@@ -4,7 +4,7 @@ import useStorage from './use-storage';
 import addItem from './shopping-cart/add-cart-item';
 import parseProduct from './shopping-cart/parse-product';
 
-const storageKey = 'SHOPPING_CART';
+const storageKey = 'ecomShoppingCart';
 const emptyCart = {
   items: [],
 };
