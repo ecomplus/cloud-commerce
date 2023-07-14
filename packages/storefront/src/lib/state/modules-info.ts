@@ -146,6 +146,31 @@ if (!import.meta.env.SSR) {
 
 export default modulesInfo;
 
+const freeShippingFromValue = computed(() => {
+  return modulesInfo.calculate_shipping.free_shipping_from_value;
+});
+const installmentsOption = computed(() => {
+  return modulesInfo.list_payments.installments_option;
+});
+const discountOption = computed(() => {
+  return modulesInfo.list_payments.discount_option;
+});
+const loyaltyPointsPrograms = computed(() => {
+  return modulesInfo.list_payments.loyalty_points_programs;
+});
+const availableExtraDiscount = computed(() => {
+  return modulesInfo.apply_discount.available_extra_discount;
+});
+
+export {
+  modulesInfo,
+  freeShippingFromValue,
+  installmentsOption,
+  discountOption,
+  loyaltyPointsPrograms,
+  availableExtraDiscount,
+};
+
 const parsePhrase = <T extends keyof typeof modulesInfo>(
   phrase: string,
   modName: T,
