@@ -11,6 +11,7 @@ export interface Props {
   placement?: 'start' | 'end' | 'top' | 'bottom';
   position?: 'fixed' | 'absolute';
   hasCloseButton?: boolean;
+  backdropTarget?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   placement: 'start',
   position: 'fixed',
   hasCloseButton: true,
+  backdropTarget: '#teleported-top',
 });
 const emit = defineEmits([
   'update:modelValue',
@@ -102,7 +104,7 @@ const isPlacementX = computed(() => {
         </button>
         <slot />
       </div>
-      <Teleport to="#teleported-top">
+      <Teleport :to="backdropTarget">
         <Fade>
           <div
             v-if="modelValue"
