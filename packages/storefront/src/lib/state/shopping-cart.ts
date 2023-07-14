@@ -45,6 +45,11 @@ const subtotal = computed(() => {
     return acc + (item.quantity * (item.final_price || item.price));
   }, 0);
 });
+const totalItems = computed(() => {
+  return cartItems.value.reduce((acc, item) => {
+    return acc + item.quantity;
+  }, 0);
+});
 const shoppingCart = computed({
   get() {
     return {
@@ -77,6 +82,7 @@ const addProductToCart = (
 export default shoppingCart;
 
 export {
+  totalItems,
   shoppingCart,
   addCartItem,
   parseProduct,
