@@ -1,9 +1,9 @@
 import type { OutgoingHttpHeaders } from 'node:http';
+import type { Readable } from 'node:stream';
 import type { Request, Response } from 'firebase-functions';
-import type { DocumentReference } from 'firebase-admin/firestore';
+import { memoryUsage } from 'node:process';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 
 declare global {
@@ -18,14 +18,15 @@ declare global {
 const {
   STOREFRONT_BASE_DIR,
   SSR_CACHE_MAXAGE,
-  SSR_CACHE_SWR,
+  SSR_CACHE_MIN_HEAP_FREE,
   SSR_PROXY_DEBUG,
   SSR_PROXY_TIMEOUT,
 } = process.env;
 
 const cacheMaxAge = SSR_CACHE_MAXAGE ? Number(SSR_CACHE_MAXAGE) : 1000 * 60 * 2;
-const isCacheSWR = SSR_CACHE_SWR ? String(SSR_CACHE_SWR).toLowerCase() === 'true' : true;
-const lockedCacheKeys: string[] = [];
+const cacheMinHeapFree = SSR_CACHE_MIN_HEAP_FREE
+  ? Number(SSR_CACHE_MIN_HEAP_FREE)
+  : 536870912; /* 512MiB */
 
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
@@ -35,6 +36,55 @@ const builtImages: BuiltImage[] = [];
 
 const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
 const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
+
+type CacheData = {
+  headers: OutgoingHttpHeaders,
+  status: number,
+  chunks: Readable[],
+};
+const memCache = {
+  timers: {} as Record<string, NodeJS.Timeout>,
+  storage: [] as Array<{ key: string, data: CacheData | null }>,
+  set(key: string, data: CacheData) {
+    if (cacheMaxAge > 0) {
+      this.storage.push({ key, data });
+      if (this.timers[key]) {
+        clearTimeout(this.timers[key]);
+      }
+      this.timers[key] = setTimeout(() => {
+        this.pull(key);
+      }, cacheMaxAge);
+      const { heapTotal, heapUsed } = memoryUsage();
+      if (heapTotal - heapUsed < cacheMinHeapFree) {
+        this.pull();
+      }
+    }
+  },
+  get(key: string) {
+    for (let i = this.storage.length - 1; i >= 0; i--) {
+      if (this.storage[i].key === key) {
+        return this.storage[i];
+      }
+    }
+    return undefined;
+  },
+  pull(key?: string) {
+    if (key) {
+      for (let i = this.storage.length - 1; i >= 0; i--) {
+        if (this.storage[i].key === key) {
+          this.storage.splice(i, 1);
+        }
+      }
+    } else {
+      for (let i = 0; i < this.storage.length; i++) {
+        if (this.storage[i].key !== '__home') {
+          this.storage.splice(i, 1);
+          break;
+        }
+      }
+    }
+  },
+};
 
 const proxy = async (req: Request, res: Response) => {
   let proxyURL: URL | undefined;
@@ -185,55 +235,27 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  const startedAt = Date.now();
-  let ssrStartedAt: number | undefined;
-  let isSSRChunkSent = false;
   const cacheKey = (!req.path || req.path === '/')
     ? '__home'
     : req.path.slice(1).replace(/\//g, '_');
-  const isSWRLocked = lockedCacheKeys.includes(cacheKey);
-  let cacheRef: DocumentReference<any> | undefined | null;
-  let isCachedBodySent = false;
-  let gettingCacheDoc: Promise<void> | undefined;
-  if (req.query.__noCache === undefined && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
-    gettingCacheDoc = (async () => {
-      try {
-        const firestore = getFirestore();
-        cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
-        const cacheDoc = await cacheRef.get();
-        if (!isSSRChunkSent && cacheDoc.exists) {
-          const {
-            headers: cachedHeaders,
-            status: cachedStatus = 200,
-            body: cachedBody,
-            __timestamp,
-          } = cacheDoc.data();
-          const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
-          if (isFresh || isCacheSWR) {
-            cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
-              + __timestamp.toDate().toISOString();
-            cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
-            Object.keys(cachedHeaders).forEach((headerName) => {
-              res.set(headerName, cachedHeaders[headerName]);
-            });
-            res.status(cachedStatus).send(cachedBody);
-            isCachedBodySent = true;
-          }
-        }
-      } catch (err) {
-        cacheRef = null;
-        logger.warn(err);
-      }
-    })();
-  }
-  if (gettingCacheDoc && (!isCacheSWR || isSWRLocked)) {
-    await gettingCacheDoc;
-    if (isCachedBodySent) return;
-  }
-  if (isCacheSWR) {
-    lockedCacheKeys.push(cacheKey);
+  if (req.query.__noCache === undefined && req.path.charAt(1) !== '~') {
+    const cached = memCache.get(cacheKey)?.data;
+    if (cached) {
+      const {
+        headers: cachedHeaders,
+        status: cachedStatus = 200,
+        chunks: cachedChunks,
+      } = cached;
+      res.writeHead(cachedStatus, cachedHeaders);
+      cachedChunks.forEach((chunk) => {
+        res.write(chunk);
+      });
+      res.end();
+      return;
+    }
   }
 
+  const startedAt = Date.now();
   let status: number;
   let headers: OutgoingHttpHeaders = {};
   const chunks: any[] = [];
@@ -252,45 +274,26 @@ export default async (req: Request, res: Response) => {
     status = _status;
     if (_headers) {
       headers = _headers;
-      const now = Date.now();
-      headers['X-Function-Took'] = String(now - startedAt);
-      if (ssrStartedAt) {
-        headers['X-SSR-Took'] = String(now - ssrStartedAt);
-      }
+      headers['X-SSR-Took'] = String(Date.now() - startedAt);
     }
   };
   const _write = res.write;
   // @ts-ignore
   res.write = function write(chunk: any) {
-    if (!isCachedBodySent) {
-      // @ts-ignore
-      _write.apply(res, arguments);
-      isSSRChunkSent = true;
-    }
+    // @ts-ignore
+    _write.apply(res, arguments);
     chunks.push(chunk);
   };
   const _end = res.end;
   // @ts-ignore
   res.end = function end() {
-    if (!isCachedBodySent) {
-      // @ts-ignore
-      _end.apply(res, arguments);
-    }
+    // @ts-ignore
+    _end.apply(res, arguments);
     if (!status) {
       status = res.statusCode;
     }
-    if (cacheRef && status === 200) {
-      cacheRef.set({
-        headers,
-        status,
-        body: Buffer.concat(chunks).toString('utf8'),
-        __timestamp: Timestamp.now(),
-      }).catch(logger.warn);
-    }
-    for (let i = 0; i < lockedCacheKeys.length; i++) {
-      if (lockedCacheKeys[i] === cacheKey) {
-        lockedCacheKeys.splice(i, 1);
-      }
+    if (status === 200) {
+      memCache.set(cacheKey, { headers, status, chunks });
     }
   };
 
@@ -299,7 +302,6 @@ export default async (req: Request, res: Response) => {
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
   global.$renderStorefront = renderStorefront;
   */
-  ssrStartedAt = Date.now();
   global.$renderStorefront(req, res, async (err: any) => {
     if (err) {
       if (res.headersSent) {
