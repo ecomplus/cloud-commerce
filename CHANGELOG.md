@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.18.0](https://github.com/ecomplus/cloud-commerce/compare/v0.17.0...v0.18.0) (2023-07-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* **infinitepay:** InfinitePay integration removed
+
+### Features
+
+* **ssr:** Handle reverse proxy on route `/~reverse-proxy?url=*` ([a202cfc](https://github.com/ecomplus/cloud-commerce/commit/a202cfce72b6b98b53b6b96ea8b0277e436a8198))
+* **storefront:** Add `totalItems` computed to shopping cart state exports ([4be3fae](https://github.com/ecomplus/cloud-commerce/commit/4be3fae482ff15a504890ce60bc30aa1f315e7f3))
+* **storefront:** New `backdropTarget` prop to <Drawer> component ([c890150](https://github.com/ecomplus/cloud-commerce/commit/c890150179ece483e77270a2741a8d51727a9b57))
+* **storefront:** New computed exports from modules info state (abstractions) ([fd00fb7](https://github.com/ecomplus/cloud-commerce/commit/fd00fb711600e5086523d7ef5668f287123130ba))
+
+
+### Bug Fixes
+
+* **ssr:** Prevent headers already sent warn with writeHead + send methods (on cached response) ([ab0ff25](https://github.com/ecomplus/cloud-commerce/commit/ab0ff2585e1f09e73d713508e9011b9233959098))
+* **storefront:** Fix <Drawer> position with placement end ([a756c92](https://github.com/ecomplus/cloud-commerce/commit/a756c928edb2859477ea78414119a8eb67184303))
+* **storefront:** Increase teleport containers z-index (custom) ([2a9b85d](https://github.com/ecomplus/cloud-commerce/commit/2a9b85dda36b6bff9087e6dc2cdb925e77153158))
+* **storefront:** New optional `alt` prop to AImg global component ([ecf4205](https://github.com/ecomplus/cloud-commerce/commit/ecf420558ac7c88747b79f0253ddfe0d3dbb89ad))
+
+
+### revert
+
+* **infinitepay:** Removing InfinitePay app and package ([3d1f790](https://github.com/ecomplus/cloud-commerce/commit/3d1f79096214d300086c40ad696e81d3145d604f))
+
 ## [0.17.0](https://github.com/ecomplus/cloud-commerce/compare/v0.16.4...v0.17.0) (2023-07-11)
 
 
