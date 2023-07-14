@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.18.2](https://github.com/ecomplus/cloud-commerce/compare/v0.18.1...v0.18.2) (2023-07-14)
+
+
+### Bug Fixes
+
+* **ssr:** Cache on memory only, sync and never out of date ([9c7f00f](https://github.com/ecomplus/cloud-commerce/commit/9c7f00f67be34a95ea3e793277d979ccce4f0917))
+* **storefront:** Edit shoping cart and customer session default storage key ([13c801b](https://github.com/ecomplus/cloud-commerce/commit/13c801b3ede543a734058ae360a2a37acf0f7019))
+
 ### [0.18.1](https://github.com/ecomplus/cloud-commerce/compare/v0.18.0...v0.18.1) (2023-07-14)
 
 
