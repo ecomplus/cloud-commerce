@@ -267,14 +267,14 @@ export default async (req: Request, res: Response) => {
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
   res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
+    status = _status;
+    if (_headers) {
+      _headers['X-SSR-Took'] = String(Date.now() - startedAt);
+      headers = _headers;
+    }
     if (!res.headersSent) {
       // @ts-ignore
       _writeHead.apply(res, arguments);
-    }
-    status = _status;
-    if (_headers) {
-      headers = _headers;
-      headers['X-SSR-Took'] = String(Date.now() - startedAt);
     }
   };
   const _write = res.write;
