@@ -1,4 +1,4 @@
-import type { Products, Carts, SearchItem } from '@cloudcommerce/types';
+import type { Products, SearchItem } from '@cloudcommerce/types';
 import { ref, computed, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import {
@@ -9,10 +9,9 @@ import {
   onPromotion as checkOnPromotion,
 } from '@ecomplus/utils';
 
-type CartItem = Carts['items'][0];
 type PictureSize = { url: string; alt?: string; size?: string };
 
-export type ProductItem = Products | SearchItem | CartItem;
+export type ProductItem = Products | SearchItem;
 
 export type Props = {
   product?: ProductItem;
@@ -23,12 +22,13 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
   const isFetching = ref(false);
   let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
+  const { productId } = props;
   const product = shallowReactive<(T extends undefined ? Partial<SearchItem> : T)
-    & { price: number }>({
+    & { _id: Products['_id'], price: number }>({
       ...(props.product as Exclude<T, undefined>),
+      _id: (props.product?._id || productId) as Products['_id'],
       price: getPrice(props.product || {}),
     });
-  const { productId } = props;
   if (!props.product && productId) {
     isFetching.value = true;
     fetching = (async () => {
@@ -61,12 +61,6 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
         const img = getImg(picture);
         if (img) _images.push(img);
       }));
-    } else {
-      const { picture } = (product as CartItem);
-      if (picture) {
-        const img = getImg(picture);
-        if (img) _images.push(img);
-      }
     }
     return _images;
   });
