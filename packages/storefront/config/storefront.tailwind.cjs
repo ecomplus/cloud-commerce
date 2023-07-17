@@ -40,14 +40,9 @@ let defaultThemeOptions = {
   ],
   generalIcons: 'heroicons',
   iconAliases: {
-    'shopping-cart': 'shopping-bag',
-    cashback: 'arrow-uturn-left',
-    menu: 'bars-3-bottom-left',
-    search: 'magnifying-glass',
-    account: 'user-circle',
     close: 'x-mark',
-    logout: 'arrow-right-on-rectangle',
-    favorites: 'heart',
+    'chevron-right': 'chevron-right',
+    'chevron-left': 'chevron-left',
   },
 };
 if (globalThis.$storefrontThemeOptions) {
@@ -179,7 +174,9 @@ const genTailwindConfig = (themeOptions = {}) => {
                 const { icons } = require(`@iconify-json/${iconset}`);
                 shortcuts = Object.keys(icons.icons);
                 Object.keys(iconAliases).forEach((alias) => {
-                  shortcuts.push([alias, iconAliases[alias]]);
+                  if (alias !== iconAliases[alias]) {
+                    shortcuts.push([alias, iconAliases[alias]]);
+                  }
                 });
               }
               shortcuts.forEach((shortcut) => {
