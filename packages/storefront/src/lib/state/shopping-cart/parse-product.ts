@@ -1,9 +1,13 @@
-import type { ResourceId, Products, Carts } from '@cloudcommerce/api/types';
+import type { Products, Carts, SearchItem } from '@cloudcommerce/api/types';
 import { price as getPrice } from '@ecomplus/utils';
 
 type CartItem = Carts['items'][0];
 
-export default (product: Products, variationId?: ResourceId, quantity?: number) => {
+export default (
+  product: (Partial<Products> | Partial<SearchItem>) & { _id: Products['_id'] },
+  variationId?: Products['_id'],
+  quantity?: number,
+) => {
   if (typeof quantity !== 'number' || Number.isNaN(quantity)) {
     quantity = product.min_quantity || 1;
   }
@@ -15,7 +19,6 @@ export default (product: Products, variationId?: ResourceId, quantity?: number) 
   item.product_id = product._id;
   if (variationId) {
     item.variation_id = variationId;
-    item.slug = product.slug;
     if (item.picture_id && product.pictures) {
       const pictures = product.pictures.filter((picture) => {
         return picture._id === item.picture_id;

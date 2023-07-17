@@ -1,4 +1,4 @@
-import type { ResourceId, Products, CartSet } from '@cloudcommerce/api/types';
+import type { Products, CartSet, SearchItem } from '@cloudcommerce/api/types';
 import { computed } from 'vue';
 import useStorage from './use-storage';
 import addItem from './shopping-cart/add-cart-item';
@@ -74,8 +74,8 @@ const addCartItem = (newItem: CartSet['items'][0]) => {
 };
 
 const addProductToCart = (
-  product: Products,
-  variationId?: ResourceId,
+  product: (Partial<Products> | Partial<SearchItem>) & { _id: Products['_id'] },
+  variationId?: Products['_id'],
   quantity?: number,
 ) => addCartItem(parseProduct(product, variationId, quantity));
 
