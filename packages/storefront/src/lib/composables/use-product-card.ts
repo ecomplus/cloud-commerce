@@ -78,6 +78,10 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     }
     return 0;
   });
+  const hasVariations = computed(() => {
+    if ((product as SearchItem).has_variations) return true;
+    return Boolean(product.variations?.length);
+  });
 
   return {
     isFetching,
@@ -90,6 +94,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     isInStock,
     isActive,
     discountPercentage,
+    hasVariations,
   };
 };
 
