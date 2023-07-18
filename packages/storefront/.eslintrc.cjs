@@ -15,7 +15,7 @@ module.exports = {
     'import/prefer-default-export': 'warn',
     'import/extensions': 'off',
     'vue/multi-word-component-names': ['error', {
-      ignores: ['Fade', 'Carousel', 'Drawer', 'Prices'],
+      ignores: ['Fade', 'Carousel', 'Drawer', 'Prices', 'Banner'],
     }],
   },
 };
