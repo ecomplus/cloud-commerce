@@ -2,7 +2,7 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { ContentGetter, SettingsContent, PageContent } from './content';
+import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 import _getConfig from '../../config/storefront.config.mjs';
