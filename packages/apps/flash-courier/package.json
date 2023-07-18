@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-flash-courier",
   "type": "module",
-  "version": "0.18.2",
+  "version": "0.19.0",
   "description": "E-Com Plus Cloud Commerce app to integrate Flash Courier",
   "main": "lib/index.js",
   "exports": {

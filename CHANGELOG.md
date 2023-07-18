@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.19.0](https://github.com/ecomplus/cloud-commerce/compare/v0.18.2...v0.19.0) (2023-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** <HeroPicture> Astro component removed in favor of <Banner> generic
+* **storefront:** Product card composable not accepting cart item anymore
+* **storefront:** Many icon aliases (as `.i-shopping-cart`) removed
+
+### Features
+
+* **storefront:** Add `hasVariations` to product card composable exports ([a9ad361](https://github.com/ecomplus/cloud-commerce/commit/a9ad361b14df31d40aceee3cec54d6cdc1457812))
+* **storefront:** New `Banner.astro` component to handle pictures with desktop/mobile variants ([61d8715](https://github.com/ecomplus/cloud-commerce/commit/61d8715cea5af86fd1aad8a03b32cd88c4a92359))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#195](https://github.com/ecomplus/cloud-commerce/issues/195)) ([ef7d5cd](https://github.com/ecomplus/cloud-commerce/commit/ef7d5cd7d98c52fd393d3397d736f51b4f6f5b1d))
+* **ssr:** Properly set X-SSR-Took before headers sent ([b0916d0](https://github.com/ecomplus/cloud-commerce/commit/b0916d05d62935e895bea443d55d26bc276f31a8))
+* **storefront:** Edit `useProductCard` composable to always preset `product._id` ([4490bf8](https://github.com/ecomplus/cloud-commerce/commit/4490bf8f46d9d8e21657f5908aa1254b094f5aac))
+* **storefront:** Fix `addProductToCart` state method typings ([50fff5f](https://github.com/ecomplus/cloud-commerce/commit/50fff5f68e267e0a002467bf087e4416aa4295a5))
+* **storefront:** Update Astro to v2.8.3 ([#194](https://github.com/ecomplus/cloud-commerce/issues/194)) ([5e276d9](https://github.com/ecomplus/cloud-commerce/commit/5e276d981cb1ad7f47da48b893be8419b69023f7))
+
+
+* **storefront:** Update theme options setting aliases only for icons used on lib components ([95208d0](https://github.com/ecomplus/cloud-commerce/commit/95208d09fae9e6a038f267279a0f08d589babee7))
+
 ### [0.18.2](https://github.com/ecomplus/cloud-commerce/compare/v0.18.1...v0.18.2) (2023-07-14)
 
 
