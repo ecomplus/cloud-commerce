@@ -55,7 +55,7 @@ export const usePageSections = async ({ routeContext }: Props) => {
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
   > = [];
   if (sectionsContent) {
-    await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }) => {
+    await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
       if (type === 'product-shelf') {
         const {
           collection_id: collectionIdAndInfo,
@@ -112,7 +112,7 @@ export const usePageSections = async ({ routeContext }: Props) => {
         };
         const { fetching, products } = useProductShelf(props);
         await fetching;
-        sections.push({
+        sections[index] = {
           type,
           props: {
             ...rest,
@@ -124,17 +124,17 @@ export const usePageSections = async ({ routeContext }: Props) => {
             isShuffle,
             products,
           },
-        });
+        };
         return;
       }
 
       if (type === 'banners-grid') {
-        sections.push({
+        sections[index] = {
           type,
           props: {
             banners: parseBanners(sectionContent.banners || []),
           },
-        });
+        };
         // return;
       }
     }));
