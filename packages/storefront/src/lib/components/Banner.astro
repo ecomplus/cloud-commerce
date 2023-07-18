@@ -1,11 +1,13 @@
 ---
-import type { HeroSliderProps } from '@@sf/layouts/sections/use-hero-section';
+import type { HeroSliderProps } from '@@sf/layouts/main/use-page-hero';
 import Picture from '@@sf/components/Picture.astro';
 
 export type Props = HeroSliderProps['slides'][0] & {
   index: number;
   widths?: number[];
+  class?: string;
   mobileWidths?: number[];
+  mobileClass?: string;
 };
 
 const {
@@ -16,9 +18,11 @@ const {
   subtitle,
   buttonText,
   index,
+  class: className = 'max-w-screen-2xl',
+  mobileClass = 'max-w-screen-sm',
 } = Astro.props as Props;
 const hasHeader = title || subtitle || buttonText;
-let { widths, mobileWidths }= Astro.props;
+let { widths, mobileWidths } = Astro.props;
 if (!widths?.length) {
   if (mobileImg) {
     widths = [1536, 2048];
@@ -40,7 +44,7 @@ if (!mobileWidths?.length) {
   widths={widths}
   fetchpriority={index === 0 ? 'high' : 'low'}
   loading={index === 0 ? 'eager' : 'lazy'}
-  class={`${(mobileImg ? 'hidden md:block' : '')} max-w-screen-2xl mx-auto`}
+  class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto ${className}`}
 />
 {mobileImg &&
   <Picture
@@ -49,6 +53,6 @@ if (!mobileWidths?.length) {
     widths={mobileWidths}
     fetchpriority={index === 0 ? 'high' : 'low'}
     loading={index === 0 ? 'eager' : 'lazy'}
-    class="md:hidden max-w-screen-sm mx-auto"
+    class={`md:hidden mx-auto ${mobileClass}`}
   />
 }
