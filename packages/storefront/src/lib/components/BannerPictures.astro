@@ -1,9 +1,9 @@
 ---
-import type { HeroSliderProps } from '@@sf/layouts/main/use-page-hero';
+import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import Picture from '@@sf/components/Picture.astro';
 
-export type Props = HeroSliderProps['slides'][0] & {
-  index: number;
+export type Props = UseBannerProps & {
+  index?: number;
   widths?: number[];
   class?: string;
   mobileWidths?: number[];
@@ -38,14 +38,16 @@ if (!mobileWidths?.length) {
 }
 ---
 
-<Picture
-  src={img}
-  alt={alt || ''}
-  widths={widths}
-  fetchpriority={index === 0 ? 'high' : 'low'}
-  loading={index === 0 ? 'eager' : 'lazy'}
-  class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto ${className}`}
-/>
+{img &&
+  <Picture
+    src={img}
+    alt={alt || ''}
+    widths={widths}
+    fetchpriority={index === 0 ? 'high' : 'low'}
+    loading={index === 0 ? 'eager' : 'lazy'}
+    class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto ${className}`}
+  />
+}
 {mobileImg &&
   <Picture
     src={mobileImg}
