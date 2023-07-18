@@ -1,18 +1,58 @@
 import type { ResourceId } from '@cloudcommerce/types';
+import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
-import type { Props as UseProductShelf } from '@@sf/composables/use-product-shelf';
+import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
+import type { Props as UseHeroSliderProps } from '@@sf/composables/use-hero-slider';
+import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
-
-export type ProductShelfProps = UseProductShelf;
 
 export interface Props {
   routeContext: RouteContext;
 }
 
-const usePageSections = async ({ routeContext }: Props) => {
+const now = Date.now();
+const parseBanners = (banners: Partial<PageContent['hero']['slides'][0]>[]) => {
+  const validBanners: UseBannerProps[] = [];
+  banners.forEach(({
+    img,
+    start,
+    end,
+    mobile_img: mobileImg,
+    button_link: buttonLink,
+    button_text: buttonText,
+    ...rest
+  }) => {
+    if (start && new Date(start).getTime() < now) return;
+    if (end && new Date(end).getTime() > now) return;
+    validBanners.push({
+      ...rest,
+      img,
+      mobileImg,
+      buttonLink,
+      buttonText,
+    });
+  });
+  return validBanners;
+};
+
+export const usePageHero = async ({ routeContext }: Props) => {
+  const { cmsContent } = routeContext;
+  const heroSlider: UseHeroSliderProps = { slides: [] };
+  const heroContent = cmsContent?.hero;
+  if (heroContent) {
+    heroSlider.autoplay = heroContent.autoplay;
+    if (heroContent.slides) {
+      heroSlider.slides = parseBanners(heroContent.slides);
+    }
+  }
+  return { heroSlider };
+};
+
+export const usePageSections = async ({ routeContext }: Props) => {
   const sectionsContent = routeContext.cmsContent?.sections;
   const sections: Array<
-    { type: 'product-shelf', props: ProductShelfProps }
+    { type: 'product-shelf', props: UseProductShelfProps }
+    | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }) => {
@@ -85,6 +125,17 @@ const usePageSections = async ({ routeContext }: Props) => {
             products,
           },
         });
+        return;
+      }
+
+      if (type === 'banners-grid') {
+        sections.push({
+          type,
+          props: {
+            banners: parseBanners(sectionContent.banners || []),
+          },
+        });
+        // return;
       }
     }));
   }
@@ -97,7 +148,3 @@ const usePageSections = async ({ routeContext }: Props) => {
     sections,
   };
 };
-
-export default usePageSections;
-
-export { usePageSections };
