@@ -275,13 +275,15 @@ export default async (req: Request, res: Response) => {
           const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
           if (__deploy !== DEPLOY_RAND) return;
           if (isFresh || isCacheSWR) {
-            cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
-              + __timestamp.toDate().toISOString();
-            cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
-            Object.keys(cachedHeaders).forEach((headerName) => {
-              res.set(headerName, cachedHeaders[headerName]);
-            });
-            _writeHead.apply(res, [cachedStatus, cachedHeaders]);
+            if (!res.headersSent) {
+              cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
+                + __timestamp.toDate().toISOString();
+              cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
+              Object.keys(cachedHeaders).forEach((headerName) => {
+                res.set(headerName, cachedHeaders[headerName]);
+              });
+              _writeHead.apply(res, [cachedStatus, cachedHeaders]);
+            }
             _write.apply(res, [cachedBody, 'utf8']);
             _end.apply(res);
             isCachedBodySent = true;
