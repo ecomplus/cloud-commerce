@@ -1,32 +1,18 @@
+import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import { computed } from 'vue';
-import { parseShippingPhrase } from '@@sf/state/modules-info';
+import useBanner from '@@sf/composables/use-banner';
 
 export interface Props {
   autoplay?: number;
-  slides: Array<{
-    img?: string;
-    alt?: string;
-    mobileImg?: string;
-    href?: string;
-    title?: string;
-    subtitle?: string;
-    buttonLink?: string;
-    buttonText?: string;
-  }>;
+  slides: Array<UseBannerProps>;
 }
 
 const useHeroSlider = (props: Props) => {
   const parsedSlides = computed(() => {
     return props.slides.map((slide) => {
-      const title = slide.title
-        ? parseShippingPhrase(slide.title).value : '';
-      const subtitle = slide.subtitle
-        ? parseShippingPhrase(slide.subtitle).value : '';
-      const buttonText = slide.buttonText
-        ? parseShippingPhrase(slide.buttonText).value : '';
       return {
         ...slide,
-        hasHeader: Boolean(title || subtitle || buttonText),
+        ...useBanner(slide),
       };
     });
   });
