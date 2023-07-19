@@ -42,7 +42,10 @@ if (argv.publish) {
         .packages.forEach((workspaceFolder) => {
           if (/ecomplus-stores\/[^/]+$/.test(workspaceFolder)) {
             const [, store] = workspaceFolder.split('/');
-            storesDirs.push(`${pwd}/ecomplus-stores/${store}`);
+            const storeDir = `${pwd}/ecomplus-stores/${store}`;
+            if (storesDirs.includes(storeDir)) {
+              storesDirs.push(storeDir);
+            }
           }
         });
     }
