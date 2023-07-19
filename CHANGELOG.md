@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.1](https://github.com/ecomplus/cloud-commerce/compare/v0.20.0...v0.20.1) (2023-07-19)
+
+
+### Features
+
+* **ssr:** Send 103 early hints when there is only one CSS file (UnoCSS bundle) :zap: ([327d829](https://github.com/ecomplus/cloud-commerce/commit/327d829a91d63b68708f25891a1ecc207612a916))
+
 ## [0.20.0](https://github.com/ecomplus/cloud-commerce/compare/v0.19.0...v0.20.0) (2023-07-19)
 
 
