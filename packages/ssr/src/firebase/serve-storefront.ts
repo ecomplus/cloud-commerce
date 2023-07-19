@@ -1,9 +1,6 @@
-import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
-import type { DocumentReference } from 'firebase-admin/firestore';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 
 declare global {
@@ -16,17 +13,10 @@ declare global {
 }
 
 const {
-  DEPLOY_RAND,
   STOREFRONT_BASE_DIR,
-  SSR_CACHE_MAXAGE,
-  SSR_CACHE_SWR,
   SSR_PROXY_DEBUG,
   SSR_PROXY_TIMEOUT,
 } = process.env;
-
-const cacheMaxAge = SSR_CACHE_MAXAGE ? Number(SSR_CACHE_MAXAGE) : 1000 * 60 * 2;
-const isCacheSWR = SSR_CACHE_SWR ? String(SSR_CACHE_SWR).toLowerCase() === 'true' : true;
-const lockedCacheKeys: string[] = [];
 
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
@@ -186,137 +176,11 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  const startedAt = Date.now();
-  let ssrStartedAt: number | undefined;
-  const cacheKey = (!req.path || req.path === '/')
-    ? '__home'
-    : req.path.slice(1).replace(/\//g, '_');
-  let cacheRef: DocumentReference<any> | undefined | null;
-  let gettingCacheDoc: Promise<void> | undefined;
-  let isCacheFresh: boolean | undefined;
-  let status: number;
-  let headers: OutgoingHttpHeaders = {};
-  const chunks: any[] = [];
-
-  /*
-  Check Response methods used by Astro Node.js integration:
-  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
-  */
-  const _writeHead = res.writeHead;
-  /* eslint-disable prefer-rest-params */
-  // @ts-ignore
-  res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
-    status = _status;
-    if (_headers) {
-      if (status === 200) {
-        const now = Date.now();
-        _headers['X-Function-Took'] = String(now - startedAt);
-        if (ssrStartedAt) {
-          _headers['X-SSR-Took'] = String(now - ssrStartedAt);
-        }
-      }
-      headers = _headers;
-    }
-  };
-  const _write = res.write;
-  // @ts-ignore
-  res.write = function write(chunk: any) {
-    chunks.push(chunk);
-  };
-  const _end = res.end;
-  // @ts-ignore
-  res.end = function end() {
-    if (!status) {
-      status = res.statusCode;
-    }
-    let body: string | undefined | null;
-    if (status === 200 && chunks.length) {
-      try {
-        body = Buffer.concat(chunks).toString('utf8');
-      } catch (err) {
-        body = null;
-        logger.warn(err);
-      }
-    }
-    if (!res.headersSent) {
-      _writeHead.apply(res, [status, headers]);
-      if (body) {
-        _write.apply(res, [body, 'utf8']);
-      } else {
-        chunks.forEach((chunk) => _write.apply(res, [chunk, 'utf8']));
-      }
-      // @ts-ignore
-      _end.apply(res, arguments);
-    }
-    if (cacheRef && body) {
-      (async () => {
-        if (gettingCacheDoc) await gettingCacheDoc;
-        if (isCacheFresh) return;
-        cacheRef.set({
-          headers,
-          status,
-          body,
-          __deploy: DEPLOY_RAND,
-          __timestamp: Timestamp.now(),
-        }).catch(logger.warn);
-      })();
-    }
-    for (let i = lockedCacheKeys.length - 1; i >= 0; i--) {
-      if (lockedCacheKeys[i] === cacheKey) {
-        lockedCacheKeys.splice(i, 1);
-      }
-    }
-  };
-
-  const isSWRLocked = lockedCacheKeys.includes(cacheKey);
-  if (req.query.__noCache === undefined && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
-    gettingCacheDoc = (async () => {
-      try {
-        const firestore = getFirestore();
-        cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
-        const cacheDoc = await cacheRef.get();
-        if (!res.headersSent && cacheDoc.exists) {
-          const {
-            headers: cachedHeaders,
-            status: cachedStatus = 200,
-            body: cachedBody,
-            __deploy,
-            __timestamp,
-          } = cacheDoc.data();
-          isCacheFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
-          if (__deploy !== DEPLOY_RAND) return;
-          if (isCacheFresh || isCacheSWR) {
-            cachedHeaders['X-SWR-Date'] = (isCacheFresh ? 'fresh ' : '')
-              + __timestamp.toDate().toISOString();
-            cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
-            Object.keys(cachedHeaders).forEach((headerName) => {
-              res.set(headerName, cachedHeaders[headerName]);
-            });
-            _writeHead.apply(res, [cachedStatus, cachedHeaders]);
-            _write.apply(res, [cachedBody, 'utf8']);
-            _end.apply(res);
-          }
-        }
-      } catch (err) {
-        cacheRef = null;
-        logger.warn(err);
-      }
-    })();
-  }
-  if (gettingCacheDoc && (!isCacheSWR || isSWRLocked)) {
-    await gettingCacheDoc;
-    if (res.headersSent) return;
-  }
-  if (isCacheSWR) {
-    lockedCacheKeys.push(cacheKey);
-  }
-
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
   global.$renderStorefront = renderStorefront;
   */
-  ssrStartedAt = Date.now();
   global.$renderStorefront(req, res, async (err: any) => {
     if (err) {
       if (res.headersSent) {
