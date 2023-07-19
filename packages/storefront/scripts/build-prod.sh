@@ -28,4 +28,8 @@ identify -format "img/uploads/%f,%w,%h\n" \
   >> ./dist/server/images.src.csv \
   2>/dev/null
 
+ls ./dist/client/_astro/*.css \
+  > ./dist/server/stylesheets.csv \
+  2>/dev/null
+
 exit 0
