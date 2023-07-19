@@ -192,6 +192,8 @@ export default async (req: Request, res: Response) => {
     ? '__home'
     : req.path.slice(1).replace(/\//g, '_');
   let cacheRef: DocumentReference<any> | undefined | null;
+  let gettingCacheDoc: Promise<void> | undefined;
+  let isCacheFresh: boolean | undefined;
   let status: number;
   let headers: OutgoingHttpHeaders = {};
   const chunks: any[] = [];
@@ -224,25 +226,40 @@ export default async (req: Request, res: Response) => {
   const _end = res.end;
   // @ts-ignore
   res.end = function end() {
-    if (!res.headersSent) {
-      _writeHead.apply(res, [status, headers]);
-      chunks.forEach((chunk) => {
-        _write.apply(res, [chunk, 'utf8']);
-      });
-      // @ts-ignore
-      _end.apply(res, arguments);
-    }
     if (!status) {
       status = res.statusCode;
     }
-    if (cacheRef && status === 200) {
-      cacheRef.set({
-        headers,
-        status,
-        body: Buffer.concat(chunks).toString('utf8'),
-        __deploy: DEPLOY_RAND,
-        __timestamp: Timestamp.now(),
-      }).catch(logger.warn);
+    let body: string | undefined | null;
+    if (status === 200 && chunks.length) {
+      try {
+        body = Buffer.concat(chunks).toString('utf8');
+      } catch (err) {
+        body = null;
+        logger.warn(err);
+      }
+    }
+    if (!res.headersSent) {
+      _writeHead.apply(res, [status, headers]);
+      if (body) {
+        _write.apply(res, [body, 'utf8']);
+      } else {
+        chunks.forEach((chunk) => _write.apply(res, [chunk, 'utf8']));
+      }
+      // @ts-ignore
+      _end.apply(res, arguments);
+    }
+    if (cacheRef && body) {
+      (async () => {
+        if (gettingCacheDoc) await gettingCacheDoc;
+        if (isCacheFresh) return;
+        cacheRef.set({
+          headers,
+          status,
+          body,
+          __deploy: DEPLOY_RAND,
+          __timestamp: Timestamp.now(),
+        }).catch(logger.warn);
+      })();
     }
     for (let i = lockedCacheKeys.length - 1; i >= 0; i--) {
       if (lockedCacheKeys[i] === cacheKey) {
@@ -252,7 +269,6 @@ export default async (req: Request, res: Response) => {
   };
 
   const isSWRLocked = lockedCacheKeys.includes(cacheKey);
-  let gettingCacheDoc: Promise<void> | undefined;
   if (req.query.__noCache === undefined && req.path.charAt(1) !== '~' && cacheMaxAge > 0) {
     gettingCacheDoc = (async () => {
       try {
@@ -267,10 +283,10 @@ export default async (req: Request, res: Response) => {
             __deploy,
             __timestamp,
           } = cacheDoc.data();
-          const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
+          isCacheFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
           if (__deploy !== DEPLOY_RAND) return;
-          if (isFresh || isCacheSWR) {
-            cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
+          if (isCacheFresh || isCacheSWR) {
+            cachedHeaders['X-SWR-Date'] = (isCacheFresh ? 'fresh ' : '')
               + __timestamp.toDate().toISOString();
             cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
             Object.keys(cachedHeaders).forEach((headerName) => {
