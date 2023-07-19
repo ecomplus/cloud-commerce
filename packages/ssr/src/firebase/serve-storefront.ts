@@ -22,19 +22,23 @@ const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
+
 let cssFilename: string | undefined;
-readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
-  .then((stylesManifest) => {
-    const cssFiles: string[] = [];
-    stylesManifest.split(/\n/).forEach((line) => {
-      const [filename] = line.split(',');
-      if (filename) cssFiles.push(filename);
-    });
-    if (cssFiles.length === 1) {
-      [cssFilename] = cssFiles;
-    }
-  })
-  .catch(logger.warn);
+const readinsStylesManifest = new Promise((resolve) => {
+  readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
+    .then((stylesManifest) => {
+      const cssFiles: string[] = [];
+      stylesManifest.split(/\n/).forEach((line) => {
+        const [filename] = line.split(',');
+        if (filename) cssFiles.push(filename);
+      });
+      if (cssFiles.length === 1) {
+        [cssFilename] = cssFiles;
+      }
+    })
+    .catch(logger.warn)
+    .finally(() => resolve(null));
+});
 
 const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
 const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
@@ -187,12 +191,15 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  if (cssFilename) {
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
-    res.writeEarlyHints({
-      link: `</${cssFilename}>; rel=preload; as=style`,
-    });
-  }
+  (async () => {
+    await readinsStylesManifest;
+    if (cssFilename && !res.headersSent) {
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
+      res.writeEarlyHints({
+        link: `</${cssFilename}>; rel=preload; as=style`,
+      });
+    }
+  })();
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
