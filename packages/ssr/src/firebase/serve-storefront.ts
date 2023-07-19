@@ -1,6 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
 import { join as joinPath } from 'node:path';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
 
 declare global {
@@ -19,14 +19,21 @@ const {
 } = process.env;
 
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
-const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
+let cssFilepath: string | undefined;
+readdir(joinPath(baseDir, 'dist/client/_astro'))
+  .then((files) => {
+    const cssFiles = files.filter((file) => file.endsWith('.css'));
+    if (cssFiles.length === 1) {
+      [cssFilepath] = cssFiles;
+    }
+  })
+  .catch(logger.warn);
 
 const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
 const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
-
 const proxy = async (req: Request, res: Response) => {
   let proxyURL: URL | undefined;
   try {
@@ -176,6 +183,13 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
+  if (cssFilepath) {
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
+    res.writeEarlyHints({
+      link: `</${cssFilepath}>; rel=preload; as=style`,
+    });
+  }
+
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
@@ -194,6 +208,7 @@ export default async (req: Request, res: Response) => {
       fallback(err);
       return;
     }
+    const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
     const local = new URL(`.${url}`, clientRoot);
     try {
       const data = await readFile(local);
