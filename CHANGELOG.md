@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.21.0](https://github.com/ecomplus/cloud-commerce/compare/v0.20.2...v0.21.0) (2023-07-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** SSR route context `apiDoc` and `apiResource` replaced by `fetchingApiContext` promise and `apiContext` object
+* **storefront:** Base.astro is no more rendering <BaseHead> because it should be rendered async with page body (sections)
+* **storefront:** BaseStateJson.astro removed in favor of unique BaseHead.astro
+
+[skip ci]
+
+### Features
+
+* **cli:** Update Firebase Hosting config with new rewrites for git-based CMS API middlewares ([ee178f6](https://github.com/ecomplus/cloud-commerce/commit/ee178f6c96d55029d4c6df5c2218d99e40a896d5))
+
+
+### Bug Fixes
+
+* **ssr:** Async handle styles manifest read to set early hints ([7a79204](https://github.com/ecomplus/cloud-commerce/commit/7a79204f54b946bc57d59134aed039c4f753ddab))
+
+
+* **storefront:** Fetch API context doc async by default on route load ([7ac707a](https://github.com/ecomplus/cloud-commerce/commit/7ac707aa671e7f6ac8bbfe54a2b4708a01f3b756))
+
 ### [0.20.2](https://github.com/ecomplus/cloud-commerce/compare/v0.20.1...v0.20.2) (2023-07-19)
 
 
