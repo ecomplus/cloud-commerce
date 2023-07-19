@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.2](https://github.com/ecomplus/cloud-commerce/compare/v0.20.1...v0.20.2) (2023-07-19)
+
+
+### Bug Fixes
+
+* **ssr:** Properly read CSS files from new `stylesheets.csv` manifest for early hints ([04a38c4](https://github.com/ecomplus/cloud-commerce/commit/04a38c4f1db3b529b8ff5f16b8dc027f13f05e47))
+
 ### [0.20.1](https://github.com/ecomplus/cloud-commerce/compare/v0.20.0...v0.20.1) (2023-07-19)
 
 
