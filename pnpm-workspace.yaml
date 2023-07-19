@@ -4,5 +4,5 @@ packages:
   - 'docs'
   - 'store'
   - 'store/functions/*'
-  #- 'ecomplus-stores/monocard'
-  #- 'ecomplus-stores/monocard/functions/*'
+  - 'ecomplus-stores/iluminim'
+  - 'ecomplus-stores/iluminim/functions/*'
