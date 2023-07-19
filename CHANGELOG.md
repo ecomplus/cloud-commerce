@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.0](https://github.com/ecomplus/cloud-commerce/compare/v0.19.0...v0.20.0) (2023-07-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Moving `layout/main/*` composables to `layout/use-page-main` only
+* **storefront:** Banner.astro removed in favor of BannerPictures.astro
+
+### Features
+
+* **storefront:** Handling `banners-grid` type on page sections composable ([edf7bfa](https://github.com/ecomplus/cloud-commerce/commit/edf7bfab881335d5516c81cf300c7e722f232bbf))
+* **storefront:** New `useBanner` (atomic) composable ([7091967](https://github.com/ecomplus/cloud-commerce/commit/7091967351bfa45748d48ea6cfb3c6ef572b20a0))
+
+
+### Bug Fixes
+
+* **storefront:** Ensure page sections order ([a50761d](https://github.com/ecomplus/cloud-commerce/commit/a50761d35c260d442f712a7913bc0c7fc8fb5d62))
+* **storefront:** Update BannerPictures.astro with img prop optional ([72ddcf1](https://github.com/ecomplus/cloud-commerce/commit/72ddcf192247f5f807e516be9cf9ed54ac53e87e))
+
+
+* **storefront:** Renaming <Banner> to <BannerPictures> Astro component ([ae0a76d](https://github.com/ecomplus/cloud-commerce/commit/ae0a76ddd5450bb59218c8d69d9ff8674cb9e72c))
+
 ## [0.19.0](https://github.com/ecomplus/cloud-commerce/compare/v0.18.2...v0.19.0) (2023-07-18)
 
 
