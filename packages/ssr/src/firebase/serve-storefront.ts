@@ -273,6 +273,12 @@ export default async (req: Request, res: Response) => {
             __timestamp,
           } = cacheDoc.data();
           const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
+          logger.debug({
+            isFresh,
+            isCacheSWR,
+            isSameDeploy: __deploy === DEPLOY_RAND,
+            headersSent: res.headersSent,
+          });
           if (__deploy !== DEPLOY_RAND) return;
           if (isFresh || isCacheSWR) {
             if (!res.headersSent) {
@@ -287,6 +293,7 @@ export default async (req: Request, res: Response) => {
             _write.apply(res, [cachedBody, 'utf8']);
             _end.apply(res);
             isCachedBodySent = true;
+            logger.debug({ isCachedBodySent });
           }
         }
       } catch (err) {
