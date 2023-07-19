@@ -192,8 +192,6 @@ export default async (req: Request, res: Response) => {
     ? '__home'
     : req.path.slice(1).replace(/\//g, '_');
   let cacheRef: DocumentReference<any> | undefined | null;
-  let isCachedBodySent = false;
-  let isSSRChunkSent = false;
   let status: number;
   let headers: OutgoingHttpHeaders = {};
   const chunks: any[] = [];
@@ -208,32 +206,29 @@ export default async (req: Request, res: Response) => {
   res.writeHead = function writeHead(_status: number, _headers: OutgoingHttpHeaders) {
     status = _status;
     if (_headers) {
-      const now = Date.now();
-      _headers['X-Function-Took'] = String(now - startedAt);
-      if (ssrStartedAt) {
-        _headers['X-SSR-Took'] = String(now - ssrStartedAt);
+      if (status === 200) {
+        const now = Date.now();
+        _headers['X-Function-Took'] = String(now - startedAt);
+        if (ssrStartedAt) {
+          _headers['X-SSR-Took'] = String(now - ssrStartedAt);
+        }
       }
       headers = _headers;
-    }
-    if (!res.headersSent) {
-      // @ts-ignore
-      _writeHead.apply(res, arguments);
     }
   };
   const _write = res.write;
   // @ts-ignore
   res.write = function write(chunk: any) {
-    if (!isCachedBodySent) {
-      // @ts-ignore
-      _write.apply(res, arguments);
-      isSSRChunkSent = true;
-    }
     chunks.push(chunk);
   };
   const _end = res.end;
   // @ts-ignore
   res.end = function end() {
-    if (!isCachedBodySent) {
+    if (!res.headersSent) {
+      _writeHead.apply(res, [status, headers]);
+      chunks.forEach((chunk) => {
+        _write.apply(res, [chunk, 'utf8']);
+      });
       // @ts-ignore
       _end.apply(res, arguments);
     }
@@ -264,7 +259,7 @@ export default async (req: Request, res: Response) => {
         const firestore = getFirestore();
         cacheRef = firestore.doc(`ssrCache/${cacheKey}`);
         const cacheDoc = await cacheRef.get();
-        if (!isSSRChunkSent && cacheDoc.exists) {
+        if (!res.headersSent && cacheDoc.exists) {
           const {
             headers: cachedHeaders,
             status: cachedStatus = 200,
@@ -275,18 +270,15 @@ export default async (req: Request, res: Response) => {
           const isFresh = (Timestamp.now().toMillis() - __timestamp.toMillis()) <= cacheMaxAge;
           if (__deploy !== DEPLOY_RAND) return;
           if (isFresh || isCacheSWR) {
-            if (!res.headersSent) {
-              cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
-                + __timestamp.toDate().toISOString();
-              cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
-              Object.keys(cachedHeaders).forEach((headerName) => {
-                res.set(headerName, cachedHeaders[headerName]);
-              });
-              _writeHead.apply(res, [cachedStatus, cachedHeaders]);
-            }
+            cachedHeaders['X-SWR-Date'] = (isFresh ? 'fresh ' : '')
+              + __timestamp.toDate().toISOString();
+            cachedHeaders['X-Function-Took'] = String(Date.now() - startedAt);
+            Object.keys(cachedHeaders).forEach((headerName) => {
+              res.set(headerName, cachedHeaders[headerName]);
+            });
+            _writeHead.apply(res, [cachedStatus, cachedHeaders]);
             _write.apply(res, [cachedBody, 'utf8']);
             _end.apply(res);
-            isCachedBodySent = true;
           }
         }
       } catch (err) {
@@ -297,7 +289,7 @@ export default async (req: Request, res: Response) => {
   }
   if (gettingCacheDoc && (!isCacheSWR || isSWRLocked)) {
     await gettingCacheDoc;
-    if (isCachedBodySent) return;
+    if (res.headersSent) return;
   }
   if (isCacheSWR) {
     lockedCacheKeys.push(cacheKey);
