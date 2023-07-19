@@ -1,6 +1,6 @@
 const {
   settings,
-  context: apiContext,
+  apiContext,
 } = globalThis.$storefront;
 
 const networkNames = [
