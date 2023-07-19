@@ -1,6 +1,6 @@
 import type { Request, Response } from 'firebase-functions';
 import { join as joinPath } from 'node:path';
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
 
 declare global {
@@ -22,12 +22,16 @@ const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
-let cssFilepath: string | undefined;
-readdir(joinPath(baseDir, 'dist/client/_astro'))
-  .then((files) => {
-    const cssFiles = files.filter((file) => file.endsWith('.css'));
+let cssFilename: string | undefined;
+readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
+  .then((stylesManifest) => {
+    const cssFiles: string[] = [];
+    stylesManifest.split(/\n/).forEach((line) => {
+      const [filename] = line.split(',');
+      if (filename) cssFiles.push(filename);
+    });
     if (cssFiles.length === 1) {
-      [cssFilepath] = cssFiles;
+      [cssFilename] = cssFiles;
     }
   })
   .catch(logger.warn);
@@ -183,10 +187,10 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  if (cssFilepath) {
+  if (cssFilename) {
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
     res.writeEarlyHints({
-      link: `</${cssFilepath}>; rel=preload; as=style`,
+      link: `</${cssFilename}>; rel=preload; as=style`,
     });
   }
 
