@@ -43,7 +43,7 @@ if (argv.publish) {
           if (/ecomplus-stores\/[^/]+$/.test(workspaceFolder)) {
             const [, store] = workspaceFolder.split('/');
             const storeDir = `${pwd}/ecomplus-stores/${store}`;
-            if (storesDirs.includes(storeDir)) {
+            if (!storesDirs.includes(storeDir)) {
               storesDirs.push(storeDir);
             }
           }
