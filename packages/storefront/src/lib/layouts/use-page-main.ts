@@ -2,7 +2,6 @@ import type { ResourceId } from '@cloudcommerce/types';
 import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
-import type { Props as UseHeroSliderProps } from '@@sf/composables/use-hero-slider';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
 
@@ -37,7 +36,8 @@ const parseBanners = (banners: Partial<PageContent['hero']['slides'][0]>[]) => {
 
 export const usePageHero = async ({ routeContext }: Props) => {
   const { cmsContent } = routeContext;
-  const heroSlider: UseHeroSliderProps = { slides: [] };
+  const heroSlider: Omit<Partial<PageContent['hero']>, 'slides'>
+    & { slides: UseBannerProps[] } = { slides: [] };
   const heroContent = cmsContent?.hero;
   if (heroContent) {
     heroSlider.autoplay = heroContent.autoplay;
