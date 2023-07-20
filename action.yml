@@ -91,13 +91,30 @@ runs:
         cache-dependency-path: '**/package-lock.json'
 
     - uses: actions/cache@v3
-      id: npm-cache
+      id: npm-cache-root
       with:
-        path: |
-          **/node_modules
-        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        path: node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
 
-    - if: steps.npm-cache.outputs.cache-hit != 'true'
+    - uses: actions/cache@v3
+      id: npm-cache-many
+      with:
+        path: functions/many/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('functions/many/package-lock.json') }}
+    
+    - uses: actions/cache@v3
+      id: npm-cache-ssr
+      with:
+        path: functions/ssr/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('functions/ssr/package-lock.json') }}
+    
+    - uses: actions/cache@v3
+      id: npm-cache-with-apps
+      with:
+        path: functions/with-apps/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('functions/with-apps/package-lock.json') }}
+
+    - if: steps.npm-cache-root.outputs.cache-hit != 'true'
       shell: bash
       run: npm ci --omit=dev
 
@@ -122,16 +139,23 @@ runs:
       shell: bash
       run: npm i --location=global firebase-tools@12.3.1
 
-    - if: steps.npm-cache.outputs.cache-hit != 'true'
-      name: Install functions dependencies
+    - if: steps.npm-cache-many.outputs.cache-hit != 'true'
+      name: Install codebase "many" dependencies
       shell: bash
-      working-directory: functions
-      run: |
-        for d in */ ; do
-          cd $d
-          npm ci
-          cd ..
-        done
+      working-directory: functions/many
+      run: npm ci
+
+    - if: steps.npm-cache-ssr.outputs.cache-hit != 'true'
+      name: Install codebase "ssr" dependencies
+      shell: bash
+      working-directory: functions/ssr
+      run: npm ci
+
+    - if: steps.npm-cache-with-apps.outputs.cache-hit != 'true'
+      name: Install codebase "with-apps" dependencies
+      shell: bash
+      working-directory: functions/with-apps
+      run: npm ci
 
     - name: Set ECOM_STORE_ID and GITHUB_REF env
       shell: bash
