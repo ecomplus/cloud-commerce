@@ -66,6 +66,58 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/iluminim:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.21.0
+        version: link:../../packages/cli
+
+  ecomplus-stores/iluminim/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.21.0
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.21.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.21.0
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/iluminim/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.21.0
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.21.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.21.0
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.21.0
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.21.0
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.21.0
+        version: link:../../../../packages/types
+
+  ecomplus-stores/iluminim/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.21.0
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.21.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.21.0
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
