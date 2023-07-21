@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.22.0](https://github.com/ecomplus/cloud-commerce/compare/v0.21.0...v0.22.0) (2023-07-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `composables/use-hero-slider` removed in favor of `useBanner` only and <Banner> component
+
+### Features
+
+* **i18n:** New time units related words ([eae4800](https://github.com/ecomplus/cloud-commerce/commit/eae4800e2b7da1ee6125b81a822bb18d728ce3ae))
+* **storefront:** Update `useSections` with new `handleCustomSection` option ([30ab9ee](https://github.com/ecomplus/cloud-commerce/commit/30ab9ee09143771fe707c70138e052fe5156d562))
+* **storefront:** Update Astro to v2.9.0 ([7b23afc](https://github.com/ecomplus/cloud-commerce/commit/7b23afc8ab5cb2fc5626d5339706f2e81279b95b))
+
+
+### Bug Fixes
+
+* **api:** Fix handling fields typedefs for products search ([2096524](https://github.com/ecomplus/cloud-commerce/commit/2096524264c2674e51fd1c40df0412484927b30e))
+
+
+* **storefront:** Removing `useHeroSlider` as it is not needed and may intuit incorrect use ([15af280](https://github.com/ecomplus/cloud-commerce/commit/15af2805de648286ac8e22f42f7357ccd1bcbc16))
+
 ## [0.21.0](https://github.com/ecomplus/cloud-commerce/compare/v0.20.2...v0.21.0) (2023-07-19)
 
 
