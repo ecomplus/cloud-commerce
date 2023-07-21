@@ -7,6 +7,8 @@ import { useProductShelf } from '@@sf/composables/use-product-shelf';
 
 export interface Props {
   routeContext: RouteContext;
+  handleCustomSection?: (type: `${string}:${string}`, content: Record<string, any>) =>
+    Promise<{ props: Record<string, any> }>;
 }
 
 const now = Date.now();
@@ -48,10 +50,17 @@ export const usePageHero = async ({ routeContext }: Props) => {
   return { heroSlider };
 };
 
-export const usePageSections = async ({ routeContext }: Props) => {
+type CustomSection = {
+  type: `${string}:${string}`,
+  props: Record<string, any>,
+};
+
+export const usePageSections = async <T extends CustomSection = CustomSection>
+({ routeContext, handleCustomSection }: Props) => {
   const sectionsContent = routeContext.cmsContent?.sections;
   const sections: Array<
-    { type: 'product-shelf', props: UseProductShelfProps }
+    T
+    | { type: 'product-shelf', props: UseProductShelfProps }
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
   > = [];
   if (sectionsContent) {
@@ -135,7 +144,14 @@ export const usePageSections = async ({ routeContext }: Props) => {
             banners: parseBanners(sectionContent.banners || []),
           },
         };
-        // return;
+        return;
+      }
+      if (typeof handleCustomSection === 'function') {
+        const { props } = await handleCustomSection(
+          type as `${string}:${string}`,
+          sectionContent,
+        );
+        sections[index] = { type, props } as T;
       }
     }));
   }
