@@ -50,10 +50,7 @@ export const usePageHero = async ({ routeContext }: Props) => {
   return { heroSlider };
 };
 
-type CustomSection = {
-  type: `${string}:${string}`,
-  props: Record<string, any>,
-};
+type CustomSection = { type: `${string}:${string}`, props: any };
 
 export const usePageSections = async <T extends CustomSection = CustomSection>
 ({ routeContext, handleCustomSection }: Props) => {
