@@ -355,7 +355,7 @@ type EventsResult<TEndpoint extends EventsEndpoint> = {
 
 type ResponseBody<
   TConfig extends Config,
-  ListFields extends string[] | null = TConfig['endpoint'] extends Resource
+  ListFields extends string[] | null = TConfig['endpoint'] extends Resource | 'search/v1'
     ? TConfig['params']['fields'] extends string ? '*'
       : TConfig['fields'] extends readonly string[] ? TConfig['fields']
       : null
