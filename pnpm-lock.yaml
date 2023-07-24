@@ -66,6 +66,64 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/iluminim:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.22.0
+        version: link:../../packages/cli
+
+  ecomplus-stores/iluminim/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.22.0
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.22.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.22.0
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/iluminim/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.22.0
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.22.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.22.0
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.22.0
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.22.0
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.22.0
+        version: link:../../../../packages/types
+      '@fontsource-variable/heebo':
+        specifier: ^5.0.5
+        version: 5.0.5
+      '@iconify-json/carbon':
+        specifier: ^1.1.18
+        version: 1.1.18
+
+  ecomplus-stores/iluminim/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.22.0
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.22.0
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.22.0
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -966,6 +1024,58 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.22.0
+        version: link:../packages/cli
+
+  store/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.22.0
+        version: link:../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.22.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.22.0
+        version: link:../../../packages/passport
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.22.0
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.22.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.22.0
+        version: link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.22.0
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.22.0
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.22.0
+        version: link:../../../packages/types
+
+  store/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.22.0
+        version: link:../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.22.0
+        version: link:../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.22.0
+        version: link:../../../packages/modules
 
 packages:
 
@@ -3711,6 +3821,10 @@ packages:
     resolution: {integrity: sha512-Dq5rYfEpdeel0bLVN+nfD1VWmzCkK+pJbSjIawGE+RY4+NIJqhbUDDQjvV0NUK84fMfwxvtFoCtEe70HfZjFcw==}
     dev: false
 
+  /@fontsource-variable/heebo@5.0.5:
+    resolution: {integrity: sha512-Lpx0IN6kCjjnpGDVet80aoCUPiNfjbpkxID/dNgkVn1Rq9ooKcn+7TaIBQIxYFONIjh7fpuVUCxyKSTDqzwjsg==}
+    dev: true
+
   /@google-cloud/firestore@6.6.1:
     resolution: {integrity: sha512-Z41j2h0mrgBH9qNIVmbRLqGKc6XmdJtWipeKwdnGa/bPTP1gn2SGTrYyWnpfsLMEtzKSYieHPSkAFp5kduF2RA==}
     engines: {node: '>=12.0.0'}
@@ -3897,6 +4011,12 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
+  /@iconify-json/carbon@1.1.18:
+    resolution: {integrity: sha512-RbKET6KS9xUMeYVq1FUH3UUA7AYNcnApkHt2AccCwTWTQQs/O58ji4Of6z6PhRajGlbfvrJzT/Uqh19OKECRvA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/fa6-brands@1.1.11:
     resolution: {integrity: sha512-+/dsIafxFCXlUvti0EHzVas9tnYXGqcSpybTBzzXbSVl2Ay1v26e/so/fz2Wrh8L3JrXq0LrMUYDsgZ4geQOqw==}
     dependencies:
@@ -3917,7 +4037,6 @@ packages:
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.7:
     resolution: {integrity: sha512-P8S3z/L1LcV4Qem9AoCfVAaTFGySEMzFEY4CHZLkfRj0Fv9LiR+AwjDgrDrzyI93U2L2mg9JHsbTJ52mF8suNw==}
