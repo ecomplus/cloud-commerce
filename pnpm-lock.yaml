@@ -211,8 +211,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       facebook-nodejs-business-sdk:
-        specifier: ^16.0.2
-        version: 16.0.2
+        specifier: ^17.0.1
+        version: 17.0.1
       firebase-admin:
         specifier: ^11.10.1
         version: 11.10.1
@@ -7106,6 +7106,7 @@ packages:
   /event-target-shim@5.0.1:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
+    requiresBuild: true
     dev: false
 
   /events@3.3.0:
@@ -7223,8 +7224,8 @@ packages:
     engines: {'0': node >=0.6.0}
     dev: false
 
-  /facebook-nodejs-business-sdk@16.0.2:
-    resolution: {integrity: sha512-0mIy9l3eagFc98BCYa9xOEk3hh4isq1G00eXeVmHP0CUKSmRF0jpumMuBnuygOc+65WKB+krvdEdmzx0rXR3tQ==}
+  /facebook-nodejs-business-sdk@17.0.1:
+    resolution: {integrity: sha512-Mu/69GoO96B5PAEXEU9Qrwp/C7MCXXjSN7nEUUqccaAEHT9uU0uGWU5RDVfsPRjRRlqD9qeGUk5cacd4pIRNbA==}
     dependencies:
       currency-codes: 1.5.1
       iso-3166-1: 2.1.1
@@ -11208,6 +11209,7 @@ packages:
 
   /stream-shift@1.0.1:
     resolution: {integrity: sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==}
+    requiresBuild: true
     dev: false
 
   /streamsearch@1.1.0:
@@ -12885,6 +12887,7 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    requiresBuild: true
 
   /yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
