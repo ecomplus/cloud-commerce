@@ -15,18 +15,21 @@ const copyFunctionsConfig = async (isDev = false) => {
   }
   const filesToCopy = ['.env', 'config.json', 'ssr/content/settings.json'];
   const dirents = await fs.readdir(functionsDir, { withFileTypes: true });
+  /* eslint-disable no-await-in-loop */
   for (let i = 0; i < dirents.length; i++) {
     if (dirents[i].isDirectory() && dirents[i].name.charAt(0) !== '.') {
       const codebase = dirents[i].name;
       const codebaseDir = joinPath(functionsDir, codebase);
-      // eslint-disable-next-line no-await-in-loop
+      const isSSR = codebase === 'ssr';
       await fs.ensureDir(joinPath(codebaseDir, 'content'));
+      if (isDev && isSSR && !fs.existsSync(joinPath(functionsDir, 'node_modules'))) {
+        await $`npm --prefix "functions/ssr" i`;
+      }
       for (let ii = 0; ii < filesToCopy.length; ii++) {
         const fileToCopy = filesToCopy[ii];
-        if (codebase !== 'ssr' || !fileToCopy.includes('ssr/')) {
+        if (!isSSR || !fileToCopy.includes('ssr/')) {
           const srcPath = joinPath(functionsDir, fileToCopy);
           if (fs.existsSync(srcPath) && srcPath) {
-            // eslint-disable-next-line no-await-in-loop
             await fs.copy(
               srcPath,
               joinPath(codebaseDir, fileToCopy.replace('ssr/', '')),

@@ -1,4 +1,4 @@
-import url from 'node:url';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import {
   $,
@@ -21,7 +21,7 @@ const {
 // https://github.com/google/zx/issues/124
 process.env.FORCE_COLOR = '3';
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const pwd = process.cwd();
 
 let projectId = FIREBASE_PROJECT_ID;
