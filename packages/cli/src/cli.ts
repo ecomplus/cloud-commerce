@@ -179,7 +179,7 @@ Finish by saving the following secrets to your GitHub repository:
   }
 
   if (argv._.includes('dev') || !argv._.length) {
-    await prepareCodebases();
+    await prepareCodebases(true);
     return $`npm --prefix "${path.join(pwd, 'functions/ssr')}" run dev`;
   }
   return $`echo 'Hello from @cloudcommerce/cli'`;

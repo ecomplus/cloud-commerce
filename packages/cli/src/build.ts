@@ -1,8 +1,18 @@
 import { join as joinPath } from 'node:path';
 import { $, fs } from 'zx';
 
-const copyFunctionsConfig = async () => {
+const copyFunctionsConfig = async (isDev = false) => {
   const functionsDir = joinPath(process.cwd(), 'functions');
+  if (isDev && !fs.existsSync(joinPath(functionsDir, '.env'))) {
+    try {
+      const { storeId } = JSON.parse(
+        fs.readFileSync(joinPath(functionsDir, 'config.json'), 'utf8'),
+      );
+      await fs.writeFile(joinPath(functionsDir, '.env'), `ECOM_STORE_ID=${storeId}\n`);
+    } catch {
+      //
+    }
+  }
   const filesToCopy = ['.env', 'config.json', 'ssr/content/settings.json'];
   const dirents = await fs.readdir(functionsDir, { withFileTypes: true });
   for (let i = 0; i < dirents.length; i++) {
