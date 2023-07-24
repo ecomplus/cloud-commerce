@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.1](https://github.com/ecomplus/cloud-commerce/compare/v0.22.0...v0.22.1) (2023-07-24)
+
+
+### Features
+
+* **cli:** Check node_modules and install SSR dependencies on dev command if needed ([b60e94b](https://github.com/ecomplus/cloud-commerce/commit/b60e94b0315bf041392e2c322133d0cf77bd0d19))
+
+
+### Bug Fixes
+
+* **cli:** Create `functions/.env` with Store ID from config.json on first dev command ([17bf92b](https://github.com/ecomplus/cloud-commerce/commit/17bf92b67bfd29de57a2b1c0950c073b192370ca))
+* **deps:** Update non-major dependencies ([#197](https://github.com/ecomplus/cloud-commerce/issues/197)) ([15715b1](https://github.com/ecomplus/cloud-commerce/commit/15715b1b587db364de627a35aafce4b34bb1c2ee))
+* **fb-conversions:** Update dependency facebook-nodejs-business-sdk to v17 ([#199](https://github.com/ecomplus/cloud-commerce/issues/199)) ([5cac54e](https://github.com/ecomplus/cloud-commerce/commit/5cac54ee19b33d8f6b1e0ca9a6bab80decd99af6))
+* **storefront:** Update dependency astro to v2.9.2 ([#196](https://github.com/ecomplus/cloud-commerce/issues/196)) ([7383674](https://github.com/ecomplus/cloud-commerce/commit/7383674c5980239d81bfa031066c09e948dc23d8))
+
 ## [0.22.0](https://github.com/ecomplus/cloud-commerce/compare/v0.21.0...v0.22.0) (2023-07-21)
 
 
