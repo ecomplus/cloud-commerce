@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { lstatSync, readFileSync } from 'node:fs';
 import { join as joinPath } from 'node:path';
 import * as dotenv from 'dotenv';
@@ -10,7 +11,7 @@ import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './config/storefront.config.mjs';
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 dotenv.config();
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
