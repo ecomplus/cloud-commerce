@@ -10,3 +10,6 @@
 [submodule "ecomplus-stores/iluminim"]
 	path = ecomplus-stores/iluminim
 	url = git@github.com:ecomplus-stores/iluminim.git
+[submodule "ecomplus-stores/barra-doce"]
+	path = ecomplus-stores/barra-doce
+	url = git@github.com:ecomplus-stores/barra-doce.git
