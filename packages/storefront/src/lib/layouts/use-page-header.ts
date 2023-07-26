@@ -10,9 +10,10 @@ type ShopHeaderProps = Omit<UseShopHeaderProps, 'header'> & {
 
 export interface Props {
   routeContext: RouteContext;
+  listedCategoryFields?: readonly string[];
 }
 
-const usePageHeader = async ({ routeContext }: Props) => {
+const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
   const { apiState, getContent } = routeContext;
   const layoutContent = await getContent('layout');
   const {
@@ -23,7 +24,18 @@ const usePageHeader = async ({ routeContext }: Props) => {
   let { categories } = apiState;
   if (!categories) {
     try {
-      categories = (await api.get('categories')).data.result;
+      categories = (await api.get('categories', {
+        fields: listedCategoryFields || ([
+          'name',
+          'slug',
+          'parent.name',
+          'parent.slug',
+          'icon.url',
+          'icon.size',
+          'pictures.0.url',
+          'pictures.0.size',
+        ] as const),
+      })).data.result;
     } catch (err) {
       categories = [];
       console.error(err);
