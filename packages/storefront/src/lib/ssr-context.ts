@@ -38,6 +38,7 @@ if (!globalThis.$storefront) {
     onLoad(callback: (...args: any[]) => void) {
       emitter.on('load', callback);
     },
+    data: {},
   };
 }
 

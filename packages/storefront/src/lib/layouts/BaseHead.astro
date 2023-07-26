@@ -56,7 +56,7 @@ window.ECOM_LANG = '${lang}';
 window.ECOM_CURRENCY = '${currency}';
 window.ECOM_CURRENCY_SYMBOL = '${currencySymbol}';
 window.ECOM_COUNTRY_CODE = '${countryCode}';
-window.$storefront = ${JSON.stringify({ settings })};`;
+window.$storefront = ${JSON.stringify({ settings, data: {} })};`;
 if (apiContext.error) {
   const { message, statusCode } = apiContext.error;
   const url = Astro.url.pathname;

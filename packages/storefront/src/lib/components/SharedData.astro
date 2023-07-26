@@ -1,0 +1,13 @@
+---
+export interface Props {
+  field: string;
+  value: any;
+}
+
+const { field, value } = Astro.props;
+global.$storefront.data[field] = value;
+let inlineClientJS = `
+window.$storefront.data['${field}'] = ${JSON.stringify(value)};`;
+---
+
+<script is:inline set:html={inlineClientJS} />

@@ -25,4 +25,5 @@ export type $Storefront = {
     doc: CollectionSet,
     timestamp: number,
   },
+  data: Record<string, any>,
 };

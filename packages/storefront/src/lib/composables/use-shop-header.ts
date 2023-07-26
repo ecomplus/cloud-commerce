@@ -1,24 +1,24 @@
 import type { Ref } from 'vue';
-import type { ResourceId, Categories, CategoriesList } from '@cloudcommerce/api/types';
+import type { Categories } from '@cloudcommerce/api/types';
 import { computed } from 'vue';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
 
+type PartCategory = Partial<Categories>;
+
 export interface Props {
   header: Ref<HTMLElement | null>;
-  categories: CategoriesList;
+  categories?: PartCategory[];
   menuCategorySlugs?: string[];
   menuRandomCategories?: number;
   isAlphabeticalSortSubmenu?: boolean;
 }
 
-type MainCategory = Partial<Categories> & {
-  _id: ResourceId,
+type MainCategory = PartCategory & {
   name: string,
   slug: string,
   parent: undefined,
 };
-type Subcategory = Partial<Categories> & {
-  _id: ResourceId,
+type Subcategory = PartCategory & {
   name: string,
   slug: string,
   parent: Exclude<Categories['parent'], undefined>,
@@ -33,7 +33,7 @@ export type CategoryTree = MainCategory & {
 };
 
 const filterMainCategories = (
-  categories: CategoriesList,
+  categories: PartCategory[],
   featuredSlugs?: string[],
 ) => {
   const mainCategories = categories.filter(({ name, slug, parent }) => {
@@ -55,13 +55,13 @@ const filterMainCategories = (
 };
 
 const filterSubcategories = (
-  categories: CategoriesList,
-  parentCategory: CategoriesList[0],
+  categories: PartCategory[],
+  parentCategory: PartCategory,
   isAlphabeticalSort = false,
 ) => {
   const subcategories = categories.filter(({ name, slug, parent }) => {
     if (name && slug && parent) {
-      return parent._id === parentCategory._id
+      return (parent._id && parent._id === parentCategory._id)
         || (parent.slug && parent.slug === parentCategory.slug);
     }
     return false;
@@ -77,7 +77,7 @@ const filterSubcategories = (
 
 const useShopHeader = ({
   header,
-  categories,
+  categories = (globalThis.$storefront.data.categories || []) as PartCategory[],
   menuCategorySlugs,
   menuRandomCategories = 7,
   isAlphabeticalSortSubmenu,
@@ -91,14 +91,14 @@ const useShopHeader = ({
     return isSticky.value ? header.value?.offsetHeight : staticY.value;
   });
   const mainCategories = filterMainCategories(categories, menuCategorySlugs);
-  const getSubcategories = (parentCategory: CategoriesList[0]) => {
+  const getSubcategories = (parentCategory: PartCategory) => {
     return filterSubcategories(
       categories,
       parentCategory,
       !!isAlphabeticalSortSubmenu,
     );
   };
-  const getCategoryTree = <T extends CategoriesList[0]>(parentCategory: T):
+  const getCategoryTree = <T extends PartCategory>(parentCategory: T):
   T & { subcategories: SubcategoryTree[] } => {
     return {
       ...parentCategory,
