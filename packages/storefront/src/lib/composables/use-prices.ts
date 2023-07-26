@@ -88,7 +88,7 @@ const usePrices = (props: Props) => {
       return 1;
     }
     const minInstallment = installmentsObject.value.min_installment || 5;
-    const maxInstallmentsNumber = Math.round(salePrice.value / minInstallment);
+    const maxInstallmentsNumber = Math.floor(salePrice.value / minInstallment);
     return Math.min(maxInstallmentsNumber, installmentsObject.value.max_number);
   });
   const monthlyInterest = computed(() => {
