@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.3](https://github.com/ecomplus/cloud-commerce/compare/v0.22.2...v0.22.3) (2023-07-26)
+
+
+### Features
+
+* **storefront:** New `useSharedData` composable to make easier setting data before components SSR ([60cdcf0](https://github.com/ecomplus/cloud-commerce/commit/60cdcf0b3315366c39ef5b481eac53dcfea8bff1))
+
+
+### Bug Fixes
+
+* **storefront:** Update `useShopHeader` to ensure global data is used on function runtime ([abaaad0](https://github.com/ecomplus/cloud-commerce/commit/abaaad0961924995bbb556074f8778e55c34f7b8))
+
 ### [0.22.2](https://github.com/ecomplus/cloud-commerce/compare/v0.22.1...v0.22.2) (2023-07-26)
 
 
