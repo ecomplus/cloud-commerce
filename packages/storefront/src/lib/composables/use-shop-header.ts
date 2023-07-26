@@ -75,13 +75,14 @@ const filterSubcategories = (
   return subcategories;
 };
 
-const useShopHeader = ({
-  header,
-  categories = (globalThis.$storefront.data.categories || []) as PartCategory[],
-  menuCategorySlugs,
-  menuRandomCategories = 7,
-  isAlphabeticalSortSubmenu,
-}: Props) => {
+const useShopHeader = (props: Props) => {
+  const {
+    header,
+    categories = (globalThis.$storefront.data.categories || []) as PartCategory[],
+    menuCategorySlugs,
+    menuRandomCategories = 7,
+    isAlphabeticalSortSubmenu,
+  } = props;
   const {
     isSticky,
     staticHeight,
