@@ -1,13 +1,12 @@
 ---
-export interface Props {
-  field: string;
-  value: any;
-}
+import {
+  type Props as UseSharedDataProps,
+  useSharedData,
+} from '@@sf/composables/use-shared-data';
 
-const { field, value } = Astro.props;
-global.$storefront.data[field] = value;
-let inlineClientJS = `
-window.$storefront.data['${field}'] = ${JSON.stringify(value)};`;
+export interface Props extends UseSharedDataProps {}
+
+const { inlineClientJS } = useSharedData(Astro.props);
 ---
 
 <script is:inline set:html={inlineClientJS} />
