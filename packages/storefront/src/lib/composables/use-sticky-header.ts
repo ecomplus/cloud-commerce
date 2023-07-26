@@ -63,7 +63,7 @@ const useStickyHeader = (props: Props) => {
         const headerElm = header.value as HTMLElement;
         staticHeight.value = headerElm.offsetHeight;
         staticY.value = staticHeight.value
-          + window.pageYOffset + headerElm.getBoundingClientRect().top;
+          + window.scrollY + headerElm.getBoundingClientRect().top;
         start();
       };
       const imgs = header.value.getElementsByTagName('IMG');
