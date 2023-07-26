@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.2](https://github.com/ecomplus/cloud-commerce/compare/v0.22.1...v0.22.2) (2023-07-26)
+
+
+### Features
+
+* **storefront:** Add `listedCategoryFields` option to `usePageHeader` ([75414a2](https://github.com/ecomplus/cloud-commerce/commit/75414a29921b7a1a45bb6bdd362e27e57cea4b32))
+* **storefront:** New <SharedData> Astro component and global `$storefront.data` ([900abec](https://github.com/ecomplus/cloud-commerce/commit/900abecba3c47c287d9d75d227ad4097dc6da6c7))
+
+
+### Bug Fixes
+
+* **storefront:** Properly handling min installment value on `usePrices` ([92608c2](https://github.com/ecomplus/cloud-commerce/commit/92608c2a8f7cf022715ab97487b8662a5d5fc58e))
+
 ### [0.22.1](https://github.com/ecomplus/cloud-commerce/compare/v0.22.0...v0.22.1) (2023-07-24)
 
 
