@@ -69,93 +69,99 @@ importers:
   ecomplus-stores/barra-doce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../packages/cli
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/passport
 
   ecomplus-stores/barra-doce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/types
+      '@fontsource/croissant-one':
+        specifier: ^5.0.5
+        version: 5.0.5
+      '@iconify-json/mingcute':
+        specifier: ^1.1.7
+        version: 1.1.7
 
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/modules
 
   ecomplus-stores/iluminim:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../packages/cli
 
   ecomplus-stores/iluminim/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/passport
 
   ecomplus-stores/iluminim/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/types
       '@fontsource-variable/heebo':
         specifier: ^5.0.5
@@ -167,13 +173,13 @@ importers:
   ecomplus-stores/iluminim/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1080,53 +1086,53 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../packages/cli
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/types
 
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.22.1
+        specifier: ^0.22.2
         version: link:../../../packages/modules
 
 packages:
@@ -3877,6 +3883,10 @@ packages:
     resolution: {integrity: sha512-Lpx0IN6kCjjnpGDVet80aoCUPiNfjbpkxID/dNgkVn1Rq9ooKcn+7TaIBQIxYFONIjh7fpuVUCxyKSTDqzwjsg==}
     dev: true
 
+  /@fontsource/croissant-one@5.0.5:
+    resolution: {integrity: sha512-l7MeWpX28LrlvBtNnJvbl4ZkYqZJYUdHbHLRaq9zoUn6rM2hu1kCd9LDCZAzAFZyoK+ujOc9nDHpN3j0IBIRCA==}
+    dev: true
+
   /@google-cloud/firestore@6.6.1:
     resolution: {integrity: sha512-Z41j2h0mrgBH9qNIVmbRLqGKc6XmdJtWipeKwdnGa/bPTP1gn2SGTrYyWnpfsLMEtzKSYieHPSkAFp5kduF2RA==}
     engines: {node: '>=12.0.0'}
@@ -4086,6 +4096,12 @@ packages:
     dependencies:
       '@iconify/types': 2.0.0
     dev: false
+
+  /@iconify-json/mingcute@1.1.7:
+    resolution: {integrity: sha512-luBuSPks/Lbk4SCyt1RWVCQ8RM1lCIXPMY30qDyk0AtI+8n+eOjMF18y1vDjHUk646Mhw4HQXoRsoPJHlt7mvA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
