@@ -28,7 +28,6 @@ const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
         fields: listedCategoryFields || ([
           'name',
           'slug',
-          'parent.name',
           'parent.slug',
           'icon.url',
           'icon.size',
