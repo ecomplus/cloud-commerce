@@ -33,7 +33,6 @@
     "astro": "2.9.6",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1",
-    "semver": "^7.5.4",
     "vue": "^3.3.4"
   },
   "devDependencies": {
