@@ -25,7 +25,7 @@
     "axios": "^1.4.0",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1",
-    "form-data": "^4.0.0"
+    "form-data": "4.0.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
