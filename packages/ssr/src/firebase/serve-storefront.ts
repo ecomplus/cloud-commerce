@@ -24,7 +24,7 @@ type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
 let cssFilename: string | undefined;
-const readinsStylesManifest = new Promise((resolve) => {
+const readingStylesManifest = new Promise((resolve) => {
   readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
     .then((stylesManifest) => {
       const cssFiles: string[] = [];
@@ -34,6 +34,7 @@ const readinsStylesManifest = new Promise((resolve) => {
       });
       if (cssFiles.length === 1) {
         [cssFilename] = cssFiles;
+        logger.debug({ cssFilename });
       }
     })
     .catch(logger.warn)
@@ -192,7 +193,7 @@ export default async (req: Request, res: Response) => {
   }
 
   (async () => {
-    await readinsStylesManifest;
+    await readingStylesManifest;
     if (cssFilename && !res.headersSent) {
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
       res.writeEarlyHints({
