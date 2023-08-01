@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NetworkName } from '@@sf/server-data';
+import type { NetworkName } from '@@sf/sf-lib';
 import { computed } from 'vue';
 
 export interface Props {

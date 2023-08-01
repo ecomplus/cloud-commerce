@@ -8,7 +8,7 @@ import { formatMoney } from '@ecomplus/utils';
 import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
 import utm from '@@sf/scripts/session-utm';
 import afetch from '../../helpers/afetch';
-import requestIdleCallback from '../../helpers/idle-callback';
+import { requestIdleCallback } from '../sf-lib';
 
 const emptyInfo = {
   list_payments: {},

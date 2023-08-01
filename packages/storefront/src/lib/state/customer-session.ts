@@ -3,7 +3,7 @@ import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
 import { computed } from 'vue';
-import requestIdleCallback from '../../helpers/idle-callback';
+import { requestIdleCallback } from '../sf-lib';
 import useStorage from './use-storage';
 
 const storageKey = 'ecomSession';
