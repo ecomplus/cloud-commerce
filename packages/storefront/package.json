@@ -58,6 +58,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@cloudcommerce/eslint": "workspace:^",
     "@cloudcommerce/types": "workspace:*"
   }
 }
