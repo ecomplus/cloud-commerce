@@ -22,7 +22,7 @@ const copyFunctionsConfig = async (isDev = false) => {
       const codebaseDir = joinPath(functionsDir, codebase);
       const isSSR = codebase === 'ssr';
       await fs.ensureDir(joinPath(codebaseDir, 'content'));
-      if (isDev && isSSR && !fs.existsSync(joinPath(functionsDir, 'node_modules'))) {
+      if (isDev && isSSR && !fs.existsSync(joinPath(functionsDir, 'ssr', 'node_modules'))) {
         await $`npm --prefix "functions/ssr" i`;
       }
       for (let ii = 0; ii < filesToCopy.length; ii++) {
