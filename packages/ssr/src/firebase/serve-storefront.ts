@@ -34,7 +34,6 @@ const readingStylesManifest = new Promise((resolve) => {
       });
       if (cssFiles.length === 1) {
         [cssFilename] = cssFiles;
-        logger.debug({ cssFilename });
       }
     })
     .catch(logger.warn)
