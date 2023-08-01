@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { type CarouselInject, carouselKey } from '@@sf/components/_injection-keys';
+import { type CarouselInject, carouselKey } from '@@sf/components/Carousel.vue';
 
 export interface Props {
   isPrev?: boolean;

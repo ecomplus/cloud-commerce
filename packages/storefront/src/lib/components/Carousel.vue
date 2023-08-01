@@ -1,6 +1,7 @@
-<script setup lang="ts">
-/* REFERENCE: https://github.com/bartdominiak/vue-snap */
+<script lang="ts">
 import {
+  type Ref,
+  type InjectionKey,
   onMounted,
   onBeforeUnmount,
   ref,
@@ -11,9 +12,20 @@ import {
   provide,
 } from 'vue';
 import { useDebounceFn, useElementHover, useScroll } from '@vueuse/core';
-import { carouselKey } from '@@sf/components/_injection-keys';
 import CarouselControl from '@@sf/components/CarouselControl.vue';
 
+export type CarouselInject = {
+  autoplay: Ref<number | undefined>,
+  changeSlide: (direction: number, isPageScroll?: boolean) => void,
+  isBoundLeft: Ref<boolean>,
+  isBoundRight: Ref<boolean>,
+};
+
+export const carouselKey = Symbol('carousel') as InjectionKey<CarouselInject>;
+</script>
+
+<script setup lang="ts">
+/* REFERENCE: https://github.com/bartdominiak/vue-snap */
 export interface Props {
   as?: string;
   modelValue?: number;
@@ -27,10 +39,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits([
   'update:modelValue',
 ]);
-const currentIndex = ref(props.modelValue - 1);
+const currentIndex = ref(0);
 watch(toRef(props, 'modelValue'), (modelValue) => {
   currentIndex.value = modelValue - 1;
-});
+}, { immediate: true });
 watch(currentIndex, (current, previous) => {
   if (current !== previous) {
     emit('update:modelValue', current + 1);
