@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.4](https://github.com/ecomplus/cloud-commerce/compare/v0.22.3...v0.22.4) (2023-08-01)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#201](https://github.com/ecomplus/cloud-commerce/issues/201)) ([0dc474b](https://github.com/ecomplus/cloud-commerce/commit/0dc474bae93f18be8498a94f189db465cadccbca))
+* **storefront:** Update Astro to v2.9.6 ([#200](https://github.com/ecomplus/cloud-commerce/issues/200)) ([dd42847](https://github.com/ecomplus/cloud-commerce/commit/dd42847fe3f9d5990bf9a6c25f8366c4c43eee96))
+
 ### [0.22.3](https://github.com/ecomplus/cloud-commerce/compare/v0.22.2...v0.22.3) (2023-07-26)
 
 

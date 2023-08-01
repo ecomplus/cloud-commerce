@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -31,7 +31,7 @@
     }
   },
   "devDependencies": {
-    "@cloudcommerce/eslint": "workspace:^",
+    "@cloudcommerce/eslint": "workspace:*",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
     "@commitlint/rules": "^17.6.7",
