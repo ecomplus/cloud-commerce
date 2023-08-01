@@ -59,6 +59,13 @@ importers:
       '@cloudcommerce/cli':
         specifier: ^0.22.4
         version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: workspace:^
+        version: link:../../packages/eslint
+      eslint:
+        specifier: ^8.46.0
+        version: 8.46.0
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
@@ -117,6 +124,13 @@ importers:
       '@cloudcommerce/cli':
         specifier: ^0.22.4
         version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: workspace:^
+        version: link:../../packages/eslint
+      eslint:
+        specifier: ^8.46.0
+        version: 8.46.0
 
   ecomplus-stores/iluminim/functions/many:
     dependencies:
@@ -1097,6 +1111,13 @@ importers:
       '@cloudcommerce/cli':
         specifier: ^0.22.4
         version: link:../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.22.4
+        version: link:../packages/eslint
+      eslint:
+        specifier: ^8.46.0
+        version: 8.46.0
 
   store/functions/many:
     dependencies:
