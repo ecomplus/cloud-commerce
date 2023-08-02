@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.23.0](https://github.com/ecomplus/cloud-commerce/compare/v0.22.4...v0.23.0) (2023-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Rootlib `server-data` and `browser-env` files removed in favor of named exports on `/sf-lib` with additional utils
+
+### Features
+
+* **storefront:** Add new `useCartItem` composable ([d9da575](https://github.com/ecomplus/cloud-commerce/commit/d9da57555cace183dea11588f8946df2083d9504))
+* **storefront:** New utils `useId` and `requestIdleCallback` from `/sf-lib` ([c53d33b](https://github.com/ecomplus/cloud-commerce/commit/c53d33b72a78beb68644b765c2e1f9023bfcc373))
+
+
+### Bug Fixes
+
+* **cli:** Fix checking SSR `node_modules` dir before reinstall on dev ([aad3bf4](https://github.com/ecomplus/cloud-commerce/commit/aad3bf40dab5b61774e0ce09aa48fca43737ce80))
+* **storefront:** Ensure config is set up even without content/settings ([dad8532](https://github.com/ecomplus/cloud-commerce/commit/dad853268a33e213139c0fedb7914e77b1c3de22))
+
 ### [0.22.4](https://github.com/ecomplus/cloud-commerce/compare/v0.22.3...v0.22.4) (2023-08-01)
 
 
