@@ -99,7 +99,7 @@ const isPlacementX = computed(() => {
           data-drawer-close
         >
           <slot name="close">
-            <i class="i-close text-base-400 text-3xl"></i>
+            <i class="i-close text-base-400 hover:text-base-600 text-3xl"></i>
           </slot>
         </button>
         <slot />
