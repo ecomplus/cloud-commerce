@@ -103,6 +103,10 @@ export interface Carts {
      */
     name?: string;
     /**
+     * Product slug to complete page URL
+     */
+    slug?: string;
+    /**
      * Product or variation picture for this cart item
      */
     picture?: {
@@ -241,6 +245,10 @@ export interface Carts {
      * Final item price including additions due to customizations (auto-calculated)
      */
     final_price?: number;
+    /**
+     * Item's original price for comparison, without discounts
+     */
+    base_price?: number;
     /**
      * Flags to associate additional info
      *

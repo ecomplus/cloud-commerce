@@ -1172,6 +1172,10 @@ export interface Orders {
      */
     name?: string;
     /**
+     * Product slug to complete page URL
+     */
+    slug?: string;
+    /**
      * Product or variation picture for this cart item
      */
     picture?: {
@@ -1294,6 +1298,10 @@ export interface Orders {
      * Final item price including additions due to customizations and gift wrap
      */
     final_price?: number;
+    /**
+     * Item's original price for comparison, without discounts
+     */
+    base_price?: number;
     /**
      * Flags to associate additional info
      *
