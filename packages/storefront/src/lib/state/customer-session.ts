@@ -3,8 +3,8 @@ import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
 import { computed } from 'vue';
-import { requestIdleCallback } from '../sf-lib';
-import useStorage from './use-storage';
+import { requestIdleCallback } from '@@sf/sf-lib';
+import useStorage from '@@sf/state/use-storage';
 
 const storageKey = 'ecomSession';
 const emptySession = {

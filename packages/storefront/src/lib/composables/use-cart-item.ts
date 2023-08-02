@@ -26,6 +26,13 @@ export const useCartItem = (props: Props) => {
   const title = computed(() => {
     return getName(cartItem);
   });
+  const link = computed(() => {
+    const { slug } = cartItem;
+    if (typeof slug === 'string') {
+      return `/${slug}`;
+    }
+    return null;
+  });
   const image = computed(() => {
     if (cartItem.picture) {
       return getImg(cartItem.picture, undefined, props.pictureSize || 'small');
@@ -38,6 +45,7 @@ export const useCartItem = (props: Props) => {
   return {
     cartItem,
     title,
+    link,
     image,
     finalPrice,
   };

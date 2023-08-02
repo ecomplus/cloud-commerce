@@ -7,8 +7,8 @@ import { reactive, computed } from 'vue';
 import { formatMoney } from '@ecomplus/utils';
 import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
 import utm from '@@sf/scripts/session-utm';
+import { requestIdleCallback } from '@@sf/sf-lib';
 import afetch from '../../helpers/afetch';
-import { requestIdleCallback } from '../sf-lib';
 
 const emptyInfo = {
   list_payments: {},
