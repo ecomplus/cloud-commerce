@@ -6,7 +6,7 @@ import {
   bodyCalculateShipping,
 } from '@cloudcommerce/test-base';
 
-describe('Test App Custom-shipping', async () => {
+describe('Test Shipping Calculation in the Custom Shipping App', async () => {
   let req;
   let data;
   const appId = 1253;

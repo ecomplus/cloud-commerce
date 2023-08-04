@@ -6,7 +6,7 @@ import {
   bodyListPayments,
 } from '@cloudcommerce/test-base';
 
-describe('Test App mercadoPago', async () => {
+describe('Test payment list of MercadoPago App', async () => {
   let req;
   let data;
   const appId = 111223;
@@ -21,7 +21,6 @@ describe('Test App mercadoPago', async () => {
     });
 
     data = (await req.json()).result;
-    console.log('>> ', data[0]);
   });
 
   test('Check Status 200', async () => {

@@ -6,7 +6,7 @@ import {
   bodyCalculateShipping,
 } from '@cloudcommerce/test-base';
 
-describe('Test App Correios', async () => {
+describe('Test Shipping Calculation in the Correios App', async () => {
   let req;
   let data;
   const appId = 1248;

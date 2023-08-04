@@ -6,16 +6,15 @@ import {
   bodyCreateTransaction,
 } from '@cloudcommerce/test-base';
 
-describe('Test App Loyalty Points', async () => {
+describe('Test to create a transaction in the loyalty points app', async () => {
   let req;
   let data;
   const appId = 124890;
   before(async () => {
-    const paymentMethodCreditCard = {
+    const paymentMethod = {
       code: 'loyalty_points',
-      // name: 'Pix - Mercado Pago',
     };
-    bodyCreateTransaction.payment_method = paymentMethodCreditCard;
+    bodyCreateTransaction.payment_method = paymentMethod;
 
     req = await fetch(`${modulesUrl}/create_transaction?app_id=${appId}`, {
       method: 'POST',

@@ -6,16 +6,16 @@ import {
   bodyCreateTransaction,
 } from '@cloudcommerce/test-base';
 
-describe('Test App mercadoPago with PIX', async () => {
+describe('Test to create a transaction in the MercadoPago App', async () => {
   let req;
   let data;
   const appId = 111223;
   before(async () => {
-    const paymentMethodCreditCard = {
+    const paymentMethod = {
       code: 'account_deposit',
       name: 'Pix - Mercado Pago',
     };
-    bodyCreateTransaction.payment_method = paymentMethodCreditCard;
+    bodyCreateTransaction.payment_method = paymentMethod;
 
     req = await fetch(`${modulesUrl}/create_transaction?app_id=${appId}`, {
       method: 'POST',

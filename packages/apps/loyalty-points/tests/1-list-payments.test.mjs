@@ -6,7 +6,7 @@ import {
   bodyListPayments,
 } from '@cloudcommerce/test-base';
 
-describe('Test App Loyalty Points', async () => {
+describe('Test payment list of Loyalty Points App', async () => {
   let req;
   let data;
   const appId = 124890;
