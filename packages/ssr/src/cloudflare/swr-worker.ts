@@ -72,6 +72,10 @@ const swr = async (event: FetchEvent) => {
   if (event.request.method !== 'GET') {
     return fetch(event.request);
   }
+  const { pathname } = new URL(event.request.url);
+  if (pathname === '/_image' || pathname.startsWith('/~')) {
+    return fetch(event.request);
+  }
   const [uri] = event.request.url.split('?', 2);
   const request = new Request(`${uri}?t=${Date.now()}`, event.request);
   const cacheKey = new Request(`${uri}?v=27`, {
