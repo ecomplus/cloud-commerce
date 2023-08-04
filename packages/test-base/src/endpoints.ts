@@ -7,7 +7,7 @@ const {
   FIREBASE_PROJECT_ID,
 } = process.env;
 
-const region = DEPLOY_REGION || 'southamerica-east1';
+const region = DEPLOY_REGION || 'us-east4';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const dirStore = path.join(__dirname, '../../../store');
 
