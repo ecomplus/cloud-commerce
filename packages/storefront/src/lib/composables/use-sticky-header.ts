@@ -10,7 +10,9 @@ import {
   useTimeout,
   useDebounceFn,
   useScroll,
+  watchDebounced,
 } from '@vueuse/core';
+import { isMobile } from '@@sf/sf-lib';
 
 export interface Props {
   header: Ref<HTMLElement | null>;
@@ -34,12 +36,20 @@ const useStickyHeader = (props: Props) => {
   const staticHeight = ref(0);
   const staticY = ref(0);
   let heightDiv: HTMLElement | undefined;
-  const { y } = !import.meta.env.SSR ? useScroll(document) : { y: ref(0) };
+  const { y: _y } = !import.meta.env.SSR ? useScroll(document) : { y: ref(0) };
+  const y = ref(0);
+  watchDebounced(_y, (nextY) => {
+    y.value = nextY;
+  }, {
+    debounce: isMobile ? 150 : 50,
+    maxWait: 600,
+  });
   const isSticky = computed(() => ready.value && y.value > staticY.value * 1.2);
   const transition = ref('none');
   watch(isSticky, async (_isSticky) => {
     if (canSetStyles && header.value) {
-      header.value.style.position = _isSticky ? 'sticky' : '';
+      header.value.style.position = _isSticky ? 'fixed' : '';
+      header.value.style.width = _isSticky ? '100vw' : '';
     }
     if (heightDiv) {
       heightDiv.style.height = _isSticky ? `${staticHeight.value}px` : '';
@@ -56,6 +66,7 @@ const useStickyHeader = (props: Props) => {
   watch(y, (newY, oldY) => {
     isScrollUp.value = newY > 0 && newY < oldY;
   });
+
   if (!import.meta.env.SSR) {
     onMounted(() => {
       if (!header.value) throw new Error('<header> (props.header) not set');
@@ -102,6 +113,7 @@ const useStickyHeader = (props: Props) => {
       }
     });
   }
+
   return {
     staticHeight,
     staticY,
