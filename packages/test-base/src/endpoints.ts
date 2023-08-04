@@ -22,14 +22,16 @@ if (!projectId) {
     );
     projectId = firebaserc.projects.default;
   } catch (e) {
-    projectId = 'ecom2-002';
+    projectId = 'ecom2-demo';
   }
 }
 
-const modulesUrl = `http://127.0.0.1:5001/${projectId}/${region}/modules`;
-const passportUrl = `http://127.0.0.1:5001/${projectId}/${region}/passport`;
+const baseUrl = `http://127.0.0.1:5001/${projectId}/${region}`;
+const modulesUrl = `${baseUrl}/modules`;
+const passportUrl = `${baseUrl}/passport`;
 
 export {
+  baseUrl,
   modulesUrl,
   passportUrl,
 };
