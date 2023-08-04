@@ -1,13 +1,13 @@
 {
   "name": "@cloudcommerce/api",
   "type": "module",
-  "version": "0.14.1",
+  "version": "0.23.0",
   "description": "E-Com Plus Cloud Commerce APIs client/adapter",
   "main": "lib/api.js",
   "types": "lib/api.d.ts",
   "exports": {
     ".": "./lib/api.js",
-    "./types": "./lib/types.d.ts"
+    "./types": "./types.d.ts"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
   "scripts": {
-    "build": "bash ../../scripts/build-lib.sh && cp -r src/types lib/",
+    "build": "bash ../../scripts/build-lib.sh",
     "test": "tsc -p ../../tsconfig.test.json && vitest run"
   }
 }

@@ -1,3 +1,3 @@
 module.exports = {
-  extends: './packages/storefront/.base.eslintrc.cjs',
+  extends: './packages/eslint/base.eslintrc.cjs',
 };

@@ -3,6 +3,7 @@ import type {
   ListPaymentsParams,
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
+import logger from 'firebase-functions/logger';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 
@@ -33,7 +34,31 @@ export default (data: AppModuleBody) => {
   if (!pixApi.certificate) {
     return responseError(409, 'NO_PIX_CERTIFICATE', 'Certificado .PEM ou .P12 não configurado');
   }
-  if ((!pixApi.client_id || !pixApi.client_secret) && !pixApi.authorization) {
+
+  let clientId: string;
+  let clientSecret: string;
+  let authorization: string;
+
+  if (process.env.PIX_CREDENTIALS) {
+    try {
+      const pixCredentials = JSON.parse(process.env.PIX_CREDENTIALS);
+      clientId = pixCredentials.client_id;
+      clientSecret = pixCredentials.client_secret;
+      authorization = pixCredentials.authentication;
+    } catch (e) {
+      logger.error(e);
+
+      clientId = pixApi.client_id;
+      clientSecret = pixApi.client_secret;
+      authorization = pixApi.authentication;
+    }
+  } else {
+    clientId = pixApi.client_id;
+    clientSecret = pixApi.client_secret;
+    authorization = pixApi.authentication;
+  }
+
+  if ((!clientId || !clientSecret) && !authorization) {
     return responseError(409, 'NO_PIX_CREDENTIALS', 'Client ID e/ou Secret não configurados');
   }
   const response: ListPaymentsResponse = {

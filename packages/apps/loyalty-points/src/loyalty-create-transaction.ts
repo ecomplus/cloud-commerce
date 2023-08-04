@@ -3,6 +3,7 @@ import type {
   CreateTransactionParams,
   CreateTransactionResponse,
   Customers,
+  ResourceId,
 } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -14,7 +15,7 @@ type UsedPointsEntries = Exclude<Customers['loyalty_points_entries'], undefined>
 
 const collectionRef = getFirestore().collection('billedPoints');
 
-const updateTransactionStatus = (orderId: string) => {
+const updateTransactionStatus = (orderId: ResourceId) => {
   setTimeout(async () => {
     const order = (await api.get(`orders/${orderId}`)).data;
 
@@ -40,7 +41,7 @@ const updateTransactionStatus = (orderId: string) => {
 const handleUpdatedPoints = (
   endpoint: any, // TODO: endpoint type not string compatible
   body: { [x: string]: any },
-  orderId: string,
+  orderId: ResourceId,
   usedPointsEntries?: UsedPointsEntries[],
   timeout = 400,
   isLastRequest = false,
@@ -105,7 +106,7 @@ export default async (appData: AppModuleBody) => {
   if (transaction.amount) {
     const loyaltyPoints = transaction.loyalty_points;
     const customerId = params.buyer.customer_id;
-    const orderId = params.order_id as string;
+    const orderId = params.order_id as ResourceId;
     const usedPointsEntries: UsedPointsEntries[] = [];
     try {
       const customer = (await api.get(`customers/${customerId}`)).data;

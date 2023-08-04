@@ -1,4 +1,4 @@
-import type { ContentFilename, ContentData } from '../content';
+import type { ContentFilename, ContentData } from '@@sf/content';
 import { shallowRef } from 'vue';
 
 function getCmsUpdates<T extends ContentFilename>(

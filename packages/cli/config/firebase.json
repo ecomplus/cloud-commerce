@@ -49,27 +49,37 @@
       {
         "source": "/api/modules/**",
         "function": "modules",
-        "region": "southamerica-east1"
+        "region": "us-east4"
       },
       {
         "source": "/api/passport/**",
         "function": "passport",
-        "region": "southamerica-east1"
+        "region": "us-east4"
       },
       {
         "source": "/_feeds/**",
         "function": "feeds",
-        "region": "southamerica-east1"
+        "region": "us-east4"
       },
       {
         "source": "/sitemap.xml",
         "function": "feeds",
-        "region": "southamerica-east1"
+        "region": "us-east4"
+      },
+      {
+        "source": "/repos/**/{git,contents,issues,branches,pulls,commits}/**",
+        "function": "feeds",
+        "region": "us-east4"
+      },
+      {
+        "source": "/.*/git/**",
+        "function": "feeds",
+        "region": "us-east4"
       },
       {
         "source": "**/!(*(*.)ico|*(*.)png|*(*.)map)",
         "function": "ssr",
-        "region": "us-central1"
+        "region": "us-east4"
       }
     ],
     "headers": [

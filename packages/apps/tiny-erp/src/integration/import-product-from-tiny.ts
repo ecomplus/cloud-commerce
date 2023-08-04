@@ -6,10 +6,12 @@ import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-from-tiny';
 
 export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) => {
-  const [queueSku, queueProductId] = String(queueEntry.nextId).split(';:');
+  const [queueSku, queueProductId] = String(queueEntry.nextId)
+    .split(';:') as [Products['sku'], Products['_id'] | undefined];
   let product: Products | null = null;
   try {
-    product = (await api.get(`products/${(queueProductId || `sku:${queueSku}`)}`)).data;
+    const resourceFind = (queueProductId || (`sku:${queueSku}` as `${string}:${string}`));
+    product = (await api.get(`products/${resourceFind}`)).data;
   } catch (err: any) {
     if (err.statusCode !== 404) {
       throw err;

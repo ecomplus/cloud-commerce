@@ -1,8 +1,9 @@
+import type { ResourceId } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 
 const updateOrderSubresource = (
-  orderId: string,
+  orderId: ResourceId,
   subresource: string,
   lastValidRecord: { [key: string]: any },
   insertedId: string,

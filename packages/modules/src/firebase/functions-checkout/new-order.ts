@@ -1,7 +1,6 @@
 import type { Response } from 'firebase-functions';
-import type { CheckoutBody } from '@cloudcommerce/types';
+import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
-  BodyOrder,
   Amount,
   CheckoutTransaction,
   TransactionOrder,
@@ -30,7 +29,7 @@ const createOrder = async (
   modulesBaseURL: string,
   amount: Amount,
   checkoutBody: CheckoutBody,
-  orderBody:BodyOrder,
+  orderBody: OrderSet,
   transactions: CheckoutTransaction[],
   dateTime: string,
 ) => {
@@ -65,7 +64,7 @@ const createOrder = async (
       newTransaction.amount_part = newTransaction.amount_part || 0;
       if (transactionBody.amount && newTransaction.amount_part > 0
         && newTransaction.amount_part < 1) {
-      // fix amount for multiple transactions
+        // fix amount for multiple transactions
         const partialAmount = transactionBody.amount.total * newTransaction.amount_part;
         transactionBody.amount.discount = transactionBody.amount.discount || 0;
         transactionBody.amount.discount += transactionBody.amount.total - partialAmount;
@@ -91,7 +90,7 @@ const createOrder = async (
           const { response } = result;
           const transaction: TransactionOrder = response && response.transaction;
           if (transaction) {
-          // complete transaction object with some request body fields
+            // complete transaction object with some request body fields
             [
               'type',
               'payment_method',
@@ -125,7 +124,7 @@ const createOrder = async (
                   }
                 });
               }
-            // logger.log(transaction.app)
+              // logger.log(transaction.app)
             }
 
             // check for transaction status
@@ -208,7 +207,7 @@ const createOrder = async (
         if (firstResult) {
           const { response } = firstResult;
           if (response) {
-          // send devMsg with app response
+            // send devMsg with app response
             if (response.message) {
               errorMessage = response.message;
               if (response.error) {

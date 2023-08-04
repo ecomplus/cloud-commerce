@@ -5,25 +5,27 @@ import type {
   ResponseBody,
   RequestBody,
   ErrorBody,
-} from './types';
+} from '../types.d';
 
 declare global {
-  // eslint-disable-next-line
+  /* eslint-disable no-var, vars-on-top */
+  // @ts-ignore
   var $apiMergeConfig: Partial<Config> | undefined;
   // eslint-disable-next-line
   var __apiCache: Record<string, {
     timestamp: number,
     res: Response & { data: any },
   }>;
+  /* eslint-enable no-var */
 }
 if (!globalThis.__apiCache) {
   globalThis.__apiCache = {};
 }
 
-// @ts-ignore
-const _env: Record<string, string> = import.meta.env
-  || (typeof process === 'object' && process?.env)
-  || globalThis;
+const _env = (
+  (typeof process === 'object' && process?.env)
+  || globalThis
+) as Record<string, any>;
 
 class ApiError extends Error {
   config: Config;
@@ -88,19 +90,34 @@ const def = {
       }
     }
     url += `/${endpoint}`;
-    if (params) {
-      if (typeof params === 'string') {
-        url += `?${params}`;
-      } else if (typeof params === 'object') {
+    if (typeof params === 'string') {
+      url += `?${params}`;
+    } else {
+      const paramsObj: Exclude<typeof params, string> = params || {};
+      (['fields', 'sort'] as const)
+        .forEach((param) => {
+          const value = config[param];
+          if (value && !paramsObj[param]) {
+            paramsObj[param] = value.join(',');
+          }
+        });
+      (['limit', 'offset', 'count', 'buckets', 'concise', 'verbose'] as const)
+        .forEach((param) => {
+          const value = config[param];
+          if (value && !paramsObj[param]) {
+            paramsObj[param] = value;
+          }
+        });
+      if (Object.keys(paramsObj).length) {
         const searchParams = new URLSearchParams();
-        Object.keys(params).forEach((key) => {
-          const values = params[key];
+        Object.keys(paramsObj).forEach((key) => {
+          const values = paramsObj[key];
           if (Array.isArray(values)) {
             values.forEach((value: string | number) => {
               // https://github.com/microsoft/TypeScript/issues/32951
               searchParams.append(key, value as string);
             });
-          } else {
+          } else if (values !== undefined) {
             searchParams.append(key, values as string);
           }
         });
@@ -207,8 +224,11 @@ const get = <E extends Endpoint, C extends AbstractedConfig>(
   config?: C,
 ): Promise<Response & {
   config: Config,
-  data: ResponseBody<{ endpoint: E }>,
-}> => api({ ...config, endpoint });
+  data: ResponseBody<C & { endpoint: E }>,
+}> => {
+  // @ts-ignore
+  return api({ ...config, endpoint });
+};
 
 const post = <E extends Endpoint, C extends AbstractedConfig>(
   endpoint: E,

@@ -11,6 +11,7 @@ export interface Props {
   placement?: 'start' | 'end' | 'top' | 'bottom';
   position?: 'fixed' | 'absolute';
   hasCloseButton?: boolean;
+  backdropTarget?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   placement: 'start',
   position: 'fixed',
   hasCloseButton: true,
+  backdropTarget: '#teleported-top',
 });
 const emit = defineEmits([
   'update:modelValue',
@@ -75,7 +77,9 @@ const isPlacementX = computed(() => {
       class="w-screen shadow p-0 m-0 z-50"
       :class="[
         position,
-        isFixed ? `top-0 left-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
+        isFixed ? `top-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
+        isFixed && placement !== 'end' ? 'left-0' : null,
+        isFixed && placement === 'end' ? 'left-auto right-0' : null,
         isPlacementX ? 'max-w-sm' : null,
       ]"
       :style="{
@@ -95,12 +99,12 @@ const isPlacementX = computed(() => {
           data-drawer-close
         >
           <slot name="close">
-            <i class="i-close text-base-400 text-3xl"></i>
+            <i class="i-close text-base-400 hover:text-base-600 text-3xl"></i>
           </slot>
         </button>
         <slot />
       </div>
-      <Teleport to="#teleported-top">
+      <Teleport :to="backdropTarget">
         <Fade>
           <div
             v-if="modelValue"

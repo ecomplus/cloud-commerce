@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { NetworkName } from '@@sf/server-data';
+import { type NetworkName, isMobile, socialNetworks } from '@@sf/sf-lib';
 import { computed } from 'vue';
-import { isMobile } from '@@sf/browser-env';
-import { socialNetworks } from '@@sf/server-data';
 import SocialNetworkIcon from '@@sf/components/SocialNetworkIcon.vue';
 
 export interface Props {

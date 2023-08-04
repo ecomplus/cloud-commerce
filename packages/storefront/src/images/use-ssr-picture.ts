@@ -3,6 +3,10 @@ import type {
   GetPictureParams,
   GetPictureResult,
 } from '@astrojs/image/dist/lib/get-picture';
+import type {
+  GetPictureParams as GetBuiltPictureParams,
+  GetPictureResult as GetBuiltPictureResult,
+} from './get-built-picture';
 
 export type PictureProps = Omit<PictureComponentRemoteImageProps, 'aspectRatio' | 'sizes'> & {
   sizes?: string;
@@ -26,7 +30,8 @@ const getAspectRatio = (src: string | ImageSize, tryImageSize: TryImageSize) => 
 
 export type UsePictureParams = PictureProps & {
   tryImageSize: TryImageSize;
-  getPicture: (params: GetPictureParams) => Promise<GetPictureResult>;
+  getPicture: ((params: GetPictureParams) => Promise<GetPictureResult>)
+    | ((params: GetBuiltPictureParams) => Promise<GetBuiltPictureResult>);
 };
 
 const useSSRPicture = async (params: UsePictureParams) => {
@@ -48,7 +53,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
     ...attrs
   } = params;
 
-  let aspectRatio: number;
+  let aspectRatio: number | undefined;
   if (propAspectRatio) {
     if (typeof propAspectRatio === 'number') {
       aspectRatio = propAspectRatio;
@@ -67,7 +72,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
   let sizes: string = propSizes || '';
   if (!sizes && attrs.class) {
     const classNames = attrs.class.split(' ');
-    let nextSize: string;
+    let nextSize: string | undefined;
     const breakpoints = {
       sm: 640,
       md: 768,
@@ -75,10 +80,10 @@ const useSSRPicture = async (params: UsePictureParams) => {
       xl: 1280,
       '2xl': 1536,
     };
-    [
-      [''],
+    ([
+      ['', 0],
       ...Object.entries(breakpoints),
-    ].forEach(([breakpoint, minWidth]: [string, number | undefined]) => {
+    ] as Array<[string, number]>).forEach(([breakpoint, minWidth]) => {
       const classRegex = breakpoint
         ? new RegExp(`^${breakpoint}:max-w-(\\[\\w+\\]|screen-\\w+)$`)
         : /^max-w-(\[\w+\]|screen-\w+)$/;

@@ -83,6 +83,12 @@ jobs:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
+          FRENET_TOKEN: ${{ secrets.FRENET_TOKEN }}
+          GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
+          GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
+          INFINITEPAY_ID: ${{ secrets.INFINITEPAY_ID }}
+          INFINITEPAY_SECRET: ${{ secrets.INFINITEPAY_SECRET }}
         run: pnpm build
 
       - name: Get npm global directories
@@ -114,7 +120,7 @@ jobs:
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: |
-          firebase --project=ecom2-002 emulators:start --only functions &
+          firebase --project=ecom2-demo emulators:start --only functions &
 
       - name: Run tests
         shell: bash

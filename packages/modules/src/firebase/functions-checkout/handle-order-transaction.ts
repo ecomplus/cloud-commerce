@@ -1,7 +1,7 @@
 import type { Response } from 'firebase-functions';
-import type { Orders } from '@cloudcommerce/types';
+import type { Orders, OrderSet } from '@cloudcommerce/types';
 import type {
-  Amount, BodyOrder,
+  Amount,
   PaymentHistory,
   OrderPaymentHistory,
   TransactionOrder,
@@ -12,7 +12,7 @@ import { sendError } from './utils';
 
 const checkoutRespond = async (
   res: Response,
-  orderId:string & {length: 24},
+  orderId: Orders['_id'],
   orderNumber: number | undefined,
   usrMsg: { en_us: string, pt_br: string },
   transaction?: TransactionOrder,
@@ -47,10 +47,10 @@ const checkoutRespond = async (
   });
 };
 
-const newOrder = async (orderBody: BodyOrder) => {
+const newOrder = async (orderBody: OrderSet) => {
   try {
     const orderId = (await api.post('orders', orderBody)).data._id;
-    return new Promise<{ order: Orders | null, err?: any} >((resolve) => {
+    return new Promise<{ order: Orders | null, err?: any }>((resolve) => {
       setTimeout(async () => {
         try {
           const order = (await api.get(`orders/${orderId}`)).data as Orders;
@@ -68,7 +68,7 @@ const newOrder = async (orderBody: BodyOrder) => {
 
 const cancelOrder = async (
   staffNotes: string,
-  orderId: string & {length: 24},
+  orderId: Orders['_id'],
   isOrderCancelled: boolean,
   res: Response,
   usrMsg: { en_us: string, pt_br: string },
@@ -110,7 +110,7 @@ const cancelOrder = async (
 };
 
 const saveTransaction = (
-  orderId: string,
+  orderId: Orders['_id'],
   transactionBody: any, // TODO: error type 'status' incompatible
 ) => {
   return new Promise((resolve, reject) => {
@@ -128,7 +128,7 @@ const saveTransaction = (
 };
 
 const addPaymentHistory = async (
-  orderId: string,
+  orderId: Orders['_id'],
   listPaymentsHistory: PaymentHistory[],
   isFirstTransaction: boolean,
   paymentEntry: PaymentHistory,

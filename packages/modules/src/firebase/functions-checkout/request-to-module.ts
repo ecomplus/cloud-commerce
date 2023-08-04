@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import type { AxiosError } from 'axios';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';
 
@@ -65,9 +63,9 @@ export default async (
         }
       }
       return resp.result;
-    } catch (err: any | AxiosError) {
-      msgErr.moreInfo = 'Unexpected error ';
+    } catch (err: any) {
       logger.error(err);
+      msgErr.moreInfo = 'Unexpected error ';
       if (axios.isAxiosError(err)) {
         msgErr.moreInfo = err.message;
         if (err.code) {

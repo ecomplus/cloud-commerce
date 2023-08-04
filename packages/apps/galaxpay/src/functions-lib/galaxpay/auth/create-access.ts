@@ -10,8 +10,8 @@ const { GALAXPAY_PARTNER_ID, GALAXPAY_PARTNER_HASH } = process.env;
 const firestoreColl = 'galaxpayTokens';
 
 type Option = {
-  galaxpayId: string;
-  galaxpayHash: string;
+  galaxpayId?: string;
+  galaxpayHash?: string;
 }
 
 export default class GalaxPay {

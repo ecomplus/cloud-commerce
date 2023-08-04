@@ -16,8 +16,8 @@ export type ContentData<T extends ContentFilename> =
   T extends `${string}/` ? Array<string> :
   T extends 'settings' ? SettingsContent :
   T extends 'layout' ? LayoutContent :
-  T extends `pages/${string}` ? PageContent :
-  Record<string, any> | null;
+  T extends `${string}/${string}` ? PageContent :
+  null;
 
 export type ContentGetter = <T extends ContentFilename>(filename: T) =>
   T extends 'settings' ? ContentData<T> :

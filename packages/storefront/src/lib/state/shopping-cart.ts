@@ -1,10 +1,10 @@
-import type { ResourceId, Products, CartSet } from '@cloudcommerce/api/types';
+import type { Products, CartSet, SearchItem } from '@cloudcommerce/api/types';
 import { computed } from 'vue';
-import useStorage from './use-storage';
-import addItem from './shopping-cart/add-cart-item';
-import parseProduct from './shopping-cart/parse-product';
+import useStorage from '@@sf/state/use-storage';
+import addItem from '@@sf/state/shopping-cart/add-cart-item';
+import parseProduct from '@@sf/state/shopping-cart/parse-product';
 
-const storageKey = 'SHOPPING_CART';
+const storageKey = 'ecomShoppingCart';
 const emptyCart = {
   items: [],
 };
@@ -45,6 +45,11 @@ const subtotal = computed(() => {
     return acc + (item.quantity * (item.final_price || item.price));
   }, 0);
 });
+const totalItems = computed(() => {
+  return cartItems.value.reduce((acc, item) => {
+    return acc + item.quantity;
+  }, 0);
+});
 const shoppingCart = computed({
   get() {
     return {
@@ -67,18 +72,28 @@ const addCartItem = (newItem: CartSet['items'][0]) => {
     shoppingCart.value.items = cartObj.items;
   }
 };
-
+const removeCartItem = (itemId: string) => {
+  for (let i = 0; i < shoppingCart.value.items.length; i++) {
+    const item = shoppingCart.value.items[i];
+    if (item._id === itemId) {
+      shoppingCart.value.items.splice(i, 1);
+      break;
+    }
+  }
+};
 const addProductToCart = (
-  product: Products,
-  variationId?: ResourceId,
+  product: (Partial<Products> | Partial<SearchItem>) & { _id: Products['_id'] },
+  variationId?: Products['_id'],
   quantity?: number,
 ) => addCartItem(parseProduct(product, variationId, quantity));
 
 export default shoppingCart;
 
 export {
+  totalItems,
   shoppingCart,
   addCartItem,
+  removeCartItem,
   parseProduct,
   addProductToCart,
 };

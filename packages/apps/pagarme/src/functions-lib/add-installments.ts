@@ -3,11 +3,17 @@ import type { ListPaymentsResponse } from '@cloudcommerce/types';
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 
 const addInstallments = (
-  total: number | undefined,
+  finalTotal: number | undefined,
   installments: { [key: string]: any },
   gateway: Gateway,
   response?: ListPaymentsResponse,
+  initialTotal?: number,
+  isDiscountInOneParcel = false,
 ) => {
+  let total = finalTotal;
+  if (isDiscountInOneParcel) {
+    total = initialTotal;
+  }
   let maxInterestFree = total && !(installments.interest_free_min_amount > total)
     ? installments.max_interest_free
     : 0;

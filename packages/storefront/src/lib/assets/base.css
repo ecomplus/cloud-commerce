@@ -75,6 +75,7 @@ html {
 ::marker {
   color: var(--c-primary);
 }
+/*
 :is(
   ::-webkit-calendar-picker-indicator,
   ::-webkit-clear-button,
@@ -83,6 +84,7 @@ html {
 ) {
   color: var(--c-secondary);
 }
+*/
 
 body {
   background: var(--c-background);

@@ -81,7 +81,7 @@ const tryImageUpload = (originImgUrl: string, product: Products) => new Promise(
 export default (tinyProduct, isNew = true) => new Promise((resolve) => {
   const sku = tinyProduct.codigo || String(tinyProduct.id);
   const name = (tinyProduct.nome || sku).trim();
-  const product: Omit<Products, '_id'| 'store_id' | 'created_at' | 'updated_at'> = {
+  const product: Omit<Products, '_id' | 'store_id' | 'created_at' | 'updated_at'> = {
     available: tinyProduct.situacao === 'A',
     sku,
     name,

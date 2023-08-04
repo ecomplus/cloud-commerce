@@ -129,12 +129,30 @@ export default async (appData: AppModuleBody) => {
       if (boleto.days_due_date) {
         const date = new Date();
         date.setDate(date.getDate() + boleto.days_due_date);
-        pagarmeTransaction.boleto_expiration_date = date.toISOString().substring(0, 10);
+        const parseDatePagarme = (ms) => {
+          const timeMs = ms.getTime() - (180000 * 60);
+          const newDate = new Date(timeMs);
+          const pad = (n) => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
+          return date.getFullYear()
+            + '-' + pad(newDate.getMonth() + 1)
+            + '-' + pad(newDate.getDate());
+        };
+        const stringDate = parseDatePagarme(date);
+        pagarmeTransaction.boleto_expiration_date = stringDate;
       }
     }
   }
 
-  pagarmeTransaction.api_key = configApp.pagarme_api_key;
+  if (!process.env.PAGARME_TOKEN) {
+    const pagarmeToken = configApp.pagarme_api_key;
+    if (typeof pagarmeToken === 'string' && pagarmeToken) {
+      process.env.PAGARME_TOKEN = pagarmeToken;
+    } else {
+      logger.warn('Missing PagarMe API token');
+    }
+  }
+
+  pagarmeTransaction.api_key = process.env.PAGARME_TOKEN;
   pagarmeTransaction.postback_url = notificationUrl;
   pagarmeTransaction.soft_descriptor = (configApp.soft_descriptor
     || `${params.domain}_PagarMe`).substring(0, 13);
@@ -144,6 +162,9 @@ export default async (appData: AppModuleBody) => {
     order_id: orderId,
     platform_integration: 'ecomplus',
   };
+  if (process.env.PAGARME_PARTNER_ID) {
+    pagarmeTransaction.service_referer_name = process.env.PAGARME_PARTNER_ID;
+  }
 
   pagarmeTransaction.customer = {
     email: buyer.email,
@@ -254,6 +275,11 @@ export default async (appData: AppModuleBody) => {
         transaction.intermediator.transaction_code = qrCode;
         const qrCodeSrc = `https://gerarqrcodepix.com.br/api/v1?brcode=${qrCode}&tamanho=256`;
         transaction.notes = `<img src="${qrCodeSrc}" style="display:block;margin:0 auto">`;
+        if (data.pix_expiration_date) {
+          transaction.account_deposit = {
+            valid_thru: new Date(data.pix_expiration_date).toISOString(),
+          };
+        }
       }
 
       transaction.status = {

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { type CarouselInject, carouselKey } from './_injection-keys';
+import { type CarouselInject, carouselKey } from '@@sf/components/Carousel.vue';
 
 export interface Props {
-  direction?: number;
+  isPrev?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
-  direction: 1,
+  isPrev: false,
 });
 const { changeSlide } = inject(carouselKey) as CarouselInject;
 </script>
@@ -15,16 +15,16 @@ const { changeSlide } = inject(carouselKey) as CarouselInject;
 <template>
   <button
     type="button"
-    :aria-label="direction > 0 ? $t.i19next : $t.i19previous"
-    @click="changeSlide(direction)"
+    :aria-label="!isPrev ? $t.i19next : $t.i19previous"
+    @click="changeSlide(!isPrev ? 1 : -1)"
     class="group absolute top-0 z-1"
-    :class="direction > 0 ? 'right-0' : 'left-0'"
-    :data-carousel-control="direction > 0 ? 'next' : 'previous'"
+    :class="!isPrev ? 'right-0' : 'left-0'"
+    :data-carousel-control="!isPrev ? 'next' : 'previous'"
   >
     <slot>
       <i
         class="m-0"
-        :class="direction > 0
+        :class="!isPrev
           ? 'i-chevron-right group-active:translate-x-1'
           : 'i-chevron-left group-active:-translate-x-1'"
       ></i>

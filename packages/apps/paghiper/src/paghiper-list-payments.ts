@@ -4,7 +4,7 @@ import type {
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
 import type { PagHiperApp } from '../types/config-app';
-// import logger from 'firebase-functions/logger';
+import logger from 'firebase-functions/logger';
 
 const responseError = (status: number | null, error: string, message: string) => {
   return {
@@ -34,13 +34,20 @@ export default async (data: AppModuleBody) => {
     payment_gateways: [],
   };
 
-  if (!configApp.paghiper_api_key) {
-    // must have configured PagHiper API key and token
-    return responseError(
-      400,
-      'LIST_PAYMENTS_ERR',
-      'PagHiper API key is unset on app hidden data (merchant must configure the app)',
-    );
+  if (!process.env.PAGHIPER_TOKEN) {
+    const pagHiperToken = configApp.paghiper_api_key;
+    if (typeof pagHiperToken === 'string' && pagHiperToken) {
+      process.env.PAGHIPER_TOKEN = pagHiperToken;
+    } else {
+      logger.warn('Missing PagHiper API token');
+
+      // must have configured PagHiper API key and token
+      return responseError(
+        400,
+        'LIST_PAYMENTS_ERR',
+        'PagHiper API key is unset on app hidden data (merchant must configure the app)',
+      );
+    }
   }
 
   const intermediator = {

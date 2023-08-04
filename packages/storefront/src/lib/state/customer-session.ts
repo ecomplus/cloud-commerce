@@ -3,10 +3,10 @@ import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
 import { computed } from 'vue';
-import requestIdleCallback from '../../helpers/idle-callback';
-import useStorage from './use-storage';
+import { requestIdleCallback } from '@@sf/sf-lib';
+import useStorage from '@@sf/state/use-storage';
 
-const storageKey = 'SESSION';
+const storageKey = 'ecomSession';
 const emptySession = {
   customer: {
     display_name: '',
@@ -19,7 +19,7 @@ const session = useStorage<{
   auth: null | {
     access_token: string,
     expires: string,
-    customer_id: string,
+    customer_id: Customers['_id'],
   },
 }>(storageKey, emptySession);
 

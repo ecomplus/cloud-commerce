@@ -1,4 +1,5 @@
 import type { Orders, Applications } from '@cloudcommerce/types';
+import logger from 'firebase-functions/logger';
 import GalaxpayAxios from './auth/create-access';
 
 const checkAmountItemsOrder = (
@@ -47,10 +48,28 @@ const updateValueSubscription = (
 ) => {
   const value = checkAmountItemsOrder({ ...amount }, [...items], { ...plan });
 
+  if (!process.env.GALAXPAY_ID) {
+    const galaxpayId = appData.hidden_data?.galaxpay_id;
+    if (typeof galaxpayId === 'string' && galaxpayId) {
+      process.env.GALAXPAY_ID = galaxpayId;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
+  if (!process.env.GALAXPAY_HASH) {
+    const galaxpayHash = appData.hidden_data?.galaxpay_hash;
+    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+      process.env.GALAXPAY_HASH = galaxpayHash;
+    } else {
+      logger.warn('Missing GalaxPay ID');
+    }
+  }
+
   return new Promise((resolve, reject) => {
     const galaxpayAxios = new GalaxpayAxios({
-      galaxpayId: appData.hidden_data?.galaxpay_id,
-      galaxpayHash: appData.hidden_data?.galaxpay_hash,
+      galaxpayId: process.env.GALAXPAY_ID,
+      galaxpayHash: process.env.GALAXPAY_HASH,
     });
 
     galaxpayAxios.preparing

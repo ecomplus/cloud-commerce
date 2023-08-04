@@ -1,6 +1,7 @@
-<script setup lang="ts">
-/* REFERENCE: https://github.com/bartdominiak/vue-snap */
+<script lang="ts">
 import {
+  type Ref,
+  type InjectionKey,
   onMounted,
   onBeforeUnmount,
   ref,
@@ -11,9 +12,20 @@ import {
   provide,
 } from 'vue';
 import { useDebounceFn, useElementHover, useScroll } from '@vueuse/core';
-import { carouselKey } from './_injection-keys';
-import CarouselControl from './CarouselControl.vue';
+import CarouselControl from '@@sf/components/CarouselControl.vue';
 
+export type CarouselInject = {
+  autoplay: Ref<number | undefined>,
+  changeSlide: (direction: number, isPageScroll?: boolean) => void,
+  isBoundLeft: Ref<boolean>,
+  isBoundRight: Ref<boolean>,
+};
+
+export const carouselKey = Symbol('carousel') as InjectionKey<CarouselInject>;
+</script>
+
+<script setup lang="ts">
+/* REFERENCE: https://github.com/bartdominiak/vue-snap */
 export interface Props {
   as?: string;
   modelValue?: number;
@@ -27,10 +39,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits([
   'update:modelValue',
 ]);
-const currentIndex = ref(props.modelValue - 1);
+const currentIndex = ref(0);
 watch(toRef(props, 'modelValue'), (modelValue) => {
   currentIndex.value = modelValue - 1;
-});
+}, { immediate: true });
 watch(currentIndex, (current, previous) => {
   if (current !== previous) {
     emit('update:modelValue', current + 1);
@@ -60,20 +72,19 @@ const calcSlidesWidth = () => {
     width: node.offsetWidth,
   }));
 };
-const calcNextWidth = (direction: number) => {
+const calcNextOffsetLeft = (direction: number) => {
   let nextSlideIndex = currentIndex.value + direction;
   if (nextSlideIndex >= slidesWidth.value.length) {
-    nextSlideIndex = 0;
-    direction = -direction;
-  } else if (nextSlideIndex < 0) {
-    nextSlideIndex = slidesWidth.value.length - 1;
-    direction = -direction;
+    return 0;
   }
-  const width = slidesWidth.value[nextSlideIndex]?.width || 0;
+  if (nextSlideIndex < 0) {
+    nextSlideIndex = slidesWidth.value.length + nextSlideIndex;
+  }
+  const { offsetLeft, width } = slidesWidth.value[nextSlideIndex] || {};
   if (!width) {
     return 0;
   }
-  return width * direction;
+  return offsetLeft;
 };
 const calcCurrentIndex = () => {
   const getCurrentIndex = slidesWidth.value.findIndex((slide) => {
@@ -99,12 +110,33 @@ const restartAutoplay = () => {
     }, props.autoplay);
   }
 };
-const changeSlide = (direction: number) => {
-  const nextSlideWidth = calcNextWidth(direction);
-  if (nextSlideWidth) {
-    wrapper.value?.scrollBy({ left: nextSlideWidth, behavior: 'smooth' });
-    restartAutoplay();
+const changeSlide = (direction: number, isPageScroll: boolean = true) => {
+  if (slidesWidth.value.length < 2) {
+    return;
   }
+  if (isPageScroll && (direction === 1 || direction === -1)) {
+    let pageStep = 0;
+    let pageStepWidth = 0;
+    for (let i = currentIndex.value; i < slidesWidth.value.length; i++) {
+      const { width } = slidesWidth.value[i] || {};
+      if (width) {
+        pageStep += 1;
+        pageStepWidth += width;
+        if (pageStepWidth >= wrapperVisibleWidth.value) {
+          break;
+        }
+      }
+    }
+    if (pageStep) {
+      direction = direction > 0 ? pageStep : -pageStep;
+    }
+  }
+  if (!props.autoplay) {
+    console.log({ direction }, currentIndex.value, slidesWidth.value.length);
+  }
+  const nextOffsetLeft = calcNextOffsetLeft(direction);
+  wrapper.value?.scrollTo({ left: nextOffsetLeft, behavior: 'smooth' });
+  restartAutoplay();
 };
 watch(isScrolling, (_isScrolling: boolean) => {
   if (_isScrolling) {
@@ -191,7 +223,7 @@ provide(carouselKey, {
         pageCount: indexCount + 1,
       }"
     >
-      <CarouselControl :direction="-1">
+      <CarouselControl is-prev>
         <slot name="previous" />
       </CarouselControl>
       <CarouselControl>

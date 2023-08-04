@@ -1,6 +1,6 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
-import { img as getImg } from '@ecomplus/utils';
+import { img as getImg, price as getPrice } from '@ecomplus/utils';
 
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
 const getIconUrl = (size: number) => {
@@ -11,14 +11,23 @@ const getIconUrl = (size: number) => {
 const {
   storeId,
   cmsContent,
-  apiDoc,
+  fetchingApiContext,
+  apiContext,
   lang,
+  countryCode,
+  currency,
+  currencySymbol,
   domain,
   primaryColor,
   settings,
+  isPreview,
   getContent,
 } = Astro.locals.routeContext;
+if (fetchingApiContext) {
+  await fetchingApiContext;
+}
 
+const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
 const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;
 const description = state.meta_description || state.short_description || settings.description;
@@ -40,6 +49,65 @@ if (!ogImage) {
 } else {
   ogImage = ogImage.replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com');
 }
+
+let inlineClientJS = `
+window.ECOM_STORE_ID = ${storeId};
+window.ECOM_LANG = '${lang}';
+window.ECOM_CURRENCY = '${currency}';
+window.ECOM_CURRENCY_SYMBOL = '${currencySymbol}';
+window.ECOM_COUNTRY_CODE = '${countryCode}';
+window.$storefront = ${JSON.stringify({ settings, data: {} })};`;
+if (apiContext.error) {
+  const { message, statusCode } = apiContext.error;
+  const url = Astro.url.pathname;
+  inlineClientJS += `
+console.error(${JSON.stringify(message)});
+setTimeout(() => {
+  window.location.replace("/fallback?status=${statusCode}&url=${encodeURIComponent(url)}");
+}, 1);`;
+}
+if (apiDoc) {
+  if (typeof apiDoc.price === 'number') {
+    apiDoc.price = getPrice(apiDoc);
+  }
+  const slimDocRegex = globalThis.$storefrontSlimDocRegex
+    || /body_|meta_|metafields|_records|i18n/;
+  const minifyApiDoc = (nestedDoc: any) => {
+    if (typeof nestedDoc === 'object' && nestedDoc) {
+      if (Array.isArray(nestedDoc)) {
+        nestedDoc.forEach((item) => minifyApiDoc(item));
+      } else {
+        Object.keys(nestedDoc).forEach((field) => {
+          if (slimDocRegex.test(field)) {
+            delete nestedDoc[field];
+          } else {
+            minifyApiDoc(nestedDoc[field]);
+          }
+        });
+      }
+    }
+    return nestedDoc;
+  };
+  inlineClientJS += `
+window.$storefront.apiContext = ${JSON.stringify({
+  resource: apiContext.resource,
+  doc: minifyApiDoc({ ...apiDoc }),
+  timestamp: Date.now(),
+})};
+window.$storefront.context /* DEPRECATED */ = window.$storefront.apiContext`;
+}
+if (isPreview) {
+  inlineClientJS += `
+window.$isCmsPreview = true;`;
+}
+
+const inlineJSONLd = JSON.stringify({
+  '@context': 'http://schema.org',
+  '@type': 'Organization',
+  name: settings.name,
+  url: `https://${domain}/`,
+  logo: `https://${domain}${settings.logo}`,
+});
 ---
 
 <meta charset="UTF-8">
@@ -76,3 +144,6 @@ if (!ogImage) {
 {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
 {(!pwaInfo && !import.meta.env.DEV) &&
   <link rel="manifest" href="/manifest.webmanifest" />}
+
+<script is:inline set:html={inlineClientJS} />
+<script type="application/ld+json" set:html={inlineJSONLd} />

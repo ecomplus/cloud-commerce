@@ -2,12 +2,12 @@ import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
-import type { ContentGetter, SettingsContent, PageContent } from './content';
+import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 import _getConfig from '../../config/storefront.config.mjs';
 
-type StorefrontConfig = {
+export type StorefrontConfig = {
   storeId: BaseConfig['storeId'],
   lang: BaseConfig['lang'],
   countryCode: BaseConfig['countryCode'],
@@ -30,7 +30,7 @@ if (!globalThis.$apiMergeConfig) {
   };
 }
 if (!globalThis.$apiPrefetchEndpoints) {
-  globalThis.$apiPrefetchEndpoints = ['categories'];
+  globalThis.$apiPrefetchEndpoints = [];
 }
 if (!globalThis.$storefront) {
   globalThis.$storefront = {
@@ -38,10 +38,9 @@ if (!globalThis.$storefront) {
     onLoad(callback: (...args: any[]) => void) {
       emitter.on('load', callback);
     },
+    data: {},
   };
 }
-
-type ApiPrefetchEndpoints = Array<ApiEndpoint>;
 
 const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
@@ -51,6 +50,8 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
   }
   Astro.response.headers.set(headerName, cacheControl);
 };
+
+export type ApiPrefetchEndpoints = Array<ApiEndpoint | ':slug'>;
 
 const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   contentCollection,
@@ -68,18 +69,26 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.$storefront.settings = config.settings;
-  let cmsContent: PageContent | Record<string, any> | null | undefined;
-  let apiResource: 'products' | 'categories' | 'brands' | 'collections' | undefined;
-  let apiDoc: Record<string, any> | undefined;
+  let cmsContent: PageContent | null | undefined;
   const apiState: {
     categories?: CategoriesList,
     brands?: BrandsList,
     [k: string]: Record<string, any> | undefined,
   } = {};
-  const apiFetchings = [
-    null, // fetch by slug
-    ...apiPrefetchEndpoints.map((endpoint) => api.get(endpoint)),
+  const apiPrefetchings = [
+    ...apiPrefetchEndpoints.map((endpoint) => {
+      if (endpoint === ':slug') return null; // fetch by slug
+      return api.get(endpoint);
+    }),
   ];
+  let fetchingApiContext: ReturnType<typeof api.get> | null = null;
+  const apiContext: {
+    resource?: 'products' | 'categories' | 'brands' | 'collections',
+    doc?: Record<string, any>,
+    error: ApiError | null,
+  } = {
+    error: null,
+  };
   if (isHomepage) {
     cmsContent = await config.getContent('pages/home');
   } else {
@@ -93,23 +102,39 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
         err.responseHTML = `<head></head><body>${err.message}</body>`;
         throw err;
       } else {
-        apiFetchings[0] = api.get(`slugs/${slug}`);
+        fetchingApiContext = api.get(`slugs/${slug}`)
+          .then((response) => {
+            Object.assign(apiContext, response.data);
+            const apiResource = apiContext.resource as
+              Exclude<typeof apiContext.resource, undefined>;
+            const apiDoc = apiContext.doc as Record<string, any>;
+            apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
+            globalThis.$storefront.apiContext = {
+              resource: apiResource,
+              doc: apiDoc as any,
+              timestamp: Date.now(),
+            };
+            return response;
+          });
+        const index = apiPrefetchings.findIndex((pr) => pr === null);
+        if (index > -1) {
+          apiPrefetchings[index] = fetchingApiContext;
+        } else {
+          fetchingApiContext.catch((err: ApiError) => {
+            apiContext.error = err;
+          });
+        }
       }
     }
   }
   try {
-    const [slugResponse, ...prefetchResponses] = await Promise.all(apiFetchings);
-    if (slugResponse) {
-      apiResource = slugResponse.data.resource;
-      apiDoc = slugResponse.data.doc;
-      if (apiDoc) {
-        apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
-      }
-    }
-    prefetchResponses.forEach((response) => {
+    (await Promise.all(apiPrefetchings)).forEach((response) => {
       if (response) {
         const { config: { endpoint }, data } = response;
-        apiState[endpoint.replace(/\?.*$/, '')] = data.result || data;
+        const apiStateKey = endpoint.replace(/\?.*$/, '');
+        if (!apiState[apiStateKey]) {
+          apiState[apiStateKey] = data.result || data;
+        }
       }
     });
   } catch (err: any) {
@@ -143,19 +168,12 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   } else {
     setResponseCache(Astro, 120, 300);
   }
-  if (apiDoc) {
-    globalThis.$storefront.context = {
-      resource: apiResource as Exclude<typeof apiResource, undefined>,
-      doc: apiDoc as any,
-      timestamp: Date.now(),
-    };
-  }
   const routeContext = {
     ...config,
     isHomepage,
     cmsContent,
-    apiResource,
-    apiDoc,
+    fetchingApiContext,
+    apiContext,
     apiState,
     isPreview,
   };
@@ -171,11 +189,4 @@ export {
   loadRouteContext,
 };
 
-type RouteContext = Awaited<ReturnType<typeof loadRouteContext>>;
-
-export type {
-  StorefrontConfig,
-  SettingsContent,
-  ApiPrefetchEndpoints,
-  RouteContext,
-};
+export type RouteContext = Awaited<ReturnType<typeof loadRouteContext>>;

@@ -2,9 +2,10 @@
 /* eslint-disable no-console, no-await-in-loop, import/no-unresolved */
 /* global $ */
 import 'zx/globals';
+import { fileURLToPath } from 'node:url';
 import all from '../lib/all.js';
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 $.cwd = __dirname;
 $.verbose = false;
 

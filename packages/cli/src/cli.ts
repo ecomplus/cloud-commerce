@@ -1,4 +1,4 @@
-import url from 'node:url';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import {
   $,
@@ -21,7 +21,7 @@ const {
 // https://github.com/google/zx/issues/124
 process.env.FORCE_COLOR = '3';
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const pwd = process.cwd();
 
 let projectId = FIREBASE_PROJECT_ID;
@@ -46,7 +46,7 @@ if (projectId) {
       const firebaserc = fs.readJSONSync(path.join(pwd, '.firebaserc'));
       projectId = firebaserc.projects.default;
     } catch (e) {
-      projectId = 'ecom2-002';
+      projectId = 'ecom2-demo';
     }
   }
 }
@@ -179,7 +179,7 @@ Finish by saving the following secrets to your GitHub repository:
   }
 
   if (argv._.includes('dev') || !argv._.length) {
-    await prepareCodebases();
+    await prepareCodebases(true);
     return $`npm --prefix "${path.join(pwd, 'functions/ssr')}" run dev`;
   }
   return $`echo 'Hello from @cloudcommerce/cli'`;

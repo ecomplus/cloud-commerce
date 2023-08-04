@@ -55,7 +55,7 @@ global.__storefrontCMS = (fs, resolvePath) => {
 
   let settings;
   try {
-    settings = getContent('settings');
+    settings = getContent('settings') || {};
   } catch (e) {
     settings = {};
   }

@@ -127,6 +127,7 @@ export async function getBuiltPicture(params: GetPictureParams): Promise<GetPict
   const sources = await Promise.all(allFormats.map((format) => getSource(format)));
   return {
     sources,
+    // @ts-ignore
     image,
   };
 }

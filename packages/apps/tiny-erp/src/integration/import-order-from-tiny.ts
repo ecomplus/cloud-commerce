@@ -1,4 +1,3 @@
-import type { Orders } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
@@ -40,18 +39,19 @@ export default async (apiDoc, queueEntry) => {
       return null;
     }
 
-    let listEndpoint = 'orders?limit=1&fields=_id,payments_history,fulfillments,shipping_lines';
-    if (orderNumber) {
-      listEndpoint += `&number=${orderNumber}`;
-    } else {
-      listEndpoint += `&hidden_metafields.value=${tinyOrderId}_tiny`;
-    }
-    const { data: { result } } = await api.get(listEndpoint as 'orders');
+    const { data: { result } } = await api.get('orders', {
+      fields: ['_id', 'payments_history', 'fulfillments', 'shipping_lines'] as const,
+      limit: 1,
+      params: {
+        number: orderNumber || undefined,
+        'hidden_metafields.value': `${tinyOrderId}_tiny`,
+      },
+    });
     if (!result.length) {
       return null;
     }
     const order = result[0];
-    const partialOrder = await parseOrder(pedido, order.shipping_lines) as Orders;
+    const partialOrder = await parseOrder(pedido, order.shipping_lines);
     const promises: Promise<any>[] = [];
     if (partialOrder && Object.keys(partialOrder).length) {
       promises.push(api.patch(`orders/${order._id}`, partialOrder));

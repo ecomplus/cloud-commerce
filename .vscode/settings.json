@@ -14,6 +14,9 @@
     "packages/storefront/tailwind.config.cjs": "packages/**",
     "store/functions/ssr/tailwind.config.cjs": "store/**",
     "ecomplus-stores/monocard/functions/ssr/tailwind.config.cjs": "ecomplus-stores/monocard/**",
-    "ecomplus-stores/tia-sonia/functions/ssr/tailwind.config.cjs": "ecomplus-stores/tia-sonia/**"
-  }
+    "ecomplus-stores/tia-sonia/functions/ssr/tailwind.config.cjs": "ecomplus-stores/tia-sonia/**",
+    "ecomplus-stores/iluminim/functions/ssr/tailwind.config.cjs": "ecomplus-stores/iluminim/**",
+    "ecomplus-stores/barra-doce/functions/ssr/tailwind.config.cjs": "ecomplus-stores/barra-doce/**"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

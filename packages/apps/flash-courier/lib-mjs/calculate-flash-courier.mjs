@@ -1,4 +1,5 @@
 import axios from 'axios';
+import logger from 'firebase-functions/logger';
 
 export default async ({ params, application }) => {
   const appData = {
@@ -21,7 +22,20 @@ export default async ({ params, application }) => {
     return response;
   }
 
-  const flashcourierKey = appData.flashcourier_contract && appData.flashcourier_contract.key;
+  let flashcourierKey;
+
+  if (process.env.FLASHCOURIER_CONTRACT) {
+    try {
+      const contract = JSON.parse(process.env.FLASHCOURIER_CONTRACT);
+      flashcourierKey = contract.key;
+    } catch (e) {
+      logger.error(e);
+      flashcourierKey = appData.flashcourier_contract && appData.flashcourier_contract.key;
+    }
+  } else {
+    flashcourierKey = appData.flashcourier_contract && appData.flashcourier_contract.key;
+  }
+
   if (!flashcourierKey) {
     return {
       status: 409,
@@ -53,9 +67,7 @@ export default async ({ params, application }) => {
   if (params.items) {
     // calculate weight and pkg value from items list
     let finalWeight = 0;
-    params.items.forEach(({
-      price, quantity, dimensions, weight,
-    }) => {
+    params.items.forEach(({ quantity, dimensions, weight }) => {
       let physicalWeight = 0;
       let cubicWeight = 1;
 
@@ -160,6 +172,14 @@ export default async ({ params, application }) => {
         } else {
           price = parseFloat(flashcourierProduto[label]);
           days = 7;
+        }
+        if (Array.isArray(appData.services) && appData.services.length) {
+          const service = appData.services.find((_service) => label === _service.service_code);
+          if (service) {
+            label = service.label || label;
+          } else {
+            return;
+          }
         }
         const shippingLine = {
           from: {

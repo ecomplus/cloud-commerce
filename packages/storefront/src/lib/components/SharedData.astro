@@ -1,0 +1,12 @@
+---
+import {
+  type Props as UseSharedDataProps,
+  useSharedData,
+} from '@@sf/composables/use-shared-data';
+
+export interface Props extends UseSharedDataProps {}
+
+const { inlineClientJS } = useSharedData(Astro.props);
+---
+
+<script is:inline set:html={inlineClientJS} />

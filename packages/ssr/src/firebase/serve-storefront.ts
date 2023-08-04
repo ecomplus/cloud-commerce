@@ -12,16 +12,123 @@ declare global {
   ) => Promise<any>;
 }
 
-const { STOREFRONT_BASE_DIR } = process.env;
+const {
+  STOREFRONT_BASE_DIR,
+  SSR_PROXY_DEBUG,
+  SSR_PROXY_TIMEOUT,
+} = process.env;
+
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
-const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
-export default (req: Request, res: Response) => {
+let cssFilename: string | undefined;
+const readingStylesManifest = new Promise((resolve) => {
+  readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
+    .then((stylesManifest) => {
+      const cssFiles: string[] = [];
+      stylesManifest.split(/\n/).forEach((line) => {
+        const [filename] = line.split(',');
+        if (filename) cssFiles.push(filename);
+      });
+      if (cssFiles.length === 1) {
+        [cssFilename] = cssFiles;
+      }
+    })
+    .catch(logger.warn)
+    .finally(() => resolve(null));
+});
+
+const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
+const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
+const proxy = async (req: Request, res: Response) => {
+  let proxyURL: URL | undefined;
+  try {
+    proxyURL = new URL(req.query.url as any);
+  } catch {
+    //
+  }
+  if (proxyURL) {
+    const { headers } = req;
+    /* eslint-disable dot-notation */
+    headers['origin'] = String(headers['x-forwarded-host']);
+    headers['host'] = proxyURL.hostname;
+    if (!headers['accept']) {
+      headers['accept'] = 'text/plain,text/html,application/javascript,application/x-javascript';
+    }
+    headers['accept-encoding'] = 'gzip';
+    delete headers['forwarded'];
+    delete headers['via'];
+    delete headers['traceparent'];
+    delete headers['upgrade-insecure-requests'];
+    delete headers['x-timer'];
+    delete headers['x-varnish'];
+    delete headers['x-orig-accept-language'];
+    /* eslint-enable dot-notation */
+    Object.keys(headers).forEach((headerName) => {
+      if (
+        headerName.startsWith('x-forwarded-')
+        || headerName.startsWith('cdn-')
+        || headerName.startsWith('fastly-')
+        || headerName.startsWith('x-firebase-')
+        || headerName.startsWith('x-cloud-')
+        || headerName.startsWith('x-appengine-')
+        || headerName.startsWith('function-')
+        || typeof headers[headerName] !== 'string'
+      ) {
+        delete headers[headerName];
+      }
+    });
+    if (isProxyDebug) {
+      logger.info({ proxy: proxyURL.href });
+    }
+    try {
+      const abortController = new AbortController();
+      const timer = setTimeout(() => {
+        abortController.abort();
+      }, proxyTimeout);
+      const response = await fetch(proxyURL, {
+        method: 'get',
+        headers: (headers as Record<string, string>),
+        signal: abortController.signal,
+      });
+      clearTimeout(timer);
+      res.status(response.status);
+      Object.keys(response.headers).forEach((headerName) => {
+        switch (headerName) {
+          case 'transfer-encoding':
+          case 'connection':
+          case 'strict-transport-security':
+          case 'alt-svc':
+          case 'server':
+            break;
+          default:
+            res.set(headerName, response.headers[headerName]);
+        }
+      });
+      res.set('access-control-allow-origin', '*');
+      res.send(await response.text());
+    } catch (err: any) {
+      logger.warn(err);
+      res.status(400).send(err.message);
+    }
+    return;
+  }
+  res.sendStatus(400);
+};
+
+export default async (req: Request, res: Response) => {
+  if (req.path.startsWith('/~partytown')) {
+    res.sendStatus(404);
+    return;
+  }
+  if (req.path.startsWith('/~reverse-proxy')) {
+    proxy(req, res);
+    return;
+  }
   res.set('X-XSS-Protection', '1; mode=block');
-  const url = req.url.replace(/\?.*$/, '').replace(/\.html$/, '');
+  const url = req.path.replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, cacheControl: string) => {
     if (res.headersSent) return res;
@@ -84,6 +191,16 @@ export default (req: Request, res: Response) => {
     return;
   }
 
+  (async () => {
+    await readingStylesManifest;
+    if (cssFilename && !res.headersSent) {
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
+      res.writeEarlyHints({
+        link: `</${cssFilename}>; rel=preload; as=style`,
+      });
+    }
+  })();
+
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
@@ -102,6 +219,7 @@ export default (req: Request, res: Response) => {
       fallback(err);
       return;
     }
+    const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
     const local = new URL(`.${url}`, clientRoot);
     try {
       const data = await readFile(local);

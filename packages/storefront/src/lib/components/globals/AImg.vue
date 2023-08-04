@@ -12,10 +12,7 @@ export interface PictureSize {
 }
 
 export interface Props {
-  picture: {
-    url: string;
-    alt?: string;
-    size?: string;
+  picture: PictureSize | {
     normal?: PictureSize;
     big?: PictureSize;
     zoom?: PictureSize;
@@ -25,23 +22,24 @@ export interface Props {
   };
   loading?: 'lazy' | 'eager';
   decoding?: 'async' | 'sync' | 'auto';
+  alt?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loading: 'lazy',
 });
-const image = computed(() => {
+const image = computed<Partial<PictureSize>>(() => {
   if ((props.picture as PictureSize).url) {
-    return props.picture;
+    return props.picture as PictureSize;
   }
-  return getImg(props.picture) as PictureSize;
+  return getImg(props.picture) || {};
 });
 const dimensions = computed(() => {
   return getImgSizes(image.value) as { width: number, height: number };
 });
 const attrs = computed<ImgHTMLAttributes>(() => ({
   src: image.value.url,
-  alt: image.value.alt,
+  alt: image.value.alt || props.alt,
   width: dimensions.value.width || undefined,
   height: dimensions.value.height || undefined,
   loading: props.loading,
