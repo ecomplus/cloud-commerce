@@ -58,7 +58,10 @@ const swr = async (event) => {
     return fetch(event.request);
   }
   const { pathname } = new URL(event.request.url);
-  if (pathname === '/_image' || pathname.startsWith('/~')) {
+  if (pathname === '/_image'
+        || pathname.startsWith('/~')
+        || pathname.startsWith('/api/')
+        || pathname.startsWith('/_feeds/')) {
     return fetch(event.request);
   }
   const [uri] = event.request.url.split('?', 2);
