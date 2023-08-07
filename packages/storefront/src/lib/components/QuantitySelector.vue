@@ -8,16 +8,16 @@ import {
   provide,
 } from 'vue';
 import { useId } from '@@sf/sf-lib';
-import NumberInputControl from '@@sf/components/NumberInputControl.vue';
+import QuantitySelectorControl from '@@sf/components/QuantitySelectorControl.vue';
 
-export type NumberInputInject = {
+export type QuantitySelectorInject = {
   value: WritableComputedRef<number>,
   isBoundMin: Ref<boolean>,
   isBoundMax: Ref<boolean>,
 };
 
-export const numberInputKey = Symbol('numberInput') as
-  InjectionKey<NumberInputInject>;
+export const quantitySelectorKey = Symbol('quantitySelector') as
+  InjectionKey<QuantitySelectorInject>;
 </script>
 
 <script setup lang="ts">
@@ -61,7 +61,7 @@ const isBoundMin = computed(() => {
 const isBoundMax = computed(() => {
   return (props.max as number) <= value.value;
 });
-provide(numberInputKey, {
+provide(quantitySelectorKey, {
   value,
   isBoundMin,
   isBoundMax,
@@ -69,8 +69,12 @@ provide(numberInputKey, {
 </script>
 
 <template>
-  <div data-number-input>
-    <slot name="label" v-bind="{ inputId, value }" />
+  <div data-quantity-selector>
+    <slot name="label" v-bind="{ inputId, value }">
+      <label :for="inputId" class="sr-only">
+        {{ $t.i19quantity }}
+      </label>
+    </slot>
     <div class="flex items-center">
       <input
         ref="input"
@@ -91,12 +95,12 @@ provide(numberInputKey, {
         name="controls"
         v-bind="{ value, isBoundMin, isBoundMax }"
       >
-        <NumberInputControl is-minus class="order-first">
+        <QuantitySelectorControl is-minus class="order-first">
           <slot name="minus" />
-        </NumberInputControl>
-        <NumberInputControl class="order-last">
+        </QuantitySelectorControl>
+        <QuantitySelectorControl class="order-last">
           <slot name="plus" />
-        </NumberInputControl>
+        </QuantitySelectorControl>
       </slot>
     </div>
   </div>
