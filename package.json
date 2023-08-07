@@ -35,7 +35,7 @@
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
     "@commitlint/rules": "^17.6.7",
-    "@types/node": "^18.17.1",
+    "@types/node": "^18.17.3",
     "eslint": "^8.46.0",
     "husky": "^8.0.3",
     "standard-version": "^9.5.0",
@@ -43,7 +43,7 @@
     "turbo": "^1.10.12",
     "typescript": "~5.0.4",
     "uglify-js": "^3.17.4",
-    "vite": "^4.4.7",
+    "vite": "^4.4.9",
     "vitest": "^0.33.0",
     "zx": "^7.2.3"
   },
