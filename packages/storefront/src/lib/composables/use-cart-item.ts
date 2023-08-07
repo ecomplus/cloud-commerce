@@ -22,7 +22,7 @@ export const useCartItem = (props: Props) => {
     return (props.item || parsedItem.value) as CartItem;
   });
   const title = computed(() => {
-    return getName(cartItem);
+    return getName(cartItem.value);
   });
   const link = computed(() => {
     const { slug } = cartItem.value;
