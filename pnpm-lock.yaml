@@ -63,9 +63,6 @@ importers:
       '@cloudcommerce/eslint':
         specifier: ^0.22.4
         version: 0.22.4(typescript@5.0.4)
-      eslint:
-        specifier: ^8.46.0
-        version: 8.46.0
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
@@ -128,9 +125,6 @@ importers:
       '@cloudcommerce/eslint':
         specifier: ^0.22.4
         version: 0.22.4(typescript@5.0.4)
-      eslint:
-        specifier: ^8.46.0
-        version: 8.46.0
 
   ecomplus-stores/iluminim/functions/many:
     dependencies:
@@ -1005,6 +999,9 @@ importers:
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../types
+      '@cloudflare/workers-types':
+        specifier: ^4.20230801.0
+        version: 4.20230801.0
       '@firebase/app-types':
         specifier: ^0.9.0
         version: 0.9.0
@@ -1115,9 +1112,6 @@ importers:
       '@cloudcommerce/eslint':
         specifier: ^0.22.4
         version: 0.22.4(typescript@5.0.4)
-      eslint:
-        specifier: ^8.46.0
-        version: 8.46.0
 
   store/functions/many:
     dependencies:
@@ -3106,6 +3100,10 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
       - typescript
+    dev: true
+
+  /@cloudflare/workers-types@4.20230801.0:
+    resolution: {integrity: sha512-RzRUR+J/T3h58qbTZHYntYsnZXu3JnrlZIhqP2hhdyfoZAZ/+ko4wX0foAqlYHi+kXWaWtySHBuMcx6ec6TXlQ==}
     dev: true
 
   /@commitlint/cli@17.6.7:
