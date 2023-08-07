@@ -16,6 +16,7 @@ let defaultThemeOptions = {
     'facebook',
     'twitter',
     'instagram',
+    'threads',
     'linkedin',
     'youtube',
     'google',
