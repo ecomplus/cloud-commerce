@@ -131,9 +131,6 @@ const changeSlide = (direction: number, isPageScroll: boolean = true) => {
       direction = direction > 0 ? pageStep : -pageStep;
     }
   }
-  if (!props.autoplay) {
-    console.log({ direction }, currentIndex.value, slidesWidth.value.length);
-  }
   const nextOffsetLeft = calcNextOffsetLeft(direction);
   wrapper.value?.scrollTo({ left: nextOffsetLeft, behavior: 'smooth' });
   restartAutoplay();
