@@ -34,6 +34,13 @@ readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
     });
     if (cssFiles.length === 1) {
       cssFilepath = cssFiles[0]?.replace('./dist/client/', '/');
+      if (
+        cssFilepath
+        && cssFilepath.charAt(0) !== '/'
+        && !cssFilepath.startsWith('https://')
+      ) {
+        cssFilepath = `/${cssFilepath}`;
+      }
     }
   })
   .catch(logger.warn);
