@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.3](https://github.com/ecomplus/cloud-commerce/compare/v0.23.2...v0.23.3) (2023-08-08)
+
+
+### Bug Fixes
+
+* **ssr:** Fix CSS filepath at Link header (early hints) ([2761642](https://github.com/ecomplus/cloud-commerce/commit/2761642d4cf0f4b5dab983c5fa0434e5ee4af5a7))
+
 ### [0.23.2](https://github.com/ecomplus/cloud-commerce/compare/v0.23.1...v0.23.2) (2023-08-08)
 
 
