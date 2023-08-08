@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.1](https://github.com/ecomplus/cloud-commerce/compare/v0.23.0...v0.23.1) (2023-08-08)
+
+
+### Features
+
+* **i18n:** Add `i19minus` and `i19plus` words ([e77b6e8](https://github.com/ecomplus/cloud-commerce/commit/e77b6e83b24947e13c16f3ef491a36d3791511db))
+* **ssr:** New script for Cloudflare Worker as SWR and cache key layer [[#135](https://github.com/ecomplus/cloud-commerce/issues/135)] ([b296ac3](https://github.com/ecomplus/cloud-commerce/commit/b296ac35ccc19cf23ba48d56ace0b73c055ce311))
+* **storefront:** New `.i-threads` brand icon shortcut ([5b1ab0a](https://github.com/ecomplus/cloud-commerce/commit/5b1ab0ad30a86f5c87c4b76698f67d6ab39636b3))
+* **storefront:** New atomi headless <NumberInput> Vue component ([45093e2](https://github.com/ecomplus/cloud-commerce/commit/45093e244acb56fcfd16e2962fd556c942550c56))
+* **storefront:** New basic <CheckoutLink> wrapper component ([2d5c1b7](https://github.com/ecomplus/cloud-commerce/commit/2d5c1b7ed6bb2c9a8b4d6b67590370c5e4c5ccdc))
+* **storefront:** Update Astro to 2.10 ([#208](https://github.com/ecomplus/cloud-commerce/issues/208)) ([5cbdebb](https://github.com/ecomplus/cloud-commerce/commit/5cbdebba4eda157199d6f7e2c84f55f32520e3d6))
+
+
+### Bug Fixes
+
+* **api:** Updating Carts and Orders interfaces ([31bf050](https://github.com/ecomplus/cloud-commerce/commit/31bf05021d51c08c215b8eb60998fbedbfd61519))
+* **deps:** Update non-major dependencies ([#209](https://github.com/ecomplus/cloud-commerce/issues/209)) ([9a1d02a](https://github.com/ecomplus/cloud-commerce/commit/9a1d02a0c8adc8d3f86957454e0f1317844cfe28))
+* **ssr:** Recommended Cloudflare SWR worker must bypass some dynamic pathnames ([3b8a029](https://github.com/ecomplus/cloud-commerce/commit/3b8a029b9a7e706712414b9993e35b72239f6ac4))
+* **ssr:** Recommended Cloudflare SWR worker should bypass API/feeds dynamic pathnames ([982cc1b](https://github.com/ecomplus/cloud-commerce/commit/982cc1b6e2885560223c90eca2096aa9478f04ba))
+* **storefront:** Add `link` to `useCartItem` return ([626b8fe](https://github.com/ecomplus/cloud-commerce/commit/626b8fe206eacb4bdb34094eb33c99615d60f7f7))
+* **storefront:** Fix cart item composable computed `title` ([e7915f9](https://github.com/ecomplus/cloud-commerce/commit/e7915f9af113ce20c7eb5b51bf72d7bcdeec8028))
+* **storefront:** Fix shopping cart `parseProduct` to create strict cart item object ([407360f](https://github.com/ecomplus/cloud-commerce/commit/407360f960f2e27475d5f53b1cc771e33273f35b))
+* **storefront:** Update `useCartItem` using computed to keep reactive object of shopping cart state ([f4aea98](https://github.com/ecomplus/cloud-commerce/commit/f4aea987f0ae4ab396508d3af2485fe7574abd0b))
+* **storefront:** Update Astro to v2.10.2 ([258072e](https://github.com/ecomplus/cloud-commerce/commit/258072eb1f7caab534df6db336a82f8eaac93f21))
+
 ## [0.23.0](https://github.com/ecomplus/cloud-commerce/compare/v0.22.4...v0.23.0) (2023-08-02)
 
 
