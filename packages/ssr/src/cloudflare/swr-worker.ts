@@ -13,7 +13,7 @@ interface ParsedCacheControl {
 
 const resolveCacheControl = (response: Response) => {
   const cacheControl = response.headers.get(HEADER_CACHE_CONTROL);
-  if (!response.headers.get(HEADER_SSR_TOOK)) {
+  if (!cacheControl || !response.headers.get(HEADER_SSR_TOOK)) {
     return { cacheControl };
   }
   const parts = cacheControl.replace(/ +/g, '').split(',');
@@ -23,14 +23,14 @@ const resolveCacheControl = (response: Response) => {
     'stale-while-revalidate': staleMaxAge,
   } = parts.reduce((result, part) => {
     const [key, value] = part.split('=');
-    result[key] = Number(value) || 0;
+    result[key as 'max-age'] = Number(value) || 0;
     return result;
   }, {} as ParsedCacheControl);
-  const edgeMaxAge = typeof sMaxAge === 'number' ? sMaxAge : maxAge;
-  if (!(edgeMaxAge > 1) || !(staleMaxAge > edgeMaxAge)) {
+  const cdnMaxAge = typeof sMaxAge === 'number' ? sMaxAge : maxAge;
+  if (!cdnMaxAge || cdnMaxAge <= 1 || !staleMaxAge || staleMaxAge <= cdnMaxAge) {
     return { cacheControl };
   }
-  const staleAt = Date.now() + (edgeMaxAge * 1000);
+  const staleAt = Date.now() + (cdnMaxAge * 1000);
   return {
     cacheControl: `public, max-age=${maxAge}, must-revalidate`
       + `, s-maxage=${staleMaxAge}`,
@@ -53,8 +53,8 @@ const addHeaders = (response: Response, headers: Record<string, string | null>) 
   return res;
 };
 
-const toCacheRes = (response: Response, cacheControl?: string, staleAt?: number) => {
-  if (!cacheControl) {
+const toCacheRes = (response: Response, cacheControl?: string | null, staleAt?: number) => {
+  if (cacheControl === undefined) {
     const parsedCacheControl = resolveCacheControl(response);
     cacheControl = parsedCacheControl.cacheControl;
     staleAt = parsedCacheControl.staleAt;
@@ -83,7 +83,7 @@ const swr = async (event: FetchEvent) => {
   }
   const [uri] = event.request.url.split('?', 2);
   const request = new Request(`${uri}?t=${Date.now()}`, event.request);
-  const cacheKey = new Request(`${uri}?v=27`, {
+  const cacheKey = new Request(`${uri}?v=28`, {
     method: event.request.method,
   });
   const cachedRes = await caches.default.match(cacheKey);
