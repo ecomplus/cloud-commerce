@@ -1,3 +1,4 @@
+import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
@@ -200,6 +201,19 @@ export default async (req: Request, res: Response) => {
       });
     }
   })();
+  /*
+  Check Response methods used by Astro Node.js integration:
+  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
+  */
+  const _writeHead = res.writeHead;
+  /* eslint-disable prefer-rest-params */
+  // @ts-ignore
+  res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
+    if (status === 200 && headers && cssFilename) {
+      headers['X-Style-Link'] = cssFilename;
+    }
+    _writeHead.apply(res, [status, headers]);
+  };
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
