@@ -19,6 +19,7 @@ export interface Props {
   canSetStyles?: boolean;
   canCreateHeightDiv?: boolean;
   isShownOnScrollDown?: boolean;
+  isShownOnMobile?: boolean;
 }
 
 const useStickyHeader = (props: Props) => {
@@ -27,6 +28,7 @@ const useStickyHeader = (props: Props) => {
     canSetStyles,
     canCreateHeightDiv,
     isShownOnScrollDown,
+    isShownOnMobile,
   } = {
     canSetStyles: true,
     canCreateHeightDiv: true,
@@ -36,13 +38,15 @@ const useStickyHeader = (props: Props) => {
   const staticHeight = ref(0);
   const staticY = ref(0);
   let heightDiv: HTMLElement | undefined;
-  const { y: _y } = !import.meta.env.SSR ? useScroll(document) : { y: ref(0) };
+  const { y: _y } = !import.meta.env.SSR && (isShownOnMobile || !isMobile)
+    ? useScroll(document)
+    : { y: ref(0) };
   const y = ref(0);
   watchDebounced(_y, (nextY) => {
     y.value = nextY;
   }, {
-    debounce: isMobile ? 150 : 50,
-    maxWait: 600,
+    debounce: isMobile ? 100 : 50,
+    maxWait: isMobile ? 300 : 150,
   });
   const isSticky = computed(() => ready.value && y.value > staticY.value * 1.2);
   const transition = ref('none');
