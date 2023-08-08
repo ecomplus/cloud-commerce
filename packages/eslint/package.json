@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/eslint",
   "type": "module",
-  "version": "0.23.1",
+  "version": "0.23.2",
   "description": "E-Com Plus Cloud Commerce ESLint config",
   "main": "lib/index.js",
   "repository": {

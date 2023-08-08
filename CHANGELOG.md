@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.23.2](https://github.com/ecomplus/cloud-commerce/compare/v0.23.1...v0.23.2) (2023-08-08)
+
+
+### Features
+
+* **ssr:** Add new `X-Style-Link` header for custom CDN layer early hints ([390d54a](https://github.com/ecomplus/cloud-commerce/commit/390d54aed024838fb36633d5c2a4429b4633b6f6))
+
+
+### Bug Fixes
+
+* **ssr:** Prevent erro with undefined `cacheControl` on SWR worker ([b926936](https://github.com/ecomplus/cloud-commerce/commit/b926936908a9628a62d13603660d8a87fc7e8ddf))
+
 ### [0.23.1](https://github.com/ecomplus/cloud-commerce/compare/v0.23.0...v0.23.1) (2023-08-08)
 
 
