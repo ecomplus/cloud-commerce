@@ -4,6 +4,7 @@
 const HEADER_CACHE_CONTROL = 'Cache-Control';
 const HEADER_SSR_TOOK = 'X-Load-Took';
 const HEADER_STALE_AT = 'X-Edge-Stale-At';
+const HEADER_STYLE_LINK = 'X-Style-Link';
 
 interface ParsedCacheControl {
   'max-age'?: number;
@@ -83,7 +84,7 @@ const swr = async (event: FetchEvent) => {
   }
   const [uri] = event.request.url.split('?', 2);
   const request = new Request(`${uri}?t=${Date.now()}`, event.request);
-  const cacheKey = new Request(`${uri}?v=28`, {
+  const cacheKey = new Request(`${uri}?v=29`, {
     method: event.request.method,
   });
   const cachedRes = await caches.default.match(cacheKey);
@@ -108,10 +109,17 @@ const swr = async (event: FetchEvent) => {
     const newCacheRes = toCacheRes(response, cacheControl, staleAt);
     event.waitUntil(caches.default.put(cacheKey, newCacheRes));
   }
-  return addHeaders(response, {
+  const headers: Record<string, string | null> = {
     [HEADER_CACHE_CONTROL]: cacheControl,
     'x-edge-state': edgeState,
-  });
+  };
+  const styleLink = response.headers.get(HEADER_STYLE_LINK);
+  if (styleLink) {
+    // https://developers.cloudflare.com/workers/examples/103-early-hints/
+    headers.link = `</${styleLink}>; rel=preload; as=style`;
+    headers[HEADER_STYLE_LINK] = null;
+  }
+  return addHeaders(response, headers);
 };
 
 // eslint-disable-next-line no-restricted-globals
