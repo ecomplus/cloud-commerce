@@ -53,21 +53,31 @@ const toCacheRes = (response, cacheControl, staleAt) => {
     vary: null,
   });
 };
-const swr = async (event) => {
-  if (event.request.method !== 'GET') {
-    return fetch(event.request);
+const swr = async (_request, env, ctx) => {
+  const url = new URL(_request.url);
+  const { hostname, pathname } = url;
+  const hostOverride = env[`OVERRIDE_${hostname}`];
+  if (hostOverride) {
+    url.hostname = hostOverride;
   }
-  const { pathname } = new URL(event.request.url);
+  const bypassEarly = () => {
+    return !hostOverride
+      ? fetch(_request)
+      : fetch(new Request(url.href, _request));
+  };
+  if (_request.method !== 'GET') {
+    return bypassEarly();
+  }
   if (pathname === '/_image'
         || pathname.startsWith('/~')
         || pathname.startsWith('/api/')
         || pathname.startsWith('/_feeds/')) {
-    return fetch(event.request);
+    return bypassEarly();
   }
-  const [uri] = event.request.url.split('?', 2);
-  const request = new Request(`${uri}?t=${Date.now()}`, event.request);
-  const cacheKey = new Request(`${uri}?v=30`, {
-    method: event.request.method,
+  const [uri] = url.href.split('?', 2);
+  const request = new Request(`${uri}?t=${Date.now()}`, _request);
+  const cacheKey = new Request(`${uri}?v=32`, {
+    method: _request.method,
   });
   const cachedRes = await caches.default.match(cacheKey);
   let edgeState = 'miss';
@@ -77,7 +87,7 @@ const swr = async (event) => {
       edgeState = 'bypass';
     } else if (Date.now() > cachedStaleAt) {
       edgeState = 'stale';
-      event.waitUntil((async () => {
+      ctx.waitUntil((async () => {
         const newCacheRes = toCacheRes(await fetch(request));
         return caches.default.put(cacheKey, newCacheRes);
       })());
@@ -89,14 +99,14 @@ const swr = async (event) => {
   const { cacheControl, staleAt } = resolveCacheControl(response);
   if (!cachedRes && response.ok) {
     const newCacheRes = toCacheRes(response, cacheControl, staleAt);
-    event.waitUntil(caches.default.put(cacheKey, newCacheRes));
+    ctx.waitUntil(caches.default.put(cacheKey, newCacheRes));
   }
   return addHeaders(response, {
     [HEADER_CACHE_CONTROL]: cacheControl,
     'x-edge-state': edgeState,
   });
 };
-// eslint-disable-next-line no-restricted-globals
-addEventListener('fetch', (event) => {
-  event.respondWith(swr(event));
-});
+
+export default {
+  fetch: swr,
+};
