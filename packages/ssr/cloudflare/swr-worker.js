@@ -53,6 +53,20 @@ const toCacheRes = (response, cacheControl, staleAt) => {
     vary: null,
   });
 };
+const checkToKvCache = (newCacheRes) => {
+  return newCacheRes.status === 200
+        && newCacheRes.headers.get('Content-Type')?.includes('text/html');
+};
+const putKvCache = async (kv, kvKey, newCacheRes) => {
+  const newKvRes = new Response(newCacheRes.clone().body, { status: 200 });
+  const body = await newKvRes.text();
+  const headers = {};
+  newCacheRes.headers.forEach((value, key) => {
+    headers[key] = value;
+  });
+  const kvValue = JSON.stringify({ body, headers });
+  return kv.put(kvKey, kvValue, { expirationTtl: 3600 * 24 * 30 });
+};
 const swr = async (_request, env, ctx) => {
   const url = new URL(_request.url);
   const { hostname, pathname } = url;
@@ -76,10 +90,55 @@ const swr = async (_request, env, ctx) => {
   }
   const [uri] = url.href.split('?', 2);
   const request = new Request(`${uri}?t=${Date.now()}`, _request);
-  const cacheKey = new Request(`${uri}?v=32`, {
+  const v = 38;
+  const cacheKey = new Request(`${uri}?v=${(v + 1)}`, {
     method: _request.method,
   });
-  const cachedRes = await caches.default.match(cacheKey);
+  const kvKey = `${v}${uri.replace('https:/', '')}`;
+  const kv = env.PERMA_CACHE;
+  let cachedRes;
+  let edgeSource = '';
+  try {
+    const gettingCache = caches.default.match(cacheKey);
+    let kvStoredRes;
+    const gettingKv = kv
+      ? kv.get(kvKey, { type: 'json' }).then((value) => {
+        if (value) {
+          const { body, headers } = value;
+          kvStoredRes = new Response(body, { headers, status: 200 });
+          return kvStoredRes;
+        }
+        kvStoredRes = null;
+        return undefined;
+      })
+      : Promise.resolve(undefined);
+    cachedRes = await Promise.race([
+      new Promise((resolve) => {
+        gettingCache.then((fromCache) => {
+          if (fromCache) {
+            edgeSource = 'cache';
+            resolve(fromCache);
+          } else if (kvStoredRes !== undefined) {
+            resolve(kvStoredRes);
+          } else {
+            gettingKv.finally(() => resolve(kvStoredRes));
+          }
+        });
+      }),
+      new Promise((resolve) => {
+        gettingKv.then((fromKv) => {
+          if (fromKv) {
+            edgeSource = 'kv';
+            resolve(fromKv);
+          } else {
+            gettingCache.then((fromCache) => resolve(fromCache));
+          }
+        });
+      }),
+    ]);
+  } catch {
+    //
+  }
   let edgeState = 'miss';
   if (cachedRes) {
     const cachedStaleAt = Number(cachedRes.headers.get(HEADER_STALE_AT));
@@ -89,6 +148,9 @@ const swr = async (_request, env, ctx) => {
       edgeState = 'stale';
       ctx.waitUntil((async () => {
         const newCacheRes = toCacheRes(await fetch(request));
+        if (kv && checkToKvCache(newCacheRes)) {
+          ctx.waitUntil(putKvCache(kv, kvKey, newCacheRes));
+        }
         return caches.default.put(cacheKey, newCacheRes);
       })());
     } else {
@@ -100,10 +162,14 @@ const swr = async (_request, env, ctx) => {
   if (!cachedRes && response.ok) {
     const newCacheRes = toCacheRes(response, cacheControl, staleAt);
     ctx.waitUntil(caches.default.put(cacheKey, newCacheRes));
+    if (kv && checkToKvCache(newCacheRes)) {
+      ctx.waitUntil(putKvCache(kv, kvKey, newCacheRes));
+    }
   }
   return addHeaders(response, {
     [HEADER_CACHE_CONTROL]: cacheControl,
     'x-edge-state': edgeState,
+    'x-edge-src': edgeSource,
   });
 };
 
