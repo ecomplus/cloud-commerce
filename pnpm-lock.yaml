@@ -54,6 +54,130 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/barra-doce:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.23.3
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.23.3
+        version: link:../../packages/eslint
+
+  ecomplus-stores/barra-doce/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.23.3
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.23.3
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/barra-doce/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.23.3
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.23.3
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.23.3
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.23.3
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.23.3
+        version: link:../../../../packages/types
+      '@fontsource/croissant-one':
+        specifier: ^5.0.5
+        version: 5.0.5
+      '@iconify-json/mingcute':
+        specifier: ^1.1.7
+        version: 1.1.7
+
+  ecomplus-stores/barra-doce/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.23.3
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.23.3
+        version: link:../../../../packages/modules
+
+  ecomplus-stores/iluminim:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.23.3
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.23.3
+        version: link:../../packages/eslint
+
+  ecomplus-stores/iluminim/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.23.3
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.23.3
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/iluminim/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.23.3
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.23.3
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.23.3
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.23.3
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.23.3
+        version: link:../../../../packages/types
+      '@fontsource-variable/heebo':
+        specifier: ^5.0.5
+        version: 5.0.5
+      '@iconify-json/carbon':
+        specifier: ^1.1.18
+        version: 1.1.18
+
+  ecomplus-stores/iluminim/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.23.3
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.23.3
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -978,6 +1102,62 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.23.3
+        version: link:../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.23.3
+        version: link:../packages/eslint
+
+  store/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.23.3
+        version: link:../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.23.3
+        version: link:../../../packages/passport
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.23.3
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.23.3
+        version: link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.23.3
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.23.3
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.23.3
+        version: link:../../../packages/types
+
+  store/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.23.3
+        version: link:../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.23.3
+        version: link:../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.23.3
+        version: link:../../../packages/modules
 
 packages:
 
@@ -4020,6 +4200,14 @@ packages:
     resolution: {integrity: sha512-Dq5rYfEpdeel0bLVN+nfD1VWmzCkK+pJbSjIawGE+RY4+NIJqhbUDDQjvV0NUK84fMfwxvtFoCtEe70HfZjFcw==}
     dev: false
 
+  /@fontsource-variable/heebo@5.0.5:
+    resolution: {integrity: sha512-Lpx0IN6kCjjnpGDVet80aoCUPiNfjbpkxID/dNgkVn1Rq9ooKcn+7TaIBQIxYFONIjh7fpuVUCxyKSTDqzwjsg==}
+    dev: true
+
+  /@fontsource/croissant-one@5.0.5:
+    resolution: {integrity: sha512-l7MeWpX28LrlvBtNnJvbl4ZkYqZJYUdHbHLRaq9zoUn6rM2hu1kCd9LDCZAzAFZyoK+ujOc9nDHpN3j0IBIRCA==}
+    dev: true
+
   /@google-cloud/firestore@6.6.1:
     resolution: {integrity: sha512-Z41j2h0mrgBH9qNIVmbRLqGKc6XmdJtWipeKwdnGa/bPTP1gn2SGTrYyWnpfsLMEtzKSYieHPSkAFp5kduF2RA==}
     engines: {node: '>=12.0.0'}
@@ -4208,6 +4396,12 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
+  /@iconify-json/carbon@1.1.18:
+    resolution: {integrity: sha512-RbKET6KS9xUMeYVq1FUH3UUA7AYNcnApkHt2AccCwTWTQQs/O58ji4Of6z6PhRajGlbfvrJzT/Uqh19OKECRvA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/fa6-brands@1.1.13:
     resolution: {integrity: sha512-7toccM334NO1jIsfnqTK9Bo12CIuE4ClnfW9SyRFKFax7b/oKOsgnvokgCAtQgomiQ6ODjC1zWCpzSDidtBUXw==}
     dependencies:
@@ -4226,9 +4420,14 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/mingcute@1.1.7:
+    resolution: {integrity: sha512-luBuSPks/Lbk4SCyt1RWVCQ8RM1lCIXPMY30qDyk0AtI+8n+eOjMF18y1vDjHUk646Mhw4HQXoRsoPJHlt7mvA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.7:
     resolution: {integrity: sha512-P8S3z/L1LcV4Qem9AoCfVAaTFGySEMzFEY4CHZLkfRj0Fv9LiR+AwjDgrDrzyI93U2L2mg9JHsbTJ52mF8suNw==}
@@ -5341,7 +5540,7 @@ packages:
       '@unocss/core': 0.55.0
       '@unocss/reset': 0.55.0
       '@unocss/vite': 0.55.0(rollup@2.79.1)(vite@4.4.9)
-      vite: 4.4.9(@types/node@18.17.3)
+      vite: 4.4.9(@types/node@18.17.5)
     transitivePeerDependencies:
       - rollup
     dev: false
@@ -14126,7 +14325,7 @@ packages:
       '@unocss/transformer-directives': 0.55.0
       '@unocss/transformer-variant-group': 0.55.0
       '@unocss/vite': 0.55.0(rollup@2.79.1)(vite@4.4.9)
-      vite: 4.4.9(@types/node@18.17.3)
+      vite: 4.4.9(@types/node@18.17.5)
     transitivePeerDependencies:
       - postcss
       - rollup
