@@ -63,7 +63,7 @@ if (apiContext.error) {
   inlineClientJS += `
 console.error(${JSON.stringify(message)});
 setTimeout(() => {
-  window.location.replace("/fallback?status=${statusCode}&url=${encodeURIComponent(url)}");
+  window.location.replace("/~fallback?status=${statusCode}&url=${encodeURIComponent(url)}");
 }, 1);`;
 }
 if (apiDoc) {
