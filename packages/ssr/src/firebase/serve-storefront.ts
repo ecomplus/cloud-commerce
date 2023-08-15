@@ -143,11 +143,11 @@ export default async (req: Request, res: Response) => {
   };
 
   const fallback = (err: any, status = 500) => {
-    if (url !== '/fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
+    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
       setStatusAndCache(status, 'public, max-age=120')
         .send('<html><head>'
           + '<meta http-equiv="refresh" content="0; '
-            + `url=/fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
+            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
           + `</head><body>${err.toString()}</body></html>`);
     } else {
       setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
