@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev --host",
-    "build": "astro build",
+    "build:ssr": "astro build",
     "build:static": "BUILD_OUTPUT=static astro build",
     "build:prod": "bash scripts/build-prod.sh",
     "preview": "astro preview",
@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@cloudcommerce/types": "workspace:*"
+    "@cloudcommerce/types": "workspace:*",
+    "@vue/runtime-core": "^3.3.4"
   }
 }
