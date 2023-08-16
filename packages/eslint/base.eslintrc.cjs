@@ -102,18 +102,25 @@ module.exports = {
       },
     },
     {
-      files: ['*.test.ts', '*.test.mjs', '*.test.cjs'],
+      files: ['*.d.ts'],
       rules: {
-        'no-console': 'off',
-        'import/no-extraneous-dependencies': 'off',
+        'import/newline-after-import': 'off',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       },
     },
     {
       files: ['*.config.*', '*.eslintrc.*'],
       rules: {
         'no-console': 'off',
-        'import/no-extraneous-dependencies': 'off',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
         'quote-props': 'off',
+      },
+    },
+    {
+      files: ['*.test.ts', '*.test.mjs', '*.test.cjs'],
+      rules: {
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': 'off',
       },
     },
   ],

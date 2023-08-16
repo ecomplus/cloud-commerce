@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import url from 'node:url';
 import fs from 'node:fs';
 import { test, expect } from 'vitest';
