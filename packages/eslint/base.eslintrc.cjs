@@ -101,5 +101,20 @@ module.exports = {
         'no-undef': 'off',
       },
     },
+    {
+      files: ['*.test.ts', '*.test.mjs', '*.test.cjs'],
+      rules: {
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
+      files: ['*.config.*', '*.eslintrc.*'],
+      rules: {
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': 'off',
+        'quote-props': 'off',
+      },
+    },
   ],
 };
