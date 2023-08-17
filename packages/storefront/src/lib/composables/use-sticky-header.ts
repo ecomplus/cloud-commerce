@@ -46,7 +46,7 @@ const useStickyHeader = (props: Props) => {
     y.value = nextY;
   }, {
     debounce: isMobile ? 100 : 50,
-    maxWait: isMobile ? 300 : 150,
+    maxWait: isMobile ? 800 : 400,
   });
   const isSticky = computed(() => ready.value && y.value > staticY.value * 1.2);
   const transition = ref('none');
