@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const iconClassName = computed(() => {
   switch (props.flag) {
-    case 'pix': return 'i-pix';
+    case 'pix': return 'i-pix text-[#77B6A8]';
     case 'visa': return 'i-visa';
     case 'mastercard': return 'i-mastercard';
     case 'elo': return 'i-elo';
@@ -26,7 +26,10 @@ const iconClassName = computed(() => {
 </script>
 
 <template>
-  <b v-if="!iconClassName" class="tracking-tighter text-xs">
+  <b
+    v-if="!iconClassName"
+    class="tracking-tighter leading-none mb-1 text-black text-[57%]"
+  >
     {{ props.flag }}
   </b>
   <component v-else :is="as" :class="iconClassName" />
