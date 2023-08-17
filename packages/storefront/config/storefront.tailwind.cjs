@@ -11,8 +11,8 @@ let defaultThemeOptions = {
   warningColor: 'amber',
   dangerColor: 'rose',
   // IntelliSense for UnoCSS icons
-  brandIcons: 'fa6-brands',
-  brandIconsShortcuts: [
+  brandIconSets: ['fa6-brands'],
+  brandIconShortcuts: [
     'facebook',
     'twitter',
     'instagram',
@@ -27,8 +27,8 @@ let defaultThemeOptions = {
     'messenger',
     'pix',
   ],
-  brandLogos: 'logos',
-  brandLogosShortcuts: [
+  logoIconSets: ['logos'],
+  logoIconShortcuts: [
     'visa',
     'mastercard',
     'paypal',
@@ -40,14 +40,12 @@ let defaultThemeOptions = {
     'dinersclub',
     'discover',
   ],
-  generalIcons: 'heroicons',
+  generalIconSets: ['heroicons'],
   iconAliases: {
     close: 'x-mark',
     'chevron-right': 'chevron-right',
     'chevron-left': 'chevron-left',
   },
-  // Optional icon sets declaration without shortcuts for IntelliSense only
-  intellisenseIconSets: [],
 };
 if (globalThis.$storefrontThemeOptions) {
   defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.$storefrontThemeOptions);
@@ -121,17 +119,16 @@ Object.keys(brandColors).forEach((colorName) => {
 
 const genTailwindConfig = (themeOptions = {}) => {
   const {
-    brandIcons,
-    brandIconsShortcuts,
-    brandLogos,
-    brandLogosShortcuts,
-    generalIcons,
     baseColor,
     successColor,
     warningColor,
     dangerColor,
+    brandIconSets,
+    brandIconShortcuts,
+    logoIconSets,
+    logoIconShortcuts,
+    generalIconSets,
     iconAliases,
-    intellisenseIconSets,
   } = deepmerge(defaultThemeOptions, themeOptions);
   const config = {
     content: ['./src/**/*.{vue,astro,tsx,jsx,md,html,svelte}'],
@@ -165,15 +162,21 @@ const genTailwindConfig = (themeOptions = {}) => {
             };
             return utilities;
           }, {}),
-          ...[{
-            iconset: generalIcons,
-          }, {
-            iconset: brandIcons,
-            shortcuts: brandIconsShortcuts,
-          }, {
-            iconset: brandLogos,
-            shortcuts: brandLogosShortcuts,
-          }].reduce((utilities, { iconset, shortcuts }) => {
+          ...[
+            /* Reverse because custom icon sets are pushed to arrays after
+            default theme ones on `deepmerge`, we want custom icon sets first */
+            ...generalIconSets.reverse().map((iconset) => {
+              return typeof iconset === 'string' ? { iconset } : iconset;
+            }),
+            ...brandIconSets.reverse().map((iconset) => ({
+              iconset,
+              shortcuts: brandIconShortcuts,
+            })),
+            ...logoIconSets.reverse().map((iconset) => ({
+              iconset,
+              shortcuts: logoIconShortcuts,
+            })),
+          ].reduce((utilities, { iconset, shortcuts }) => {
             if (iconset) {
               if (!shortcuts) {
                 const { icons } = require(`@iconify-json/${iconset}`);
@@ -185,36 +188,24 @@ const genTailwindConfig = (themeOptions = {}) => {
                 });
               }
               shortcuts.forEach((shortcut) => {
+                let selector;
+                let icon;
                 if (typeof shortcut === 'string') {
-                  utilities[`.i-${shortcut}`] = {
-                    '--iconify': iconset,
-                    '--icon': `"${shortcut}"`,
-                  };
+                  selector = `.i-${shortcut}`;
+                  icon = shortcut;
                 } else {
-                  utilities[`.i-${shortcut[0]}`] = {
-                    '--iconify': iconset,
-                    '--icon': `"${shortcut[1]}"`,
-                  };
+                  selector = `.i-${shortcut[0]}`;
+                  icon = shortcut[1];
                 }
-              });
-            }
-            return utilities;
-          }, {}),
-          ...intellisenseIconSets.reduce((utilities, iconset) => {
-            if (iconset) {
-              const { icons } = require(`@iconify-json/${iconset}`);
-              Object.keys(icons.icons).forEach((shortcut) => {
-                if (typeof shortcut === 'string') {
-                  utilities[`.i-${iconset}:${shortcut}`] = {
-                    '--iconify': iconset,
-                    '--icon': `"${shortcut}"`,
-                  };
-                } else {
-                  utilities[`.i-${iconset}:${shortcut[0]}`] = {
-                    '--iconify': iconset,
-                    '--icon': `"${shortcut[1]}"`,
-                  };
+                if (utilities[selector]) {
+                  // Same shortcut from previous icon set
+                  return;
                 }
+                utilities[selector] = {
+                  '--collection': iconset,
+                  '--icon': icon,
+                  '--view': `"https://icones.js.org/collection/${iconset}?s=${icon}"`,
+                };
               });
             }
             return utilities;
