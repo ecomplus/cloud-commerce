@@ -38,6 +38,7 @@ let defaultThemeOptions = {
     'elo',
     'hipercard',
     'dinersclub',
+    'discover',
   ],
   generalIcons: 'heroicons',
   iconAliases: {
