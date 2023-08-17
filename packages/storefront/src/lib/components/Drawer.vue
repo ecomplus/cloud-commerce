@@ -94,7 +94,7 @@ const isPlacementX = computed(() => {
           type="button"
           :aria-label="$t.i19close"
           @click.prevent="close"
-          class="absolute top-2"
+          class="absolute top-2 z-30"
           :class="placement === 'end' ? 'left-2' : 'right-2'"
           data-drawer-close
         >
