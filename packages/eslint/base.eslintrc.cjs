@@ -59,6 +59,7 @@ module.exports = {
     'quote-props': 'warn',
     'quotes': 'warn',
     'prefer-template': 'off',
+    'prefer-destructuring': 'off',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'no-continue': 'off',
