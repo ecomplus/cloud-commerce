@@ -57,45 +57,45 @@ importers:
   ecomplus-stores/barra-doce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../packages/eslint
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/barra-doce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/types
       '@fontsource/croissant-one':
         specifier: ^5.0.5
@@ -107,57 +107,57 @@ importers:
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/iluminim:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../packages/eslint
 
   ecomplus-stores/iluminim/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/iluminim/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/types
       '@fontsource-variable/heebo':
         specifier: ^5.0.5
@@ -169,13 +169,13 @@ importers:
   ecomplus-stores/iluminim/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -963,8 +963,8 @@ importers:
   packages/ssr:
     dependencies:
       '@astrojs/node':
-        specifier: 5.3.3
-        version: 5.3.3(astro@2.10.7)
+        specifier: 5.3.4
+        version: 5.3.4(astro@2.10.9)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -984,8 +984,8 @@ importers:
         specifier: 10.3.0
         version: 10.3.0(vue@3.3.4)
       astro:
-        specifier: 2.10.7
-        version: 2.10.7(@types/node@18.17.5)(sharp@0.32.4)
+        specifier: 2.10.9
+        version: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       firebase-admin:
         specifier: ^11.10.1
         version: 11.10.1
@@ -1010,13 +1010,13 @@ importers:
     dependencies:
       '@astrojs/image':
         specifier: 0.17.3
-        version: 0.17.3(astro@2.10.7)(sharp@0.32.4)
+        version: 0.17.3(astro@2.10.9)(sharp@0.32.4)
       '@astrojs/node':
-        specifier: 5.3.3
-        version: 5.3.3(astro@2.10.7)
+        specifier: 5.3.4
+        version: 5.3.4(astro@2.10.9)
       '@astrojs/vue':
         specifier: 2.2.1
-        version: 2.2.1(astro@2.10.7)(vite@4.4.9)(vue@3.3.4)
+        version: 2.2.1(astro@2.10.9)(vite@4.4.9)(vue@3.3.4)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1046,13 +1046,13 @@ importers:
         version: 1.1.34
       '@vite-pwa/astro':
         specifier: ^0.1.1
-        version: 0.1.1(astro@2.10.7)(vite-plugin-pwa@0.16.4)
+        version: 0.1.1(astro@2.10.9)(vite-plugin-pwa@0.16.4)
       '@vueuse/core':
         specifier: 10.3.0
         version: 10.3.0(vue@3.3.4)
       astro:
-        specifier: 2.10.7
-        version: 2.10.7(sharp@0.32.4)
+        specifier: 2.10.9
+        version: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1076,13 +1076,13 @@ importers:
         version: 0.32.4
       tailwindcss:
         specifier: ^3.3.3
-        version: 3.3.3
+        version: 3.3.3(ts-node@10.9.1)
       unocss:
         specifier: ^0.55.0
         version: 0.55.0(postcss@8.4.27)(rollup@2.79.1)(vite@4.4.9)
       vite:
         specifier: ^4.4.9
-        version: 4.4.9
+        version: 4.4.9(@types/node@18.17.5)
       vite-plugin-pwa:
         specifier: ^0.16.4
         version: 0.16.4(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
@@ -1109,57 +1109,57 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/types
 
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.23.3
+        specifier: ^0.24.0
         version: link:../../../packages/modules
 
 packages:
@@ -1212,7 +1212,7 @@ packages:
     resolution: {integrity: sha512-C28qplQzgIJ+JU9S+1wNx+ue2KCBUp0TTAd10EWAEkk4RsL3Tzlw0BYvLDDb4KP9jS48lXmR4/1TtZ4aavYJ8Q==}
     dev: false
 
-  /@astrojs/image@0.17.3(astro@2.10.7)(sharp@0.32.4):
+  /@astrojs/image@0.17.3(astro@2.10.9)(sharp@0.32.4):
     resolution: {integrity: sha512-5xF4d4dmyjSdEeA0E2M8YS5Usf0SxPHUp4w/xAsbArQP27p6BcA+952Ay8+UJfRdT+9dUGGvRafDtjEZOkefxQ==}
     peerDependencies:
       astro: ^2.10.0
@@ -1224,7 +1224,7 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.10.7(sharp@0.32.4)
+      astro: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
@@ -1256,7 +1256,7 @@ packages:
       vscode-uri: 3.0.7
     dev: false
 
-  /@astrojs/markdown-remark@2.2.1(astro@2.10.7):
+  /@astrojs/markdown-remark@2.2.1(astro@2.10.9):
     resolution: {integrity: sha512-VF0HRv4GpC1XEMLnsKf6jth7JSmlt9qpqP0josQgA2eSpCIAC/Et+y94mgdBIZVBYH/yFnMoIxgKVe93xfO2GA==}
     peerDependencies:
       astro: ^2.5.0
@@ -1265,7 +1265,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.10.7(sharp@0.32.4)
+      astro: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -1282,16 +1282,16 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@5.3.3(astro@2.10.7):
-    resolution: {integrity: sha512-ogJrN6CvZiUtD29Vk7tbVg29iT0JaS5gOnH7dMyCMlEKs0af7ma7W6oh+xWUqkhasWB5vB7H0Kz4H4vkzh9CzA==}
+  /@astrojs/node@5.3.4(astro@2.10.9):
+    resolution: {integrity: sha512-NDpkYhq3S8DTZT1ootTyIxBPtYur+0pkccsAhKj5E4B3Rh57on5EA2uS4NHJx36BFwrCTIIGlWN6eq49cX/cAQ==}
     peerDependencies:
-      astro: ^2.10.6
+      astro: ^2.10.8
     peerDependenciesMeta:
       astro:
         optional: true
     dependencies:
       '@astrojs/webapi': 2.2.0
-      astro: 2.10.7(sharp@0.32.4)
+      astro: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1321,7 +1321,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@2.2.1(astro@2.10.7)(vite@4.4.9)(vue@3.3.4):
+  /@astrojs/vue@2.2.1(astro@2.10.9)(vite@4.4.9)(vue@3.3.4):
     resolution: {integrity: sha512-fq+RKFAKpIRcobF/803kMJWv/lobf9IIk6K5As5fWE/eYTpykkgHtxd+zDnf7d4I2V7K9XLKV06Oi6Q+oTJmDw==}
     engines: {node: '>=16.12.0'}
     peerDependencies:
@@ -1337,7 +1337,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.0.1(vite@4.4.9)(vue@3.3.4)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.22.9)
       '@vue/compiler-sfc': 3.3.4
-      astro: 2.10.7(sharp@0.32.4)
+      astro: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -3266,7 +3266,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
-    dev: true
 
   /@ecomplus/transactional-mails@2.0.0:
     resolution: {integrity: sha512-Am1mmk+/bQhJ8Tn4vtrnhaYfAvIrZY1AHHRQeP4NTkzXilo0CtZ3igItpDrXigOFaOPqBoH7u+COlKRrUqbS9g==}
@@ -4459,7 +4458,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.6.2
       '@jest/types': 29.6.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       jest-mock: 29.6.2
     dev: false
 
@@ -4469,7 +4468,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.1
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       jest-message-util: 29.6.2
       jest-mock: 29.6.2
       jest-util: 29.6.2
@@ -4487,7 +4486,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       '@types/yargs': 15.0.15
       chalk: 4.1.2
     dev: false
@@ -4498,7 +4497,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       '@types/yargs': 16.0.5
       chalk: 4.1.2
     dev: false
@@ -4510,7 +4509,7 @@ packages:
       '@jest/schemas': 29.6.0
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       '@types/yargs': 17.0.24
       chalk: 4.1.2
     dev: false
@@ -4532,7 +4531,6 @@ packages:
   /@jridgewell/resolve-uri@3.1.1:
     resolution: {integrity: sha512-dSYZh7HhCDtCKm4QakX0xFpsRDqjjtZf/kjI/v3T3Nwt5r8/qz/M19F9ySyOqU94SXBmeG9ttTul+YnR4LOxFA==}
     engines: {node: '>=6.0.0'}
-    dev: true
 
   /@jridgewell/set-array@1.1.2:
     resolution: {integrity: sha512-xnkseuNADM0gt2bs+BvhO0p78Mk762YnZdsuzFV018NoG1Sj1SCQvpSqa7XUaTam5vAGasABV9qXASMKnFMwMw==}
@@ -4565,7 +4563,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
-    dev: true
 
   /@jsdevtools/ono@7.1.3:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
@@ -5025,19 +5022,15 @@ packages:
 
   /@tsconfig/node10@1.0.9:
     resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
-    dev: true
 
   /@tsconfig/node12@1.0.11:
     resolution: {integrity: sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==}
-    dev: true
 
   /@tsconfig/node14@1.0.3:
     resolution: {integrity: sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==}
-    dev: true
 
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
-    dev: true
 
   /@types/babel__core@7.20.1:
     resolution: {integrity: sha512-aACu/U/omhdk15O4Nfb+fHgH/z3QsfQzpnvRZhYhThms83ZnAOZz7zZAWO7mn2yyNQaA4xTO8GLK3uqFU4bYYw==}
@@ -5298,6 +5291,7 @@ packages:
 
   /@types/node@20.4.7:
     resolution: {integrity: sha512-bUBrPjEry2QUTsnuEjzjbS7voGWCc30W0qzgMf90GPeDGFRakvrz47ju+oqDAKCXLUCe39u57/ORMl/O/04/9g==}
+    dev: true
 
   /@types/nodemailer@6.4.9:
     resolution: {integrity: sha512-XYG8Gv+sHjaOtUpiuytahMy2mM3rectgroNbs6R3djZEKmPNiIJwe9KqOJBGzKKnNZNKvnuvmugBgpq3w/S0ig==}
@@ -5331,7 +5325,7 @@ packages:
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
     dev: false
 
   /@types/resolve@1.20.2:
@@ -5549,7 +5543,7 @@ packages:
       '@unocss/core': 0.55.0
       '@unocss/reset': 0.55.0
       '@unocss/vite': 0.55.0(rollup@2.79.1)(vite@4.4.9)
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
     transitivePeerDependencies:
       - rollup
     dev: false
@@ -5727,12 +5721,12 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.3.1
       magic-string: 0.30.2
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
     transitivePeerDependencies:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.1.1(astro@2.10.7)(vite-plugin-pwa@0.16.4):
+  /@vite-pwa/astro@0.1.1(astro@2.10.9)(vite-plugin-pwa@0.16.4):
     resolution: {integrity: sha512-ZImC5fFMekgXyyCEsed5y6R9srFhNfFqwNrOhpi9klOn0nju1eCwHKGodJGK9B4gjxZo35dc5lS5FHFinTOBcw==}
     peerDependencies:
       astro: ^1.6.0 || ^2.0.0
@@ -5741,7 +5735,7 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 2.10.7(sharp@0.32.4)
+      astro: 2.10.9(@types/node@18.17.5)(sharp@0.32.4)
       vite-plugin-pwa: 0.16.4(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
     dev: false
 
@@ -5758,7 +5752,7 @@ packages:
       '@babel/core': 7.22.9
       '@babel/plugin-transform-typescript': 7.22.9(@babel/core@7.22.9)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.22.9)
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
       vue: 3.3.4
     transitivePeerDependencies:
       - supports-color
@@ -5774,7 +5768,7 @@ packages:
       vue:
         optional: true
     dependencies:
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
       vue: 3.3.4
     dev: false
 
@@ -5999,7 +5993,6 @@ packages:
   /acorn-walk@8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
     engines: {node: '>=0.4.0'}
-    dev: true
 
   /acorn@8.10.0:
     resolution: {integrity: sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==}
@@ -6121,7 +6114,6 @@ packages:
 
   /arg@4.1.3:
     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
-    dev: true
 
   /arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
@@ -6256,8 +6248,8 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /astro@2.10.7(@types/node@18.17.5)(sharp@0.32.4):
-    resolution: {integrity: sha512-R8aF4yphrsbhxW2UxHZ1DslBn8e8vPQ23+Z/OnajNE1Q4HEZCOZ4CAbHJx2PDwq2p+CRWArNalpr3+rTqyOYBQ==}
+  /astro@2.10.9(@types/node@18.17.5)(sharp@0.32.4):
+    resolution: {integrity: sha512-rtm/RHeJdAIAsziQaAGvbv2ALylNNOF1SUQ0zJaugu/ABUU62tNGNSxIR0LO5l4+dHhLbzRNo5uEnIPkmSRw+w==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     peerDependencies:
@@ -6269,7 +6261,7 @@ packages:
       '@astrojs/compiler': 1.8.1
       '@astrojs/internal-helpers': 0.1.2
       '@astrojs/language-server': 1.0.8
-      '@astrojs/markdown-remark': 2.2.1(astro@2.10.7)
+      '@astrojs/markdown-remark': 2.2.1(astro@2.10.9)
       '@astrojs/telemetry': 2.1.1
       '@astrojs/webapi': 2.2.0
       '@babel/core': 7.22.9
@@ -6288,7 +6280,6 @@ packages:
       common-ancestor-path: 1.0.1
       cookie: 0.5.0
       debug: 4.3.4
-      deepmerge-ts: 4.3.0
       devalue: 4.3.2
       diff: 5.1.0
       es-module-lexer: 1.3.0
@@ -6321,86 +6312,6 @@ packages:
       unist-util-visit: 4.1.2
       vfile: 5.3.7
       vite: 4.4.9(@types/node@18.17.5)
-      vitefu: 0.2.4(vite@4.4.9)
-      which-pm: 2.0.0
-      yargs-parser: 21.1.1
-      zod: 3.21.4
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: false
-
-  /astro@2.10.7(sharp@0.32.4):
-    resolution: {integrity: sha512-R8aF4yphrsbhxW2UxHZ1DslBn8e8vPQ23+Z/OnajNE1Q4HEZCOZ4CAbHJx2PDwq2p+CRWArNalpr3+rTqyOYBQ==}
-    engines: {node: '>=16.12.0', npm: '>=6.14.0'}
-    hasBin: true
-    peerDependencies:
-      sharp: '>=0.31.0 || 0.32'
-    peerDependenciesMeta:
-      sharp:
-        optional: true
-    dependencies:
-      '@astrojs/compiler': 1.8.1
-      '@astrojs/internal-helpers': 0.1.2
-      '@astrojs/language-server': 1.0.8
-      '@astrojs/markdown-remark': 2.2.1(astro@2.10.7)
-      '@astrojs/telemetry': 2.1.1
-      '@astrojs/webapi': 2.2.0
-      '@babel/core': 7.22.9
-      '@babel/generator': 7.22.9
-      '@babel/parser': 7.22.7
-      '@babel/plugin-transform-react-jsx': 7.22.5(@babel/core@7.22.9)
-      '@babel/traverse': 7.22.8
-      '@babel/types': 7.22.5
-      '@types/babel__core': 7.20.1
-      '@types/dom-view-transitions': 1.0.1
-      '@types/yargs-parser': 21.0.0
-      acorn: 8.10.0
-      boxen: 6.2.1
-      chokidar: 3.5.3
-      ci-info: 3.8.0
-      common-ancestor-path: 1.0.1
-      cookie: 0.5.0
-      debug: 4.3.4
-      deepmerge-ts: 4.3.0
-      devalue: 4.3.2
-      diff: 5.1.0
-      es-module-lexer: 1.3.0
-      esbuild: 0.17.19
-      estree-walker: 3.0.0
-      execa: 6.1.0
-      fast-glob: 3.3.1
-      github-slugger: 2.0.0
-      gray-matter: 4.0.3
-      html-escaper: 3.0.3
-      js-yaml: 4.1.0
-      kleur: 4.1.5
-      magic-string: 0.30.2
-      mime: 3.0.0
-      network-information-types: 0.1.1(typescript@5.0.4)
-      ora: 6.3.1
-      p-limit: 4.0.0
-      path-to-regexp: 6.2.1
-      preferred-pm: 3.0.3
-      prompts: 2.4.2
-      rehype: 12.0.1
-      semver: 7.5.4
-      server-destroy: 1.0.1
-      sharp: 0.32.4
-      shiki: 0.14.3
-      string-width: 5.1.2
-      strip-ansi: 7.1.0
-      tsconfig-resolver: 3.0.1
-      typescript: 5.0.4
-      unist-util-visit: 4.1.2
-      vfile: 5.3.7
-      vite: 4.4.9
       vitefu: 0.2.4(vite@4.4.9)
       which-pm: 2.0.0
       yargs-parser: 21.1.1
@@ -7428,7 +7339,6 @@ packages:
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
-    dev: true
 
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -7577,11 +7487,6 @@ packages:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
     requiresBuild: true
 
-  /deepmerge-ts@4.3.0:
-    resolution: {integrity: sha512-if3ZYdkD2dClhnXR5reKtG98cwyaRT1NeugQoAPTTfsOpV9kqyeiBF9Qa5RHjemb3KzD5ulqygv6ED3t5j9eJw==}
-    engines: {node: '>=12.4.0'}
-    dev: false
-
   /deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
@@ -7695,7 +7600,6 @@ packages:
   /diff@4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
-    dev: true
 
   /diff@5.1.0:
     resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
@@ -9861,7 +9765,7 @@ packages:
       '@jest/environment': 29.6.2
       '@jest/fake-timers': 29.6.2
       '@jest/types': 29.6.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       jest-mock: 29.6.2
       jest-util: 29.6.2
     dev: false
@@ -9891,7 +9795,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       jest-util: 29.6.2
     dev: false
 
@@ -9905,7 +9809,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/types': 27.5.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.11
@@ -9917,7 +9821,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.11
@@ -9940,7 +9844,7 @@ packages:
     resolution: {integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: false
@@ -9949,7 +9853,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.4.7
+      '@types/node': 18.17.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -10529,7 +10433,6 @@ packages:
 
   /make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
-    dev: true
 
   /makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
@@ -12113,7 +12016,7 @@ packages:
       postcss: 8.4.26
     dev: false
 
-  /postcss-load-config@4.0.1(postcss@8.4.26):
+  /postcss-load-config@4.0.1(postcss@8.4.26)(ts-node@10.9.1):
     resolution: {integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==}
     engines: {node: '>= 14'}
     peerDependencies:
@@ -12127,6 +12030,7 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.26
+      ts-node: 10.9.1(@types/node@18.17.5)(typescript@5.0.4)
       yaml: 2.3.1
     dev: false
 
@@ -13687,7 +13591,7 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /tailwindcss@3.3.3:
+  /tailwindcss@3.3.3(ts-node@10.9.1):
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -13709,7 +13613,7 @@ packages:
       postcss: 8.4.26
       postcss-import: 15.1.0(postcss@8.4.26)
       postcss-js: 4.0.1(postcss@8.4.26)
-      postcss-load-config: 4.0.1(postcss@8.4.26)
+      postcss-load-config: 4.0.1(postcss@8.4.26)(ts-node@10.9.1)
       postcss-nested: 6.0.1(postcss@8.4.26)
       postcss-selector-parser: 6.0.13
       resolve: 1.22.2
@@ -13977,7 +13881,6 @@ packages:
       typescript: 5.0.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
 
   /ts-node@10.9.1(@types/node@20.4.7)(typescript@5.0.4):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
@@ -14416,7 +14319,7 @@ packages:
       '@unocss/transformer-directives': 0.55.0
       '@unocss/transformer-variant-group': 0.55.0
       '@unocss/vite': 0.55.0(rollup@2.79.1)(vite@4.4.9)
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -14501,7 +14404,6 @@ packages:
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
-    dev: true
 
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -14580,46 +14482,11 @@ packages:
       debug: 4.3.4
       fast-glob: 3.3.0
       pretty-bytes: 6.1.1
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
       workbox-build: 7.0.0
       workbox-window: 7.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /vite@4.4.9:
-    resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      esbuild: 0.18.14
-      postcss: 8.4.27
-      rollup: 3.27.2
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: false
 
   /vite@4.4.9(@types/node@18.17.5):
@@ -14665,7 +14532,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.4.9
+      vite: 4.4.9(@types/node@18.17.5)
     dev: false
 
   /vitest@0.34.1:
@@ -15310,7 +15177,6 @@ packages:
   /yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
     engines: {node: '>=6'}
-    dev: true
 
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
