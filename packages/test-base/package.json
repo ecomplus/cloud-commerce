@@ -1,5 +1,6 @@
 {
   "name": "@cloudcommerce/test-base",
+  "private": true,
   "type": "module",
   "version": "0.0.0",
   "description": "E-Com Plus Cloud Commerce basic setup for testing",

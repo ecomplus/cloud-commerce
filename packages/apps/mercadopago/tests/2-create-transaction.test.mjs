@@ -6,7 +6,7 @@ import {
   bodyCreateTransaction,
 } from '@cloudcommerce/test-base';
 
-describe('Test to create a transaction in the MercadoPago App', async () => {
+describe('Test to create a transaction in the MercadoPago App with PIX', async () => {
   let req;
   let data;
   const appId = 111223;
