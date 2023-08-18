@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.24.0](https://github.com/ecomplus/cloud-commerce/compare/v0.23.3...v0.24.0) (2023-08-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Icons related theme config fields replaced by `generalIconSets`, `brandIconSets`, `brandIconShortcuts`, `logoIconSets`, `logoIconShortcuts`
+
+IntelliSense only field for icons no more needed and removed
+* **storefront:** Global component <ALink> API changed
+* **storefront:** `usePageHeader` composable props changed (simplified)
+* **ssr:** Previous /fallback.astro page must be changed to /~fallback.astro
+* **storefront:** Route context `fetchingApiContext` now always resolve with null, error only at `apiContext.error` if any
+
+### Features
+
+* **ssr:** Edit Cloudflare SWR worker to also store SSRed HTML on KV PERMA_CACHE namespace ([1f3b188](https://github.com/ecomplus/cloud-commerce/commit/1f3b188b583a8bfa656c7a7469510fadc10081f4))
+* **ssr:** Edit Cloudflare SWR worker to support host override from env vars ([b2fc99b](https://github.com/ecomplus/cloud-commerce/commit/b2fc99bb2310dc9986569beb89a8251c65af85a8))
+* **storefront:** Add new `intellisenseIconSets` theme option for Tailwind config ([75ce9c9](https://github.com/ecomplus/cloud-commerce/commit/75ce9c9b64f997dd9bbc86b6f178137745acc40b))
+* **storefront:** Add support for multiple icon sets with arrays on theme config ([5d5c0a3](https://github.com/ecomplus/cloud-commerce/commit/5d5c0a3a806cac5ecf15462b2add22804d3d6c0d))
+* **storefront:** New <PaymentMethodFlag> component ([2ba386f](https://github.com/ecomplus/cloud-commerce/commit/2ba386fb26dcb72a5c91f4740403302cb4e4a157))
+* **types:** Add `service_links` and `payment_methods` (flags) to settings content type ([390be9d](https://github.com/ecomplus/cloud-commerce/commit/390be9d7ec65996bbef1b1431c50de5b195ce8f0))
+
+
+### Bug Fixes
+
+* **deps:** Update Astro to v2.10.7 ([#210](https://github.com/ecomplus/cloud-commerce/issues/210)) ([fab598f](https://github.com/ecomplus/cloud-commerce/commit/fab598febeb9d2b2d7979497dba08f17b921dcde))
+* **deps:** Update dependency unocss to ^0.55.0 ([#213](https://github.com/ecomplus/cloud-commerce/issues/213)) ([55b9626](https://github.com/ecomplus/cloud-commerce/commit/55b96263e141ef5abd340f2146215a0141a02ceb))
+* **storefront:** Fix <Drawer> close button z-index ([4ff06db](https://github.com/ecomplus/cloud-commerce/commit/4ff06dbadce0c3261444ea5dcbe57ec294ffa549))
+* **storefront:** Increasing sticky header debounce max wait to prevent wrong header final place ([d04b808](https://github.com/ecomplus/cloud-commerce/commit/d04b808ff55a7457d78bc5965d43e5276299a780))
+* **storefront:** Minor fix BannerPicture.astro default alt text styles ([6d0aed5](https://github.com/ecomplus/cloud-commerce/commit/6d0aed5ba849af6a0aa8e11da916f7c204e04564))
+* **storefront:** Prevent errors with not founds by slug on SSR context load ([eeb3232](https://github.com/ecomplus/cloud-commerce/commit/eeb3232fb79f6440234a257b915f9c9d2de0e7b4))
+* **storefront:** Update Astro to v2.10.9 ([3555906](https://github.com/ecomplus/cloud-commerce/commit/35559061843a1c8ba7618c255080289677640b10))
+
+
+* **ssr:** Expecting fallback static HTML at /~fallback route ([922c9c9](https://github.com/ecomplus/cloud-commerce/commit/922c9c9ddeda661861cf1c80204ebd9adf0bf47e))
+* **storefront:** Set href optional on <ALink> to handle common optional link case ([1573c65](https://github.com/ecomplus/cloud-commerce/commit/1573c653126975b3fac1e3291fa01976e98a8052))
+* **storefront:** Update `usePageHeader` composable removing `serviceLinks` prop ([e566038](https://github.com/ecomplus/cloud-commerce/commit/e56603848af4013eb29b7604d0fb936238e85d7c))
+
 ### [0.23.3](https://github.com/ecomplus/cloud-commerce/compare/v0.23.2...v0.23.3) (2023-08-08)
 
 
