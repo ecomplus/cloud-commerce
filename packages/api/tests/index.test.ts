@@ -1,5 +1,3 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies */
-
 import { test, expect } from 'vitest';
 import api, { type ApiError } from '../src/api';
 

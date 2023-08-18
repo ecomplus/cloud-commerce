@@ -1,3 +1,4 @@
+import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
@@ -23,22 +24,26 @@ let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
-let cssFilename: string | undefined;
-const readingStylesManifest = new Promise((resolve) => {
-  readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
-    .then((stylesManifest) => {
-      const cssFiles: string[] = [];
-      stylesManifest.split(/\n/).forEach((line) => {
-        const [filename] = line.split(',');
-        if (filename) cssFiles.push(filename);
-      });
-      if (cssFiles.length === 1) {
-        [cssFilename] = cssFiles;
+let cssFilepath: string | undefined;
+readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
+  .then((stylesManifest) => {
+    const cssFiles: string[] = [];
+    stylesManifest.split(/\n/).forEach((line) => {
+      const [filename] = line.split(',');
+      if (filename) cssFiles.push(filename);
+    });
+    if (cssFiles.length === 1) {
+      cssFilepath = cssFiles[0]?.replace('./dist/client/', '/');
+      if (
+        cssFilepath
+        && cssFilepath.charAt(0) !== '/'
+        && !cssFilepath.startsWith('https://')
+      ) {
+        cssFilepath = `/${cssFilepath}`;
       }
-    })
-    .catch(logger.warn)
-    .finally(() => resolve(null));
-});
+    }
+  })
+  .catch(logger.warn);
 
 const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
 const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
@@ -138,11 +143,11 @@ export default async (req: Request, res: Response) => {
   };
 
   const fallback = (err: any, status = 500) => {
-    if (url !== '/fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
+    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
       setStatusAndCache(status, 'public, max-age=120')
         .send('<html><head>'
           + '<meta http-equiv="refresh" content="0; '
-            + `url=/fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
+            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
           + `</head><body>${err.toString()}</body></html>`);
     } else {
       setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
@@ -191,15 +196,20 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  (async () => {
-    await readingStylesManifest;
-    if (cssFilename && !res.headersSent) {
-      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103 :zap:
-      res.writeEarlyHints({
-        link: `</${cssFilename}>; rel=preload; as=style`,
-      });
+  /*
+  Check Response methods used by Astro Node.js integration:
+  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
+  */
+  const _writeHead = res.writeHead;
+  /* eslint-disable prefer-rest-params */
+  // @ts-ignore
+  res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
+    if (status === 200 && headers && cssFilepath) {
+      // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
+      headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
     }
-  })();
+    _writeHead.apply(res, [status, headers]);
+  };
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs

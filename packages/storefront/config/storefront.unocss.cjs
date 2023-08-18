@@ -46,12 +46,6 @@ Object.keys(onBrandColors).forEach((colorLabel) => {
 const genUnoCSSConfig = (_tailwindConfig) => {
   const themeOptions = _tailwindConfig?.themeOptions || {};
   const {
-    brandIcons,
-    brandIconsShortcuts,
-    brandLogos,
-    brandLogosShortcuts,
-    generalIcons,
-    iconAliases,
     preflights = [{
       getCSS: () => {
         const strCSSVars = Object.entries(colorCSSVars)
@@ -63,13 +57,20 @@ const genUnoCSSConfig = (_tailwindConfig) => {
   } = deepmerge(defaultThemeOptions, themeOptions);
   const tailwindConfig = _tailwindConfig || genTailwindConfig(themeOptions);
   const rules = [];
+  const shortcuts = [];
   tailwindConfig.plugins?.forEach((plugin) => {
     plugin({
       addUtilities: (utilities) => {
         Object.keys(utilities).forEach((s) => {
           /* Skip icons, custom UI and prose selectors
           added on tailwind.config.cjs only for IntelliSense */
-          if (!s.startsWith('.i-') && !s.startsWith('.ui-') && !s.includes('prose')) {
+          if (s.startsWith('.i-')) {
+            const {
+              '--collection': iconset,
+              '--icon': icon,
+            } = utilities[s];
+            shortcuts.push({ [`i-${icon}`]: `i-${iconset}:${icon}` });
+          } else if (!s.startsWith('.ui-') && !s.includes('prose')) {
             rules.push([s.replace('.', ''), utilities[s]]);
           }
         });
@@ -80,22 +81,7 @@ const genUnoCSSConfig = (_tailwindConfig) => {
   return defineConfig({
     preflights,
     rules,
-    shortcuts: [
-      [/^i-([^:]+)$/, ([, icon]) => `i-${generalIcons}:${icon}`],
-      ...brandIconsShortcuts.map((brand) => {
-        return typeof brand === 'string'
-          ? { [`i-${brand}`]: `i-${brandIcons}:${brand}` }
-          : { [`i-${brand[0]}`]: `i-${brandIcons}:${brand[1]}` };
-      }),
-      ...brandLogosShortcuts.map((brand) => {
-        return typeof brand === 'string'
-          ? { [`i-${brand}`]: `i-${brandLogos}:${brand}` }
-          : { [`i-${brand[0]}`]: `i-${brandLogos}:${brand[1]}` };
-      }),
-      ...Object.keys(iconAliases).map((alias) => {
-        return { [`i-${alias}`]: `i-${generalIcons}:${iconAliases[alias]}` };
-      }),
-    ],
+    shortcuts,
     theme: {
       ...theme,
       colors: {

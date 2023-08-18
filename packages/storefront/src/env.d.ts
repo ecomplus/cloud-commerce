@@ -4,8 +4,6 @@
 /// <reference types="../client" />
 /// <reference types="../server" />
 
-/* eslint-disable import/newline-after-import */
-
 declare module '*.vue' {
   import { type DefineComponent } from 'vue';
   const component: DefineComponent<{}, {}, any>;

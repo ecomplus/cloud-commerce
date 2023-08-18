@@ -82,6 +82,7 @@ if (argv.publish) {
       cd(storeDir);
       await $`rm -rf node_modules package-lock.json`;
       await $`npm i --save @cloudcommerce/cli@${version}`;
+      await $`npm i --save-dev @cloudcommerce/eslint@${version}`;
       await $`rm -rf node_modules`;
       try {
         await $`git add package* functions/*/package*`;

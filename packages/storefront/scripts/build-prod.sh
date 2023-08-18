@@ -8,6 +8,8 @@ DEPLOY_RUNTIME=serverless npx astro build
 mv ./.cloudcommerce/sf-tmp-dist/_astro/*.{png,jpg,jpeg,webp,avif,svg} \
   ./dist/client/_astro/ \
   2>/dev/null
+mv ./.cloudcommerce/sf-tmp-dist/~fallback/index.html ./dist/client/~fallback.html
+mv ./.cloudcommerce/sf-tmp-dist/index.html ./dist/client/~index.html
 rm -rf ./.cloudcommerce/sf-tmp-dist
 
 identify -format "%f,%w,%h\n" \

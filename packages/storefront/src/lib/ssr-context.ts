@@ -75,13 +75,13 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
     brands?: BrandsList,
     [k: string]: Record<string, any> | undefined,
   } = {};
-  const apiPrefetchings = [
+  const apiPrefetchings: Array<ReturnType<typeof api.get> | Promise<null> | null> = [
     ...apiPrefetchEndpoints.map((endpoint) => {
       if (endpoint === ':slug') return null; // fetch by slug
       return api.get(endpoint);
     }),
   ];
-  let fetchingApiContext: ReturnType<typeof api.get> | null = null;
+  let fetchingApiContext: typeof apiPrefetchings[number] = null;
   const apiContext: {
     resource?: 'products' | 'categories' | 'brands' | 'collections',
     doc?: Record<string, any>,
@@ -89,20 +89,21 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   } = {
     error: null,
   };
+  const { slug } = Astro.params;
   if (isHomepage) {
     cmsContent = await config.getContent('pages/home');
-  } else {
-    const { slug } = Astro.params;
-    if (slug) {
-      if (contentCollection) {
-        cmsContent = await config.getContent(`${contentCollection}/${slug}`);
-      } else if (slug.startsWith('api/')) {
-        const err: any = new Error('/api/* routes not implemented on SSR directly');
-        Astro.response.status = 501;
-        err.responseHTML = `<head></head><body>${err.message}</body>`;
-        throw err;
-      } else {
-        fetchingApiContext = api.get(`slugs/${slug}`)
+  } else if (slug) {
+    if (contentCollection) {
+      cmsContent = await config.getContent(`${contentCollection}/${slug}`);
+    } else if (slug.startsWith('api/')) {
+      const err: any = new Error('/api/* routes not implemented on SSR directly');
+      Astro.response.status = 501;
+      err.responseHTML = `<head></head><body>${err.message}</body>`;
+      throw err;
+    } else {
+      const prefetchingsIndex = apiPrefetchings.findIndex((pr) => pr === null);
+      fetchingApiContext = new Promise((resolve, reject) => {
+        api.get(`slugs/${slug}`)
           .then((response) => {
             Object.assign(apiContext, response.data);
             const apiResource = apiContext.resource as
@@ -114,16 +115,19 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
               doc: apiDoc as any,
               timestamp: Date.now(),
             };
-            return response;
+            resolve(null);
+          })
+          .catch((err: ApiError) => {
+            if (prefetchingsIndex > -1) {
+              reject(err);
+            } else {
+              apiContext.error = err;
+              resolve(null);
+            }
           });
-        const index = apiPrefetchings.findIndex((pr) => pr === null);
-        if (index > -1) {
-          apiPrefetchings[index] = fetchingApiContext;
-        } else {
-          fetchingApiContext.catch((err: ApiError) => {
-            apiContext.error = err;
-          });
-        }
+      }) as Promise<null>;
+      if (prefetchingsIndex > -1) {
+        apiPrefetchings[prefetchingsIndex] = fetchingApiContext;
       }
     }
   }
@@ -135,6 +139,8 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
         if (!apiState[apiStateKey]) {
           apiState[apiStateKey] = data.result || data;
         }
+      } else if (slug && apiContext.doc) {
+        apiState[`slugs/${slug}`] = apiContext;
       }
     });
   } catch (err: any) {
@@ -155,13 +161,13 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
     Astro.response.status = status;
     err.responseHTML = `<head>
       <meta http-equiv="refresh" content="0;
-        url=/fallback?status=${status}&url=${encodeURIComponent(urlPath)}"/>
+        url=/~fallback?status=${status}&url=${encodeURIComponent(urlPath)}"/>
       </head>
       <body></body>`;
     throw err;
   }
   Astro.response.headers.set('X-Load-Took', String(Date.now() - startedAt));
-  if (urlPath === '/fallback') {
+  if (urlPath === '/~fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else if (isHomepage) {
     setResponseCache(Astro, 180, 300);

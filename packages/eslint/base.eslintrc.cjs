@@ -59,6 +59,7 @@ module.exports = {
     'quote-props': 'warn',
     'quotes': 'warn',
     'prefer-template': 'off',
+    'prefer-destructuring': 'off',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'no-continue': 'off',
@@ -99,6 +100,28 @@ module.exports = {
       files: ['*.ts', '*.mts', '*.cts', '*.tsx', '*.vue', '*.astro'],
       rules: {
         'no-undef': 'off',
+      },
+    },
+    {
+      files: ['*.d.ts'],
+      rules: {
+        'import/newline-after-import': 'off',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      },
+    },
+    {
+      files: ['*.config.*', '*.eslintrc.*'],
+      rules: {
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'quote-props': 'off',
+      },
+    },
+    {
+      files: ['*.test.ts', '*.test.mjs', '*.test.cjs'],
+      rules: {
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': 'off',
       },
     },
   ],

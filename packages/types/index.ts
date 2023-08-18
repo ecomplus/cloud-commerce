@@ -81,6 +81,16 @@ type AppModuleBody = {
   application: Applications,
 };
 
+type PaymentMethodFlag = 'pix'
+  | 'visa'
+  | 'mastercard'
+  | 'elo'
+  | 'amex'
+  | 'hipercard'
+  | 'boleto'
+  | 'diners'
+  | 'discover';
+
 type SettingsContent = {
   domain: string,
   name: string,
@@ -106,6 +116,12 @@ type SettingsContent = {
   youtube?: string,
   tiktok?: string,
   pinterest?: string,
+  threads?: string,
+  service_links?: Array<{
+    title: string,
+    href: string,
+  }>,
+  payment_methods?: PaymentMethodFlag[],
   modules?: {
     list_payments?: {
       installments_option?: Partial<ListPaymentsResponse['installments_option']>,

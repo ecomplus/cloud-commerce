@@ -11,8 +11,11 @@ const networkNames = [
   'youtube',
   'tiktok',
   'pinterest',
+  'threads',
 ] as const;
-type NetworkName = typeof networkNames[number];
+
+export type NetworkName = typeof networkNames[number];
+
 const socialNetworks: Partial<Record<NetworkName, string>> = {};
 networkNames.forEach((network: NetworkName) => {
   if (settings[network]) {
@@ -22,4 +25,8 @@ networkNames.forEach((network: NetworkName) => {
 
 export { settings, apiContext, socialNetworks };
 
-export type { NetworkName };
+export const serviceLinks = settings.service_links;
+
+export const paymentMethodFlags = settings.payment_methods;
+
+export type PaymentMethodFlag = Exclude<typeof paymentMethodFlags, undefined>[number];

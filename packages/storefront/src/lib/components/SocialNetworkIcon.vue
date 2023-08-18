@@ -19,6 +19,7 @@ const iconClassName = computed(() => {
     case 'pinterest': return 'i-pinterest';
     case 'tiktok': return 'i-tiktok';
     case 'twitter': return 'i-twitter';
+    case 'threads': return 'i-threads';
     default: return '';
   }
 });

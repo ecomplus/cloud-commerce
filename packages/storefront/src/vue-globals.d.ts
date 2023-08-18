@@ -1,5 +1,4 @@
 // Read more: https://github.com/vuejs/core/pull/3399
-// eslint-disable-next-line import/no-extraneous-dependencies
 import '@vue/runtime-core';
 import type { FormatPercentage } from '@@sf/pages/_vue';
 import type { $Storefront } from '@@sf/$storefront';

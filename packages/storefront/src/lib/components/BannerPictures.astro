@@ -45,7 +45,7 @@ if (!mobileWidths?.length) {
     widths={widths}
     fetchpriority={index === 0 ? 'high' : 'low'}
     loading={index === 0 ? 'eager' : 'lazy'}
-    class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto ${className}`}
+    class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto text-sm text-opacity-70 ${className}`}
   />
 }
 {mobileImg &&
@@ -55,6 +55,6 @@ if (!mobileWidths?.length) {
     widths={mobileWidths}
     fetchpriority={index === 0 ? 'high' : 'low'}
     loading={index === 0 ? 'eager' : 'lazy'}
-    class={`md:hidden mx-auto ${mobileClass}`}
+    class={`md:hidden mx-auto text-sm text-opacity-70 ${mobileClass}`}
   />
 }
