@@ -18,7 +18,7 @@ const {
   subtitle,
   buttonText,
   index,
-  class: className = 'max-w-screen-2xl',
+  class: className = 'max-w-screen-sm sm:max-w-screen-2xl',
   mobileClass = 'max-w-screen-sm',
 } = Astro.props as Props;
 const hasHeader = title || subtitle || buttonText;
@@ -27,14 +27,14 @@ if (!widths?.length) {
   if (mobileImg) {
     widths = [1536, 2048];
   } else {
-    widths = [856, 1536, 2048];
+    widths = [640, 856, 1536, 2048];
     if (hasHeader) {
       widths = widths.map((w) => (w / 2));
     }
   }
 }
 if (!mobileWidths?.length) {
-  mobileWidths = [720, 856];
+  mobileWidths = [640, 856];
 }
 ---
 
