@@ -19,6 +19,7 @@ module.exports = {
         'Fade',
         'Carousel',
         'Drawer',
+        'Skeleton',
         'Prices',
         'Banner',
         'Countdown',
