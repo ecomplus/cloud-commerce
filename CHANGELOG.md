@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.24.1](https://github.com/ecomplus/cloud-commerce/compare/v0.24.0...v0.24.1) (2023-08-19)
+
+
+### Features
+
+* **storefront:** Add new global <Skeleton> component ([83c42b1](https://github.com/ecomplus/cloud-commerce/commit/83c42b113200c28dd56b77f80df393f911194957))
+
+
+### Bug Fixes
+
+* **storefront:** Fix regression with icons aliases selectors on UnoCSS config ([37f7c8e](https://github.com/ecomplus/cloud-commerce/commit/37f7c8efaa63273cf3c0eb575d174cb9e2358fdc))
+
 ## [0.24.0](https://github.com/ecomplus/cloud-commerce/compare/v0.23.3...v0.24.0) (2023-08-18)
 
 
