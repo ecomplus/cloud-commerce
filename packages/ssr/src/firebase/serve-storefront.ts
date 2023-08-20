@@ -132,28 +132,10 @@ export default async (req: Request, res: Response) => {
     proxy(req, res);
     return;
   }
-  res.set('X-XSS-Protection', '1; mode=block');
-  const url = req.path.replace(/\.html$/, '');
-
-  const setStatusAndCache = (status: number, cacheControl: string) => {
-    if (res.headersSent) return res;
-    return res.status(status)
-      .set('X-SSR-ID', `v1/${Date.now()}`)
-      .set('Cache-Control', cacheControl);
-  };
-
-  const fallback = (err: any, status = 500) => {
-    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
-      setStatusAndCache(status, 'public, max-age=120')
-        .send('<html><head>'
-          + '<meta http-equiv="refresh" content="0; '
-            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
-          + `</head><body>${err.toString()}</body></html>`);
-    } else {
-      setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
-        .send(err.toString());
-    }
-  };
+  if (req.path.endsWith('.css') && cssFilepath) {
+    res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
+    return;
+  }
 
   if (req.path === '/_image') {
     const { href } = req.query;
@@ -195,6 +177,29 @@ export default async (req: Request, res: Response) => {
     res.sendStatus(400);
     return;
   }
+
+  res.set('X-XSS-Protection', '1; mode=block');
+  const url = req.path.replace(/\.html$/, '');
+
+  const setStatusAndCache = (status: number, cacheControl: string) => {
+    if (res.headersSent) return res;
+    return res.status(status)
+      .set('X-SSR-ID', `v1/${Date.now()}`)
+      .set('Cache-Control', cacheControl);
+  };
+
+  const fallback = (err: any, status = 500) => {
+    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
+      setStatusAndCache(status, 'public, max-age=120')
+        .send('<html><head>'
+          + '<meta http-equiv="refresh" content="0; '
+            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
+          + `</head><body>${err.toString()}</body></html>`);
+    } else {
+      setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
+        .send(err.toString());
+    }
+  };
 
   /*
   Check Response methods used by Astro Node.js integration:
