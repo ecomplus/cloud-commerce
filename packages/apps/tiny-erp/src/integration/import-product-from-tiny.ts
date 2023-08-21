@@ -60,6 +60,14 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
       }
       return null;
     }
+
+    if (!product && tinyProduct && tipo === 'produto') {
+      return parseProduct(tinyProduct, tipo, true)
+        .then((bodyProduct) => {
+          return api.post('products', bodyProduct);
+        });
+    }
+
     if (!tinyProduct) {
       return null;
     }
@@ -72,14 +80,14 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
         if (productId) {
           method = 'PATCH';
           endpoint = `products/${productId}`;
-        } else if (tipo === 'produto' || !tipo) {
+        } else if (tipo === 'produto' || appData.import_all_products) {
           method = 'POST';
           endpoint = 'products';
         } else {
           return null;
         }
         // @ts-ignore
-        return parseProduct(produto, method === 'POST').then((parsedProduct: Products) => {
+        return parseProduct(produto, tipo, method === 'POST').then((parsedProduct: Products) => {
           if (!Number.isNaN(quantity)) {
             parsedProduct.quantity = quantity >= 0 ? quantity : 0;
           }
@@ -140,6 +148,10 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
   if (tinyStockUpdate && isHiddenQueue && queueProductId) {
     return handleTinyStock(tinyStockUpdate as any);
   }
+  if (tinyStockUpdate.tipo === 'produto' && !queueProductId) {
+    return handleTinyStock({ produto: {}, tipo: 'produto' }, tinyStockUpdate.produto);
+  }
+
   return postTiny('/produtos.pesquisa.php', { pesquisa: queueSku })
     .then(({ produtos }) => {
       if (Array.isArray(produtos)) {

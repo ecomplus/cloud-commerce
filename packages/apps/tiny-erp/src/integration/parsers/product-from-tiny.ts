@@ -1,4 +1,4 @@
-import type { Products } from '@cloudcommerce/types';
+import type { Products, ProductSet } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import FormData from 'form-data';
@@ -78,17 +78,26 @@ const tryImageUpload = (originImgUrl: string, product: Products) => new Promise(
   return picture;
 });
 
-export default (tinyProduct, isNew = true) => new Promise((resolve) => {
+export default (
+  tinyProduct,
+  tipo?:string,
+  isNew = true,
+): Promise<ProductSet> => new Promise((resolve) => {
   const sku = tinyProduct.codigo || String(tinyProduct.id);
   const name = (tinyProduct.nome || sku).trim();
-  const product: Omit<Products, '_id' | 'store_id' | 'created_at' | 'updated_at'> = {
+  const isProduct = tipo === 'produto';
+  const getCorrectPrice = (price) => {
+    return Number(price) > 0 ? Number(price) : null;
+  };
+  const product: ProductSet = {
     available: tinyProduct.situacao === 'A',
     sku,
     name,
-    cost_price: tinyProduct.preco_custo,
-    price: tinyProduct.preco_promocional || tinyProduct.preco,
-    base_price: tinyProduct.preco,
-    body_html: tinyProduct.descricao_complementar,
+    cost_price: !isProduct ? Number(tinyProduct.preco_custo) : Number(tinyProduct.precoCusto),
+    price: !isProduct ? Number(tinyProduct.preco_promocional || tinyProduct.preco)
+      : Number(getCorrectPrice(tinyProduct.precoPromocional) || tinyProduct.preco),
+    base_price: Number(tinyProduct.preco),
+    body_html: tinyProduct.descricao_complementar || tinyProduct.descricaoComplementar,
   };
 
   if (isNew) {
@@ -102,8 +111,9 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
   if (tinyProduct.garantia) {
     product.warranty = tinyProduct.garantia;
   }
-  if (tinyProduct.unidade_por_caixa) {
-    product.min_quantity = Number(tinyProduct.unidade_por_caixa);
+  if (tinyProduct.unidade_por_caixa || tinyProduct.unidadePorCaixa) {
+    product.min_quantity = !isProduct ? Number(tinyProduct.unidade_por_caixa)
+      : Number(tinyProduct.unidadePorCaixa);
   }
   if (tinyProduct.ncm) {
     product.mpn = [tinyProduct.ncm];
@@ -113,8 +123,8 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
   };
   if (validateGtin(tinyProduct.gtin)) {
     product.gtin = [tinyProduct.gtin];
-    if (validateGtin(tinyProduct.gtin_embalagem)) {
-      product.gtin.push(tinyProduct.gtin_embalagem);
+    if (validateGtin(tinyProduct.gtin_embalagem || tinyProduct.gtinEmbalagem)) {
+      product.gtin.push(tinyProduct.gtin_embalagem || tinyProduct.gtinEmbalagem);
     }
   }
 
@@ -145,38 +155,84 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
   if (isNew) {
     if (Array.isArray(tinyProduct.variacoes) && tinyProduct.variacoes.length) {
       product.variations = [];
-      tinyProduct.variacoes.forEach(({ variacao }) => {
-        const { codigo, preco, grade } = variacao;
+      tinyProduct.variacoes.forEach(({ variacaoObj }) => {
+        const variacao = !isProduct ? variacaoObj.variacao : variacaoObj;
+        const {
+          codigo,
+          preco,
+          grade,
+          estoqueAtual,
+          anexos,
+        } = variacao;
+        const gridIdFormat = (text) => {
+          return removeAccents(text.toLowerCase())
+            .replace(/\s+/g, '_')
+            .replace(/[^a-z0-9_]/g, '')
+            .substring(0, 30)
+            .padStart(2, 'i');
+        };
+
+        const specifications = {};
+        const specTexts: string[] = [];
+
         if (grade && typeof grade === 'object') {
-          const specifications = {};
-          const specTexts: string[] = [];
-          Object.keys(grade).forEach((tipo) => {
-            if (grade[tipo]) {
-              const gridId = removeAccents(tipo.toLowerCase())
-                .replace(/\s+/g, '_')
-                .replace(/[^a-z0-9_]/g, '')
-                .substring(0, 30)
-                .padStart(2, 'i');
-              const spec: Record<string, string> = {
-                text: grade[tipo],
+          Object.keys(grade).forEach((tipoGrade) => {
+            if (grade[tipoGrade]) {
+              const gridId = gridIdFormat(tipoGrade);
+              const spec = {
+                text: grade[tipoGrade],
               };
               specTexts.push(spec.text);
               if (gridId !== 'colors') {
-                spec.value = removeAccents(spec.text.toLowerCase()).substring(0, 100);
+                Object.assign(
+                  spec,
+                  {
+                    value: removeAccents(spec.text.toLowerCase()).substring(0, 100),
+                  },
+                );
               }
               specifications[gridId] = [spec];
             }
           });
+        } else if (Array.isArray(grade)) {
+          grade.forEach((gd) => {
+            const gridId = gridIdFormat(gd.chave);
+            const spec = {
+              text: gd.valor,
+            };
+            specTexts.push(spec.text);
+            if (gridId !== 'colors') {
+              Object.assign(
+                spec,
+                {
+                  value: removeAccents(spec.text.toLowerCase()).substring(0, 100),
+                },
+              );
+            }
+            specifications[gridId] = [spec];
+          });
+        }
+        let pictureId;
+        if (Array.isArray(anexos) && anexos.length
+          && Array.isArray(tinyProduct.anexos) && tinyProduct.anexos.length) {
+          pictureId = tinyProduct.anexos.length;
+          anexos.forEach((anexo) => {
+            tinyProduct.anexos.push(anexo);
+          });
+        } else if (Array.isArray(tinyProduct.anexos) && tinyProduct.anexos.length) {
+          pictureId = 0;
+        }
 
-          if (specTexts.length) {
-            product.variations?.push({
-              _id: ecomUtils.randomObjectId(),
-              name: `${name} / ${specTexts.join(' / ')}`.substring(0, 100),
-              sku: codigo,
-              specifications,
-              price: parseFloat(preco || 0),
-            });
-          }
+        if (specTexts.length) {
+          product.variations?.push({
+            _id: ecomUtils.randomObjectId(),
+            name: `${name} / ${specTexts.join(' / ')}`.substring(0, 100),
+            sku: codigo,
+            specifications,
+            price: parseFloat(preco || 0),
+            quantity: estoqueAtual || 0,
+            picture_id: pictureId,
+          });
         }
       });
     }
@@ -201,12 +257,33 @@ export default (tinyProduct, isNew = true) => new Promise((resolve) => {
         product.pictures = [];
       }
       const promises: Promise<any>[] = [];
-      tinyProduct.anexos.forEach(({ anexo }) => {
-        if (typeof anexo === 'string' && anexo.startsWith('http')) {
+      tinyProduct.anexos.forEach((anexo) => {
+        let url;
+        if (anexo && anexo.anexo) {
+          url = anexo.anexo;
+        } else if (anexo.url) {
+          url = anexo.url;
+        }
+
+        if (typeof url === 'string' && url.startsWith('http')) {
           promises.push(tryImageUpload(anexo, product as Products));
         }
       });
-      Promise.all(promises).then(() => resolve(product));
+      Promise.all(promises).then((images) => {
+        if (Array.isArray(product.variations) && product.variations.length) {
+          product.variations.forEach((variation) => {
+            if (variation.picture_id) {
+              const variationImage = images[variation.picture_id];
+              if (variationImage._id) {
+                variation.picture_id = variationImage._id;
+              } else {
+                delete variation.picture_id;
+              }
+            }
+          });
+        }
+        return resolve(product);
+      });
       return;
     }
   }
