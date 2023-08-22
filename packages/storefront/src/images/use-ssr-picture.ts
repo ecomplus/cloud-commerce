@@ -65,8 +65,6 @@ const useSSRPicture = async (params: UsePictureParams) => {
     const { width, height } = tryImageSize(src);
     if (width && height) {
       aspectRatio = getAspectRatio({ width, height }, tryImageSize);
-      attrs.width = width;
-      attrs.height = height;
       let hasSplicedWidths = false;
       for (let i = widths.length - 1; i >= 0; i--) {
         if (widths[i] > width) {
@@ -74,8 +72,15 @@ const useSSRPicture = async (params: UsePictureParams) => {
           hasSplicedWidths = true;
         }
       }
-      if (hasSplicedWidths && !widths.find((w) => w === width)) {
-        widths.push(width);
+      if (hasSplicedWidths) {
+        attrs.width = width;
+        attrs.height = height;
+        if (!widths.find((w) => w === width)) {
+          widths.push(width);
+        }
+      } else {
+        attrs.width = Math.max(...widths);
+        attrs.height = attrs.width / aspectRatio;
       }
     }
   }
