@@ -80,7 +80,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
         }
       } else {
         attrs.width = Math.max(...widths);
-        attrs.height = attrs.width / aspectRatio;
+        attrs.height = Math.round(attrs.width / aspectRatio);
       }
     }
   }
