@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.25.0](https://github.com/ecomplus/cloud-commerce/compare/v0.24.1...v0.25.0) (2023-08-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **cli:** Host is now exposed by default on dev (default) CLI command, SSR function dev script should not contain --host and --port options
+* **storefront:** Stop exporing non-reactive globals `settings` and `apiContext` from `@@sf/sf-lib`
+
+### Bug Fixes
+
+* **cli:** Update `cloudcommerce [dev]` command to bypass --host and --port args ([e55e438](https://github.com/ecomplus/cloud-commerce/commit/e55e4383a8de2a9ff1d65b0af766c3e8980b1121))
+* **deps:** Update non-major dependencies ([#216](https://github.com/ecomplus/cloud-commerce/issues/216)) ([377e4b0](https://github.com/ecomplus/cloud-commerce/commit/377e4b0533cb41d839afff1cfc4f8c44caeffa0f))
+* **firebase:** Update dependency @google-cloud/pubsub to v4 ([#217](https://github.com/ecomplus/cloud-commerce/issues/217)) ([d5e98b8](https://github.com/ecomplus/cloud-commerce/commit/d5e98b84937a5be3062972e49480fc98bc9ffe70))
+* **ssr:** Redirect not found .css files to unique CSS filepath ([d2dcaf9](https://github.com/ecomplus/cloud-commerce/commit/d2dcaf99551e2581027f07c62a1beddec46ec896))
+* **storefront:** Prevent undefined `import.meta.env` error on config ([83c26f6](https://github.com/ecomplus/cloud-commerce/commit/83c26f660c307e366c139c489e75f8bc2450dc1b))
+* **storefront:** Set `socialNetworks` after route load on SSR ([9d2be60](https://github.com/ecomplus/cloud-commerce/commit/9d2be602937f4d61ca0c96cdc6170a717ff5b3f0))
+* **storefront:** Update Astro to v2.10.12 ([#215](https://github.com/ecomplus/cloud-commerce/issues/215)) ([4ae833f](https://github.com/ecomplus/cloud-commerce/commit/4ae833f25438626e268019e7ea9032a14aa1abf8))
+
 ### [0.24.1](https://github.com/ecomplus/cloud-commerce/compare/v0.24.0...v0.24.1) (2023-08-19)
 
 
