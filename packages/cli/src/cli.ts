@@ -180,7 +180,11 @@ Finish by saving the following secrets to your GitHub repository:
 
   if (argv._.includes('dev') || !argv._.length) {
     await prepareCodebases(true);
-    return $`npm --prefix "${path.join(pwd, 'functions/ssr')}" run dev`;
+    const prefix = path.join(pwd, 'functions/ssr');
+    // https://docs.astro.build/en/reference/cli-reference/#astro-dev
+    const host = typeof argv.host === 'string' ? argv.host : '';
+    const port = typeof argv.port === 'string' || typeof argv.port === 'number' ? argv.port : '';
+    return $`npm --prefix "${prefix}" run dev -- --host ${host} --port ${port}`;
   }
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
