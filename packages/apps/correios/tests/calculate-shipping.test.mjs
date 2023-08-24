@@ -12,15 +12,19 @@ describe('Test Shipping Calculation in the Correios App', async () => {
   const appId = 1248;
 
   before(async () => {
-    req = await fetch(`${modulesUrl}/calculate_shipping?app_id=${appId}`, {
-      method: 'POST',
-      body: JSON.stringify(bodyCalculateShipping),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      req = await fetch(`${modulesUrl}/calculate_shipping?app_id=${appId}`, {
+        method: 'POST',
+        body: JSON.stringify(bodyCalculateShipping),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    data = (await req.json()).result;
+      data = (await req.json()).result;
+    } catch (err) {
+      console.error(err);
+    }
     console.log('>> ', req, ' ', data);
   });
 
