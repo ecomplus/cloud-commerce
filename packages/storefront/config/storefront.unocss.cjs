@@ -69,7 +69,7 @@ const genUnoCSSConfig = (_tailwindConfig) => {
               '--collection': iconset,
               '--icon': icon,
             } = utilities[s];
-            shortcuts.push({ [`i-${icon}`]: `i-${iconset}:${icon}` });
+            shortcuts.push({ [s.replace('.', '')]: `i-${iconset}:${icon}` });
           } else if (!s.startsWith('.ui-') && !s.includes('prose')) {
             rules.push([s.replace('.', ''), utilities[s]]);
           }

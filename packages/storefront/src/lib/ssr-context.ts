@@ -36,7 +36,7 @@ if (!globalThis.$storefront) {
   globalThis.$storefront = {
     settings: {},
     onLoad(callback: (...args: any[]) => void) {
-      emitter.on('load', callback);
+      emitter.once('load', callback);
     },
     data: {},
   };

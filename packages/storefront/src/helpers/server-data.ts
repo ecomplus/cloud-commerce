@@ -1,8 +1,3 @@
-const {
-  settings,
-  apiContext,
-} = globalThis.$storefront;
-
 const networkNames = [
   'whatsapp',
   'instagram',
@@ -17,16 +12,18 @@ const networkNames = [
 export type NetworkName = typeof networkNames[number];
 
 const socialNetworks: Partial<Record<NetworkName, string>> = {};
-networkNames.forEach((network: NetworkName) => {
-  if (settings[network]) {
-    socialNetworks[network] = settings[network];
-  }
-});
+const setSocialNetworks = () => {
+  const { settings } = globalThis.$storefront;
+  networkNames.forEach((network: NetworkName) => {
+    if (settings[network]) {
+      socialNetworks[network] = settings[network];
+    }
+  });
+};
+if (import.meta.env.SSR) {
+  global.$storefront.onLoad(() => setSocialNetworks());
+} else {
+  setSocialNetworks();
+}
 
-export { settings, apiContext, socialNetworks };
-
-export const serviceLinks = settings.service_links;
-
-export const paymentMethodFlags = settings.payment_methods;
-
-export type PaymentMethodFlag = Exclude<typeof paymentMethodFlags, undefined>[number];
+export { socialNetworks };

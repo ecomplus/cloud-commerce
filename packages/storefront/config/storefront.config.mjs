@@ -4,9 +4,15 @@ import config from '@cloudcommerce/config';
 import './storefront.cms.js';
 
 export default () => {
-  const { VITE_ECOM_STORE_ID } = import.meta.env || process.env;
+  const {
+    ECOM_STORE_ID,
+    VITE_ECOM_STORE_ID,
+    PROD,
+  } = import.meta.env || process.env;
   if (VITE_ECOM_STORE_ID) {
     config.set({ storeId: Number(VITE_ECOM_STORE_ID) });
+  } else if (ECOM_STORE_ID) {
+    config.set({ storeId: Number(ECOM_STORE_ID) });
   }
 
   const {
@@ -29,7 +35,7 @@ export default () => {
     } catch {
       //
     }
-    if (!storeId && import.meta.env.DEV === true) {
+    if (!storeId && !PROD) {
       storeId = 1011;
       console.warn('> `storeId` is not set, using fallback 1011 for dev only\n');
     }
