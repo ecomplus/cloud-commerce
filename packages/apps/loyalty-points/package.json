@@ -20,13 +20,15 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/loyalty-points#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test:e2e": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*"
   },
   "devDependencies": {
+    "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*"
   }
 }

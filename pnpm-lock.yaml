@@ -221,6 +221,9 @@ importers:
         specifier: 0.6.2
         version: 0.6.2
     devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../../test-base
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../../types
@@ -241,6 +244,9 @@ importers:
         specifier: workspace:*
         version: link:../../api
     devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../../test-base
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../../types
@@ -458,6 +464,9 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
     devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../../test-base
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../../types
@@ -505,6 +514,9 @@ importers:
         specifier: ^4.4.1
         version: 4.4.1(firebase-admin@11.10.1)
     devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../../test-base
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../../types
@@ -925,6 +937,9 @@ importers:
         specifier: ^0.5.21
         version: 0.5.21
     devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../test-base
       '@cloudcommerce/types':
         specifier: workspace:*
         version: link:../types
@@ -1099,6 +1114,16 @@ importers:
       '@vue/runtime-core':
         specifier: ^3.3.4
         version: 3.3.4
+
+  packages/test-base:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../api
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../types
 
   packages/types:
     dependencies:

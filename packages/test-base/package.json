@@ -1,29 +1,28 @@
 {
-  "name": "@cloudcommerce/app-custom-shipping",
+  "name": "@cloudcommerce/test-base",
+  "private": true,
   "type": "module",
-  "version": "0.25.0",
-  "description": "E-Com Plus Cloud Commerce app for custom shipping methods",
-  "main": "lib/custom-shipping.js",
+  "version": "0.0.0",
+  "description": "E-Com Plus Cloud Commerce basic setup for testing",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/apps/custom-shipping"
+    "directory": "packages/test-base"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/custom-shipping#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/test-base#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh",
-    "test:e2e": "node --test tests/"
+    "build": "bash ../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
   },
   "devDependencies": {
-    "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*"
   }
 }

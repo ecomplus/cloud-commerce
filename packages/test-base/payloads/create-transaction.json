@@ -1,0 +1,116 @@
+{
+  "items": [
+    {
+      "_id": "344153168658920073000000",
+      "visible": true,
+      "available": true,
+      "manage_stock": true,
+      "sales": 76,
+      "total_sold": 6683.85,
+      "name": "Vaso para Orquídeas / M",
+      "sku": "GIE2742-405-2",
+      "price": 99.75,
+      "base_price": 24.99,
+      "price_effective_date": {
+        "start": "2021-10-06T03:00:00.000Z",
+        "end": "2021-10-15T03:00:00.000Z"
+      },
+      "cost_price": 21.99,
+      "quantity": 1,
+      "pictures": [
+        {
+          "zoom": {
+            "url": "https://ecoms1.com/1173/@v3/1634126448701-vaso-orquideas.webp",
+            "size": "900x900",
+            "alt": "vaso-orquideas"
+          },
+          "_id": "854260163412645020000000"
+        }
+      ],
+      "categories": [
+        {
+          "_id": "5f81f29eb2161709fa3da64f",
+          "name": "Cerâmica"
+        }
+      ],
+      "short_description": "Vaso para Orquídeas em Cerâmica",
+      "slug": "vaso-para-orquideas",
+      "commodity_type": "physical",
+      "ad_relevance": 0,
+      "currency_id": "BRL",
+      "currency_symbol": "R$",
+      "condition": "new",
+      "adult": false,
+      "auto_fill_related_products": true,
+      "views": 0,
+      "dimensions": {
+        "width": {
+          "unit": "cm",
+          "value": 30
+        },
+        "height": {
+          "unit": "cm",
+          "value": 30
+        },
+        "length": {
+          "unit": "cm",
+          "value": 30
+        }
+      },
+      "weight": {
+        "unit": "kg",
+        "value": 0.5
+      },
+      "updated_at": "2023-06-06T22:54:56.420Z",
+      "store_id": 1173,
+      "created_at": "2023-05-24T17:48:21.549Z",
+      "customizations": [],
+      "specifications": {
+        "size": [
+          {
+            "text": "M",
+            "value": "m"
+          }
+        ]
+      },
+      "product_id": "6166cb1528ace502aea2dc36",
+      "variation_id": "693120163769524850000003",
+      "picture": {
+        "zoom": {
+          "url": "https://ecoms1.com/1173/@v3/1634126448701-vaso-orquideas.webp",
+          "size": "900x900",
+          "alt": "vaso-orquideas"
+        }
+      },
+      "max_quantity": 4,
+      "final_price": 99.75,
+      "min_quantity": 1
+    }
+  ],
+  "buyer": {
+    "customer_id": "621781e57963422eee198e7f",
+    "email": "fulanociclano@email.com",
+    "birth_date": {
+      "day": 25,
+      "month": 12,
+      "year": 1990
+    },
+    "fullname": "Fulano Ciclano",
+    "doc_number": "21645193292",
+    "registry_type": "p",
+    "phone": {
+      "number": "31999999999"
+    }
+  },
+  "amount": {
+    "subtotal": 99.75,
+    "freight": 0.00,
+    "total": 99.75
+  },
+  "payment_method": {
+    "code": "account_deposit",
+    "name": "Pix - Mercado Pago"
+  },
+  "order_number": 4977,
+  "order_id": "6490a0d15e606903703fdf92"
+}
