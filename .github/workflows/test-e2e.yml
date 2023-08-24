@@ -125,5 +125,5 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          sleep 10
+          sleep 20
           pnpm test:e2e
