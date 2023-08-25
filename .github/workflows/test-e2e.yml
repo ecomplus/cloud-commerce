@@ -120,7 +120,7 @@ jobs:
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: |
-          firebase --project=ecom2-demo emulators:start --only functions > stdout.txt &
+          firebase --project=ecom2-demo emulators:start --only functions &
 
       - name: Run tests
         continue-on-error: true
@@ -128,9 +128,3 @@ jobs:
         run: |
           sleep 10
           pnpm test:e2e
-      - name: Read File
-        shell: bash
-        run: |
-          cd store
-          nano stdout.txt
-          sleep 10
