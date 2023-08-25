@@ -123,7 +123,6 @@ jobs:
           firebase --project=ecom2-demo emulators:start --only functions &
 
       - name: Run tests
-        continue-on-error: true
         shell: bash
         run: |
           sleep 10

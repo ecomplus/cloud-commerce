@@ -77,7 +77,7 @@ async function runModule(
       return res.status(500).send({
         status: 500,
         error_code: 'MOD801',
-        message: `Store API returned status ${error.statusCode} trying to list apps`,
+        message: `Store API returned status ${error.statusCode} trying to list apps ${storeId} ${listAppsParams}`,
         more_info: error.data?.user_message?.en_us,
       });
     }
