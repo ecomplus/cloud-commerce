@@ -133,3 +133,4 @@ jobs:
         run: |
           cd store
           nano stdout.txt
+          sleep 10
