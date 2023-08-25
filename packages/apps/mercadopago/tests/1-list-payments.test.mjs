@@ -12,6 +12,8 @@ describe('Test payment list of MercadoPago App', async () => {
   const appId = 111223;
 
   before(async () => {
+    console.log('>> ', modulesUrl);
+    console.log('>>body ', bodyListPayments);
     req = await fetch(`${modulesUrl}/list_payments?app_id=${appId}`, {
       method: 'POST',
       body: JSON.stringify(bodyListPayments),
@@ -20,6 +22,7 @@ describe('Test payment list of MercadoPago App', async () => {
       },
     });
 
+    console.log('req: ', await req.text(), ' headers ', req.headers);
     data = (await req.json()).result;
   });
 

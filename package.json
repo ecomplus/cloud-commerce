@@ -17,7 +17,7 @@
     "build": "turbo run build --filter='!./ecomplus-stores/**'",
     "test": "turbo run test --filter='!./ecomplus-stores/**'",
     "test:apps": "turbo run test --filter='./packages/{apps/**,modules}'",
-    "test:e2e": "turbo run test:e2e --filter='./packages/**'",
+    "test:e2e": "turbo run test:e2e --filter='./packages/**' --force",
     "release": "bash scripts/version-and-release.sh",
     "store:run": "pnpm build && npm --prefix \"store\" run",
     "start": "pnpm store:run start",
