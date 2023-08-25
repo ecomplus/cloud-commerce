@@ -120,10 +120,15 @@ jobs:
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
         run: |
-          firebase --project=ecom2-demo emulators:start --only functions &
+          firebase --project=ecom2-demo emulators:start --only functions > stdout.txt &
 
       - name: Run tests
         shell: bash
         run: |
           sleep 10
           pnpm test:e2e
+      - name: Run tests
+        shell: bash
+        run: |
+          cd store
+          nano stdout.txt
