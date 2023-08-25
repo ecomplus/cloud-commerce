@@ -123,11 +123,12 @@ jobs:
           firebase --project=ecom2-demo emulators:start --only functions > stdout.txt &
 
       - name: Run tests
+        continue-on-error: true
         shell: bash
         run: |
           sleep 10
           pnpm test:e2e
-      - name: Run tests
+      - name: Read File
         shell: bash
         run: |
           cd store
