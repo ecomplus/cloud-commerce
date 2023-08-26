@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const now = Date.now();
-const parseBanners = (banners: Partial<PageContent['hero']['slides'][0]>[]) => {
+const parseBanners = (banners: PageContent['hero']['slides']) => {
   const validBanners: UseBannerProps[] = [];
   banners.forEach(({
     img,
@@ -38,7 +38,7 @@ const parseBanners = (banners: Partial<PageContent['hero']['slides'][0]>[]) => {
 
 export const usePageHero = async ({ routeContext }: Props) => {
   const { cmsContent } = routeContext;
-  const heroSlider: Omit<Partial<PageContent['hero']>, 'slides'>
+  const heroSlider: Omit<PageContent['hero'], 'slides'>
     & { slides: UseBannerProps[] } = { slides: [] };
   const heroContent = cmsContent?.hero;
   if (heroContent) {

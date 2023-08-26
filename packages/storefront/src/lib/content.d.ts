@@ -5,7 +5,30 @@ export type SettingsContent = _SettingsContent &
 
 export type LayoutContent = typeof import('content/layout.json');
 
-export type PageContent = typeof import('content/pages/home.json');
+export interface PageContent {
+  meta_title: string;
+  meta_description: string;
+  hero: {
+    [k: string]: unknown,
+    autoplay?: number,
+    slides: Array<{
+      [k: string]: unknown,
+      start?: string,
+      end?: string,
+      img: string,
+      alt?: string,
+      mobile_img?: string,
+      href?: string,
+      title?: string,
+      subtitle?: string
+      button_link?: string,
+      button_text?: string,
+    }>,
+  };
+  sections: Array<Record<string, any> & {
+    type: string,
+  }>;
+}
 
 export type ContentFilename = 'settings'
   | 'layout'
