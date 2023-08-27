@@ -24,21 +24,21 @@
     "build:workers": "npx tsc -p src/cloudflare --outDir cloudflare && npx eslint --ext .js cloudflare --fix"
   },
   "dependencies": {
-    "@astrojs/node": "5.3.5",
+    "@astrojs/node": "5.3.6",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.5",
     "@headlessui/vue": "^1.7.16",
     "@vueuse/core": "10.3.0",
-    "astro": "2.10.12",
+    "astro": "2.10.14",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@cloudflare/workers-types": "^4.20230814.0",
+    "@cloudflare/workers-types": "^4.20230821.0",
     "@firebase/app-types": "^0.9.0"
   }
 }

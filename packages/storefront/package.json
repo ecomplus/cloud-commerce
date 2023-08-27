@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@astrojs/image": "0.17.3",
-    "@astrojs/node": "5.3.5",
+    "@astrojs/node": "5.3.6",
     "@astrojs/vue": "2.2.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
@@ -43,7 +43,7 @@
     "@iconify-json/logos": "^1.1.34",
     "@vite-pwa/astro": "^0.1.1",
     "@vueuse/core": "10.3.0",
-    "astro": "2.10.12",
+    "astro": "2.10.14",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.3.1",
     "firebase": "^10.2.0",
