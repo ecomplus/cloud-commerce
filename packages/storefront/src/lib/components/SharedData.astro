@@ -6,7 +6,7 @@ import {
 
 export interface Props extends UseSharedDataProps {}
 
-const { inlineClientJS } = useSharedData(Astro.props);
+const { inlineClientJS } = await useSharedData(Astro.props);
 ---
 
 <script is:inline set:html={inlineClientJS} />
