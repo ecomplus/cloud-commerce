@@ -13,21 +13,12 @@ declare global {
   ) => Promise<any>;
 }
 
-const {
-  STOREFRONT_BASE_DIR,
-  SSR_PROXY_DEBUG,
-  SSR_PROXY_TIMEOUT,
-  SSR_SET_LINK_HEADER,
-} = process.env;
-
+const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
-const canSetLinkHeader = SSR_SET_LINK_HEADER
-  ? String(SSR_SET_LINK_HEADER).toLowerCase() !== 'false'
-  : true;
 let cssFilepath: string | undefined;
 readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
   .then((stylesManifest) => {
@@ -49,9 +40,10 @@ readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
   })
   .catch(logger.warn);
 
-const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
-const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
 const proxy = async (req: Request, res: Response) => {
+  const { SSR_PROXY_DEBUG, SSR_PROXY_TIMEOUT } = process.env;
+  const isDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
+  const timeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
   let proxyURL: URL | undefined;
   try {
     proxyURL = new URL(req.query.url as any);
@@ -89,14 +81,14 @@ const proxy = async (req: Request, res: Response) => {
         delete headers[headerName];
       }
     });
-    if (isProxyDebug) {
+    if (isDebug) {
       logger.info({ proxy: proxyURL.href });
     }
     try {
       const abortController = new AbortController();
       const timer = setTimeout(() => {
         abortController.abort();
-      }, proxyTimeout);
+      }, timeout);
       const response = await fetch(proxyURL, {
         method: 'get',
         headers: (headers as Record<string, string>),
@@ -205,6 +197,10 @@ export default async (req: Request, res: Response) => {
     }
   };
 
+  const { SSR_SET_LINK_HEADER } = process.env;
+  const canSetLinkHeader = SSR_SET_LINK_HEADER
+    ? String(SSR_SET_LINK_HEADER).toLowerCase() !== 'false'
+    : true;
   if (canSetLinkHeader) {
     /*
     Check Response methods used by Astro Node.js integration:
