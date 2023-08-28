@@ -131,4 +131,6 @@ jobs:
         shell: bash
         run: |
           sleep 10
+          nano store/functions/.env && 
+          ls -la store/functions/with-apps
           pnpm test:e2e
