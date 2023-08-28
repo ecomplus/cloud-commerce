@@ -1068,6 +1068,9 @@ importers:
       astro:
         specifier: 2.10.14
         version: 2.10.14(@types/node@18.17.6)(sharp@0.32.5)
+      astro-capo:
+        specifier: ^0.0.1
+        version: 0.0.1(astro@2.10.14)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -5614,6 +5617,18 @@ packages:
   /assertion-error@1.1.0:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
+
+  /astro-capo@0.0.1(astro@2.10.14):
+    resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
+    peerDependencies:
+      astro: '>= 2.8'
+    peerDependenciesMeta:
+      astro:
+        optional: true
+    dependencies:
+      astro: 2.10.14(@types/node@18.17.6)(sharp@0.32.5)
+      ultrahtml: 1.3.0
+    dev: false
 
   /astro@2.10.14(@types/node@18.17.6)(sharp@0.32.5):
     resolution: {integrity: sha512-02k2DjnI8yGtLCvdCSggvfCTkTWPm9UDgc/XHKdd1K34TSTl3X0A8TTYbASEXvgynk1zInCyOEe3IUDt3Lke+A==}
@@ -12263,6 +12278,10 @@ packages:
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
+
+  /ultrahtml@1.3.0:
+    resolution: {integrity: sha512-xmXvE8tC8t4PVqy0/g1fe7H9USY/Brr425q4dD/0QbQMQit7siCtb06+SCqE4GfU24nwsZz8Th1g7L7mm1lL5g==}
+    dev: false
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
