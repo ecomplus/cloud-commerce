@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/test-base",
   "private": true,
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.26.2",
   "description": "E-Com Plus Cloud Commerce basic setup for testing",
   "main": "lib/index.js",
   "repository": {

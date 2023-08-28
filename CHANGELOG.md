@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.2](https://github.com/ecomplus/cloud-commerce/compare/v0.26.1...v0.26.2) (2023-08-28)
+
+
+### Bug Fixes
+
+* **ssr:** Check SSR_* env vars on function execution time ([1364f67](https://github.com/ecomplus/cloud-commerce/commit/1364f674aeaa016fcec7c99f95364ed45a59ecb8))
+
+### [0.26.1](https://github.com/ecomplus/cloud-commerce/compare/v0.26.0...v0.26.1) (2023-08-28)
+
+
+### Bug Fixes
+
+* **ssr:** Add `astro-capo` to SSR dependencies ([dbd2f06](https://github.com/ecomplus/cloud-commerce/commit/dbd2f06a79b5eac8cf68f93c7459689fe8cdcb58))
+
+## [0.26.0](https://github.com/ecomplus/cloud-commerce/compare/v0.25.0...v0.26.0) (2023-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `useSharedData` composable now returns a promise
+
+### Features
+
+* **i18n:** Add `i19allProducts` and `i19institutional` ([131a7e3](https://github.com/ecomplus/cloud-commerce/commit/131a7e3cc2d1dfdf995ae4c1eb92dd0cbbec3e12))
+* **ssr:** New optional `SSR_SET_LINK_HEADER` env (true by default) ([e8481a7](https://github.com/ecomplus/cloud-commerce/commit/e8481a7bd78e6caebd6e37776e6a030425cff11f))
+* **storefront:** Mannualy set `´PageContent` to more flexible interface ([820d716](https://github.com/ecomplus/cloud-commerce/commit/820d7160e84d71391998139c28ec606957160f91))
+* **storefront:** Update VueUse to v10.4.0, UnoCSS and Firebase non-major ([88b0bcc](https://github.com/ecomplus/cloud-commerce/commit/88b0bcc944f71fc7fe85d8da837b63c6e1bb110d))
+* **storefront:** Use event emitter on `useSharedData` to support optional awaited value ([851ed67](https://github.com/ecomplus/cloud-commerce/commit/851ed67037ebc1552540bf8e4f7d1797c0807c14))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#221](https://github.com/ecomplus/cloud-commerce/issues/221)) [skip ci] ([0191eff](https://github.com/ecomplus/cloud-commerce/commit/0191eff3ac0f5fb9cb1cdb91479c28d0dc0f3036))
+* **i18n:** Fix `i19allProducts` ([3a09c25](https://github.com/ecomplus/cloud-commerce/commit/3a09c2553d819a3b4dadbfe3f3355c7defa6453d))
+* **storefront:** Edit `LayoutContent` typedef for extendable footer and header content ([2edc576](https://github.com/ecomplus/cloud-commerce/commit/2edc5769865b212efeeace9546d7cf33783ee2d9))
+* **storefront:** Extending `PageContent` typedef for extra pages and blog posts ([16a4b3e](https://github.com/ecomplus/cloud-commerce/commit/16a4b3e6d6bd1530bba6c19581a5b1a982b8132c))
+* **storefront:** Fix CMS `getContent` to escape folder hidden files and clear not .json ext ([e0b5563](https://github.com/ecomplus/cloud-commerce/commit/e0b55635abeb9c1d083006937f9b4fe3803e3b0b))
+* **storefront:** Update Astro to v2.10.14 ([4d00a98](https://github.com/ecomplus/cloud-commerce/commit/4d00a984d56d1cc15b42d04d2d1520690b5e2bbb))
+
 ## [0.25.0](https://github.com/ecomplus/cloud-commerce/compare/v0.24.1...v0.25.0) (2023-08-23)
 
 

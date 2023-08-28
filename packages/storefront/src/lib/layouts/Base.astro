@@ -1,11 +1,12 @@
 ---
+import { Head } from 'astro-capo';
 import BaseBody from '@@sf/layouts/BaseBody.astro';
 
 const { getContent } = Astro.locals.routeContext;
 const { custom_code: customCodeContent } = await getContent('layout');
 ---
 
-<head>
+<Head>
   <slot name="base-head" />
   {customCodeContent?.css && <style>{customCodeContent.css}</style>}
   {customCodeContent?.html_head && <Fragment set:html={customCodeContent.html_head} />}
@@ -13,7 +14,7 @@ const { custom_code: customCodeContent } = await getContent('layout');
     <script src="../scripts/modules-info-preset"></script>
   </slot>
   <slot name="before-head-end" />
-</head>
+</Head>
 <BaseBody>
   <slot />
   {customCodeContent?.html_body && <Fragment set:html={customCodeContent.html_body} />}
