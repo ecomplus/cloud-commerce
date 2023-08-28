@@ -33,6 +33,12 @@ export interface PageContent {
   sections: Array<Record<string, any> & {
     type: string,
   }>;
+  title?: string;
+  date?: string;
+  thumbnail?: string;
+  author?: string;
+  description?: string;
+  body?: string;
 }
 
 export type ContentFilename = 'settings'
