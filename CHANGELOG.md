@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.2](https://github.com/ecomplus/cloud-commerce/compare/v0.26.1...v0.26.2) (2023-08-28)
+
+
+### Bug Fixes
+
+* **ssr:** Check SSR_* env vars on function execution time ([1364f67](https://github.com/ecomplus/cloud-commerce/commit/1364f674aeaa016fcec7c99f95364ed45a59ecb8))
+
 ### [0.26.1](https://github.com/ecomplus/cloud-commerce/compare/v0.26.0...v0.26.1) (2023-08-28)
 
 
