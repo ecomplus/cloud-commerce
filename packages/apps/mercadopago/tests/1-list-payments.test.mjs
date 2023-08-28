@@ -22,7 +22,6 @@ describe('Test payment list of MercadoPago App', async () => {
       },
     });
 
-    console.log('req: ', await req.text(), ' headers ', req.headers);
     data = (await req.json()).result;
   });
 
