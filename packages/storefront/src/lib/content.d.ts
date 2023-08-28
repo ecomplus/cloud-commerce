@@ -3,7 +3,12 @@ import type { SettingsContent as _SettingsContent } from '@cloudcommerce/types';
 export type SettingsContent = _SettingsContent &
   Omit<typeof import('content/settings.json'), Exclude<keyof _SettingsContent, 'metafields'>>;
 
-export type LayoutContent = typeof import('content/layout.json');
+type _LayoutContent = typeof import('content/layout.json');
+
+export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
+  header: Record<string, unknown> & _LayoutContent['header'],
+  footer: Record<string, unknown> & Partial<_LayoutContent['footer']>,
+};
 
 export interface PageContent {
   meta_title: string;
