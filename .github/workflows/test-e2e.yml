@@ -123,10 +123,8 @@ jobs:
           printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
           ECOM_API_KEY=$ECOM_API_KEY
           ECOM_STORE_ID=$ECOM_STORE_ID
-          " > functions/.env 
-          cp functions/.env functions/many/.env
-          cp functions/.env functions/with-apps/.env
-          cp functions/.env functions/ssr/.env
+          " > functions/.env
+          npx cloudcommerce prepare
           firebase --project=ecom2-demo emulators:start --only functions &
 
       - name: Run tests
