@@ -179,8 +179,7 @@ Finish by saving the following secrets to your GitHub repository:
   }
 
   if (argv._.includes('prepare')) {
-    await prepareCodebases(true);
-    return $`echo 'prepare'`;
+    return prepareCodebases();
   }
 
   if (argv._.includes('dev') || !argv._.length) {

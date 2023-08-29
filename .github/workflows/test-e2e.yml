@@ -1,4 +1,4 @@
-name: Run E2E tests
+name: Run tests on apps
 
 on:
   pull_request:
@@ -119,6 +119,7 @@ jobs:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
         run: |
           printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
           ECOM_API_KEY=$ECOM_API_KEY
@@ -129,6 +130,11 @@ jobs:
 
       - name: Run tests
         shell: bash
+        env:
+          ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
+          ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
+          ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
         run: |
           sleep 10
-          pnpm test:e2e
+          pnpm test:apps
