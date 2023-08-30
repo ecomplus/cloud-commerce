@@ -98,11 +98,11 @@ importers:
         specifier: ^0.26.2
         version: link:../../../../packages/types
       '@fontsource/croissant-one':
-        specifier: ^5.0.5
-        version: 5.0.5
+        specifier: ^5.0.9
+        version: 5.0.9
       '@iconify-json/mingcute':
-        specifier: ^1.1.7
-        version: 1.1.7
+        specifier: ^1.1.9
+        version: 1.1.9
 
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
@@ -160,11 +160,11 @@ importers:
         specifier: ^0.26.2
         version: link:../../../../packages/types
       '@fontsource-variable/heebo':
-        specifier: ^5.0.5
-        version: 5.0.5
+        specifier: ^5.0.8
+        version: 5.0.8
       '@iconify-json/carbon':
-        specifier: ^1.1.18
-        version: 1.1.18
+        specifier: ^1.1.20
+        version: 1.1.20
 
   ecomplus-stores/iluminim/functions/with-apps:
     dependencies:
@@ -3949,12 +3949,12 @@ packages:
     resolution: {integrity: sha512-xDxhD9++451HuCv3xKBEdSYaArX9NcokODXZYH/MxGw1XFFOz7OKkTRItZ5wf6npBN/inwp8dUZCP7SpAg46yQ==}
     dev: false
 
-  /@fontsource-variable/heebo@5.0.5:
-    resolution: {integrity: sha512-Lpx0IN6kCjjnpGDVet80aoCUPiNfjbpkxID/dNgkVn1Rq9ooKcn+7TaIBQIxYFONIjh7fpuVUCxyKSTDqzwjsg==}
+  /@fontsource-variable/heebo@5.0.8:
+    resolution: {integrity: sha512-J1OoiDvcW8/vkQbH1X7lWW8aPqFlCy+x/8kBG2V4BbSNAwAdJcMucR7mKBxopuGGOTsoeTmJSKpNJZcMiKopnw==}
     dev: true
 
-  /@fontsource/croissant-one@5.0.5:
-    resolution: {integrity: sha512-l7MeWpX28LrlvBtNnJvbl4ZkYqZJYUdHbHLRaq9zoUn6rM2hu1kCd9LDCZAzAFZyoK+ujOc9nDHpN3j0IBIRCA==}
+  /@fontsource/croissant-one@5.0.9:
+    resolution: {integrity: sha512-VzRRSfVTbLK7OEZzkhVNRGCZI3xyRWOIRVWMIkMAMMBldF659oQmKQa4Et+Nabcnb5THHOADDuSgX5VCNlO2Cw==}
     dev: true
 
   /@google-cloud/firestore@6.7.0:
@@ -4128,8 +4128,8 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@iconify-json/carbon@1.1.18:
-    resolution: {integrity: sha512-RbKET6KS9xUMeYVq1FUH3UUA7AYNcnApkHt2AccCwTWTQQs/O58ji4Of6z6PhRajGlbfvrJzT/Uqh19OKECRvA==}
+  /@iconify-json/carbon@1.1.20:
+    resolution: {integrity: sha512-ed/3FDCjicQARWaSGIDZpaF+rWmxoSqrmHYZV2aEicufp0yciG44y9OEmArxxr/0U6bEC3zJbKMSOSw4CKeBJg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -4152,8 +4152,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
-  /@iconify-json/mingcute@1.1.7:
-    resolution: {integrity: sha512-luBuSPks/Lbk4SCyt1RWVCQ8RM1lCIXPMY30qDyk0AtI+8n+eOjMF18y1vDjHUk646Mhw4HQXoRsoPJHlt7mvA==}
+  /@iconify-json/mingcute@1.1.9:
+    resolution: {integrity: sha512-bDU36w8G6vKJ2RcX3/lpuUtxmAoB8qLzdGFwioUgGaOw7o7YgviNCTA0h4mHYgh3qZQd/RBGoMf7rG+7nZMcRQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
