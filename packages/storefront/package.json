@@ -43,7 +43,7 @@
     "@iconify-json/logos": "^1.1.35",
     "@vite-pwa/astro": "^0.1.2",
     "@vueuse/core": "10.4.1",
-    "astro": "2.10.14",
+    "astro": "3.0.8",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.3.1",
