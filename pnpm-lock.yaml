@@ -854,8 +854,8 @@ importers:
   packages/ssr:
     dependencies:
       '@astrojs/node':
-        specifier: 5.3.6
-        version: 5.3.6(astro@2.10.14)
+        specifier: 6.0.0
+        version: 6.0.0(astro@2.10.14)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -906,8 +906,8 @@ importers:
         specifier: 0.17.3
         version: 0.17.3(astro@2.10.14)(sharp@0.32.5)
       '@astrojs/node':
-        specifier: 5.3.6
-        version: 5.3.6(astro@2.10.14)
+        specifier: 6.0.0
+        version: 6.0.0(astro@2.10.14)
       '@astrojs/vue':
         specifier: 2.2.1
         version: 2.2.1(astro@2.10.14)(vite@4.4.9)(vue@3.3.4)
@@ -1133,15 +1133,14 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@5.3.6(astro@2.10.14):
-    resolution: {integrity: sha512-aKM1xBzHMKBU6UIL8UQ63L3DHGq+vghAsFRRWOHjmGBmpvQsTTca1JTFqytFyzzWg6kY1sy4mDA1HOaJDuVZdA==}
+  /@astrojs/node@6.0.0(astro@2.10.14):
+    resolution: {integrity: sha512-06x5UBt+g0EIUpOdtCdnTxRJhOTLxUnjzmGwIHp9RNBlIEpzd/dJs6pwvfiM2zuPolTLI53T8VOsdw3EMh2V+w==}
     peerDependencies:
-      astro: ^2.10.13
+      astro: ^3.0.0
     peerDependenciesMeta:
       astro:
         optional: true
     dependencies:
-      '@astrojs/webapi': 2.2.0
       astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
       send: 0.18.0
       server-destroy: 1.0.1
