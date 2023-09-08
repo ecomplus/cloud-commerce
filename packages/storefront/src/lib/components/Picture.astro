@@ -1,7 +1,8 @@
 ---
 import { resolve as resolvePath } from 'node:path';
+import { getImage } from 'astro:assets';
 import imageSize from 'image-size';
-import { getPicture } from '@astrojs/image';
+import { createPictureGetter } from '../../images/picture-base';
 import { type PictureProps, useSSRPicture } from '../../images/use-ssr-picture';
 
 export type Props = PictureProps;
@@ -34,7 +35,14 @@ const {
 } = await useSSRPicture({
   ...Astro.props,
   tryImageSize,
-  getPicture,
+  getPicture: createPictureGetter(async (imageOptions) => {
+    const {
+      options,
+      src,
+      attributes: { width, height },
+    } = await getImage(imageOptions);
+    return { src, width, height };
+  }),
 });
 if (imgAttrs) {
   imgAttrs.src += versionSuffix;
