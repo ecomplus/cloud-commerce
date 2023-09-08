@@ -65,7 +65,7 @@ const _vitePWAOptions = {
       urlPattern: /^\/(~fallback)?$/,
       handler: 'NetworkFirst',
     }, {
-      urlPattern: /\/((?!(?:admin|assets|img)(\/|$))[^.]+)(\.(?!js|css|xml|txt|png|jpg|jpeg|webp|avif|svg|gif)[^.]+)*$/,
+      urlPattern: /^\/(?!_astro\/|admin\/|assets\/|img\/)/,
       handler: 'NetworkFirst',
       options: {
         cacheName: 'pages',
@@ -74,10 +74,20 @@ const _vitePWAOptions = {
         },
       },
     }, {
-      urlPattern: /^\/_astro\//,
+      urlPattern: /^\/_astro\/.*\.(?:js|css)$/,
       handler: 'CacheFirst',
       options: {
         cacheName: 'hashed-chunks',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 86400 * 365,
+        },
+      },
+    }, {
+      urlPattern: /^\/_astro\/.*\.(?!js|css)\w+$/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'hashed-images',
         expiration: {
           maxAgeSeconds: 86400 * 30,
         },
