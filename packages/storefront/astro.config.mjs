@@ -56,13 +56,13 @@ const _vitePWAOptions = {
   },
   registerType: 'autoUpdate',
   workbox: {
-    navigateFallback: '/404',
+    navigateFallback: '/~fallback',
     globDirectory: 'dist/client',
-    globPatterns: ['**/!(cms*|admin*).{js,css}'],
+    globPatterns: [],
     globIgnores: ['admin/**/*'],
     ignoreURLParametersMatching: [/.*/],
     runtimeCaching: [{
-      urlPattern: /^\/$/,
+      urlPattern: /^\/(~fallback)?$/,
       handler: 'NetworkFirst',
     }, {
       urlPattern: /\/((?!(?:admin|assets|img)(\/|$))[^.]+)(\.(?!js|css|xml|txt|png|jpg|jpeg|webp|avif|svg|gif)[^.]+)*$/,
@@ -70,8 +70,16 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'pages',
         expiration: {
-          maxEntries: 50,
-          purgeOnQuotaError: true,
+          maxAgeSeconds: 86400 * 7,
+        },
+      },
+    }, {
+      urlPattern: /^\/_astro\//,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'hashed-chunks',
+        expiration: {
+          maxAgeSeconds: 86400 * 30,
         },
       },
     }, {
@@ -79,26 +87,17 @@ const _vitePWAOptions = {
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'assets',
-      },
-    }, {
-      urlPattern: /^\/_image$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'optim-images',
         expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-          purgeOnQuotaError: true,
+          maxAgeSeconds: 86400 * 7,
         },
       },
     }, {
-      urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
+      urlPattern: /^\/img\/uploads\//,
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'cms-images',
         expiration: {
-          maxEntries: 20,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          maxAgeSeconds: 86400 * 7,
           purgeOnQuotaError: true,
         },
       },
@@ -108,8 +107,7 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'store-api',
         expiration: {
-          maxEntries: 50,
-          purgeOnQuotaError: true,
+          maxAgeSeconds: 86400 * 7,
         },
       },
     }, {
@@ -118,8 +116,7 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'product-thumbnails',
         expiration: {
-          maxEntries: 100,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          maxAgeSeconds: 86400 * 30,
           purgeOnQuotaError: true,
         },
       },
@@ -129,8 +126,8 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'product-pictures',
         expiration: {
-          maxEntries: 10,
-          maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+          maxEntries: 100,
+          maxAgeSeconds: 86400 * 7,
           purgeOnQuotaError: true,
         },
       },
