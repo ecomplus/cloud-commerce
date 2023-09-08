@@ -4,7 +4,5 @@ packages:
   - 'docs'
   - 'store'
   - 'store/functions/*'
-  - 'ecomplus-stores/iluminim'
-  - 'ecomplus-stores/iluminim/functions/*'
   - 'ecomplus-stores/barra-doce'
   - 'ecomplus-stores/barra-doce/functions/*'
