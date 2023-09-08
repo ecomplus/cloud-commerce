@@ -1,6 +1,26 @@
-import type { OutputFormat } from '@astrojs/image/dist/loaders/';
 import { join as joinPath } from 'node:path';
 import { readFileSync } from 'node:fs';
+
+export type OutputFormatSupportsAlpha = 'avif' | 'png' | 'webp';
+
+export type OutputFormat = OutputFormatSupportsAlpha | 'jpeg' | 'jpg' | 'svg';
+
+export interface TransformOptions {
+  src: string;
+  alt?: string;
+  format?: OutputFormat;
+  quality?: number;
+  width?: number;
+  height?: number;
+  aspectRatio?: number | `${number}:${number}`;
+  background?: string;
+  fit?: 'cover' | 'contain' | 'fill' | 'inside' | 'outside';
+  position?: 'top' | 'right top' | 'right' | 'right bottom'
+    | 'bottom' | 'left bottom' | 'left' | 'left top'
+    | 'north' | 'northeast' | 'east' | 'southeast'
+    | 'south' | 'southwest' | 'west' | 'northwest'
+    | 'center' | 'centre' | 'cover' | 'entropy' | 'attention';
+}
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
@@ -51,3 +71,5 @@ const getBuiltImage = async ({ src, width, format }: ImageOptions) => {
 export default getBuiltImage;
 
 export { getBuiltImage };
+
+export type GetBuiltImage = typeof getBuiltImage;
