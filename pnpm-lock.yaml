@@ -57,45 +57,45 @@ importers:
   ecomplus-stores/barra-doce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../packages/eslint
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/passport
 
   ecomplus-stores/barra-doce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/types
       '@fontsource/croissant-one':
         specifier: ^5.0.9
@@ -107,75 +107,13 @@ importers:
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.26.3
-        version: link:../../../../packages/modules
-
-  ecomplus-stores/iluminim:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.26.3
-        version: link:../../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^0.26.3
-        version: link:../../packages/eslint
-
-  ecomplus-stores/iluminim/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^0.26.3
-        version: link:../../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.3
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.26.3
-        version: link:../../../../packages/passport
-
-  ecomplus-stores/iluminim/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.26.3
-        version: link:../../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.3
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.26.3
-        version: link:../../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.26.3
-        version: link:../../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.26.3
-        version: link:../../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.26.3
-        version: link:../../../../packages/types
-      '@fontsource-variable/heebo':
-        specifier: ^5.0.8
-        version: 5.0.8
-      '@iconify-json/carbon':
-        specifier: ^1.1.20
-        version: 1.1.21
-
-  ecomplus-stores/iluminim/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.26.3
-        version: link:../../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.3
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1140,57 +1078,57 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/types
 
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.26.3
+        specifier: ^0.26.4
         version: link:../../../packages/modules
 
 packages:
@@ -3949,10 +3887,6 @@ packages:
     resolution: {integrity: sha512-xDxhD9++451HuCv3xKBEdSYaArX9NcokODXZYH/MxGw1XFFOz7OKkTRItZ5wf6npBN/inwp8dUZCP7SpAg46yQ==}
     dev: false
 
-  /@fontsource-variable/heebo@5.0.8:
-    resolution: {integrity: sha512-J1OoiDvcW8/vkQbH1X7lWW8aPqFlCy+x/8kBG2V4BbSNAwAdJcMucR7mKBxopuGGOTsoeTmJSKpNJZcMiKopnw==}
-    dev: true
-
   /@fontsource/croissant-one@5.0.11:
     resolution: {integrity: sha512-IuUaxRYXYdfSLQEicINUpssz6ADj74p1uSho7L0gCaAwj98+owPOsOEXSFlq5omVIiTUrjhHTUxdhZ/UTmVx8g==}
     dev: true
@@ -4126,12 +4060,6 @@ packages:
   /@hutson/parse-repository-url@3.0.2:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
-    dev: true
-
-  /@iconify-json/carbon@1.1.21:
-    resolution: {integrity: sha512-bK2cMVM4noBU+FGlay433flpXLRzQu0ED095iAnoO6ka3yb4uz0lvb8acpN5gthyGLJ89C4HpfIbQZLQnMKQww==}
-    dependencies:
-      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify-json/fa6-brands@1.1.13:
