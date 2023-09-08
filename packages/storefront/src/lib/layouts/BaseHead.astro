@@ -1,5 +1,6 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
+import { ViewTransitions } from 'astro:transitions';
 import { img as getImg, price as getPrice } from '@ecomplus/utils';
 
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
@@ -148,3 +149,5 @@ const inlineJSONLd = JSON.stringify({
 
 <script is:inline set:html={inlineClientJS} />
 <script type="application/ld+json" set:html={inlineJSONLd} />
+
+<ViewTransitions />

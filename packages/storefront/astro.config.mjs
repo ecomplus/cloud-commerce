@@ -186,6 +186,9 @@ const genAstroConfig = ({
     }));
   }
   return {
+    experimental: {
+      viewTransitions: true,
+    },
     output: isSSG ? 'static' : 'server',
     adapter: isSSG ? undefined : node({
       mode: 'middleware',
