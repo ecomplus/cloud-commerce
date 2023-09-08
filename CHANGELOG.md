@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.3](https://github.com/ecomplus/cloud-commerce/compare/v0.26.2...v0.26.3) (2023-09-08)
+
+
+### Features
+
+* **modules:** Checkout accepting undefined discount app id for multiple discount apps ([8c6984a](https://github.com/ecomplus/cloud-commerce/commit/8c6984a719b0b3b942ef6f4b50797beb818ebe07))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#228](https://github.com/ecomplus/cloud-commerce/issues/228)) ([0aa35ea](https://github.com/ecomplus/cloud-commerce/commit/0aa35ea0fe8bbc11cc291e2266a70a646e32444b))
+* **modules:** Better handling multiple results (apps) for apply discounts ([4f9126b](https://github.com/ecomplus/cloud-commerce/commit/4f9126b362d40cc87d633bde012271ac15c5bb31))
+
 ### [0.26.2](https://github.com/ecomplus/cloud-commerce/compare/v0.26.1...v0.26.2) (2023-08-28)
 
 
