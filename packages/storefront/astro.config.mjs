@@ -2,10 +2,9 @@ import { fileURLToPath } from 'node:url';
 import { lstatSync, readFileSync } from 'node:fs';
 import { join as joinPath } from 'node:path';
 import * as dotenv from 'dotenv';
-import { defineConfig } from 'astro/config';
+import { defineConfig, squooshImageService } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
-import image from '@astrojs/image';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
@@ -173,11 +172,6 @@ const genAstroConfig = ({
     }),
     AstroPWA(vitePWAOptions),
   ];
-  if (!isToServerless) {
-    integrations.push(image({
-      serviceEntryPoint: '@astrojs/image/sharp',
-    }));
-  }
   return {
     output: isSSG ? 'static' : 'server',
     adapter: isSSG ? undefined : node({
@@ -185,6 +179,7 @@ const genAstroConfig = ({
     }),
     outDir,
     integrations,
+    image: isToServerless ? { service: squooshImageService() } : undefined,
     site,
     compressHTML: isToServerless,
     build: {
