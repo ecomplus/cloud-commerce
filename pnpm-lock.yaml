@@ -54,6 +54,130 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/barra-doce:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.26.2
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.26.2
+        version: link:../../packages/eslint
+
+  ecomplus-stores/barra-doce/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.26.2
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.26.2
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/barra-doce/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.26.2
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.26.2
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.26.2
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.26.2
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.26.2
+        version: link:../../../../packages/types
+      '@fontsource/croissant-one':
+        specifier: ^5.0.9
+        version: 5.0.11
+      '@iconify-json/mingcute':
+        specifier: ^1.1.9
+        version: 1.1.9
+
+  ecomplus-stores/barra-doce/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.26.2
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.26.2
+        version: link:../../../../packages/modules
+
+  ecomplus-stores/iluminim:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.26.2
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.26.2
+        version: link:../../packages/eslint
+
+  ecomplus-stores/iluminim/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.26.2
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.26.2
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/iluminim/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.26.2
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.26.2
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.26.2
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.26.2
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.26.2
+        version: link:../../../../packages/types
+      '@fontsource-variable/heebo':
+        specifier: ^5.0.8
+        version: 5.0.8
+      '@iconify-json/carbon':
+        specifier: ^1.1.20
+        version: 1.1.21
+
+  ecomplus-stores/iluminim/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.26.2
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.26.2
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -855,7 +979,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 5.3.6
-        version: 5.3.6(astro@2.10.14)
+        version: 5.3.6(astro@2.10.15)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -875,11 +999,11 @@ importers:
         specifier: 10.4.1
         version: 10.4.1(vue@3.3.4)
       astro:
-        specifier: 2.10.14
-        version: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+        specifier: 2.10.15
+        version: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@2.10.14)
+        version: 0.0.1(astro@2.10.15)
       firebase-admin:
         specifier: ^11.10.1
         version: 11.10.1
@@ -904,13 +1028,13 @@ importers:
     dependencies:
       '@astrojs/image':
         specifier: 0.17.3
-        version: 0.17.3(astro@2.10.14)(sharp@0.32.5)
+        version: 0.17.3(astro@2.10.15)(sharp@0.32.5)
       '@astrojs/node':
         specifier: 5.3.6
-        version: 5.3.6(astro@2.10.14)
+        version: 5.3.6(astro@2.10.15)
       '@astrojs/vue':
         specifier: 2.2.1
-        version: 2.2.1(astro@2.10.14)(vite@4.4.9)(vue@3.3.4)
+        version: 2.2.1(astro@2.10.15)(vite@4.4.9)(vue@3.3.4)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -940,16 +1064,16 @@ importers:
         version: 1.1.35
       '@vite-pwa/astro':
         specifier: ^0.1.2
-        version: 0.1.2(astro@2.10.14)(vite-plugin-pwa@0.16.4)
+        version: 0.1.2(astro@2.10.15)(vite-plugin-pwa@0.16.4)
       '@vueuse/core':
         specifier: 10.4.1
         version: 10.4.1(vue@3.3.4)
       astro:
-        specifier: 2.10.14
-        version: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+        specifier: 2.10.15
+        version: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@2.10.14)
+        version: 0.0.1(astro@2.10.15)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1013,6 +1137,62 @@ importers:
         specifier: workspace:*
         version: link:../api
 
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.26.2
+        version: link:../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.26.2
+        version: link:../packages/eslint
+
+  store/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.26.2
+        version: link:../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.26.2
+        version: link:../../../packages/passport
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.26.2
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.26.2
+        version: link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.26.2
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.26.2
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.26.2
+        version: link:../../../packages/types
+
+  store/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.26.2
+        version: link:../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.2
+        version: link:../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.26.2
+        version: link:../../../packages/modules
+
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -1063,7 +1243,7 @@ packages:
     resolution: {integrity: sha512-o/ObKgtMzl8SlpIdzaxFnt7SATKPxu4oIP/1NL+HDJRzxfJcAkOTAb/ZKMRyULbz4q+1t2/DAebs2Z1QairkZw==}
     dev: false
 
-  /@astrojs/image@0.17.3(astro@2.10.14)(sharp@0.32.5):
+  /@astrojs/image@0.17.3(astro@2.10.15)(sharp@0.32.5):
     resolution: {integrity: sha512-5xF4d4dmyjSdEeA0E2M8YS5Usf0SxPHUp4w/xAsbArQP27p6BcA+952Ay8+UJfRdT+9dUGGvRafDtjEZOkefxQ==}
     peerDependencies:
       astro: ^2.10.0
@@ -1075,7 +1255,7 @@ packages:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+      astro: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
@@ -1107,7 +1287,7 @@ packages:
       vscode-uri: 3.0.7
     dev: false
 
-  /@astrojs/markdown-remark@2.2.1(astro@2.10.14):
+  /@astrojs/markdown-remark@2.2.1(astro@2.10.15):
     resolution: {integrity: sha512-VF0HRv4GpC1XEMLnsKf6jth7JSmlt9qpqP0josQgA2eSpCIAC/Et+y94mgdBIZVBYH/yFnMoIxgKVe93xfO2GA==}
     peerDependencies:
       astro: ^2.5.0
@@ -1116,7 +1296,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+      astro: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -1133,7 +1313,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@5.3.6(astro@2.10.14):
+  /@astrojs/node@5.3.6(astro@2.10.15):
     resolution: {integrity: sha512-aKM1xBzHMKBU6UIL8UQ63L3DHGq+vghAsFRRWOHjmGBmpvQsTTca1JTFqytFyzzWg6kY1sy4mDA1HOaJDuVZdA==}
     peerDependencies:
       astro: ^2.10.13
@@ -1142,7 +1322,7 @@ packages:
         optional: true
     dependencies:
       '@astrojs/webapi': 2.2.0
-      astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+      astro: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1172,7 +1352,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@2.2.1(astro@2.10.14)(vite@4.4.9)(vue@3.3.4):
+  /@astrojs/vue@2.2.1(astro@2.10.15)(vite@4.4.9)(vue@3.3.4):
     resolution: {integrity: sha512-fq+RKFAKpIRcobF/803kMJWv/lobf9IIk6K5As5fWE/eYTpykkgHtxd+zDnf7d4I2V7K9XLKV06Oi6Q+oTJmDw==}
     engines: {node: '>=16.12.0'}
     peerDependencies:
@@ -1188,7 +1368,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.0.2(vite@4.4.9)(vue@3.3.4)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.22.11)
       '@vue/compiler-sfc': 3.3.4
-      astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+      astro: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -3769,6 +3949,14 @@ packages:
     resolution: {integrity: sha512-xDxhD9++451HuCv3xKBEdSYaArX9NcokODXZYH/MxGw1XFFOz7OKkTRItZ5wf6npBN/inwp8dUZCP7SpAg46yQ==}
     dev: false
 
+  /@fontsource-variable/heebo@5.0.8:
+    resolution: {integrity: sha512-J1OoiDvcW8/vkQbH1X7lWW8aPqFlCy+x/8kBG2V4BbSNAwAdJcMucR7mKBxopuGGOTsoeTmJSKpNJZcMiKopnw==}
+    dev: true
+
+  /@fontsource/croissant-one@5.0.11:
+    resolution: {integrity: sha512-IuUaxRYXYdfSLQEicINUpssz6ADj74p1uSho7L0gCaAwj98+owPOsOEXSFlq5omVIiTUrjhHTUxdhZ/UTmVx8g==}
+    dev: true
+
   /@google-cloud/firestore@6.7.0:
     resolution: {integrity: sha512-bkH2jb5KkQSUa+NAvpip9HQ+rpYhi77IaqHovWuN07adVmvNXX08gPpvPWEzoXYa/wDjEVI7LiAtCWkJJEYTNg==}
     engines: {node: '>=12.0.0'}
@@ -3940,6 +4128,12 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
+  /@iconify-json/carbon@1.1.21:
+    resolution: {integrity: sha512-bK2cMVM4noBU+FGlay433flpXLRzQu0ED095iAnoO6ka3yb4uz0lvb8acpN5gthyGLJ89C4HpfIbQZLQnMKQww==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/fa6-brands@1.1.13:
     resolution: {integrity: sha512-7toccM334NO1jIsfnqTK9Bo12CIuE4ClnfW9SyRFKFax7b/oKOsgnvokgCAtQgomiQ6ODjC1zWCpzSDidtBUXw==}
     dependencies:
@@ -3958,9 +4152,14 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/mingcute@1.1.9:
+    resolution: {integrity: sha512-bDU36w8G6vKJ2RcX3/lpuUtxmAoB8qLzdGFwioUgGaOw7o7YgviNCTA0h4mHYgh3qZQd/RBGoMf7rG+7nZMcRQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.9:
     resolution: {integrity: sha512-mo+A4n3MwLlWlg1SoSO+Dt6pOPWKElk9sSJ6ZpuzbB9OcjxN8RUWxU3ulPwB1nglErWKRam2x4BAohbYF7FiFA==}
@@ -4886,7 +5085,7 @@ packages:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.1.2(astro@2.10.14)(vite-plugin-pwa@0.16.4):
+  /@vite-pwa/astro@0.1.2(astro@2.10.15)(vite-plugin-pwa@0.16.4):
     resolution: {integrity: sha512-k4sqPQwNLEgOsnPe5ymHyL3SR39r5OujOs2t30h9L15aN22UqZA6bhUdWyv2glDPGHs1TH5dnO1Cm7I8yVysvA==}
     peerDependencies:
       astro: ^1.6.0 || ^2.0.0 || ^3.0.0
@@ -4895,7 +5094,7 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+      astro: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       vite-plugin-pwa: 0.16.4(vite@4.4.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
     dev: false
 
@@ -5371,7 +5570,7 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro-capo@0.0.1(astro@2.10.14):
+  /astro-capo@0.0.1(astro@2.10.15):
     resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
@@ -5379,12 +5578,12 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 2.10.14(@types/node@18.17.14)(sharp@0.32.5)
+      astro: 2.10.15(@types/node@18.17.14)(sharp@0.32.5)
       ultrahtml: 1.3.0
     dev: false
 
-  /astro@2.10.14(@types/node@18.17.14)(sharp@0.32.5):
-    resolution: {integrity: sha512-02k2DjnI8yGtLCvdCSggvfCTkTWPm9UDgc/XHKdd1K34TSTl3X0A8TTYbASEXvgynk1zInCyOEe3IUDt3Lke+A==}
+  /astro@2.10.15(@types/node@18.17.14)(sharp@0.32.5):
+    resolution: {integrity: sha512-7jgkCZexxOX541g2kKHGOcDDUVKYc+sGi87GtLOkbWwTsKqEIp9GU0o7DpKe1rhItm9VVEiHz4uxvMh3wGmJdA==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     peerDependencies:
@@ -5396,7 +5595,7 @@ packages:
       '@astrojs/compiler': 1.8.2
       '@astrojs/internal-helpers': 0.1.2
       '@astrojs/language-server': 1.0.8
-      '@astrojs/markdown-remark': 2.2.1(astro@2.10.14)
+      '@astrojs/markdown-remark': 2.2.1(astro@2.10.15)
       '@astrojs/telemetry': 2.1.1
       '@astrojs/webapi': 2.2.0
       '@babel/core': 7.22.11
@@ -5430,7 +5629,7 @@ packages:
       kleur: 4.1.5
       magic-string: 0.30.3
       mime: 3.0.0
-      network-information-types: 0.1.1(typescript@5.2.2)
+      network-information-types: 0.1.1(typescript@5.0.4)
       ora: 6.3.1
       p-limit: 4.0.0
       path-to-regexp: 6.2.1
@@ -5444,7 +5643,7 @@ packages:
       string-width: 5.1.2
       strip-ansi: 7.1.0
       tsconfig-resolver: 3.0.1
-      typescript: 5.2.2
+      typescript: 5.0.4
       unist-util-visit: 4.1.2
       vfile: 5.3.7
       vite: 4.4.9(@types/node@18.17.14)
@@ -9690,12 +9889,12 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /network-information-types@0.1.1(typescript@5.2.2):
+  /network-information-types@0.1.1(typescript@5.0.4):
     resolution: {integrity: sha512-mLXNafJYOkiJB6IlF727YWssTRpXitR+tKSLyA5VAdBi3SOvLf5gtizHgxf241YHPWocnAO/fAhVrB/68tPHDw==}
     peerDependencies:
       typescript: '>= 3.0.0'
     dependencies:
-      typescript: 5.2.2
+      typescript: 5.0.4
     dev: false
 
   /next-tick@1.1.0:
@@ -11984,12 +12183,6 @@ packages:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
-
-  /typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-    dev: false
 
   /uc.micro@1.0.6:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
