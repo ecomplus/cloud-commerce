@@ -11,8 +11,9 @@ export interface Props {
     Promise<{ props: Record<string, any> }>;
 }
 
+type PageContentHero = Exclude<PageContent['hero'], undefined>;
 const now = Date.now();
-const parseBanners = (banners: PageContent['hero']['slides']) => {
+const parseBanners = (banners: PageContentHero['slides']) => {
   const validBanners: UseBannerProps[] = [];
   banners.forEach(({
     img,
@@ -38,7 +39,7 @@ const parseBanners = (banners: PageContent['hero']['slides']) => {
 
 export const usePageHero = async ({ routeContext }: Props) => {
   const { cmsContent } = routeContext;
-  const heroSlider: Omit<PageContent['hero'], 'slides'>
+  const heroSlider: Omit<PageContentHero, 'slides'>
     & { slides: UseBannerProps[] } = { slides: [] };
   const heroContent = cmsContent?.hero;
   if (heroContent) {
