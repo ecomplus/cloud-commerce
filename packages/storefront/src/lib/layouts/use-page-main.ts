@@ -3,6 +3,7 @@ import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
+import type { Props as UseBreadcrumbsProps } from '@@sf/composables/use-breadcrumbs';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
 
 export interface Props {
@@ -60,6 +61,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     T
     | { type: 'product-shelf', props: UseProductShelfProps }
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
+    | { type: 'breadcrumbs', props: UseBreadcrumbsProps }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
@@ -141,6 +143,13 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           props: {
             banners: parseBanners(sectionContent.banners || []),
           },
+        };
+        return;
+      }
+      if (type === 'breadcrumbs') {
+        sections[index] = {
+          type,
+          props: {},
         };
         return;
       }

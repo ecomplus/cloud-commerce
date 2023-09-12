@@ -8,6 +8,7 @@ import {
   name as getName,
   categoriesList as getCategoriesList,
 } from '@ecomplus/utils';
+import useSharedData from '@@sf/composables/use-shared-data';
 
 export interface Props {
   apiDoc?: Products | Categories | Brands | Collections;
@@ -15,23 +16,26 @@ export interface Props {
   domain?: string;
 }
 
-const useBreadcrumbs = (props: Props = {}) => {
+const useBreadcrumbs = async (props: Props = {}) => {
   const { settings, apiContext, data } = globalThis.$storefront;
   const {
     apiDoc = apiContext?.doc,
-    categories = (data.categories || []),
     domain = settings.domain,
   } = props;
+  let categories: Props['categories'] = props.categories || data.categories;
+  if (!categories) {
+    categories = (await useSharedData({ field: 'categories' })).value;
+  }
   const breadcrumbs: Array<{ name: string, link: string }> = [];
   if (apiDoc) {
     const productCategories = (apiDoc as Products).categories;
     if (productCategories) {
-      getCategoriesList(productCategories).forEach((categoryName) => {
+      getCategoriesList(apiDoc).forEach((categoryName) => {
         const findCategory = (category: Partial<Categories>) => {
           return category.name === categoryName;
         };
         const category = (productCategories && productCategories.find(findCategory))
-          || categories.find(findCategory);
+          || categories?.find(findCategory);
         if (category) {
           breadcrumbs.push({
             name: getName(category),
