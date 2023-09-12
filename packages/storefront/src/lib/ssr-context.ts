@@ -69,7 +69,7 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   const isHomepage = urlPath === '/';
   const config = getConfig();
   globalThis.$storefront.settings = config.settings;
-  let cmsContent: PageContent | null | undefined;
+  let cmsContent: PageContent | null = { sections: [] };
   const apiState: {
     categories?: CategoriesList,
     brands?: BrandsList,
@@ -108,6 +108,13 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
             Object.assign(apiContext, response.data);
             const apiResource = apiContext.resource as
               Exclude<typeof apiContext.resource, undefined>;
+            config.getContent(`pages/${apiResource}`)
+              .then((_cmsContent) => {
+                if (cmsContent && _cmsContent) {
+                  Object.assign(cmsContent, _cmsContent);
+                }
+              })
+              .catch(console.warn);
             const apiDoc = apiContext.doc as Record<string, any>;
             apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
             globalThis.$storefront.apiContext = {

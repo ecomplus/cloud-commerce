@@ -34,9 +34,9 @@ jobs:
       !contains(github.event.head_commit.author.name, '[bot]')
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: ecomplus/store
           path: store

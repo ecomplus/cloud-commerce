@@ -11,9 +11,9 @@ export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
 };
 
 export interface PageContent {
-  meta_title: string;
-  meta_description: string;
-  hero: {
+  meta_title?: string;
+  meta_description?: string;
+  hero?: {
     [k: string]: unknown,
     autoplay?: number,
     slides: Array<{

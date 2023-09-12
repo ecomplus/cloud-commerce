@@ -28,6 +28,4 @@ window.$storefront.data['${field}'] = ${JSON.stringify(value)};`,
 
 export default useSharedData;
 
-export {
-  useSharedData,
-};
+export { useSharedData };

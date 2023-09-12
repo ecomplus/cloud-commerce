@@ -1,5 +1,6 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
+import { ViewTransitions } from 'astro:transitions';
 import { img as getImg, price as getPrice } from '@ecomplus/utils';
 
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
@@ -29,7 +30,7 @@ if (fetchingApiContext) {
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
-const title = state.meta_title || state.name || state.title || Astro.props.title || settings.name;
+const title = state.meta_title || state.name || state.title || settings.name;
 const description = state.meta_description || state.short_description || settings.description;
 const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
 const shortcutIcon = settings.icon ? getIconUrl(192) : null;
@@ -137,9 +138,10 @@ const inlineJSONLd = JSON.stringify({
 {metatagsContent?.twitter_username &&
   <meta name="twitter:site" content={metatagsContent.twitter_username} />}
 <meta name="ecom-store-id" content={String(storeId)}>
+
 <script>
   import { registerSW } from 'virtual:pwa-register';
-  registerSW({ immediate: true });
+  registerSW({ immediate: false });
 </script>
 {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
 {(!pwaInfo && !import.meta.env.DEV) &&
@@ -147,3 +149,5 @@ const inlineJSONLd = JSON.stringify({
 
 <script is:inline set:html={inlineClientJS} />
 <script type="application/ld+json" set:html={inlineJSONLd} />
+
+<ViewTransitions />
