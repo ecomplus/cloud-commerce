@@ -11,7 +11,7 @@ import {
 import useSharedData from '@@sf/composables/use-shared-data';
 
 export interface Props {
-  apiDoc?: Products | Categories | Brands | Collections;
+  apiDoc?: Partial<Products | Categories | Brands | Collections>;
   categories?: Partial<Categories>[];
   domain?: string;
 }
