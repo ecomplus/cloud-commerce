@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.6](https://github.com/ecomplus/cloud-commerce/compare/v0.26.5...v0.26.6) (2023-09-13)
+
+
+### Bug Fixes
+
+* **apps:** Ensure `@cloudcommerce/test-base` as dev dependency only ([020a23d](https://github.com/ecomplus/cloud-commerce/commit/020a23d474e20a6712e51a04f16bd293035d8929))
+
 ### [0.26.5](https://github.com/ecomplus/cloud-commerce/compare/v0.26.4...v0.26.5) (2023-09-13)
 
 
