@@ -1,6 +1,7 @@
-if [ $MERCADOPAGO_TOKEN != "" ] 
-    then 
-        node --test tests/
+#!/bin/bash
+
+if [ -z ${MERCADOPAGO_TOKEN+x} ]; then
+  echo -e "MERCADOPAGO_TOKEN not set\n"
 else
-  echo -e "MERCADOPAGO_TOKEN not found\n"
+  node --test tests/
 fi

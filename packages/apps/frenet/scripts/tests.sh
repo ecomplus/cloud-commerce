@@ -1,6 +1,7 @@
-if [ $FRENET_TOKEN != "" ] 
-    then 
-        node --test tests/
+#!/bin/bash
+
+if [ -z ${FRENET_TOKEN+x} ]; then
+  echo -e "FRENET_TOKEN not set\n"
 else
-  echo -e "FRENET_TOKEN not found\n"
+  node --test tests/
 fi
