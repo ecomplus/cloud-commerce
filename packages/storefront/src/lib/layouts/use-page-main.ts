@@ -62,6 +62,10 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'product-shelf', props: UseProductShelfProps }
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
     | { type: 'breadcrumbs', props: UseBreadcrumbsProps }
+    | { type: 'product-details', props: {} }
+    | { type: 'related-products', props: {} }
+    | { type: 'doc-description', props: {} }
+    | { type: 'product-specifications', props: {} }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
@@ -146,12 +150,19 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         };
         return;
       }
-      if (type === 'breadcrumbs') {
-        sections[index] = {
-          type,
-          props: {},
-        };
-        return;
+      switch (type) {
+        case 'breadcrumbs':
+        case 'product-details':
+        case 'related-products':
+        case 'doc-description':
+        case 'product-specifications':
+          // Bypassed sections
+          sections[index] = {
+            type,
+            props: {},
+          };
+          return;
+        default:
       }
       if (typeof handleCustomSection === 'function') {
         const { props } = await handleCustomSection(
