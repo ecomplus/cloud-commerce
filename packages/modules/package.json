@@ -22,7 +22,7 @@
   "scripts": {
     "build": "bash ../../scripts/build-lib.sh",
     "build:types": "bash scripts/build-types.sh",
-    "test:e2e": "node --test tests/modules.test.mjs"
+    "test": "node --test tests/modules.test.mjs"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
