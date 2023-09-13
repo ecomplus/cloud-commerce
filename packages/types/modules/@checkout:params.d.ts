@@ -192,7 +192,7 @@ export interface CheckoutBody {
     /**
      * ID of application chosen for extra discount
      */
-    app_id: number;
+    app_id?: number;
     /**
      * Text of discount coupon applied by customer
      */

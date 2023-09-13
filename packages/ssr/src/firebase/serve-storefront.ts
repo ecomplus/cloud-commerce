@@ -13,12 +13,7 @@ declare global {
   ) => Promise<any>;
 }
 
-const {
-  STOREFRONT_BASE_DIR,
-  SSR_PROXY_DEBUG,
-  SSR_PROXY_TIMEOUT,
-} = process.env;
-
+const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
@@ -45,9 +40,10 @@ readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
   })
   .catch(logger.warn);
 
-const isProxyDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
-const proxyTimeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
 const proxy = async (req: Request, res: Response) => {
+  const { SSR_PROXY_DEBUG, SSR_PROXY_TIMEOUT } = process.env;
+  const isDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
+  const timeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
   let proxyURL: URL | undefined;
   try {
     proxyURL = new URL(req.query.url as any);
@@ -85,14 +81,14 @@ const proxy = async (req: Request, res: Response) => {
         delete headers[headerName];
       }
     });
-    if (isProxyDebug) {
+    if (isDebug) {
       logger.info({ proxy: proxyURL.href });
     }
     try {
       const abortController = new AbortController();
       const timer = setTimeout(() => {
         abortController.abort();
-      }, proxyTimeout);
+      }, timeout);
       const response = await fetch(proxyURL, {
         method: 'get',
         headers: (headers as Record<string, string>),
@@ -132,28 +128,10 @@ export default async (req: Request, res: Response) => {
     proxy(req, res);
     return;
   }
-  res.set('X-XSS-Protection', '1; mode=block');
-  const url = req.path.replace(/\.html$/, '');
-
-  const setStatusAndCache = (status: number, cacheControl: string) => {
-    if (res.headersSent) return res;
-    return res.status(status)
-      .set('X-SSR-ID', `v1/${Date.now()}`)
-      .set('Cache-Control', cacheControl);
-  };
-
-  const fallback = (err: any, status = 500) => {
-    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
-      setStatusAndCache(status, 'public, max-age=120')
-        .send('<html><head>'
-          + '<meta http-equiv="refresh" content="0; '
-            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
-          + `</head><body>${err.toString()}</body></html>`);
-    } else {
-      setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
-        .send(err.toString());
-    }
-  };
+  if (req.path.endsWith('.css') && cssFilepath) {
+    res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
+    return;
+  }
 
   if (req.path === '/_image') {
     const { href } = req.query;
@@ -196,20 +174,49 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
-  /*
-  Check Response methods used by Astro Node.js integration:
-  https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
-  */
-  const _writeHead = res.writeHead;
-  /* eslint-disable prefer-rest-params */
-  // @ts-ignore
-  res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
-    if (status === 200 && headers && cssFilepath) {
-      // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
-      headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
-    }
-    _writeHead.apply(res, [status, headers]);
+  res.set('X-XSS-Protection', '1; mode=block');
+  const url = req.path.replace(/\.html$/, '');
+
+  const setStatusAndCache = (status: number, cacheControl: string) => {
+    if (res.headersSent) return res;
+    return res.status(status)
+      .set('X-SSR-ID', `v1/${Date.now()}`)
+      .set('Cache-Control', cacheControl);
   };
+
+  const fallback = (err: any, status = 500) => {
+    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
+      setStatusAndCache(status, 'public, max-age=120')
+        .send('<html><head>'
+          + '<meta http-equiv="refresh" content="0; '
+            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
+          + `</head><body>${err.toString()}</body></html>`);
+    } else {
+      setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
+        .send(err.toString());
+    }
+  };
+
+  const { SSR_SET_LINK_HEADER } = process.env;
+  const canSetLinkHeader = SSR_SET_LINK_HEADER
+    ? String(SSR_SET_LINK_HEADER).toLowerCase() !== 'false'
+    : true;
+  if (canSetLinkHeader) {
+    /*
+    Check Response methods used by Astro Node.js integration:
+    https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
+    */
+    const _writeHead = res.writeHead;
+    /* eslint-disable prefer-rest-params */
+    // @ts-ignore
+    res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
+      if (status === 200 && headers && cssFilepath) {
+        // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
+        headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
+      }
+      _writeHead.apply(res, [status, headers]);
+    };
+  }
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs

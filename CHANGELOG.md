@@ -2,6 +2,139 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.4](https://github.com/ecomplus/cloud-commerce/compare/v0.26.3...v0.26.4) (2023-09-08)
+
+
+### Features
+
+* **storefront:** Enabling Astro (v2 experimental) `viewTransitions` on all pages by default ([561c40d](https://github.com/ecomplus/cloud-commerce/commit/561c40d18e6e442ffc400e1c32197d0c26dd90c9))
+
+
+### Bug Fixes
+
+* **storefront:** Fixing SW navigate fallback and cache strategies ([1198a94](https://github.com/ecomplus/cloud-commerce/commit/1198a94b22347ea99a41d9d6d7efee31f67201a1))
+* **storefront:** Update SW for immutable (365d) cache for js/css hashed chunks ([1e631f4](https://github.com/ecomplus/cloud-commerce/commit/1e631f4ba21c309b1c71d32478e9fad507a0b723))
+
+### [0.26.3](https://github.com/ecomplus/cloud-commerce/compare/v0.26.2...v0.26.3) (2023-09-08)
+
+
+### Features
+
+* **modules:** Checkout accepting undefined discount app id for multiple discount apps ([8c6984a](https://github.com/ecomplus/cloud-commerce/commit/8c6984a719b0b3b942ef6f4b50797beb818ebe07))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#228](https://github.com/ecomplus/cloud-commerce/issues/228)) ([0aa35ea](https://github.com/ecomplus/cloud-commerce/commit/0aa35ea0fe8bbc11cc291e2266a70a646e32444b))
+* **modules:** Better handling multiple results (apps) for apply discounts ([4f9126b](https://github.com/ecomplus/cloud-commerce/commit/4f9126b362d40cc87d633bde012271ac15c5bb31))
+
+### [0.26.2](https://github.com/ecomplus/cloud-commerce/compare/v0.26.1...v0.26.2) (2023-08-28)
+
+
+### Bug Fixes
+
+* **ssr:** Check SSR_* env vars on function execution time ([1364f67](https://github.com/ecomplus/cloud-commerce/commit/1364f674aeaa016fcec7c99f95364ed45a59ecb8))
+
+### [0.26.1](https://github.com/ecomplus/cloud-commerce/compare/v0.26.0...v0.26.1) (2023-08-28)
+
+
+### Bug Fixes
+
+* **ssr:** Add `astro-capo` to SSR dependencies ([dbd2f06](https://github.com/ecomplus/cloud-commerce/commit/dbd2f06a79b5eac8cf68f93c7459689fe8cdcb58))
+
+## [0.26.0](https://github.com/ecomplus/cloud-commerce/compare/v0.25.0...v0.26.0) (2023-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** `useSharedData` composable now returns a promise
+
+### Features
+
+* **i18n:** Add `i19allProducts` and `i19institutional` ([131a7e3](https://github.com/ecomplus/cloud-commerce/commit/131a7e3cc2d1dfdf995ae4c1eb92dd0cbbec3e12))
+* **ssr:** New optional `SSR_SET_LINK_HEADER` env (true by default) ([e8481a7](https://github.com/ecomplus/cloud-commerce/commit/e8481a7bd78e6caebd6e37776e6a030425cff11f))
+* **storefront:** Mannualy set `´PageContent` to more flexible interface ([820d716](https://github.com/ecomplus/cloud-commerce/commit/820d7160e84d71391998139c28ec606957160f91))
+* **storefront:** Update VueUse to v10.4.0, UnoCSS and Firebase non-major ([88b0bcc](https://github.com/ecomplus/cloud-commerce/commit/88b0bcc944f71fc7fe85d8da837b63c6e1bb110d))
+* **storefront:** Use event emitter on `useSharedData` to support optional awaited value ([851ed67](https://github.com/ecomplus/cloud-commerce/commit/851ed67037ebc1552540bf8e4f7d1797c0807c14))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#221](https://github.com/ecomplus/cloud-commerce/issues/221)) [skip ci] ([0191eff](https://github.com/ecomplus/cloud-commerce/commit/0191eff3ac0f5fb9cb1cdb91479c28d0dc0f3036))
+* **i18n:** Fix `i19allProducts` ([3a09c25](https://github.com/ecomplus/cloud-commerce/commit/3a09c2553d819a3b4dadbfe3f3355c7defa6453d))
+* **storefront:** Edit `LayoutContent` typedef for extendable footer and header content ([2edc576](https://github.com/ecomplus/cloud-commerce/commit/2edc5769865b212efeeace9546d7cf33783ee2d9))
+* **storefront:** Extending `PageContent` typedef for extra pages and blog posts ([16a4b3e](https://github.com/ecomplus/cloud-commerce/commit/16a4b3e6d6bd1530bba6c19581a5b1a982b8132c))
+* **storefront:** Fix CMS `getContent` to escape folder hidden files and clear not .json ext ([e0b5563](https://github.com/ecomplus/cloud-commerce/commit/e0b55635abeb9c1d083006937f9b4fe3803e3b0b))
+* **storefront:** Update Astro to v2.10.14 ([4d00a98](https://github.com/ecomplus/cloud-commerce/commit/4d00a984d56d1cc15b42d04d2d1520690b5e2bbb))
+
+## [0.25.0](https://github.com/ecomplus/cloud-commerce/compare/v0.24.1...v0.25.0) (2023-08-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **cli:** Host is now exposed by default on dev (default) CLI command, SSR function dev script should not contain --host and --port options
+* **storefront:** Stop exporing non-reactive globals `settings` and `apiContext` from `@@sf/sf-lib`
+
+### Bug Fixes
+
+* **cli:** Update `cloudcommerce [dev]` command to bypass --host and --port args ([e55e438](https://github.com/ecomplus/cloud-commerce/commit/e55e4383a8de2a9ff1d65b0af766c3e8980b1121))
+* **deps:** Update non-major dependencies ([#216](https://github.com/ecomplus/cloud-commerce/issues/216)) ([377e4b0](https://github.com/ecomplus/cloud-commerce/commit/377e4b0533cb41d839afff1cfc4f8c44caeffa0f))
+* **firebase:** Update dependency @google-cloud/pubsub to v4 ([#217](https://github.com/ecomplus/cloud-commerce/issues/217)) ([d5e98b8](https://github.com/ecomplus/cloud-commerce/commit/d5e98b84937a5be3062972e49480fc98bc9ffe70))
+* **ssr:** Redirect not found .css files to unique CSS filepath ([d2dcaf9](https://github.com/ecomplus/cloud-commerce/commit/d2dcaf99551e2581027f07c62a1beddec46ec896))
+* **storefront:** Prevent undefined `import.meta.env` error on config ([83c26f6](https://github.com/ecomplus/cloud-commerce/commit/83c26f660c307e366c139c489e75f8bc2450dc1b))
+* **storefront:** Set `socialNetworks` after route load on SSR ([9d2be60](https://github.com/ecomplus/cloud-commerce/commit/9d2be602937f4d61ca0c96cdc6170a717ff5b3f0))
+* **storefront:** Update Astro to v2.10.12 ([#215](https://github.com/ecomplus/cloud-commerce/issues/215)) ([4ae833f](https://github.com/ecomplus/cloud-commerce/commit/4ae833f25438626e268019e7ea9032a14aa1abf8))
+
+### [0.24.1](https://github.com/ecomplus/cloud-commerce/compare/v0.24.0...v0.24.1) (2023-08-19)
+
+
+### Features
+
+* **storefront:** Add new global <Skeleton> component ([83c42b1](https://github.com/ecomplus/cloud-commerce/commit/83c42b113200c28dd56b77f80df393f911194957))
+
+
+### Bug Fixes
+
+* **storefront:** Fix regression with icons aliases selectors on UnoCSS config ([37f7c8e](https://github.com/ecomplus/cloud-commerce/commit/37f7c8efaa63273cf3c0eb575d174cb9e2358fdc))
+
+## [0.24.0](https://github.com/ecomplus/cloud-commerce/compare/v0.23.3...v0.24.0) (2023-08-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Icons related theme config fields replaced by `generalIconSets`, `brandIconSets`, `brandIconShortcuts`, `logoIconSets`, `logoIconShortcuts`
+
+IntelliSense only field for icons no more needed and removed
+* **storefront:** Global component <ALink> API changed
+* **storefront:** `usePageHeader` composable props changed (simplified)
+* **ssr:** Previous /fallback.astro page must be changed to /~fallback.astro
+* **storefront:** Route context `fetchingApiContext` now always resolve with null, error only at `apiContext.error` if any
+
+### Features
+
+* **ssr:** Edit Cloudflare SWR worker to also store SSRed HTML on KV PERMA_CACHE namespace ([1f3b188](https://github.com/ecomplus/cloud-commerce/commit/1f3b188b583a8bfa656c7a7469510fadc10081f4))
+* **ssr:** Edit Cloudflare SWR worker to support host override from env vars ([b2fc99b](https://github.com/ecomplus/cloud-commerce/commit/b2fc99bb2310dc9986569beb89a8251c65af85a8))
+* **storefront:** Add new `intellisenseIconSets` theme option for Tailwind config ([75ce9c9](https://github.com/ecomplus/cloud-commerce/commit/75ce9c9b64f997dd9bbc86b6f178137745acc40b))
+* **storefront:** Add support for multiple icon sets with arrays on theme config ([5d5c0a3](https://github.com/ecomplus/cloud-commerce/commit/5d5c0a3a806cac5ecf15462b2add22804d3d6c0d))
+* **storefront:** New <PaymentMethodFlag> component ([2ba386f](https://github.com/ecomplus/cloud-commerce/commit/2ba386fb26dcb72a5c91f4740403302cb4e4a157))
+* **types:** Add `service_links` and `payment_methods` (flags) to settings content type ([390be9d](https://github.com/ecomplus/cloud-commerce/commit/390be9d7ec65996bbef1b1431c50de5b195ce8f0))
+
+
+### Bug Fixes
+
+* **deps:** Update Astro to v2.10.7 ([#210](https://github.com/ecomplus/cloud-commerce/issues/210)) ([fab598f](https://github.com/ecomplus/cloud-commerce/commit/fab598febeb9d2b2d7979497dba08f17b921dcde))
+* **deps:** Update dependency unocss to ^0.55.0 ([#213](https://github.com/ecomplus/cloud-commerce/issues/213)) ([55b9626](https://github.com/ecomplus/cloud-commerce/commit/55b96263e141ef5abd340f2146215a0141a02ceb))
+* **storefront:** Fix <Drawer> close button z-index ([4ff06db](https://github.com/ecomplus/cloud-commerce/commit/4ff06dbadce0c3261444ea5dcbe57ec294ffa549))
+* **storefront:** Increasing sticky header debounce max wait to prevent wrong header final place ([d04b808](https://github.com/ecomplus/cloud-commerce/commit/d04b808ff55a7457d78bc5965d43e5276299a780))
+* **storefront:** Minor fix BannerPicture.astro default alt text styles ([6d0aed5](https://github.com/ecomplus/cloud-commerce/commit/6d0aed5ba849af6a0aa8e11da916f7c204e04564))
+* **storefront:** Prevent errors with not founds by slug on SSR context load ([eeb3232](https://github.com/ecomplus/cloud-commerce/commit/eeb3232fb79f6440234a257b915f9c9d2de0e7b4))
+* **storefront:** Update Astro to v2.10.9 ([3555906](https://github.com/ecomplus/cloud-commerce/commit/35559061843a1c8ba7618c255080289677640b10))
+
+
+* **ssr:** Expecting fallback static HTML at /~fallback route ([922c9c9](https://github.com/ecomplus/cloud-commerce/commit/922c9c9ddeda661861cf1c80204ebd9adf0bf47e))
+* **storefront:** Set href optional on <ALink> to handle common optional link case ([1573c65](https://github.com/ecomplus/cloud-commerce/commit/1573c653126975b3fac1e3291fa01976e98a8052))
+* **storefront:** Update `usePageHeader` composable removing `serviceLinks` prop ([e566038](https://github.com/ecomplus/cloud-commerce/commit/e56603848af4013eb29b7604d0fb936238e85d7c))
+
 ### [0.23.3](https://github.com/ecomplus/cloud-commerce/compare/v0.23.2...v0.23.3) (2023-08-08)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-correios",
   "type": "module",
-  "version": "0.23.3",
+  "version": "0.26.4",
   "description": "E-Com Plus Cloud Commerce app for Correios shipping calculation",
   "main": "lib/correios.js",
   "repository": {
@@ -16,14 +16,16 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/correios#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test:e2e": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "axios": "^1.4.0",
+    "axios": "^1.5.0",
     "xml2js": "0.6.2"
   },
   "devDependencies": {
+    "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*"
   }
 }

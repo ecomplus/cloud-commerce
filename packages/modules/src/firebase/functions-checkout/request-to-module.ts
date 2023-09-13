@@ -32,9 +32,9 @@ export default async (
       break;
   }
 
-  if (moduleBody && moduleBody.app_id && modName) {
+  if (moduleBody && modName) {
     // mask request objects
-    const url = `${modulesBaseURL}/${modName}?app_id=${moduleBody.app_id}`;
+    const url = `${modulesBaseURL}/${modName}?app_id=${(moduleBody.app_id || '')}`;
     // mount request body with received checkout body object
     const body = {
       ...checkoutBody,

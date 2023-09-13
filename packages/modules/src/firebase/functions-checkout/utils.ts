@@ -261,15 +261,29 @@ const handleApplyDiscount = (
         // update amount and save extra discount to order body
         amount.discount += extraDiscount.value;
         fixAmount(amount, body, orderBody);
-        orderBody.extra_discount = {
-          ...body.discount,
-          ...extraDiscount,
-          // app info
-          app: {
-            ...discountRule,
-            _id: result._id,
-          },
-        };
+        if (
+          !orderBody.extra_discount
+          || (extraDiscount.flags && !orderBody.extra_discount.flags)
+        ) {
+          orderBody.extra_discount = {
+            ...body.discount,
+            ...extraDiscount,
+            // app info
+            app: {
+              ...discountRule,
+              _id: result._id,
+            },
+          };
+        } else {
+          const flags = orderBody.extra_discount.flags || [];
+          flags.push(`app-${result.app_id}`.substring(0, 20));
+          if (extraDiscount.flags) {
+            extraDiscount.flags.forEach((flag) => {
+              flags.push(flag);
+            });
+          }
+          orderBody.extra_discount.flags = flags.slice(0, 10);
+        }
 
         if (response.freebie_product_ids) {
           // mark items provided for free

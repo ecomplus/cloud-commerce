@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-fb-conversions",
   "type": "module",
-  "version": "0.23.3",
+  "version": "0.26.4",
   "description": "E-Com Plus Cloud Commerce app to send carts/orders to Facebook Conversions API",
   "main": "lib/index.js",
   "repository": {
@@ -21,7 +21,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "facebook-nodejs-business-sdk": "^17.0.2",
+    "facebook-nodejs-business-sdk": "^17.0.3",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1"
   },

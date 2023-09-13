@@ -63,10 +63,25 @@ const useSSRPicture = async (params: UsePictureParams) => {
     }
   } else if ((!attrs.width || !attrs.height) && typeof src === 'string') {
     const { width, height } = tryImageSize(src);
-    if (height) {
+    if (width && height) {
       aspectRatio = getAspectRatio({ width, height }, tryImageSize);
-      attrs.width = width;
-      attrs.height = height;
+      let hasSplicedWidths = false;
+      for (let i = widths.length - 1; i >= 0; i--) {
+        if (widths[i] > width) {
+          widths.splice(i, 1);
+          hasSplicedWidths = true;
+        }
+      }
+      if (hasSplicedWidths) {
+        attrs.width = width;
+        attrs.height = height;
+        if (!widths.find((w) => w === width)) {
+          widths.push(width);
+        }
+      } else {
+        attrs.width = Math.max(...widths);
+        attrs.height = Math.round(attrs.width / aspectRatio);
+      }
     }
   }
   let sizes: string = propSizes || '';

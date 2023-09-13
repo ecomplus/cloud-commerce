@@ -20,7 +20,9 @@ global.__storefrontCMS = (fs, resolvePath) => {
           const dirColl = resolvePath(dirContent, filename);
           return new Promise((resolve) => {
             const slugs = fs.existsSync(dirColl)
-              ? fs.readdirSync(dirColl).map((file) => file.replace('.json', ''))
+              ? fs.readdirSync(dirColl)
+                .filter((file) => file.charAt(0) !== '.')
+                .map((file) => file.replace(/\.[^.]{0,5}$/, ''))
               : [];
             resolve(slugs);
           });

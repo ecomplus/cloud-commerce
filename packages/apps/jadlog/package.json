@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-jadlog",
   "type": "module",
-  "version": "0.23.3",
+  "version": "0.26.4",
   "description": "E-Com Plus Cloud Commerce  app for Jadlog shipping calculation",
   "main": "lib/index.js",
   "repository": {
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "axios": "^1.4.0"
+    "axios": "^1.5.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

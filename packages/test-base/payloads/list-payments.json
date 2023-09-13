@@ -1,0 +1,125 @@
+{
+  "items": [
+    {
+      "quantity": 1,
+      "customizations": [],
+      "product_id": "6166cb1528ace502aea2dc36",
+      "variation_id": "693120163769524850000003",
+      "picture": {
+        "zoom": {
+          "url": "https://ecoms1.com/1173/@v3/1634126448701-vaso-orquideas.webp",
+          "size": "900x900",
+          "alt": "vaso-orquideas"
+        }
+      },
+      "sku": "GIE2742-405-2",
+      "name": "Vaso para Orquídeas / M",
+      "price": 99.75,
+      "final_price": 99.75,
+      "_id": "e17926a16871999536691111",
+      "stock_status": "released",
+      "specifications": {
+        "size": [
+          {
+            "text": "M",
+            "value": "m"
+          }
+        ]
+      },
+      "visible": true,
+      "available": true,
+      "manage_stock": true,
+      "sales": 77,
+      "total_sold": 6783.6,
+      "base_price": 24.99,
+      "price_effective_date": {
+        "start": "2021-10-06T03:00:00.000Z",
+        "end": "2021-10-15T03:00:00.000Z"
+      },
+      "cost_price": 21.99,
+      "categories": [
+        {
+          "_id": "5f81f29eb2161709fa3da64f",
+          "name": "Cerâmica"
+        }
+      ],
+      "short_description": "Vaso para Orquídeas em Cerâmica",
+      "slug": "vaso-para-orquideas",
+      "commodity_type": "physical",
+      "currency_id": "BRL",
+      "currency_symbol": "R$",
+      "condition": "new",
+      "auto_fill_related_products": true,
+      "dimensions": {
+        "width": {
+          "unit": "cm",
+          "value": 30
+        },
+        "height": {
+          "unit": "cm",
+          "value": 30
+        },
+        "length": {
+          "unit": "cm",
+          "value": 30
+        }
+      },
+      "weight": {
+        "unit": "kg",
+        "value": 0.5
+      },
+      "updated_at": "2023-06-19T18:39:14.573Z",
+      "store_id": 1173,
+      "created_at": "2023-05-24T17:48:21.549Z",
+      "min_quantity": 1,
+      "max_quantity": 3
+    }
+  ],
+  "amount": {
+    "subtotal": 99.75,
+    "freight": 0,
+    "discount": 0,
+    "total": 99.75
+  },
+  "domain": "leaodejuda.netlify.app",
+  "can_fetch_when_selected": true,
+  "currency_id": "BRL",
+  "currency_symbol": "R$",
+  "customer": {
+    "_id": "621781e57963422eee198e7f",
+    "main_email": "wis.tech7l@gmail.com",
+    "display_name": "Wisley",
+    "name": {
+      "given_name": "Wisley",
+      "family_name": "Alves"
+    },
+    "birth_date": {
+      "day": 22,
+      "month": 10,
+      "year": 1993
+    },
+    "photos": [
+      "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5215435488508219&height=50&width=50&ext=1648299747&hash=AeRW9liwzh7S8_nDRNc"
+    ],
+    "phones": [
+      {
+        "number": "31920006175"
+      }
+    ],
+    "registry_type": "p",
+    "doc_number": "21645193292",
+    "addresses": [
+      {
+        "_id": "801165164564353427100000",
+        "zip": "35701134",
+        "province_code": "MG",
+        "name": "Wisley Alves",
+        "city": "Sete Lagoas",
+        "borough": "Progresso",
+        "street": "Rua Santo André",
+        "default": true,
+        "number": 81
+      }
+    ]
+  }
+}

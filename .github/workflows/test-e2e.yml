@@ -34,9 +34,9 @@ jobs:
       !contains(github.event.head_commit.author.name, '[bot]')
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: ecomplus/store
           path: store
@@ -106,11 +106,11 @@ jobs:
             ${{ steps.npm-paths.outputs.LIB_PATH }}
             ${{ steps.npm-paths.outputs.BIN_PATH }}
             ~/.npm-global/bin
-          key: ${{ runner.os }}-npm-globals-firebase-tools-12.3.1
+          key: ${{ runner.os }}-npm-globals-firebase-tools-12.5.2
 
       - if: steps.npm-g-cache.outputs.cache-hit != 'true'
         shell: bash
-        run: npm install -g firebase-tools@12.3.1
+        run: npm install -g firebase-tools@12.5.2
 
       - name: Initialize Firebase emulators
         shell: bash

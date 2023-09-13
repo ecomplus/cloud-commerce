@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { PaymentMethodFlag } from '@@sf/sf-lib';
+import type { SettingsContent } from '@@sf/content';
 import { computed } from 'vue';
 
 export interface Props {
   as?: string;
-  flag: PaymentMethodFlag;
+  flag: Exclude<SettingsContent['payment_methods'], undefined>[number];
 }
 
 const props = withDefaults(defineProps<Props>(), {
