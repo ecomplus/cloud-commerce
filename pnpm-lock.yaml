@@ -1018,16 +1018,13 @@ importers:
 
   store:
     dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.23.0
-        version: 0.23.0
+       '@cloudcommerce/cli':
+        specifier: ^0.26.4
+        version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.22.4
-        version: 0.22.4(typescript@5.0.4)
-      eslint:
-        specifier: ^8.46.0
-        version: 8.46.0
+        specifier: ^0.26.4
+        version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
