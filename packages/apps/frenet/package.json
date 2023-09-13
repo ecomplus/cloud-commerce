@@ -20,11 +20,13 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/packages/apps/frenet#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test": "bash scripts/tests.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "@cloudcommerce/test-base": "workspace:^",
     "axios": "^1.5.0",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1"

@@ -135,6 +135,9 @@ jobs:
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
           MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
+          FRENET_TOKEN: ${{ secrets.FRENET_TOKEN }}
+          GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
+          GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
         run: |
           sleep 10
           pnpm test:apps
