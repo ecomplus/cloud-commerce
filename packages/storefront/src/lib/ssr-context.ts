@@ -1,7 +1,7 @@
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
-import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
+import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
@@ -83,9 +83,14 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   ];
   let fetchingApiContext: typeof apiPrefetchings[number] = null;
   const apiContext: {
-    resource?: 'products' | 'categories' | 'brands' | 'collections',
-    doc?: Record<string, any>,
-    error: ApiError | null,
+    resource?: 'products' | 'categories' | 'brands' | 'collections';
+    doc?: Record<string, any> & {
+      _id: ResourceId;
+      store_id: number;
+      created_at: string;
+      updated_at: string;
+    };
+    error: ApiError | null;
   } = {
     error: null,
   };
