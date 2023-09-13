@@ -26,12 +26,12 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "@cloudcommerce/test-base": "workspace:*",
     "axios": "^1.5.0",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1"
   },
   "devDependencies": {
+    "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.0"
   }
