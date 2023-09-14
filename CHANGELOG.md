@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.6](https://github.com/ecomplus/cloud-commerce/compare/v0.26.5...v0.26.6) (2023-09-13)
+
+
+### Bug Fixes
+
+* **apps:** Ensure `@cloudcommerce/test-base` as dev dependency only ([020a23d](https://github.com/ecomplus/cloud-commerce/commit/020a23d474e20a6712e51a04f16bd293035d8929))
+
+### [0.26.5](https://github.com/ecomplus/cloud-commerce/compare/v0.26.4...v0.26.5) (2023-09-13)
+
+
+### Features
+
+* **storefront:** Async loading CMS content for API doc page (wildcard by slug) ([5fc2010](https://github.com/ecomplus/cloud-commerce/commit/5fc2010ab897a81c142014a1cd207e428e910974))
+* **storefront:** Handling new section type breadcrumbs ([c3af083](https://github.com/ecomplus/cloud-commerce/commit/c3af0838691db06ecd5aaa31d9619b49cfdbdd01))
+* **storefront:** New `useBreadcrumbs` server-side-first composable ([688c037](https://github.com/ecomplus/cloud-commerce/commit/688c03727210834413dc78cdfdca663b0ef80496))
+* **storefront:** New bypassed section types expected for product page ([3e38002](https://github.com/ecomplus/cloud-commerce/commit/3e38002b398881a3ef44d4a916d009c7eeab6443))
+* **storefront:** New ContentClearfix.astro component for user's html content ([5873973](https://github.com/ecomplus/cloud-commerce/commit/58739737f47a494715492ba50116e651a95501b4))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#234](https://github.com/ecomplus/cloud-commerce/issues/234)) ([62345c6](https://github.com/ecomplus/cloud-commerce/commit/62345c648901b88ee49c3fee77daa4eaafb4fbb9))
+* **storefront:** Update `apiContext.doc` type with common required document fields ([7f814d9](https://github.com/ecomplus/cloud-commerce/commit/7f814d9fce20a5e8ba01a65ed515f557d3a7d194))
+* **storefront:** Update `useSharedData` to timeout listeners (1s by default) ([9aa5d30](https://github.com/ecomplus/cloud-commerce/commit/9aa5d3018b9eb90397b64d66861a1e05096b9770))
+
 ### [0.26.4](https://github.com/ecomplus/cloud-commerce/compare/v0.26.3...v0.26.4) (2023-09-08)
 
 

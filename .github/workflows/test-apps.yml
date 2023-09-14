@@ -1,4 +1,4 @@
-name: Run E2E tests
+name: Run module and app tests
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/test-e2e.yml"
+      - ".github/workflows/test-apps.yml"
       - "packages/**"
       - "pnpm-lock.yaml"
       - "!**/package.json"
@@ -119,11 +119,25 @@ jobs:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
         run: |
+          printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
+          ECOM_API_KEY=$ECOM_API_KEY
+          ECOM_STORE_ID=$ECOM_STORE_ID
+          " > functions/.env
+          npx cloudcommerce prepare
           firebase --project=ecom2-demo emulators:start --only functions &
 
       - name: Run tests
         shell: bash
+        env:
+          ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
+          ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
+          ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
+          FRENET_TOKEN: ${{ secrets.FRENET_TOKEN }}
+          GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
+          GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
         run: |
           sleep 10
-          pnpm test:e2e
+          pnpm test:apps

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-custom-shipping",
   "type": "module",
-  "version": "0.26.4",
+  "version": "0.26.6",
   "description": "E-Com Plus Cloud Commerce app for custom shipping methods",
   "main": "lib/custom-shipping.js",
   "repository": {
@@ -17,7 +17,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/custom-shipping#readme",
   "scripts": {
     "build": "bash ../../../scripts/build-lib.sh",
-    "test:e2e": "node --test tests/"
+    "test": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"

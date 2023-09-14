@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-mercadopago",
   "type": "module",
-  "version": "0.26.4",
+  "version": "0.26.6",
   "description": "E-Com Plus Cloud Commerce app to integrate Mercado Pago",
   "main": "lib/mercadopago.js",
   "exports": {
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/packages/apps/mercadopago#readme",
   "scripts": {
     "build": "bash scripts/build.sh",
-    "test:e2e": "node --test tests/"
+    "test": "bash scripts/tests.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
