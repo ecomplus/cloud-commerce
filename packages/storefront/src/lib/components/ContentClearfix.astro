@@ -8,5 +8,8 @@ const parsedHTML = html.replace(/<(img|iframe) /g, '<$1 loading="lazy" ');
 ---
 
 <article class="overflow-x-auto lg:overflow-x-hidden prose !max-w-full">
-  <div class="[&_table]:max-w-full [&_img]:max-w-full" set:html={parsedHTML}></div>
+  <div
+    class="[&_table]:max-w-full [&_img]:max-w-full [&_iframe]:max-w-full"
+    set:html={parsedHTML}
+  ></div>
 </article>
