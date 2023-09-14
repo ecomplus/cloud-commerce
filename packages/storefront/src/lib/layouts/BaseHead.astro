@@ -89,13 +89,18 @@ if (apiDoc) {
     }
     return nestedDoc;
   };
-  inlineClientJS += `
-window.$storefront.apiContext = ${JSON.stringify({
+  Astro.locals.contextInlineClientJS = `
+$storefront.apiContext = ${JSON.stringify({
   resource: apiContext.resource,
   doc: minifyApiDoc({ ...apiDoc }),
   timestamp: Date.now(),
 })};
-window.$storefront.context /* DEPRECATED */ = window.$storefront.apiContext`;
+$storefront.context /* DEPRECATED */ = $storefront.apiContext`;
+} else {
+  Astro.locals.contextInlineClientJS = `
+$storefront.apiContext = null;
+delete $storefront.apiContext;
+delete $storefront.context;`;
 }
 if (isPreview) {
   inlineClientJS += `
