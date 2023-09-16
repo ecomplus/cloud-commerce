@@ -7,7 +7,7 @@ type ShopHeaderProps = Omit<UseShopHeaderProps, 'header'>;
 
 export interface Props {
   routeContext: RouteContext;
-  listedCategoryFields?: readonly string[];
+  listedCategoryFields?: readonly string[] | null;
 }
 
 const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
@@ -16,7 +16,7 @@ const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
   const { header: headerContent } = layoutContent;
   const pitchBar = parseLayoutContent(layoutContent);
   let { categories } = apiState;
-  if (!categories) {
+  if (!categories && listedCategoryFields !== null) {
     try {
       categories = (await api.get('categories', {
         fields: listedCategoryFields || ([
