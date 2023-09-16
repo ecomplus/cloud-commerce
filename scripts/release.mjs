@@ -49,15 +49,6 @@ if (argv.publish) {
           }
         });
     }
-    const {
-      dependencies: ssrDependencies,
-    } = JSON.parse(fs.readFileSync(`${pwd}/packages/ssr/package.json`));
-    const astroPkgs = ['astro'];
-    Object.keys(ssrDependencies).forEach((dep) => {
-      if (dep.startsWith('@astrojs/')) {
-        astroPkgs.push(dep);
-      }
-    });
     for (let ii = 0; ii < storesDirs.length; ii++) {
       const storeDir = storesDirs[ii];
       for (let iii = 0; iii < functions.length; iii++) {
@@ -67,11 +58,6 @@ if (argv.publish) {
         if (codebase === 'ssr') {
           await $`npm i --save @cloudcommerce/{firebase,ssr,api}@${version}`;
           await $`npm i --save-dev @cloudcommerce/{storefront,i18n,types}@${version}`;
-          for (let i = 0; i < astroPkgs.length; i++) {
-            const astroPkg = astroPkgs[i];
-            const dep = `${astroPkg}@${ssrDependencies[astroPkg]}`;
-            await $`npm i --save --save-exact ${dep}`;
-          }
         } else if (codebase === 'many') {
           await $`npm i --save @cloudcommerce/{firebase,feeds,passport}@${version}`;
         } else {
