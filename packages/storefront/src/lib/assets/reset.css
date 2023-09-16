@@ -78,8 +78,10 @@ Reset links to optimize for opt-in styling instead of opt-out.
 */
 
 a {
-  color: inherit;
   text-decoration: inherit;
+}
+:where(a) {
+  color: inherit;
 }
 
 /*
@@ -183,8 +185,15 @@ button,
 [type='reset'],
 [type='submit'] {
   -webkit-appearance: button; /* 1 */
-  background-color: transparent; /* 2 */
   background-image: none; /* 2 */
+}
+:where(
+  button,
+  [type='button'],
+  [type='reset'],
+  [type='submit']
+) {
+  background-color: transparent; /* 2 */
 }
 
 /*
