@@ -54,68 +54,6 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
-  ecomplus-stores/barra-doce:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.26.6
-        version: link:../../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^0.26.6
-        version: link:../../packages/eslint
-
-  ecomplus-stores/barra-doce/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^0.26.6
-        version: link:../../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.6
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.26.6
-        version: link:../../../../packages/passport
-
-  ecomplus-stores/barra-doce/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.26.6
-        version: link:../../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.6
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.26.6
-        version: link:../../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.26.6
-        version: link:../../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.26.6
-        version: link:../../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.26.6
-        version: link:../../../../packages/types
-      '@fontsource/croissant-one':
-        specifier: ^5.0.9
-        version: 5.0.12
-      '@iconify-json/mingcute':
-        specifier: ^1.1.9
-        version: 1.1.9
-
-  ecomplus-stores/barra-doce/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.26.6
-        version: link:../../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.6
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.26.6
-        version: link:../../../../packages/modules
-
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -267,8 +205,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       facebook-nodejs-business-sdk:
-        specifier: ^17.0.3
-        version: 17.0.3
+        specifier: ^18.0.0
+        version: 18.0.0
       firebase-admin:
         specifier: ^11.10.1
         version: 11.10.1
@@ -1077,62 +1015,6 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
-
-  store:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.26.6
-        version: link:../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^0.26.6
-        version: link:../packages/eslint
-
-  store/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^0.26.6
-        version: link:../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.6
-        version: link:../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.26.6
-        version: link:../../../packages/passport
-
-  store/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.26.6
-        version: link:../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.6
-        version: link:../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.26.6
-        version: link:../../../packages/ssr
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.26.6
-        version: link:../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.26.6
-        version: link:../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.26.6
-        version: link:../../../packages/types
-
-  store/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.26.6
-        version: link:../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.26.6
-        version: link:../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.26.6
-        version: link:../../../packages/modules
 
 packages:
 
@@ -3894,10 +3776,6 @@ packages:
     resolution: {integrity: sha512-xDxhD9++451HuCv3xKBEdSYaArX9NcokODXZYH/MxGw1XFFOz7OKkTRItZ5wf6npBN/inwp8dUZCP7SpAg46yQ==}
     dev: false
 
-  /@fontsource/croissant-one@5.0.12:
-    resolution: {integrity: sha512-ymocYV8vEZAOj1TxQE4saFC8IpUOlD0zxwHagNFHSHZ8+N/C7MrsNjDR8fDMKzkdyLO9euh7VLqOWMyQec9RYg==}
-    dev: true
-
   /@google-cloud/firestore@6.7.0:
     resolution: {integrity: sha512-bkH2jb5KkQSUa+NAvpip9HQ+rpYhi77IaqHovWuN07adVmvNXX08gPpvPWEzoXYa/wDjEVI7LiAtCWkJJEYTNg==}
     engines: {node: '>=12.0.0'}
@@ -4087,14 +3965,9 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
-  /@iconify-json/mingcute@1.1.9:
-    resolution: {integrity: sha512-bDU36w8G6vKJ2RcX3/lpuUtxmAoB8qLzdGFwioUgGaOw7o7YgviNCTA0h4mHYgh3qZQd/RBGoMf7rG+7nZMcRQ==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
-
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: false
 
   /@iconify/utils@2.1.9:
     resolution: {integrity: sha512-mo+A4n3MwLlWlg1SoSO+Dt6pOPWKElk9sSJ6ZpuzbB9OcjxN8RUWxU3ulPwB1nglErWKRam2x4BAohbYF7FiFA==}
@@ -7370,8 +7243,8 @@ packages:
     requiresBuild: true
     dev: false
 
-  /facebook-nodejs-business-sdk@17.0.3:
-    resolution: {integrity: sha512-WGSSt+WKs2leujJIMQiCmxDlrPOl1A7BDHmzuI6hfwUq9fk6OoVii83HHBNkzz7OSFh0YLdWOxrYDwCvIhrVaA==}
+  /facebook-nodejs-business-sdk@18.0.0:
+    resolution: {integrity: sha512-+uhJegMQS27I3//b4AZkiqofvUt5sKnrf6qVPOuCEF4xspMt1kdHQSIKYzryEgB3LhM5Q485hfyq3ARJMKb7og==}
     dependencies:
       axios: 1.5.0
       currency-codes: 1.5.1
