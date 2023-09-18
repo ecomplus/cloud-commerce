@@ -11,7 +11,7 @@ const { settings } = Astro.locals.routeContext;
 const { contextInlineClientJS } = Astro.locals;
 ---
 
-<body>
+<body style="visibility:hidden" class="!visible"> <!-- Prevent FOUC -->
   {contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}
   <div id="teleported-overlap" class="relative z-[59]"></div>
   <div id="teleported-top" class="relative z-[19]"></div>
