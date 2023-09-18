@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "libsodium-wrappers": "^0.7.11",
+    "libsodium-wrappers": "^0.7.13",
     "md5": "^2.3.0",
     "zx": "^7.2.3"
   }
