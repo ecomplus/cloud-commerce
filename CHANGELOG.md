@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.26.7](https://github.com/ecomplus/cloud-commerce/compare/v0.26.6...v0.26.7) (2023-09-18)
+
+
+### Features
+
+* **ssr:** Fallback redirect static built files on 404 hash mismtach ([494848b](https://github.com/ecomplus/cloud-commerce/commit/494848b5822f0bb5fd4e1dc9c800197b6c585e33))
+* **storefront:** Edit `usePageHeader` to accept `listedCategoryFields` null skip categories fetch ([be563d7](https://github.com/ecomplus/cloud-commerce/commit/be563d746837c97972825d2db5cdf01fc3084238))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency facebook-nodejs-business-sdk to v18 ([#239](https://github.com/ecomplus/cloud-commerce/issues/239)) ([464b0df](https://github.com/ecomplus/cloud-commerce/commit/464b0df1701f1e73e0c891ab8d64144f3c5e23cb))
+* **deps:** Update non-major dependencies ([#238](https://github.com/ecomplus/cloud-commerce/issues/238)) ([e869660](https://github.com/ecomplus/cloud-commerce/commit/e869660e1796f1a78bbf98ab7b345909f61cc3cf))
+* **storefront:** Hardfix for 100vh problem on mobile (`.h-screen`) with dvh unit ([c4a3fb7](https://github.com/ecomplus/cloud-commerce/commit/c4a3fb707a3668ec5ffdd8ae7a2b987da8a40ad7))
+* **storefront:** New `Astro.locals.contextInlineClientJS` and body script to reset context n CSR ([eeab76c](https://github.com/ecomplus/cloud-commerce/commit/eeab76c30c5e3942d032d475459828872461eaf6))
+* **storefront:** Set and reset <body> visibility to prevent FOUC ([6eb237f](https://github.com/ecomplus/cloud-commerce/commit/6eb237f7173072a3ee780fe7cd948faaa99dfec6))
+* **storefront:** Update ContentClearfix to also limit child <iframe> width ([0b0031b](https://github.com/ecomplus/cloud-commerce/commit/0b0031bb4c10fd50d92c0ca2165446e760174c3a))
+* **storefront:** Update reset.css to selector specificity 0 for button/a colors ([23b3870](https://github.com/ecomplus/cloud-commerce/commit/23b387066e96808fc59fbca40beffa1bad8227ca))
+
 ### [0.26.6](https://github.com/ecomplus/cloud-commerce/compare/v0.26.5...v0.26.6) (2023-09-13)
 
 
