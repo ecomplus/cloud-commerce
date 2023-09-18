@@ -31,7 +31,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
-    "@google-cloud/pubsub": "^4.0.5",
+    "@google-cloud/pubsub": "^4.0.6",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1",
     "source-map-support": "^0.5.21"
