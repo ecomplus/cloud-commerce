@@ -1,7 +1,11 @@
 module.exports = {
-  extends: './base.eslintrc.cjs',
+  extends: [
+    './base.eslintrc.cjs',
+    'plugin:tailwindcss/recommended',
+  ],
   rules: {
     'no-console': 'off',
+    'max-len': 'warn',
     'semi': 'warn',
     'arrow-parens': 'warn',
     'object-curly-newline': 'warn',
@@ -27,5 +31,6 @@ module.exports = {
         'Accordion',
       ],
     }],
+    'tailwindcss/no-custom-classname': 'off',
   },
 };
