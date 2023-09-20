@@ -1,8 +1,8 @@
 import type {
-  ProductSet,
-  CategorySet,
-  BrandSet,
-  CollectionSet,
+  Products,
+  Categories,
+  Brands,
+  Collections,
 } from '@cloudcommerce/api/types';
 import type { SettingsContent } from '@@sf/content';
 
@@ -10,19 +10,19 @@ export type $Storefront = {
   settings: Partial<SettingsContent>,
   apiContext?: {
     resource: 'products',
-    doc: ProductSet,
+    doc: Products,
     timestamp: number,
   } | {
     resource: 'categories',
-    doc: CategorySet,
+    doc: Categories,
     timestamp: number,
   } | {
     resource: 'brands',
-    doc: BrandSet,
+    doc: Brands,
     timestamp: number,
   } | {
     resource: 'collections',
-    doc: CollectionSet,
+    doc: Collections,
     timestamp: number,
   },
   data: Record<string, any>,

@@ -19,13 +19,15 @@ let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
+const staticFilepaths: string[] = [];
 let cssFilepath: string | undefined;
-readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
-  .then((stylesManifest) => {
+readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
+  .then((staticBuildsManifest) => {
     const cssFiles: string[] = [];
-    stylesManifest.split(/\n/).forEach((line) => {
-      const [filename] = line.split(',');
-      if (filename) cssFiles.push(filename);
+    staticBuildsManifest.split(/\n/).forEach((line) => {
+      const [filepath] = line.split(',');
+      staticFilepaths.push(filepath);
+      if (filepath.endsWith('.css')) cssFiles.push(filepath);
     });
     if (cssFiles.length === 1) {
       cssFilepath = cssFiles[0]?.replace('./dist/client/', '/');
@@ -128,9 +130,23 @@ export default async (req: Request, res: Response) => {
     proxy(req, res);
     return;
   }
-  if (req.path.endsWith('.css') && cssFilepath) {
-    res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
-    return;
+
+  const ext = req.path.split('.').pop();
+  if (ext === 'js' || ext === 'css' || ext === 'avif' || ext === 'webp') {
+    const baseFilepath = req.path.replace(new RegExp(`(\\.|_)[a-zA-Z0-9]+\\.${ext}$`), '');
+    if (baseFilepath !== req.path) {
+      const filepath = staticFilepaths.find((_filepath) => {
+        return _filepath.startsWith(baseFilepath) && _filepath.endsWith(`.${ext}`);
+      });
+      if (filepath) {
+        res.set('Cache-Control', 'max-age=21600').redirect(302, filepath);
+        return;
+      }
+    }
+    if (ext === 'css' && cssFilepath) {
+      res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
+      return;
+    }
   }
 
   if (req.path === '/_image') {

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/eslint",
   "type": "module",
-  "version": "0.26.6",
+  "version": "0.26.7",
   "description": "E-Com Plus Cloud Commerce ESLint config",
   "main": "lib/index.js",
   "repository": {
@@ -19,8 +19,8 @@
     "build": "echo '@ecomplus/eslint'"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.49.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.28.1",

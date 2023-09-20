@@ -110,3 +110,11 @@ details > summary.list-none::-webkit-details-marker,
 details > summary.list-none::marker {
   display: none;
 }
+
+/*
+Hardfix for 100vh problem on mobile:
+https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
+*/
+.h-screen {
+  max-height: 100dvh;
+}
