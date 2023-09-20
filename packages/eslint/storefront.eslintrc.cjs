@@ -23,6 +23,8 @@ module.exports = {
         'Prices',
         'Banner',
         'Countdown',
+        'Collapse',
+        'Accordion',
       ],
     }],
   },
