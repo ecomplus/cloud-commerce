@@ -60,10 +60,20 @@ export default async (product: Products, originalTinyProduct, appData) => {
 
   if (product.weight && product.weight.value) {
     tinyProduct.peso_bruto = product.weight.value;
+    tinyProduct.peso_liquido = product.weight.value;
+
+    // middleware
+    const setWeightUnitProduct = global.$tinyErpSetWeightUnitProduct;
+    if (setWeightUnitProduct && typeof setWeightUnitProduct === 'function') {
+      setWeightUnitProduct(product);
+    }
+
     if (product.weight.unit === 'mg') {
       tinyProduct.peso_bruto /= 1000000;
+      tinyProduct.peso_liquido /= 1000000;
     } else if (product.weight.unit === 'g') {
       tinyProduct.peso_bruto /= 1000;
+      tinyProduct.peso_liquido /= 1000;
     }
   }
   const { dimensions } = product;

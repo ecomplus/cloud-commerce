@@ -66,12 +66,39 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       logger.info(`${orderId} skipped with status "${tinyStatus}"`);
       return null;
     }
+
+    if (appData.ready_for_shipping_only) {
+      const validStatusesTiny = {
+        aberto: true,
+        cancelado: true,
+        aprovado: true,
+        preparando_envio: true,
+        faturado: true,
+      };
+
+      if (
+        validStatusesTiny[tinyStatus]
+        && (!order.fulfillment_status || order.fulfillment_status.current !== 'ready_for_shipping')
+      ) {
+        logger.info(`${orderId} skipped with status "${tinyStatus}"`);
+        return null;
+      }
+    }
+
     const tinyOrder = parseOrder(order, appData);
     logger.info(`${orderId} ${JSON.stringify(tinyOrder)}`);
     return postTiny('/pedido.incluir.php', {
       pedido: {
         pedido: tinyOrder,
       },
+    }).then((response) => {
+      // TODO: middleware ?
+      // https://github.com/ecomplus/app-tiny-erp/blob/d5eef0c6be83485805ec94ba801a8cf111d24ed6/functions/lib/integration/export-order.js#L91
+      const updateTrackingCode = global.$tinyErpUpdateTrackingCode;
+      if (updateTrackingCode && typeof updateTrackingCode === 'function') {
+        return updateTrackingCode(response, order, postTiny);
+      }
+      return response;
     });
   }
 

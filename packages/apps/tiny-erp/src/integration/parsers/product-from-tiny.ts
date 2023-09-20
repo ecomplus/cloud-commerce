@@ -12,7 +12,11 @@ const removeAccents = (str: string) => str.replace(/áàãâÁÀÃÂ/g, 'a')
   .replace(/úÚ/g, 'u')
   .replace(/çÇ/g, 'c');
 
-const tryImageUpload = (originImgUrl: string, product: Products) => new Promise((resolve) => {
+const tryImageUpload = (
+  originImgUrl: string,
+  product: Products,
+  index?: number,
+) => new Promise((resolve) => {
   const {
     storeId,
     apiAuth: {
@@ -72,8 +76,13 @@ const tryImageUpload = (originImgUrl: string, product: Products) => new Promise(
     });
 }).then((picture) => {
   if (product && product.pictures) {
-    // @ts-ignore
-    product.pictures.push(picture);
+    if (index === 0 || index) {
+      // @ts-ignore
+      product.pictures[index] = picture;
+    } else {
+      // @ts-ignore
+      product.pictures.push(picture);
+    }
   }
   return picture;
 });
@@ -101,6 +110,21 @@ export default (
   };
 
   if (isNew) {
+    if (tinyProduct.seo) {
+      if (tinyProduct.seo.slug && tinyProduct.seo.slug.length) {
+        product.slug = tinyProduct.seo.slug;
+      }
+      if (tinyProduct.seo.title && tinyProduct.seo.title.length) {
+        product.meta_title = tinyProduct.seo.title.slice(0, 254);
+      }
+      if (tinyProduct.seo.description && tinyProduct.seo.description.length) {
+        product.meta_description = tinyProduct.seo.description.slice(0, 999);
+      }
+      if (tinyProduct.seo.keywords && tinyProduct.seo.keywords.length) {
+        product.keywords = tinyProduct.seo.keywords.split(',');
+      }
+    }
+
     product.slug = removeAccents(name.toLowerCase())
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-_./]/g, '');
@@ -128,7 +152,9 @@ export default (
     }
   }
 
-  const weight = tinyProduct.peso_bruto || tinyProduct.peso_liquido;
+  const weight = !isProduct ? (tinyProduct.peso_bruto || tinyProduct.peso_liquido)
+    : (tinyProduct.pesoBruto || tinyProduct.pesoLiquido);
+
   if (weight > 0) {
     product.weight = {
       unit: 'kg',
