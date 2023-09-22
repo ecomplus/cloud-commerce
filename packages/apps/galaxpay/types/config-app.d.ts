@@ -31,7 +31,14 @@ export type GalaxpayApp = {
     periodicity: 'Semanal' | 'Quinzenal' | 'Mensal' | 'Bimestral' | 'Trimestral' | 'Semestral' | 'Anual'
     quantity: integer | 0,
     discount: {
-      percentage: boolean,
+      type?: 'percentage' | 'fixed',
+      value: number,
+      apply_at: 'total' | 'subtotal' | 'frete',
+      min_amount?: number
+    },
+    discount_first_installment: {
+      disable?: boolean,
+      type?: 'percentage' | 'fixed',
       value: number,
       apply_at: 'total' | 'subtotal' | 'frete',
       min_amount?: number

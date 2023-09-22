@@ -3,11 +3,6 @@
 
 // type Gateway = ListPaymentsResponse['payment_gateways'][number]
 
-const gerateId = (id: string | number) => {
-  const length = 24 - id.toString().length + 1;
-  return Array(length).join('0') + id;
-};
-
 const parsePeriodicityToEcom = (periodicity?: string) => {
   switch (periodicity) {
     case 'weekly':
@@ -84,7 +79,6 @@ const parsePeriodicityToGalaxPay = (periodicity?: string) => {
 };
 
 export {
-  gerateId,
   parsePeriodicityToEcom,
   parsePeriodicityToGalaxPay,
   parseStatus,

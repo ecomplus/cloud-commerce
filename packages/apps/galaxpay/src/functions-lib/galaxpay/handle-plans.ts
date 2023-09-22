@@ -1,7 +1,8 @@
 import type { GalaxpayApp } from '../../../types/config-app';
 import type { ListPaymentsParams } from '@cloudcommerce/types';
 
-// type Gateway = ListPaymentsResponse['payment_gateways'][number]
+type Plan = Exclude<GalaxpayApp['plans'], undefined>[number]
+type Amount = Exclude<ListPaymentsParams['amount'], undefined>
 
 const handleGateway = (appData: GalaxpayApp) => {
   const plans: Exclude<GalaxpayApp['plans'], undefined> = [];
@@ -40,15 +41,27 @@ const findPlanToCreateTransction = (label: string | undefined, appData: Galaxpay
 };
 
 const discountPlan = (
-  planDiscount: Exclude<GalaxpayApp['plans'], undefined>[number]['discount'],
-  amount: Exclude<ListPaymentsParams['amount'], undefined>,
+  planName: string,
+  plan: Plan,
+  amount: Omit<Amount, 'total'> & { total?: number },
 ) => {
+  let planDiscount: Plan['discount'];
+  if (plan.discount_first_installment && !plan.discount_first_installment?.disable) {
+    planDiscount = plan.discount_first_installment;
+  } else {
+    planDiscount = plan.discount;
+  }
+
   if (planDiscount && planDiscount.value > 0) {
     // default discount option
+    const type = planDiscount.type;
+
+    const applyAt: string = planDiscount.apply_at === 'frete' ? 'freight' : planDiscount.apply_at;
+
     const discountOption = {
-      value: planDiscount.value,
-      apply_at: (planDiscount.apply_at === 'frete' ? 'freight' : planDiscount) as 'total' | 'subtotal' | 'freight',
-      type: planDiscount.percentage ? 'percentage' : 'fixed' as 'percentage' | 'fixed' | undefined,
+      label: planName,
+      value: planDiscount.value as number | undefined,
+      type,
     };
 
     if (amount.total) {
@@ -58,15 +71,16 @@ const discountPlan = (
       } else {
         delete planDiscount.min_amount;
 
-        const maxDiscount = amount[discountOption.apply_at || 'subtotal'];
+        const maxDiscount = amount[applyAt || 'subtotal'];
         let discountValue: number | undefined;
 
         if (maxDiscount && discountOption.type === 'percentage') {
           discountValue = (maxDiscount * planDiscount.value) / 100;
         } else {
           discountValue = planDiscount.value;
-          if (maxDiscount && discountValue > maxDiscount) {
-            discountValue = maxDiscount;
+          if (maxDiscount) {
+            discountValue = (discountValue && discountValue > maxDiscount)
+              ? maxDiscount : discountValue;
           }
         }
 
@@ -79,7 +93,10 @@ const discountPlan = (
         }
       }
     }
-    return discountOption;
+    const discount = planDiscount as Omit<Plan['discount'], 'apply_at'>
+      & { apply_at: 'total' | 'subtotal' | 'freight' };
+
+    return { amount, discountOption, discount };
   }
   return null;
 };

@@ -16,7 +16,7 @@ export default async (data: AppModuleBody) => {
   const { application } = data;
   const params = data.params as ListPaymentsParams;
   // https://apx-mods.e-com.plus/api/v1/list_payments/schema.json?store_id=100
-  const amount = params.amount || { total: undefined, discount: undefined };
+  let amount = { ...params.amount } || { total: undefined, discount: undefined };
   // const initialTotalAmount = amount.total;
 
   const configApp = {
@@ -31,7 +31,7 @@ export default async (data: AppModuleBody) => {
 
   if (!process.env.GALAXPAY_ID) {
     const galaxpayId = configApp.galaxpay_id;
-    if (typeof galaxpayId === 'string' && galaxpayId) {
+    if (galaxpayId && typeof galaxpayId === 'string') {
       process.env.GALAXPAY_ID = galaxpayId;
     } else {
       logger.warn('Missing GalaxPay ID');
@@ -40,7 +40,7 @@ export default async (data: AppModuleBody) => {
 
   if (!process.env.GALAXPAY_HASH) {
     const galaxpayHash = configApp.galaxpay_hash;
-    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+    if (galaxpayHash && typeof galaxpayHash === 'string') {
       process.env.GALAXPAY_HASH = galaxpayHash;
     } else {
       logger.warn('Missing GalaxPay Hash');
@@ -93,7 +93,7 @@ export default async (data: AppModuleBody) => {
           const planName = plan.label ? plan.label : 'Plano';
 
           if (type === 'recurrence' && planName) {
-            label = `${planName} ${periodicity} ${label}`;
+            label = `${planName}`;
           }
           const gateway: Gateway = {
             label,
@@ -101,7 +101,7 @@ export default async (data: AppModuleBody) => {
             text: methodConfig.text,
             payment_method: {
               code: isPix ? 'account_deposit' : paymentMethod as CodePaymentMethod, // pix is defined payment method outher
-              name: `${label} - ${intermediator.name}`,
+              name: `${label} - ${periodicity} - ${intermediator.name}`,
             },
             type,
             intermediator,
@@ -126,18 +126,11 @@ export default async (data: AppModuleBody) => {
             };
           }
 
-          const planDiscount = discountPlan(plan.discount, amount);
-          if (planDiscount) {
-            if (gateway && gateway.discount) {
-              gateway.discount = planDiscount;
-            }
-
-            response.discount_option = {
-              label,
-              ...planDiscount,
-              apply_at: planDiscount?.apply_at !== 'freight'
-                ? planDiscount?.apply_at : undefined,
-            };
+          const handleDiscount = discountPlan(label, plan, amount);
+          if (handleDiscount) {
+            amount = handleDiscount.amount;
+            gateway.discount = handleDiscount.discount;
+            response.discount_option = handleDiscount.discountOption;
           }
           response.payment_gateways.push(gateway);
         }

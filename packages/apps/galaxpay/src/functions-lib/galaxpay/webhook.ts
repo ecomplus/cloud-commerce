@@ -1,7 +1,6 @@
 import type {
   Orders,
   Applications,
-  ResourceListResult,
   ResourceId,
 } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions';
@@ -9,13 +8,23 @@ import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
-import { parseStatus, parsePeriodicityToEcom, gerateId } from '../all-parses';
+import { parseStatus, parsePeriodicityToEcom } from '../all-parses';
+import {
+  findOrderById,
+  getOrderIntermediatorTId,
+} from '../ecom/request-api';
+import { createItemsAndAmount } from '../firestore/utils';
 import GalaxpayAxios from './auth/create-access';
-import { updateValueSubscription, checkAmountItemsOrder } from './update-subscription';
+import {
+  checkAndUpdateSubscriptionGalaxpay,
+  checkItemsAndRecalculeteOrder,
+  compareDocItemsWithOrder,
+} from './update-subscription';
 
 type FinancialStatusCurrent = Exclude<Orders['financial_status'], undefined>['current']
 
 const collectionSubscription = getFirestore().collection('galaxpaySubscriptions');
+const collectionTransactions = getFirestore().collection('galaxpayTransactions');
 
 const getApp = async (): Promise<Applications> => {
   return new Promise((resolve, reject) => {
@@ -58,91 +67,115 @@ const checkPayDay = (strDate: string) => {
   return (now >= payDay);
 };
 
-const findOrderByTransactionId = (transactionId: string): Promise<ResourceListResult<'orders'>> => {
-  return new Promise((resolve, reject) => {
-    api.get(`orders?transactions._id=${transactionId}`)
-      .then(({ data: response }) => {
-        const resp = response as unknown as ResourceListResult<'orders'>; // TODO:
-        resolve(resp);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
-
-const findOrderById = async (orderId: ResourceId): Promise<Orders> => new Promise((resolve) => {
-  api.get(`orders/${orderId}`)
-    .then(({ data: order }) => {
-      resolve(order);
-    });
-});
-
 const createTransaction = async (
   res: Response,
   subscriptionLabel: string,
-  plan: { [x: string]: any },
+  docSubscription,
   orderNumber: string,
   galaxpayFristTransactionId: string,
-  GalaxPayTransaction: { [x: string]: any },
-  GalaxPaySubscription: { [x: string]: any },
-  GalaxPayTransactionValue: number,
+  galaxPayTransaction,
+  galaxPaySubscription,
+  galaxPayTransactionValue: number,
   originalOrderId: ResourceId,
 ) => {
-  if (galaxpayFristTransactionId !== GalaxPayTransaction.galaxPayId) {
+  if (galaxpayFristTransactionId !== galaxPayTransaction.galaxPayId) {
     // let body;
     const originalOrder = (await api.get(`orders/${originalOrderId}`)).data;
 
     // logger.log('> Create new Order ')
     if (originalOrder.transactions && originalOrder.items) {
-      const { installment } = GalaxPayTransaction;
+      const { installment } = galaxPayTransaction;
       const {
-        buyers, items, domain, amount,
+        buyers,
+        items,
+        domain,
+        amount,
       } = originalOrder;
+
+      const { plan } = docSubscription;
+      let { itemsAndAmount } = docSubscription;
+
+      try {
+        const transactionDoc = (await collectionTransactions
+          .doc(`${galaxPayTransaction.galaxPayId}`).get())?.data();
+
+        itemsAndAmount = transactionDoc?.itemsAndAmount;
+        // logger.log('>> items to transaction');
+      } catch (err) {
+        logger.warn(err);
+      }
+
       const channelType = originalOrder.channel_type;
       const shippingLines = originalOrder.shipping_lines;
       const shippingMethodLabel = originalOrder.shipping_method_label;
       const paymentMethodLabel = originalOrder.payment_method_label;
       const originalTransaction = originalOrder.transactions[0];
       const quantity = installment;
-      const periodicity = parsePeriodicityToEcom(GalaxPaySubscription.periodicity);
-      const dateUpdate = GalaxPayTransaction.datetimeLastSentToOperator
-        ? new Date(GalaxPayTransaction.datetimeLastSentToOperator).toISOString()
+      const periodicity = parsePeriodicityToEcom(galaxPaySubscription.periodicity);
+      const dateUpdate = galaxPayTransaction.datetimeLastSentToOperator
+        ? new Date(galaxPayTransaction.datetimeLastSentToOperator).toISOString()
         : new Date().toISOString();
 
-      // remove items free in new orders subscription
-      checkAmountItemsOrder(amount, items, plan);
+      if (itemsAndAmount && itemsAndAmount.items?.length) {
+        compareDocItemsWithOrder(itemsAndAmount, items, amount, galaxPayTransactionValue);
+      }
+      // recalculate order
+      const shippingLine = shippingLines && shippingLines[0];
+      await checkItemsAndRecalculeteOrder(amount, items, plan, null, shippingLine);
+
+      if (shippingLines?.length && shippingLine) {
+        shippingLines[0] = shippingLine;
+      }
+
       if (amount.balance) {
         delete amount.balance;
       }
 
-      const transactionId = String(gerateId(GalaxPayTransaction.galaxPayId));
+      items.forEach((item) => {
+        if (item.stock_status && item.stock_status !== 'unmanaged') {
+          item.stock_status = 'pending';
+        }
+      });
+
+      const tId = galaxPayTransaction.tid;
 
       const transactions: Orders['transactions'] = [
         {
           amount: originalTransaction.amount,
           status: {
             updated_at: dateUpdate,
-            current: parseStatus(GalaxPayTransaction.status),
+            current: parseStatus(galaxPayTransaction.status),
           },
           intermediator: {
-            transaction_id: GalaxPayTransaction.tid || '',
-            transaction_code: GalaxPayTransaction.authorizationCode || '',
+            transaction_id: tId,
+            transaction_code: galaxPayTransaction.authorizationCode || '',
+            transaction_reference: galaxPayTransaction.tid || '',
           },
           payment_method: originalTransaction.payment_method,
           app: originalTransaction.app,
-          _id: transactionId as ResourceId,
           notes: `Parcela #${quantity} referente à ${subscriptionLabel} ${periodicity}`,
           custom_fields: originalTransaction.custom_fields,
         },
       ];
 
-      transactions[0].payment_link = GalaxPaySubscription.paymentLink;
+      transactions[0].payment_link = galaxPaySubscription.paymentLink;
 
       const financialStatus = {
         updated_at: dateUpdate,
-        current: parseStatus(GalaxPayTransaction.status) as FinancialStatusCurrent,
+        current: parseStatus(galaxPayTransaction.status) as FinancialStatusCurrent,
       };
+
+      const planPergentage = plan?.discount
+        ? plan.discount.type === 'percentage' || plan.discount.percentage
+        : null;
+
+      let notes = `Parcela #${quantity} desconto de ${planPergentage ? '' : 'R$'}`;
+      if (planPergentage) {
+        notes += ` ${plan?.discount?.value || ''} ${planPergentage ? '%' : ''}`;
+        notes += ` sobre ${plan?.discount?.apply_at || ''}`;
+        notes += ` referente à ${subscriptionLabel} ${periodicity}`;
+      }
+
       const body = {
         opened_at: new Date().toISOString(),
         items,
@@ -159,16 +192,28 @@ const createTransaction = async (
           _id: originalOrderId as string & { length: 24 },
           number: parseInt(orderNumber, 10),
         },
-        notes: `Pedido #${quantity} referente à ${subscriptionLabel} ${periodicity}`,
-        staff_notes: `Valor cobrado no GalaxPay R$${GalaxPayTransactionValue}`,
+        notes,
+        staff_notes: `Valor cobrado no GalaxPay R$${galaxPayTransactionValue}`,
       };
 
-      const { result } = await findOrderByTransactionId(transactionId);
+      const finalAmount = Math.floor(parseFloat((amount.total).toFixed(2)) * 1000) / 1000;
+
+      if (galaxPayTransactionValue !== finalAmount) {
+        logger.warn(`#${galaxPayTransaction.galaxPayId}] amount: ${
+          JSON.stringify(amount)
+        }, Galaxpay value: ${galaxPayTransactionValue}, items: ${JSON.stringify(items)},`);
+      }
+
+      const { result } = await getOrderIntermediatorTId(tId);
 
       if (!result.length) {
         await api.post('orders', body);
         // logger.log('> Created new order API')
-        return res.sendStatus(200);
+        await collectionTransactions.doc(`${galaxPayTransaction.galaxPayId}`)
+          .delete()
+          .catch(logger.error);
+
+        return res.sendStatus(201);
       }
       // Order Exists
       return res.sendStatus(200);
@@ -184,17 +229,17 @@ const handleWehook = async (req: Request, res: Response) => {
   // POST transaction.updateStatus update Transation status
   // POST subscription.addTransaction add transation in subscription
 
-  const galaxpayHook = req.body;
-  const type = galaxpayHook.event;
-  const GalaxPaySubscription = galaxpayHook.Subscription;
-  const GalaxPaySubscriptionQuantity = GalaxPaySubscription.quantity;
-  const originalOrderId = GalaxPaySubscription.myId;
-  const GalaxPayTransaction = galaxpayHook.Transaction;
-  const GalaxPayTransactionValue = GalaxPayTransaction.value / 100;
+  const whGalaxPay = req.body;
+  const type = whGalaxPay.event;
+  const whGalaxPaySubscription = whGalaxPay.Subscription;
+  const whGalaxPaySubscriptionQuantity = whGalaxPaySubscription.quantity;
+  const originalOrderId = whGalaxPaySubscription.myId;
+  const whGalaxPayTransaction = whGalaxPay.Transaction;
+  const whGalaxPayTransactionValue = whGalaxPayTransaction.value / 100;
 
   logger.log(
-    `> (App GalaxPay) WebHook ${type}, Body ${JSON.stringify(galaxpayHook)}, quantity:
-    ${GalaxPaySubscriptionQuantity}, status: ${GalaxPayTransaction.status} <`,
+    `> (App GalaxPay) WebHook ${type}, Body ${JSON.stringify(whGalaxPay)}, quantity:
+    ${whGalaxPaySubscriptionQuantity}, status: ${whGalaxPayTransaction.status} <`,
   );
 
   try {
@@ -208,7 +253,7 @@ const handleWehook = async (req: Request, res: Response) => {
             plan,
             orderNumber,
             subscriptionLabel,
-          } = docSubscription.data();
+          } = docSubscription;
 
           let galaxPayTransactionStatus: string | undefined;
           let galaxpaySubscriptionStatus: string | undefined;
@@ -219,7 +264,7 @@ const handleWehook = async (req: Request, res: Response) => {
             // check subscription and transaction status before in galaxpay
             if (!process.env.GALAXPAY_ID) {
               const galaxpayId = app.hidden_data?.galaxpay_id;
-              if (typeof galaxpayId === 'string' && galaxpayId) {
+              if (galaxpayId && typeof galaxpayId === 'string') {
                 process.env.GALAXPAY_ID = galaxpayId;
               } else {
                 logger.warn('Missing GalaxPay ID');
@@ -228,7 +273,7 @@ const handleWehook = async (req: Request, res: Response) => {
 
             if (!process.env.GALAXPAY_HASH) {
               const galaxpayHash = app.hidden_data?.galaxpay_hash;
-              if (typeof galaxpayHash === 'string' && galaxpayHash) {
+              if (galaxpayHash && typeof galaxpayHash === 'string') {
                 process.env.GALAXPAY_HASH = galaxpayHash;
               } else {
                 logger.warn('Missing GalaxPay Hash');
@@ -243,7 +288,7 @@ const handleWehook = async (req: Request, res: Response) => {
 
             if (galaxpayAxios.axios) {
               let { data } = await galaxpayAxios.axios
-                .get(`/transactions?galaxPayIds=${GalaxPayTransaction.galaxPayId}&startAt=0&limit=1`);
+                .get(`/transactions?galaxPayIds=${whGalaxPayTransaction.galaxPayId}&startAt=0&limit=1`);
 
               galaxPayTransactionStatus = data.Transactions[0]?.status;
               const dateTimeTransaction = data.Transactions[0]?.createdAt;
@@ -260,32 +305,40 @@ const handleWehook = async (req: Request, res: Response) => {
             logger.warn(`galaxpay webhook Error: get Transaction/Subscription in Galaxpay => ${err?.message}`);
           }
 
-          if (galaxpayFristTransactionId === GalaxPayTransaction.galaxPayId) {
+          if (galaxpayFristTransactionId === whGalaxPayTransaction.galaxPayId) {
             // update frist payment
             const order = await findOrderById(originalOrderId);
             // Update value Subscription in GalaxPay
 
-            //   logger.log('plan-> ', JSON.stringify(plan));
             // subscripton is paid
             if (checkStatusPaid(galaxPayTransactionStatus) && order.items) {
               const oldSubscriptionValue = docSubscription.data()?.value
                 || ({ ...order.amount }.total * 100);
 
-              const newValue = checkAmountItemsOrder(
-                { ...order.amount },
-                [...order.items],
-                { ...plan },
+              let shippingLine: Exclude<Orders['shipping_lines'], undefined>[number] | undefined;
+
+              if (order.shipping_lines?.length) {
+                [shippingLine] = order.shipping_lines;
+              }
+
+              const newValue = await checkItemsAndRecalculeteOrder(
+                order.amount,
+                order.items,
+                plan,
+                null,
+                shippingLine,
               );
-              if (newValue && newValue !== oldSubscriptionValue) {
-                await updateValueSubscription(
-                  app,
+              if (newValue && (newValue / 100) !== oldSubscriptionValue) {
+                await checkAndUpdateSubscriptionGalaxpay(
                   originalOrderId,
                   order.amount,
                   order.items,
                   plan,
+                  oldSubscriptionValue,
+                  shippingLine,
                 );
 
-                collectionSubscription.doc(originalOrderId)
+                await collectionSubscription.doc(originalOrderId)
                   .set({
                     updatedAt: new Date().toISOString(),
                     value: newValue,
@@ -300,16 +353,18 @@ const handleWehook = async (req: Request, res: Response) => {
               && checkStatusIsEqual(order.financial_status, galaxPayTransactionStatus)) {
               // check status is equal
               return res.sendStatus(200);
-            } if (order.transactions) {
+            }
+
+            if (order.transactions?.length) {
               // update payment
               const transactionId = order.transactions[0]._id;
-              let notificationCode = `;${GalaxPayTransaction.tid || ''};`;
-              notificationCode += `${GalaxPayTransaction.authorizationCode || ''}`;
+              let notificationCode = `;${whGalaxPayTransaction.tid || ''};`;
+              notificationCode += `${whGalaxPayTransaction.authorizationCode || ''}`;
               const bodyPaymentHistory = {
                 date_time: transactionCreatedAt || new Date().toISOString(),
                 status: parseStatus(galaxPayTransactionStatus),
                 transaction_id: transactionId,
-                notification_code: `${type};${galaxpayHook.webhookId}${notificationCode}`,
+                notification_code: `${type};${whGalaxPay.webhookId}${notificationCode}`,
                 flags: ['GalaxPay'],
               } as any; // TODO: incompatible type=> amount and status;;
 
@@ -319,8 +374,9 @@ const handleWehook = async (req: Request, res: Response) => {
                 `orders/${order._id}/transactions/${transactionId}`,
                 {
                   intermediator: {
-                    transaction_id: GalaxPayTransaction.tid || '',
-                    transaction_code: GalaxPayTransaction.authorizationCode || '',
+                    transaction_id: whGalaxPayTransaction.galaxPayId,
+                    transaction_reference: whGalaxPayTransaction.tid || '',
+                    transaction_code: whGalaxPayTransaction.authorizationCode || '',
                   },
                 },
               );
@@ -329,29 +385,29 @@ const handleWehook = async (req: Request, res: Response) => {
             }
           } else {
             /*
-                  add order, because recurrence creates all transactions in the
-                  first transaction when quantity is non-zero,search for the order by ID,
-                  if not found, create the transaction, and if found, check if it will be
-                  necessary to update the transaction status
-                */
-            const transactionId = String(gerateId(GalaxPayTransaction.galaxPayId));
+              add order, because recurrence creates all transactions in the
+              first transaction when quantity is non-zero,search for the order by ID,
+              if not found, create the transaction, and if found, check if it will be
+              necessary to update the transaction status
+            */
+            const tId = whGalaxPayTransaction.galaxPayId;
 
-            const { result } = await findOrderByTransactionId(transactionId);
+            const { result } = await getOrderIntermediatorTId(tId);
 
             if (!result || !result.length) {
               // logger.log('> Not found Transaction in API')
               if (checkStatusPaid(galaxPayTransactionStatus)
-                && checkPayDay(GalaxPayTransaction.payday)) {
+                && checkPayDay(whGalaxPayTransaction.payday)) {
                 // necessary to create order
                 return createTransaction(
                   res,
                   subscriptionLabel,
-                  plan,
+                  docSubscription,
                   orderNumber,
                   galaxpayFristTransactionId,
-                  GalaxPayTransaction,
-                  GalaxPaySubscription,
-                  GalaxPayTransactionValue,
+                  whGalaxPayTransaction,
+                  whGalaxPaySubscription,
+                  whGalaxPayTransactionValue,
                   originalOrderId,
                 );
               }
@@ -383,26 +439,31 @@ const handleWehook = async (req: Request, res: Response) => {
                   return res.sendStatus(400);
                 }
               } else {
-                logger.log(`>> galaxpay webhook: Status or checkPayDay invalid => Payday: ${GalaxPayTransaction.payday} now: ${new Date().toISOString()}`);
+                logger.log(`>> galaxpay webhook: Status or checkPayDay invalid => Payday: ${whGalaxPayTransaction.payday} now: ${new Date().toISOString()}`);
                 return res.status(404).send('Status or checkPayDay invalid');
               }
             }
-            const order = result[0];
+            const orderId = result[0]._id;
+            const { data: order } = await api.get(`orders/${orderId}`);
+            const transaction = order.transactions?.find(
+              (transactionFind) => transactionFind.intermediator?.transaction_id === tId,
+            );
+
             if (order.financial_status
               && checkStatusIsEqual(order.financial_status, galaxPayTransactionStatus)) {
               // check status is equal
               // logger.log('> Equals Status')
               return res.sendStatus(200);
             }
-            // logger.log('> Order id ')
             // update payment
-            let notificationCode = `;${GalaxPayTransaction.tid || ''};`;
-            notificationCode += `${GalaxPayTransaction.authorizationCode || ''}`;
+            let notificationCode = `;${whGalaxPayTransaction.tid || ''};`;
+            notificationCode += `${whGalaxPayTransaction.authorizationCode || ''}`;
+
             const bodyPaymentHistory = {
               date_time: transactionCreatedAt || new Date().toISOString(),
               status: parseStatus(galaxPayTransactionStatus),
-              transaction_id: transactionId,
-              notification_code: `${type};${galaxpayHook.webhookId}${notificationCode}`,
+              // transaction_id: transactionId,
+              notification_code: `${type};${whGalaxPay.webhookId}${notificationCode}`,
               flags: ['GalaxPay'],
             } as any; // TODO: incompatible type=> amount and status;
 
@@ -411,11 +472,11 @@ const handleWehook = async (req: Request, res: Response) => {
             // logger.log('>  create Payment History')
 
             await api.patch(
-              `orders/${order._id}/transactions/${transactionId}`,
+              `orders/${order._id}/transactions/${transaction?._id}`,
               {
                 intermediator: {
-                  transaction_id: GalaxPayTransaction.tid || '',
-                  transaction_code: GalaxPayTransaction.authorizationCode || '',
+                  transaction_id: whGalaxPayTransaction.tid || '',
+                  transaction_code: whGalaxPayTransaction.authorizationCode || '',
                 },
               },
             );
@@ -435,42 +496,64 @@ const handleWehook = async (req: Request, res: Response) => {
       //
       return res.status(404).send('Document not found in firestore');
     } if (type === 'subscription.addTransaction') {
-      if (GalaxPaySubscriptionQuantity === 0) {
-        // find transaction in firebase
+      if (whGalaxPaySubscription?.quantity === 0) {
+      // console.log('>> Add transaction')
         const documentSnapshot = await collectionSubscription.doc(originalOrderId).get();
         if (documentSnapshot && documentSnapshot.exists) {
-          const docSubscription = documentSnapshot.data();
+          const subscriptionDoc = documentSnapshot.data();
+          if (subscriptionDoc) {
+            const { plan, transactionId } = subscriptionDoc;
+            if (transactionId !== whGalaxPayTransaction.galaxPayId) {
+              const order = await findOrderById(originalOrderId);
 
-          if (docSubscription) {
-            const {
-              galaxpayFristTransactionId,
-              plan,
-              orderNumber,
-              subscriptionLabel,
-            } = docSubscription.data();
+              let { itemsAndAmount } = subscriptionDoc;
+              if (itemsAndAmount && itemsAndAmount.items?.length) {
+                compareDocItemsWithOrder(
+                  itemsAndAmount,
+                  order.items,
+                  order.amount,
+                  whGalaxPayTransactionValue,
+                );
+              }
 
-            if (checkPayDay(GalaxPayTransaction.payday)) {
-              return createTransaction(
-                res,
-                subscriptionLabel,
-                plan,
-                orderNumber,
-                galaxpayFristTransactionId,
-                GalaxPayTransaction,
-                GalaxPaySubscription,
-                GalaxPayTransactionValue,
-                originalOrderId,
-              );
+              let shippingLine: Exclude<Orders['shipping_lines'], undefined>[number] | undefined;
+
+              if (order?.shipping_lines?.length) {
+                [shippingLine] = order.shipping_lines;
+              }
+
+              if (order.items) {
+                await checkItemsAndRecalculeteOrder(
+                  order.amount,
+                  order.items,
+                  plan,
+                  null,
+                  shippingLine,
+                );
+              }
+
+              itemsAndAmount = createItemsAndAmount(order.amount, order.items);
+
+              await collectionTransactions.doc(`${whGalaxPayTransaction.galaxPayId}`)
+                .set(
+                  {
+                    itemsAndAmount,
+                    updatedAt: new Date().toISOString(),
+                  },
+                  { merge: true },
+                );
+              return res.sendStatus(200);
             }
+            // console.log('>> Transaction Original')
+            return res.sendStatus(200);
           }
         }
-        //
-        return res.status(404).send('Document not found in firestore');
+
+        return res.sendStatus(400);
       }
       // Avoid retries of this GalaxPay webhook
       return res.status(200)
-        .send(`Subscription webhook with non-zero quantity.
-          The Order will be analyzed with the updateStatus webhook.`);
+        .send('Subscription webhook with non-zero quantity. The Order will be analyzed with the updateStatus webhook.');
     }
     //
     return res.status(404).send('Unidentified webhook type');

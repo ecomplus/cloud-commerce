@@ -64,7 +64,7 @@ export default class GalaxPay {
           .then((documentSnapshot) => {
             if (documentSnapshot.exists
               && Date.now() - documentSnapshot.updateTime.toDate().getTime()
-              <= 9 * 60 * 1000 // access token expires in 10 minutes
+              <= 5 * 60 * 1000 // access token expires in 5 minutes
             ) {
               authenticate(documentSnapshot.get('accessToken'));
             } else {
