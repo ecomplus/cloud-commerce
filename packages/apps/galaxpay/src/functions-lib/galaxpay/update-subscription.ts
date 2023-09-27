@@ -86,7 +86,10 @@ const getNewFreight = async (
         (serviceFind) => serviceFind.service_code === shippingLineOriginal.app.service_code,
       );
 
-      return service || sameApp.response?.shipping_services[0];
+      return {
+        app: sameApp,
+        service: service || sameApp.response?.shipping_services[0],
+      };
     }
 
     let minPrice = result[0]?.response?.shipping_services[0]?.shipping_line?.total_price;
@@ -99,7 +102,7 @@ const getNewFreight = async (
         const service = app.response?.shipping_services[j];
 
         if (service.service_code === shippingLineOriginal.app.service_code) {
-          return service;
+          return { app, service };
         }
 
         if (minPrice > service?.shipping_line?.total_price) {
@@ -110,7 +113,10 @@ const getNewFreight = async (
       }
     }
 
-    return result[indexPosition.app]?.response?.shipping_services[indexPosition.service];
+    return {
+      app: result[indexPosition.app],
+      service: result[indexPosition.app]?.response?.shipping_services[indexPosition.service],
+    };
   } catch (err) {
     logger.error(err);
     return null;
@@ -151,14 +157,34 @@ const checkItemsAndRecalculeteOrder = async (
 
   if (subtotal > 0) {
     if (shippingLine) {
-      const service = await getNewFreight(items, shippingLine?.to, subtotal, shippingLine);
+      const newFreight = await getNewFreight(items, shippingLine?.to, subtotal, shippingLine);
+      let service;
+      let app;
 
-      if (service && service?.shipping_line?.total_price) {
-        shippingLine = { ...shippingLine, ...service.shipping_line };
-        if (shippingLine) {
-          delete shippingLine._id;
-        }
+      if (newFreight?.service) {
+        service = newFreight.service;
+      }
+
+      if (newFreight?.app) {
+        app = newFreight.app;
+      }
+
+      if (service && service?.service_code !== shippingLine?.app?.service_code) {
+        shippingLine = {
+          ...service.shipping_line,
+          app: {
+            _id: app?._id,
+            service_code: service?.service_code,
+            label: service?.label,
+          },
+        };
         amount.freight = service.shipping_line.total_price;
+      }
+
+      if (shippingLine) {
+        delete shippingLine._id;
+        delete shippingLine.tracking_codes;
+        delete shippingLine.invoices;
       }
     }
 
@@ -179,9 +205,12 @@ const checkItemsAndRecalculeteOrder = async (
     amount.discount = planDiscount || amount.discount || 0;
 
     amount.total -= amount.discount || 0;
-    return amount.total > 0 ? Math.floor(parseFloat(amount.total.toFixed(2)) * 1000) / 10 : 0;
+    return {
+      value: amount.total > 0 ? Math.floor(parseFloat((amount.total).toFixed(2)) * 1000) / 10 : 0,
+      shippingLine,
+    };
   }
-  return 0;
+  return { value: 0, shippingLine };
 };
 
 const getSubscriptionsByListMyIds = async (
@@ -229,7 +258,7 @@ const updateValueSubscriptionGalaxpay = async (
   galaxpayAxios,
   subscriptionId: string,
   value: number,
-  oldValue: number,
+  oldValue?: number,
 ) => {
   if (!oldValue) {
     const { data } = await galaxpayAxios.axios.get(`subscriptions?myIds=${subscriptionId}&startAt=0&limit=1`);
@@ -259,7 +288,7 @@ const checkAndUpdateSubscriptionGalaxpay = async (
   if (shippingLine) {
     copyShippingLine = { ...shippingLine };
   }
-  const value = await checkItemsAndRecalculeteOrder(
+  const { value } = await checkItemsAndRecalculeteOrder(
     { ...amount },
     [...items],
     { ...plan },

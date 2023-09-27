@@ -13,12 +13,16 @@ import {
   findOrderById,
   getOrderIntermediatorTId,
 } from '../ecom/request-api';
-import { createItemsAndAmount } from '../firestore/utils';
+import {
+  createItemsAndAmount,
+  updateDocSubscription,
+} from '../firestore/utils';
 import GalaxpayAxios from './auth/create-access';
 import {
   checkAndUpdateSubscriptionGalaxpay,
   checkItemsAndRecalculeteOrder,
   compareDocItemsWithOrder,
+  updateValueSubscriptionGalaxpay,
 } from './update-subscription';
 
 type FinancialStatusCurrent = Exclude<Orders['financial_status'], undefined>['current']
@@ -121,10 +125,16 @@ const createTransaction = async (
       }
       // recalculate order
       const shippingLine = shippingLines && shippingLines[0];
-      await checkItemsAndRecalculeteOrder(amount, items, plan, null, shippingLine);
+      const { shippingLine: newShippingLine } = await checkItemsAndRecalculeteOrder(
+        amount,
+        items,
+        plan,
+        null,
+        shippingLine,
+      );
 
-      if (shippingLines?.length && shippingLine) {
-        shippingLines[0] = shippingLine;
+      if (shippingLines?.length && newShippingLine) {
+        shippingLines[0] = newShippingLine;
       }
 
       if (amount.balance) {
@@ -243,6 +253,31 @@ const handleWehook = async (req: Request, res: Response) => {
   );
 
   try {
+    const app = await getApp();
+
+    if (!process.env.GALAXPAY_ID) {
+      const galaxpayId = app.hidden_data?.galaxpay_id;
+      if (galaxpayId && typeof galaxpayId === 'string') {
+        process.env.GALAXPAY_ID = galaxpayId;
+      } else {
+        logger.warn('Missing GalaxPay ID');
+      }
+    }
+
+    if (!process.env.GALAXPAY_HASH) {
+      const galaxpayHash = app.hidden_data?.galaxpay_hash;
+      if (galaxpayHash && typeof galaxpayHash === 'string') {
+        process.env.GALAXPAY_HASH = galaxpayHash;
+      } else {
+        logger.warn('Missing GalaxPay Hash');
+      }
+    }
+
+    const galaxpayAxios = new GalaxpayAxios({
+      galaxpayId: process.env.GALAXPAY_ID,
+      galaxpayHash: process.env.GALAXPAY_HASH,
+    });
+
     if (type === 'transaction.updateStatus') {
       const documentSnapshot = await collectionSubscription.doc(originalOrderId).get();
       if (documentSnapshot && documentSnapshot.exists) {
@@ -258,32 +293,9 @@ const handleWehook = async (req: Request, res: Response) => {
           let galaxPayTransactionStatus: string | undefined;
           let galaxpaySubscriptionStatus: string | undefined;
           let transactionCreatedAt: string | undefined;
-          const app = await getApp();
 
           try {
             // check subscription and transaction status before in galaxpay
-            if (!process.env.GALAXPAY_ID) {
-              const galaxpayId = app.hidden_data?.galaxpay_id;
-              if (galaxpayId && typeof galaxpayId === 'string') {
-                process.env.GALAXPAY_ID = galaxpayId;
-              } else {
-                logger.warn('Missing GalaxPay ID');
-              }
-            }
-
-            if (!process.env.GALAXPAY_HASH) {
-              const galaxpayHash = app.hidden_data?.galaxpay_hash;
-              if (galaxpayHash && typeof galaxpayHash === 'string') {
-                process.env.GALAXPAY_HASH = galaxpayHash;
-              } else {
-                logger.warn('Missing GalaxPay Hash');
-              }
-            }
-
-            const galaxpayAxios = new GalaxpayAxios({
-              galaxpayId: process.env.GALAXPAY_ID,
-              galaxpayHash: process.env.GALAXPAY_HASH,
-            });
             await galaxpayAxios.preparing;
 
             if (galaxpayAxios.axios) {
@@ -321,7 +333,7 @@ const handleWehook = async (req: Request, res: Response) => {
                 [shippingLine] = order.shipping_lines;
               }
 
-              const newValue = await checkItemsAndRecalculeteOrder(
+              const { value: newValue } = await checkItemsAndRecalculeteOrder(
                 order.amount,
                 order.items,
                 plan,
@@ -542,6 +554,41 @@ const handleWehook = async (req: Request, res: Response) => {
                   },
                   { merge: true },
                 );
+
+              try {
+                await galaxpayAxios.preparing;
+
+                if (galaxpayAxios.axios) {
+                  const { data } = await galaxpayAxios.axios
+                    .get(`/transactions?galaxPayIds=${whGalaxPayTransaction.galaxPayId}&startAt=0&limit=1`);
+
+                  const value = itemsAndAmount?.amount?.total
+                    && Math.floor(parseFloat((itemsAndAmount.amount.total).toFixed(2)) * 100);
+                  const hasUpdateValue = value && data?.Transactions[0]?.value
+                    && value !== data?.Transactions[0]?.value;
+
+                  if (hasUpdateValue) {
+                    const resp = await updateValueSubscriptionGalaxpay(
+                      galaxpayAxios,
+                      originalOrderId,
+                      value,
+                    );
+
+                    if (resp) {
+                      logger.log('> Successful signature edit on Galax Pay');
+                      const body = { itemsAndAmount };
+                      if (value) {
+                        Object.assign(body, { value });
+                      }
+
+                      await updateDocSubscription(collectionSubscription, body, originalOrderId);
+                    }
+                  }
+                }
+              } catch (error) {
+                logger.error(error);
+              }
+
               return res.sendStatus(200);
             }
             // console.log('>> Transaction Original')
