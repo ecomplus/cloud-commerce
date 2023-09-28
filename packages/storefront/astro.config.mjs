@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { lstatSync, readFileSync } from 'node:fs';
-import { join as joinPath } from 'node:path';
+import { join as joinPath, relative as relativePath } from 'node:path';
 import * as dotenv from 'dotenv';
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
@@ -8,6 +8,7 @@ import vue from '@astrojs/vue';
 import image from '@astrojs/image';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
+import AutoImport from 'unplugin-auto-import/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './config/storefront.config.mjs';
 
@@ -18,6 +19,7 @@ const isSSG = process.env.BUILD_OUTPUT === 'static';
 const outDir = process.env.BUILD_OUT_DIR || (isSSG ? './dist/client' : './dist');
 const isToServerless = !isSSG && process.env.DEPLOY_RUNTIME === 'serverless';
 const deployRand = process.env.DEPLOY_RAND || '_';
+const isLibDev = !(relativePath(__dirname, process.cwd()));
 
 const {
   lang,
@@ -179,6 +181,16 @@ const genAstroConfig = ({
       injectEntry: false,
     }),
     AstroPWA(vitePWAOptions),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/, /\.vue\?vue/, // .vue
+        /\.mdx?$/, // .md, .mdx
+        /\.astro$/,
+      ],
+      imports: ['vue'],
+      dts: isLibDev ? '.auto-imports.d.ts' : false,
+    }),
   ];
   if (!isToServerless) {
     integrations.push(image({
