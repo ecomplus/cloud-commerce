@@ -62,10 +62,9 @@ export default async (product: Products, originalTinyProduct, appData) => {
     tinyProduct.peso_bruto = product.weight.value;
     tinyProduct.peso_liquido = product.weight.value;
 
-    // middleware
     const setWeightUnitProduct = global.$tinyErpSetWeightUnitProduct;
     if (setWeightUnitProduct && typeof setWeightUnitProduct === 'function') {
-      setWeightUnitProduct(product);
+      setWeightUnitProduct({ product });
     }
 
     if (product.weight.unit === 'mg') {
