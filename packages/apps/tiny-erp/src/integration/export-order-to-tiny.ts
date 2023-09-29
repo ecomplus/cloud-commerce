@@ -91,10 +91,9 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
         pedido: tinyOrder,
       },
     }).then((response) => {
-      // https://github.com/ecomplus/app-tiny-erp/blob/d5eef0c6be83485805ec94ba801a8cf111d24ed6/functions/lib/integration/export-order.js#L91
-      const updateTrackingCode = global.$tinyErpUpdateTrackingCode;
-      if (updateTrackingCode && typeof updateTrackingCode === 'function') {
-        return updateTrackingCode({ response, order, postTiny });
+      const tinyErpOnNewOrder = global.$tinyErpOnNewOrder;
+      if (tinyErpOnNewOrder && typeof tinyErpOnNewOrder === 'function') {
+        return tinyErpOnNewOrder({ response, order, postTiny });
       }
       return response;
     });

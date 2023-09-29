@@ -1,7 +1,9 @@
 import type { Products } from '@cloudcommerce/types';
+import config from '@cloudcommerce/firebase/lib/config';
 import ecomUtils from '@ecomplus/utils';
 
 export default async (product: Products, originalTinyProduct, appData) => {
+  const { metafields } = config.get();
   const hasVariations = product.variations && product.variations.length;
   let unidade: string = originalTinyProduct?.unidade;
   if (!unidade) {
@@ -62,9 +64,8 @@ export default async (product: Products, originalTinyProduct, appData) => {
     tinyProduct.peso_bruto = product.weight.value;
     tinyProduct.peso_liquido = product.weight.value;
 
-    const setWeightUnitProduct = global.$tinyErpSetWeightUnitProduct;
-    if (setWeightUnitProduct && typeof setWeightUnitProduct === 'function') {
-      setWeightUnitProduct({ product });
+    if (metafields.tinyErpProductWeigthUnit) {
+      product.weight.unit = metafields.tinyErpProductWeigthUnit;
     }
 
     if (product.weight.unit === 'mg') {

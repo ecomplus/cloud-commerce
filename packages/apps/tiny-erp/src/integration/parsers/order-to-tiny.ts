@@ -127,9 +127,9 @@ export default (order: Orders, appData) => {
     }
   }
 
-  const middlewareOrderParser = global.$tinyErpOrderParser;
-  if (middlewareOrderParser && typeof middlewareOrderParser === 'function') {
-    middlewareOrderParser({ tinyOrder, order });
+  const tinyErpOrderParser = global.$tinyErpOrderParser;
+  if (tinyErpOrderParser && typeof tinyErpOrderParser === 'function') {
+    tinyErpOrderParser({ tinyOrder, order });
   }
 
   if (order.shipping_method_label) {
