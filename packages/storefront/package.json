@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@astrojs/image": "0.17.3",
-    "@astrojs/node": "5.3.6",
+    "@astrojs/node": "6.0.1",
     "@astrojs/vue": "2.2.1",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
