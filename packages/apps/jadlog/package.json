@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "axios": "^1.5.0"
+    "axios": "^1.5.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"
