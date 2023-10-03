@@ -54,6 +54,139 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/barra-doce:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.26.7
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.26.7
+        version: link:../../packages/eslint
+
+  ecomplus-stores/barra-doce/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.26.7
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.26.7
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/barra-doce/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.26.7
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.26.7
+        version: link:../../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.26.7
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.26.7
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.26.7
+        version: link:../../../../packages/types
+      '@fontsource/croissant-one':
+        specifier: ^5.0.9
+        version: 5.0.13
+      '@iconify-json/mingcute':
+        specifier: ^1.1.9
+        version: 1.1.10
+
+  ecomplus-stores/barra-doce/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.26.7
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.26.7
+        version: link:../../../../packages/modules
+
+  ecomplus-stores/monocard:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.26.7
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.26.7
+        version: link:../../packages/eslint
+
+  ecomplus-stores/monocard/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.26.7
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.26.7
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/monocard/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.26.7
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.26.7
+        version: link:../../../../packages/ssr
+      '@vueuse/motion':
+        specifier: 2.0.0-beta.22
+        version: 2.0.0-beta.22
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.26.7
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.26.7
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.26.7
+        version: link:../../../../packages/types
+      '@fontsource-variable/inter':
+        specifier: ^5.0.8
+        version: 5.0.8
+      '@iconify-json/ri':
+        specifier: ^1.1.8
+        version: 1.1.12
+      '@iconify-json/wpf':
+        specifier: ^1.1.4
+        version: 1.1.5
+      lottie-web:
+        specifier: ^5.12.2
+        version: 5.12.2
+
+  ecomplus-stores/monocard/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.26.7
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.26.7
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -1021,6 +1154,62 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^0.26.7
+        version: link:../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^0.26.7
+        version: link:../packages/eslint
+
+  store/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^0.26.7
+        version: link:../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^0.26.7
+        version: link:../../../packages/passport
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^0.26.7
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^0.26.7
+        version: link:../../../packages/ssr
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^0.26.7
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^0.26.7
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^0.26.7
+        version: link:../../../packages/types
+
+  store/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^0.26.7
+        version: link:../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^0.26.7
+        version: link:../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^0.26.7
+        version: link:../../../packages/modules
 
 packages:
 
@@ -3782,6 +3971,14 @@ packages:
     resolution: {integrity: sha512-+ZplYUN3HOpgCfgInqgdDAbkGGVzES1cs32JJpeqoh87SkRobGXElJx+1GZSaDqzFL+bYiX18qEcBK76mYs8uA==}
     dev: false
 
+  /@fontsource-variable/inter@5.0.8:
+    resolution: {integrity: sha512-WkYfFNccmEIeL2fNg0mYeLWqOoB7xD8MFxFRc4IwbSP2o8ZaBt36v5aW4by4MyrgGRMNk7uNi5LbvYKq6clPjw==}
+    dev: true
+
+  /@fontsource/croissant-one@5.0.13:
+    resolution: {integrity: sha512-bHiO0nx+IWyK81d2GqbvmaTwDV726xS5z89amymbN3Mzy6jIhFMOvC4XYobiBSpA7F4Smjxo5dBjOXaSytLAkQ==}
+    dev: true
+
   /@google-cloud/firestore@6.7.0:
     resolution: {integrity: sha512-bkH2jb5KkQSUa+NAvpip9HQ+rpYhi77IaqHovWuN07adVmvNXX08gPpvPWEzoXYa/wDjEVI7LiAtCWkJJEYTNg==}
     engines: {node: '>=12.0.0'}
@@ -3980,9 +4177,26 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/mingcute@1.1.10:
+    resolution: {integrity: sha512-0PMgTc9RqLN8IZn5Icsu3mPmtruLS4TfecyNd6FuZ8q5e1EnsXIaV6K4J7ybiVxqCzXig5N/KxSceUonvhlhHA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/ri@1.1.12:
+    resolution: {integrity: sha512-s5VsyMWYuUuTB5bATJRoDQKGqo6W0dsxvOBrJI/P2H9QI7IAaAWl8zHxseSjoUGG6AwZwWwDMW9YPULPt+vA6w==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/wpf@1.1.5:
+    resolution: {integrity: sha512-aihJ1TIU3bC6omUzyyW5m7OtRKw8RePOB7822QFOzKUplsqjbA6w38TuPglVShWUxYcwlLSFqFgE3fFYz1LWXw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.10:
     resolution: {integrity: sha512-0/+5hxjzCZ9RoYpqxnOzbnpQyMdZRuHcMxPJeuX+x/aZkAAD/N4TajDjAPT7LpX+M0bfLExj/p0bbDkUfp0lrg==}
@@ -4568,6 +4782,10 @@ packages:
     resolution: {integrity: sha512-cputDpIbFgLUaGQn6Vqg3/YsJwxUwHLO13v3i5ouxT4lat0khip9AEWxtERujXV9wxIB1EyF97BSJFt6vpdI8g==}
     dev: false
 
+  /@types/web-bluetooth@0.0.16:
+    resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
+    dev: false
+
   /@types/web-bluetooth@0.0.17:
     resolution: {integrity: sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==}
     dev: false
@@ -5136,12 +5354,56 @@ packages:
       - vue
     dev: false
 
+  /@vueuse/core@9.13.0:
+    resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 9.13.0
+      '@vueuse/shared': 9.13.0
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/metadata@10.4.1:
     resolution: {integrity: sha512-2Sc8X+iVzeuMGHr6O2j4gv/zxvQGGOYETYXEc41h0iZXIRnRbJZGmY/QP8dvzqUelf8vg0p/yEA5VpCEu+WpZg==}
     dev: false
 
+  /@vueuse/metadata@9.13.0:
+    resolution: {integrity: sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==}
+    dev: false
+
+  /@vueuse/motion@2.0.0-beta.22:
+    resolution: {integrity: sha512-xPRm8i2WVhLQW4TgAC4z5Os4WOQZ8O2IwBIlWLf14W8cluQPiMcZ72miLjTknPVg1S7/vGTcZzSp2L2HDxoipQ==}
+    peerDependencies:
+      '@nuxt/kit': ^3.0.0-rc.9
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+    dependencies:
+      '@vueuse/core': 9.13.0
+      '@vueuse/shared': 9.13.0
+      csstype: 3.1.2
+      framesync: 6.1.2
+      popmotion: 11.0.5
+      style-value-types: 5.1.2
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/shared@10.4.1(vue@3.3.4):
     resolution: {integrity: sha512-vz5hbAM4qA0lDKmcr2y3pPdU+2EVw/yzfRsBdu+6+USGa4PxqSQRYIUC9/NcT06y+ZgaTsyURw2I9qOFaaXHAg==}
+    dependencies:
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared@9.13.0:
+    resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
     dependencies:
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
@@ -7547,6 +7809,12 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /framesync@6.1.2:
+    resolution: {integrity: sha512-jBTqhX6KaQVDyus8muwZbBeGGP0XgujBRbQ7gM7BRdS3CadCZIHiawyzYLnafYcvZIh5j8WE7cxZKFn7dXhu9g==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
@@ -8159,6 +8427,10 @@ packages:
   /heap-js@2.3.0:
     resolution: {integrity: sha512-E5303mzwQ+4j/n2J0rDvEPBN7GKjhis10oHiYOgjxsmxYgqG++hz9NyLLOXttzH8as/DyiBHYpUrJTZWYaMo8Q==}
     engines: {node: '>=10.0.0'}
+    dev: false
+
+  /hey-listen@1.0.8:
+    resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
 
   /hosted-git-info@2.8.9:
@@ -9041,6 +9313,10 @@ packages:
   /longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
     dev: false
+
+  /lottie-web@5.12.2:
+    resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
+    dev: true
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
@@ -10256,6 +10532,15 @@ packages:
       jsonc-parser: 3.2.0
       mlly: 1.4.1
       pathe: 1.1.1
+
+  /popmotion@11.0.5:
+    resolution: {integrity: sha512-la8gPM1WYeFznb/JqF4GiTkRRPZsfaj2+kCxqQgr2MJylMmIKUwBfWW8Wa5fml/8gmtlD5yI01MP1QCZPWmppA==}
+    dependencies:
+      framesync: 6.1.2
+      hey-listen: 1.0.8
+      style-value-types: 5.1.2
+      tslib: 2.4.0
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.4.28):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
@@ -11503,6 +11788,13 @@ packages:
     dev: false
     optional: true
 
+  /style-value-types@5.1.2:
+    resolution: {integrity: sha512-Vs9fNreYF9j6W2VvuDTP7kepALi7sk0xtk2Tu8Yxi9UoajJdEVpNpCov0HsLTqXvNGKX+Uv09pkozVITi1jf3Q==}
+    dependencies:
+      hey-listen: 1.0.8
+      tslib: 2.4.0
+    dev: false
+
   /sucrase@3.34.0:
     resolution: {integrity: sha512-70/LQEZ07TEcxiU2dz51FKaE6hCTWC6vr7FOk3Gr0U60C3shtAN+H+BFr9XlYe5xqf3RA8nrc+VIwzCfnxuXJw==}
     engines: {node: '>=8'}
@@ -11873,6 +12165,10 @@ packages:
       resolve: 1.22.4
       strip-bom: 4.0.0
       type-fest: 0.13.1
+    dev: false
+
+  /tslib@2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: false
 
   /tslib@2.6.2:
