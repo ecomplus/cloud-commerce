@@ -28,7 +28,7 @@ const iconClassName = computed(() => {
 <template>
   <b
     v-if="!iconClassName"
-    class="tracking-tighter leading-none mb-1 text-black text-[57%]"
+    class="mb-1 text-[57%] leading-none tracking-tighter text-black"
   >
     {{ props.flag }}
   </b>

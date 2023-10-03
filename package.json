@@ -32,11 +32,11 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@commitlint/cli": "^17.7.1",
+    "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
     "@commitlint/rules": "^17.7.0",
-    "@types/node": "^18.17.17",
-    "eslint": "^8.49.0",
+    "@types/node": "^18.18.1",
+    "eslint": "^8.50.0",
     "husky": "^8.0.3",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.1",
@@ -44,7 +44,7 @@
     "typescript": "~5.0.4",
     "uglify-js": "^3.17.4",
     "vite": "^4.4.9",
-    "vitest": "^0.34.4",
+    "vitest": "^0.34.6",
     "zx": "^7.2.3"
   },
   "pnpm": {

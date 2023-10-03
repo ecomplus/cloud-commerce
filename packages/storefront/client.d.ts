@@ -1,4 +1,5 @@
 /// <reference types="./src/vue-globals" />
+/// <reference types="./.auto-imports" />
 
 type DocCleanupFields = 'body_html'
   | 'body_text'

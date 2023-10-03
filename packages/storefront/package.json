@@ -51,9 +51,10 @@
     "image-size": "^1.0.2",
     "mime": "^3.0.0",
     "semver": "^7.5.4",
-    "sharp": "^0.32.5",
+    "sharp": "^0.32.6",
     "tailwindcss": "^3.3.3",
-    "unocss": "^0.55.7",
+    "unocss": "^0.56.4",
+    "unplugin-auto-import": "^0.16.6",
     "vite": "^4.4.9",
     "vite-plugin-pwa": "^0.16.5",
     "vue": "^3.3.4"
