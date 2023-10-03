@@ -198,9 +198,8 @@ provide(carouselKey, {
     <component
       :is="as"
       ref="wrapper"
-      class="flex overflow-x-scroll overflow-y-hidden list-none m-0 p-0
-        snap-x snap-mandatory scroll-smooth
-        [&>*]:snap-start [&>*]:outline-none"
+      class="m-0 flex snap-x snap-mandatory list-none overflow-y-hidden
+      overflow-x-scroll scroll-smooth p-0 [&>*]:snap-start [&>*]:outline-none"
       style="
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;

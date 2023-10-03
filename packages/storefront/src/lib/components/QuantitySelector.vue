@@ -86,10 +86,10 @@ provide(quantitySelectorKey, {
         :step="step"
         :disabled="disabled"
         :readonly="readonly"
-        class="h-12 w-14 px-2 text-lg border-transparent text-center
-        [-moz-appearance:_textfield] [&::-webkit-outer-spin-button]:m-0
-        [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0
-        [&::-webkit-inner-spin-button]:appearance-none"
+        class="h-12 w-14 border-transparent px-2 text-center text-lg
+        [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0
+        [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0
+        [&::-webkit-outer-spin-button]:appearance-none"
       />
       <slot
         name="controls"
