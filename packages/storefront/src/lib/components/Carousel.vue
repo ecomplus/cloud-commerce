@@ -16,6 +16,7 @@ import CarouselControl from '@@sf/components/CarouselControl.vue';
 
 export type CarouselInject = {
   autoplay: Ref<number | undefined>,
+  axis: 'x' | 'y',
   changeSlide: (step: number, isPageScroll?: boolean) => void,
   isBoundStart: Ref<boolean>,
   isBoundEnd: Ref<boolean>,
@@ -197,6 +198,7 @@ onBeforeUnmount(() => {
 });
 provide(carouselKey, {
   autoplay: toRef(props, 'autoplay'),
+  axis: props.axis,
   changeSlide,
   isBoundStart,
   isBoundEnd,

@@ -4,15 +4,13 @@ import { type CarouselInject, carouselKey } from '@@sf/components/Carousel.vue';
 
 export interface Props {
   isPrev?: boolean;
-  axis?: 'x' | 'y';
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   isPrev: false,
-  axis: 'x',
 });
-const isX = props.axis === 'x';
-const { changeSlide } = inject(carouselKey) as CarouselInject;
+const { axis, changeSlide } = inject(carouselKey) as CarouselInject;
+const isX = axis === 'x';
 </script>
 
 <template>
