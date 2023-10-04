@@ -31,7 +31,7 @@ const { changeSlide } = inject(carouselKey) as CarouselInject;
         class="m-0"
         :class="!isPrev
           ? 'i-chevron-right group-active:translate-x-1'
-          : 'i-chevron-left group-active:-translate-x-1'"
+          : 'i-chevron-right rotate-180 group-active:-translate-x-1'"
       ></i>
     </slot>
   </button>
