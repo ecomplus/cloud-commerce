@@ -235,10 +235,10 @@ provide(carouselKey, {
         activeIndex,
       }"
     >
-      <CarouselControl is-prev>
+      <CarouselControl is-prev :axis="axis">
         <slot name="previous" />
       </CarouselControl>
-      <CarouselControl>
+      <CarouselControl :axis="axis">
         <slot name="next" />
       </CarouselControl>
     </slot>
