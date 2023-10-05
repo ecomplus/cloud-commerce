@@ -1,8 +1,13 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
-import { ViewTransitions } from 'astro:transitions';
 import { img as getImg, price as getPrice } from '@ecomplus/utils';
+import ViewTransitions from '@@sf/components/ViewTransitions.astro';
 
+export interface Props {
+  hasViewTransitions?: boolean;
+}
+
+const hasViewTransitions = Astro.props.hasViewTransitions !== false;
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
 const getIconUrl = (size: number) => {
   return `/_image?f=png&w=${size}&h=${size}`
@@ -52,6 +57,11 @@ if (!ogImage) {
 }
 
 let inlineClientJS = `
+window._emitApiContext = (id = null) => {
+  console.log('[ctx] emit ' + id);
+  window.dispatchEvent(new Event('storefront:apiContext'));
+  window._emitedContextId = id;
+};
 window.ECOM_STORE_ID = ${storeId};
 window.ECOM_LANG = '${lang}';
 window.ECOM_CURRENCY = '${currency}';
@@ -67,6 +77,7 @@ setTimeout(() => {
   window.location.replace("/~fallback?status=${statusCode}&url=${encodeURIComponent(url)}");
 }, 1);`;
 }
+let contextInlineClientJS: string | undefined;
 if (apiDoc) {
   if (typeof apiDoc.price === 'number') {
     apiDoc.price = getPrice(apiDoc);
@@ -89,18 +100,24 @@ if (apiDoc) {
     }
     return nestedDoc;
   };
-  Astro.locals.contextInlineClientJS = `
+  inlineClientJS += `
+window._firstLoadContextId = '${apiDoc._id}';`;
+  contextInlineClientJS = `
 $storefront.apiContext = ${JSON.stringify({
   resource: apiContext.resource,
   doc: minifyApiDoc({ ...apiDoc }),
   timestamp: Date.now(),
 })};
-$storefront.context /* DEPRECATED */ = $storefront.apiContext`;
+$storefront.context /* DEPRECATED */ = $storefront.apiContext;
+_emitApiContext('${apiDoc._id}');`;
 } else {
-  Astro.locals.contextInlineClientJS = `
+  inlineClientJS += `
+window._firstLoadContextId = null;`;
+  contextInlineClientJS = `
 $storefront.apiContext = null;
 delete $storefront.apiContext;
-delete $storefront.context;`;
+delete $storefront.context;
+_emitApiContext();`;
 }
 if (isPreview) {
   inlineClientJS += `
@@ -152,7 +169,8 @@ const inlineJSONLd = JSON.stringify({
 {(!pwaInfo && !import.meta.env.DEV) &&
   <link rel="manifest" href="/manifest.webmanifest" />}
 
-<script is:inline set:html={inlineClientJS} />
+<script is:inline set:html={inlineClientJS} transition:persist />
 <script type="application/ld+json" set:html={inlineJSONLd} />
 
-<ViewTransitions />
+{hasViewTransitions && <ViewTransitions />}
+{contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}
