@@ -191,6 +191,17 @@ const genAstroConfig = ({
       imports: ['vue'],
       dts: isLibDev ? '.auto-imports.d.ts' : false,
     }),
+    {
+      name: 'client:context',
+      hooks: {
+        'astro:config:setup': ({ addClientDirective }) => {
+          addClientDirective({
+            name: 'context',
+            entrypoint: joinPath(__dirname, 'config/astro/context-directive.mjs'),
+          });
+        },
+      },
+    },
   ];
   if (!isToServerless) {
     integrations.push(image({

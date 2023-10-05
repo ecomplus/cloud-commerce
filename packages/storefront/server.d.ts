@@ -1,4 +1,5 @@
 /* eslint-disable vars-on-top, no-var */
+/// <reference types="./config/astro/index.d.ts" />
 
 import type { ApiEndpoint } from '@cloudcommerce/api';
 import type { RouteContext } from '@@sf/ssr-context';
@@ -8,7 +9,6 @@ declare global {
   namespace App {
     interface Locals {
       routeContext: RouteContext,
-      contextInlineClientJS?: string,
     }
   }
 
