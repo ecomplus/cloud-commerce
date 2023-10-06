@@ -49,6 +49,8 @@ module.exports = {
           '@@.*',
           'content/.*',
           '~/.*',
+          'photoswipe/lightbox',
+          'photoswipe/style.css',
         ],
       },
     ],
