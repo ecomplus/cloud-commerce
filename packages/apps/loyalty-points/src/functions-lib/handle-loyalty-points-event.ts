@@ -1,7 +1,8 @@
 import type { Orders, Customers, ResourceId } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
+import ecomUtils from '@ecomplus/utils';
 import getProgramId from './get-program-id';
 
 const ECHO_SUCCESS = 'SUCCESS';
@@ -97,36 +98,77 @@ const handleLoyaltyPointsEvent = async (
           const hasEarnedPoints = haveEarnedPoints(pointsList, orderId);
 
           if (isPaid && !hasEarnedPoints) {
-            for (let i = 0; i < programRules.length; i++) {
-              const rule = programRules[i];
-              if (amount.subtotal) {
-                if (!rule.min_subtotal_to_earn || rule.min_subtotal_to_earn <= amount.subtotal) {
-                  const pointsValue = ((rule.earn_percentage || 1) / 100)
-                    * (amount.subtotal - (amount.discount || 0));
+            const docRef = getFirestore().doc(`pointsToAdd/${orderId}`);
+            const docSnapshot = await docRef.get();
+            if (!docSnapshot.exists) {
+              const pointEntries: any[] = [];
 
-                  let validThru: string | undefined;
-                  if (rule.expiration_days > 0) {
-                    const d = new Date();
-                    d.setDate(d.getDate() + rule.expiration_days);
-                    validThru = d.toISOString();
+              for (let i = 0; i < programRules.length; i++) {
+                const rule = programRules[i];
+                if (rule.earn_percentage === 0) {
+                  continue;
+                }
+                if (
+                  !rule.min_subtotal_to_earn
+                    || (amount?.subtotal && rule.min_subtotal_to_earn <= amount.subtotal)
+                ) {
+                  let subtotal = amount.subtotal as number;
+
+                  if (Array.isArray(rule.category_ids) && rule.category_ids.length) {
+                    if (!order.items || !order.items.length) {
+                      continue;
+                    }
+
+                    // eslint-disable-next-line no-await-in-loop
+                    const { data: { result } } = await api.get('search/v1', {
+                      limit: order.items.length,
+                      params: {
+                        _id: order.items.map((item) => item.product_id),
+                        'categories._id': rule.category_ids,
+                      },
+                    });
+
+                    // eslint-disable-next-line no-await-in-loop
+                    order.items.forEach((item) => {
+                      if (!result.find(({ _id }) => _id === item.product_id)) {
+                        subtotal -= (ecomUtils.price(item) * item.quantity);
+                      }
+                    });
                   }
 
-                  const data = {
-                    name: rule.name,
-                    program_id: getProgramId(rule, i),
-                    earned_points: pointsValue,
-                    active_points: pointsValue,
-                    ratio: rule.ratio || 1,
-                    valid_thru: validThru,
-                    order_id: orderId,
-                  } as any; // TODO: set the correct type
+                  const pointsValue = ((rule.earn_percentage || 1) / 100)
+                    * (subtotal - (amount.discount || 0));
 
-                  // eslint-disable-next-line no-await-in-loop
-                  await api.post(`customers/${customerId}/loyalty_points_entries`, data);
-
-                  return responsePubSub(ECHO_SUCCESS);
+                  if (pointsValue > 0) {
+                    let validThru: string | undefined;
+                    if (rule.expiration_days > 0) {
+                      const d = new Date();
+                      d.setDate(d.getDate() + 2 + rule.expiration_days);
+                      validThru = d.toISOString();
+                    }
+                    const data = {
+                      name: rule.name,
+                      program_id: getProgramId(rule, i),
+                      earned_points: pointsValue,
+                      active_points: pointsValue,
+                      ratio: rule.ratio || 1,
+                      order_id: orderId,
+                    };
+                    if (validThru) {
+                      Object.assign(data, { valid_thru: validThru });
+                    }
+                    pointEntries.push(data);
+                  }
                 }
               }
+
+              await docRef.set({
+                customerId,
+                pointEntries,
+                queuedAt: Timestamp.now(),
+              });
+
+              return responsePubSub(ECHO_SUCCESS);
             }
           }
 
