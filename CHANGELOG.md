@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.27.0](https://github.com/ecomplus/cloud-commerce/compare/v0.26.7...v0.27.0) (2023-10-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Astro.locals.contextInlineClientJS no more set
+* **storefront:** <Carousel> API changed, using explicit `index` prop with model instead of default (value) `v-model`, edited binds on controls slot
+* **storefront:** Component ContentClearfix.astro is removed in favor of .vue one
+
+### Features
+
+* **storefront:** Add new prop `preferredSize` to global <AImg> component ([d2387d4](https://github.com/ecomplus/cloud-commerce/commit/d2387d4a20b7e2343399674b4f73bd7dee70f879))
+* **storefront:** Auto import Vue composition API and other helper exports ([9e92931](https://github.com/ecomplus/cloud-commerce/commit/9e929316277f0162ff55a1c86792697dc50867e5))
+* **storefront:** New prop `hasControls` to <Carousel> ([017d5c9](https://github.com/ecomplus/cloud-commerce/commit/017d5c9f8eb9f927e463b8a7d5c6f1f811d839f5))
+* **storefront:** Update <Carousel> with new optional `axis` prop for vertical slide ([21e3a02](https://github.com/ecomplus/cloud-commerce/commit/21e3a02799bb52e573856a4304032315e060410b))
+* **tiny-erp:** Updating with https://github.com/ecomplus/app-tiny-erp ([#218](https://github.com/ecomplus/cloud-commerce/issues/218)) ([a5ffd26](https://github.com/ecomplus/cloud-commerce/commit/a5ffd26808ddc5609492a39363ce265d3ded3f26))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#248](https://github.com/ecomplus/cloud-commerce/issues/248)) ([344927b](https://github.com/ecomplus/cloud-commerce/commit/344927bb69b3be5c5ec1e43dc0b38246a04f256a))
+* **storefront:** Add hardfix on base CSS to hide duplicated drawer backdrops (with "SPA" mode) ([91ce452](https://github.com/ecomplus/cloud-commerce/commit/91ce452b50bd210999c8c228adcf744fa763a5be))
+* **storefront:** Disable View Transitions fallback (Firefox) by default (for now) ([deb58ff](https://github.com/ecomplus/cloud-commerce/commit/deb58ff34c9bf3f58e3f961a060d062bad3518a3))
+* **storefront:** Fixing global `$storefront.apiContext.doc` types with full resources interfaces ([c28ce11](https://github.com/ecomplus/cloud-commerce/commit/c28ce118325a7aac9409d8d3535b95879b3ea021))
+* **storefront:** Properly dealing with API Context on View Transitions ([e254116](https://github.com/ecomplus/cloud-commerce/commit/e2541161f696ccd5da8403d8d7bea0e9c33131fc))
+* **storefront:** Properly sync <Carousel> index on prop change ([6237934](https://github.com/ecomplus/cloud-commerce/commit/6237934cdf5c70c47d7269c0dd35125b427bd30a))
+* **storefront:** Setup custom <ViewTransitions> with fixed head script exec and browser fallback ([2e53207](https://github.com/ecomplus/cloud-commerce/commit/2e5320718bfa76c6e7f6258031a546e3f9089aa4))
+
+
+* **storefront:** Move <ContentClearfix> to Vue component instead of Astro one ([e6ca8c4](https://github.com/ecomplus/cloud-commerce/commit/e6ca8c4bbe5f8f42de15d852273dd9ae2575c136))
+
 ### [0.26.7](https://github.com/ecomplus/cloud-commerce/compare/v0.26.6...v0.26.7) (2023-09-18)
 
 
