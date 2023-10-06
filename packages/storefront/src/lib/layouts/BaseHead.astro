@@ -172,5 +172,5 @@ const inlineJSONLd = JSON.stringify({
 <script is:inline set:html={inlineClientJS} transition:persist />
 <script type="application/ld+json" set:html={inlineJSONLd} />
 
-{hasViewTransitions && <ViewTransitions />}
+{hasViewTransitions && <ViewTransitions fallback="none" />}
 {contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}
