@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.28.0](https://github.com/ecomplus/cloud-commerce/compare/v0.27.0...v0.28.0) (2023-10-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** content/layout.json must be edited with fields in camelCase
+* Content `settings` object (and `config.settingsContent`) changed
+* **storefront:** `PageContent` interface editted, content/pages hero and sections must be updated with new fields in camelCase
+
+### Bug Fixes
+
+* **loyalty points:** Add points after some days gap with cron to prevent fast cancellations ([#250](https://github.com/ecomplus/cloud-commerce/issues/250)) ([4eb705c](https://github.com/ecomplus/cloud-commerce/commit/4eb705cea98884255745ae7222bb8e2a264e625a))
+* **mercadopago:** Updating with https://github.com/ecomplus/app-mercadopago/commit/0205afd64e31fc19776343b8a355d43deb6a911d ([#249](https://github.com/ecomplus/cloud-commerce/issues/249)) ([47a03e6](https://github.com/ecomplus/cloud-commerce/commit/47a03e60551d9fb2e17a079cedff00106b05e967))
+* **storefront:** Minor fix `<ContentClearfix>` with horizontal scroll on large devices ([03b1d8d](https://github.com/ecomplus/cloud-commerce/commit/03b1d8da4fb01f0bc8dc7701ff71ad9ce0bdd858))
+
+
+* Edit settings types to camelCase fields ([47aec28](https://github.com/ecomplus/cloud-commerce/commit/47aec28bffd1e33ed2b2d715aac7611cf2ef3403))
+* **storefront:** Expect hero/sections content with camelCase for easy parsing and props bypass ([70d976b](https://github.com/ecomplus/cloud-commerce/commit/70d976b1b1600fff9772db275bb57d85b08dc07e))
+* **storefront:** Expect layout content fields camelCase ([e9404ea](https://github.com/ecomplus/cloud-commerce/commit/e9404ea61f72a5aa50858104ee58b1c3b1d88d9e))
+
 ## [0.27.0](https://github.com/ecomplus/cloud-commerce/compare/v0.26.7...v0.27.0) (2023-10-06)
 
 
