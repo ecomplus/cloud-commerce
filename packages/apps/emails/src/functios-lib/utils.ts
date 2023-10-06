@@ -29,7 +29,7 @@ const getStore = () => {
     lang: settingsContent.lang,
     domain: settingsContent.domain,
     name: settingsContent.name,
-    corporate_name: settingsContent.corporate_name || settingsContent.name,
+    corporate_name: settingsContent.corporateName || settingsContent.name,
     contact_email: settingsContent.email,
     logo: {
       url: `https://${settingsContent.domain}${settingsContent.logo}`,

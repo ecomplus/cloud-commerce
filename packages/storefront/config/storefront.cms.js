@@ -62,8 +62,8 @@ global.__storefrontCMS = (fs, resolvePath) => {
     settings = {};
   }
   const { domain } = settings;
-  const primaryColor = settings.primary_color || '#137c5c';
-  const secondaryColor = settings.secondary_color || primaryColor;
+  const primaryColor = settings.primaryColor || '#137c5c';
+  const secondaryColor = settings.secondaryColor || primaryColor;
 
   return {
     domain,
