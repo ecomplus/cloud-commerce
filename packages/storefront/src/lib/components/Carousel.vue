@@ -241,10 +241,10 @@ provide(carouselKey, {
         activeIndex,
       }"
     >
-      <CarouselControl v-show="slideSizes.length > 1 || hasControls" is-prev>
+      <CarouselControl v-if="slideSizes.length > 1 || hasControls" is-prev>
         <slot name="previous" />
       </CarouselControl>
-      <CarouselControl v-show="slideSizes.length > 1 || hasControls">
+      <CarouselControl v-if="slideSizes.length > 1 || hasControls">
         <slot name="next" />
       </CarouselControl>
     </slot>
