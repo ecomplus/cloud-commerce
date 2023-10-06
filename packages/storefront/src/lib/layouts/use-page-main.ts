@@ -3,7 +3,6 @@ import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
-import type { Props as UseBreadcrumbsProps } from '@@sf/composables/use-breadcrumbs';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
 
 export interface Props {
@@ -17,23 +16,13 @@ const now = Date.now();
 const parseBanners = (banners: PageContentHero['slides']) => {
   const validBanners: UseBannerProps[] = [];
   banners.forEach(({
-    img,
-    start,
-    end,
-    mobile_img: mobileImg,
-    button_link: buttonLink,
-    button_text: buttonText,
-    ...rest
+    startsAt,
+    endsAt,
+    ...bannerProps
   }) => {
-    if (start && new Date(start).getTime() < now) return;
-    if (end && new Date(end).getTime() > now) return;
-    validBanners.push({
-      ...rest,
-      img,
-      mobileImg,
-      buttonLink,
-      buttonText,
-    });
+    if (startsAt && new Date(startsAt).getTime() < now) return;
+    if (endsAt && new Date(endsAt).getTime() > now) return;
+    validBanners.push(bannerProps);
   });
   return validBanners;
 };
@@ -61,8 +50,8 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     T
     | { type: 'product-shelf', props: UseProductShelfProps }
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
-    | { type: 'breadcrumbs', props: UseBreadcrumbsProps }
-    | { type: 'product-details', props: {} }
+    | { type: 'product-details', props: { hasDescription?: boolean } }
+    | { type: 'breadcrumbs', props: {} }
     | { type: 'related-products', props: {} }
     | { type: 'doc-description', props: {} }
     | { type: 'product-specifications', props: {} }
@@ -71,9 +60,9 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
       if (type === 'product-shelf') {
         const {
-          collection_id: collectionIdAndInfo,
-          headless: isHeadless,
-          shuffle: isShuffle,
+          collectionIdAndInfo,
+          isHeadless,
+          isShuffle,
           ...rest
         } = sectionContent;
         let { sort, title } = sectionContent;
@@ -127,16 +116,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         await fetching;
         sections[index] = {
           type,
-          props: {
-            ...rest,
-            collectionId,
-            searchQuery,
-            sort,
-            title: isHeadless ? null : title,
-            titleLink,
-            isShuffle,
-            products,
-          },
+          props: { ...props, products },
         };
         return;
       }
@@ -159,7 +139,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           // Bypassed sections
           sections[index] = {
             type,
-            props: {},
+            props: sectionContent,
           };
           return;
         default:
