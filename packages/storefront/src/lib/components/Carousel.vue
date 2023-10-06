@@ -11,7 +11,11 @@ import {
   nextTick,
   provide,
 } from 'vue';
-import { useDebounceFn, useElementHover, useScroll } from '@vueuse/core';
+import {
+  useDebounceFn,
+  useElementHover,
+  useScroll,
+} from '@vueuse/core';
 import CarouselControl from '@@sf/components/CarouselControl.vue';
 
 export type CarouselInject = {
@@ -44,8 +48,7 @@ const activeIndex = ref(0);
 watch(toRef(props, 'index'), (index) => {
   if (index !== activeIndex.value) {
     const step = index - activeIndex.value;
-    activeIndex.value = index;
-    nextTick(() => changeSlide(step, false));
+    changeSlide(step, false);
   }
 }, { immediate: true });
 watch(activeIndex, (current, previous) => {
