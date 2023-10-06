@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 export interface Props {
   as?: string;
-  flag: Exclude<SettingsContent['payment_methods'], undefined>[number];
+  flag: Exclude<SettingsContent['paymentMethods'], undefined>[number];
 }
 
 const props = withDefaults(defineProps<Props>(), {

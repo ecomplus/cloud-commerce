@@ -48,9 +48,9 @@ if (apiDoc) {
   ogImage = picture && picture.url;
 }
 if (!ogImage) {
-  if (metatagsContent?.og_image) {
-    ogImage = metatagsContent.og_image.charAt(0) === '/'
-      ? `https://${domain}${metatagsContent.og_image}` : metatagsContent.og_image;
+  if (metatagsContent?.ogImage) {
+    ogImage = metatagsContent.ogImage.charAt(0) === '/'
+      ? `https://${domain}${metatagsContent.ogImage}` : metatagsContent.ogImage;
   }
 } else {
   ogImage = ogImage.replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com');
@@ -154,11 +154,11 @@ const inlineJSONLd = JSON.stringify({
 <meta property="og:type" content="website">
 <meta property="og:locale" content={ogLocale}>
 {ogImage && <meta property="og:image" content={ogImage} />}
-{metatagsContent?.fb_app_id &&
-  <meta property="fb:app_id" content={metatagsContent.fb_app_id} />}
+{metatagsContent?.fbAppId &&
+  <meta property="fb:app_id" content={metatagsContent.fbAppId} />}
 <meta name="twitter:card" content="summary">
-{metatagsContent?.twitter_username &&
-  <meta name="twitter:site" content={metatagsContent.twitter_username} />}
+{metatagsContent?.twitterUsername &&
+  <meta name="twitter:site" content={metatagsContent.twitterUsername} />}
 <meta name="ecom-store-id" content={String(storeId)}>
 
 <script>
