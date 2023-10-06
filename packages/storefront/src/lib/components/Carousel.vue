@@ -36,6 +36,7 @@ export interface Props {
   index?: number;
   autoplay?: number; // milliseconds
   axis?: 'x' | 'y';
+  hasControls?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -240,10 +241,10 @@ provide(carouselKey, {
         activeIndex,
       }"
     >
-      <CarouselControl is-prev :axis="axis">
+      <CarouselControl v-show="slideSizes.length > 1 || hasControls" is-prev>
         <slot name="previous" />
       </CarouselControl>
-      <CarouselControl :axis="axis">
+      <CarouselControl v-show="slideSizes.length > 1 || hasControls">
         <slot name="next" />
       </CarouselControl>
     </slot>
