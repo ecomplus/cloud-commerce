@@ -9,8 +9,8 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   to: 'cart',
-  cartUrl: globalThis.$storefront.settings.cart_url || '/app/#/cart',
-  checkoutUrl: globalThis.$storefront.settings.checkout_url || '/app/#/checkout',
+  cartUrl: globalThis.$storefront.settings.cartUrl || '/app/#/cart',
+  checkoutUrl: globalThis.$storefront.settings.checkoutUrl || '/app/#/checkout',
 });
 const href = computed(() => {
   if (props.to === 'cart') return props.cartUrl;
