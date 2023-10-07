@@ -7,7 +7,7 @@ export interface Props {
   cartUrl?: string;
   checkoutUrl?: string;
   cartId?: CartItem['_id'];
-  cartItem?: CartItem;
+  cartItem?: Partial<CartItem> & { product_id: CartItem['product_id'] };
 }
 
 const props = withDefaults(defineProps<Props>(), {
