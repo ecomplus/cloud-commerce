@@ -7,6 +7,8 @@ export interface Props {
   hasViewTransitions?: boolean;
 }
 
+// @ts-ignore
+const isPWA = pwaInfo !== false; // config/astro/mock-pwa-info.mjs
 const hasViewTransitions = Astro.props.hasViewTransitions !== false;
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
 const getIconUrl = (size: number) => {
@@ -161,13 +163,15 @@ const inlineJSONLd = JSON.stringify({
   <meta name="twitter:site" content={metatagsContent.twitterUsername} />}
 <meta name="ecom-store-id" content={String(storeId)}>
 
-<script>
-  import { registerSW } from 'virtual:pwa-register';
-  registerSW({ immediate: false });
-</script>
-{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
-{(!pwaInfo && !import.meta.env.DEV) &&
-  <link rel="manifest" href="/manifest.webmanifest" />}
+{isPWA && <>
+  <script>
+    import { registerSW } from 'virtual:pwa-register';
+    registerSW({ immediate: false });
+  </script>
+  {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+  {(!pwaInfo && !import.meta.env.DEV) &&
+    <link rel="manifest" href="/manifest.webmanifest" />}
+</>}
 
 <script is:inline set:html={inlineClientJS} transition:persist />
 <script type="application/ld+json" set:html={inlineJSONLd} />

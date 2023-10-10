@@ -165,6 +165,7 @@ viteAlias.push(
 
 const genAstroConfig = ({
   site = `https://${domain}`,
+  isPWA = false,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => {
   const integrations = [
@@ -180,7 +181,6 @@ const genAstroConfig = ({
       injectReset: false,
       injectEntry: false,
     }),
-    AstroPWA(vitePWAOptions),
     AutoImport({
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -203,6 +203,14 @@ const genAstroConfig = ({
       },
     },
   ];
+  if (isPWA && !isSSG) {
+    integrations.push(AstroPWA(vitePWAOptions));
+  } else {
+    viteAlias.push({
+      find: 'virtual:pwa-info',
+      replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
+    });
+  }
   if (!isToServerless) {
     integrations.push(image({
       serviceEntryPoint: '@astrojs/image/sharp',
