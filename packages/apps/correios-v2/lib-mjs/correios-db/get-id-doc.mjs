@@ -1,8 +1,14 @@
 export default ({
-  sCepDestino,
-  nVlPeso,
-  nCdEmpresa = '',
-  sCepOrigem,
+  cepOrigem,
+  cepDestino,
+  psObjeto,
+  length,
+  height,
+  width,
+  valorDeclarado,
 }) => {
-  return `calc_results/1_${nCdEmpresa}_${sCepOrigem}_${sCepDestino}_${nVlPeso}`;
+  const dimensions = `${length}_${height}_${width}`;
+  const id = `${cepOrigem}_${cepDestino}_${psObjeto}_${dimensions}_${valorDeclarado}`;
+
+  return `correiosV2FreightResults/1_${id}`;
 };

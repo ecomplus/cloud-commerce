@@ -24,7 +24,7 @@ const newCorreiosAuth = async () => {
 const newCorreios = async ({ postCardNumber } = {}) => {
   let token;
   let correiosContract;
-  const docRef = getFirestore().doc('correiosContract/myStore');
+  const docRef = getFirestore().doc('correiosv2/contract');
   let correiosAuth;
   if (postCardNumber) {
     correiosAuth = await newCorreiosAuth();
@@ -38,7 +38,7 @@ const newCorreios = async ({ postCardNumber } = {}) => {
       } else {
         correiosAuth = await newCorreiosAuth();
       }
-      postCardNumber = docData.postCardNumber;
+      postCardNumber = process.env.CORREIOS_POSTCARD || docData.postCardNumber;
       correiosContract = docData;
     } else {
       throw Error('No Correios contract document');

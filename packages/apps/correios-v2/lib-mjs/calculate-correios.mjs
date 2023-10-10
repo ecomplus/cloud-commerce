@@ -1,6 +1,10 @@
 import logger from 'firebase-functions/logger';
+import { getFirestore } from 'firebase-admin/firestore';
+import getDocId from './correios-db/get-id-doc.mjs';
 import calculateV2 from './calculate-v2.mjs';
+
 // const { calculate } = require('../../../lib/correios-calculate');
+const zipRangeStep = 5000;
 
 export default async ({ params, application }) => {
   const appData = {
@@ -114,7 +118,10 @@ export default async ({ params, application }) => {
   };
 
   params.items.forEach(({
-    price, quantity, dimensions, weight,
+    price,
+    quantity,
+    dimensions,
+    weight,
   }) => {
     if (!params.subtotal && !appData.no_declare_value) {
       vlDeclarado += price * quantity;
@@ -183,27 +190,58 @@ export default async ({ params, application }) => {
   });
 
   let correiosResult;
-  try {
-    const { data } = await calculateV2({
-      correiosParams: {
+
+  if (!servicosAdicionais || !servicosAdicionais.length) {
+    let docId;
+    try {
+      const docParams = {
         cepOrigem,
-        cepDestino,
+        cepDestino: (Number(cepDestino) - (Number(cepDestino) % zipRangeStep) + 1)
+          .toString().padStart(8, '0'),
         psObjeto: pkg.weight.value,
         comprimento: pkg.dimensions.length.value,
         altura: pkg.dimensions.height.value,
         largura: pkg.dimensions.width.value,
         vlDeclarado,
-        servicosAdicionais,
-      },
-      serviceCodes,
-    });
-    correiosResult = data;
-  } catch (err) {
-    const message = err?.response?.data?.[0]?.txErro || err.message;
-    return {
-      error: 'CALCULATE_FAILED',
-      message,
-    };
+      };
+
+      docId = getDocId(docParams);
+      const docSnapshot = await getFirestore().doc(docId).get();
+      let docData;
+      if (docSnapshot.exists) {
+        docData = docSnapshot.data();
+        correiosResult = docData.data;
+      }
+    } catch (err) {
+      logger.error(new Error(`[calculate Correios V2] Cannot get doc ID ${docId}`));
+      logger.error(err);
+    }
+  }
+
+  // fallback Calculate
+  if (!correiosResult) {
+    try {
+      const { data } = await calculateV2({
+        correiosParams: {
+          cepOrigem,
+          cepDestino,
+          psObjeto: pkg.weight.value,
+          comprimento: pkg.dimensions.length.value,
+          altura: pkg.dimensions.height.value,
+          largura: pkg.dimensions.width.value,
+          vlDeclarado,
+          servicosAdicionais,
+        },
+        serviceCodes,
+      });
+      correiosResult = data;
+    } catch (err) {
+      const message = err?.response?.data?.[0]?.txErro || err.message;
+      return {
+        error: 'CALCULATE_FAILED',
+        message,
+      };
+    }
   }
 
   correiosResult.forEach(({
