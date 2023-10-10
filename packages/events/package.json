@@ -25,6 +25,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-affilate-program": "workspace:*",
+    "@cloudcommerce/app-correios-v2": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
     "@cloudcommerce/app-fb-conversions": "workspace:*",

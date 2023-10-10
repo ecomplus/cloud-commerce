@@ -13,7 +13,7 @@ import topicName from '../lib-mjs/correios-db/pubsub/get-topic-name.mjs';
 
 export const correiosv2 = {
   fillDatabase: createPubSubFunction(topicName(), fillDb),
-  cronTrackingCodes: functions.region(config.get().httpsFunctionOptions.region).pubsub
+  cronRunDatabase: functions.region(config.get().httpsFunctionOptions.region).pubsub
     .schedule('26 10 26 3,9 *')
     .onRun(() => {
       return runDb();

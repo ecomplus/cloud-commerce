@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "description": "E-Com Plus Cloud Commerce app to integrate Correios new APIs",
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./events": "./lib/correios-events.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
