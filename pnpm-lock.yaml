@@ -656,6 +656,9 @@ importers:
       '@cloudcommerce/app-affilate-program':
         specifier: workspace:*
         version: link:../apps/affilate-program
+      '@cloudcommerce/app-correios-v2':
+        specifier: workspace:*
+        version: link:../apps/correios-v2
       '@cloudcommerce/app-datafrete':
         specifier: workspace:*
         version: link:../apps/datafrete
