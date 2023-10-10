@@ -36,11 +36,18 @@ export default (data: AppModuleBody) => {
   if (Array.isArray(appData.programs_rules)) {
     const pointsPrograms = {};
     appData.programs_rules.forEach((programRule, index) => {
+      let maxPoints = programRule.max_points;
+      const ratio = programRule.ratio || 1;
+      if (!maxPoints && programRule.max_amount_percentage && params.amount) {
+        maxPoints = Math.round(
+          ((programRule.max_amount_percentage * params.amount.total) / 100) / ratio,
+        );
+      }
       const programId = getProgramId(programRule, index);
       pointsPrograms[programId] = {
         name: programRule.name,
-        ratio: programRule.ratio || 1,
-        max_points: programRule.max_points,
+        ratio,
+        max_points: maxPoints,
         min_subtotal_to_earn: programRule.min_subtotal_to_earn,
         earn_percentage: programRule.earn_percentage,
       };

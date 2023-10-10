@@ -13,7 +13,12 @@ export interface Props {
 const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
   const { apiState, getContent } = routeContext;
   const layoutContent = await getContent('layout');
-  const { header: headerContent } = layoutContent;
+  const {
+    header: {
+      inlineMenuCategories,
+      isAlphabeticalSortSubmenu,
+    },
+  } = layoutContent;
   const pitchBar = parseLayoutContent(layoutContent);
   let { categories } = apiState;
   if (!categories && listedCategoryFields !== null) {
@@ -36,9 +41,9 @@ const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
   }
   const shopHeader: ShopHeaderProps = {
     categories,
-    menuCategorySlugs: headerContent.inline_menu_categories?.featured,
-    menuRandomCategories: headerContent.inline_menu_categories?.random,
-    isAlphabeticalSortSubmenu: headerContent.alphabetical_sort_submenu,
+    menuCategorySlugs: inlineMenuCategories?.featured,
+    menuRandomCategories: inlineMenuCategories?.random,
+    isAlphabeticalSortSubmenu,
   };
   /*
   if (import.meta.env.DEV) {

@@ -118,3 +118,8 @@ https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-b
 .h-screen {
   max-height: 100dvh;
 }
+
+/* Hardfix for multiple <Teleport> backdrops with View Transitions "SPA" */
+[data-drawer-backdrop] + [data-drawer-backdrop] {
+  display: none;
+}

@@ -23,6 +23,7 @@ export interface Props {
   loading?: 'lazy' | 'eager';
   decoding?: 'async' | 'sync' | 'auto';
   alt?: string;
+  preferredSize?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -32,7 +33,7 @@ const image = computed<Partial<PictureSize>>(() => {
   if ((props.picture as PictureSize).url) {
     return props.picture as PictureSize;
   }
-  return getImg(props.picture) || {};
+  return getImg(props.picture, undefined, props.preferredSize) || {};
 });
 const dimensions = computed(() => {
   return getImgSizes(image.value) as { width: number, height: number };

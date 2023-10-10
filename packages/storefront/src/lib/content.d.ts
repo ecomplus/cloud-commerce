@@ -18,16 +18,16 @@ export interface PageContent {
     autoplay?: number,
     slides: Array<{
       [k: string]: unknown,
-      start?: string,
-      end?: string,
+      startsAt?: string,
+      endsAt?: string,
       img: string,
       alt?: string,
-      mobile_img?: string,
+      mobileImg?: string,
       href?: string,
       title?: string,
       subtitle?: string
-      button_link?: string,
-      button_text?: string,
+      buttonLink?: string,
+      buttonText?: string,
     }>,
   };
   sections: Array<Record<string, any> & {

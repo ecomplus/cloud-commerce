@@ -48,8 +48,8 @@ export default {
     if (settingsContent) {
       config.lang = config.lang || settingsContent.lang;
       config.currency = config.currency || settingsContent.currency;
-      config.currencySymbol = config.currencySymbol || settingsContent.currency_symbol;
-      config.countryCode = config.currencySymbol || settingsContent.country_code;
+      config.currencySymbol = config.currencySymbol || settingsContent.currencySymbol;
+      config.countryCode = config.currencySymbol || settingsContent.countryCode;
     }
     self.config = deepmerge(self.config, config);
     if (config.storeId) {

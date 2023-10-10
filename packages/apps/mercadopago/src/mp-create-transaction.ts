@@ -34,12 +34,15 @@ export default async (appData: AppModuleBody) => {
 
   let token: string | undefined;
   let paymentMethodId: string;
+  let deviceId;
   const isPix = params.payment_method.code === 'account_deposit';
   if (params.credit_card && params.credit_card.hash) {
     const hashParts = params.credit_card.hash.split(' // ');
     [token] = hashParts;
     try {
-      paymentMethodId = JSON.parse(hashParts[1]).payment_method_id;
+      const parsed = JSON.parse(hashParts[1]);
+      paymentMethodId = parsed.payment_method_id;
+      deviceId = parsed.deviceId;
     } catch (e) {
       paymentMethodId = params.credit_card.company || 'visa';
     }
@@ -159,14 +162,20 @@ export default async (appData: AppModuleBody) => {
   }
 
   try {
+    const headers = {
+      Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
+      'Content-Type': 'application/json',
+    };
+
+    if (deviceId) {
+      Object.assign(headers, { 'X-meli-session-id': deviceId });
+    }
+
     // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post
     const { data } = await axios({
       url: 'https://api.mercadopago.com/v1/payments',
       method: 'post',
-      headers: {
-        Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       data: payment,
     });
     if (data) {
@@ -254,8 +263,11 @@ export default async (appData: AppModuleBody) => {
         const qrCode = data.point_of_interaction.transaction_data.qr_code;
         const qrCodeBase64 = data.point_of_interaction.transaction_data.qr_code_base64;
         transaction.notes = '<div style="display:block;margin:0 auto"> '
-          + `<img width="280" height="280" style="margin:5px auto" src='data:image/jpeg;base64,${qrCodeBase64}'/> `
-          + `<lable> ${qrCode} </label></div>`;
+        + `<img width="280" height="280" style="margin:5px auto" src='data:image/jpeg;base64,${qrCodeBase64}'/> `
+        + `<input readonly type="text" id="pix-copy" value="${qrCode}" />`
+        + `<button type="button" class="btn btn-sm btn-light" onclick="let codePix = document.getElementById('pix-copy')
+        codePix.select()
+        document.execCommand('copy')">Copiar Pix</button></div>`;
       }
 
       return {

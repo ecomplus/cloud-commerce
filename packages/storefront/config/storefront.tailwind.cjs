@@ -44,7 +44,6 @@ let defaultThemeOptions = {
   iconAliases: {
     close: 'x-mark',
     'chevron-right': 'chevron-right',
-    'chevron-left': 'chevron-left',
   },
 };
 if (globalThis.$storefrontThemeOptions) {
