@@ -104,7 +104,7 @@ importers:
         specifier: workspace:*
         version: link:../../types
 
-   packages/apps/correios-v2:
+  packages/apps/correios-v2:
     dependencies:
       '@cloudcommerce/api':
         specifier: workspace:*
