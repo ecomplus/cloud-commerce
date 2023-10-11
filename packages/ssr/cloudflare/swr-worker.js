@@ -68,7 +68,7 @@ const putKvCache = async (kv, kvKey, newCacheRes) => {
   return kv.put(kvKey, kvValue, { expirationTtl: 3600 * 24 * 30 });
 };
 const swr = async (_request, env, ctx) => {
-  const url = new URL(_request.url);
+  const url = new URL(_request.url.replace('/__swr/', '/'));
   const { hostname, pathname } = url;
   const hostOverride = env[`OVERRIDE_${hostname}`];
   if (hostOverride) {

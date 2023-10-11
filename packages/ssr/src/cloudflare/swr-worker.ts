@@ -89,7 +89,7 @@ export type Env = Record<`OVERRIDE_${string}`, string | undefined> & {
 };
 
 const swr = async (_request: Request, env: Env, ctx: ExecutionContext) => {
-  const url = new URL(_request.url);
+  const url = new URL(_request.url.replace('/__swr/', '/'));
   const { hostname, pathname } = url;
   const hostOverride = env[`OVERRIDE_${hostname}`];
   if (hostOverride) {
