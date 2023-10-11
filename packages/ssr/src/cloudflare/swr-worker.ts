@@ -88,8 +88,9 @@ export type Env = Record<`OVERRIDE_${string}`, string | undefined> & {
   PERMA_CACHE: KVNamespace | undefined;
 };
 
-const swr = async (_request: Request, env: Env, ctx: ExecutionContext) => {
-  const url = new URL(_request.url.replace('/__swr/', '/'));
+const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
+  const _request = new Request(_rewritedReq.url.replace('/__swr/', '/'), _rewritedReq);
+  const url = new URL(_request.url);
   const { hostname, pathname } = url;
   const hostOverride = env[`OVERRIDE_${hostname}`];
   if (hostOverride) {
