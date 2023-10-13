@@ -14,8 +14,8 @@ export type StorefrontConfig = {
   currency: BaseConfig['currency'],
   currencySymbol: BaseConfig['currencySymbol'],
   domain: SettingsContent['domain'],
-  primaryColor: SettingsContent['primary_color'],
-  secondaryColor: SettingsContent['secondary_color'],
+  primaryColor: SettingsContent['primaryColor'],
+  secondaryColor: SettingsContent['secondaryColor'],
   settings: SettingsContent,
   getContent: ContentGetter,
 };
@@ -179,6 +179,13 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
     throw err;
   }
   Astro.response.headers.set('X-Load-Took', String(Date.now() - startedAt));
+  if (import.meta.env.PROD) {
+    const { assetsPrefix } = config.settings;
+    if (assetsPrefix && assetsPrefix.startsWith('https://')) {
+      const cdnURL = assetsPrefix.replace(/(https:\/\/[^/]+).*/, '$1');
+      Astro.response.headers.set('Link', `<${cdnURL}/>; rel=preconnect`);
+    }
+  }
   if (urlPath === '/~fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else if (isHomepage) {

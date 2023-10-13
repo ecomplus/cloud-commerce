@@ -22,6 +22,7 @@ const deployRand = process.env.DEPLOY_RAND || '_';
 const isLibDev = !(relativePath(__dirname, process.cwd()));
 
 const {
+  storeId,
   lang,
   domain,
   primaryColor,
@@ -36,9 +37,9 @@ const getIconUrl = (size) => {
 const _vitePWAOptions = {
   manifest: {
     name: settings.name || 'My Shop',
-    short_name: settings.short_name || settings.name || 'MyShop',
+    short_name: settings.shortName || settings.name || 'MyShop',
     description: settings.description || 'My PWA Shop',
-    background_color: settings.bg_color || '#f5f6fa',
+    background_color: settings.bgColor || '#f5f6fa',
     theme_color: primaryColor,
     crossorigin: 'use-credentials',
     icons: [{
@@ -216,6 +217,12 @@ const genAstroConfig = ({
       serviceEntryPoint: '@astrojs/image/sharp',
     }));
   }
+  let assetsPrefix;
+  if (!isSSG) {
+    assetsPrefix = storeId === 1011 && domain === 'demo.ecomplus.app'
+      ? 'https://s2-demo.b-cdn.net'
+      : settings.assetsPrefix;
+  }
   return {
     experimental: {
       viewTransitions: true,
@@ -229,7 +236,9 @@ const genAstroConfig = ({
     site,
     compressHTML: isToServerless,
     build: {
+      assetsPrefix,
       inlineStylesheets: 'never',
+      ...settings.build,
     },
     vite: {
       plugins: [
