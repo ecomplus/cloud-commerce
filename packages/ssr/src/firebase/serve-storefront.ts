@@ -226,7 +226,7 @@ export default async (req: Request, res: Response) => {
     /* eslint-disable prefer-rest-params */
     // @ts-ignore
     res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
-      if (status === 200 && headers && cssFilepath) {
+      if (status === 200 && headers && cssFilepath && !headers.link) {
         // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
         headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
       }
