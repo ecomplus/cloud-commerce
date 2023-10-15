@@ -22,7 +22,6 @@ const deployRand = process.env.DEPLOY_RAND || '_';
 const isLibDev = !(relativePath(__dirname, process.cwd()));
 
 const {
-  storeId,
   lang,
   domain,
   primaryColor,
@@ -217,12 +216,6 @@ const genAstroConfig = ({
       serviceEntryPoint: '@astrojs/image/sharp',
     }));
   }
-  let assetsPrefix;
-  if (!isSSG) {
-    assetsPrefix = storeId === 1011 && domain === 'demo.ecomplus.app'
-      ? 'https://s2-demo.b-cdn.net'
-      : settings.assetsPrefix;
-  }
   return {
     experimental: {
       viewTransitions: true,
@@ -236,7 +229,7 @@ const genAstroConfig = ({
     site,
     compressHTML: isToServerless,
     build: {
-      assetsPrefix,
+      assetsPrefix: !isSSG ? settings.assetsPrefix : undefined,
       inlineStylesheets: 'never',
       ...settings.build,
     },
