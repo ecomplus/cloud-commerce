@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/firebase",
   "type": "module",
-  "version": "0.28.1",
+  "version": "0.28.2",
   "description": "E-Com Plus Cloud Commerce on Firebase",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
