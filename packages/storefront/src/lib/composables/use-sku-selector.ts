@@ -1,4 +1,8 @@
-import type { Products, GridsList } from '@cloudcommerce/api/types';
+import type {
+  ResourceId,
+  Products,
+  GridsList,
+} from '@cloudcommerce/api/types';
 import {
   ref,
   computed,
@@ -17,7 +21,7 @@ import {
 
 export interface Props {
   variations: Exclude<Products['variations'], undefined>;
-  variationId?: string | null;
+  variationId?: ResourceId | null;
 }
 
 const useSkuSelector = (props: Props) => {
@@ -44,7 +48,7 @@ const useSkuSelector = (props: Props) => {
 
   const orderedGridIds = computed(() => Object.keys(variationsGrids));
   const selectedOptions = reactive<Record<string, string>>({});
-  const variationId = ref<string | null | undefined>();
+  const variationId = ref<ResourceId | null | undefined>();
   const selectOption = ({ optionText, gridId, gridIndex }: {
     optionText: string,
     gridId: string,
