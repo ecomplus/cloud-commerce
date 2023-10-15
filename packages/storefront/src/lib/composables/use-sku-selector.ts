@@ -44,7 +44,7 @@ const useSkuSelector = (props: Props) => {
 
   const orderedGridIds = computed(() => Object.keys(variationsGrids));
   const selectedOptions = reactive<Record<string, string>>({});
-  const variationId = ref<string | null>(null);
+  const variationId = ref<string | null | undefined>();
   const selectOption = ({ optionText, gridId, gridIndex }: {
     optionText: string,
     gridId: string,
@@ -91,29 +91,31 @@ const useSkuSelector = (props: Props) => {
     const selectedVariation = props.variations.find((variation) => {
       return variation._id === _variationId;
     });
-    if (selectedVariation) {
-      const { specifications } = selectedVariation;
-      const specs = Object.keys(specifications);
-      const nextSpec = (specIndex = 0) => {
-        const gridId = specs[specIndex];
-        if (
-          specs[specIndex]
-          && specifications[gridId]
-          && specifications[gridId].length === 1
-        ) {
-          const optionText = specifications[gridId][0].text;
-          if (variationsGrids[gridId].find((option) => option === optionText)) {
-            selectOption({
-              optionText,
-              gridId,
-              gridIndex: orderedGridIds.value.indexOf(gridId),
-            });
-            nextSpec(specIndex + 1);
-          }
-        }
-      };
-      nextSpec();
+    if (!selectedVariation) {
+      variationId.value = null;
+      return;
     }
+    const { specifications } = selectedVariation;
+    const specs = Object.keys(specifications);
+    const nextSpec = (specIndex = 0) => {
+      const gridId = specs[specIndex];
+      if (
+        specs[specIndex]
+        && specifications[gridId]
+        && specifications[gridId].length === 1
+      ) {
+        const optionText = specifications[gridId][0].text;
+        if (variationsGrids[gridId].find((option) => option === optionText)) {
+          selectOption({
+            optionText,
+            gridId,
+            gridIndex: orderedGridIds.value.indexOf(gridId),
+          });
+          nextSpec(specIndex + 1);
+        }
+      }
+    };
+    nextSpec();
   }, { immediate: true });
 
   const getGridTitle = (gridId: string) => {
