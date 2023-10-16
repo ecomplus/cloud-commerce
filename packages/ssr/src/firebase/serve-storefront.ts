@@ -226,9 +226,17 @@ export default async (req: Request, res: Response) => {
     /* eslint-disable prefer-rest-params */
     // @ts-ignore
     res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
-      if (status === 200 && headers && cssFilepath && !headers.link) {
+      if (status === 200 && headers && cssFilepath) {
         // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
-        headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
+        const cssLink = `<${cssFilepath}>; rel=preload; as=style`;
+        if (!headers.link) {
+          headers.Link = cssLink;
+        } else {
+          if (typeof headers.link === 'string') {
+            headers.link = [headers.link];
+          }
+          headers.link.push(cssLink);
+        }
       }
       _writeHead.apply(res, [status, headers]);
     };
