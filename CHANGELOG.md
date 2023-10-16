@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.28.3](https://github.com/ecomplus/cloud-commerce/compare/v0.28.2...v0.28.3) (2023-10-16)
+
+
+### Features
+
+* **storefront:** Set `Astro.locals.assetsPrefix` globally available on Astro components ([0548fbb](https://github.com/ecomplus/cloud-commerce/commit/0548fbb9c864a300e215a3f2c8c722f34fb07279))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#253](https://github.com/ecomplus/cloud-commerce/issues/253)) ([9a29d76](https://github.com/ecomplus/cloud-commerce/commit/9a29d76459541b20f1816b1e572281294f19d4c3))
+* **storefront:** Must set cache control stale-while-revalidate even without s-maxage ([3d27496](https://github.com/ecomplus/cloud-commerce/commit/3d274961e0f10f1afae22da1e6cdeb70e17811e8))
+* **storefront:** Properly set optimized pictures src with assets prefix (CDN) if configured ([68a8b6e](https://github.com/ecomplus/cloud-commerce/commit/68a8b6e3fb2f1837dfb40dbe996fb46832c4b0b5))
+
 ### [0.28.2](https://github.com/ecomplus/cloud-commerce/compare/v0.28.1...v0.28.2) (2023-10-15)
 
 ### [0.28.1](https://github.com/ecomplus/cloud-commerce/compare/v0.28.0...v0.28.1) (2023-10-15)
