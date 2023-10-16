@@ -45,9 +45,8 @@ if (!globalThis.$storefront) {
 const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
   let cacheControl = `public, max-age=${maxAge}, must-revalidate`;
-  if (sMaxAge) {
-    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=604800`;
-  }
+  if (sMaxAge) cacheControl += `, s-maxage=${sMaxAge}`;
+  if (sMaxAge || maxAge >= 60) cacheControl += `, stale-while-revalidate=604800`;
   Astro.response.headers.set(headerName, cacheControl);
 };
 
