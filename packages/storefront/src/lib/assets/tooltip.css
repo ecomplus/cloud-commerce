@@ -16,6 +16,7 @@
   top: 102%;
   margin-top: 5px;
   font-size: clamp(0.75rem, 90%, 1rem);
+  font-weight: 400;
   width: max-content;
   background-color: var(--background-color);
   color: var(--color);

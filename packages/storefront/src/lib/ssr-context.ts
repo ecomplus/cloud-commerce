@@ -14,8 +14,8 @@ export type StorefrontConfig = {
   currency: BaseConfig['currency'],
   currencySymbol: BaseConfig['currencySymbol'],
   domain: SettingsContent['domain'],
-  primaryColor: SettingsContent['primary_color'],
-  secondaryColor: SettingsContent['secondary_color'],
+  primaryColor: SettingsContent['primaryColor'],
+  secondaryColor: SettingsContent['secondaryColor'],
   settings: SettingsContent,
   getContent: ContentGetter,
 };
@@ -45,9 +45,8 @@ if (!globalThis.$storefront) {
 const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
   let cacheControl = `public, max-age=${maxAge}, must-revalidate`;
-  if (sMaxAge) {
-    cacheControl += `, s-maxage=${sMaxAge}, stale-while-revalidate=604800`;
-  }
+  if (sMaxAge) cacheControl += `, s-maxage=${sMaxAge}`;
+  if (sMaxAge || maxAge >= 60) cacheControl += `, stale-while-revalidate=604800`;
   Astro.response.headers.set(headerName, cacheControl);
 };
 
@@ -179,12 +178,22 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
     throw err;
   }
   Astro.response.headers.set('X-Load-Took', String(Date.now() - startedAt));
+  if (import.meta.env.PROD) {
+    const { assetsPrefix } = config.settings;
+    if (assetsPrefix && assetsPrefix.startsWith('https://')) {
+      const cdnURL = assetsPrefix.replace(/(https:\/\/[^/]+).*/, '$1');
+      Astro.response.headers.set('Link', `<${cdnURL}/>; rel=preconnect`);
+    }
+    Astro.locals.assetsPrefix = assetsPrefix || '';
+  } else {
+    Astro.locals.assetsPrefix = '';
+  }
   if (urlPath === '/~fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else if (isHomepage) {
-    setResponseCache(Astro, 180, 300);
+    setResponseCache(Astro, 180);
   } else {
-    setResponseCache(Astro, 120, 300);
+    setResponseCache(Astro, 120, 180);
   }
   const routeContext = {
     ...config,

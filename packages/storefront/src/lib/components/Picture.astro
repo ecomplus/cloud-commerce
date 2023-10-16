@@ -35,6 +35,7 @@ const {
   ...Astro.props,
   tryImageSize,
   getPicture,
+  assetsPrefix: Astro.locals.assetsPrefix,
 });
 if (imgAttrs) {
   imgAttrs.src += versionSuffix;

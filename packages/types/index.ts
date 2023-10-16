@@ -100,6 +100,7 @@ type SettingsContent = {
   primaryColor: string,
   secondaryColor?: string,
   bgColor?: string,
+  assetsPrefix?: string,
   email: string,
   phone: string,
   address: string,

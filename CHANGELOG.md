@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.28.2](https://github.com/ecomplus/cloud-commerce/compare/v0.28.1...v0.28.2) (2023-10-15)
+
+### [0.28.1](https://github.com/ecomplus/cloud-commerce/compare/v0.28.0...v0.28.1) (2023-10-15)
+
+
+### Features
+
+* **i18n:** Add `i19chooseProductDetailsToBuy` ([2b8aea7](https://github.com/ecomplus/cloud-commerce/commit/2b8aea72fc75c1700ef6ef691742052d5e51ce07))
+* **ssr:** Edit Cloudflare SWR worker to support URL rewrites /__swr/* ([528aab0](https://github.com/ecomplus/cloud-commerce/commit/528aab0d7398983f9c43662c8b949f5ca8c5e1d3))
+* **storefront:** Handle optional `settings.assetsPrefix` field to support deploy with external CDN ([46d6c43](https://github.com/ecomplus/cloud-commerce/commit/46d6c431a951a510508ed6d4078035e3fbbf2304))
+* **storefront:** New `useSkuSelector` composable ([2865f1e](https://github.com/ecomplus/cloud-commerce/commit/2865f1efc7e3c8a909aca70fe85045fb3804ae2d))
+* **storefront:** New optional props `cartId` and `cartItem` for `<CheckoutLink>` ([5295149](https://github.com/ecomplus/cloud-commerce/commit/529514968bb786cb4754912837aa9505989f3873))
+
+
+### Bug Fixes
+
+* **ssr:** Prevent overwriting Link response header if already set on storefront render output ([3e30407](https://github.com/ecomplus/cloud-commerce/commit/3e30407781485b16fd285e3e94083ea04e86ba19))
+* **storefront:** Update link fields from settings on `<CheckoutLink>` and `<AccountLink>` ([af6808e](https://github.com/ecomplus/cloud-commerce/commit/af6808e17273b358ed274d8b79b421d4fded1042))
+
 ## [0.28.0](https://github.com/ecomplus/cloud-commerce/compare/v0.27.0...v0.28.0) (2023-10-06)
 
 

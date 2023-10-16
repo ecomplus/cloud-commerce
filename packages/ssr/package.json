@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/ssr",
   "type": "module",
-  "version": "0.28.0",
+  "version": "0.28.2",
   "description": "E-Com Plus Cloud Commerce storefront SSR",
   "main": "lib/index.js",
   "exports": {
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@cloudflare/workers-types": "^4.20231002.0",
+    "@cloudflare/workers-types": "^4.20231010.0",
     "@firebase/app-types": "^0.9.0"
   }
 }

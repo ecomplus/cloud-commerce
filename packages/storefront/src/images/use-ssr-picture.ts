@@ -32,6 +32,7 @@ export type UsePictureParams = PictureProps & {
   tryImageSize: TryImageSize;
   getPicture: ((params: GetPictureParams) => Promise<GetPictureResult>)
     | ((params: GetBuiltPictureParams) => Promise<GetBuiltPictureResult>);
+  assetsPrefix?: string;
 };
 
 const useSSRPicture = async (params: UsePictureParams) => {
@@ -50,6 +51,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
     hasImg = true,
     tryImageSize,
     getPicture,
+    assetsPrefix,
     ...attrs
   } = params;
 
@@ -150,6 +152,12 @@ const useSSRPicture = async (params: UsePictureParams) => {
   });
   delete image.width;
   delete image.height;
+  if (import.meta.env.PROD && assetsPrefix && image.src?.charAt(0) === '/') {
+    image.src = `${assetsPrefix}${image.src}`;
+    sources.forEach((source) => {
+      source.srcset = `${assetsPrefix}${source.srcset}`;
+    });
+  }
 
   const pictureAttrs: Partial<typeof attrs & { alt: string }> = {};
   if (!hasImg) {

@@ -36,9 +36,9 @@ const getIconUrl = (size) => {
 const _vitePWAOptions = {
   manifest: {
     name: settings.name || 'My Shop',
-    short_name: settings.short_name || settings.name || 'MyShop',
+    short_name: settings.shortName || settings.name || 'MyShop',
     description: settings.description || 'My PWA Shop',
-    background_color: settings.bg_color || '#f5f6fa',
+    background_color: settings.bgColor || '#f5f6fa',
     theme_color: primaryColor,
     crossorigin: 'use-credentials',
     icons: [{
@@ -165,6 +165,7 @@ viteAlias.push(
 
 const genAstroConfig = ({
   site = `https://${domain}`,
+  isPWA = false,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => {
   const integrations = [
@@ -180,7 +181,6 @@ const genAstroConfig = ({
       injectReset: false,
       injectEntry: false,
     }),
-    AstroPWA(vitePWAOptions),
     AutoImport({
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -203,6 +203,14 @@ const genAstroConfig = ({
       },
     },
   ];
+  if (isPWA && !isSSG) {
+    integrations.push(AstroPWA(vitePWAOptions));
+  } else {
+    viteAlias.push({
+      find: 'virtual:pwa-info',
+      replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
+    });
+  }
   if (!isToServerless) {
     integrations.push(image({
       serviceEntryPoint: '@astrojs/image/sharp',
@@ -221,7 +229,9 @@ const genAstroConfig = ({
     site,
     compressHTML: isToServerless,
     build: {
+      assetsPrefix: !isSSG ? settings.assetsPrefix : undefined,
       inlineStylesheets: 'never',
+      ...settings.build,
     },
     vite: {
       plugins: [
