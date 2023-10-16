@@ -9,6 +9,7 @@ declare global {
   namespace App {
     interface Locals {
       routeContext: RouteContext,
+      assetsPrefix: string,
     }
   }
 

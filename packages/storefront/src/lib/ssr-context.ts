@@ -184,6 +184,9 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
       const cdnURL = assetsPrefix.replace(/(https:\/\/[^/]+).*/, '$1');
       Astro.response.headers.set('Link', `<${cdnURL}/>; rel=preconnect`);
     }
+    Astro.locals.assetsPrefix = assetsPrefix || '';
+  } else {
+    Astro.locals.assetsPrefix = '';
   }
   if (urlPath === '/~fallback') {
     setResponseCache(Astro, 3600, 86400);
