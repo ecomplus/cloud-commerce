@@ -1,10 +1,13 @@
 import logger from 'firebase-functions/logger';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import getDocId from './correios-db/get-id-doc.mjs';
 import calculateV2 from './calculate-v2.mjs';
+import { zipRangeStep } from './correios-db/pubsub/run-database.mjs';
 
-// const { calculate } = require('../../../lib/correios-calculate');
-const zipRangeStep = 5000;
+const parseZipCode = (zipCode) => {
+  return (Number(zipCode) - (Number(zipCode) % zipRangeStep) + 1)
+    .toString().padStart(8, '0');
+};
 
 export default async ({ params, application }) => {
   const appData = {
@@ -191,31 +194,26 @@ export default async ({ params, application }) => {
 
   let correiosResult;
 
-  if (!servicosAdicionais || !servicosAdicionais.length) {
-    let docId;
-    try {
-      const docParams = {
-        cepOrigem,
-        cepDestino: (Number(cepDestino) - (Number(cepDestino) % zipRangeStep) + 1)
-          .toString().padStart(8, '0'),
-        psObjeto: pkg.weight.value,
-        comprimento: pkg.dimensions.length.value,
-        altura: pkg.dimensions.height.value,
-        largura: pkg.dimensions.width.value,
-        vlDeclarado,
-      };
+  let docId;
+  try {
+    const docParams = {
+      cepOrigem,
+      cepDestino: parseZipCode(cepDestino),
+      psObjeto: pkg.weight.value,
+      vlDeclarado,
+      servicosAdicionais,
+    };
 
-      docId = getDocId(docParams);
-      const docSnapshot = await getFirestore().doc(docId).get();
-      let docData;
-      if (docSnapshot.exists) {
-        docData = docSnapshot.data();
-        correiosResult = docData.data;
-      }
-    } catch (err) {
-      logger.error(new Error(`[calculate Correios V2] Cannot get doc ID ${docId}`));
-      logger.error(err);
+    docId = getDocId(docParams);
+    const docSnapshot = await getFirestore().doc(docId).get();
+    let docData;
+    if (docSnapshot.exists) {
+      docData = docSnapshot.data();
+      correiosResult = docData.data;
     }
+  } catch (err) {
+    logger.error(new Error(`[calculate Correios V2] Cannot get doc ID ${docId}`));
+    logger.error(err);
   }
 
   // fallback Calculate
@@ -235,6 +233,16 @@ export default async ({ params, application }) => {
         serviceCodes,
       });
       correiosResult = data;
+
+      // save in database
+      if (docId) {
+        getFirestore().doc(docId)
+          .set({
+            data,
+            t: Timestamp.fromDate(new Date()),
+          })
+          .catch(logger.error);
+      }
     } catch (err) {
       const message = err?.response?.data?.[0]?.txErro || err.message;
       return {

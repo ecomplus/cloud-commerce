@@ -28,6 +28,8 @@ const runDb = async () => {
     ...application.hidden_data,
   };
 
+  const zipCodeOrigin = appData.zip.replace(/\D/g, '');
+
   return new Promise((resolve) => {
     const weights = [0.5];
     let weigth = 0;
@@ -47,31 +49,14 @@ const runDb = async () => {
     let zipCode = firstZipCode;
     while (zipCode <= maxZipCode) {
       for (let i = 0; i < weights.length; i++) {
-        for (let length = 15; length <= 100; length++) {
-          for (let height = 2; height <= 100; height++) {
-            for (let width = 10; width <= 100; width++) {
-              const sumDimensions = length + height + width;
-              if (sumDimensions >= 26 && sumDimensions <= 200) {
-                for (let declaredValue = 0; declaredValue <= 500; declaredValue++) {
-                  try {
-                    sendMessageTopic({
-                      pkg: {
-                        length,
-                        height,
-                        width,
-                        weight: weights[i],
-                      },
-                      declaredValue,
-                      zipCode,
-                      appData,
-                    });
-                  } catch (err) {
-                    logger.error(err);
-                  }
-                }
-              }
-            }
-          }
+        try {
+          sendMessageTopic({
+            weight: weights[i],
+            zipCode,
+            zipCodeOrigin,
+          });
+        } catch (err) {
+          logger.error(err);
         }
       }
       zipCode += zipRangeStep;
@@ -81,3 +66,8 @@ const runDb = async () => {
 };
 
 export default runDb;
+
+export {
+  zipRangeStep,
+  sendMessageTopic,
+};

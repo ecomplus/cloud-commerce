@@ -5,23 +5,16 @@ import getDocId from './get-id-doc.mjs';
 
 const fillDb = async (
   {
-    pkg,
-    declaredValue,
+    weight,
     zipCode,
-    appData,
+    zipCodeOrigin,
   },
   context,
 ) => {
-  const cepOrigem = appData.zip.replace(/\D/g, '');
-
   const correiosParams = {
-    cepOrigem,
+    cepOrigem: zipCodeOrigin,
     cepDestino: zipCode,
-    psObjeto: pkg.weight,
-    comprimento: pkg.dimensions.length,
-    altura: pkg.dimensions.height,
-    largura: pkg.dimensions.width,
-    declaredValue,
+    psObjeto: weight,
   };
   const docId = getDocId(correiosParams);
   const docSnapshot = await getFirestore().doc(docId).get();

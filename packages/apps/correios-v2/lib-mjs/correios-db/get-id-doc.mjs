@@ -2,13 +2,10 @@ export default ({
   cepOrigem,
   cepDestino,
   psObjeto,
-  length,
-  height,
-  width,
-  valorDeclarado,
+  // valorDeclarado,
+  // servicosAdicionais,
 }) => {
-  const dimensions = `${length}_${height}_${width}`;
-  const id = `${cepOrigem}_${cepDestino}_${psObjeto}_${dimensions}_${valorDeclarado}`;
+  const id = `${cepOrigem}_${cepDestino}_${psObjeto}`;
 
   return `correiosV2FreightResults/1_${id}`;
 };
