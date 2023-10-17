@@ -20,7 +20,7 @@ export default (req: Request, res: Response) => {
     url = url.slice(0, -5);
   }
   [url] = url.split('?');
-  url = url.replace('/api/modules', ''); // due to hosting rewrite
+  url = url.replace('/_api/modules', ''); // due to hosting rewrite
   const modName = url.split('/')[1];
 
   const sendSchema = (isResponseSchema = false) => {
