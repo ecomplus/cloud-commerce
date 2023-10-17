@@ -16,7 +16,11 @@ declare global {
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
-const { assetsPrefix } = config.get().settingsContent;
+const { storeId, settingsContent } = config.get();
+let { assetsPrefix } = settingsContent;
+if (!assetsPrefix && storeId === 1011 && settingsContent.domain === 'demo.ecomplus.app') {
+  assetsPrefix = 'https://s2-demo.b-cdn.net';
+}
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
