@@ -4,7 +4,7 @@ import { computed } from 'vue';
 export interface Props {
   to?: 'orders' | 'favorites';
   accountUrl?: string;
-  returnUrl?: string;
+  returnUrl?: string | null;
   isSignUp?: boolean;
 }
 
@@ -20,7 +20,7 @@ const href = computed(() => {
     } else {
       url += '?';
     }
-    return `${url}return_url=${props.returnUrl}`;
+    return props.returnUrl ? `${url}return_url=${props.returnUrl}` : url;
   }
   const { settings } = globalThis.$storefront;
   if (props.to === 'orders' && settings.ordersUrl) {
