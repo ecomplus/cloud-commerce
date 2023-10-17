@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.28.4](https://github.com/ecomplus/cloud-commerce/compare/v0.28.3...v0.28.4) (2023-10-17)
+
+
+### Bug Fixes
+
+* **storefront:** Set optimized pictures responsive srcset with assets prefix (CDN) if configured ([36b9ae6](https://github.com/ecomplus/cloud-commerce/commit/36b9ae66fb03609017b06ef6002e4f052f6b40af))
+
 ### [0.28.3](https://github.com/ecomplus/cloud-commerce/compare/v0.28.2...v0.28.3) (2023-10-16)
 
 
