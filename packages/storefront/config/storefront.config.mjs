@@ -50,10 +50,6 @@ export default () => {
     currencySymbol,
   } = config.get();
 
-  if (!settings.assetsPrefix && storeId === 1011 && domain === 'demo.ecomplus.app') {
-    settings.assetsPrefix = 'https://s2-demo.b-cdn.net';
-  }
-
   return {
     storeId,
     lang,
