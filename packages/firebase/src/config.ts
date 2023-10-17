@@ -152,6 +152,9 @@ const mergeConfig = {
     flashCourier: {
       appId: 104136,
     },
+    mandae: {
+      appId: 124677,
+    },
   },
   settingsContent,
   metafields: {},
