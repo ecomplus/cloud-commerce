@@ -57,45 +57,45 @@ importers:
   ecomplus-stores/barra-doce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../packages/eslint
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/passport
 
   ecomplus-stores/barra-doce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/types
       '@fontsource/croissant-one':
         specifier: ^5.0.9
@@ -107,60 +107,60 @@ importers:
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/modules
 
   ecomplus-stores/monocard:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../packages/eslint
 
   ecomplus-stores/monocard/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/passport
 
   ecomplus-stores/monocard/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/ssr
       '@vueuse/motion':
         specifier: 2.0.0-beta.22
         version: 2.0.0-beta.22
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/types
       '@fontsource-variable/inter':
         specifier: ^5.0.8
@@ -178,13 +178,13 @@ importers:
   ecomplus-stores/monocard/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1161,45 +1161,45 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/ssr
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.2
@@ -1208,13 +1208,13 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.28.3
+        specifier: ^0.28.4
         version: link:../../../packages/modules
 
 packages:
