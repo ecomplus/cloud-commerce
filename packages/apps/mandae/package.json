@@ -25,6 +25,7 @@
     "firebase-functions": "^4.4.1"
   },
   "devDependencies": {
+    "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*"
   }
 }
