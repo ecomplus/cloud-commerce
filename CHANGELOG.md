@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.28.5](https://github.com/ecomplus/cloud-commerce/compare/v0.28.4...v0.28.5) (2023-10-17)
+
+
+### Bug Fixes
+
+* **ssr:** Properly set assets prefix (if configured) to CSS preload Link header ([3f83e56](https://github.com/ecomplus/cloud-commerce/commit/3f83e56e11c7e9a9aceb3c2a7cfd21e704304069))
+
 ### [0.28.4](https://github.com/ecomplus/cloud-commerce/compare/v0.28.3...v0.28.4) (2023-10-17)
 
 
