@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.29.0](https://github.com/ecomplus/cloud-commerce/compare/v0.28.5...v0.29.0) (2023-10-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* Default modules and passport APIs URLs changed
+
+### Features
+
+* **storefront:** Update Astro `client:context` custom directive to accept "idle" value ([3ce1f3b](https://github.com/ecomplus/cloud-commerce/commit/3ce1f3b1e60feb3071eec0f5e36ece4af851a658))
+
+
+### Bug Fixes
+
+* **ssr:** Set default demoStore CDN assets prefix as done by storefront config ([5de0ac1](https://github.com/ecomplus/cloud-commerce/commit/5de0ac1c18e481317d2f10f4aad5d77ad80a5488)), closes [#L53-L55](https://github.com/ecomplus/cloud-commerce/issues/L53-L55)
+
+
+* Moving modules and passport APIs to /_api/* routes ([eed3d73](https://github.com/ecomplus/cloud-commerce/commit/eed3d731257d06fa81a31ccdec8466f9c465d59b))
+
 ### [0.28.5](https://github.com/ecomplus/cloud-commerce/compare/v0.28.4...v0.28.5) (2023-10-17)
 
 
