@@ -36,6 +36,7 @@
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-jadlog": "workspace:*",
     "@cloudcommerce/app-loyalty-points": "workspace:*",
+    "@cloudcommerce/app-mandae": "workspace:*",
     "@cloudcommerce/app-melhor-envio": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
