@@ -99,7 +99,7 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   } else if (slug) {
     if (contentCollection) {
       cmsContent = await config.getContent(`${contentCollection}/${slug}`);
-    } else if (slug.startsWith('api/')) {
+    } else if (slug.startsWith('_api/')) {
       const err: any = new Error('/api/* routes not implemented on SSR directly');
       Astro.response.status = 501;
       err.responseHTML = `<head></head><body>${err.message}</body>`;
