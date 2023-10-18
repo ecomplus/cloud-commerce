@@ -8,14 +8,7 @@ if (!import.meta.env.SSR) {
   screenWidth = 0;
 }
 
-export const isSafari = userAgent.includes('Safari') && !userAgent.includes('Chrome');
-
-export const isSafariNew = isSafari && /Version\/1[4-9]/i.test(userAgent);
-
-// @ts-ignore
-export const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-
-export const isMobile = isIOS || /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+export const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 
 export const isScreenXs = screenWidth < 640;
 
