@@ -486,6 +486,28 @@ importers:
         specifier: workspace:*
         version: link:../../types
 
+  packages/apps/mandae:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@ecomplus/utils':
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
+      axios:
+        specifier: ^1.5.1
+        version: 1.5.1
+      firebase-functions:
+        specifier: ^4.4.1
+        version: 4.4.1(firebase-admin@11.11.0)
+    devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../../test-base
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/melhor-envio:
     dependencies:
       '@cloudcommerce/api':
@@ -915,6 +937,9 @@ importers:
       '@cloudcommerce/app-loyalty-points':
         specifier: workspace:*
         version: link:../apps/loyalty-points
+      '@cloudcommerce/app-mandae':
+        specifier: workspace:*
+        version: link:../apps/mandae
       '@cloudcommerce/app-melhor-envio':
         specifier: workspace:*
         version: link:../apps/melhor-envio
