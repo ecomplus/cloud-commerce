@@ -28,6 +28,6 @@
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.0",
-    "@types/facebook-nodejs-business-sdk": "^15.0.2"
+    "@types/facebook-nodejs-business-sdk": "^15.0.4"
   }
 }
