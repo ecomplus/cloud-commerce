@@ -7,13 +7,22 @@ import { parserInvoiceStatusToEcom, parseAddress } from './functions-lib/pagarme
 import axios from './functions-lib/pagarme/create-axios.mjs';
 
 export default async (appData) => {
-  const colletionFirebase = getFirestore().collection('subscriptions');
+  const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
 
   const { params, application } = appData;
 
   const configApp = { ...application.data, ...application.hidden_data };
 
-  const pagarmeAxios = axios(configApp.pagarme_api_token);
+  if (!process.env.PAGARMEV5_API_TOKEN) {
+    const pagarmeApiToken = configApp.pagarme_api_token;
+    if (pagarmeApiToken && typeof pagarmeApiToken === 'string') {
+      process.env.PAGARMEV5_API_TOKEN = pagarmeApiToken;
+    } else {
+      logger.warn('Missing PAGARMEV5 API TOKEN');
+    }
+  }
+
+  const pagarmeAxios = axios(process.env.PAGARMEV5_API_TOKEN);
   const { storeId } = config.get();
 
   const orderId = params.order_id;

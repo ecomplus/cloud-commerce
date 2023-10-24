@@ -78,6 +78,10 @@ inputs:
     description: 'App: Flash Courier contract'
   webhooks-token:
     description: 'App: Webhooks token'
+  pagarmev5-api-token:
+    description: 'App: Pagar.me API V5 token'
+  pagarmev5-public-key: 
+    description: 'App: Pagar.me API V5 public key'
 
 outputs: {}
 
@@ -241,6 +245,8 @@ runs:
         PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
         WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
+        PAGARMEV5_API_TOKEN: ${{ inputs.pagarmev5-api-token }}
+        PAGARMEV5_PUBLIC_KEY: ${{ inputs.pagarmev5-public-key }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -281,6 +287,8 @@ runs:
         PIX_CREDENTIALS=$PIX_CREDENTIALS
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
+        PAGARMEV5_API_TOKEN=$PAGARMEV5_API_TOKEN
+        PAGARMEV5_PUBLIC_KEY=$PAGARMEV5_PUBLIC_KEY
         " > functions/.env
         if [ -z "$DEPLOY_CODEBASE" ]; then
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy

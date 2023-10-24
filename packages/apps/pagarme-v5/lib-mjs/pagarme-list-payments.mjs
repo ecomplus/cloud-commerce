@@ -1,21 +1,54 @@
 import path from 'path';
 import fs from 'fs';
+import logger from 'firebase-functions/logger';
+import api from '@cloudcommerce/api';
 import addInstallments from './functions-lib/payments/add-installments.mjs';
 import { discountPlanPayment } from './functions-lib/pagarme/handle-plans.mjs';
 
-export default (data) => {
+export default async (data) => {
   const { application, params } = data;
+  const { items } = params;
 
-  const appData = {
+  const configApp = {
     ...application.data,
     ...application.hidden_data,
   };
 
-  if (!appData.pagarme_api_token || !appData.pagarme_public_key) {
+  if (!process.env.PAGARMEV5_PUBLIC_KEY) {
+    const pagarmePublicKey = configApp.pagarme_public_key;
+    if (pagarmePublicKey && typeof pagarmePublicKey === 'string') {
+      process.env.PAGARMEV5_PUBLIC_KEY = pagarmePublicKey;
+    } else {
+      logger.warn('Missing PAGARMEV5 API TOKEN');
+    }
+  }
+
+  if (!process.env.PAGARMEV5_API_TOKEN || !process.env.PAGARMEV5_PUBLIC_KEY) {
     return {
       error: 'NO_PAGARME_KEYS',
       message: 'Chave de API e/ou criptografia não configurada (lojista deve configurar o aplicativo)',
     };
+  }
+
+  const categoryIds = configApp.recurrency_category_ids;
+  let hasRecurrence = false;
+  let isAllRecurring = true;
+
+  if (categoryIds.length) {
+    try {
+      const { data: { result } } = await api.get('search/v1', {
+        limit: items.length,
+        params: {
+          _id: items.map((item) => item.product_id),
+          'categories._id': categoryIds,
+        },
+      });
+
+      hasRecurrence = result.length > 0;
+      isAllRecurring = result.length === items.length;
+    } catch (err) {
+      // logger.error(err)
+    }
   }
 
   const response = {
@@ -23,12 +56,13 @@ export default (data) => {
   };
 
   const paymentTypes = [];
-  if (appData.recurrence && appData.recurrence.length && appData.recurrence[0].label) {
+  if ((isAllRecurring) && configApp.recurrence && configApp.recurrence.length
+    && configApp.recurrence[0].label) {
     paymentTypes.push('recurrence');
   }
 
-  if (!appData.credit_card.disable || !appData.banking_billet.disable
-    || !appData.account_deposit.disable) {
+  if ((!hasRecurrence) && (!configApp.credit_card.disable || !configApp.banking_billet.disable
+    || !configApp.account_deposit.disable)) {
     paymentTypes.push('payment');
   }
 
@@ -41,21 +75,21 @@ export default (data) => {
 
   const listPaymentMethod = ['credit_card', 'banking_billet'];
 
-  if (!appData.account_deposit?.disable) {
+  if (!configApp.account_deposit?.disable) {
     listPaymentMethod.push('account_deposit');
   }
 
   paymentTypes.forEach((type) => {
     // At first the occurrence only with credit card
     const isRecurrence = type === 'recurrence';
-    const plans = isRecurrence ? appData.recurrence : ['single_payment'];
+    const plans = isRecurrence ? configApp.recurrence : ['single_payment'];
     plans.forEach((plan) => {
       listPaymentMethod.forEach((paymentMethod) => {
         // console.log('>> List Payments ', type, ' ', plan, ' ', paymentMethod)
         const amount = { ...params.amount } || {};
         const isCreditCard = paymentMethod === 'credit_card';
         const isPix = paymentMethod === 'account_deposit';
-        const methodConfig = appData[paymentMethod] || {};
+        const methodConfig = configApp[paymentMethod] || {};
         let methodEnable = isRecurrence ? methodConfig.enable_recurrence : !methodConfig.disable;
 
         // Pix not active in recurrence
@@ -90,7 +124,7 @@ export default (data) => {
           if (isRecurrence) {
             discount = discountPlanPayment(label, plan, amount);
           } else {
-            discount = appData.discount;
+            discount = configApp.discount;
           }
 
           if (discount) {
@@ -147,7 +181,7 @@ export default (data) => {
             // https://github.com/pagarme/pagarme-js
             gateway.js_client = {
               script_uri: 'https://checkout.pagar.me/v1/tokenizecard.js',
-              onload_expression: `window._pagarmeKey="${appData.pagarme_public_key}";`
+              onload_expression: `window._pagarmeKey="${process.env.PAGARMEV5_PUBLIC_KEY}";`
                 + fs.readFileSync(path.join(__dirname, '../assets/onload-expression.min.js'), 'utf8'),
               cc_hash: {
                 function: '_pagarmeHash',
@@ -155,7 +189,7 @@ export default (data) => {
               },
             };
             if (!isRecurrence) {
-              const { installments } = appData;
+              const { installments } = configApp;
               if (installments) {
                 // list all installment options and default one
                 addInstallments(amount, response, installments, gateway);
