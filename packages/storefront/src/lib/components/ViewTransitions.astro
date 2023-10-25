@@ -302,6 +302,8 @@ const { fallback = 'animate' } = Astro.props as Props;
       if (
         !link ||
         !(link instanceof HTMLAnchorElement) ||
+        link.dataset.astroReload !== undefined ||
+        link.hasAttribute('download') ||
         !link.href ||
         (link.target && link.target !== '_self') ||
         link.origin !== location.origin ||
@@ -382,6 +384,8 @@ const { fallback = 'animate' } = Astro.props as Props;
             if (
               el.origin === location.origin &&
               el.pathname !== location.pathname &&
+              el.dataset.astroReload === undefined &&
+              !el.hasAttribute('download') &&
               transitionEnabledOnThisPage()
             ) {
               maybePrefetch(el.pathname);
