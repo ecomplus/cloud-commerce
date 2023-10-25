@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 export default (
   url: string,
   body: Record<string, any>,
-  token = process.env.TINY_ERP_TOKEN,
+  token = process.env.TINYERP_TOKEN,
   options: Partial<AxiosRequestConfig> = {},
 ) => {
   // https://www.tiny.com.br/ajuda/api/api2

@@ -34,7 +34,7 @@ inputs:
     description: 'Emails: SMTP password'
   sendgrid-api-key:
     description: 'App: SendGrid API key'
-  tiny-erp-token:
+  tinyerp-token:
     description: 'App: Tiny ERP API token'
   galaxpay-partner-id:
     description: 'App: Optional Galax Pay partner ID'
@@ -219,7 +219,7 @@ runs:
         SMTP_USER: ${{ inputs.smpt-user }}
         SMTP_PASS: ${{ inputs.smpt-pass }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
-        TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
+        TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
         DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
@@ -259,7 +259,7 @@ runs:
         SMTP_USER=$SMTP_USER
         SMTP_PASS=$SMTP_PASS
         SENDGRID_API_KEY=$SENDGRID_API_KEY
-        TINY_ERP_TOKEN=$TINY_ERP_TOKEN
+        TINYERP_TOKEN=$TINYERP_TOKEN
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
