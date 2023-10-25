@@ -154,11 +154,9 @@ export default async () => {
       if (lastNonOrdersTimestamp) {
         if (actionName === 'delayed') {
           // Defines the limits for getting events with predefined delay
-          const delayMs = process.env.API_EVENTS_DELAYED_MS
-            ? (parseInt(process.env.API_EVENTS_DELAYED_MS, 10))
-            : apiEvents.delayedMs;
-          params['timestamp>'] = new Date(lastNonOrdersTimestamp - delayMs).toISOString();
-          params['timestamp<'] = new Date(timestamp - delayMs).toISOString();
+          const { delayedMs } = apiEvents;
+          params['timestamp>'] = new Date(lastNonOrdersTimestamp - delayedMs).toISOString();
+          params['timestamp<'] = new Date(timestamp - delayedMs).toISOString();
         } else {
           params['timestamp>'] = new Date(lastNonOrdersTimestamp).toISOString();
         }
