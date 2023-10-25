@@ -305,6 +305,7 @@ const { fallback = 'animate' } = Astro.props as Props;
         link.dataset.astroReload !== undefined ||
         link.hasAttribute('download') ||
         !link.href ||
+        link.pathname.startsWith('/app/') || // "real" SPA routes
         (link.target && link.target !== '_self') ||
         link.origin !== location.origin ||
         ev.button !== 0 || // left clicks only
@@ -384,8 +385,13 @@ const { fallback = 'animate' } = Astro.props as Props;
             if (
               el.origin === location.origin &&
               el.pathname !== location.pathname &&
+              !el.pathname.startsWith('/app/') && // "real" SPA routes
               el.dataset.astroReload === undefined &&
               !el.hasAttribute('download') &&
+              /* <a role=button> commonly used as no-JS interaction fallback,
+                thus, on-click redirect may be prevented after component hydration.
+                Shouldn't prefetch. */
+              el.role !== 'button' &&
               transitionEnabledOnThisPage()
             ) {
               maybePrefetch(el.pathname);
