@@ -13,7 +13,7 @@ const { httpsFunctionOptions: { region } } = config.get();
 
 export const frenet = {
   cronTrackingCodes: functions.region(region).pubsub
-    .schedule('*/30 * * * *')
+    .schedule(process.env.CRONTAB_FRENET_TRACKING_CODES || '19 * * * *')
     .onRun(() => {
       return handleTrackingCodes;
     }),
