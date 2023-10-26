@@ -41,8 +41,6 @@ const getDocId = ({
   psObjeto,
   correios,
   serviceCodes,
-  // valorDeclarado,
-  // servicosAdicionais,
 }) => {
   let id = `${cepOrigem}_${cepDestino}_${psObjeto}`;
 
@@ -86,7 +84,7 @@ const setCredentials = (appData) => {
     if (correiosAccessCode && typeof correiosAccessCode === 'string') {
       process.env.CORREIOS_ACCESS_CODE = correiosAccessCode;
     } else {
-      logger.warn('Missing Correios Acess code');
+      logger.warn('Missing Correios Access code');
     }
   }
 };

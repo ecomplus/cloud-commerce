@@ -221,8 +221,6 @@ export default async ({ params, application }) => {
       psObjeto: parserWeight(pkg.weight.value),
       correios,
       serviceCodes,
-      // vlDeclarado,
-      // servicosAdicionais,
     };
 
     docId = getDocId(docParams);

@@ -56,7 +56,6 @@ const fillDb = async (state) => {
     await new PubSub()
       .topic('continueDbFill')
       .publishMessage({ json });
-    // logger.info(`[fill] To continue DB fill for #${json.storeId} (${messageId})`)
   };
 
   let configApp;
@@ -110,8 +109,6 @@ const fillDb = async (state) => {
     const _calculateParams = {
       cepOrigem,
       cepDestino,
-      // vlDeclarado,
-      // servicosAdicionais,
     };
 
     const correios = await newCorreios();
