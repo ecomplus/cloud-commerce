@@ -1,5 +1,5 @@
 import logger from 'firebase-functions/logger';
-import { newCorreios } from './correios-axios.mjs';
+import { newCorreios } from './utils/correios-axios.mjs';
 
 const calculate = async ({
   correiosParams,

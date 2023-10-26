@@ -1,26 +1,32 @@
 import logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import getDocId from './correios-db/get-id-doc.mjs';
-import calculateV2 from './calculate-v2.mjs';
-import { zipRangeStep } from './correios-db/pubsub/run-database.mjs';
-
-const parseZipCode = (zipCode) => {
-  return (Number(zipCode) - (Number(zipCode) % zipRangeStep) + 1)
-    .toString().padStart(8, '0');
-};
+import {
+  getDocId,
+  parseZipCode,
+  parserWeight,
+  setCredentials,
+} from './utils/constants-parsers.mjs';
+import calculateV2 from './correios-v2.mjs';
+import { newCorreios } from './utils/correios-axios.mjs';
 
 export default async ({ params, application }) => {
-  const appData = {
+  const configApp = {
     ...application.data,
     ...application.hidden_data,
   };
+
+  const { metafields } = config.get();
+
+  setCredentials(configApp);
+
   // setup basic required response object
   const response = {
     shipping_services: [],
   };
 
-  if (appData.free_shipping_from_value >= 0) {
-    response.free_shipping_from_value = appData.free_shipping_from_value;
+  if (configApp.free_shipping_from_value >= 0) {
+    response.free_shipping_from_value = configApp.free_shipping_from_value;
   }
   if (!params.to) {
     // just a free shipping preview with no shipping address received
@@ -33,8 +39,8 @@ export default async ({ params, application }) => {
   let cepOrigem;
   if (params.from) {
     cepOrigem = params.from.zip.replace(/\D/g, '');
-  } else if (appData.zip) {
-    cepOrigem = appData.zip.replace(/\D/g, '');
+  } else if (configApp.zip) {
+    cepOrigem = configApp.zip.replace(/\D/g, '');
   }
 
   if (!cepOrigem) {
@@ -61,9 +67,9 @@ export default async ({ params, application }) => {
   };
 
   // search for configured free shipping rule
-  if (Array.isArray(appData.shipping_rules)) {
-    for (let i = 0; i < appData.shipping_rules.length; i++) {
-      const rule = appData.shipping_rules[i];
+  if (Array.isArray(configApp.shipping_rules)) {
+    for (let i = 0; i < configApp.shipping_rules.length; i++) {
+      const rule = configApp.shipping_rules[i];
       if (rule.free_shipping && checkZipCode(rule)) {
         if (!rule.min_amount) {
           response.free_shipping_from_value = 0;
@@ -79,14 +85,14 @@ export default async ({ params, application }) => {
   let serviceCodes;
   if (params.service_code) {
     serviceCodes = [params.service_code];
-  } else if (appData.services?.[0]?.service_code) {
-    serviceCodes = appData.services.map((service) => service.service_code);
+  } else if (configApp.services?.[0]?.service_code) {
+    serviceCodes = configApp.services.map((service) => service.service_code);
   }
 
   // optional params to Correios services
   let vlDeclarado = 0;
   const servicosAdicionais = [];
-  if (params.subtotal && !appData.no_declare_value) {
+  if (params.subtotal && !configApp.no_declare_value) {
     vlDeclarado = params.subtotal;
   }
   // https://api.correios.com.br/preco/v1/servicos-adicionais/03220
@@ -126,7 +132,7 @@ export default async ({ params, application }) => {
     dimensions,
     weight,
   }) => {
-    if (!params.subtotal && !appData.no_declare_value) {
+    if (!params.subtotal && !configApp.no_declare_value) {
       vlDeclarado += price * quantity;
     }
     // sum physical weight
@@ -193,15 +199,30 @@ export default async ({ params, application }) => {
   });
 
   let correiosResult;
-
   let docId;
+  let correios;
+
+  try {
+    correios = await newCorreios();
+  } catch (err) {
+    err.app = '[calculate Correios]';
+    logger.error(err);
+    const message = err.message || '[calculate Correios] Contract not found';
+    return {
+      error: 'CALCULATE_ERR',
+      message,
+    };
+  }
+
   try {
     const docParams = {
       cepOrigem,
       cepDestino: parseZipCode(cepDestino),
-      psObjeto: pkg.weight.value,
-      vlDeclarado,
-      servicosAdicionais,
+      psObjeto: parserWeight(pkg.weight.value),
+      correios,
+      serviceCodes,
+      // vlDeclarado,
+      // servicosAdicionais,
     };
 
     docId = getDocId(docParams);
@@ -209,10 +230,14 @@ export default async ({ params, application }) => {
     let docData;
     if (docSnapshot.exists) {
       docData = docSnapshot.data();
-      correiosResult = docData.data;
+      const expiresIn = 1000 * 60 * 60 * 24 * 30 * (metafields?.correiosMonthsExpireDb || 3);
+      const now = Timestamp.now().toMillis();
+      if ((docData.createdAt.toMillis() + expiresIn) > now) {
+        correiosResult = docData.data;
+      }
     }
   } catch (err) {
-    logger.error(new Error(`[calculate Correios V2] Cannot get doc ID ${docId}`));
+    logger.error(new Error(`[calculate Correios] Cannot get doc ID ${docId}`));
     logger.error(err);
   }
 
@@ -231,6 +256,7 @@ export default async ({ params, application }) => {
           servicosAdicionais,
         },
         serviceCodes,
+        correios,
       });
       correiosResult = data;
 
@@ -239,7 +265,7 @@ export default async ({ params, application }) => {
         getFirestore().doc(docId)
           .set({
             data,
-            t: Timestamp.fromDate(new Date()),
+            createdAt: Timestamp.fromDate(new Date()),
           })
           .catch(logger.error);
       }
@@ -264,7 +290,7 @@ export default async ({ params, application }) => {
     txErro,
   }) => {
     if (txErro) {
-      logger.warn(`[calculate Correios V2] alert/error ${coProduto}`, {
+      logger.warn(`[calculate Correios] alert/error ${coProduto}`, {
         pcFinal,
         prazoEntrega,
         txErro,
@@ -289,9 +315,9 @@ export default async ({ params, application }) => {
         break;
     }
     let label = serviceName || `Correios ${coProduto}`;
-    if (Array.isArray(appData.services)) {
-      for (let i = 0; i < appData.services.length; i++) {
-        const service = appData.services[i];
+    if (Array.isArray(configApp.services)) {
+      for (let i = 0; i < configApp.services.length; i++) {
+        const service = configApp.services[i];
         if (service && service.service_code === coProduto && service.label) {
           label = service.label;
         }
@@ -320,15 +346,15 @@ export default async ({ params, application }) => {
       },
       posting_deadline: {
         days: 3,
-        ...appData.posting_deadline,
+        ...configApp.posting_deadline,
       },
       flags: ['correios-api'],
     };
 
     // search for discount by shipping rule
-    if (Array.isArray(appData.shipping_rules)) {
-      for (let i = 0; i < appData.shipping_rules.length; i++) {
-        const rule = appData.shipping_rules[i];
+    if (Array.isArray(configApp.shipping_rules)) {
+      for (let i = 0; i < configApp.shipping_rules.length; i++) {
+        const rule = configApp.shipping_rules[i];
         if (
           rule
           && (!rule.service_code || rule.service_code === coProduto)

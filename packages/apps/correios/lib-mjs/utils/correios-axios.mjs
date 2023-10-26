@@ -21,33 +21,33 @@ const newCorreiosAuth = async () => {
   });
 };
 
-const newCorreios = async ({ postCardNumber } = {}) => {
+const newCorreios = async () => {
   let token;
   let correiosContract;
-  const docRef = getFirestore().doc('correiosV2/contract');
+  const docRef = getFirestore().doc('correios/contract');
   let correiosAuth;
 
-  postCardNumber = postCardNumber || process.env.CORREIOS_POSTCARD;
+  const postCardNumber = process.env.CORREIOS_POSTCARD;
 
   if (postCardNumber) {
     correiosAuth = await newCorreiosAuth();
   } else {
-    const docSnapshot = await docRef.get();
-    if (docSnapshot.exists) {
-      const { expiredAt, ...docData } = docSnapshot.data();
-      const now = Timestamp.now().toMillis();
-      if (now + 9000 < expiredAt.toMillis()) {
-        token = docData.token;
-      } else {
-        correiosAuth = await newCorreiosAuth();
-      }
-      postCardNumber = docData.postCardNumber;
-      correiosContract = docData;
-    } else {
-      throw Error('No Correios contract document');
-    }
+    throw Error('Correios postCard number not found');
   }
-  if (correiosAuth) {
+
+  const docSnapshot = await docRef.get();
+  if (docSnapshot.exists) {
+    const { expiredAt, ...docData } = docSnapshot.data();
+    const now = Timestamp.now().toMillis();
+    if (now + 9000 < expiredAt.toMillis()) {
+      token = docData.token;
+    } else {
+      correiosAuth = await newCorreiosAuth();
+    }
+    correiosContract = docData;
+  }
+
+  if (correiosAuth && !token) {
     const { data } = await correiosAuth.post('/token/v1/autentica/cartaopostagem', {
       numero: postCardNumber,
     });
