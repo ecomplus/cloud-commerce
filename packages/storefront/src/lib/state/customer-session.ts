@@ -63,7 +63,7 @@ const authenticate = async () => {
   }
   const { domain } = window.$storefront.settings;
   try {
-    const resAuth = await fetch(`https://${domain}/api/passport/token`, {
+    const resAuth = await fetch(`https://${domain}/_api/passport/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

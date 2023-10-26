@@ -47,12 +47,12 @@
     ],
     "rewrites": [
       {
-        "source": "/api/modules/**",
+        "source": "/_api/modules/**",
         "function": "modules",
         "region": "us-east4"
       },
       {
-        "source": "/api/passport/**",
+        "source": "/_api/passport/**",
         "function": "passport",
         "region": "us-east4"
       },

@@ -18,7 +18,7 @@ const addPoints = async () => {
 
   for (let i = 0; i < docs.length; i++) {
     const { customerId, pointEntries } = docs[i].data();
-    const orderId = docs[i].ref.id;
+    const orderId = docs[i].ref.id as string & { length: 24 };
     let order: Orders | undefined;
     try {
       // eslint-disable-next-line no-await-in-loop

@@ -9,7 +9,8 @@ export interface Props {
 
 // @ts-ignore
 const isPWA = pwaInfo !== false; // config/astro/mock-pwa-info.mjs
-const hasViewTransitions = Astro.props.hasViewTransitions !== false;
+const hasViewTransitions = Astro.props.hasViewTransitions !== false
+  && !Astro.url.pathname.startsWith('/app/');
 const deployRand = import.meta.env.DEPLOY_RAND || '_';
 const getIconUrl = (size: number) => {
   return `/_image?f=png&w=${size}&h=${size}`

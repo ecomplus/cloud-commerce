@@ -53,6 +53,7 @@ const {
   SSR_DEPLOY_TIMEOUT_SECONDS,
   SSR_DEPLOY_MIN_INSTANCES,
   MODULES_DEPLOY_MEMORY,
+  API_EVENTS_DELAYED_MS,
 } = process.env;
 
 let settingsContentFile = SETTINGS_FILEPATH && existsSync(SETTINGS_FILEPATH)
@@ -63,6 +64,7 @@ if (!existsSync(settingsContentFile)) {
 }
 const settingsContent: SettingsContent = JSON.parse(readFileSync(settingsContentFile, 'utf-8'));
 
+const disabledEvents: ApiEventName[] = [];
 const mergeConfig = {
   hello: 'from @cloudcommerce/firebase',
   httpsFunctionOptions: {
@@ -77,6 +79,12 @@ const mergeConfig = {
   },
   modulesFunctionOptions: {
     memory: (MODULES_DEPLOY_MEMORY as '256MiB' | '512MiB' | '1GiB' | '2GiB') || '512MiB',
+  },
+  apiEvents: {
+    delayedMs: API_EVENTS_DELAYED_MS
+      ? parseInt(API_EVENTS_DELAYED_MS, 10)
+      : 1000 * 60 * 5,
+    disabledEvents,
   },
   apps: {
     discounts: {
