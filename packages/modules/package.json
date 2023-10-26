@@ -27,7 +27,6 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-correios": "workspace:*",
-    "@cloudcommerce/app-correios-v2": "workspace:*",
     "@cloudcommerce/app-custom-payment": "workspace:*",
     "@cloudcommerce/app-custom-shipping": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
