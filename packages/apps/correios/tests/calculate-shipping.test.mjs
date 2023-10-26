@@ -21,7 +21,6 @@ describe('Test Shipping Calculation in the Correios App', async () => {
     });
 
     data = (await req.json()).result;
-    console.log('>> ', JSON.stringify(data));
   });
 
   test('Check Status 200', async () => {
