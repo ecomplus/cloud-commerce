@@ -237,34 +237,6 @@ importers:
         specifier: workspace:*
         version: link:../../types
 
-  packages/apps/correios-v2:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: workspace:*
-        version: link:../../api
-      '@cloudcommerce/firebase':
-        specifier: workspace:*
-        version: link:../../firebase
-      '@google-cloud/pubsub':
-        specifier: ^4.0.6
-        version: 4.0.6
-      axios:
-        specifier: ^1.5.1
-        version: 1.5.1
-      firebase-admin:
-        specifier: ^11.11.0
-        version: 11.11.0
-      firebase-functions:
-        specifier: ^4.4.1
-        version: 4.4.1(firebase-admin@11.11.0)
-    devDependencies:
-      '@cloudcommerce/test-base':
-        specifier: workspace:*
-        version: link:../../test-base
-      '@cloudcommerce/types':
-        specifier: workspace:*
-        version: link:../../types
-
   packages/apps/custom-payment:
     dependencies:
       '@cloudcommerce/api':
@@ -789,9 +761,6 @@ importers:
       '@cloudcommerce/app-affilate-program':
         specifier: workspace:*
         version: link:../apps/affilate-program
-      '@cloudcommerce/app-correios-v2':
-        specifier: workspace:*
-        version: link:../apps/correios-v2
       '@cloudcommerce/app-datafrete':
         specifier: workspace:*
         version: link:../apps/datafrete
@@ -919,9 +888,6 @@ importers:
       '@cloudcommerce/app-correios':
         specifier: workspace:*
         version: link:../apps/correios
-      '@cloudcommerce/app-correios-v2':
-        specifier: workspace:*
-        version: link:../apps/correios-v2
       '@cloudcommerce/app-custom-payment':
         specifier: workspace:*
         version: link:../apps/custom-payment
