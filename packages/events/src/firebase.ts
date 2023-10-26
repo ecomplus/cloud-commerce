@@ -31,5 +31,3 @@ export * from '@cloudcommerce/app-webhooks';
 export * from '@cloudcommerce/app-affilate-program';
 
 export * from '@cloudcommerce/app-flash-courier/events';
-
-export * from '@cloudcommerce/app-correios-v2/events';
