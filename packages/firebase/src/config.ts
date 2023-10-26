@@ -83,7 +83,7 @@ const mergeConfig = {
       appId: 1252,
     },
     correios: {
-      appId: 1248,
+      appId: 126334,
     },
     customShipping: {
       appId: 1253,
@@ -151,9 +151,6 @@ const mergeConfig = {
     },
     flashCourier: {
       appId: 104136,
-    },
-    correiosV2: {
-      appId: 126334,
     },
   },
   settingsContent,
