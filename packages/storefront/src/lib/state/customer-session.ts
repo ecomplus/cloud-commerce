@@ -6,6 +6,8 @@ import { computed } from 'vue';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
 
+export const EMAIL_STORAGE_KEY = 'emailForSignIn';
+
 const storageKey = 'ecomSession';
 const emptySession = {
   customer: {
@@ -132,7 +134,7 @@ const initializeFirebaseAuth = (canWaitIdle = !window.location.pathname.startsWi
         const email = urlParams.get('email');
         if (email) {
           signInWithEmailLink(firebaseAuth, email, window.location.href)
-            .then(() => window.localStorage.removeItem('emailForSignIn'))
+            .then(() => window.localStorage.removeItem(EMAIL_STORAGE_KEY))
             .catch(console.error);
         }
       }
