@@ -34,7 +34,10 @@ const useStickyHeader = (props: Props) => {
     canCreateHeightDiv: true,
     ...props,
   };
-  const { ready, start } = useTimeout(100, { controls: true, immediate: false });
+  const { ready, start } = useTimeout(100, {
+    controls: true,
+    immediate: false,
+  });
   const staticHeight = ref(0);
   const staticY = ref(0);
   let heightDiv: HTMLElement | undefined;

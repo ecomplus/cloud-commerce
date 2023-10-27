@@ -44,14 +44,18 @@ const props = withDefaults(defineProps<Props>(), {
   index: 0,
   axis: 'x',
 });
-const emit = defineEmits(['update:index']);
+const emit = defineEmits<{
+  'update:index': [value: number]
+}>();
 const activeIndex = ref(0);
 watch(toRef(props, 'index'), (index) => {
   if (index !== activeIndex.value) {
     const step = index - activeIndex.value;
     changeSlide(step, false);
   }
-}, { immediate: true });
+}, {
+  immediate: true,
+});
 watch(activeIndex, (current, previous) => {
   if (current !== previous) {
     emit('update:index', current);
