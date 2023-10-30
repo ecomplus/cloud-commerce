@@ -21,9 +21,9 @@ const props = withDefaults(defineProps<Props>(), {
   hasCloseButton: true,
   backdropTarget: '#teleported-top',
 });
-const emit = defineEmits([
-  'update:modelValue',
-]);
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>();
 const close = () => emit('update:modelValue', false);
 const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
