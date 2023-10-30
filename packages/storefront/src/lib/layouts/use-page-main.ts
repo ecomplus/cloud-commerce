@@ -42,6 +42,7 @@ export const usePageHero = async ({ routeContext }: Props) => {
 };
 
 type CustomSection = { type: `${string}:${string}`, props: any };
+type ProductDetailsProps = { hasDescription?: boolean, hasSpecifications?: boolean };
 
 export const usePageSections = async <T extends CustomSection = CustomSection>
 ({ routeContext, handleCustomSection }: Props) => {
@@ -50,7 +51,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     T
     | { type: 'product-shelf', props: UseProductShelfProps }
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
-    | { type: 'product-details', props: { hasDescription?: boolean } }
+    | { type: 'product-details', props: ProductDetailsProps }
     | { type: 'breadcrumbs', props: {} }
     | { type: 'related-products', props: {} }
     | { type: 'doc-description', props: {} }

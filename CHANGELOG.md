@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.29.0](https://github.com/ecomplus/cloud-commerce/compare/v0.28.5...v0.29.0) (2023-10-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* Default modules and passport APIs URLs changed
+
+### Features
+
+* **storefront:** Update Astro `client:context` custom directive to accept "idle" value ([3ce1f3b](https://github.com/ecomplus/cloud-commerce/commit/3ce1f3b1e60feb3071eec0f5e36ece4af851a658))
+
+
+### Bug Fixes
+
+* **ssr:** Set default demoStore CDN assets prefix as done by storefront config ([5de0ac1](https://github.com/ecomplus/cloud-commerce/commit/5de0ac1c18e481317d2f10f4aad5d77ad80a5488)), closes [#L53-L55](https://github.com/ecomplus/cloud-commerce/issues/L53-L55)
+
+
+* Moving modules and passport APIs to /_api/* routes ([eed3d73](https://github.com/ecomplus/cloud-commerce/commit/eed3d731257d06fa81a31ccdec8466f9c465d59b))
+
+### [0.28.5](https://github.com/ecomplus/cloud-commerce/compare/v0.28.4...v0.28.5) (2023-10-17)
+
+
+### Bug Fixes
+
+* **ssr:** Properly set assets prefix (if configured) to CSS preload Link header ([3f83e56](https://github.com/ecomplus/cloud-commerce/commit/3f83e56e11c7e9a9aceb3c2a7cfd21e704304069))
+
+### [0.28.4](https://github.com/ecomplus/cloud-commerce/compare/v0.28.3...v0.28.4) (2023-10-17)
+
+
+### Bug Fixes
+
+* **storefront:** Set optimized pictures responsive srcset with assets prefix (CDN) if configured ([36b9ae6](https://github.com/ecomplus/cloud-commerce/commit/36b9ae66fb03609017b06ef6002e4f052f6b40af))
+
+### [0.28.3](https://github.com/ecomplus/cloud-commerce/compare/v0.28.2...v0.28.3) (2023-10-16)
+
+
+### Features
+
+* **storefront:** Set `Astro.locals.assetsPrefix` globally available on Astro components ([0548fbb](https://github.com/ecomplus/cloud-commerce/commit/0548fbb9c864a300e215a3f2c8c722f34fb07279))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#253](https://github.com/ecomplus/cloud-commerce/issues/253)) ([9a29d76](https://github.com/ecomplus/cloud-commerce/commit/9a29d76459541b20f1816b1e572281294f19d4c3))
+* **storefront:** Must set cache control stale-while-revalidate even without s-maxage ([3d27496](https://github.com/ecomplus/cloud-commerce/commit/3d274961e0f10f1afae22da1e6cdeb70e17811e8))
+* **storefront:** Properly set optimized pictures src with assets prefix (CDN) if configured ([68a8b6e](https://github.com/ecomplus/cloud-commerce/commit/68a8b6e3fb2f1837dfb40dbe996fb46832c4b0b5))
+
 ### [0.28.2](https://github.com/ecomplus/cloud-commerce/compare/v0.28.1...v0.28.2) (2023-10-15)
 
 ### [0.28.1](https://github.com/ecomplus/cloud-commerce/compare/v0.28.0...v0.28.1) (2023-10-15)

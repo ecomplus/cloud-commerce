@@ -18,7 +18,7 @@ export const emails = {
   ),
 
   cronAbandonedCarts: functions.region(region).pubsub
-    .schedule('25 */3 * * *')
+    .schedule(process.env.CRONTAB_EMAILS_ABANDONED_CARTS || '25 */3 * * *')
     .onRun(() => {
       return handleAbandonedCarts();
     }),

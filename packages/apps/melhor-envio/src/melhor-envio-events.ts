@@ -11,7 +11,7 @@ import handleTrackingCodes from './functions-lib/tracking-codes';
 
 export const melhorenvio = {
   cronTrackingCodes: functions.region(config.get().httpsFunctionOptions.region).pubsub
-    .schedule('*/30 * * * *')
+    .schedule(process.env.CRONTAB_MELHORENVIO_TRACKING_CODES || '19 * * * *')
     .onRun(() => {
       return handleTrackingCodes;
     }),
@@ -20,5 +20,4 @@ export const melhorenvio = {
     'melhorEnvio',
     handleApiEvent as ApiEventHandler,
   ),
-
 };

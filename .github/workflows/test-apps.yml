@@ -87,8 +87,6 @@ jobs:
           FRENET_TOKEN: ${{ secrets.FRENET_TOKEN }}
           GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
           GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
-          INFINITEPAY_ID: ${{ secrets.INFINITEPAY_ID }}
-          INFINITEPAY_SECRET: ${{ secrets.INFINITEPAY_SECRET }}
         run: pnpm build
 
       - name: Get npm global directories

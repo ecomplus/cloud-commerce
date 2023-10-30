@@ -1,24 +1,25 @@
+import type { ResourceId } from '@cloudcommerce/types';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';
 
 const firestoreColl = 'melhorEnvioTracking';
 
-export type Lable = {
+export type Label = {
   id: string,
   labelId: string,
   status: string,
-  resourceId: string,
+  resourceId: ResourceId,
   createdAt: Timestamp,
   updateAt?: string,
 };
 
-const searchLabel = async (resourceId: string): Promise<Lable | null> => new Promise(
+const searchLabel = async (resourceId: ResourceId): Promise<Label | null> => new Promise(
   (resolve, reject) => {
     getFirestore().doc(`${firestoreColl}/${resourceId}`)
       .get()
       .then((documentSnapshot) => {
         if (documentSnapshot && documentSnapshot.exists) {
-          const data = documentSnapshot.data() as Lable;
+          const data = documentSnapshot.data() as Label;
           if (data) {
             resolve(data);
           } else {
@@ -52,14 +53,14 @@ const saveLabel = (
   }
 });
 
-const getAllLabels = (): Promise<Lable[]> => new Promise((resolve, reject) => {
+const getAllLabels = (): Promise<Label[]> => new Promise((resolve, reject) => {
   getFirestore().collection(firestoreColl).get()
     .then((docsRef) => {
       if (docsRef.size > 0) {
-        const list: Lable[] = [];
+        const list: Label[] = [];
         docsRef.forEach((documentSnapshot) => {
           if (documentSnapshot && documentSnapshot.exists) {
-            const data = documentSnapshot.data() as Lable;
+            const data = documentSnapshot.data() as Label;
             list.push(data);
           }
         });

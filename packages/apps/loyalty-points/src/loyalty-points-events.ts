@@ -45,7 +45,7 @@ export const loyaltypoints = {
   ),
 
   cronAddPoints: functions.region(region).pubsub
-    .schedule('28 * * * *')
+    .schedule(process.env.CRONTAB_LOYALTYPOINTS_ADD_POINTS || '28 * * * *')
     .onRun(() => {
       return addPoints;
     }),

@@ -1,4 +1,5 @@
-import type { Orders, ResourceId, ResourceAndId } from '@cloudcommerce/api/types';
+import type { Orders, ResourceAndId } from '@cloudcommerce/api/types';
+import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import meClient from '../../lib-mjs/functions/client-melhor-envio.mjs';
@@ -11,13 +12,13 @@ const ECHO_SKIP = (msg?: string) => logger.warn(msg || 'SKIP');
 
 const metafieldName = 'melhor_envio_label_id';
 
-const handleApiEvent = async ({
+const handleApiEvent: ApiEventHandler = async ({
   evName,
   apiEvent,
   apiDoc,
   app,
 }) => {
-  const resourceId = apiEvent.resource_id as ResourceId;
+  const resourceId = apiEvent.resource_id;
   logger.info('>> ', resourceId, ' - Action: ', apiEvent.action);
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };

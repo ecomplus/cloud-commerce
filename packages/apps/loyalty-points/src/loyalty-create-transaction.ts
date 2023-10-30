@@ -112,7 +112,7 @@ export default async (appData: AppModuleBody) => {
 
   if (transaction.amount) {
     const loyaltyPoints = transaction.loyalty_points;
-    const customerId = params.buyer.customer_id;
+    const customerId = params.buyer.customer_id as ResourceId;
     const orderId = params.order_id as ResourceId;
     const usedPointsEntries: UsedPointsEntries[] = [];
     try {

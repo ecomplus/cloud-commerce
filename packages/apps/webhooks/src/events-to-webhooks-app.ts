@@ -11,7 +11,7 @@ import axios from 'axios';
 
 const updateManualQueue = async (
   manualQueue: any[] | null,
-  appId: string,
+  appId: ResourceId,
 ) => {
   if (manualQueue) {
     try {
@@ -50,7 +50,7 @@ const sendWebhook = async (
     let headers: { Authorization: string; } | undefined;
 
     if (!process.env.WEBHOOKS_TOKEN) {
-      const webhookAppToken = options.webhook_token
+      const webhookAppToken = options.webhook_token;
       if (typeof webhookAppToken === 'string' && webhookAppToken) {
         process.env.WEBHOOKS_TOKEN = webhookAppToken;
       } else {

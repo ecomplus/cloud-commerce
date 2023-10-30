@@ -3,6 +3,6 @@ import 'astro';
 
 declare module 'astro' {
   interface AstroClientDirectives {
-    'client:context'?: boolean
+    'client:context'?: boolean | 'idle';
   }
 }

@@ -14,7 +14,7 @@ const functionBuilder = functions
   });
 
 export const cronStoreEvents = functionBuilder.pubsub
-  .schedule('* * * * *')
+  .schedule(process.env.CRONTAB_STORE_EVENTS || '* * * * *')
   .onRun(() => {
     return checkStoreEvents();
   });
