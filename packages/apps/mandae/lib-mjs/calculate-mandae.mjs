@@ -117,7 +117,6 @@ export default async ({ params, application }) => {
   const response = {
     shipping_services: [],
   };
-  // merge all app options configured by merchant
 
   if (appData.free_shipping_from_value >= 0) {
     response.free_shipping_from_value = appData.free_shipping_from_value;
@@ -192,7 +191,11 @@ export default async ({ params, application }) => {
     if (mandaeToken && typeof mandaeToken === 'string') {
       process.env.MANDAE_TOKEN = mandaeToken;
     } else {
-      logger.warn('Missing GalaxPay ID');
+      logger.warn('Missing Mandae token');
+      return {
+        error: 'NO_MANDAE_TOKEN',
+        message: 'The token is not defined in the application\'s environment variables and hidden data',
+      };
     }
   }
 
