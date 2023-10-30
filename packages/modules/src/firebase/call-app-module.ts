@@ -87,6 +87,11 @@ export default async (
         return import('@cloudcommerce/app-flash-courier')
           .then(({ calculateShipping }) => calculateShipping(_data));
       };
+    } else if (appId === apps.mandae.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-mandae')
+          .then(({ calculateShipping }) => calculateShipping(_data));
+      };
     }
   } else if (modName === 'list_payments') {
     if (appId === apps.mercadoPago.appId) {
