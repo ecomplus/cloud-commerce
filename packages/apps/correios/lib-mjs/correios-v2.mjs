@@ -23,25 +23,11 @@ const calculate = async ({
   if (!(Number(correiosParams.largura) >= 11)) {
     correiosParams.largura = '11';
   }
-  if (correiosParams.vlDeclarado) {
-    const value = Number(correiosParams.vlDeclarado);
-    if (value < 25) {
-      correiosParams.vlDeclarado = '25';
-    } else if (value > 10000) {
-      correiosParams.vlDeclarado = '10000';
-    }
-    if (!correiosParams.servicosAdicionais) {
-      correiosParams.servicosAdicionais = ['019'];
-    } else if (!correiosParams.servicosAdicionais.includes('019')) {
-      correiosParams.servicosAdicionais.push('019');
-    }
-  }
   [
     'psObjeto',
     'comprimento',
     'altura',
     'largura',
-    'vlDeclarado',
   ].forEach((param) => {
     if (typeof correiosParams[param] === 'number') {
       correiosParams[param] = String(Math.round(correiosParams[param]));
@@ -70,11 +56,7 @@ const calculate = async ({
         nuRequisicao,
         tpObjeto: '2',
       };
-      const listWithoutAddService = ['03298', '04227', '80659'];
-      if (listWithoutAddService.includes(coProduto) && _params.vlDeclarado) {
-        delete _params.vlDeclarado;
-        _params.servicosAdicionais = _params.servicosAdicionais.filter((s) => s !== '019');
-      }
+
       return _params;
     });
   return Promise.all([

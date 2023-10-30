@@ -6,6 +6,8 @@ import {
   parseZipCode,
   parserWeight,
   setCredentials,
+  dataToDoc,
+  docToData,
 } from './utils/constants-parsers.mjs';
 import calculateV2 from './correios-v2.mjs';
 import { newCorreios } from './utils/correios-axios.mjs';
@@ -91,16 +93,9 @@ export default async ({ params, application }) => {
 
   // optional params to Correios services
   let vlDeclarado = 0;
-  const servicosAdicionais = [];
+  // const servicosAdicionais = [];
   if (params.subtotal && !configApp.no_declare_value) {
     vlDeclarado = params.subtotal;
-  }
-  // https://api.correios.com.br/preco/v1/servicos-adicionais/03220
-  if (params.own_hand) {
-    servicosAdicionais.push('002');
-  }
-  if (params.receipt) {
-    servicosAdicionais.push('001');
   }
 
   // calculate weight and pkg value from items list
@@ -198,12 +193,16 @@ export default async ({ params, application }) => {
     }
   });
 
+  let correios;
   let correiosResult;
   let docId;
-  let correios;
+  let isFromDb = false;
 
   try {
     correios = await newCorreios();
+    if (!correios.$contract || !correios.$contract.nuContrato) {
+      throw new Error('Correios contract not found');
+    }
   } catch (err) {
     err.app = '[calculate Correios]';
     logger.error(err);
@@ -214,33 +213,42 @@ export default async ({ params, application }) => {
     };
   }
 
+  // /*
   try {
+    const psObjKg = parserWeight((pkg.weight.value) / 1000);
+
     const docParams = {
       cepOrigem,
       cepDestino: parseZipCode(cepDestino),
-      psObjeto: parserWeight(pkg.weight.value),
-      correios,
+      psObjeto: psObjKg,
+      nuContrato: correios.$contract.nuContrato,
       serviceCodes,
     };
 
     docId = getDocId(docParams);
-    const docSnapshot = await getFirestore().doc(docId).get();
-    let docData;
+    const docRef = getFirestore().doc(docId);
+    const docSnapshot = await docRef.get();
     if (docSnapshot.exists) {
-      docData = docSnapshot.data();
-      const expiresIn = 1000 * 60 * 60 * 24 * 30 * (metafields?.correiosMonthsExpireDb || 3);
+      const docData = docSnapshot.data();
+      const expiresIn = 1000 * 60 * 60 * 24 * 30
+        * (metafields?.correiosResultsExpirationMonths || 3);
+
       const now = Timestamp.now().toMillis();
-      if ((docData.createdAt.toMillis() + expiresIn) > now) {
-        correiosResult = docData.data;
+      if ((docData.t.toMillis() + expiresIn) > now) {
+        correiosResult = docToData(docData);
+        isFromDb = true;
+      } else {
+        docRef.delete();
       }
     }
   } catch (err) {
     logger.error(new Error(`[calculate Correios] Cannot get doc ID ${docId}`));
     logger.error(err);
-  }
+  } // */
 
   // fallback Calculate
   if (!correiosResult) {
+    logger.log('> fallback App');
     try {
       const { data } = await calculateV2({
         correiosParams: {
@@ -250,8 +258,6 @@ export default async ({ params, application }) => {
           comprimento: pkg.dimensions.length.value,
           altura: pkg.dimensions.height.value,
           largura: pkg.dimensions.width.value,
-          vlDeclarado,
-          servicosAdicionais,
         },
         serviceCodes,
         correios,
@@ -260,10 +266,11 @@ export default async ({ params, application }) => {
 
       // save in database
       if (docId) {
-        getFirestore().doc(docId)
+        getFirestore()
+          .doc(docId)
           .set({
-            data,
-            createdAt: Timestamp.fromDate(new Date()),
+            ...dataToDoc(data),
+            t: Timestamp.fromDate(new Date()),
           })
           .catch(logger.error);
       }
@@ -276,26 +283,31 @@ export default async ({ params, application }) => {
     }
   }
 
-  correiosResult.forEach(({
-    coProduto,
-    // psCobrado
-    // peAdValorem
-    pcProduto,
-    pcTotalServicosAdicionais,
-    pcFinal,
-    prazoEntrega,
-    entregaSabado,
-    txErro,
-  }) => {
+  let index = 0;
+  while (index < correiosResult.length) {
+    const {
+      coProduto,
+      // psCobrado
+      // peAdValorem
+      pcProduto,
+      // pcTotalServicosAdicionais,
+      // pcFinal,
+      prazoEntrega,
+      entregaSabado,
+      txErro,
+    } = correiosResult[index];
+
     if (txErro) {
       logger.warn(`[calculate Correios] alert/error ${coProduto}`, {
-        pcFinal,
+        pcProduto,
         prazoEntrega,
         txErro,
       });
     }
-    if (!pcFinal || !prazoEntrega) {
-      return;
+    if (!pcProduto || !prazoEntrega) {
+      // return;
+      index += 1;
+      continue;
     }
     // find respective configured service label
     let serviceName;
@@ -324,6 +336,59 @@ export default async ({ params, application }) => {
 
     // parse to E-Com Plus shipping line object
     const parseMoney = (str) => (Number(str.replace(',', '.') || 0));
+    let pcFinal = parseMoney(`${pcProduto}`);
+    let valorAvisoRecebimento;
+    let valorMaoPropria;
+    let taxDeclaredValue;
+
+    // https://api.correios.com.br/preco/v1/servicos-adicionais/03220
+    if (params.own_hand || params.receipt || vlDeclarado) {
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        const { data: additionalServices } = await correios
+          .get(`/preco/v1/servicos-adicionais/${coProduto}`);
+        const addServiceAR = additionalServices
+          .find((service) => service.nome === 'AVISO DE RECEBIMENTO');
+        const addServiceMP = additionalServices
+          .find((service) => service.nome === 'MAO PROPRIA');
+        const addServiceVl = additionalServices
+          .find((service) => service.nome.startsWith('VALOR DECLARADO'));
+
+        if (params.own_hand) {
+          valorMaoPropria = addServiceMP.preco;
+          pcFinal += valorMaoPropria || 0;
+        }
+
+        if (params.receipt) {
+          valorAvisoRecebimento = addServiceAR.preco;
+          pcFinal += valorAvisoRecebimento || 0;
+        }
+
+        if (vlDeclarado && addServiceVl) {
+          if (addServiceVl.vlMaxDeclarado && vlDeclarado > addServiceVl.vlMaxDeclarado) {
+            vlDeclarado = addServiceVl.vlMaxDeclarado;
+          }
+
+          if (addServiceVl.vlMinDeclarado) {
+            const realValue = (vlDeclarado - addServiceVl.vlMinDeclarado);
+            taxDeclaredValue = parseInt(realValue * 0.02 * 100, 10) / 100;
+          }
+
+          pcFinal += taxDeclaredValue || 0;
+        }
+      } catch (err) {
+        if (err.response) {
+          logger.warn('[calculate] failed for', {
+            body: err.config.data,
+            response: err.response.data,
+            status: err.response.status,
+          });
+        } else {
+          logger.error(err);
+        }
+      }
+    }
+
     const shippingLine = {
       from: {
         ...params.from,
@@ -331,13 +396,15 @@ export default async ({ params, application }) => {
       },
       to: params.to,
       package: pkg,
-      price: parseMoney(pcProduto || pcFinal),
-      declared_value: pcTotalServicosAdicionais ? vlDeclarado : 0,
-      declared_value_price: pcTotalServicosAdicionais ? parseMoney(pcTotalServicosAdicionais) : 0,
+      price: parseMoney(pcProduto) || pcFinal,
+      declared_value: vlDeclarado,
+      declared_value_price: taxDeclaredValue > 0 ? taxDeclaredValue : 0,
       own_hand: Boolean(params.own_hand),
+      own_hand_price: valorMaoPropria,
       receipt: Boolean(params.receipt),
+      receipt_price: valorAvisoRecebimento,
       discount: 0,
-      total_price: parseMoney(pcFinal),
+      total_price: pcFinal,
       delivery_time: {
         days: Number(prazoEntrega),
         working_days: entregaSabado !== 'S',
@@ -346,7 +413,7 @@ export default async ({ params, application }) => {
         days: 3,
         ...configApp.posting_deadline,
       },
-      flags: ['correios-api'],
+      flags: [`correios-${isFromDb ? 'off' : 'api'}`],
     };
 
     // search for discount by shipping rule
@@ -392,7 +459,9 @@ export default async ({ params, application }) => {
       service_name: serviceName || label,
       shipping_line: shippingLine,
     });
-  });
+
+    index += 1;
+  }
 
   return response;
 };

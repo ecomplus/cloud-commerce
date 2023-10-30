@@ -10,6 +10,7 @@ import {
   zipRangeStep,
   getDocId,
   setCredentials,
+  dataToDoc,
 } from './utils/constants-parsers.mjs';
 
 const VERSION = 1;
@@ -113,17 +114,22 @@ const fillDb = async (state) => {
 
     const correios = await newCorreios();
 
+    if (!correios?.$contract?.nuContrato) {
+      logger.warn('Contract not found');
+      return false;
+    }
+
     if (Number(cepDestino) > 2000000) {
       const docSnapshot = await getFirestore()
         .doc(getDocId({
           ..._calculateParams,
           psObjeto: 10,
-          correios,
+          nuContrato: correios?.$contract?.nuContrato,
           serviceCodes,
         })).get();
       if (docSnapshot.exists) {
-        const { createdAt } = docSnapshot.data();
-        if (createdAt && createdAt.toMillis() > Date.now() - 1000 * 60 * 60 * 24 * 3) {
+        const { t } = docSnapshot.data();
+        if (t && t.toMillis() > Date.now() - 1000 * 60 * 60 * 24 * 3) {
           logger.warn(`> Skip probably dup call for (${cepDestino})`);
           return false;
         }
@@ -145,14 +151,14 @@ const fillDb = async (state) => {
             .then(async ({ data }) => {
               const docId = getDocId({
                 ...calculateParams,
-                correios,
+                nuContrato: correios?.$contract?.nuContrato,
                 serviceCodes: listServiceCode,
               });
 
               await getFirestore().doc(docId)
                 .set({
-                  data,
-                  createdAt: Timestamp.fromDate(new Date()),
+                  ...dataToDoc(data),
+                  t: Timestamp.fromDate(new Date()),
                 })
                 .catch(logger.error);
             }),
