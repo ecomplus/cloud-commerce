@@ -286,7 +286,7 @@ export default async ({ params, application }) => {
     if (error && error.response) {
       return {
         error: 'CALCULATE_SHIPPING_ERROR',
-        message: error.response.data.error.message,
+        message: error.response.data?.error?.message || error.message,
       };
     }
     return {
