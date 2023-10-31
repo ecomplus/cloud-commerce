@@ -1,5 +1,5 @@
 import * as readline from 'node:readline';
-import { question, echo, fetch } from 'zx';
+import { question, echo } from 'zx';
 import md5 from 'md5';
 import api from '@cloudcommerce/api';
 import createAuth from './create-auth';
@@ -29,20 +29,17 @@ export default async () => {
     };
   });
 
-  const apiConfig = {
-    fetch: fetch as Window['fetch'],
-  };
   const { data: login } = await api.post('login', {
     username,
     pass_md5_hash: passMd5,
-  }, apiConfig);
+  });
   const storeId = login.store_ids[0];
 
   const {
     data: {
       access_token: accessToken,
     },
-  } = await api.post('authenticate', login, apiConfig);
+  } = await api.post('authenticate', login);
 
   return createAuth(storeId, accessToken);
 };
