@@ -5,6 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import ecomUtils from '@ecomplus/utils';
 import axios from './functions-lib/pagarme/create-axios.mjs';
 import { getOrderWithQueryString } from './functions-lib/api-utils.mjs';
+import { getDocFirestore } from './functions-lib/firestore-utils.mjs';
 
 const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
 
@@ -26,6 +27,9 @@ const eventOrderCancelled = async (
             updatedAt: new Date().toISOString(),
           }, { merge: true })
           .catch(logger.error);
+
+        logger.log('>> SUCESSS');
+        return null;
       } catch (err) {
         logger.error('> (App PagarMe V5): Error when canceling in Pagar.Me, return the status');
         await api.patch(order._id, { status: 'open' })
@@ -56,10 +60,12 @@ const eventProducts = async (
   const result = await getOrderWithQueryString(query);
 
   if (result && result.length) {
-    for (let i = 0; i < result.length; i++) {
+    let i = 0;
+    while (i < result.length) {
       const updateItemPagarme = [];
       // eslint-disable-next-line no-await-in-loop
       const order = (await api.get(`orders/${result[i]._id}`)).data;
+      // eslint-disable-next-line no-await-in-loop
       const docSubscription = await getDocFirestore(colletionFirebase, result[i]._id);
       logger.log('> (App PagarMe v5): Order ', JSON.stringify(order), ' ', JSON.stringify(docSubscription));
       if (order && docSubscription) {
@@ -127,8 +133,6 @@ const eventProducts = async (
               },
             );
           }));
-          // console.log('>>> Update SUCESSS');
-          // res.send(ECHO_SUCCESS);
         } catch (err) {
           logger.error(err);
           /* When creating a new order, check the items saved in Pagar.Me
@@ -138,9 +142,13 @@ const eventProducts = async (
           */
         }
       }
+      i += 1;
     }
+    logger.log('>> SUCESSS');
+    return null;
   }
-  logger.log('>> not found ');
+  logger.log('>> Orders not found ');
+  return null;
 };
 
 const handleApiEvent = async ({
@@ -168,6 +176,7 @@ const handleApiEvent = async ({
       process.env.PAGARMEV5_API_TOKEN = pagarmeApiToken;
     } else {
       logger.warn('Missing PAGARMEV5 API TOKEN');
+      return null;
     }
   }
 
@@ -179,7 +188,7 @@ const handleApiEvent = async ({
     }
 
     if (evName.startsWith('products-') && evName !== 'products-new') {
-      //
+      return eventProducts(apiDoc, pagarmeAxios);
     }
 
     return null;

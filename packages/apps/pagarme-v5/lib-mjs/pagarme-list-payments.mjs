@@ -47,7 +47,7 @@ export default async (data) => {
       hasRecurrence = result.length > 0;
       isAllRecurring = result.length === items.length;
     } catch (err) {
-      // logger.error(err)
+      logger.error(err);
     }
   }
 
