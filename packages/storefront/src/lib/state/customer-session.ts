@@ -104,7 +104,7 @@ let isAuthInitialized = false;
 const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
   if (import.meta.env.SSR || isAuthInitialized) return;
   if (canWaitIdle === undefined) {
-    canWaitIdle = window.location.pathname.startsWith('/app/');
+    canWaitIdle = !window.location.pathname.startsWith('/app/');
   }
   isAuthInitialized = true;
   const runImport = () => import('../scripts/firebase-app')
