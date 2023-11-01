@@ -3,7 +3,11 @@
   "type": "module",
   "version": "0.30.0",
   "description": "E-Com Plus Cloud Commerce app for Correios shipping calculation",
-  "main": "lib/correios.js",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./fill-database": "./lib-mjs/correios-db.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

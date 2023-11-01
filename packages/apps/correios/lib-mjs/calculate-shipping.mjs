@@ -18,6 +18,8 @@ export default async ({ params, application }) => {
     ...application.hidden_data,
   };
 
+  // getFirestore().settings({ ignoreUndefinedProperties: true });
+
   const { metafields } = config.get();
 
   setCredentials(configApp);
@@ -99,7 +101,7 @@ export default async ({ params, application }) => {
   }
 
   // calculate weight and pkg value from items list
-  let nextDimensionToSum = 'length';
+  // const nextDimensionToSum = 'length';
   const pkg = {
     dimensions: {
       width: {
@@ -121,6 +123,9 @@ export default async ({ params, application }) => {
     },
   };
 
+  let cubicWeight = 0;
+  let psObj = 0;
+
   params.items.forEach(({
     price,
     quantity,
@@ -131,8 +136,8 @@ export default async ({ params, application }) => {
       vlDeclarado += price * quantity;
     }
     // sum physical weight
+    let weightValue;
     if (weight && weight.value) {
-      let weightValue;
       switch (weight.unit) {
         case 'kg':
           weightValue = weight.value * 1000;
@@ -153,6 +158,7 @@ export default async ({ params, application }) => {
 
     // sum total items dimensions to calculate cubic weight
     if (dimensions) {
+      const sumDimensions = {};
       Object.keys(dimensions).forEach((side) => {
         const dimension = dimensions[side];
         if (dimension && dimension.value) {
@@ -172,24 +178,35 @@ export default async ({ params, application }) => {
           }
           // add/sum current side to final dimensions object
           if (dimensionValue) {
-            const pkgDimension = pkg.dimensions[side];
-            for (let i = 0; i < quantity; i++) {
-              if (!pkgDimension.value) {
-                pkgDimension.value = dimensionValue;
-              } else if (nextDimensionToSum === side) {
-                pkgDimension.value += dimensionValue;
-                if (nextDimensionToSum === 'length') {
-                  nextDimensionToSum = 'width';
-                } else {
-                  nextDimensionToSum = nextDimensionToSum === 'width' ? 'height' : 'length';
-                }
-              } else if (pkgDimension.value < dimensionValue) {
-                pkgDimension.value = dimensionValue;
-              }
-            }
+            sumDimensions[side] = sumDimensions[side]
+              ? sumDimensions[side] + dimensionValue
+              : dimensionValue;
           }
         }
       });
+      // calculate cubic weight
+      // https://suporte.boxloja.pro/article/82-correios-calculo-frete
+      // (C x L x A) / 6.000
+      Object.keys(sumDimensions).forEach((side) => {
+        if (sumDimensions[side]) {
+          cubicWeight = cubicWeight > 0
+            ? cubicWeight * sumDimensions[side]
+            : sumDimensions[side];
+          pkg.dimensions[side].value += sumDimensions[side] * quantity;
+        }
+      });
+      if (cubicWeight > 0) {
+        cubicWeight /= 6000;
+      }
+
+      // convert weight to kilograms
+      if (weightValue > 0) {
+        weightValue /= 1000;
+      }
+    }
+    if (!configApp.free_no_weight_shipping || weightValue > 0) {
+      psObj += quantity * (cubicWeight < 5 || weightValue > cubicWeight
+        ? weightValue : cubicWeight);
     }
   });
 
@@ -213,14 +230,15 @@ export default async ({ params, application }) => {
     };
   }
 
-  // /*
-  try {
-    const psObjKg = parserWeight((pkg.weight.value) / 1000);
+  const correiosParams = {
+    cepOrigem,
+    cepDestino: parseZipCode(cepDestino),
+    psObjeto: parserWeight(psObj),
+  };
 
+  try {
     const docParams = {
-      cepOrigem,
-      cepDestino: parseZipCode(cepDestino),
-      psObjeto: psObjKg,
+      ...correiosParams,
       nuContrato: correios.$contract.nuContrato,
       serviceCodes,
     };
@@ -244,21 +262,13 @@ export default async ({ params, application }) => {
   } catch (err) {
     logger.error(new Error(`[calculate Correios] Cannot get doc ID ${docId}`));
     logger.error(err);
-  } // */
+  }
 
   // fallback Calculate
   if (!correiosResult) {
-    logger.log('> fallback App');
     try {
       const { data } = await calculateV2({
-        correiosParams: {
-          cepOrigem,
-          cepDestino,
-          psObjeto: pkg.weight.value,
-          comprimento: pkg.dimensions.length.value,
-          altura: pkg.dimensions.height.value,
-          largura: pkg.dimensions.width.value,
-        },
+        correiosParams,
         serviceCodes,
         correios,
       });
@@ -283,20 +293,12 @@ export default async ({ params, application }) => {
     }
   }
 
-  let index = 0;
-  while (index < correiosResult.length) {
-    const {
-      coProduto,
-      // psCobrado
-      // peAdValorem
-      pcProduto,
-      // pcTotalServicosAdicionais,
-      // pcFinal,
-      prazoEntrega,
-      entregaSabado,
-      txErro,
-    } = correiosResult[index];
-
+  correiosResult.forEach(({
+    coProduto,
+    pcProduto,
+    prazoEntrega,
+    txErro,
+  }) => {
     if (txErro) {
       logger.warn(`[calculate Correios] alert/error ${coProduto}`, {
         pcProduto,
@@ -305,9 +307,7 @@ export default async ({ params, application }) => {
       });
     }
     if (!pcProduto || !prazoEntrega) {
-      // return;
-      index += 1;
-      continue;
+      return;
     }
     // find respective configured service label
     let serviceName;
@@ -342,51 +342,24 @@ export default async ({ params, application }) => {
     let taxDeclaredValue;
 
     // https://api.correios.com.br/preco/v1/servicos-adicionais/03220
-    if (params.own_hand || params.receipt || vlDeclarado) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        const { data: additionalServices } = await correios
-          .get(`/preco/v1/servicos-adicionais/${coProduto}`);
-        const addServiceAR = additionalServices
-          .find((service) => service.nome === 'AVISO DE RECEBIMENTO');
-        const addServiceMP = additionalServices
-          .find((service) => service.nome === 'MAO PROPRIA');
-        const addServiceVl = additionalServices
-          .find((service) => service.nome.startsWith('VALOR DECLARADO'));
+    // https://www.correios.com.br/enviar/servicos-adicionais
+    if (params.own_hand) {
+      valorMaoPropria = configApp.own_hand_price || metafields.correiosOwnHandPrice || 8.75;
+      pcFinal += valorMaoPropria;
+    }
 
-        if (params.own_hand) {
-          valorMaoPropria = addServiceMP.preco;
-          pcFinal += valorMaoPropria || 0;
-        }
+    if (params.receipt) {
+      valorAvisoRecebimento = configApp.receipt_price || metafields.correiosReceiptPrice || 7.4;
+      pcFinal += valorAvisoRecebimento;
+    }
 
-        if (params.receipt) {
-          valorAvisoRecebimento = addServiceAR.preco;
-          pcFinal += valorAvisoRecebimento || 0;
-        }
-
-        if (vlDeclarado && addServiceVl) {
-          if (addServiceVl.vlMaxDeclarado && vlDeclarado > addServiceVl.vlMaxDeclarado) {
-            vlDeclarado = addServiceVl.vlMaxDeclarado;
-          }
-
-          if (addServiceVl.vlMinDeclarado) {
-            const realValue = (vlDeclarado - addServiceVl.vlMinDeclarado);
-            taxDeclaredValue = parseInt(realValue * 0.02 * 100, 10) / 100;
-          }
-
-          pcFinal += taxDeclaredValue || 0;
-        }
-      } catch (err) {
-        if (err.response) {
-          logger.warn('[calculate] failed for', {
-            body: err.config.data,
-            response: err.response.data,
-            status: err.response.status,
-          });
-        } else {
-          logger.error(err);
-        }
+    if (vlDeclarado) {
+      // pre check for maximum allowed declared value
+      if (vlDeclarado > 10000) {
+        vlDeclarado = 10000;
       }
+      taxDeclaredValue = parseInt(vlDeclarado * 0.02 * 100, 10) / 100;
+      pcFinal += taxDeclaredValue || 0;
     }
 
     const shippingLine = {
@@ -407,7 +380,7 @@ export default async ({ params, application }) => {
       total_price: pcFinal,
       delivery_time: {
         days: Number(prazoEntrega),
-        working_days: entregaSabado !== 'S',
+        working_days: true,
       },
       posting_deadline: {
         days: 3,
@@ -459,9 +432,7 @@ export default async ({ params, application }) => {
       service_name: serviceName || label,
       shipping_line: shippingLine,
     });
-
-    index += 1;
-  }
+  });
 
   return response;
 };

@@ -27,7 +27,6 @@ const parserWeight = (findWeight) => {
   for (let i = 0; i < weights.length; i++) {
     if (findWeight <= weights[i]) return weights[i];
   }
-
   return weights[weights.length - 1];
 };
 
@@ -83,26 +82,21 @@ const dataToDoc = (data) => {
     coProduto,
     pcProduto,
     prazoEntrega,
-    entregaSabado,
     txErro,
   }) => {
-    // ignoreUndefinedProperties
-    const obj = {};
-    if (coProduto) {
-      Object.assign(obj, { c: coProduto });
-    }
-    if (pcProduto) {
-      Object.assign(obj, { p: pcProduto });
-    }
-    if (prazoEntrega) {
-      Object.assign(obj, { e: prazoEntrega });
-    }
-    if (entregaSabado) {
-      Object.assign(obj, { s: entregaSabado });
-    }
-    if (txErro) {
-      Object.assign(obj, { m: txErro });
-    }
+    const obj = {
+      c: coProduto,
+      p: pcProduto,
+      e: prazoEntrega,
+      m: txErro,
+    };
+    // TODO:
+    // set ignoreUndefinedProperties in Firestore
+    // no need to delete undefined fields
+
+    Object.keys(obj).forEach((key) => {
+      if (!obj[key]) delete obj[key];
+    });
 
     return obj;
   });
@@ -115,14 +109,12 @@ const docToData = ({ d }) => {
     c,
     p,
     e,
-    s,
     m,
   }) => {
     return {
       coProduto: c,
       pcProduto: p,
       prazoEntrega: e,
-      entregaSabado: s,
       txErro: m,
     };
   });

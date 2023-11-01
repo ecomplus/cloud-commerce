@@ -293,7 +293,6 @@ runs:
         CORREIOS_USER=$CORREIOS_USER
         CORREIOS_ACCESS_CODE=$CORREIOS_ACCESS_CODE
         CORREIOS_POSTCARD=$CORREIOS_POSTCARD
-
         " > functions/.env
         if [ -z "$DEPLOY_CODEBASE" ]; then
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
