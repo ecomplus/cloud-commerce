@@ -18,8 +18,6 @@ export default async ({ params, application }) => {
     ...application.hidden_data,
   };
 
-  // getFirestore().settings({ ignoreUndefinedProperties: true });
-
   const { metafields } = config.get();
 
   setCredentials(configApp);
@@ -101,7 +99,6 @@ export default async ({ params, application }) => {
   }
 
   // calculate weight and pkg value from items list
-  // const nextDimensionToSum = 'length';
   const pkg = {
     dimensions: {
       width: {
