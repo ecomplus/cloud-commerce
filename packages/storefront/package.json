@@ -31,7 +31,7 @@
   "dependencies": {
     "@astrojs/image": "0.17.3",
     "@astrojs/node": "5.3.6",
-    "@astrojs/vue": "2.2.1",
+    "@astrojs/vue": "3.0.2",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
