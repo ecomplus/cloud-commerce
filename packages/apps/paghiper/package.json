@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-paghiper",
   "type": "module",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "description": "E-Com Plus Cloud Commerce app to integrate PagHiper",
   "main": "lib/paghiper.js",
   "exports": {
