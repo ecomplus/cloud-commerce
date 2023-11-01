@@ -8,6 +8,7 @@ import {
 import {
   EMAIL_STORAGE_KEY,
   customerEmail as email,
+  initializeFirebaseAuth,
 } from '@@sf/state/customer-session';
 
 export interface Props {
@@ -15,6 +16,7 @@ export interface Props {
 }
 
 const useLoginForm = (props?: Props) => {
+  initializeFirebaseAuth();
   const canUseUrlParams = props?.canUseUrlParams !== false;
   const params = canUseUrlParams ? useUrlSearchParams('history') : {};
   const isInitSignUp = params.sign_up !== undefined && params.sign_up !== '0';
