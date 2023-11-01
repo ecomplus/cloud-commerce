@@ -74,10 +74,11 @@ Object.keys(brandColors).forEach((colorName) => {
     subtle = chroma(hex).darken();
     bold = chroma(hex).brighten();
   }
+  const toRGB = (_color) => _color.css().replace(/,/g, ' ');
   const pallete = {
-    subtle: subtle.css(),
-    DEFAULT: color.css(),
-    bold: bold.css(),
+    subtle: toRGB(subtle),
+    DEFAULT: toRGB(color),
+    bold: toRGB(bold),
   };
   const scale = chroma.scale([
     chroma(hex).luminance(0.95), // 50
@@ -97,7 +98,7 @@ Object.keys(brandColors).forEach((colorName) => {
     if (index === 0) palleteIndex = '50';
     else if (index === scale.length - 1) palleteIndex = '950';
     else palleteIndex = (100 * index).toString();
-    pallete[palleteIndex] = chroma(sHex).css();
+    pallete[palleteIndex] = toRGB(chroma(sHex));
   });
   brandColorsPalletes[colorName] = pallete;
   const colorVariants = { color, subtle, bold };

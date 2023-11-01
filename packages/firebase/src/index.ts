@@ -10,7 +10,7 @@ const functionBuilder = functions
   .region(region)
   .runWith({
     timeoutSeconds: 300,
-    memory: '128MB',
+    memory: '256MB',
   });
 
 export const cronStoreEvents = functionBuilder.pubsub

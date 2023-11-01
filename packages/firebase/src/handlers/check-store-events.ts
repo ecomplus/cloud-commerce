@@ -5,7 +5,7 @@ import type {
   EventsResult,
 } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import { error, info } from 'firebase-functions/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import config from '../config';
@@ -89,7 +89,7 @@ const tryPubSubPublish = (
     .catch((err) => {
       // eslint-disable-next-line no-param-reassign
       err.retries = retries;
-      logger.error(err);
+      error(err);
       if (retries <= 3) {
         setTimeout(() => {
           tryPubSubPublish(topicName, messageObj, retries + 1);
@@ -177,6 +177,8 @@ export default async () => {
     if (typeof $transformApiEvents === 'function') {
       result = await $transformApiEvents(resource, result);
     }
+    if (!result.length) return;
+    info(`> '${listenedEventName}' ${result.length} events`);
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
       const resourceId = apiEvent.resource_id;
@@ -205,7 +207,12 @@ export default async () => {
         }
       });
     });
-    logger.info(`> '${listenedEventName}' events: `, result);
+    info(`> '${listenedEventName}' events: `, {
+      result: result.map((apiEvent) => ({
+        timestamp: apiEvent.timestamp,
+        resource_id: apiEvent.resource_id,
+      })),
+    });
   });
   return documentRef.set({
     timestamp,
