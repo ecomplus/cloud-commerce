@@ -29,6 +29,11 @@ if (!globalThis.$apiMergeConfig) {
     canCache: true,
   };
 }
+declare global {
+  /* eslint-disable no-var, vars-on-top */
+  var $apiPrefetchEndpoints: Array<ApiEndpoint | ':slug'>;
+  /* eslint-enable no-var */
+}
 if (!globalThis.$apiPrefetchEndpoints) {
   globalThis.$apiPrefetchEndpoints = [];
 }
@@ -42,12 +47,25 @@ if (!globalThis.$storefront) {
   };
 }
 
+declare global {
+  /* eslint-disable no-var, vars-on-top */
+  var $storefrontCacheController: undefined
+    | ((Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => string | null);
+  /* eslint-enable no-var */
+}
 const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
-  let cacheControl = `public, max-age=${maxAge}, must-revalidate`;
-  if (sMaxAge) cacheControl += `, s-maxage=${sMaxAge}`;
-  if (sMaxAge || maxAge >= 60) cacheControl += `, stale-while-revalidate=604800`;
-  Astro.response.headers.set(headerName, cacheControl);
+  let cacheControl: string | null = null;
+  if (globalThis.$storefrontCacheController) {
+    cacheControl = globalThis.$storefrontCacheController(Astro, maxAge, sMaxAge);
+  } else {
+    cacheControl = `public, max-age=${maxAge}, must-revalidate`;
+    if (sMaxAge) cacheControl += `, s-maxage=${sMaxAge}`;
+    if (sMaxAge || maxAge >= 60) cacheControl += `, stale-while-revalidate=604800`;
+  }
+  if (cacheControl) {
+    Astro.response.headers.set(headerName, cacheControl);
+  }
 };
 
 export type ApiPrefetchEndpoints = Array<ApiEndpoint | ':slug'>;
@@ -99,7 +117,7 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   } else if (slug) {
     if (contentCollection) {
       cmsContent = await config.getContent(`${contentCollection}/${slug}`);
-    } else if (slug.startsWith('api/')) {
+    } else if (slug.startsWith('_api/')) {
       const err: any = new Error('/api/* routes not implemented on SSR directly');
       Astro.response.status = 501;
       err.responseHTML = `<head></head><body>${err.message}</body>`;

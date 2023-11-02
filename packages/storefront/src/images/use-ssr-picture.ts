@@ -155,7 +155,8 @@ const useSSRPicture = async (params: UsePictureParams) => {
   if (import.meta.env.PROD && assetsPrefix && image.src?.charAt(0) === '/') {
     image.src = `${assetsPrefix}${image.src}`;
     sources.forEach((source) => {
-      source.srcset = `${assetsPrefix}${source.srcset}`;
+      source.srcset = `${assetsPrefix}${source.srcset}`
+        .replace(/,\//g, `,${assetsPrefix}/`);
     });
   }
 

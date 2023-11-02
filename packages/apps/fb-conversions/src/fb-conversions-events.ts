@@ -134,8 +134,10 @@ const handleApiEvent: ApiEventHandler = async ({
           );
 
           const eventsData = [serverEvent];
-          const eventRequest = (new EventRequest(process.env.FB_GRAPH_TOKEN, process.env.FB_PIXEL_ID))
-            .setEvents(eventsData);
+          const eventRequest = new EventRequest(
+            process.env.FB_GRAPH_TOKEN,
+            process.env.FB_PIXEL_ID,
+          ).setEvents(eventsData);
 
           try {
             const response = await eventRequest.execute();

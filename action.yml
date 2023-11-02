@@ -34,7 +34,7 @@ inputs:
     description: 'Emails: SMTP password'
   sendgrid-api-key:
     description: 'App: SendGrid API key'
-  tiny-erp-token:
+  tinyerp-token:
     description: 'App: Tiny ERP API token'
   galaxpay-partner-id:
     description: 'App: Optional Galax Pay partner ID'
@@ -78,6 +78,8 @@ inputs:
     description: 'App: Flash Courier contract'
   webhooks-token:
     description: 'App: Webhooks token'
+  mandae-token:
+    description: 'App: Mandaê token'
   pagarmev5-api-token:
     description: 'App: Pagar.me API V5 token'
   pagarmev5-public-key: 
@@ -88,7 +90,7 @@ outputs: {}
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 18
         cache: 'npm'
@@ -223,7 +225,7 @@ runs:
         SMTP_USER: ${{ inputs.smpt-user }}
         SMTP_PASS: ${{ inputs.smpt-pass }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
-        TINY_ERP_TOKEN: ${{ inputs.tiny-erp-token }}
+        TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
         DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
@@ -233,8 +235,6 @@ runs:
         GALAXPAY_HASH: ${{ inputs.galaxpay-hash }}
         GA_MEASUREMENT_ID: ${{ inputs.ga-measurement-id }}
         GA_API_TOKEN: ${{ inputs.ga-api-token }}
-        INFINITEPAY_ID: ${{ inputs.infinitepay-id }}
-        INFINITEPAY_SECRET: ${{ inputs.infinitepay-secret }}
         FB_PIXEL_ID: ${{ inputs.fb-pixel-id }}
         FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
         JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
@@ -245,6 +245,7 @@ runs:
         PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
         WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
+        MANDAE_TOKEN: ${{ inputs.mandae-token }}
         PAGARMEV5_API_TOKEN: ${{ inputs.pagarmev5-api-token }}
         PAGARMEV5_PUBLIC_KEY: ${{ inputs.pagarmev5-public-key }}
       run: |
@@ -265,7 +266,7 @@ runs:
         SMTP_USER=$SMTP_USER
         SMTP_PASS=$SMTP_PASS
         SENDGRID_API_KEY=$SENDGRID_API_KEY
-        TINY_ERP_TOKEN=$TINY_ERP_TOKEN
+        TINYERP_TOKEN=$TINYERP_TOKEN
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN
@@ -275,8 +276,6 @@ runs:
         GALAXPAY_HASH=$GALAXPAY_HASH
         GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID
         GA_API_TOKEN=$GA_API_TOKEN
-        INFINITEPAY_ID=$INFINITEPAY_ID
-        INFINITEPAY_SECRET=$INFINITEPAY_SECRET
         FB_PIXEL_ID=$FB_PIXEL_ID
         FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
         JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
@@ -287,6 +286,7 @@ runs:
         PIX_CREDENTIALS=$PIX_CREDENTIALS
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
+        MANDAE_TOKEN=$MANDAE_TOKEN
         PAGARMEV5_API_TOKEN=$PAGARMEV5_API_TOKEN
         PAGARMEV5_PUBLIC_KEY=$PAGARMEV5_PUBLIC_KEY
         " > functions/.env

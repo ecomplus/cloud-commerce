@@ -10,7 +10,7 @@ export const passport = functions
   .region(region)
   .runWith({
     ...httpsFunctionOptions,
-    memory: '128MB',
+    memory: '256MB',
     timeoutSeconds: 30,
   })
   .https.onRequest(servePassportApi);

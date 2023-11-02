@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-pagarme",
   "type": "module",
-  "version": "0.28.2",
+  "version": "0.30.0",
   "description": "E-Com Plus Cloud Commerce app to integrate Pagar.me",
   "main": "lib/pagarme.js",
   "exports": {
@@ -25,7 +25,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "axios": "^1.5.1",
+    "axios": "^1.6.0",
     "firebase-admin": "^11.11.0",
     "firebase-functions": "^4.4.1",
     "pagarme": "^4.33.1",

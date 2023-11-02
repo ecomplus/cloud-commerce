@@ -6,6 +6,13 @@ import { computed } from 'vue';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
 
+export const EMAIL_STORAGE_KEY = 'emailForSignIn';
+
+export const GET_PASSPORT_API_URI = () => {
+  const { domain } = globalThis.$storefront.settings;
+  return `https://${domain}/_api/passport/`;
+};
+
 const storageKey = 'ecomSession';
 const emptySession = {
   customer: {
@@ -61,9 +68,8 @@ const authenticate = async () => {
     throwNoAuth('Can\'t get Firebase user ID token');
     return;
   }
-  const { domain } = window.$storefront.settings;
   try {
-    const resAuth = await fetch(`https://${domain}/api/passport/token`, {
+    const resAuth = await fetch(`${GET_PASSPORT_API_URI()}token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -95,8 +101,11 @@ const fetchCustomer = async () => {
 };
 
 let isAuthInitialized = false;
-const initializeFirebaseAuth = (canWaitIdle = !window.location.pathname.startsWith('/app/')) => {
+const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
   if (import.meta.env.SSR || isAuthInitialized) return;
+  if (canWaitIdle === undefined) {
+    canWaitIdle = !window.location.pathname.startsWith('/app/');
+  }
   isAuthInitialized = true;
   const runImport = () => import('../scripts/firebase-app')
     .then(({
@@ -132,7 +141,7 @@ const initializeFirebaseAuth = (canWaitIdle = !window.location.pathname.startsWi
         const email = urlParams.get('email');
         if (email) {
           signInWithEmailLink(firebaseAuth, email, window.location.href)
-            .then(() => window.localStorage.removeItem('emailForSignIn'))
+            .then(() => window.localStorage.removeItem(EMAIL_STORAGE_KEY))
             .catch(console.error);
         }
       }

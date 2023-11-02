@@ -5,7 +5,7 @@ import type {
   EventsResult,
 } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import { error, info } from 'firebase-functions/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
 import config from '../config';
@@ -89,7 +89,7 @@ const tryPubSubPublish = (
     .catch((err) => {
       // eslint-disable-next-line no-param-reassign
       err.retries = retries;
-      logger.error(err);
+      error(err);
       if (retries <= 3) {
         setTimeout(() => {
           tryPubSubPublish(topicName, messageObj, retries + 1);
@@ -111,7 +111,7 @@ export default async () => {
     'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
     'timestamp<': new Date(timestamp).toISOString(),
   };
-  const { apps } = config.get();
+  const { apiEvents, apps } = config.get();
   const subscribersApps: Array<{ appId: number, events: ApiEventName[] }> = [];
   Object.keys(apps).forEach((appName) => {
     const appObj = apps[appName];
@@ -130,7 +130,10 @@ export default async () => {
   subscribersApps.forEach(({ appId, events }) => {
     if (activeApps.find((app) => app.app_id === appId)) {
       events.forEach((evName) => {
-        if (!listenedEvents.includes(evName)) {
+        if (
+          !listenedEvents.includes(evName)
+          && !apiEvents.disabledEvents.includes(evName)
+        ) {
           listenedEvents.push(evName);
         }
       });
@@ -139,19 +142,21 @@ export default async () => {
   // Some resource events are not listened to every minute
   const isOrdersOnly = Boolean(new Date().getMinutes() % 5);
   listenedEvents.forEach(async (listenedEventName) => {
-    const { resource, params, actionName } = parseEventName(listenedEventName, baseApiEventsFilter);
+    const {
+      resource,
+      params,
+      actionName,
+    } = parseEventName(listenedEventName, baseApiEventsFilter);
     if (resource !== 'orders') {
       if (isOrdersOnly) {
         return;
       }
       if (lastNonOrdersTimestamp) {
         if (actionName === 'delayed') {
-          // defines the limits for getting events with predefined delay
-          const delayMs = process.env.API_EVENTS_DELAYED_MS
-            ? (parseInt(process.env.API_EVENTS_DELAYED_MS, 10))
-            : (1000 * 60 * 5);
-          params['timestamp>'] = new Date(lastNonOrdersTimestamp - delayMs).toISOString();
-          params['timestamp<'] = new Date(timestamp - delayMs).toISOString();
+          // Defines the limits for getting events with predefined delay
+          const { delayedMs } = apiEvents;
+          params['timestamp>'] = new Date(lastNonOrdersTimestamp - delayedMs).toISOString();
+          params['timestamp<'] = new Date(timestamp - delayedMs).toISOString();
         } else {
           params['timestamp>'] = new Date(lastNonOrdersTimestamp).toISOString();
         }
@@ -172,6 +177,8 @@ export default async () => {
     if (typeof $transformApiEvents === 'function') {
       result = await $transformApiEvents(resource, result);
     }
+    if (!result.length) return;
+    info(`> '${listenedEventName}' ${result.length} events`);
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
       const resourceId = apiEvent.resource_id;
@@ -200,7 +207,12 @@ export default async () => {
         }
       });
     });
-    logger.info(`> '${listenedEventName}' events: `, result);
+    info(`> '${listenedEventName}' events: `, {
+      result: result.map((apiEvent) => ({
+        timestamp: apiEvent.timestamp,
+        resource_id: apiEvent.resource_id,
+      })),
+    });
   });
   return documentRef.set({
     timestamp,

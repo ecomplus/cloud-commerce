@@ -67,7 +67,7 @@ if (!import.meta.env.SSR) {
     }
 
     modulesToFetch.forEach(({ modName, reqOptions }) => {
-      afetch(`/api/modules/${modName}`, reqOptions)
+      afetch(`/_api/modules/${modName}`, reqOptions)
         .then(async (response) => {
           if (response.ok) {
             const modInfo = {};

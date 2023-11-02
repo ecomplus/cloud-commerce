@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/modules",
   "type": "module",
-  "version": "0.28.2",
+  "version": "0.30.0",
   "description": "E-Com Plus Cloud Commerce modules API",
   "main": "lib/index.cjs",
   "exports": {
@@ -36,6 +36,7 @@
     "@cloudcommerce/app-galaxpay": "workspace:*",
     "@cloudcommerce/app-jadlog": "workspace:*",
     "@cloudcommerce/app-loyalty-points": "workspace:*",
+    "@cloudcommerce/app-mandae": "workspace:*",
     "@cloudcommerce/app-melhor-envio": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
@@ -45,7 +46,7 @@
     "@ecomplus/utils": "1.5.0-rc.5",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "axios": "^1.5.1",
+    "axios": "^1.6.0",
     "firebase-admin": "^11.11.0",
     "firebase-functions": "^4.4.1",
     "source-map-support": "^0.5.21"

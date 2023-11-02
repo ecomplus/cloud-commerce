@@ -3,6 +3,7 @@ import type { Request, Response } from 'firebase-functions';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
 
 declare global {
   // eslint-disable-next-line
@@ -15,6 +16,7 @@ declare global {
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
+const { assetsPrefix } = config.get().settingsContent;
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
@@ -226,9 +228,17 @@ export default async (req: Request, res: Response) => {
     /* eslint-disable prefer-rest-params */
     // @ts-ignore
     res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
-      if (status === 200 && headers && cssFilepath && !headers.link) {
+      if (status === 200 && headers && cssFilepath) {
         // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
-        headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
+        const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
+        if (!headers.link) {
+          headers.Link = cssLink;
+        } else {
+          if (typeof headers.link === 'string') {
+            headers.link = [headers.link];
+          }
+          headers.link.push(cssLink);
+        }
       }
       _writeHead.apply(res, [status, headers]);
     };

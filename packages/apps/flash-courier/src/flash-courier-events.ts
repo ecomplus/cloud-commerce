@@ -6,7 +6,7 @@ import handleTrackingCodes from '../lib-mjs/update-tracking.mjs';
 
 export const flashcourier = {
   cronTrackingCodes: functions.region(config.get().httpsFunctionOptions.region).pubsub
-    .schedule('19 * * * *')
+    .schedule(process.env.CRONTAB_FLASHCOURIER_TRACKING_CODES || '19 * * * *')
     .onRun(() => {
       return handleTrackingCodes();
     }),
