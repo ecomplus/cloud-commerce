@@ -2,6 +2,74 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.31.2](https://github.com/ecomplus/cloud-commerce/compare/v0.31.1...v0.31.2) (2023-11-03)
+
+### [0.31.1](https://github.com/ecomplus/cloud-commerce/compare/v0.31.0...v0.31.1) (2023-11-03)
+
+## [0.31.0](https://github.com/ecomplus/cloud-commerce/compare/v0.30.0...v0.31.0) (2023-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **correios:** Requires new Correios contracts and credentials
+
+* feat(correios v2): Create app
+
+* chore(correios db): Add database population and main search in database
+
+* chore(action): add correios app environment variables
+
+* chore(pnpm lock): update file
+
+* fix(pnpm lock): Update file
+
+* chore(events): Add event functions
+
+* chore(pnpm lock): Update file
+
+* fix(correios db): Fix fill database and write fallback data
+
+* fix(app correios): Update app package [skip ci]
+
+* fix(events): Remove app correios v2
+
+* fix(firebase config): Remove correiosV2 app and update appId [skip ci]
+
+* fix(modules): Remove correios v2 app
+
+* fix(pnpm lock): Return file to main version
+
+* fix(test correios): Remove debug
+
+* fix(correios): Remove unnecessary comments [skip ci]
+
+* fix(correios v2): Add and correct parsers adds declared value check
+
+* fix(correios): Add weight check and standardization of parameters
+
+* fix(correios): Remove unnecessary comments
+
+* fix(correios): Correct conversion of weight to grams
+
+* fix(correios): Parameterize weight array to grams
+
+### Features
+
+* **correios:** Update app to integrate new Correios API and read/save results to db ([#251](https://github.com/ecomplus/cloud-commerce/issues/251)) ([a1fb7e8](https://github.com/ecomplus/cloud-commerce/commit/a1fb7e8ac3581451ca2a2b57001ddb4a374c6c24))
+* **i18n:** Add `i19emailWasSentMsg` ([b3bcb53](https://github.com/ecomplus/cloud-commerce/commit/b3bcb53d0f2603e34ba0ea2ac9193e01dbce178d))
+* **storefront:** Add `linkActionUrl` opt param to `submitLogin` method on login form composable ([a783be6](https://github.com/ecomplus/cloud-commerce/commit/a783be6c9fe5af847a6f00eeb7a15b32a07ebad9))
+* **storefront:** New `vbeta-app` script to load legacy checkout SPA with session compatibility ([ed7cfb7](https://github.com/ecomplus/cloud-commerce/commit/ed7cfb7612016b577f60b05f4db84a28ea5b8550))
+
+
+### Bug Fixes
+
+* **affiliate-program:** Preventing error with undefined customer by code and other type fixes ([8340982](https://github.com/ecomplus/cloud-commerce/commit/834098212c539993ec3644c7cc01fcc6b61dbc2e))
+* **cli:** Update default `firebase.json` API routes CORS accepted methods ([31fd1c5](https://github.com/ecomplus/cloud-commerce/commit/31fd1c52e3d395f0b585d12bcacc323342b574bb))
+* **cli:** Update default `firebase.json` with API routes cache control and CORS headers ([c2a6ff2](https://github.com/ecomplus/cloud-commerce/commit/c2a6ff2f5f1cf5c20d048204628fdaab4f14d6fc))
+* **storefront:** Ensure Firebase app init on `useLoginForm` ([3505eda](https://github.com/ecomplus/cloud-commerce/commit/3505eda698ef5f4acdb206f2b4a0b2963fdbd25e))
+* **storefront:** Ensure View Transitions script not started on /app/* routes ([9e14b11](https://github.com/ecomplus/cloud-commerce/commit/9e14b11d01538534f13f33b2160c69e9fc95bb3a))
+* **storefront:** Update `useLoginForm` to throttle login submit and return `isSubmitting` state ([4096aab](https://github.com/ecomplus/cloud-commerce/commit/4096aabf3bfa0a13db911491bb36cac6c7ed53f7))
+
 ## [0.30.0](https://github.com/ecomplus/cloud-commerce/compare/v0.29.0...v0.30.0) (2023-11-01)
 
 
