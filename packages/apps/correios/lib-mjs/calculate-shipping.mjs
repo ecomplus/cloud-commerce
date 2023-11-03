@@ -225,7 +225,7 @@ export default async ({ params, application }) => {
   const correiosParams = {
     cepOrigem,
     cepDestino: parseZipCode(cepDestino),
-    psObjeto: findBaseWeight(psObj / 1000) * 1000,
+    psObjeto: findBaseWeight(psObj),
   };
 
   try {

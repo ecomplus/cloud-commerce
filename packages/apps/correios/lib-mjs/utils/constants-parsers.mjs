@@ -2,12 +2,12 @@ import logger from 'firebase-functions/logger';
 
 const zipRangeStep = 5000;
 
-const weights = [0.5];
+const weightsKg = [0.5];
 let weight = 0;
 
-// representation in kg
 do {
-  const lastWeight = weights[weights.length - 1];
+  // representation in kg
+  const lastWeight = weightsKg[weightsKg.length - 1];
   weight = lastWeight + Math.ceil(lastWeight / 10);
 
   if (lastWeight < 1) {
@@ -15,8 +15,10 @@ do {
   } else if (lastWeight >= 40) {
     weight = 50;
   }
-  weights.push(weight);
+  weightsKg.push(weight);
 } while (weight < 50);
+
+const weights = weightsKg.map((weightKg) => weightKg * 1000);
 
 const parseZipCode = (zipCode) => {
   return (Number(zipCode) - (Number(zipCode) % zipRangeStep) + 1)

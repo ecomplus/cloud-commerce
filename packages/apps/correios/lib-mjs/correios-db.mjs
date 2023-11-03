@@ -138,10 +138,10 @@ const fillDb = async (state) => {
     logger.info(`> ZipCode: ${cepDestino}}`);
 
     const calculateMany = async (calculateWeights, listServiceCode) => {
-      return calculateWeights.map((psObj) => {
+      return calculateWeights.map((psObjeto) => {
         const promises = [];
 
-        const calculateParams = { ..._calculateParams, psObjeto: psObj * 1000 };
+        const calculateParams = { ..._calculateParams, psObjeto };
         promises.push(
           calculateV2({
             calculateParams,
