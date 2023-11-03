@@ -288,7 +288,10 @@ const { fallback = 'animate' } = Astro.props as Props;
     document.head.append(link);
   }
 
-  if (supportsViewTransitions || getFallback() !== 'none') {
+  if (
+    (supportsViewTransitions || getFallback() !== 'none') &&
+    !location.pathname.startsWith('/app/')
+  ) {
     markScriptsExec();
 
     document.addEventListener('click', (ev) => {
