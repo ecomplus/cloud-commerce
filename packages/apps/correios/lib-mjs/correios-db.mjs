@@ -123,7 +123,7 @@ const fillDb = async (state) => {
       const docSnapshot = await getFirestore()
         .doc(getDocId({
           ..._calculateParams,
-          psObjeto: 10,
+          psObjeto: 10000,
           nuContrato: correios?.$contract?.nuContrato,
           serviceCodes,
         })).get();
@@ -138,10 +138,10 @@ const fillDb = async (state) => {
     logger.info(`> ZipCode: ${cepDestino}}`);
 
     const calculateMany = async (calculateWeights, listServiceCode) => {
-      return calculateWeights.map((psObjeto) => {
+      return calculateWeights.map((psObj) => {
         const promises = [];
 
-        const calculateParams = { ..._calculateParams, psObjeto };
+        const calculateParams = { ..._calculateParams, psObjeto: psObj * 1000 };
         promises.push(
           calculateV2({
             calculateParams,

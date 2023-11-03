@@ -4,7 +4,7 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import {
   getDocId,
   parseZipCode,
-  parserWeight,
+  findBaseWeight,
   setCredentials,
   dataToDoc,
   docToData,
@@ -143,7 +143,7 @@ export default async ({ params, application }) => {
           weightValue = weight.value;
           break;
         case 'mg':
-          weightValue = weight.value / 1000000;
+          weightValue = weight.value / 1000;
           break;
         default:
           weightValue = weight.value;
@@ -193,12 +193,7 @@ export default async ({ params, application }) => {
         }
       });
       if (cubicWeight > 0) {
-        cubicWeight /= 6000;
-      }
-
-      // convert weight to kilograms
-      if (weightValue > 0) {
-        weightValue /= 1000;
+        cubicWeight /= 6; // representation in g
       }
     }
     if (!configApp.free_no_weight_shipping || weightValue > 0) {
@@ -230,7 +225,7 @@ export default async ({ params, application }) => {
   const correiosParams = {
     cepOrigem,
     cepDestino: parseZipCode(cepDestino),
-    psObjeto: parserWeight(psObj),
+    psObjeto: findBaseWeight(psObj / 1000) * 1000,
   };
 
   try {

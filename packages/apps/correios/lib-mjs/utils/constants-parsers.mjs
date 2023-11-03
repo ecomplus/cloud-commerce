@@ -23,7 +23,7 @@ const parseZipCode = (zipCode) => {
     .toString().padStart(8, '0');
 };
 
-const parserWeight = (findWeight) => {
+const findBaseWeight = (findWeight) => {
   for (let i = 0; i < weights.length; i++) {
     if (findWeight <= weights[i]) return weights[i];
   }
@@ -95,7 +95,7 @@ const dataToDoc = (data) => {
     // no need to delete undefined fields
 
     Object.keys(obj).forEach((key) => {
-      if (!obj[key]) delete obj[key];
+      if (obj[key] === undefined) delete obj[key];
     });
 
     return obj;
@@ -125,7 +125,7 @@ export {
   zipRangeStep,
   weights,
   parseZipCode,
-  parserWeight,
+  findBaseWeight,
   getDocId,
   setCredentials,
   dataToDoc,
