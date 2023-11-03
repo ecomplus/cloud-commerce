@@ -36,7 +36,7 @@ const useLoginForm = (props?: Props) => {
   });
   const password = ref('');
   const isSubmitting = ref(false);
-  const submitLogin = useThrottleFn(async () => {
+  const submitLogin = useThrottleFn(async (linkActionUrl?: string | null) => {
     isSubmitting.value = true;
     const timestamp = Date.now();
     const firebaseAuth = getAuth();
@@ -44,7 +44,7 @@ const useLoginForm = (props?: Props) => {
     window.localStorage.setItem(EMAIL_STORAGE_KEY, email.value);
     try {
       if (isLinkSignIn.value) {
-        const url = new URL(window.location.toString());
+        const url = new URL(linkActionUrl || window.location.toString());
         url.searchParams.append('email', email.value);
         await sendSignInLinkToEmail(firebaseAuth, email.value, {
           url: url.toString(),
