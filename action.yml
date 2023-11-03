@@ -80,6 +80,12 @@ inputs:
     description: 'App: Webhooks token'
   mandae-token:
     description: 'App: Mandaê token'
+  correios-user:
+    description: 'App: Correios username'
+  correios-access-code:
+    description: 'App: Correios access code'
+  correios-postcard-number:
+    description: 'App: Optional Correios postcard number'
 
 outputs: {}
 
@@ -242,6 +248,9 @@ runs:
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
         WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
         MANDAE_TOKEN: ${{ inputs.mandae-token }}
+        CORREIOS_USER: ${{ inputs.correios-user }}
+        CORREIOS_ACCESS_CODE: ${{ inputs.correios-access-code }}
+        CORREIOS_POSTCARD: ${{ inputs.correios-postcard-number }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -281,6 +290,9 @@ runs:
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
         MANDAE_TOKEN=$MANDAE_TOKEN
+        CORREIOS_USER=$CORREIOS_USER
+        CORREIOS_ACCESS_CODE=$CORREIOS_ACCESS_CODE
+        CORREIOS_POSTCARD=$CORREIOS_POSTCARD
         " > functions/.env
         if [ -z "$DEPLOY_CODEBASE" ]; then
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME npm run deploy
