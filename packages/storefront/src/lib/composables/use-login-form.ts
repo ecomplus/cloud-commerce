@@ -1,5 +1,5 @@
 import { ref, watch } from 'vue';
-import { useUrlSearchParams } from '@vueuse/core';
+import { useUrlSearchParams, useThrottleFn } from '@vueuse/core';
 import {
   getAuth,
   sendSignInLinkToEmail,
@@ -35,7 +35,10 @@ const useLoginForm = (props?: Props) => {
     params.password = _isLinkSignIn ? '0' : '1';
   });
   const password = ref('');
-  const submitLogin = async () => {
+  const isSubmitting = ref(false);
+  const submitLogin = useThrottleFn(async () => {
+    isSubmitting.value = true;
+    const timestamp = Date.now();
     const firebaseAuth = getAuth();
     if (!email.value) return;
     window.localStorage.setItem(EMAIL_STORAGE_KEY, email.value);
@@ -58,12 +61,16 @@ const useLoginForm = (props?: Props) => {
       console.warn(error.code);
       console.error(error);
     }
-  };
+    setTimeout(() => {
+      isSubmitting.value = false;
+    }, Math.min(2000 - (Date.now() - timestamp), 1));
+  }, 2000);
   return {
     isLinkSignIn,
     isSignUp,
     email,
     password,
+    isSubmitting,
     submitLogin,
   };
 };
