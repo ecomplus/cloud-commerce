@@ -293,6 +293,7 @@ export const i19emailProfileNotFoundMsg = 'Nenhum perfil encontrado com o endere
 export const i19emails = 'E-mails'
 export const i19emailShippedTextMsg = 'Seu pacote já foi entregue para a transportadora. Para acompanhar o andamento da entrega acesse a página'
 export const i19emailShippedTitleMsg = 'Seu pedido está a caminho!'
+export const i19emailWasSentMsg = 'Te enviamos o e-mail, verifique sua caixa de entrada e spam se necessário.'
 export const i19empty = 'Vazio'
 export const i19emptyCart = 'Carrinho vazio'
 export const i19emptyCartMsg = 'Seu carrinho de compras está vazio'

@@ -97,7 +97,7 @@ const mergeConfig = {
       appId: 1252,
     },
     correios: {
-      appId: 1248,
+      appId: 126334,
     },
     customShipping: {
       appId: 1253,

@@ -293,6 +293,7 @@ export const i19emailProfileNotFound = 'No profile found with this email address
 export const i19emails = 'Emails'
 export const i19emailShippedTextMsg = 'Your package is now with the carrier. To track the delivery progress, go to'
 export const i19emailShippedTitleMsg = 'Your package is on the way!'
+export const i19emailWasSentMsg = 'We sent you the email, please check your inbox and spam if necessary.'
 export const i19empty = 'Empty'
 export const i19emptyCart = 'Empty shopping cart'
 export const i19emptyCartMsg = 'Your shopping cart is empty'

@@ -80,6 +80,12 @@ inputs:
     description: 'App: Webhooks token'
   mandae-token:
     description: 'App: Mandaê token'
+  correios-user:
+    description: 'App: Correios username'
+  correios-access-code:
+    description: 'App: Correios access code'
+  correios-postcard-number:
+    description: 'App: Optional Correios postcard number'
   pagarmev5-api-token:
     description: 'App: Pagar.me API V5 token'
   pagarmev5-public-key: 
@@ -246,6 +252,9 @@ runs:
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
         WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
         MANDAE_TOKEN: ${{ inputs.mandae-token }}
+        CORREIOS_USER: ${{ inputs.correios-user }}
+        CORREIOS_ACCESS_CODE: ${{ inputs.correios-access-code }}
+        CORREIOS_POSTCARD: ${{ inputs.correios-postcard-number }}
         PAGARMEV5_API_TOKEN: ${{ inputs.pagarmev5-api-token }}
         PAGARMEV5_PUBLIC_KEY: ${{ inputs.pagarmev5-public-key }}
       run: |
@@ -287,6 +296,9 @@ runs:
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
         MANDAE_TOKEN=$MANDAE_TOKEN
+        CORREIOS_USER=$CORREIOS_USER
+        CORREIOS_ACCESS_CODE=$CORREIOS_ACCESS_CODE
+        CORREIOS_POSTCARD=$CORREIOS_POSTCARD
         PAGARMEV5_API_TOKEN=$PAGARMEV5_API_TOKEN
         PAGARMEV5_PUBLIC_KEY=$PAGARMEV5_PUBLIC_KEY
         " > functions/.env
