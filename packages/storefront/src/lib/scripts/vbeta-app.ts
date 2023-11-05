@@ -1,6 +1,5 @@
 import { watch } from 'vue';
 import {
-  GET_PASSPORT_API_URI,
   session,
   isAuthenticated,
   customer,
@@ -8,12 +7,22 @@ import {
 
 // https://github.com/ecomplus/storefront/tree/master/%40ecomplus/storefront-app compat
 if (!import.meta.env.SSR) {
+  const { domain } = globalThis.$storefront.settings;
+  // @ts-ignore
+  window.API_STORE = `https://ecomplus.io/v2/${window.ECOM_STORE_ID}/`;
+  // @ts-ignore
+  window.API_STORE_CACHE = window.API_STORE;
+  // @ts-ignore
+  window.API_PASSPORT = window.API_STORE;
+  // @ts-ignore
+  window.API_SEARCH = `${window.API_STORE}/search/_els/`;
+  // @ts-ignore
+  window.API_MODULES = `https://${domain}/_api/modules/`;
+
   const onLoad = () => {
     const { ecomPassport } = window as Record<string, any>;
     watch(isAuthenticated, async () => {
       if (isAuthenticated.value) {
-        // @ts-ignore
-        window.ECOMCLIENT_API_PASSPORT = GET_PASSPORT_API_URI();
         ecomPassport.setSession({
           auth: {
             ...session.auth,
