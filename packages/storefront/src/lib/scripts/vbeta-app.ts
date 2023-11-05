@@ -8,16 +8,17 @@ import {
 // https://github.com/ecomplus/storefront/tree/master/%40ecomplus/storefront-app compat
 if (!import.meta.env.SSR) {
   const { domain } = globalThis.$storefront.settings;
+  const apiBaseUri = `https://ecomplus.io/v2/${window.ECOM_STORE_ID}/`;
   // @ts-ignore
-  window.API_STORE = `https://ecomplus.io/v2/${window.ECOM_STORE_ID}/`;
+  window.ECOMCLIENT_API_STORE = apiBaseUri;
   // @ts-ignore
-  window.API_STORE_CACHE = window.API_STORE;
+  window.ECOMCLIENT_API_STORE_CACHE = apiBaseUri;
   // @ts-ignore
-  window.API_PASSPORT = window.API_STORE;
+  window.ECOMCLIENT_API_PASSPORT = apiBaseUri;
   // @ts-ignore
-  window.API_SEARCH = `${window.API_STORE}/search/_els/`;
+  window.ECOMCLIENT_API_SEARCH = `${apiBaseUri}/search/_els/`;
   // @ts-ignore
-  window.API_MODULES = `https://${domain}/_api/modules/`;
+  window.ECOMCLIENT_API_MODULES = `https://${domain}/_api/modules/`;
 
   const onLoad = () => {
     const { ecomPassport } = window as Record<string, any>;
