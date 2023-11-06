@@ -85,7 +85,7 @@ const swr = async (_rewritedReq, env, ctx) => {
   }
   if (pathname === '/_image'
         || pathname.startsWith('/~')
-        || pathname.startsWith('/api/')
+        || pathname.startsWith('/_api/')
         || pathname.startsWith('/_feeds/')) {
     return bypassEarly();
   }
