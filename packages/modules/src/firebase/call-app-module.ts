@@ -44,6 +44,7 @@ export default async (
 
   // eslint-disable-next-line no-unused-vars
   let internalModuleFn: undefined | ((_data: AppModuleBody) => Promise<any>);
+  console.log('>> ', appId, ' ', apps.pagarMeV5.appId, ' calls ');
   if (modName === 'apply_discount') {
     if (appId === apps.discounts.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -136,6 +137,12 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
   } else if (modName === 'create_transaction') {
     if (appId === apps.mercadoPago.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -176,6 +183,12 @@ export default async (
     if (appId === apps.pagHiper.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-paghiper')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }
