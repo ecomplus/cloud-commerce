@@ -67,7 +67,8 @@ if (!import.meta.env.SSR) {
     }
 
     modulesToFetch.forEach(({ modName, reqOptions }) => {
-      afetch(`/_api/modules/${modName}`, reqOptions)
+      const { domain } = globalThis.$storefront.settings;
+      afetch(`https://${domain}/_api/modules/${modName}`, reqOptions)
         .then(async (response) => {
           if (response.ok) {
             const modInfo = {};
