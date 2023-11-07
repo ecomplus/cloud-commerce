@@ -49,7 +49,7 @@ export default {
       config.lang = config.lang || settingsContent.lang;
       config.currency = config.currency || settingsContent.currency;
       config.currencySymbol = config.currencySymbol || settingsContent.currencySymbol;
-      config.countryCode = config.currencySymbol || settingsContent.countryCode;
+      config.countryCode = config.countryCode || settingsContent.countryCode;
     }
     self.config = deepmerge(self.config, config);
     if (config.storeId) {
