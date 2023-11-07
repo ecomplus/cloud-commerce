@@ -10,7 +10,7 @@ import {
 import handleApiEvent from '../lib-mjs/pagarme-events-api.mjs';
 import handlePagarmeV5Webhook from '../lib-mjs/pagarme-webhooks.mjs';
 
-export const galaxpay = {
+export const pagarmev5 = {
   onStoreEvent: createAppEventsFunction(
     'pagarMeV5',
     handleApiEvent as ApiEventHandler,

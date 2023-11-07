@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "description": "E-Com Plus Cloud Commerce",
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./events": "./lib/pagarme-events.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
