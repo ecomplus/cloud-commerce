@@ -44,6 +44,12 @@ const affilateProgramEvents: ApiEventName[] = [
   'customers-new',
 ];
 
+const pagarMeV5Events: ApiEventName[] = [
+  'orders-cancelled',
+  'products-priceSet',
+  'products-quantitySet',
+];
+
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -162,6 +168,10 @@ const mergeConfig = {
     },
     mandae: {
       appId: 124677,
+    },
+    pagarMeV5: {
+      appId: 112381,
+      events: pagarMeV5Events,
     },
   },
   settingsContent,
