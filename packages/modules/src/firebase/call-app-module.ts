@@ -44,7 +44,6 @@ export default async (
 
   // eslint-disable-next-line no-unused-vars
   let internalModuleFn: undefined | ((_data: AppModuleBody) => Promise<any>);
-  console.log('>> ', appId, ' ', apps.pagarMeV5.appId, ' calls ');
   if (modName === 'apply_discount') {
     if (appId === apps.discounts.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
