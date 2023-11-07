@@ -7,8 +7,8 @@ import {
   createAppEventsFunction,
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import handleApiEvent from '../lib-mjs/pagarme-events-api.mjs';
-import handlePagarmeV5Webhook from '../lib-mjs/pagarme-webhooks.mjs';
+import handleApiEvent from '../lib-mjs/pagarme-v5-events-api.mjs';
+import handlePagarmeV5Webhook from '../lib-mjs/pagarme-v5-webhooks.mjs';
 
 export const pagarmev5 = {
   onStoreEvent: createAppEventsFunction(

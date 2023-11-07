@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/app-pagarme-v5",
   "type": "module",
   "version": "0.0.0",
-  "description": "E-Com Plus Cloud Commerce",
+  "description": "E-Com Plus Cloud Commerce app to integrate Pagar.me API v5 with recurring payments",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/pagarme-v5#readme",
   "scripts": {
-    "build": "bash scripts/build.sh"
+    "build": "bash scripts/build.sh",
+    "test": "bash scripts/tests.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
