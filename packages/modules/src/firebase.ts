@@ -13,5 +13,18 @@ export const modules = onRequest({
   region,
   memory,
 }, (req, res) => {
+  if (!process.env.MODULES_DISABLE_CORS) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, OPTIONS');
+    res.setHeader('Access-Control-Max-Age', '600');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Authorization, Content-Type, X-Store-ID, X-My-ID, X-Access-Token',
+    );
+    if (req.method === 'OPTIONS') {
+      res.end();
+      return;
+    }
+  }
   serveModulesApi(req, res);
 });
