@@ -601,6 +601,34 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
 
+  packages/apps/pagarme-v5:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:*
+        version: link:../../firebase
+      '@ecomplus/utils':
+        specifier: 1.5.0-rc.5
+        version: 1.5.0-rc.5
+      axios:
+        specifier: ^1.5.1
+        version: 1.6.0
+      firebase-admin:
+        specifier: ^11.11.0
+        version: 11.11.0
+      firebase-functions:
+        specifier: ^4.4.1
+        version: 4.5.0(firebase-admin@11.11.0)
+    devDependencies:
+      '@cloudcommerce/test-base':
+        specifier: workspace:*
+        version: link:../../test-base
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/paghiper:
     dependencies:
       '@cloudcommerce/api':
@@ -825,6 +853,9 @@ importers:
       '@cloudcommerce/app-pagarme':
         specifier: workspace:*
         version: link:../apps/pagarme
+      '@cloudcommerce/app-pagarme-v5':
+        specifier: workspace:*
+        version: link:../apps/pagarme-v5
       '@cloudcommerce/app-paghiper':
         specifier: workspace:*
         version: link:../apps/paghiper
@@ -958,6 +989,9 @@ importers:
       '@cloudcommerce/app-pagarme':
         specifier: workspace:*
         version: link:../apps/pagarme
+      '@cloudcommerce/app-pagarme-v5':
+        specifier: workspace:*
+        version: link:../apps/pagarme-v5
       '@cloudcommerce/app-paghiper':
         specifier: workspace:*
         version: link:../apps/paghiper
