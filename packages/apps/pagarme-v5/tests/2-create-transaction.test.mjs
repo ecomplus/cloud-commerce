@@ -12,10 +12,24 @@ describe('Test to create a transaction in the Pagar.me V5 with banking billet', 
   const appId = 112381;
   before(async () => {
     const paymentMethod = {
-      code: 'banking_billet',
-      name: 'Boleto Bancário - Pagar.me',
+      code: 'account_deposit',
+      name: 'Pix - Pagar.me',
     };
-    bodyCreateTransaction.payment_method = paymentMethod;
+    const to = {
+      zip: '35701134',
+      province_code: 'MG',
+      name: 'Wisley Alves',
+      city: 'Sete Lagoas',
+      borough: 'Progresso',
+      street: 'Rua Santo André',
+      number: 81,
+    };
+
+    Object.assign(bodyCreateTransaction, {
+      payment_method: paymentMethod,
+      to,
+      domain: 'www.lojatest.com.br',
+    });
 
     req = await fetch(`${modulesUrl}/create_transaction?app_id=${appId}`, {
       method: 'POST',

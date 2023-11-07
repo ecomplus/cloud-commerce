@@ -182,7 +182,7 @@ export default async (appData) => {
   } catch (error) {
     logger.error(error);
     // try to debug request error
-    const errCode = isRecurrence ? 'PAGARME_SUBSCRIPTION_ERR' : 'PAGARME_TRANSACTION_ERR';
+    const errCode = isRecurrence ? 'PAGARMEV5_SUBSCRIPTION_ERR' : 'PAGARMEV5_TRANSACTION_ERR';
     let { message } = error;
     const err = new Error(`${errCode}- ${orderId} => ${message}`);
     if (error.response) {

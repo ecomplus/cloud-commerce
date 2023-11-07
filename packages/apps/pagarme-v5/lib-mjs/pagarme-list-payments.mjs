@@ -1,9 +1,12 @@
 import path from 'path';
 import fs from 'fs';
+import url from 'node:url';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import addInstallments from './functions-lib/payments/add-installments.mjs';
 import { discountPlanPayment } from './functions-lib/pagarme/handle-plans.mjs';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export default async (data) => {
   const { application, params } = data;
@@ -19,13 +22,22 @@ export default async (data) => {
     if (pagarmePublicKey && typeof pagarmePublicKey === 'string') {
       process.env.PAGARMEV5_PUBLIC_KEY = pagarmePublicKey;
     } else {
+      logger.warn('Missing PAGARMEV5 PUBLIC KEY');
+    }
+  }
+
+  if (!process.env.PAGARMEV5_API_TOKEN) {
+    const pagarmeApiKey = configApp.pagarme_api_token;
+    if (pagarmeApiKey && typeof pagarmeApiKey === 'string') {
+      process.env.PAGARMEV5_API_TOKEN = pagarmeApiKey;
+    } else {
       logger.warn('Missing PAGARMEV5 API TOKEN');
     }
   }
 
   if (!process.env.PAGARMEV5_API_TOKEN || !process.env.PAGARMEV5_PUBLIC_KEY) {
     return {
-      error: 'NO_PAGARME_KEYS',
+      error: 'NO_PAGARMEV5_KEYS',
       message: 'Chave de API e/ou criptografia não configurada (lojista deve configurar o aplicativo)',
     };
   }
