@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.32.0](https://github.com/ecomplus/cloud-commerce/compare/v0.31.2...v0.32.0) (2023-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Passport API not existing anymore, just for token, removed `GET_PASSPORT_API_URI`
+
+### Features
+
+* **modules:** Add CORS headers by default and handle OPTIONS HTTP method (CORS preflight) ([aa08573](https://github.com/ecomplus/cloud-commerce/commit/aa08573100c5744c7b3a48f40187c7d9cc74b613))
+* **pagarme-v5:** Create app to integrate Pagar.me API v5 with recurring payments ([#255](https://github.com/ecomplus/cloud-commerce/issues/255)) ([a445642](https://github.com/ecomplus/cloud-commerce/commit/a445642c2a2774fc51d2df3467ca391dc55b0ba6))
+
+
+### Bug Fixes
+
+* **config:** Properly using `countryCode` from settings content [skip ci] ([4014aab](https://github.com/ecomplus/cloud-commerce/commit/4014aabe3bea6e119755b7abec19b80cd684cba0))
+* **deps:** Update non-major dependencies ([#266](https://github.com/ecomplus/cloud-commerce/issues/266)) ([17a559b](https://github.com/ecomplus/cloud-commerce/commit/17a559b0cf3df0897dacd8ac89a02c48415f24a9))
+* **modules:** Improving GET response cache with fine control for stale cache ([9c22262](https://github.com/ecomplus/cloud-commerce/commit/9c222625a66cf3ff5abe188041dd054ef05d853e))
+* **pagarme-v5:** Fixing package exports filepaths ([3522084](https://github.com/ecomplus/cloud-commerce/commit/3522084b30b77322fc921b7005690dbde44e360f))
+* **ssr:** Update Cloudflare SWR worker considering API routes at /_api/* ([8946190](https://github.com/ecomplus/cloud-commerce/commit/8946190d2dcd7a35a64081bb82e541fbca8998f0))
+* **storefront:** Fix `@ecomplus/client` const API base URIs on vbeta app compat ([7296836](https://github.com/ecomplus/cloud-commerce/commit/7296836fba024a56e0eb52e1af2e7b7762291816))
+* **storefront:** Fix constants names for `@ecomplus/client` on vbeta compat ([56d260a](https://github.com/ecomplus/cloud-commerce/commit/56d260ad520584ecd1b6142455fe48996c2a70fa))
+* **storefront:** Fixing API base URI on vbeta-app script ([0e7436e](https://github.com/ecomplus/cloud-commerce/commit/0e7436ef3d1f4aa6ea195561ab10da92852f882b))
+* **storefront:** Updating vbeta-app script version ([47738b7](https://github.com/ecomplus/cloud-commerce/commit/47738b76a5e742ca5144ac766d7ea80d0d1c003e))
+
 ### [0.31.2](https://github.com/ecomplus/cloud-commerce/compare/v0.31.1...v0.31.2) (2023-11-03)
 
 ### [0.31.1](https://github.com/ecomplus/cloud-commerce/compare/v0.31.0...v0.31.1) (2023-11-03)
