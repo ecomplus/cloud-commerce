@@ -6,7 +6,8 @@
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
-    "./firebase": "./lib/firebase.js"
+    "./firebase": "./lib/firebase.js",
+    "./lib/analytics-events": "./lib/analytics-events.js"
   },
   "repository": {
     "type": "git",
