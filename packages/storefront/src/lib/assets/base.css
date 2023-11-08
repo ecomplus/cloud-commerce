@@ -67,10 +67,11 @@ html {
 }
 
 :focus-visible {
-  outline-color: var(--c-outline, rgba(var(--rgb-secondary), .1));
+  outline-color: var(--c-outline, rgb(var(--rgb-secondary) / .1));
 }
 ::selection {
-  background-color: var(--c-selection-background, rgba(var(--rgb-secondary), .15));
+  background-color: var(--c-selection-background, rgb(var(--rgb-secondary-950) / .7));
+  color: var(--c-selection-foreground, #fff);
 }
 ::marker {
   color: var(--c-primary);

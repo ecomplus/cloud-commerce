@@ -1,7 +1,7 @@
 [data-tooltip] {
   position: relative;
   cursor: help;
-  --background-color: var(--c-tooltip-background, rgba(44, 44, 44, 0.85));
+  --background-color: var(--c-tooltip-background, rgb(44 44 44 / 0.85));
   --color: var(--c-tooltip-foreground, var(--c-on-dark));
   --border-color: transparent transparent var(--background-color) transparent;
 }
