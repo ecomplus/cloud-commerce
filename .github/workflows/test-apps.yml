@@ -64,7 +64,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - shell: bash
-        run: bash scripts/pre-install.sh && pnpm install --frozen-lockfile
+        run: bash scripts/pre-install.sh && pnpm install
 
       - uses: actions/cache@v3
         with:
