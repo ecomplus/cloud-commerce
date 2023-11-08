@@ -1078,9 +1078,6 @@ importers:
       '@ecomplus/utils':
         specifier: 1.5.0-rc.5
         version: 1.5.0-rc.5
-      '@headlessui/vue':
-        specifier: ^1.7.16
-        version: 1.7.16(vue@3.3.8)
       '@vueuse/core':
         specifier: 10.5.0
         version: 10.5.0(vue@3.3.8)
@@ -1136,9 +1133,6 @@ importers:
       '@fastify/deepmerge':
         specifier: ^1.3.0
         version: 1.3.0
-      '@headlessui/vue':
-        specifier: ^1.7.16
-        version: 1.7.16(vue@3.3.8)
       '@iconify-json/fa6-brands':
         specifier: ^1.1.13
         version: 1.1.13
@@ -1259,6 +1253,9 @@ importers:
       '@cloudcommerce/ssr':
         specifier: ^0.32.0
         version: link:../../../packages/ssr
+      '@headlessui/vue':
+        specifier: ^1.7.16
+        version: 1.7.16
     devDependencies:
       '@cloudcommerce/i18n':
         specifier: ^0.32.0
@@ -4203,7 +4200,7 @@ packages:
       yargs: 17.7.2
     dev: false
 
-  /@headlessui/vue@1.7.16(vue@3.3.8):
+  /@headlessui/vue@1.7.16:
     resolution: {integrity: sha512-nKT+nf/q6x198SsyK54mSszaQl/z+QxtASmgMEJtpxSX2Q0OPJX0upS/9daDyiECpeAsvjkoOrm2O/6PyBQ+Qg==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -4211,8 +4208,6 @@ packages:
     peerDependenciesMeta:
       vue:
         optional: true
-    dependencies:
-      vue: 3.3.8(typescript@5.0.4)
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
