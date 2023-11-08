@@ -5,13 +5,13 @@ import serveModulesApi from './firebase/serve-modules-api';
 
 const {
   httpsFunctionOptions: { region },
-  modulesFunctionOptions: { memory },
+  modulesFunctionOptions,
 } = config.get();
 
 export const modules = onRequest({
   concurrency: 24,
   region,
-  memory,
+  ...modulesFunctionOptions,
 }, (req, res) => {
   if (!process.env.MODULES_DISABLE_CORS) {
     res.setHeader('Access-Control-Allow-Origin', '*');
