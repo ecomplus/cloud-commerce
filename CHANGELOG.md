@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.33.0](https://github.com/ecomplus/cloud-commerce/compare/v0.32.0...v0.33.0) (2023-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ssr:** `@headlessui/vue` is no more dev dep of `@cloudcommerce/storefront`, not dep of `@cloudcommerce/ssr`, must be manually added as dependency if used
+
+### Features
+
+* **modules:** Optionally override any Function runtime option on `modulesFunctionOptions` config ([d1fed93](https://github.com/ecomplus/cloud-commerce/commit/d1fed93c4ae69c780efe690c62762b2a6ffd1da1))
+
+
+### Bug Fixes
+
+* **passport:** Set CORS headers and accept OPTIONS request ([d15dc5a](https://github.com/ecomplus/cloud-commerce/commit/d15dc5a11f8d6a180269f8f48660d92ada5e9c38))
+* **storefront:** Fix default styles for ::selection with new RGB syntax ([9497bfd](https://github.com/ecomplus/cloud-commerce/commit/9497bfd5dbcbf45136dc027327ea8abe3d8b748d))
+* **storefront:** Update dark/light CSS vars to RGB spaces notation ([62ea62c](https://github.com/ecomplus/cloud-commerce/commit/62ea62cc9653b7a207b2da7e203524c6be6db387))
+* **storefront:** Updating vbeta-app script version ([c0d50c0](https://github.com/ecomplus/cloud-commerce/commit/c0d50c028474ef0ccbc935b8253260ad978c13e7))
+
+
+* **ssr:** Removing `@headlessui/vue` from pkg deps ([344916f](https://github.com/ecomplus/cloud-commerce/commit/344916fd49c4683023b188fa9ead66a5c1a346f3))
+
 ## [0.32.0](https://github.com/ecomplus/cloud-commerce/compare/v0.31.2...v0.32.0) (2023-11-07)
 
 
