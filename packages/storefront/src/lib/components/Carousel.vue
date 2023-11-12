@@ -127,24 +127,29 @@ const changeSlide = (step: number, isPageScroll: boolean = true) => {
   if (slideSizes.value.length < 2) {
     return;
   }
-  if (isPageScroll && (step === 1 || step === -1)) {
-    let pageStep = 0;
-    let pageStepSize = 0;
-    for (let i = activeIndex.value; i < slideSizes.value.length; i++) {
-      const { size } = slideSizes.value[i] || {};
-      if (size) {
-        pageStep += 1;
-        pageStepSize += size;
-        if (pageStepSize >= wrapperVisibleSize.value) {
-          break;
+  let nextOffset = -1;
+  if (currentPos.value + wrapperVisibleSize.value >= wrapperScrollSize.value) {
+    nextOffset = 0;
+  } else {
+    if (isPageScroll && (step === 1 || step === -1)) {
+      let pageStep = 0;
+      let pageStepSize = 0;
+      for (let i = activeIndex.value; i < slideSizes.value.length; i++) {
+        const { size } = slideSizes.value[i] || {};
+        if (size) {
+          pageStep += 1;
+          pageStepSize += size;
+          if (pageStepSize + size * 0.75 >= wrapperVisibleSize.value) {
+            break;
+          }
         }
       }
+      if (pageStep) {
+        step = step > 0 ? pageStep : -pageStep;
+      }
     }
-    if (pageStep) {
-      step = step > 0 ? pageStep : -pageStep;
-    }
+    nextOffset = calcNextOffset(step);
   }
-  const nextOffset = calcNextOffset(step);
   wrapper.value?.scrollTo({
     [isX ? 'left' : 'top']: nextOffset,
     behavior: 'smooth',
