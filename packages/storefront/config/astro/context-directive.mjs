@@ -23,9 +23,9 @@ export default (load, opts) => {
   if (window._firstLoadContextId === id && window._emitedContextId === id) {
     console.log('[ctx] first load');
     next();
-    setTimeout(() => {
+    document.addEventListener('astro:beforeload', () => {
       delete window._firstLoadContextId;
-    }, 49);
+    }, { once: true });
     return;
   }
   window.addEventListener('storefront:apiContext', next, { once: true });
