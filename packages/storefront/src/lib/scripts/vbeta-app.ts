@@ -4,9 +4,13 @@ import {
   isAuthenticated,
   customer,
 } from '@@sf/state/customer-session';
+import utm from '@@sf/scripts/session-utm';
 
 // https://github.com/ecomplus/storefront/tree/master/%40ecomplus/storefront-app compat
 if (!import.meta.env.SSR) {
+  if (Object.keys(utm).length) {
+    sessionStorage.setItem('ecomUtm', JSON.stringify(utm));
+  }
   const { domain } = globalThis.$storefront.settings;
   const apiBaseUri = `https://ecomplus.io/v2/:${window.ECOM_STORE_ID}/`;
   // @ts-ignore
