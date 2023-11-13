@@ -26,8 +26,8 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "@google-cloud/pubsub": "^4.0.6",
-    "axios": "^1.6.0",
+    "@google-cloud/pubsub": "^4.0.7",
+    "axios": "^1.6.1",
     "firebase-admin": "^11.11.0",
     "firebase-functions": "^4.5.0"
   },
