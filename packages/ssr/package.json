@@ -30,7 +30,7 @@
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.5",
-    "@vueuse/core": "10.5.0",
+    "@vueuse/core": "10.6.1",
     "astro": "2.10.15",
     "astro-capo": "^0.0.1",
     "firebase-admin": "^11.11.0",
