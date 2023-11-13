@@ -38,8 +38,15 @@ if (fetchingApiContext) {
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
-const title = state.meta_title || state.name || state.title || settings.name;
-const description = state.meta_description || state.short_description || settings.description;
+const title = state.meta_title ||
+  state.metaTitle ||
+  (state.name && `${state.name} | ${settings.name}`) ||
+  (state.title && `${state.title} | ${settings.name}`) ||
+  settings.name;
+const description = state.meta_description ||
+  state.metaDescription ||
+  state.short_description ||
+  settings.description;
 const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
 const shortcutIcon = settings.icon ? getIconUrl(192) : null;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
