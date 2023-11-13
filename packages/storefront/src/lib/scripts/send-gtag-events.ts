@@ -34,17 +34,25 @@ export const sendGtagEvent = (name: string, params: Record<string, any>) => {
 
 if (!import.meta.env.SSR) {
   const { $storefront: { settings } } = globalThis;
-  const url = new URL(window.location.toString());
-  Object.keys(utm).forEach((utmParam) => {
-    if (utm[utmParam] && !url.searchParams.get(`utm_${utmParam}`)) {
-      url.searchParams.set(`utm_${utmParam}`, utm[utmParam]);
-    }
-  });
-  sendGtagEvent('page_view', {
-    page_location: url.toString(),
-    client_id: customer.value._id,
-    language: settings.lang,
-    page_title: document.title,
-    user_agent: navigator.userAgent,
-  });
+  let lastPageLocation = '';
+  const sendPageView = () => {
+    const url = new URL(window.location.toString());
+    Object.keys(utm).forEach((utmParam) => {
+      if (utm[utmParam] && !url.searchParams.get(`utm_${utmParam}`)) {
+        url.searchParams.set(`utm_${utmParam}`, utm[utmParam]);
+      }
+    });
+    const pageLocation = url.toString();
+    if (pageLocation === lastPageLocation) return;
+    sendGtagEvent('page_view', {
+      page_location: pageLocation,
+      client_id: customer.value._id,
+      language: settings.lang,
+      page_title: document.title,
+      user_agent: navigator.userAgent,
+    });
+    lastPageLocation = pageLocation;
+  };
+  sendPageView();
+  document.addEventListener('astro:load', sendPageView);
 }
