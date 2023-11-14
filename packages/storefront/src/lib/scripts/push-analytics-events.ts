@@ -28,9 +28,13 @@ if (!import.meta.env.SSR) {
   watchGtagEvents(({ event }) => {
     sendServerEvent(event);
     const { name, params } = event;
-    const { gtag } = window as any;
+    const { gtag, dataLayer } = window as any;
     if (typeof gtag === 'function') {
       gtag('event', name, params);
+    }
+    // https://developers.google.com/analytics/devguides/migration/ecommerce/gtm-ga4-to-ua#4_enable_the_gtagjs_api
+    if (dataLayer && typeof dataLayer.push === 'function') {
+      dataLayer.push(['event', name, params]);
     }
   });
 
@@ -49,7 +53,17 @@ if (!import.meta.env.SSR) {
     lastPageLocation = pageLocation;
   };
   sendPageView();
-  document.addEventListener('astro:load', sendPageView);
+  document.addEventListener('astro:load', () => {
+    try {
+      (window as any).dataLayer.push(function resetAndSend() {
+        // @ts-ignore
+        this.reset();
+        sendPageView();
+      });
+    } catch {
+      sendPageView();
+    }
+  });
 
   if (isLogged.value) {
     emitGtagEvent('login');
