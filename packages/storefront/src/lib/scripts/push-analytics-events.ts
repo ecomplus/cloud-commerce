@@ -28,10 +28,14 @@ if (!import.meta.env.SSR) {
   watchGtagEvents(({ event }) => {
     sendServerEvent(event);
     const { name, params } = event;
-    const { gtag, dataLayer } = window as any;
+    const { gtag, dataLayer } = window as {
+      gtag?: Gtag.Gtag,
+      dataLayer?: Array<any>,
+    };
     if (typeof gtag === 'function') {
       gtag('event', name, params);
     }
+    if (name === 'page_view') return;
     // https://developers.google.com/analytics/devguides/migration/ecommerce/gtm-ga4-to-ua#4_enable_the_gtagjs_api
     if (dataLayer && typeof dataLayer.push === 'function') {
       dataLayer.push(['event', name, params]);

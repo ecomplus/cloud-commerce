@@ -12,10 +12,15 @@ export const trackingIds: {
 } = {};
 
 if (!import.meta.env.SSR) {
-  const { gtag, GTAG_TAG_ID } = window as any;
-  if (GTAG_TAG_ID && typeof gtag === 'function') {
+  const {
+    gtag,
+    GTAG_TAG_ID,
+    GA_TRACKING_ID,
+  } = window as { [k:string]: any, gtag?: Gtag.Gtag };
+  const tagId = GTAG_TAG_ID || GA_TRACKING_ID;
+  if (tagId && typeof gtag === 'function') {
     ['client_id', 'session_id', 'gclid'].forEach((key) => {
-      gtag('get', GTAG_TAG_ID, key, (id) => {
+      gtag('get', tagId, key, (id) => {
         trackingIds[key === 'gclid' ? key : `g_${key}`] = id;
       });
     });
@@ -61,14 +66,27 @@ if (!import.meta.env.SSR) {
 
 export const GTAG_EVENT_TYPE = 'GtagEvent';
 
+// `page_view` params not typed
+// https://developers.google.com/tag-platform/gtagjs/reference/events#page_view
+type PageViewParams = {
+  page_location?: string,
+  client_id?: string,
+  language?: string,
+  page_encoding?: string,
+  page_title?: string,
+  user_agent?: string,
+};
 type EventMessage = typeof trackingIds &
   { utm: typeof utm } &
   {
     type: string,
     user_id?: string & { length: 24 },
     event: {
-      name: string,
-      params: Record<string, any>,
+      name: 'page_view',
+      params: PageViewParams,
+    } | {
+      name: Exclude<Gtag.EventNames, 'page_view'>,
+      params: Gtag.EventParams,
     },
   };
 
@@ -80,12 +98,16 @@ export const getAnalyticsContext = () => {
   };
 };
 
-export const emitGtagEvent = (name: string, params: Record<string, any> = {}) => {
+export const emitGtagEvent = <N extends Gtag.EventNames = 'view_item'>
+  (name: N, params: N extends 'page_view' ? PageViewParams : Gtag.EventParams = {}) => {
   try {
     const data: EventMessage = {
       type: GTAG_EVENT_TYPE,
       ...getAnalyticsContext(),
-      event: { name, params },
+      event: {
+        name: name as 'view_item',
+        params: params as Gtag.EventParams,
+      },
     };
     window.postMessage(data, window.origin);
   } catch (e) {

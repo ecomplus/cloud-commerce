@@ -40,6 +40,7 @@
     "@iconify-json/fa6-brands": "^1.1.13",
     "@iconify-json/heroicons": "^1.1.13",
     "@iconify-json/logos": "^1.1.37",
+    "@types/gtag.js": "^0.0.18",
     "@vite-pwa/astro": "^0.1.4",
     "@vueuse/core": "10.6.1",
     "astro": "2.10.15",
