@@ -20,7 +20,7 @@ const { customCode } = await getContent('layout');
   {customCode?.htmlBody && <Fragment set:html={customCode.htmlBody} />}
   <slot name="base-body-scripts">
     <script src="../scripts/session-utm"></script>
-    <script src="../scripts/send-gtag-events"></script>
+    <script src="../scripts/push-analytics-events"></script>
   </slot>
   <slot name="before-body-end" />
 </BaseBody>
