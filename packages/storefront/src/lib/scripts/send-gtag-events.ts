@@ -1,52 +1,27 @@
-import { useDebounceFn } from '@vueuse/core';
-import { customer } from '@@sf/state/customer-session';
-import utm from '@@sf/scripts/session-utm';
-import afetch from '../../helpers/afetch';
-
-let eventsToSend: Array<Record<string, any>> = [];
-const _sendServerEvents = useDebounceFn(() => {
-  afetch(`/_analytics`, {
-    method: 'post',
-    body: { events: eventsToSend },
-  });
-  eventsToSend = [];
-}, 200);
-const sendServerEvent = (data: Record<string, any>) => {
-  eventsToSend.push(data);
-  _sendServerEvents();
-};
-
-export const GTAG_EVENT_TYPE = 'GtagEvent';
-
-export const sendGtagEvent = (name: string, params: Record<string, any>) => {
-  try {
-    const data = {
-      type: GTAG_EVENT_TYPE,
-      name,
-      params,
-    };
-    sendServerEvent(data);
-    window.postMessage(data, window.origin);
-  } catch (e) {
-    console.error(e);
-  }
-};
+import { watchOnce } from '@vueuse/core';
+import { isLogged } from '@@sf/state/customer-session';
+import {
+  sessionIds,
+  sendGtagEvent,
+  watchGtagEvents,
+} from '@@sf/state/use-analytics';
 
 if (!import.meta.env.SSR) {
+  watchGtagEvents(({ event: { name, params } }) => {
+    const { gtag } = window as any;
+    if (typeof gtag === 'function') {
+      gtag('event', name, params);
+    }
+  });
+
   const { $storefront: { settings } } = globalThis;
   let lastPageLocation = '';
   const sendPageView = () => {
-    const url = new URL(window.location.toString());
-    Object.keys(utm).forEach((utmParam) => {
-      if (utm[utmParam] && !url.searchParams.get(`utm_${utmParam}`)) {
-        url.searchParams.set(`utm_${utmParam}`, utm[utmParam]);
-      }
-    });
-    const pageLocation = url.toString();
+    const pageLocation = window.location.toString();
     if (pageLocation === lastPageLocation) return;
     sendGtagEvent('page_view', {
       page_location: pageLocation,
-      client_id: customer.value._id,
+      client_id: sessionIds.g_client_id || sessionIds.client_id,
       language: settings.lang,
       page_title: document.title,
       user_agent: navigator.userAgent,
@@ -55,4 +30,10 @@ if (!import.meta.env.SSR) {
   };
   sendPageView();
   document.addEventListener('astro:load', sendPageView);
+
+  if (isLogged.value) {
+    sendGtagEvent('login');
+  } else {
+    watchOnce(isLogged, () => sendGtagEvent('login'));
+  }
 }
