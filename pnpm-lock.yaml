@@ -1154,6 +1154,9 @@ importers:
       '@iconify-json/logos':
         specifier: ^1.1.37
         version: 1.1.37
+      '@types/gtag.js':
+        specifier: ^0.0.18
+        version: 0.0.18
       '@vite-pwa/astro':
         specifier: ^0.1.4
         version: 0.1.4(astro@2.10.15)(vite-plugin-pwa@0.16.7)
@@ -4684,6 +4687,10 @@ packages:
       '@types/node': 18.18.9
     dev: false
     optional: true
+
+  /@types/gtag.js@0.0.18:
+    resolution: {integrity: sha512-GJxnIvuXuVhKaHfsOdzGipoOoXq72y3mdcncc9h6i6E7nlz89zBEj2wrLM7bqO5Xk9Lm2B94MwdQsSwRlaPSWw==}
+    dev: false
 
   /@types/hast@2.3.5:
     resolution: {integrity: sha512-SvQi0L/lNpThgPoleH53cdjB3y9zpLlVjRbqB3rH8hx1jiRSBGAhyjV3H+URFjNVRqt2EdYNrbZE5IsGlNfpRg==}
