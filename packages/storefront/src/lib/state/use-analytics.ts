@@ -1,3 +1,5 @@
+import type { Products, Carts, SearchItem } from '@cloudcommerce/types';
+import { price as getPrice, name as getName } from '@ecomplus/utils';
 import { customer } from '@@sf/state/customer-session';
 import utm from '@@sf/scripts/session-utm';
 
@@ -11,7 +13,27 @@ export const trackingIds: {
   session_id?: string,
 } = {};
 
+export const getAnalyticsContext = () => {
+  return {
+    ...trackingIds,
+    user_id: customer.value._id,
+    utm,
+  };
+};
+
+const pageViewState = {} as {
+  resolve: ((...args: any[]) => void) | null | undefined,
+  waiting: Promise<unknown> | undefined,
+};
 if (!import.meta.env.SSR) {
+  const resetPageViewPromise = () => {
+    if (pageViewState.resolve) return;
+    pageViewState.waiting = new Promise((resolve) => {
+      pageViewState.resolve = resolve;
+    });
+  };
+  resetPageViewPromise();
+  document.addEventListener('astro:beforeload', resetPageViewPromise);
   const {
     gtag,
     GTAG_TAG_ID,
@@ -64,8 +86,6 @@ if (!import.meta.env.SSR) {
   });
 }
 
-export const GTAG_EVENT_TYPE = 'GtagEvent';
-
 // `page_view` params not typed
 // https://developers.google.com/tag-platform/gtagjs/reference/events#page_view
 type PageViewParams = {
@@ -90,23 +110,78 @@ type EventMessage = typeof trackingIds &
     },
   };
 
-export const getAnalyticsContext = () => {
-  return {
-    ...trackingIds,
-    user_id: customer.value._id,
-    utm,
-  };
-};
+export const GTAG_EVENT_TYPE = 'GtagEvent';
 
-export const emitGtagEvent = <N extends Gtag.EventNames = 'view_item'>
-  (name: N, params: N extends 'page_view' ? PageViewParams : Gtag.EventParams = {}) => {
+let countItemsPerList: Record<string, number> = {};
+let defaultItemsList = '';
+
+export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
+  name: N,
+  _params: N extends 'page_view' ? PageViewParams : Gtag.EventParams = {},
+) => {
+  if (import.meta.env.SSR) return;
+  const params = _params as Gtag.EventParams;
+  if (name === 'page_view') {
+    countItemsPerList = {};
+    const { apiContext } = window.$storefront;
+    defaultItemsList = '';
+    if (apiContext) {
+      const { name: docName } = apiContext.doc;
+      switch (apiContext.resource) {
+        case 'categories': defaultItemsList = `Category: ${docName}`; break;
+        case 'brands': defaultItemsList = `Brand: ${docName}`; break;
+        case 'collections': defaultItemsList = `Collection: ${docName}`; break;
+        default:
+      }
+    } else {
+      switch (window.location.pathname) {
+        case '/':
+          defaultItemsList = 'Home';
+          break;
+        case '/s':
+        case '/search':
+        case '/busca':
+          defaultItemsList = 'Search results';
+          break;
+        default:
+      }
+    }
+    if (pageViewState.resolve) {
+      pageViewState.resolve();
+      pageViewState.resolve = null;
+    }
+  } else {
+    if (pageViewState.waiting) await pageViewState.waiting;
+    if (name === 'view_item') {
+      params.items?.forEach((item) => {
+        if (item.index !== undefined) return;
+        const listKey = item.item_list_id
+          || item.item_list_name
+          || defaultItemsList;
+        if (listKey) {
+          if (!countItemsPerList[listKey]) {
+            countItemsPerList[listKey] = 1;
+          } else {
+            countItemsPerList[listKey] += 1;
+          }
+          item.index = countItemsPerList[listKey];
+          if (!item.item_list_id && !item.item_list_name) {
+            item.item_list_name = listKey;
+          }
+        }
+      });
+    }
+    if (typeof params.value === 'number' && !params.currency) {
+      params.currency = window.ECOM_CURRENCY || 'BRL';
+    }
+  }
   try {
     const data: EventMessage = {
       type: GTAG_EVENT_TYPE,
       ...getAnalyticsContext(),
       event: {
         name: name as 'view_item',
-        params: params as Gtag.EventParams,
+        params,
       },
     };
     window.postMessage(data, window.origin);
@@ -121,4 +196,46 @@ export const watchGtagEvents = (cb: (payload: EventMessage) => any) => {
       cb(data);
     }
   });
+};
+
+type CartItem = Carts['items'][0];
+
+export const getGtagItem = (product: Partial<Products> | SearchItem | CartItem) => {
+  const [name, ...variants] = getName(product).split(' / ');
+  const item: Gtag.Item = {
+    item_name: name,
+    item_id: product.sku,
+    price: Math.round(getPrice(product) * 100) / 100,
+  };
+  if (variants && variants.length) {
+    item.item_variant = variants.join(' / ');
+  } else if ((product as CartItem).variation_id) {
+    item.item_name = name.replace(
+      (window as any).__customGTMVariantRegex || /\s[^\s]+$/,
+      '',
+    );
+    item.item_variant = name.replace(item.item_name, '').trim();
+  }
+  if (
+    product.quantity === 0
+    || (product.quantity && (product as CartItem).product_id)
+  ) {
+    item.quantity = product.quantity;
+  }
+  const { brands, categories } = product as Products;
+  if (brands?.length) {
+    item.item_brand = brands[0].name;
+  }
+  if (categories?.length) {
+    for (let i = 0; i < categories.length; i++) {
+      const { name: categoryName } = categories[i];
+      if (i === 0) {
+        item.item_category = categoryName;
+      } else {
+        item[`item_category${(i + 1)}`] = categoryName;
+        if (i === 4) break;
+      }
+    }
+  }
+  return item;
 };

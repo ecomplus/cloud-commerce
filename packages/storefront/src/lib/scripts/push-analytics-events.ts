@@ -35,7 +35,6 @@ if (!import.meta.env.SSR) {
     if (typeof gtag === 'function') {
       gtag('event', name, params);
     }
-    if (name === 'page_view') return;
     // https://developers.google.com/analytics/devguides/migration/ecommerce/gtm-ga4-to-ua#4_enable_the_gtagjs_api
     if (dataLayer && typeof dataLayer.push === 'function') {
       dataLayer.push(['event', name, params]);
@@ -57,7 +56,7 @@ if (!import.meta.env.SSR) {
     lastPageLocation = pageLocation;
   };
   sendPageView();
-  document.addEventListener('astro:load', () => {
+  window.addEventListener('storefront:apiContext', () => {
     try {
       (window as any).dataLayer.push(function resetAndSend() {
         // @ts-ignore
