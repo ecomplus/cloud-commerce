@@ -96,10 +96,13 @@ type PageViewParams = {
   page_title?: string,
   user_agent?: string,
 };
-type EventMessage = typeof trackingIds &
+
+export const GTAG_EVENT_TYPE = 'GtagEvent';
+
+export type GtagEventMessage = typeof trackingIds &
   { utm: typeof utm } &
   {
-    type: string,
+    type: typeof GTAG_EVENT_TYPE,
     user_id?: string & { length: 24 },
     event: {
       name: 'page_view',
@@ -109,8 +112,6 @@ type EventMessage = typeof trackingIds &
       params: Gtag.EventParams,
     },
   };
-
-export const GTAG_EVENT_TYPE = 'GtagEvent';
 
 let countItemsPerList: Record<string, number> = {};
 let defaultItemsList = '';
@@ -176,7 +177,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
     }
   }
   try {
-    const data: EventMessage = {
+    const data: GtagEventMessage = {
       type: GTAG_EVENT_TYPE,
       ...getAnalyticsContext(),
       event: {
@@ -190,8 +191,8 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
   }
 };
 
-export const watchGtagEvents = (cb: (payload: EventMessage) => any) => {
-  window.addEventListener('message', ({ data }: { data: EventMessage }) => {
+export const watchGtagEvents = (cb: (payload: GtagEventMessage) => any) => {
+  window.addEventListener('message', ({ data }: { data: GtagEventMessage }) => {
     if (data.type === GTAG_EVENT_TYPE) {
       cb(data);
     }

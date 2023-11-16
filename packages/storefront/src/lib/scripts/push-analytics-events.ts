@@ -8,7 +8,13 @@ import {
 } from '@@sf/state/use-analytics';
 import afetch from '../../helpers/afetch';
 
-let eventsToSend: Array<Record<string, any>> = [];
+type AnalyticsEvent = { name: string, params: Record<string, any> };
+interface GroupedAnalyticsEvent {
+  g: AnalyticsEvent;
+  fb?: AnalyticsEvent;
+  tt?: AnalyticsEvent;
+}
+let eventsToSend: Array<GroupedAnalyticsEvent> = [];
 const _sendServerEvents = useDebounceFn(() => {
   afetch(`/_analytics`, {
     method: 'post',
@@ -19,14 +25,13 @@ const _sendServerEvents = useDebounceFn(() => {
   });
   eventsToSend = [];
 }, 200);
-const sendServerEvent = (event: Record<string, any>) => {
-  eventsToSend.push(event);
+const sendServerEvent = (groupedEvent: GroupedAnalyticsEvent) => {
+  eventsToSend.push(groupedEvent);
   _sendServerEvents();
 };
 
 if (!import.meta.env.SSR) {
   watchGtagEvents(({ event }) => {
-    sendServerEvent(event);
     const { name, params } = event;
     const { gtag, dataLayer } = window as {
       gtag?: Gtag.Gtag,
@@ -39,6 +44,7 @@ if (!import.meta.env.SSR) {
     if (dataLayer && typeof dataLayer.push === 'function') {
       dataLayer.push(['event', name, params]);
     }
+    sendServerEvent({ g: event });
   });
 
   const { $storefront: { settings } } = globalThis;
