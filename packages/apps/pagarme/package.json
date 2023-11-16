@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-pagarme",
   "type": "module",
-  "version": "0.33.0",
+  "version": "0.33.1",
   "description": "E-Com Plus Cloud Commerce app to integrate Pagar.me",
   "main": "lib/pagarme.js",
   "exports": {

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.33.1](https://github.com/ecomplus/cloud-commerce/compare/v0.33.0...v0.33.1) (2023-11-16)
+
+
+### Features
+
+* **storefront:** Add new `getGtagItem` method on `useAnalytics` state as reusable parser ([2f7cb99](https://github.com/ecomplus/cloud-commerce/commit/2f7cb99ccf37f9c0dfcd484068702e0e7291f0f6))
+* **storefront:** New `send-gtag-events` script, auto emit first pageview ([a888870](https://github.com/ecomplus/cloud-commerce/commit/a88887013901aa42fbf1722fd7a5c578a810c6ed))
+* **storefront:** New `state/use-analytics` module to send and watch events and retrieve session ([f2c10f5](https://github.com/ecomplus/cloud-commerce/commit/f2c10f5d0138755c9526b94f7d033de48123d89d))
+* **storefront:** Send page view analytics event on each view transitions "SPA" page load ([914aec4](https://github.com/ecomplus/cloud-commerce/commit/914aec4e07f9b954d2a5da803d1a2fc1dd01f4b3))
+* **storefront:** Typing analytics gtag events ([12d2325](https://github.com/ecomplus/cloud-commerce/commit/12d2325d4270b9f8233e4c854cccbd5c41098258))
+* **storefront:** Update `scripts/push-analytics-events` to handle GTM `dataLayer` if globally set ([058fe1d](https://github.com/ecomplus/cloud-commerce/commit/058fe1d4b3a6bb6c4a683282a1de1bfc3f0c58c9))
+* **storefront:** Update `useProductCard` composable to send view item gtag event ([f2dafd5](https://github.com/ecomplus/cloud-commerce/commit/f2dafd545471530f1e49f51147312aef169a4ad3))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#268](https://github.com/ecomplus/cloud-commerce/issues/268)) ([a2a2ebd](https://github.com/ecomplus/cloud-commerce/commit/a2a2ebdccb6153afb89b5df937ca0ea30fa16300))
+* **storefront:** Ensure async components hydration with `client:context` on first load ([782ba4a](https://github.com/ecomplus/cloud-commerce/commit/782ba4a0d4b0388e2081c1181393b7c252ce99fe))
+* **storefront:** Keep UTM on local storage and consider valid for 7 days ([b0b2d6e](https://github.com/ecomplus/cloud-commerce/commit/b0b2d6e33948798f8a564bc0ee9a0467a09f29d9))
+* **storefront:** Properly set page meta title and description from route state and store settings ([39f1ce4](https://github.com/ecomplus/cloud-commerce/commit/39f1ce4b0f8c20777770b0eba67d0e20d4d4f84e))
+* **storefront:** Update `<Carousel>` to properly handle partially fit slides ([86666f7](https://github.com/ecomplus/cloud-commerce/commit/86666f7451ebaa5be09df303b297f17b1ac7be58))
+
 ## [0.33.0](https://github.com/ecomplus/cloud-commerce/compare/v0.32.0...v0.33.0) (2023-11-09)
 
 
