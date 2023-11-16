@@ -8,6 +8,7 @@ import {
   inStock as checkInStock,
   onPromotion as checkOnPromotion,
 } from '@ecomplus/utils';
+import { slugify } from '@@sf/sf-lib';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
 
 type PictureSize = { url: string; alt?: string; size?: string };
@@ -17,8 +18,8 @@ export type ProductItem = Products | SearchItem;
 export type Props = {
   product?: ProductItem;
   productId?: Products['_id'];
-  listId?: string;
   listName?: string;
+  listId?: string;
 } & ({ product: ProductItem } | { productId: Products['_id'] });
 
 const useProductCard = <T extends ProductItem | undefined = undefined>(props: Props) => {
@@ -89,8 +90,8 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     value: isActive.value ? product.price : 0,
     items: [{
       ...getGtagItem(product),
-      item_list_id: props.listId,
       item_list_name: props.listName,
+      item_list_id: props.listId || (props.listName && slugify(props.listName)),
     }],
   });
 
