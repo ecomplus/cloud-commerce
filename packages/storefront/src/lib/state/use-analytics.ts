@@ -156,6 +156,14 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
     if (name === 'view_item') {
       params.items?.forEach((item) => {
         if (item.index !== undefined) return;
+        if (!item.item_list_id && !item.item_list_name) {
+          const { apiContext } = window.$storefront;
+          // @ts-ignore
+          if (apiContext?.doc._id === item.object_id) {
+            item.item_list_id = 'product-page';
+            item.item_list_name = 'Product page';
+          }
+        }
         const listKey = item.item_list_id
           || item.item_list_name
           || defaultItemsList;
@@ -207,6 +215,9 @@ export const getGtagItem = (product: Partial<Products> | SearchItem | CartItem) 
     item_name: name,
     item_id: product.sku,
     price: Math.round(getPrice(product) * 100) / 100,
+    // https://developers.google.com/analytics/devguides/collection/ga4/item-scoped-ecommerce#add_an_item-scoped_custom_parameter
+    // @ts-ignore
+    object_id: product._id,
   };
   if (variants && variants.length) {
     item.item_variant = variants.join(' / ');
