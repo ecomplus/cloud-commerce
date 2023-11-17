@@ -1,5 +1,4 @@
-import { useDebounceFn, watchOnce } from '@vueuse/core';
-import { isLogged } from '@@sf/state/customer-session';
+import { useDebounceFn } from '@vueuse/core';
 import {
   useAnalytics,
   trackingIds,
@@ -75,10 +74,4 @@ if (!import.meta.env.SSR) {
       sendPageView();
     }
   });
-
-  if (isLogged.value) {
-    emitGtagEvent('login');
-  } else {
-    watchOnce(isLogged, () => emitGtagEvent('login'));
-  }
 }
