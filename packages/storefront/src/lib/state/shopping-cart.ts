@@ -1,9 +1,11 @@
 import type { Products, CartSet, SearchItem } from '@cloudcommerce/api/types';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
+import mitt from 'mitt';
 import useStorage from '@@sf/state/use-storage';
 import addItem from '@@sf/state/shopping-cart/add-cart-item';
 import parseProduct from '@@sf/state/shopping-cart/parse-product';
 
+type CartItem = CartSet['items'][0];
 const storageKey = 'ecomShoppingCart';
 const emptyCart = {
   items: [],
@@ -64,7 +66,7 @@ const shoppingCart = computed({
   },
 });
 
-const addCartItem = (newItem: CartSet['items'][0]) => {
+const addCartItem = (newItem: CartItem) => {
   const cartObj = shoppingCart.value;
   const upsertedItem = addItem(cartObj, newItem);
   if (upsertedItem) {
@@ -96,4 +98,35 @@ export {
   removeCartItem,
   parseProduct,
   addProductToCart,
+};
+
+type CartEvent = {
+  addCartItem: CartItem,
+  removeCartItem: CartItem,
+};
+const cartEmitter = mitt<CartEvent>();
+const cloneItems = () => shoppingCart.value.items.map((item) => ({ ...item }));
+let oldItems = cloneItems();
+watch(shoppingCart, ({ items }) => {
+  ['addCartItem' as const, 'removeCartItem' as const].forEach((evName) => {
+    const isAdd = evName === 'addCartItem';
+    const baseItems = isAdd ? items : oldItems;
+    const compareItems = isAdd ? oldItems : items;
+    baseItems.forEach((baseItem) => {
+      if (!baseItem.quantity) return;
+      const compareItem = compareItems.find(({ _id }) => _id === baseItem._id);
+      if (compareItem && baseItem.quantity > compareItem.quantity) {
+        cartEmitter.emit(evName, {
+          ...baseItem,
+          quantity: baseItem.quantity - (compareItem?.quantity || 0),
+        });
+      }
+    });
+  });
+  oldItems = cloneItems();
+});
+
+export const cartEvents = {
+  on: cartEmitter.on,
+  off: cartEmitter.off,
 };
