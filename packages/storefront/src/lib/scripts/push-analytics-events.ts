@@ -1,6 +1,7 @@
 import { useDebounceFn, watchOnce } from '@vueuse/core';
 import { isLogged } from '@@sf/state/customer-session';
 import {
+  useAnalytics,
   trackingIds,
   getAnalyticsContext,
   emitGtagEvent,
@@ -31,6 +32,7 @@ const sendServerEvent = (groupedEvent: GroupedAnalyticsEvent) => {
 };
 
 if (!import.meta.env.SSR) {
+  useAnalytics();
   watchGtagEvents(({ event }) => {
     const { name, params } = event;
     const { gtag, dataLayer } = window as {

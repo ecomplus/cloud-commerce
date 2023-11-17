@@ -25,14 +25,17 @@ const pageViewState = {} as {
   resolve: ((...args: any[]) => void) | null | undefined,
   waiting: Promise<unknown> | undefined,
 };
+const resetPageViewPromise = () => {
+  if (pageViewState.resolve) return;
+  pageViewState.waiting = new Promise((resolve) => {
+    pageViewState.resolve = resolve;
+  });
+};
 if (!import.meta.env.SSR) {
-  const resetPageViewPromise = () => {
-    if (pageViewState.resolve) return;
-    pageViewState.waiting = new Promise((resolve) => {
-      pageViewState.resolve = resolve;
-    });
-  };
   resetPageViewPromise();
+}
+
+export const useAnalytics = () => {
   document.addEventListener('astro:beforeload', resetPageViewPromise);
   const {
     gtag,
@@ -84,7 +87,9 @@ if (!import.meta.env.SSR) {
     }
     storage.setItem(`analytics_${key}`, trackingIds[key]);
   });
-}
+};
+
+export default useAnalytics;
 
 // `page_view` params not typed
 // https://developers.google.com/tag-platform/gtagjs/reference/events#page_view
