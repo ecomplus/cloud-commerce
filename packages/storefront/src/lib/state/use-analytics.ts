@@ -15,17 +15,20 @@ export const trackingIds: {
   session_id?: string,
 } = {};
 
-export const getAnalyticsContext = () => {
-  return {
-    ...trackingIds,
-    user_id: customer.value._id,
-    utm,
-  };
+// `page_view` params not typed
+// https://developers.google.com/tag-platform/gtagjs/reference/events#page_view
+type PageViewParams = {
+  page_location: string,
+  client_id?: string,
+  language: string,
+  page_encoding?: string,
+  page_title: string,
+  user_agent: string,
 };
-
 const pageViewState = {} as {
   resolve: ((...args: any[]) => void) | null | undefined,
   waiting: Promise<unknown> | undefined,
+  params: PageViewParams | undefined,
 };
 const resetPageViewPromise = () => {
   if (pageViewState.resolve) return;
@@ -37,20 +40,28 @@ if (!import.meta.env.SSR) {
   resetPageViewPromise();
 }
 
-// `page_view` params not typed
-// https://developers.google.com/tag-platform/gtagjs/reference/events#page_view
-type PageViewParams = {
-  page_location?: string,
-  client_id?: string,
-  language?: string,
-  page_encoding?: string,
-  page_title?: string,
-  user_agent?: string,
+export const getPageViewParams = () => {
+  return {
+    page_location: window.location.toString(),
+    language: globalThis.$storefront.settings.lang || 'pt_br',
+    page_title: document.title,
+    user_agent: navigator.userAgent,
+  };
+};
+
+export const getAnalyticsContext = () => {
+  return {
+    ...(pageViewState.params || getPageViewParams()),
+    ...trackingIds,
+    user_id: customer.value._id,
+    utm,
+  };
 };
 
 export const GTAG_EVENT_TYPE = 'GtagEvent';
 
 export type GtagEventMessage = typeof trackingIds &
+  PageViewParams &
   { utm: typeof utm } &
   {
     type: typeof GTAG_EVENT_TYPE,
@@ -69,7 +80,7 @@ let defaultItemsList = '';
 
 export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
   name: N,
-  _params: N extends 'page_view' ? PageViewParams : Gtag.EventParams = {},
+  _params: N extends 'page_view' ? PageViewParams : Gtag.EventParams,
 ) => {
   if (import.meta.env.SSR) return;
   const params = _params as Gtag.EventParams;
@@ -99,6 +110,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
       }
     }
     if (pageViewState.resolve) {
+      pageViewState.params = (_params as PageViewParams);
       pageViewState.resolve();
       pageViewState.resolve = null;
     }
@@ -206,9 +218,9 @@ export const getGtagItem = (product: Partial<Products> | SearchItem | CartItem) 
 export const useAnalytics = () => {
   document.addEventListener('astro:beforeload', resetPageViewPromise);
   if (isLogged.value) {
-    emitGtagEvent('login');
+    emitGtagEvent('login', {});
   } else {
-    watchOnce(isLogged, () => emitGtagEvent('login'));
+    watchOnce(isLogged, () => emitGtagEvent('login', {}));
   }
   cartEvents.on('*', (evName, cartItem) => {
     emitGtagEvent(

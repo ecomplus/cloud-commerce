@@ -2,6 +2,7 @@ import { useDebounceFn } from '@vueuse/core';
 import {
   useAnalytics,
   trackingIds,
+  getPageViewParams,
   getAnalyticsContext,
   emitGtagEvent,
   watchGtagEvents,
@@ -48,17 +49,14 @@ if (!import.meta.env.SSR) {
     sendServerEvent({ g: event });
   });
 
-  const { $storefront: { settings } } = globalThis;
   let lastPageLocation = '';
   const sendPageView = () => {
     const pageLocation = window.location.toString();
     if (pageLocation === lastPageLocation) return;
     emitGtagEvent('page_view', {
+      ...getPageViewParams(),
       page_location: pageLocation,
       client_id: trackingIds.g_client_id || trackingIds.client_id,
-      language: settings.lang,
-      page_title: document.title,
-      user_agent: navigator.userAgent,
     });
     lastPageLocation = pageLocation;
   };
