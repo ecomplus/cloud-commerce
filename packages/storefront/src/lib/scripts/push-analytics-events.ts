@@ -8,14 +8,14 @@ import {
   watchGtagEvents,
 } from '@@sf/state/use-analytics';
 import afetch from '../../helpers/afetch';
+import parseGtagToFbq from '../../analytics/event-to-fbq';
 
-type AnalyticsEvent = { name: string, params: Record<string, any> };
-interface GroupedAnalyticsEvent {
-  g: AnalyticsEvent;
-  fb?: AnalyticsEvent;
-  tt?: AnalyticsEvent;
-}
-let eventsToSend: Array<GroupedAnalyticsEvent> = [];
+type AnalyticsEvent = {
+  type: 'gtag' | 'fbq' | 'ttq',
+  name: string,
+  params?: Record<string, any>,
+};
+let eventsToSend: Array<AnalyticsEvent> = [];
 const _sendServerEvents = useDebounceFn(() => {
   afetch(`/_analytics`, {
     method: 'post',
@@ -26,18 +26,24 @@ const _sendServerEvents = useDebounceFn(() => {
   });
   eventsToSend = [];
 }, 200);
-const sendServerEvent = (groupedEvent: GroupedAnalyticsEvent) => {
-  eventsToSend.push(groupedEvent);
+const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
+  eventsToSend.push(analyticsEvent);
   _sendServerEvents();
 };
 
 if (!import.meta.env.SSR) {
   useAnalytics();
-  watchGtagEvents(({ event }) => {
-    const { name, params } = event;
-    const { gtag, dataLayer } = window as {
+  watchGtagEvents(async (evMessage) => {
+    const { name, params } = evMessage.event;
+    sendServerEvent({ type: 'gtag', name, params });
+    const {
+      gtag,
+      dataLayer,
+      fbq,
+    } = window as {
       gtag?: Gtag.Gtag,
       dataLayer?: Array<any>,
+      fbq?: (action: string, value: string, payload?: any) => any,
     };
     if (typeof gtag === 'function') {
       gtag('event', name, params);
@@ -46,7 +52,14 @@ if (!import.meta.env.SSR) {
     if (dataLayer && typeof dataLayer.push === 'function') {
       dataLayer.push(['event', name, params]);
     }
-    sendServerEvent({ g: event });
+    const fbqEvents = await parseGtagToFbq(evMessage);
+    fbqEvents.forEach((fbqEvent) => {
+      if (!fbqEvent.name) return;
+      sendServerEvent({ type: 'fbq', ...fbqEvent });
+      if (typeof fbq === 'function') {
+        fbq('track', fbqEvent.name, fbqEvent.params);
+      }
+    });
   });
 
   let lastPageLocation = '';
