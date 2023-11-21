@@ -1,5 +1,6 @@
 import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
+import type { AnalyticsEvents } from '../analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
@@ -194,28 +195,32 @@ export default async (req: Request, res: Response) => {
   }
 
   if (req.path === '/_analytics') {
-    // @TODO: Must check to match GA4 events schema
-    const events: Array<{ name: string, [k: string]: any }> = [];
-    const { url } = req.query;
-    if (typeof url !== 'string' || !url) {
-      res.status(400);
-      res.send('`?url=` param must be set with original pageview URL');
+    if (req.method !== 'POST') {
+      res.sendStatus(405);
       return;
     }
-    const { ev } = req.query;
-    if (Array.isArray(ev)) {
-      ev.forEach((name) => {
-        if (typeof name === 'string' && name) events.push({ name });
+    const url = req.body?.page_location;
+    if (typeof url !== 'string' || !url) {
+      res.status(400);
+      res.send('Pageview URL is required in the `{ page_location }` body field');
+      return;
+    }
+    const events: AnalyticsEvents = [];
+    if (Array.isArray(req.body?.events)) {
+      req.body.events.forEach((event) => {
+        if (typeof event.type === 'string' && event.type) {
+          if (typeof event.name === 'string' && event.name) {
+            events.push(event);
+          }
+        }
       });
-    } else if (Array.isArray(req.body.events)) {
-      req.body.events.forEach((event) => events.push(event));
     }
     if (!events.length) {
       res.status(400);
-      res.send('Any event from `?ev=` URL param or `{ events }` array body field');
+      res.send('Event(s) must be sent via the `{ events }` array in the request body');
       return;
     }
-    sendAnalyticsEvents({ url, events });
+    sendAnalyticsEvents({ url, events }, req.body);
     res.sendStatus(204);
     return;
   }
