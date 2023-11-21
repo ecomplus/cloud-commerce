@@ -1,5 +1,6 @@
 import type { Products, CartSet, SearchItem } from '@cloudcommerce/api/types';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
+import { watchDebounced } from '@vueuse/core';
 import mitt from 'mitt';
 import useStorage from '@@sf/state/use-storage';
 import addItem from '@@sf/state/shopping-cart/add-cart-item';
@@ -107,7 +108,7 @@ type CartEvent = {
 const cartEmitter = mitt<CartEvent>();
 const cloneItems = () => shoppingCart.value.items.map((item) => ({ ...item }));
 let oldItems = cloneItems();
-watch(shoppingCart, ({ items }) => {
+watchDebounced(shoppingCart, ({ items }) => {
   ['addCartItem' as const, 'removeCartItem' as const].forEach((evName) => {
     const isAdd = evName === 'addCartItem';
     const baseItems = isAdd ? items : oldItems;
@@ -115,16 +116,17 @@ watch(shoppingCart, ({ items }) => {
     baseItems.forEach((baseItem) => {
       if (!baseItem.quantity) return;
       const compareItem = compareItems.find(({ _id }) => _id === baseItem._id);
-      if (compareItem && baseItem.quantity > compareItem.quantity) {
+      const compareQnt = compareItem?.quantity || 0;
+      if (baseItem.quantity > compareQnt) {
         cartEmitter.emit(evName, {
           ...baseItem,
-          quantity: baseItem.quantity - (compareItem?.quantity || 0),
+          quantity: baseItem.quantity - compareQnt,
         });
       }
     });
   });
   oldItems = cloneItems();
-});
+}, { debounce: 200 });
 
 export const cartEvents = {
   on: cartEmitter.on,
