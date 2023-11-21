@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.33.2](https://github.com/ecomplus/cloud-commerce/compare/v0.33.1...v0.33.2) (2023-11-21)
+
+
+### Features
+
+* **storefront:** Export `cartEvents` from shopping cart state to handle item add/remove events ([57bdcc8](https://github.com/ecomplus/cloud-commerce/commit/57bdcc85aff78a41e67cc05ec8734f7683261315))
+* **storefront:** Parsing pageview, items and cart events to Meta Pixel ([0ace18a](https://github.com/ecomplus/cloud-commerce/commit/0ace18a2715ae06f5d81513e368fbf73efffefa4))
+* **storefront:** Update `useAnalytics` to emit shopping cart gtag events ([c1a600f](https://github.com/ecomplus/cloud-commerce/commit/c1a600f0970cf2687fc098b42030c43c52db7d10))
+
+
+### Bug Fixes
+
+* **storefront:** Identifying analytics item view on product page by list id ([cb2cbd2](https://github.com/ecomplus/cloud-commerce/commit/cb2cbd2378a74423f022cb641fab647b3e157c04))
+* **storefront:** Sen page view params on every analytics message payload ([98be05f](https://github.com/ecomplus/cloud-commerce/commit/98be05f5b4a2ef098efe69da4f9ced60eda2741c))
+
 ### [0.33.1](https://github.com/ecomplus/cloud-commerce/compare/v0.33.0...v0.33.1) (2023-11-16)
 
 
