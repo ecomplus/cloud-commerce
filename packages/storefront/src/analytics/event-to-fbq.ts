@@ -25,6 +25,9 @@ const parseGtagItem = (
       id: item.item_id,
       quantity: item.quantity,
     }];
+    if (Number(item.quantity) < 0) {
+      params.value = 0;
+    }
   } else {
     params.content_ids = [item.item_id];
   }

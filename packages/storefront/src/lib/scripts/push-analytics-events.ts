@@ -9,6 +9,7 @@ import {
 } from '@@sf/state/use-analytics';
 import afetch from '../../helpers/afetch';
 import parseGtagToFbq from '../../analytics/event-to-fbq';
+import parseGtagToTtq from '../../analytics/event-to-ttq';
 
 type AnalyticsEvent = {
   type: 'gtag' | 'fbq' | 'ttq',
@@ -40,10 +41,12 @@ if (!import.meta.env.SSR) {
       gtag,
       dataLayer,
       fbq,
+      ttq,
     } = window as {
       gtag?: Gtag.Gtag,
       dataLayer?: Array<any>,
       fbq?: (action: string, value: string, payload?: any) => any,
+      ttq?: { page: () => any, track: (value: string, payload?: any) => any },
     };
     if (typeof gtag === 'function') {
       gtag('event', name, params);
@@ -58,6 +61,18 @@ if (!import.meta.env.SSR) {
       sendServerEvent({ type: 'fbq', ...fbqEvent });
       if (typeof fbq === 'function') {
         fbq('track', fbqEvent.name, fbqEvent.params);
+      }
+    });
+    const ttqEvents = await parseGtagToTtq(evMessage);
+    ttqEvents.forEach((ttqEvent) => {
+      if (!ttqEvent.name) return;
+      sendServerEvent({ type: 'ttk', ...ttqEvent });
+      if (typeof ttq?.page === 'function') {
+        if (ttqEvent.name === 'PageView') {
+          ttq.page();
+        } else {
+          ttq.track(ttqEvent.name, ttqEvent.params);
+        }
       }
     });
   });
