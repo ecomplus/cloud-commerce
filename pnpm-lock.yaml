@@ -1105,6 +1105,9 @@ importers:
       firebase-functions:
         specifier: ^4.5.0
         version: 4.5.0(firebase-admin@11.11.0)
+      mitt:
+        specifier: ^3.0.1
+        version: 3.0.1
       vue:
         specifier: ^3.3.8
         version: 3.3.8(typescript@5.0.4)
