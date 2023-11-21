@@ -1,6 +1,6 @@
 import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
-import type { AnalyticsEvents } from '../analytics-events';
+import type { GroupedAnalyticsEvents } from '../analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
@@ -205,7 +205,7 @@ export default async (req: Request, res: Response) => {
       res.send('Pageview URL is required in the `{ page_location }` body field');
       return;
     }
-    const events: AnalyticsEvents = [];
+    const events: GroupedAnalyticsEvents = [];
     if (Array.isArray(req.body?.events)) {
       req.body.events.forEach((event) => {
         if (typeof event.type === 'string' && event.type) {
@@ -220,7 +220,7 @@ export default async (req: Request, res: Response) => {
       res.send('Event(s) must be sent via the `{ events }` array in the request body');
       return;
     }
-    sendAnalyticsEvents({ url, events }, req.body);
+    sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
     res.sendStatus(204);
     return;
   }
