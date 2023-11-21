@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.33.3](https://github.com/ecomplus/cloud-commerce/compare/v0.33.2...v0.33.3) (2023-11-21)
+
+
+### Bug Fixes
+
+* **ssr:** Must add `mitt` to SSR package deps ([8c47ac9](https://github.com/ecomplus/cloud-commerce/commit/8c47ac9dff3e496cda0b2e3e70298069b81a1209))
+
 ### [0.33.2](https://github.com/ecomplus/cloud-commerce/compare/v0.33.1...v0.33.2) (2023-11-21)
 
 
