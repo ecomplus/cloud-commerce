@@ -1,8 +1,11 @@
+import type { AxiosResponse } from 'axios';
 import { EventEmitter } from 'node:events';
+import ga4Events from './analytics-providers/google-analytics';
+import metaEvents from './analytics-providers/meta-conversions-api';
 
 const analyticsEmitter = new EventEmitter();
 
-type AnalyticsEvent = {
+export type AnalyticsEvent = {
   name: string,
   params?: Record<string, any>,
 }
@@ -21,6 +24,8 @@ const sendAnalyticsEvents = (
     }
     (eventsByType[type] as AnalyticsEvent[]).push({ name, params });
   });
+
+  const sendingEvents: Promise<AxiosResponse<any, any> | null>[] = [];
   if (eventsByType.gtag) {
     console.log('events to ga4:', {
       events: eventsByType.gtag,
@@ -30,6 +35,22 @@ const sendAnalyticsEvents = (
       gclid: payload.gclid,
       user_agent: payload.user_agent,
       ip: payload.ip,
+    });
+    const sessionId = payload.g_session_id || payload.session_id;
+    const clientId = payload.g_client_id || payload.client_id;
+    eventsByType.gtag.forEach((event) => {
+      sendingEvents.push(ga4Events(event, clientId, sessionId));
+    });
+  }
+  if (eventsByType.fbq) {
+    const userData = {
+      client_ip_address: payload.id,
+      client_user_agent: payload.user_agent,
+      fbc: payload.fbclid,
+      fbp: payload.fbp,
+    };
+    eventsByType.fbq.forEach((event) => {
+      sendingEvents.push(metaEvents(event, payload.page_location, userData));
     });
   }
   /* @TODO:
@@ -41,6 +62,7 @@ const sendAnalyticsEvents = (
   - Send the events in parallel for all APIs with `Promise.all(sendingEvents)`;
   - No CORS!
   */
+  Promise.all(sendingEvents);
 };
 
 export default sendAnalyticsEvents;
