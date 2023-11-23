@@ -29,9 +29,9 @@ const sendAnalyticsEvents = (
   if (eventsByType.gtag) {
     const sessionId = payload.g_session_id || payload.session_id;
     const clientId = payload.g_client_id || payload.client_id;
-    const eventsGA4 = ga4Events(eventsByType.gtag, clientId, sessionId, payload.utm);
-    if (eventsGA4) {
-      sendingEvents.push(...eventsGA4);
+    const listGA4Events = ga4Events(eventsByType.gtag, clientId, sessionId, payload.utm);
+    if (listGA4Events) {
+      sendingEvents.push(...listGA4Events);
     }
   }
   if (eventsByType.fbq) {
@@ -41,9 +41,9 @@ const sendAnalyticsEvents = (
       fbc: payload.fbclid,
       fbp: payload.fbp,
     };
-    const eventsMeta = metaEvents(eventsByType.fbq, payload.page_location, userData);
-    if (eventsMeta) {
-      sendingEvents.push(...eventsMeta);
+    const listMetaEvents = metaEvents(eventsByType.fbq, payload.page_location, userData);
+    if (listMetaEvents) {
+      sendingEvents.push(...listMetaEvents);
     }
   }
   /* @TODO:
