@@ -26,9 +26,9 @@ type Item = Exclude<OrderSet['items'], undefined>[number]
 export default async (req: Request, res: Response) => {
   const { httpsFunctionOptions } = config.get();
   const modulesBaseURL = req.hostname !== 'localhost'
-    ? `https://${req.hostname}${req.url.replace(/\/checkout[^/]*/i, '')}`
+    ? `https://${req.hostname}${req.url.replace(/\/@?checkout[^/]*$/i, '')}`
     : `http://localhost:5001/${process.env.GCLOUD_PROJECT}`
-    + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
+      + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
 
   const validate = ajv.compile(checkoutSchema.params);
   const checkoutBody = req.body as CheckoutBody;
