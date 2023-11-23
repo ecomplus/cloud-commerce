@@ -25,22 +25,14 @@ const sendAnalyticsEvents = (
     (eventsByType[type] as AnalyticsEvent[]).push({ name, params });
   });
 
-  const sendingEvents: Promise<AxiosResponse<any, any> | null>[] = [];
+  const sendingEvents: Promise<AxiosResponse<any, any>>[] = [];
   if (eventsByType.gtag) {
-    console.log('events to ga4:', {
-      events: eventsByType.gtag,
-      page_title: payload.page_title,
-      client_id: payload.g_client_id || payload.client_id,
-      session_id: payload.g_session_id || payload.session_id,
-      gclid: payload.gclid,
-      user_agent: payload.user_agent,
-      ip: payload.ip,
-    });
     const sessionId = payload.g_session_id || payload.session_id;
     const clientId = payload.g_client_id || payload.client_id;
-    eventsByType.gtag.forEach((event) => {
-      sendingEvents.push(ga4Events(event, clientId, sessionId));
-    });
+    const eventsGA4 = ga4Events(eventsByType.gtag, clientId, sessionId, payload.utm);
+    if (eventsGA4) {
+      sendingEvents.push(...eventsGA4);
+    }
   }
   if (eventsByType.fbq) {
     const userData = {
@@ -49,9 +41,10 @@ const sendAnalyticsEvents = (
       fbc: payload.fbclid,
       fbp: payload.fbp,
     };
-    eventsByType.fbq.forEach((event) => {
-      sendingEvents.push(metaEvents(event, payload.page_location, userData));
-    });
+    const eventsMeta = metaEvents(eventsByType.fbq, payload.page_location, userData);
+    if (eventsMeta) {
+      sendingEvents.push(...eventsMeta);
+    }
   }
   /* @TODO:
   - Get credentials from env vars, e.g. `process.env.GA_MEASUREMENT_ID`;
