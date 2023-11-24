@@ -47,6 +47,11 @@
     ],
     "rewrites": [
       {
+        "source": "/",
+        "function": "ssr",
+        "region": "us-east4"
+      },
+      {
         "source": "/_api/modules/**",
         "function": "modules",
         "region": "us-east4"
