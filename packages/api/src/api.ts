@@ -163,7 +163,6 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   if (bodyObject) {
     body = JSON.stringify(bodyObject);
     headers['Content-Type'] = 'application/json';
-    headers['Content-Length'] = body.length.toString();
   }
 
   const abortController = new AbortController();
@@ -181,7 +180,11 @@ const api = async <T extends Config & { body?: any, data?: any }>(
       signal: abortController.signal,
     });
   } catch (err: any) {
-    throw new ApiError(config, response, err.message, isTimeout);
+    let msg = err.message;
+    if (err.cause) {
+      msg += ` - ${err.cause}`;
+    }
+    throw new ApiError(config, response, msg, isTimeout);
   }
   clearTimeout(timer);
 
