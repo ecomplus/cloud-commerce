@@ -182,6 +182,7 @@ if (!import.meta.env.SSR) {
   if (Object.keys(utm).length) {
     sessionStorage.setItem('ecomUtm', JSON.stringify(utm));
   }
+  const { hostname } = window.location;
   const { domain } = globalThis.$storefront.settings;
   const apiBaseUri = `https://ecomplus.io/v2/:${window.ECOM_STORE_ID}/`;
   // @ts-ignore
@@ -193,7 +194,9 @@ if (!import.meta.env.SSR) {
   // @ts-ignore
   window.ECOMCLIENT_API_SEARCH = `${apiBaseUri}/search/_els/`;
   // @ts-ignore
-  window.ECOMCLIENT_API_MODULES = `https://${domain}/_api/modules/`;
+  window.ECOMCLIENT_API_MODULES = hostname !== 'localhost' && hostname !== '127.0.0.1'
+    ? `https://${domain}/_api/modules/`
+    : '/_api/modules/';
 
   const onLoad = () => {
     const { ecomPassport } = window as Record<string, any>;
