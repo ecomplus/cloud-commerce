@@ -62,6 +62,9 @@ const newOrder = async (orderBody: OrderSet) => {
       }, 800);
     });
   } catch (err: any) {
+    if (err.message === 'fetch failed') {
+      logger.error(err);
+    }
     return { order: null, err };
   }
 };
