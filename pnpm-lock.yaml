@@ -1099,6 +1099,9 @@ importers:
       astro-capo:
         specifier: ^0.0.1
         version: 0.0.1(astro@2.10.15)
+      axios:
+        specifier: ^1.6.2
+        version: 1.6.2
       firebase-admin:
         specifier: ^11.11.0
         version: 11.11.0
