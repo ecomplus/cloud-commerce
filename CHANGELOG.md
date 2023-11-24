@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.33.4](https://github.com/ecomplus/cloud-commerce/compare/v0.33.3...v0.33.4) (2023-11-24)
+
+
+### Features
+
+* **i18n:** Add `i19safeBuy` ([60cd36e](https://github.com/ecomplus/cloud-commerce/commit/60cd36e509ba38519a0fead16f07e10694e97af9))
+* **ssr:** Start sending GA4 server events with Measurement Protocol API ([#273](https://github.com/ecomplus/cloud-commerce/issues/273)) ([1f98e03](https://github.com/ecomplus/cloud-commerce/commit/1f98e035d478c9226e2352a0c55ebde156ca68cc))
+* **storefront:** Parsing pageview, items and cart events to Tiktok Pixel ([fc21d1d](https://github.com/ecomplus/cloud-commerce/commit/fc21d1d3f49efad87b6398107e8eb40fc5e028ba))
+* **storefront:** Parsing vbeta app routes to send gtag checkout and purchase events ([48a64db](https://github.com/ecomplus/cloud-commerce/commit/48a64db4f18c9aa6b6228f81967630b75d188d52))
+
+
+### Bug Fixes
+
+* **modules:** Properly getting modules base URI on checkout request ([94de8af](https://github.com/ecomplus/cloud-commerce/commit/94de8af9864b6258ca95eccd2f06ba5864da775f))
+* **storefront:** Fix sending initial add/remove cart events ([a293a98](https://github.com/ecomplus/cloud-commerce/commit/a293a983351f3372b244885e9bb81739dd640ea1))
+
 ### [0.33.3](https://github.com/ecomplus/cloud-commerce/compare/v0.33.2...v0.33.3) (2023-11-21)
 
 
