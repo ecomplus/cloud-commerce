@@ -5,7 +5,6 @@ import type {
   Amount,
   Payment,
 } from '../types/index';
-import config from '@cloudcommerce/firebase/lib/config';
 import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
@@ -24,11 +23,10 @@ import createOrder from './functions-checkout/new-order';
 type Item = Exclude<OrderSet['items'], undefined>[number]
 
 export default async (req: Request, res: Response) => {
-  const { httpsFunctionOptions } = config.get();
-  const modulesBaseURL = req.hostname !== 'localhost'
-    ? `https://${req.hostname}${req.url.replace(/\/@?checkout[^/]*$/i, '')}`
-    : `http://localhost:5001/${process.env.GCLOUD_PROJECT}`
-      + `/${(process.env.FUNCTION_REGION || httpsFunctionOptions.region)}/modules`;
+  const host = req.hostname !== 'localhost' && req.hostname !== '127.0.0.1'
+    ? `https://${req.hostname}`
+    : 'http://127.0.0.1:5000';
+  const modulesBaseURL = `${host}${req.url.replace(/\/@?checkout[^/]*$/i, '')}`;
 
   const validate = ajv.compile(checkoutSchema.params);
   const checkoutBody = req.body as CheckoutBody;
