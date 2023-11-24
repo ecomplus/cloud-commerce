@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.33.5](https://github.com/ecomplus/cloud-commerce/compare/v0.33.4...v0.33.5) (2023-11-24)
+
+
+### Bug Fixes
+
+* **api:** Prevent error Content-Length mismatch on POST ([8e642fc](https://github.com/ecomplus/cloud-commerce/commit/8e642fc0b792a070bf8d3bf526c1fdb904787a56))
+* **cli:** Update default `firebase.json` to ensure Hosting root rewrited to SSR function ([f465763](https://github.com/ecomplus/cloud-commerce/commit/f465763cefaeb5cac783f9a8125c3190d7f4b05f))
+* **jadlog:** Fixing module file exports ([6f9d195](https://github.com/ecomplus/cloud-commerce/commit/6f9d1959e0fd02a2dc2b6f20b39751c8993c0b19))
+* **modules:** Properly set modules API base URL on localhost emulators ([18befaf](https://github.com/ecomplus/cloud-commerce/commit/18befafe44171312b95511613c8091bbad70eabb))
+* **storefront:** Properly set modules API base URI on localhost emulation ([eade67b](https://github.com/ecomplus/cloud-commerce/commit/eade67bd2280affc4c7f294fc5df0ce0da4f5158))
+
 ### [0.33.4](https://github.com/ecomplus/cloud-commerce/compare/v0.33.3...v0.33.4) (2023-11-24)
 
 
