@@ -40,7 +40,7 @@ const sendEvent = (
           medium: utm?.medium,
           campaign: utm?.campaign,
           term: utm?.term,
-          content: utm?.content || event.params?.page_location,
+          content: utm?.content,
           session_id: sessionId,
         };
       }
