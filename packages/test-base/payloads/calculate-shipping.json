@@ -1,6 +1,6 @@
 {
   "to": {
-    "zip": "35701134"
+    "zip": "30140070"
   },
   "items": [
     {
@@ -11,8 +11,8 @@
       "quantity": 1,
       "currency_id": "BRL",
       "currency_symbol": "R$",
-      "price": 99.75,
-      "final_price": 99.75,
+      "price": 500,
+      "final_price": 500,
       "dimensions": {
         "width": {
           "unit": "cm",
@@ -33,5 +33,5 @@
       }
     }
   ],
-  "subtotal": 99.75
+  "subtotal": 500
 }

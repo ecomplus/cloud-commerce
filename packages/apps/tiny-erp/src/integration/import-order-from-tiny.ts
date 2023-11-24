@@ -91,9 +91,16 @@ export default async (apiDoc, queueEntry) => {
     ? { numeroEcommerce: tinyOrderNumber.substring(5) }
     : { numero: tinyOrderNumber };
   return postTiny('/pedidos.pesquisa.php', filter).then(({ pedidos }) => {
+    let prop = 'numero';
+    let tinyOrderNumberSearch = tinyOrderNumber;
+    if (filter && filter.numeroEcommerce) {
+      prop = 'numero_ecommerce';
+      tinyOrderNumberSearch = tinyOrderNumber.substring(5);
+    }
     const tinyOrder = pedidos.find(({ pedido }) => {
-      return Number(tinyOrderNumber) === Number(pedido.numero);
+      return Number(tinyOrderNumberSearch) === Number(pedido[prop]);
     });
+
     if (tinyOrder) {
       return getTinyOrder(tinyOrder.pedido.id);
     }

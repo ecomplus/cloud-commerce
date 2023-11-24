@@ -76,7 +76,7 @@ export default async (appData: AppModuleBody) => {
     if (pointsApplied && Array.isArray(programsRules) && programsRules.length) {
       // for (const programId in pointsApplied) {
       Object.keys(pointsApplied).forEach((programId) => {
-        const pointsValue = pointsApplied[programId];
+        let pointsValue = pointsApplied[programId];
         if (pointsValue > 0) {
           const programRule = programsRules.find((programRuleFound, index) => {
             if (programRuleFound) {
@@ -87,14 +87,21 @@ export default async (appData: AppModuleBody) => {
           });
 
           if (programRule) {
+            let maxPoints = programRule.max_points;
             const ratio = programRule.ratio || 1;
+            if (!maxPoints && programRule.max_amount_percentage && params.amount) {
+              maxPoints = Math.round(
+                ((programRule.max_amount_percentage * params.amount.total) / 100) / ratio,
+              );
+            }
+            if (maxPoints < pointsValue) {
+              pointsValue = maxPoints;
+            }
             transaction.loyalty_points = {
               name: programRule.name,
               program_id: programRule.program_id,
               ratio,
-              points_value: programRule.max_points < pointsValue
-                ? programRule.max_points
-                : pointsValue,
+              points_value: pointsValue,
             };
             transaction.amount = pointsValue * ratio;
           }
@@ -105,7 +112,7 @@ export default async (appData: AppModuleBody) => {
 
   if (transaction.amount) {
     const loyaltyPoints = transaction.loyalty_points;
-    const customerId = params.buyer.customer_id;
+    const customerId = params.buyer.customer_id as ResourceId;
     const orderId = params.order_id as ResourceId;
     const usedPointsEntries: UsedPointsEntries[] = [];
     try {

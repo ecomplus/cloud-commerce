@@ -10,7 +10,7 @@ import Picture from '@@sf/components/Picture.astro';
 const { settings } = Astro.locals.routeContext;
 ---
 
-<body>
+<body style="visibility:hidden" class="!visible"> <!-- Prevent FOUC -->
   <div id="teleported-overlap" class="relative z-[59]"></div>
   <div id="teleported-top" class="relative z-[19]"></div>
   <slot />

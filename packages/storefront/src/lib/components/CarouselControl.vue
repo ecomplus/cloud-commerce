@@ -9,7 +9,8 @@ export interface Props {
 withDefaults(defineProps<Props>(), {
   isPrev: false,
 });
-const { changeSlide } = inject(carouselKey) as CarouselInject;
+const { axis, changeSlide } = inject(carouselKey) as CarouselInject;
+const isX = axis === 'x';
 </script>
 
 <template>
@@ -17,16 +18,21 @@ const { changeSlide } = inject(carouselKey) as CarouselInject;
     type="button"
     :aria-label="!isPrev ? $t.i19next : $t.i19previous"
     @click="changeSlide(!isPrev ? 1 : -1)"
-    class="group absolute top-0 z-1"
-    :class="!isPrev ? 'right-0' : 'left-0'"
+    class="z-1 group absolute"
+    :class="isX
+      ? `${(!isPrev ? 'right-0' : 'left-0')} top-0`
+      : `${(!isPrev ? 'bottom-0' : 'top-0')} left-0`"
     :data-carousel-control="!isPrev ? 'next' : 'previous'"
   >
     <slot>
       <i
-        class="m-0"
-        :class="!isPrev
-          ? 'i-chevron-right group-active:translate-x-1'
-          : 'i-chevron-left group-active:-translate-x-1'"
+        class="i-chevron-right m-0"
+        :class="{
+          'group-active:translate-x-1': isX && !isPrev,
+          'rotate-180 group-active:-translate-x-1': isX && isPrev,
+          'rotate-90 group-active:translate-y-1': !isX && !isPrev,
+          '-rotate-90 group-active:-translate-y-1': !isX && isPrev,
+        }"
       ></i>
     </slot>
   </button>

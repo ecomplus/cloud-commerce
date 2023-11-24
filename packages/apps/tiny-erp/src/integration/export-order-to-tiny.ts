@@ -66,12 +66,36 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       logger.info(`${orderId} skipped with status "${tinyStatus}"`);
       return null;
     }
+
+    if (appData.ready_for_shipping_only) {
+      switch (tinyStatus) {
+        case 'aberto':
+        case 'cancelado':
+        case 'aprovado':
+        case 'preparando_envio':
+        case 'faturado':
+          if (!order.fulfillment_status || order.fulfillment_status.current !== 'ready_for_shipping') {
+            logger.info(`${orderId} skipped with status "${tinyStatus}"`);
+            return null;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
     const tinyOrder = parseOrder(order, appData);
     logger.info(`${orderId} ${JSON.stringify(tinyOrder)}`);
     return postTiny('/pedido.incluir.php', {
       pedido: {
         pedido: tinyOrder,
       },
+    }).then((response) => {
+      const tinyErpOnNewOrder = global.$tinyErpOnNewOrder;
+      if (tinyErpOnNewOrder && typeof tinyErpOnNewOrder === 'function') {
+        return tinyErpOnNewOrder({ response, order, postTiny });
+      }
+      return response;
     });
   }
 

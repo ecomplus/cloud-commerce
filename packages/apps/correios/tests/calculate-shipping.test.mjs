@@ -9,7 +9,7 @@ import {
 describe('Test Shipping Calculation in the Correios App', async () => {
   let req;
   let data;
-  const appId = 1248;
+  const appId = 126334;
 
   before(async () => {
     req = await fetch(`${modulesUrl}/calculate_shipping?app_id=${appId}`, {

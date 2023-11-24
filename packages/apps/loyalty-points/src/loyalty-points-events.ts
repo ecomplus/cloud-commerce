@@ -6,7 +6,12 @@ import {
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
+import functions from 'firebase-functions/v1';
 import handleLoyaltyPointsEvent from './functions-lib/handle-loyalty-points-event';
+import addPoints from './functions-lib/cron-add-points';
+
+const { httpsFunctionOptions: { region } } = config.get();
 
 const handleApiEvent: ApiEventHandler = async ({
   evName,
@@ -37,5 +42,11 @@ export const loyaltypoints = {
   onStoreEvent: createAppEventsFunction(
     'loyaltyPoints',
     handleApiEvent,
-  ) as any,
+  ),
+
+  cronAddPoints: functions.region(region).pubsub
+    .schedule(process.env.CRONTAB_LOYALTYPOINTS_ADD_POINTS || '28 * * * *')
+    .onRun(() => {
+      return addPoints;
+    }),
 };

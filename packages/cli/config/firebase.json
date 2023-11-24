@@ -47,12 +47,17 @@
     ],
     "rewrites": [
       {
-        "source": "/api/modules/**",
+        "source": "/",
+        "function": "ssr",
+        "region": "us-east4"
+      },
+      {
+        "source": "/_api/modules/**",
         "function": "modules",
         "region": "us-east4"
       },
       {
-        "source": "/api/passport/**",
+        "source": "/_api/passport/**",
         "function": "passport",
         "region": "us-east4"
       },
@@ -83,15 +88,6 @@
       }
     ],
     "headers": [
-      {
-        "source": "/api/**",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "private, max-age=30, must-revalidate"
-          }
-        ]
-      },
       {
         "source": "/img/**",
         "headers": [

@@ -43,6 +43,7 @@ const {
     } = await getImage(imageOptions);
     return { src, width, height };
   }),
+  assetsPrefix: Astro.locals.assetsPrefix,
 });
 if (imgAttrs) {
   imgAttrs.src += versionSuffix;

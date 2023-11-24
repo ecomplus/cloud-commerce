@@ -178,6 +178,10 @@ Finish by saving the following secrets to your GitHub repository:
 `;
   }
 
+  if (argv._.includes('prepare')) {
+    return prepareCodebases();
+  }
+
   if (argv._.includes('dev') || !argv._.length) {
     await prepareCodebases(true);
     const prefix = path.join(pwd, 'functions/ssr');

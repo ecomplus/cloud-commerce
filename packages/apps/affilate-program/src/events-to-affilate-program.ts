@@ -86,7 +86,7 @@ const handleApiEvent: ApiEventHandler = async ({
   logger.info(`${isOrder ? 'Orders' : 'Customers'}`);
   try {
     if (isCustomer && appData.points_on_signup) {
-      const referralCustomer = (await api.get(`customers/${referralId}`)).data;
+      const referralCustomer = (await api.get(`customers/${referralId as ResourceId}`)).data;
       if (!referralCustomer?.enabled) {
         logger.warn('Inactive customer');
         return null;
@@ -118,18 +118,17 @@ const handleApiEvent: ApiEventHandler = async ({
       if (appData.min_subtotal_to_earn > orderSubtotal) {
         return null;
       }
-      const buyerCustomer = (await api.get(`customers/${buyerId}`)).data;
+      const buyerCustomer = (await api.get(`customers/${buyerId as ResourceId}`)).data;
 
       if (!buyerCustomer?.enabled) {
         logger.warn('Inactive customer');
         return null;
       }
 
-      if (!buyerCustomer.affiliate_code) {
-        return null;
-      }
-      const referralCustomer = (await api.get(`customers/${buyerCustomer.affiliate_code}`)).data;
-      if (referralCustomer.doc_number === buyerCustomer.doc_number) {
+      const affiliateCode = buyerCustomer.affiliate_code as ResourceId | undefined;
+      if (!affiliateCode) return null;
+      const referralCustomer = (await api.get(`customers/${affiliateCode}`)).data;
+      if (referralCustomer?.doc_number === buyerCustomer.doc_number) {
         logger.warn('Order placed by affiliate');
         return null;
       }

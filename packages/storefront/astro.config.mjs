@@ -1,12 +1,13 @@
 import { fileURLToPath } from 'node:url';
 import { lstatSync, readFileSync } from 'node:fs';
-import { join as joinPath } from 'node:path';
+import { join as joinPath, relative as relativePath } from 'node:path';
 import * as dotenv from 'dotenv';
 import { defineConfig, squooshImageService } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
+import AutoImport from 'unplugin-auto-import/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './config/storefront.config.mjs';
 
@@ -17,6 +18,7 @@ const isSSG = process.env.BUILD_OUTPUT === 'static';
 const outDir = process.env.BUILD_OUT_DIR || (isSSG ? './dist/client' : './dist');
 const isToServerless = !isSSG && process.env.DEPLOY_RUNTIME === 'serverless';
 const deployRand = process.env.DEPLOY_RAND || '_';
+const isLibDev = !(relativePath(__dirname, process.cwd()));
 
 const {
   lang,
@@ -33,9 +35,9 @@ const getIconUrl = (size) => {
 const _vitePWAOptions = {
   manifest: {
     name: settings.name || 'My Shop',
-    short_name: settings.short_name || settings.name || 'MyShop',
+    short_name: settings.shortName || settings.name || 'MyShop',
     description: settings.description || 'My PWA Shop',
-    background_color: settings.bg_color || '#f5f6fa',
+    background_color: settings.bgColor || '#f5f6fa',
     theme_color: primaryColor,
     crossorigin: 'use-credentials',
     icons: [{
@@ -55,22 +57,40 @@ const _vitePWAOptions = {
   },
   registerType: 'autoUpdate',
   workbox: {
-    navigateFallback: '/404',
+    navigateFallback: '/~fallback',
     globDirectory: 'dist/client',
-    globPatterns: ['**/!(cms*|admin*).{js,css}'],
+    globPatterns: [],
     globIgnores: ['admin/**/*'],
     ignoreURLParametersMatching: [/.*/],
     runtimeCaching: [{
-      urlPattern: /^\/$/,
+      urlPattern: /^\/(~fallback)?$/,
       handler: 'NetworkFirst',
     }, {
-      urlPattern: /\/((?!(?:admin|assets|img)(\/|$))[^.]+)(\.(?!js|css|xml|txt|png|jpg|jpeg|webp|avif|svg|gif)[^.]+)*$/,
+      urlPattern: /^\/(?!_astro\/|admin\/|assets\/|img\/)/,
       handler: 'NetworkFirst',
       options: {
         cacheName: 'pages',
         expiration: {
-          maxEntries: 50,
-          purgeOnQuotaError: true,
+          maxAgeSeconds: 86400 * 7,
+        },
+      },
+    }, {
+      urlPattern: /^\/_astro\/.*\.(?:js|css)$/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'hashed-chunks',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 86400 * 365,
+        },
+      },
+    }, {
+      urlPattern: /^\/_astro\/.*\.(?!js|css)\w+$/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'hashed-images',
+        expiration: {
+          maxAgeSeconds: 86400 * 30,
         },
       },
     }, {
@@ -78,26 +98,17 @@ const _vitePWAOptions = {
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'assets',
-      },
-    }, {
-      urlPattern: /^\/_image$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'optim-images',
         expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-          purgeOnQuotaError: true,
+          maxAgeSeconds: 86400 * 7,
         },
       },
     }, {
-      urlPattern: /^\/img\/uploads\/.*\.(?:png|jpg|jpeg|webp|avif|svg|gif)$/,
+      urlPattern: /^\/img\/uploads\//,
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'cms-images',
         expiration: {
-          maxEntries: 20,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          maxAgeSeconds: 86400 * 7,
           purgeOnQuotaError: true,
         },
       },
@@ -107,8 +118,7 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'store-api',
         expiration: {
-          maxEntries: 50,
-          purgeOnQuotaError: true,
+          maxAgeSeconds: 86400 * 7,
         },
       },
     }, {
@@ -117,8 +127,7 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'product-thumbnails',
         expiration: {
-          maxEntries: 100,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          maxAgeSeconds: 86400 * 30,
           purgeOnQuotaError: true,
         },
       },
@@ -128,8 +137,8 @@ const _vitePWAOptions = {
       options: {
         cacheName: 'product-pictures',
         expiration: {
-          maxEntries: 10,
-          maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+          maxEntries: 100,
+          maxAgeSeconds: 86400 * 7,
           purgeOnQuotaError: true,
         },
       },
@@ -155,6 +164,7 @@ viteAlias.push(
 
 const genAstroConfig = ({
   site = `https://${domain}`,
+  isPWA = false,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => {
   const integrations = [
@@ -170,9 +180,45 @@ const genAstroConfig = ({
       injectReset: false,
       injectEntry: false,
     }),
-    AstroPWA(vitePWAOptions),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/, /\.vue\?vue/, // .vue
+        /\.mdx?$/, // .md, .mdx
+        /\.astro$/,
+      ],
+      imports: ['vue'],
+      dts: isLibDev ? '.auto-imports.d.ts' : false,
+    }),
+    {
+      name: 'client:context',
+      hooks: {
+        'astro:config:setup': ({ addClientDirective }) => {
+          addClientDirective({
+            name: 'context',
+            entrypoint: joinPath(__dirname, 'config/astro/context-directive.mjs'),
+          });
+        },
+      },
+    },
   ];
+  if (isPWA && !isSSG) {
+    integrations.push(AstroPWA(vitePWAOptions));
+  } else {
+    viteAlias.push({
+      find: 'virtual:pwa-info',
+      replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
+    });
+  }
+  if (!isToServerless) {
+    integrations.push(image({
+      serviceEntryPoint: '@astrojs/image/sharp',
+    }));
+  }
   return {
+    experimental: {
+      viewTransitions: true,
+    },
     output: isSSG ? 'static' : 'server',
     adapter: isSSG ? undefined : node({
       mode: 'middleware',
@@ -183,7 +229,9 @@ const genAstroConfig = ({
     site,
     compressHTML: isToServerless,
     build: {
+      assetsPrefix: !isSSG ? settings.assetsPrefix : undefined,
       inlineStylesheets: 'never',
+      ...settings.build,
     },
     vite: {
       plugins: [

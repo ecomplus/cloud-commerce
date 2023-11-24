@@ -87,6 +87,11 @@ export default async (
         return import('@cloudcommerce/app-flash-courier')
           .then(({ calculateShipping }) => calculateShipping(_data));
       };
+    } else if (appId === apps.mandae.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-mandae')
+          .then(({ calculateShipping }) => calculateShipping(_data));
+      };
     }
   } else if (modName === 'list_payments') {
     if (appId === apps.mercadoPago.appId) {
@@ -131,6 +136,12 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
   } else if (modName === 'create_transaction') {
     if (appId === apps.mercadoPago.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
@@ -171,6 +182,12 @@ export default async (
     if (appId === apps.pagHiper.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-paghiper')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data: AppModuleBody = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

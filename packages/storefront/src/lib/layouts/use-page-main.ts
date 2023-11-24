@@ -11,34 +11,25 @@ export interface Props {
     Promise<{ props: Record<string, any> }>;
 }
 
+type PageContentHero = Exclude<PageContent['hero'], undefined>;
 const now = Date.now();
-const parseBanners = (banners: PageContent['hero']['slides']) => {
+const parseBanners = (banners: PageContentHero['slides']) => {
   const validBanners: UseBannerProps[] = [];
   banners.forEach(({
-    img,
-    start,
-    end,
-    mobile_img: mobileImg,
-    button_link: buttonLink,
-    button_text: buttonText,
-    ...rest
+    startsAt,
+    endsAt,
+    ...bannerProps
   }) => {
-    if (start && new Date(start).getTime() < now) return;
-    if (end && new Date(end).getTime() > now) return;
-    validBanners.push({
-      ...rest,
-      img,
-      mobileImg,
-      buttonLink,
-      buttonText,
-    });
+    if (startsAt && new Date(startsAt).getTime() < now) return;
+    if (endsAt && new Date(endsAt).getTime() > now) return;
+    validBanners.push(bannerProps);
   });
   return validBanners;
 };
 
 export const usePageHero = async ({ routeContext }: Props) => {
   const { cmsContent } = routeContext;
-  const heroSlider: Omit<PageContent['hero'], 'slides'>
+  const heroSlider: Omit<PageContentHero, 'slides'>
     & { slides: UseBannerProps[] } = { slides: [] };
   const heroContent = cmsContent?.hero;
   if (heroContent) {
@@ -51,6 +42,7 @@ export const usePageHero = async ({ routeContext }: Props) => {
 };
 
 type CustomSection = { type: `${string}:${string}`, props: any };
+type ProductDetailsProps = { hasDescription?: boolean, hasSpecifications?: boolean };
 
 export const usePageSections = async <T extends CustomSection = CustomSection>
 ({ routeContext, handleCustomSection }: Props) => {
@@ -59,14 +51,19 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     T
     | { type: 'product-shelf', props: UseProductShelfProps }
     | { type: 'banners-grid', props: { banners: UseBannerProps[] } }
+    | { type: 'product-details', props: ProductDetailsProps }
+    | { type: 'breadcrumbs', props: {} }
+    | { type: 'related-products', props: {} }
+    | { type: 'doc-description', props: {} }
+    | { type: 'product-specifications', props: {} }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
       if (type === 'product-shelf') {
         const {
-          collection_id: collectionIdAndInfo,
-          headless: isHeadless,
-          shuffle: isShuffle,
+          collectionIdAndInfo,
+          isHeadless,
+          isShuffle,
           ...rest
         } = sectionContent;
         let { sort, title } = sectionContent;
@@ -120,16 +117,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         await fetching;
         sections[index] = {
           type,
-          props: {
-            ...rest,
-            collectionId,
-            searchQuery,
-            sort,
-            title: isHeadless ? null : title,
-            titleLink,
-            isShuffle,
-            products,
-          },
+          props: { ...props, products },
         };
         return;
       }
@@ -142,6 +130,20 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           },
         };
         return;
+      }
+      switch (type) {
+        case 'breadcrumbs':
+        case 'product-details':
+        case 'related-products':
+        case 'doc-description':
+        case 'product-specifications':
+          // Bypassed sections
+          sections[index] = {
+            type,
+            props: sectionContent,
+          };
+          return;
+        default:
       }
       if (typeof handleCustomSection === 'function') {
         const { props } = await handleCustomSection(

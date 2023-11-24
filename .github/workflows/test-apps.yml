@@ -1,4 +1,4 @@
-name: Run E2E tests
+name: Run module and app tests
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/test-e2e.yml"
+      - ".github/workflows/test-apps.yml"
       - "packages/**"
       - "pnpm-lock.yaml"
       - "!**/package.json"
@@ -34,14 +34,14 @@ jobs:
       !contains(github.event.head_commit.author.name, '[bot]')
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: ecomplus/store
           path: store
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -64,7 +64,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - shell: bash
-        run: bash scripts/pre-install.sh && pnpm install --frozen-lockfile
+        run: bash scripts/pre-install.sh && pnpm install --no-frozen-lockfile
 
       - uses: actions/cache@v3
         with:
@@ -87,8 +87,6 @@ jobs:
           FRENET_TOKEN: ${{ secrets.FRENET_TOKEN }}
           GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
           GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
-          INFINITEPAY_ID: ${{ secrets.INFINITEPAY_ID }}
-          INFINITEPAY_SECRET: ${{ secrets.INFINITEPAY_SECRET }}
         run: pnpm build
 
       - name: Get npm global directories
@@ -106,11 +104,11 @@ jobs:
             ${{ steps.npm-paths.outputs.LIB_PATH }}
             ${{ steps.npm-paths.outputs.BIN_PATH }}
             ~/.npm-global/bin
-          key: ${{ runner.os }}-npm-globals-firebase-tools-12.5.2
+          key: ${{ runner.os }}-npm-globals-firebase-tools-12.9.0
 
       - if: steps.npm-g-cache.outputs.cache-hit != 'true'
         shell: bash
-        run: npm install -g firebase-tools@12.5.2
+        run: npm install -g firebase-tools@12.9.0
 
       - name: Initialize Firebase emulators
         shell: bash
@@ -119,11 +117,25 @@ jobs:
           ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
           ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
           ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
         run: |
+          printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
+          ECOM_API_KEY=$ECOM_API_KEY
+          ECOM_STORE_ID=$ECOM_STORE_ID
+          " > functions/.env
+          npx cloudcommerce prepare
           firebase --project=ecom2-demo emulators:start --only functions &
 
       - name: Run tests
         shell: bash
+        env:
+          ECOM_STORE_ID: ${{ secrets.ECOM_STORE_ID }}
+          ECOM_AUTHENTICATION_ID: ${{ secrets.ECOM_AUTHENTICATION_ID }}
+          ECOM_API_KEY: ${{ secrets.ECOM_API_KEY }}
+          MERCADOPAGO_TOKEN: ${{ secrets.MERCADOPAGO_TOKEN }}
+          FRENET_TOKEN: ${{ secrets.FRENET_TOKEN }}
+          GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
+          GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
         run: |
           sleep 10
-          pnpm test:e2e
+          pnpm test:apps

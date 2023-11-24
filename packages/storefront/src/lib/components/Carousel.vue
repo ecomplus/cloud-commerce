@@ -11,14 +11,19 @@ import {
   nextTick,
   provide,
 } from 'vue';
-import { useDebounceFn, useElementHover, useScroll } from '@vueuse/core';
+import {
+  useDebounceFn,
+  useElementHover,
+  useScroll,
+} from '@vueuse/core';
 import CarouselControl from '@@sf/components/CarouselControl.vue';
 
 export type CarouselInject = {
   autoplay: Ref<number | undefined>,
-  changeSlide: (direction: number, isPageScroll?: boolean) => void,
-  isBoundLeft: Ref<boolean>,
-  isBoundRight: Ref<boolean>,
+  axis: 'x' | 'y',
+  changeSlide: (step: number, isPageScroll?: boolean) => void,
+  isBoundStart: Ref<boolean>,
+  isBoundEnd: Ref<boolean>,
 };
 
 export const carouselKey = Symbol('carousel') as InjectionKey<CarouselInject>;
@@ -28,77 +33,85 @@ export const carouselKey = Symbol('carousel') as InjectionKey<CarouselInject>;
 /* REFERENCE: https://github.com/bartdominiak/vue-snap */
 export interface Props {
   as?: string;
-  modelValue?: number;
+  index?: number;
   autoplay?: number; // milliseconds
+  axis?: 'x' | 'y';
+  hasControls?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   as: 'ul',
-  modelValue: 1,
+  index: 0,
+  axis: 'x',
 });
-const emit = defineEmits([
-  'update:modelValue',
-]);
-const currentIndex = ref(0);
-watch(toRef(props, 'modelValue'), (modelValue) => {
-  currentIndex.value = modelValue - 1;
-}, { immediate: true });
-watch(currentIndex, (current, previous) => {
+const emit = defineEmits<{
+  'update:index': [value: number]
+}>();
+const activeIndex = ref(0);
+watch(toRef(props, 'index'), (index) => {
+  if (index !== activeIndex.value) {
+    const step = index - activeIndex.value;
+    changeSlide(step, false);
+  }
+}, {
+  immediate: true,
+});
+watch(activeIndex, (current, previous) => {
   if (current !== previous) {
-    emit('update:modelValue', current + 1);
+    emit('update:index', current);
   }
 });
 const wrapper = ref<HTMLElement | null>(null);
-const { x: currentPos, isScrolling, arrivedState } = useScroll(wrapper);
-const isBoundLeft = computed(() => arrivedState.left);
-const isBoundRight = computed(() => arrivedState.right);
-const slidesWidth = ref<{ offsetLeft: number; width: number; }[]>([]);
-const wrapperScrollWidth = ref(0);
-const wrapperVisibleWidth = ref(0);
-const indexCount = ref(0);
-const calcWrapperWidth = () => {
+const { [props.axis]: currentPos, isScrolling, arrivedState } = useScroll(wrapper);
+const isX = props.axis === 'x';
+const isBoundStart = computed(() => (isX ? arrivedState.left : arrivedState.top));
+const isBoundEnd = computed(() => (isX ? arrivedState.right : arrivedState.bottom));
+const slideSizes = ref<{ offset: number; size: number; }[]>([]);
+const wrapperScrollSize = ref(0);
+const wrapperVisibleSize = ref(0);
+const calcWrapperSize = () => {
   if (!wrapper.value) return;
-  wrapperScrollWidth.value = wrapper.value.scrollWidth;
-  wrapperVisibleWidth.value = wrapper.value.offsetWidth;
+  if (isX) {
+    wrapperScrollSize.value = wrapper.value.scrollWidth;
+    wrapperVisibleSize.value = wrapper.value.offsetWidth;
+  } else {
+    wrapperScrollSize.value = wrapper.value.scrollHeight;
+    wrapperVisibleSize.value = wrapper.value.offsetHeight;
+  }
 };
-const calcSlidesWidth = () => {
+const calcSlidesSize = () => {
   if (!wrapper.value) return;
   let childNodes = [...wrapper.value.children] as HTMLElement[];
   if (childNodes.length === 1 && childNodes[0].tagName.endsWith('SLOT')) {
     childNodes = [...childNodes[0].children] as HTMLElement[];
   }
-  slidesWidth.value = childNodes.map((node) => ({
-    offsetLeft: node.offsetLeft,
-    width: node.offsetWidth,
+  slideSizes.value = childNodes.map((node) => ({
+    offset: isX ? node.offsetLeft : node.offsetTop,
+    size: isX ? node.offsetWidth : node.offsetHeight,
   }));
 };
-const calcNextOffsetLeft = (direction: number) => {
-  let nextSlideIndex = currentIndex.value + direction;
-  if (nextSlideIndex >= slidesWidth.value.length) {
+const calcNextOffset = (step: number) => {
+  let nextSlideIndex = activeIndex.value + step;
+  if (nextSlideIndex >= slideSizes.value.length) {
     return 0;
   }
   if (nextSlideIndex < 0) {
-    nextSlideIndex = slidesWidth.value.length + nextSlideIndex;
+    nextSlideIndex = slideSizes.value.length + nextSlideIndex;
   }
-  const { offsetLeft, width } = slidesWidth.value[nextSlideIndex] || {};
-  if (!width) {
+  const { offset, size } = slideSizes.value[nextSlideIndex] || {};
+  if (!size) {
     return 0;
   }
-  return offsetLeft;
+  return offset;
 };
 const calcCurrentIndex = () => {
-  const getCurrentIndex = slidesWidth.value.findIndex((slide) => {
+  const index = slideSizes.value.findIndex((slide) => {
     // Find the closest point, with 5px approximate.
-    return Math.abs(slide.offsetLeft - currentPos.value) <= 5;
+    return Math.abs(slide.offset - currentPos.value) <= 5;
   });
-  if (getCurrentIndex > -1) {
-    currentIndex.value = getCurrentIndex || 0;
+  if (index > -1) {
+    activeIndex.value = index || 0;
   }
-};
-const calcIndexCount = () => {
-  const maxPos = wrapperScrollWidth.value - wrapperVisibleWidth.value;
-  indexCount.value = slidesWidth.value
-    .findIndex(({ offsetLeft }) => (offsetLeft >= maxPos - 5));
 };
 let autoplayTimer: ReturnType<typeof setTimeout> | undefined;
 const restartAutoplay = () => {
@@ -110,29 +123,37 @@ const restartAutoplay = () => {
     }, props.autoplay);
   }
 };
-const changeSlide = (direction: number, isPageScroll: boolean = true) => {
-  if (slidesWidth.value.length < 2) {
+const changeSlide = (step: number, isPageScroll: boolean = true) => {
+  if (slideSizes.value.length < 2) {
     return;
   }
-  if (isPageScroll && (direction === 1 || direction === -1)) {
-    let pageStep = 0;
-    let pageStepWidth = 0;
-    for (let i = currentIndex.value; i < slidesWidth.value.length; i++) {
-      const { width } = slidesWidth.value[i] || {};
-      if (width) {
-        pageStep += 1;
-        pageStepWidth += width;
-        if (pageStepWidth >= wrapperVisibleWidth.value) {
-          break;
+  let nextOffset = -1;
+  if (currentPos.value + wrapperVisibleSize.value >= wrapperScrollSize.value) {
+    nextOffset = 0;
+  } else {
+    if (isPageScroll && (step === 1 || step === -1)) {
+      let pageStep = 0;
+      let pageStepSize = 0;
+      for (let i = activeIndex.value; i < slideSizes.value.length; i++) {
+        const { size } = slideSizes.value[i] || {};
+        if (size) {
+          pageStep += 1;
+          pageStepSize += size;
+          if (pageStepSize + size * 0.75 >= wrapperVisibleSize.value) {
+            break;
+          }
         }
       }
+      if (pageStep) {
+        step = step > 0 ? pageStep : -pageStep;
+      }
     }
-    if (pageStep) {
-      direction = direction > 0 ? pageStep : -pageStep;
-    }
+    nextOffset = calcNextOffset(step);
   }
-  const nextOffsetLeft = calcNextOffsetLeft(direction);
-  wrapper.value?.scrollTo({ left: nextOffsetLeft, behavior: 'smooth' });
+  wrapper.value?.scrollTo({
+    [isX ? 'left' : 'top']: nextOffset,
+    behavior: 'smooth',
+  });
   restartAutoplay();
 };
 watch(isScrolling, (_isScrolling: boolean) => {
@@ -156,14 +177,17 @@ const calcOnInit = () => {
   if (!wrapper.value) {
     return;
   }
-  calcWrapperWidth();
-  calcSlidesWidth();
+  calcWrapperSize();
+  calcSlidesSize();
   calcCurrentIndex();
-  calcIndexCount();
 };
 const onResize = useDebounceFn(() => {
   if (!wrapper.value) return;
-  wrapper.value.scrollLeft = 0;
+  if (isX) {
+    wrapper.value.scrollLeft = 0;
+  } else {
+    wrapper.value.scrollTop = 0;
+  }
   calcOnInit();
 }, 400);
 onMounted(() => {
@@ -187,20 +211,27 @@ onBeforeUnmount(() => {
 });
 provide(carouselKey, {
   autoplay: toRef(props, 'autoplay'),
+  axis: props.axis,
   changeSlide,
-  isBoundLeft,
-  isBoundRight,
+  isBoundStart,
+  isBoundEnd,
 });
 </script>
 
 <template>
-  <div ref="carousel" class="relative" data-carousel>
+  <div
+    ref="carousel"
+    :class="`relative ${(!isX ? 'overflow-hidden' : '')}`"
+    data-carousel
+  >
     <component
       :is="as"
       ref="wrapper"
-      class="flex overflow-x-scroll overflow-y-hidden list-none m-0 p-0
-        snap-x snap-mandatory scroll-smooth
-        [&>*]:snap-start [&>*]:outline-none"
+      class="m-0 flex snap-mandatory list-none scroll-smooth p-0
+      [&>*]:snap-start [&>*]:outline-none"
+      :class="isX
+        ? 'snap-x overflow-y-hidden overflow-x-scroll'
+        : 'h-full flex-col snap-y overflow-x-hidden overflow-y-scroll'"
       style="
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
@@ -214,16 +245,15 @@ provide(carouselKey, {
       name="controls"
       v-bind="{
         changeSlide,
-        isBoundLeft,
-        isBoundRight,
-        currentPage: currentIndex + 1,
-        pageCount: indexCount + 1,
+        isBoundStart,
+        isBoundEnd,
+        activeIndex,
       }"
     >
-      <CarouselControl is-prev>
+      <CarouselControl v-if="slideSizes.length > 1 || hasControls" is-prev>
         <slot name="previous" />
       </CarouselControl>
-      <CarouselControl>
+      <CarouselControl v-if="slideSizes.length > 1 || hasControls">
         <slot name="next" />
       </CarouselControl>
     </slot>

@@ -51,7 +51,10 @@ export default (order: Orders, appData) => {
     if (buyer.doc_number && buyer.doc_number.length <= 18) {
       tinyCustomer.cpf_cnpj = buyer.doc_number;
     }
-    if (buyer.inscription_number && buyer.inscription_number.length <= 18) {
+    if (
+      buyer.inscription_number && buyer.inscription_number.length <= 18
+      && buyer.inscription_type !== 'Municipal'
+    ) {
       tinyCustomer.ie = buyer.inscription_number;
     }
     if (buyer.main_email && buyer.main_email.length <= 50) {
@@ -72,7 +75,7 @@ export default (order: Orders, appData) => {
     };
   }
 
-  if (shippingAddress && billingAddress) {
+  if (shippingAddress) {
     tinyOrder.endereco_entrega = {};
     parseAddress(shippingAddress, tinyOrder.endereco_entrega);
     if (shippingAddress.name) {
@@ -83,7 +86,7 @@ export default (order: Orders, appData) => {
   if (order.items) {
     order.items.forEach((item) => {
       if (item.quantity) {
-        const itemRef = (item.sku || item._id || Math.random().toString()).substring(0, 30);
+        const itemRef = (item.sku || item._id || Math.random().toString()).substring(0, 60);
         tinyOrder.itens.push({
           item: {
             codigo: itemRef,
@@ -124,6 +127,11 @@ export default (order: Orders, appData) => {
     }
   }
 
+  const tinyErpOrderParser = global.$tinyErpOrderParser;
+  if (tinyErpOrderParser && typeof tinyErpOrderParser === 'function') {
+    tinyErpOrderParser({ tinyOrder, order });
+  }
+
   if (order.shipping_method_label) {
     tinyOrder.forma_frete = order.shipping_method_label;
   }
@@ -162,9 +170,6 @@ export default (order: Orders, appData) => {
       tinyOrder.valor_frete = amount.freight;
       if (amount.tax) {
         tinyOrder.valor_frete += amount.tax;
-      }
-      if (amount.extra) {
-        tinyOrder.valor_frete += amount.extra;
       }
     }
     if (amount.discount) {

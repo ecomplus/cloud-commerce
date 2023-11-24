@@ -13,8 +13,8 @@ export interface Props {
 
 const parseLayoutContent = (layoutContent: LayoutContent) => {
   const pitchBar: Props = { slides: [] };
-  if (layoutContent.header?.pitch_bar) {
-    pitchBar.slides = layoutContent.header.pitch_bar;
+  if (layoutContent.header?.pitchBar) {
+    pitchBar.slides = layoutContent.header.pitchBar;
   }
   return pitchBar;
 };

@@ -194,7 +194,11 @@ export default (
   const responseValidate = ajvAppsResponse.compile(responseSchema);
   return {
     GET() {
-      res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=10');
+      res.setHeader(
+        'Cache-Control',
+        'public, max-age=180, must-revalidate'
+          + ', s-maxage=5, stale-while-revalidate=9, stale-if-error=300',
+      );
       runModule(req.query, res, modName, validate, responseValidate);
     },
     POST() {

@@ -1,8 +1,11 @@
 import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
+import type { GroupedAnalyticsEvents } from '../analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
+import { sendAnalyticsEvents } from '../analytics-events';
 
 declare global {
   // eslint-disable-next-line
@@ -15,17 +18,20 @@ declare global {
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
+const { assetsPrefix } = config.get().settingsContent;
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
+const staticFilepaths: string[] = [];
 let cssFilepath: string | undefined;
-readFile(joinPath(baseDir, 'dist/server/stylesheets.csv'), 'utf-8')
-  .then((stylesManifest) => {
+readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
+  .then((staticBuildsManifest) => {
     const cssFiles: string[] = [];
-    stylesManifest.split(/\n/).forEach((line) => {
-      const [filename] = line.split(',');
-      if (filename) cssFiles.push(filename);
+    staticBuildsManifest.split(/\n/).forEach((line) => {
+      const [filepath] = line.split(',');
+      staticFilepaths.push(filepath);
+      if (filepath.endsWith('.css')) cssFiles.push(filepath);
     });
     if (cssFiles.length === 1) {
       cssFilepath = cssFiles[0]?.replace('./dist/client/', '/');
@@ -128,9 +134,23 @@ export default async (req: Request, res: Response) => {
     proxy(req, res);
     return;
   }
-  if (req.path.endsWith('.css') && cssFilepath) {
-    res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
-    return;
+
+  const ext = req.path.split('.').pop();
+  if (ext === 'js' || ext === 'css' || ext === 'avif' || ext === 'webp') {
+    const baseFilepath = req.path.replace(new RegExp(`(\\.|_)[a-zA-Z0-9]+\\.${ext}$`), '');
+    if (baseFilepath !== req.path) {
+      const filepath = staticFilepaths.find((_filepath) => {
+        return _filepath.startsWith(baseFilepath) && _filepath.endsWith(`.${ext}`);
+      });
+      if (filepath) {
+        res.set('Cache-Control', 'max-age=21600').redirect(302, filepath);
+        return;
+      }
+    }
+    if (ext === 'css' && cssFilepath) {
+      res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
+      return;
+    }
   }
 
   if (req.path === '/_image') {
@@ -174,6 +194,37 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
+  if (req.path === '/_analytics') {
+    if (req.method !== 'POST') {
+      res.sendStatus(405);
+      return;
+    }
+    const url = req.body?.page_location;
+    if (typeof url !== 'string' || !url) {
+      res.status(400);
+      res.send('Pageview URL is required in the `{ page_location }` body field');
+      return;
+    }
+    const events: GroupedAnalyticsEvents = [];
+    if (Array.isArray(req.body?.events)) {
+      req.body.events.forEach((event) => {
+        if (typeof event.type === 'string' && event.type) {
+          if (typeof event.name === 'string' && event.name) {
+            events.push(event);
+          }
+        }
+      });
+    }
+    if (!events.length) {
+      res.status(400);
+      res.send('Event(s) must be sent via the `{ events }` array in the request body');
+      return;
+    }
+    sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
+    res.sendStatus(204);
+    return;
+  }
+
   res.set('X-XSS-Protection', '1; mode=block');
   const url = req.path.replace(/\.html$/, '');
 
@@ -212,7 +263,15 @@ export default async (req: Request, res: Response) => {
     res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
       if (status === 200 && headers && cssFilepath) {
         // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
-        headers.Link = `<${cssFilepath}>; rel=preload; as=style`;
+        const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
+        if (!headers.link) {
+          headers.Link = cssLink;
+        } else {
+          if (typeof headers.link === 'string') {
+            headers.link = [headers.link];
+          }
+          headers.link.push(cssLink);
+        }
       }
       _writeHead.apply(res, [status, headers]);
     };

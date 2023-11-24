@@ -12,7 +12,7 @@
     "test": {
       "outputs": []
     },
-    "test:e2e": {
+    "test:apps": {
       "outputs": []
     }
   },

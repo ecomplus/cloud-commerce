@@ -4,12 +4,12 @@ import { computed } from 'vue';
 export interface Props {
   to?: 'orders' | 'favorites';
   accountUrl?: string;
-  returnUrl?: string;
+  returnUrl?: string | null;
   isSignUp?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  accountUrl: globalThis.$storefront.settings.account_url || '/app/account',
+  accountUrl: globalThis.$storefront?.settings.accountUrl || '/app/account',
   returnUrl: globalThis.location?.href,
 });
 const href = computed(() => {
@@ -20,14 +20,14 @@ const href = computed(() => {
     } else {
       url += '?';
     }
-    return `${url}return_url=${props.returnUrl}`;
+    return props.returnUrl ? `${url}return_url=${props.returnUrl}` : url;
   }
   const { settings } = globalThis.$storefront;
-  if (props.to === 'orders' && settings.orders_url) {
-    return settings.orders_url;
+  if (props.to === 'orders' && settings.ordersUrl) {
+    return settings.ordersUrl;
   }
-  if (props.to === 'favorites' && settings.favorites_url) {
-    return settings.favorites_url;
+  if (props.to === 'favorites' && settings.favoritesUrl) {
+    return settings.favoritesUrl;
   }
   return `${url}/${props.to}`;
 });

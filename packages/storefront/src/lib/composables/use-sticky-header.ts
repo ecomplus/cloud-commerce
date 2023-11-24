@@ -12,7 +12,7 @@ import {
   useScroll,
   watchDebounced,
 } from '@vueuse/core';
-import { isMobile } from '@@sf/sf-lib';
+import { isMobile, isScreenXs } from '@@sf/sf-lib';
 
 export interface Props {
   header: Ref<HTMLElement | null>;
@@ -34,13 +34,16 @@ const useStickyHeader = (props: Props) => {
     canCreateHeightDiv: true,
     ...props,
   };
-  const { ready, start } = useTimeout(100, { controls: true, immediate: false });
+  const { ready, start } = useTimeout(100, {
+    controls: true,
+    immediate: false,
+  });
   const staticHeight = ref(0);
   const staticY = ref(0);
   let heightDiv: HTMLElement | undefined;
-  const { y: _y } = !import.meta.env.SSR && (isShownOnMobile || !isMobile)
-    ? useScroll(document)
-    : { y: ref(0) };
+  const canWatchScroll = !import.meta.env.SSR
+    && (isShownOnMobile || (!isMobile && !isScreenXs));
+  const { y: _y } = canWatchScroll ? useScroll(document) : { y: ref(0) };
   const y = ref(0);
   watchDebounced(_y, (nextY) => {
     y.value = nextY;

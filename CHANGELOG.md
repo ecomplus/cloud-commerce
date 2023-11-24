@@ -2,6 +2,418 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.33.5](https://github.com/ecomplus/cloud-commerce/compare/v0.33.4...v0.33.5) (2023-11-24)
+
+
+### Bug Fixes
+
+* **api:** Prevent error Content-Length mismatch on POST ([8e642fc](https://github.com/ecomplus/cloud-commerce/commit/8e642fc0b792a070bf8d3bf526c1fdb904787a56))
+* **cli:** Update default `firebase.json` to ensure Hosting root rewrited to SSR function ([f465763](https://github.com/ecomplus/cloud-commerce/commit/f465763cefaeb5cac783f9a8125c3190d7f4b05f))
+* **jadlog:** Fixing module file exports ([6f9d195](https://github.com/ecomplus/cloud-commerce/commit/6f9d1959e0fd02a2dc2b6f20b39751c8993c0b19))
+* **modules:** Properly set modules API base URL on localhost emulators ([18befaf](https://github.com/ecomplus/cloud-commerce/commit/18befafe44171312b95511613c8091bbad70eabb))
+* **storefront:** Properly set modules API base URI on localhost emulation ([eade67b](https://github.com/ecomplus/cloud-commerce/commit/eade67bd2280affc4c7f294fc5df0ce0da4f5158))
+
+### [0.33.4](https://github.com/ecomplus/cloud-commerce/compare/v0.33.3...v0.33.4) (2023-11-24)
+
+
+### Features
+
+* **i18n:** Add `i19safeBuy` ([60cd36e](https://github.com/ecomplus/cloud-commerce/commit/60cd36e509ba38519a0fead16f07e10694e97af9))
+* **ssr:** Start sending GA4 server events with Measurement Protocol API ([#273](https://github.com/ecomplus/cloud-commerce/issues/273)) ([1f98e03](https://github.com/ecomplus/cloud-commerce/commit/1f98e035d478c9226e2352a0c55ebde156ca68cc))
+* **storefront:** Parsing pageview, items and cart events to Tiktok Pixel ([fc21d1d](https://github.com/ecomplus/cloud-commerce/commit/fc21d1d3f49efad87b6398107e8eb40fc5e028ba))
+* **storefront:** Parsing vbeta app routes to send gtag checkout and purchase events ([48a64db](https://github.com/ecomplus/cloud-commerce/commit/48a64db4f18c9aa6b6228f81967630b75d188d52))
+
+
+### Bug Fixes
+
+* **modules:** Properly getting modules base URI on checkout request ([94de8af](https://github.com/ecomplus/cloud-commerce/commit/94de8af9864b6258ca95eccd2f06ba5864da775f))
+* **storefront:** Fix sending initial add/remove cart events ([a293a98](https://github.com/ecomplus/cloud-commerce/commit/a293a983351f3372b244885e9bb81739dd640ea1))
+
+### [0.33.3](https://github.com/ecomplus/cloud-commerce/compare/v0.33.2...v0.33.3) (2023-11-21)
+
+
+### Bug Fixes
+
+* **ssr:** Must add `mitt` to SSR package deps ([8c47ac9](https://github.com/ecomplus/cloud-commerce/commit/8c47ac9dff3e496cda0b2e3e70298069b81a1209))
+
+### [0.33.2](https://github.com/ecomplus/cloud-commerce/compare/v0.33.1...v0.33.2) (2023-11-21)
+
+
+### Features
+
+* **storefront:** Export `cartEvents` from shopping cart state to handle item add/remove events ([57bdcc8](https://github.com/ecomplus/cloud-commerce/commit/57bdcc85aff78a41e67cc05ec8734f7683261315))
+* **storefront:** Parsing pageview, items and cart events to Meta Pixel ([0ace18a](https://github.com/ecomplus/cloud-commerce/commit/0ace18a2715ae06f5d81513e368fbf73efffefa4))
+* **storefront:** Update `useAnalytics` to emit shopping cart gtag events ([c1a600f](https://github.com/ecomplus/cloud-commerce/commit/c1a600f0970cf2687fc098b42030c43c52db7d10))
+
+
+### Bug Fixes
+
+* **storefront:** Identifying analytics item view on product page by list id ([cb2cbd2](https://github.com/ecomplus/cloud-commerce/commit/cb2cbd2378a74423f022cb641fab647b3e157c04))
+* **storefront:** Sen page view params on every analytics message payload ([98be05f](https://github.com/ecomplus/cloud-commerce/commit/98be05f5b4a2ef098efe69da4f9ced60eda2741c))
+
+### [0.33.1](https://github.com/ecomplus/cloud-commerce/compare/v0.33.0...v0.33.1) (2023-11-16)
+
+
+### Features
+
+* **storefront:** Add new `getGtagItem` method on `useAnalytics` state as reusable parser ([2f7cb99](https://github.com/ecomplus/cloud-commerce/commit/2f7cb99ccf37f9c0dfcd484068702e0e7291f0f6))
+* **storefront:** New `send-gtag-events` script, auto emit first pageview ([a888870](https://github.com/ecomplus/cloud-commerce/commit/a88887013901aa42fbf1722fd7a5c578a810c6ed))
+* **storefront:** New `state/use-analytics` module to send and watch events and retrieve session ([f2c10f5](https://github.com/ecomplus/cloud-commerce/commit/f2c10f5d0138755c9526b94f7d033de48123d89d))
+* **storefront:** Send page view analytics event on each view transitions "SPA" page load ([914aec4](https://github.com/ecomplus/cloud-commerce/commit/914aec4e07f9b954d2a5da803d1a2fc1dd01f4b3))
+* **storefront:** Typing analytics gtag events ([12d2325](https://github.com/ecomplus/cloud-commerce/commit/12d2325d4270b9f8233e4c854cccbd5c41098258))
+* **storefront:** Update `scripts/push-analytics-events` to handle GTM `dataLayer` if globally set ([058fe1d](https://github.com/ecomplus/cloud-commerce/commit/058fe1d4b3a6bb6c4a683282a1de1bfc3f0c58c9))
+* **storefront:** Update `useProductCard` composable to send view item gtag event ([f2dafd5](https://github.com/ecomplus/cloud-commerce/commit/f2dafd545471530f1e49f51147312aef169a4ad3))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#268](https://github.com/ecomplus/cloud-commerce/issues/268)) ([a2a2ebd](https://github.com/ecomplus/cloud-commerce/commit/a2a2ebdccb6153afb89b5df937ca0ea30fa16300))
+* **storefront:** Ensure async components hydration with `client:context` on first load ([782ba4a](https://github.com/ecomplus/cloud-commerce/commit/782ba4a0d4b0388e2081c1181393b7c252ce99fe))
+* **storefront:** Keep UTM on local storage and consider valid for 7 days ([b0b2d6e](https://github.com/ecomplus/cloud-commerce/commit/b0b2d6e33948798f8a564bc0ee9a0467a09f29d9))
+* **storefront:** Properly set page meta title and description from route state and store settings ([39f1ce4](https://github.com/ecomplus/cloud-commerce/commit/39f1ce4b0f8c20777770b0eba67d0e20d4d4f84e))
+* **storefront:** Update `<Carousel>` to properly handle partially fit slides ([86666f7](https://github.com/ecomplus/cloud-commerce/commit/86666f7451ebaa5be09df303b297f17b1ac7be58))
+
+## [0.33.0](https://github.com/ecomplus/cloud-commerce/compare/v0.32.0...v0.33.0) (2023-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ssr:** `@headlessui/vue` is no more dev dep of `@cloudcommerce/storefront`, not dep of `@cloudcommerce/ssr`, must be manually added as dependency if used
+
+### Features
+
+* **modules:** Optionally override any Function runtime option on `modulesFunctionOptions` config ([d1fed93](https://github.com/ecomplus/cloud-commerce/commit/d1fed93c4ae69c780efe690c62762b2a6ffd1da1))
+
+
+### Bug Fixes
+
+* **passport:** Set CORS headers and accept OPTIONS request ([d15dc5a](https://github.com/ecomplus/cloud-commerce/commit/d15dc5a11f8d6a180269f8f48660d92ada5e9c38))
+* **storefront:** Fix default styles for ::selection with new RGB syntax ([9497bfd](https://github.com/ecomplus/cloud-commerce/commit/9497bfd5dbcbf45136dc027327ea8abe3d8b748d))
+* **storefront:** Update dark/light CSS vars to RGB spaces notation ([62ea62c](https://github.com/ecomplus/cloud-commerce/commit/62ea62cc9653b7a207b2da7e203524c6be6db387))
+* **storefront:** Updating vbeta-app script version ([c0d50c0](https://github.com/ecomplus/cloud-commerce/commit/c0d50c028474ef0ccbc935b8253260ad978c13e7))
+
+
+* **ssr:** Removing `@headlessui/vue` from pkg deps ([344916f](https://github.com/ecomplus/cloud-commerce/commit/344916fd49c4683023b188fa9ead66a5c1a346f3))
+
+## [0.32.0](https://github.com/ecomplus/cloud-commerce/compare/v0.31.2...v0.32.0) (2023-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Passport API not existing anymore, just for token, removed `GET_PASSPORT_API_URI`
+
+### Features
+
+* **modules:** Add CORS headers by default and handle OPTIONS HTTP method (CORS preflight) ([aa08573](https://github.com/ecomplus/cloud-commerce/commit/aa08573100c5744c7b3a48f40187c7d9cc74b613))
+* **pagarme-v5:** Create app to integrate Pagar.me API v5 with recurring payments ([#255](https://github.com/ecomplus/cloud-commerce/issues/255)) ([a445642](https://github.com/ecomplus/cloud-commerce/commit/a445642c2a2774fc51d2df3467ca391dc55b0ba6))
+
+
+### Bug Fixes
+
+* **config:** Properly using `countryCode` from settings content [skip ci] ([4014aab](https://github.com/ecomplus/cloud-commerce/commit/4014aabe3bea6e119755b7abec19b80cd684cba0))
+* **deps:** Update non-major dependencies ([#266](https://github.com/ecomplus/cloud-commerce/issues/266)) ([17a559b](https://github.com/ecomplus/cloud-commerce/commit/17a559b0cf3df0897dacd8ac89a02c48415f24a9))
+* **modules:** Improving GET response cache with fine control for stale cache ([9c22262](https://github.com/ecomplus/cloud-commerce/commit/9c222625a66cf3ff5abe188041dd054ef05d853e))
+* **pagarme-v5:** Fixing package exports filepaths ([3522084](https://github.com/ecomplus/cloud-commerce/commit/3522084b30b77322fc921b7005690dbde44e360f))
+* **ssr:** Update Cloudflare SWR worker considering API routes at /_api/* ([8946190](https://github.com/ecomplus/cloud-commerce/commit/8946190d2dcd7a35a64081bb82e541fbca8998f0))
+* **storefront:** Fix `@ecomplus/client` const API base URIs on vbeta app compat ([7296836](https://github.com/ecomplus/cloud-commerce/commit/7296836fba024a56e0eb52e1af2e7b7762291816))
+* **storefront:** Fix constants names for `@ecomplus/client` on vbeta compat ([56d260a](https://github.com/ecomplus/cloud-commerce/commit/56d260ad520584ecd1b6142455fe48996c2a70fa))
+* **storefront:** Fixing API base URI on vbeta-app script ([0e7436e](https://github.com/ecomplus/cloud-commerce/commit/0e7436ef3d1f4aa6ea195561ab10da92852f882b))
+* **storefront:** Updating vbeta-app script version ([47738b7](https://github.com/ecomplus/cloud-commerce/commit/47738b76a5e742ca5144ac766d7ea80d0d1c003e))
+
+### [0.31.2](https://github.com/ecomplus/cloud-commerce/compare/v0.31.1...v0.31.2) (2023-11-03)
+
+### [0.31.1](https://github.com/ecomplus/cloud-commerce/compare/v0.31.0...v0.31.1) (2023-11-03)
+
+## [0.31.0](https://github.com/ecomplus/cloud-commerce/compare/v0.30.0...v0.31.0) (2023-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **correios:** Requires new Correios contracts and credentials
+
+* feat(correios v2): Create app
+
+* chore(correios db): Add database population and main search in database
+
+* chore(action): add correios app environment variables
+
+* chore(pnpm lock): update file
+
+* fix(pnpm lock): Update file
+
+* chore(events): Add event functions
+
+* chore(pnpm lock): Update file
+
+* fix(correios db): Fix fill database and write fallback data
+
+* fix(app correios): Update app package [skip ci]
+
+* fix(events): Remove app correios v2
+
+* fix(firebase config): Remove correiosV2 app and update appId [skip ci]
+
+* fix(modules): Remove correios v2 app
+
+* fix(pnpm lock): Return file to main version
+
+* fix(test correios): Remove debug
+
+* fix(correios): Remove unnecessary comments [skip ci]
+
+* fix(correios v2): Add and correct parsers adds declared value check
+
+* fix(correios): Add weight check and standardization of parameters
+
+* fix(correios): Remove unnecessary comments
+
+* fix(correios): Correct conversion of weight to grams
+
+* fix(correios): Parameterize weight array to grams
+
+### Features
+
+* **correios:** Update app to integrate new Correios API and read/save results to db ([#251](https://github.com/ecomplus/cloud-commerce/issues/251)) ([a1fb7e8](https://github.com/ecomplus/cloud-commerce/commit/a1fb7e8ac3581451ca2a2b57001ddb4a374c6c24))
+* **i18n:** Add `i19emailWasSentMsg` ([b3bcb53](https://github.com/ecomplus/cloud-commerce/commit/b3bcb53d0f2603e34ba0ea2ac9193e01dbce178d))
+* **storefront:** Add `linkActionUrl` opt param to `submitLogin` method on login form composable ([a783be6](https://github.com/ecomplus/cloud-commerce/commit/a783be6c9fe5af847a6f00eeb7a15b32a07ebad9))
+* **storefront:** New `vbeta-app` script to load legacy checkout SPA with session compatibility ([ed7cfb7](https://github.com/ecomplus/cloud-commerce/commit/ed7cfb7612016b577f60b05f4db84a28ea5b8550))
+
+
+### Bug Fixes
+
+* **affiliate-program:** Preventing error with undefined customer by code and other type fixes ([8340982](https://github.com/ecomplus/cloud-commerce/commit/834098212c539993ec3644c7cc01fcc6b61dbc2e))
+* **cli:** Update default `firebase.json` API routes CORS accepted methods ([31fd1c5](https://github.com/ecomplus/cloud-commerce/commit/31fd1c52e3d395f0b585d12bcacc323342b574bb))
+* **cli:** Update default `firebase.json` with API routes cache control and CORS headers ([c2a6ff2](https://github.com/ecomplus/cloud-commerce/commit/c2a6ff2f5f1cf5c20d048204628fdaab4f14d6fc))
+* **storefront:** Ensure Firebase app init on `useLoginForm` ([3505eda](https://github.com/ecomplus/cloud-commerce/commit/3505eda698ef5f4acdb206f2b4a0b2963fdbd25e))
+* **storefront:** Ensure View Transitions script not started on /app/* routes ([9e14b11](https://github.com/ecomplus/cloud-commerce/commit/9e14b11d01538534f13f33b2160c69e9fc95bb3a))
+* **storefront:** Update `useLoginForm` to throttle login submit and return `isSubmitting` state ([4096aab](https://github.com/ecomplus/cloud-commerce/commit/4096aabf3bfa0a13db911491bb36cac6c7ed53f7))
+
+## [0.30.0](https://github.com/ecomplus/cloud-commerce/compare/v0.29.0...v0.30.0) (2023-11-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Removing `<LoginForm>` Vue component in favor of composable
+* **tiny-erp:** GH Action input and env var for Tiny ERP token (optionals) renamed to respect convention
+* **storefront:** Removing exported const specific for IOS and Safari
+
+Trying to reduce script execution time with one regex only (instead of separated two)
+
+### Features
+
+* Check optional `env.CRONTAB_*` for each scheduled function ([eebade4](https://github.com/ecomplus/cloud-commerce/commit/eebade443be15207a76ed217c564e7e0b93061d3))
+* **firebase:** Check `env.STORE_EVENTS_CRONTAB` to customize events checked crontab (every min) ([d89e67a](https://github.com/ecomplus/cloud-commerce/commit/d89e67a928c316d066d1b5724f9025e0ead33356))
+* **firebase:** Handle optional config object `apiEvents` to change delayed ms or disable events ([d04ce53](https://github.com/ecomplus/cloud-commerce/commit/d04ce53b786d8954cca0f7e4660f379d98e65e2a))
+* **i18n:** Add `i19sendLoginLinkByEmail` ([bec9f07](https://github.com/ecomplus/cloud-commerce/commit/bec9f07737abf0981def8a6bd98ed41527f04791))
+* **mandae:** Create app to integrate Mandaê shipping intermediator  ([#254](https://github.com/ecomplus/cloud-commerce/issues/254)) ([ffbc94c](https://github.com/ecomplus/cloud-commerce/commit/ffbc94c397ff4642c1ec8a1133e6a69a9f947b27))
+* **storefront:** New `useLoginForm` composable ([30dfd82](https://github.com/ecomplus/cloud-commerce/commit/30dfd82cd30b863586d97725401ccbd7aad98a27))
+* **storefront:** Optional global `$storefrontCacheController` to override default SSR Cache-Control ([2244d3e](https://github.com/ecomplus/cloud-commerce/commit/2244d3eb840bb989e8b41979285c8997abd84364))
+
+
+### Bug Fixes
+
+* **cli:** Stop using zx fetch, using node (18) global fetch instead ([947de65](https://github.com/ecomplus/cloud-commerce/commit/947de65714bcb932d799e31ea1953d8aafe506f8))
+* **deps:** Update non-major dependencies ([#256](https://github.com/ecomplus/cloud-commerce/issues/256)) ([6ad8135](https://github.com/ecomplus/cloud-commerce/commit/6ad81355939b1c971d70de2efd8e70aa36458348))
+* **firebase:** Set minimum default functions memory to 256mb [skip ci] ([e0d0cce](https://github.com/ecomplus/cloud-commerce/commit/e0d0cce1d08e1da32e8d5facb4660a99a363a48b))
+* **storefront:** Disabling global view transitions on /app/* SPA routes ([dc5ed9a](https://github.com/ecomplus/cloud-commerce/commit/dc5ed9af1970a8a7a130c575752f3d800f829568))
+* **storefront:** Prevent `<CheckoutLink>` and `<AccountLink>` breack with undefined `$storefront` ([beaa530](https://github.com/ecomplus/cloud-commerce/commit/beaa53089423c4d037656b7578aafc44d2bf50a4))
+* **storefront:** Set brand colors vars with RGB new (spaces) notation ([c5c11ee](https://github.com/ecomplus/cloud-commerce/commit/c5c11ee53efb224e00e6eaf43d51a11e87f2cb87))
+* **storefront:** Skip /_api* routes to wildcard slug pages ([7bf7fe3](https://github.com/ecomplus/cloud-commerce/commit/7bf7fe3aeca9729375913892c3375df8d6658a1f))
+* **storefront:** Update `<ViewTransitions>` to skip /app/* routes and dont prefetch with role=button ([efc2dba](https://github.com/ecomplus/cloud-commerce/commit/efc2dbac3b6fadbe099af3f28df765e455a76577))
+* **storefront:** Update `ViewTransitions.astro` to respect v3 data-astro-reload spec ([687e181](https://github.com/ecomplus/cloud-commerce/commit/687e181cd9aa40cb28ba3f188b9ef354eab820e3))
+* **storefront:** Update dependency unocss to ^0.57.1 ([#259](https://github.com/ecomplus/cloud-commerce/issues/259)) ([d1c9a88](https://github.com/ecomplus/cloud-commerce/commit/d1c9a883419b989e35e0b78d2f3bea591eeb1b36))
+
+
+* **storefront:** Simplifying browser env detection ([750427f](https://github.com/ecomplus/cloud-commerce/commit/750427f70eb86836dd0eb4b852aee41233226672))
+* **tiny-erp:** Renaming token env to `env.TINYERP_TOKEN` ([d150cba](https://github.com/ecomplus/cloud-commerce/commit/d150cbaa9e84a38d6722b13b77bd596387f3d57b))
+
+## [0.29.0](https://github.com/ecomplus/cloud-commerce/compare/v0.28.5...v0.29.0) (2023-10-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* Default modules and passport APIs URLs changed
+
+### Features
+
+* **storefront:** Update Astro `client:context` custom directive to accept "idle" value ([3ce1f3b](https://github.com/ecomplus/cloud-commerce/commit/3ce1f3b1e60feb3071eec0f5e36ece4af851a658))
+
+
+### Bug Fixes
+
+* **ssr:** Set default demoStore CDN assets prefix as done by storefront config ([5de0ac1](https://github.com/ecomplus/cloud-commerce/commit/5de0ac1c18e481317d2f10f4aad5d77ad80a5488)), closes [#L53-L55](https://github.com/ecomplus/cloud-commerce/issues/L53-L55)
+
+
+* Moving modules and passport APIs to /_api/* routes ([eed3d73](https://github.com/ecomplus/cloud-commerce/commit/eed3d731257d06fa81a31ccdec8466f9c465d59b))
+
+### [0.28.5](https://github.com/ecomplus/cloud-commerce/compare/v0.28.4...v0.28.5) (2023-10-17)
+
+
+### Bug Fixes
+
+* **ssr:** Properly set assets prefix (if configured) to CSS preload Link header ([3f83e56](https://github.com/ecomplus/cloud-commerce/commit/3f83e56e11c7e9a9aceb3c2a7cfd21e704304069))
+
+### [0.28.4](https://github.com/ecomplus/cloud-commerce/compare/v0.28.3...v0.28.4) (2023-10-17)
+
+
+### Bug Fixes
+
+* **storefront:** Set optimized pictures responsive srcset with assets prefix (CDN) if configured ([36b9ae6](https://github.com/ecomplus/cloud-commerce/commit/36b9ae66fb03609017b06ef6002e4f052f6b40af))
+
+### [0.28.3](https://github.com/ecomplus/cloud-commerce/compare/v0.28.2...v0.28.3) (2023-10-16)
+
+
+### Features
+
+* **storefront:** Set `Astro.locals.assetsPrefix` globally available on Astro components ([0548fbb](https://github.com/ecomplus/cloud-commerce/commit/0548fbb9c864a300e215a3f2c8c722f34fb07279))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#253](https://github.com/ecomplus/cloud-commerce/issues/253)) ([9a29d76](https://github.com/ecomplus/cloud-commerce/commit/9a29d76459541b20f1816b1e572281294f19d4c3))
+* **storefront:** Must set cache control stale-while-revalidate even without s-maxage ([3d27496](https://github.com/ecomplus/cloud-commerce/commit/3d274961e0f10f1afae22da1e6cdeb70e17811e8))
+* **storefront:** Properly set optimized pictures src with assets prefix (CDN) if configured ([68a8b6e](https://github.com/ecomplus/cloud-commerce/commit/68a8b6e3fb2f1837dfb40dbe996fb46832c4b0b5))
+
+### [0.28.2](https://github.com/ecomplus/cloud-commerce/compare/v0.28.1...v0.28.2) (2023-10-15)
+
+### [0.28.1](https://github.com/ecomplus/cloud-commerce/compare/v0.28.0...v0.28.1) (2023-10-15)
+
+
+### Features
+
+* **i18n:** Add `i19chooseProductDetailsToBuy` ([2b8aea7](https://github.com/ecomplus/cloud-commerce/commit/2b8aea72fc75c1700ef6ef691742052d5e51ce07))
+* **ssr:** Edit Cloudflare SWR worker to support URL rewrites /__swr/* ([528aab0](https://github.com/ecomplus/cloud-commerce/commit/528aab0d7398983f9c43662c8b949f5ca8c5e1d3))
+* **storefront:** Handle optional `settings.assetsPrefix` field to support deploy with external CDN ([46d6c43](https://github.com/ecomplus/cloud-commerce/commit/46d6c431a951a510508ed6d4078035e3fbbf2304))
+* **storefront:** New `useSkuSelector` composable ([2865f1e](https://github.com/ecomplus/cloud-commerce/commit/2865f1efc7e3c8a909aca70fe85045fb3804ae2d))
+* **storefront:** New optional props `cartId` and `cartItem` for `<CheckoutLink>` ([5295149](https://github.com/ecomplus/cloud-commerce/commit/529514968bb786cb4754912837aa9505989f3873))
+
+
+### Bug Fixes
+
+* **ssr:** Prevent overwriting Link response header if already set on storefront render output ([3e30407](https://github.com/ecomplus/cloud-commerce/commit/3e30407781485b16fd285e3e94083ea04e86ba19))
+* **storefront:** Update link fields from settings on `<CheckoutLink>` and `<AccountLink>` ([af6808e](https://github.com/ecomplus/cloud-commerce/commit/af6808e17273b358ed274d8b79b421d4fded1042))
+
+## [0.28.0](https://github.com/ecomplus/cloud-commerce/compare/v0.27.0...v0.28.0) (2023-10-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** content/layout.json must be edited with fields in camelCase
+* Content `settings` object (and `config.settingsContent`) changed
+* **storefront:** `PageContent` interface editted, content/pages hero and sections must be updated with new fields in camelCase
+
+### Bug Fixes
+
+* **loyalty points:** Add points after some days gap with cron to prevent fast cancellations ([#250](https://github.com/ecomplus/cloud-commerce/issues/250)) ([4eb705c](https://github.com/ecomplus/cloud-commerce/commit/4eb705cea98884255745ae7222bb8e2a264e625a))
+* **mercadopago:** Updating with https://github.com/ecomplus/app-mercadopago/commit/0205afd64e31fc19776343b8a355d43deb6a911d ([#249](https://github.com/ecomplus/cloud-commerce/issues/249)) ([47a03e6](https://github.com/ecomplus/cloud-commerce/commit/47a03e60551d9fb2e17a079cedff00106b05e967))
+* **storefront:** Minor fix `<ContentClearfix>` with horizontal scroll on large devices ([03b1d8d](https://github.com/ecomplus/cloud-commerce/commit/03b1d8da4fb01f0bc8dc7701ff71ad9ce0bdd858))
+
+
+* Edit settings types to camelCase fields ([47aec28](https://github.com/ecomplus/cloud-commerce/commit/47aec28bffd1e33ed2b2d715aac7611cf2ef3403))
+* **storefront:** Expect hero/sections content with camelCase for easy parsing and props bypass ([70d976b](https://github.com/ecomplus/cloud-commerce/commit/70d976b1b1600fff9772db275bb57d85b08dc07e))
+* **storefront:** Expect layout content fields camelCase ([e9404ea](https://github.com/ecomplus/cloud-commerce/commit/e9404ea61f72a5aa50858104ee58b1c3b1d88d9e))
+
+## [0.27.0](https://github.com/ecomplus/cloud-commerce/compare/v0.26.7...v0.27.0) (2023-10-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Astro.locals.contextInlineClientJS no more set
+* **storefront:** <Carousel> API changed, using explicit `index` prop with model instead of default (value) `v-model`, edited binds on controls slot
+* **storefront:** Component ContentClearfix.astro is removed in favor of .vue one
+
+### Features
+
+* **storefront:** Add new prop `preferredSize` to global <AImg> component ([d2387d4](https://github.com/ecomplus/cloud-commerce/commit/d2387d4a20b7e2343399674b4f73bd7dee70f879))
+* **storefront:** Auto import Vue composition API and other helper exports ([9e92931](https://github.com/ecomplus/cloud-commerce/commit/9e929316277f0162ff55a1c86792697dc50867e5))
+* **storefront:** New prop `hasControls` to <Carousel> ([017d5c9](https://github.com/ecomplus/cloud-commerce/commit/017d5c9f8eb9f927e463b8a7d5c6f1f811d839f5))
+* **storefront:** Update <Carousel> with new optional `axis` prop for vertical slide ([21e3a02](https://github.com/ecomplus/cloud-commerce/commit/21e3a02799bb52e573856a4304032315e060410b))
+* **tiny-erp:** Updating with https://github.com/ecomplus/app-tiny-erp ([#218](https://github.com/ecomplus/cloud-commerce/issues/218)) ([a5ffd26](https://github.com/ecomplus/cloud-commerce/commit/a5ffd26808ddc5609492a39363ce265d3ded3f26))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#248](https://github.com/ecomplus/cloud-commerce/issues/248)) ([344927b](https://github.com/ecomplus/cloud-commerce/commit/344927bb69b3be5c5ec1e43dc0b38246a04f256a))
+* **storefront:** Add hardfix on base CSS to hide duplicated drawer backdrops (with "SPA" mode) ([91ce452](https://github.com/ecomplus/cloud-commerce/commit/91ce452b50bd210999c8c228adcf744fa763a5be))
+* **storefront:** Disable View Transitions fallback (Firefox) by default (for now) ([deb58ff](https://github.com/ecomplus/cloud-commerce/commit/deb58ff34c9bf3f58e3f961a060d062bad3518a3))
+* **storefront:** Fixing global `$storefront.apiContext.doc` types with full resources interfaces ([c28ce11](https://github.com/ecomplus/cloud-commerce/commit/c28ce118325a7aac9409d8d3535b95879b3ea021))
+* **storefront:** Properly dealing with API Context on View Transitions ([e254116](https://github.com/ecomplus/cloud-commerce/commit/e2541161f696ccd5da8403d8d7bea0e9c33131fc))
+* **storefront:** Properly sync <Carousel> index on prop change ([6237934](https://github.com/ecomplus/cloud-commerce/commit/6237934cdf5c70c47d7269c0dd35125b427bd30a))
+* **storefront:** Setup custom <ViewTransitions> with fixed head script exec and browser fallback ([2e53207](https://github.com/ecomplus/cloud-commerce/commit/2e5320718bfa76c6e7f6258031a546e3f9089aa4))
+
+
+* **storefront:** Move <ContentClearfix> to Vue component instead of Astro one ([e6ca8c4](https://github.com/ecomplus/cloud-commerce/commit/e6ca8c4bbe5f8f42de15d852273dd9ae2575c136))
+
+### [0.26.7](https://github.com/ecomplus/cloud-commerce/compare/v0.26.6...v0.26.7) (2023-09-18)
+
+
+### Features
+
+* **ssr:** Fallback redirect static built files on 404 hash mismtach ([494848b](https://github.com/ecomplus/cloud-commerce/commit/494848b5822f0bb5fd4e1dc9c800197b6c585e33))
+* **storefront:** Edit `usePageHeader` to accept `listedCategoryFields` null skip categories fetch ([be563d7](https://github.com/ecomplus/cloud-commerce/commit/be563d746837c97972825d2db5cdf01fc3084238))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency facebook-nodejs-business-sdk to v18 ([#239](https://github.com/ecomplus/cloud-commerce/issues/239)) ([464b0df](https://github.com/ecomplus/cloud-commerce/commit/464b0df1701f1e73e0c891ab8d64144f3c5e23cb))
+* **deps:** Update non-major dependencies ([#238](https://github.com/ecomplus/cloud-commerce/issues/238)) ([e869660](https://github.com/ecomplus/cloud-commerce/commit/e869660e1796f1a78bbf98ab7b345909f61cc3cf))
+* **storefront:** Hardfix for 100vh problem on mobile (`.h-screen`) with dvh unit ([c4a3fb7](https://github.com/ecomplus/cloud-commerce/commit/c4a3fb707a3668ec5ffdd8ae7a2b987da8a40ad7))
+* **storefront:** New `Astro.locals.contextInlineClientJS` and body script to reset context n CSR ([eeab76c](https://github.com/ecomplus/cloud-commerce/commit/eeab76c30c5e3942d032d475459828872461eaf6))
+* **storefront:** Set and reset <body> visibility to prevent FOUC ([6eb237f](https://github.com/ecomplus/cloud-commerce/commit/6eb237f7173072a3ee780fe7cd948faaa99dfec6))
+* **storefront:** Update ContentClearfix to also limit child <iframe> width ([0b0031b](https://github.com/ecomplus/cloud-commerce/commit/0b0031bb4c10fd50d92c0ca2165446e760174c3a))
+* **storefront:** Update reset.css to selector specificity 0 for button/a colors ([23b3870](https://github.com/ecomplus/cloud-commerce/commit/23b387066e96808fc59fbca40beffa1bad8227ca))
+
+### [0.26.6](https://github.com/ecomplus/cloud-commerce/compare/v0.26.5...v0.26.6) (2023-09-13)
+
+
+### Bug Fixes
+
+* **apps:** Ensure `@cloudcommerce/test-base` as dev dependency only ([020a23d](https://github.com/ecomplus/cloud-commerce/commit/020a23d474e20a6712e51a04f16bd293035d8929))
+
+### [0.26.5](https://github.com/ecomplus/cloud-commerce/compare/v0.26.4...v0.26.5) (2023-09-13)
+
+
+### Features
+
+* **storefront:** Async loading CMS content for API doc page (wildcard by slug) ([5fc2010](https://github.com/ecomplus/cloud-commerce/commit/5fc2010ab897a81c142014a1cd207e428e910974))
+* **storefront:** Handling new section type breadcrumbs ([c3af083](https://github.com/ecomplus/cloud-commerce/commit/c3af0838691db06ecd5aaa31d9619b49cfdbdd01))
+* **storefront:** New `useBreadcrumbs` server-side-first composable ([688c037](https://github.com/ecomplus/cloud-commerce/commit/688c03727210834413dc78cdfdca663b0ef80496))
+* **storefront:** New bypassed section types expected for product page ([3e38002](https://github.com/ecomplus/cloud-commerce/commit/3e38002b398881a3ef44d4a916d009c7eeab6443))
+* **storefront:** New ContentClearfix.astro component for user's html content ([5873973](https://github.com/ecomplus/cloud-commerce/commit/58739737f47a494715492ba50116e651a95501b4))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#234](https://github.com/ecomplus/cloud-commerce/issues/234)) ([62345c6](https://github.com/ecomplus/cloud-commerce/commit/62345c648901b88ee49c3fee77daa4eaafb4fbb9))
+* **storefront:** Update `apiContext.doc` type with common required document fields ([7f814d9](https://github.com/ecomplus/cloud-commerce/commit/7f814d9fce20a5e8ba01a65ed515f557d3a7d194))
+* **storefront:** Update `useSharedData` to timeout listeners (1s by default) ([9aa5d30](https://github.com/ecomplus/cloud-commerce/commit/9aa5d3018b9eb90397b64d66861a1e05096b9770))
+
+### [0.26.4](https://github.com/ecomplus/cloud-commerce/compare/v0.26.3...v0.26.4) (2023-09-08)
+
+
+### Features
+
+* **storefront:** Enabling Astro (v2 experimental) `viewTransitions` on all pages by default ([561c40d](https://github.com/ecomplus/cloud-commerce/commit/561c40d18e6e442ffc400e1c32197d0c26dd90c9))
+
+
+### Bug Fixes
+
+* **storefront:** Fixing SW navigate fallback and cache strategies ([1198a94](https://github.com/ecomplus/cloud-commerce/commit/1198a94b22347ea99a41d9d6d7efee31f67201a1))
+* **storefront:** Update SW for immutable (365d) cache for js/css hashed chunks ([1e631f4](https://github.com/ecomplus/cloud-commerce/commit/1e631f4ba21c309b1c71d32478e9fad507a0b723))
+
+### [0.26.3](https://github.com/ecomplus/cloud-commerce/compare/v0.26.2...v0.26.3) (2023-09-08)
+
+
+### Features
+
+* **modules:** Checkout accepting undefined discount app id for multiple discount apps ([8c6984a](https://github.com/ecomplus/cloud-commerce/commit/8c6984a719b0b3b942ef6f4b50797beb818ebe07))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#228](https://github.com/ecomplus/cloud-commerce/issues/228)) ([0aa35ea](https://github.com/ecomplus/cloud-commerce/commit/0aa35ea0fe8bbc11cc291e2266a70a646e32444b))
+* **modules:** Better handling multiple results (apps) for apply discounts ([4f9126b](https://github.com/ecomplus/cloud-commerce/commit/4f9126b362d40cc87d633bde012271ac15c5bb31))
+
 ### [0.26.2](https://github.com/ecomplus/cloud-commerce/compare/v0.26.1...v0.26.2) (2023-08-28)
 
 

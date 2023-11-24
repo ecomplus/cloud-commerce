@@ -18,14 +18,14 @@ export default async (req: Request, res: Response) => {
       TODO: Check Tiny server IPs
       const clientIp = req.get('x-forwarded-for') || req.connection.remoteAddress
       */
-      const { TINY_ERP_TOKEN } = process.env;
-      if (!TINY_ERP_TOKEN || TINY_ERP_TOKEN !== tinyToken) {
+      const { TINYERP_TOKEN } = process.env;
+      if (!TINYERP_TOKEN || TINYERP_TOKEN !== tinyToken) {
         const { apps: { tinyErp: { appId } } } = config.get();
         const applicationId = req.query._id;
         const appEndpoint = applicationId && typeof applicationId === 'string'
           ? `applications/${applicationId}`
           : `applications/app_id:${appId}`;
-        application = (await api.get(appEndpoint as 'applications/id')).data;
+        application = (await api.get(appEndpoint as `applications/${Applications['_id']}`)).data;
         appData = {
           ...application.data,
           ...application.hidden_data,
@@ -34,7 +34,7 @@ export default async (req: Request, res: Response) => {
           res.sendStatus(401);
           return;
         }
-        process.env.TINY_ERP_TOKEN = tinyToken;
+        process.env.TINYERP_TOKEN = tinyToken;
       }
 
       if (dados.idVendaTiny) {

@@ -1,4 +1,3 @@
-import { fetch } from 'zx';
 import api from '@cloudcommerce/api';
 
 const defaultAgent = {
@@ -10,7 +9,6 @@ export default async (storeId: number, accessToken: string) => {
   const apiConfig = {
     storeId,
     accessToken,
-    fetch: fetch as Window['fetch'],
   };
   const { data } = await api.get('authentications', {
     ...apiConfig,

@@ -1,26 +1,36 @@
 // eslint-disable-next-line import/no-mutable-exports
-let utm: { [k: string]: string } = {};
+let utm: {
+  source?: string,
+  medium?: string,
+  campaign?: string,
+  term?: string,
+  content?: string,
+} = {};
 
 if (!import.meta.env.SSR) {
   const storageKey = 'ecomUtm';
-  const storedValue = sessionStorage.getItem(storageKey);
+  const storedValue = localStorage.getItem(storageKey);
+  const at = Date.now();
   try {
-    utm = (storedValue && JSON.parse(storedValue)) || {};
+    const data = (storedValue && JSON.parse(storedValue)) || {};
+    if (new Date(data.at + 1000 * 60 * 60 * 24 * 7).getTime() >= at) {
+      utm = data.utm || {};
+    }
   } catch {
     utm = {};
   }
 
-  let isCurrentUrl;
+  let isCurrentUrl = false;
   const urlParams = new URLSearchParams(window.location.search);
   ['source', 'medium', 'campaign', 'term', 'content'].forEach((utmParam) => {
     const value = urlParams.get(`utm_${utmParam}`);
-    if (typeof value === 'string') {
+    if (value) {
       utm[utmParam] = value;
       isCurrentUrl = true;
     }
   });
   if (isCurrentUrl) {
-    sessionStorage.setItem(storageKey, JSON.stringify(utm));
+    localStorage.setItem(storageKey, JSON.stringify({ at, utm }));
   }
 }
 

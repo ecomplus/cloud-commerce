@@ -4,7 +4,7 @@ import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 import meClient from '../../lib-mjs/functions/client-melhor-envio.mjs';
 import errorHandling from '../../lib-mjs/functions/error-handling.mjs';
-import db, { Lable } from './database';
+import db, { Label } from './database';
 
 const getConfig = async () => {
   try {
@@ -29,7 +29,7 @@ const handleTrackingCodes = async () => {
     logger.log('>> Inciando rastreio de etiquetas');
 
     try {
-      const labels: Lable[] = await db.getAllLabels();
+      const labels: Label[] = await db.getAllLabels();
       // .then(labels => {
       const checkStatus = async (queue = 0) => {
         const label = labels[queue];
@@ -182,7 +182,7 @@ const handleTrackingCodes = async () => {
 
     if (new Date().getHours() === 23) {
       await db.clearLabels().catch((err) => {
-        logger.error('> Error removing old Lables => ', err);
+        logger.error('> Error removing old Labels => ', err);
       });
     }
   }

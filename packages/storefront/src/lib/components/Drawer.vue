@@ -21,9 +21,9 @@ const props = withDefaults(defineProps<Props>(), {
   hasCloseButton: true,
   backdropTarget: '#teleported-top',
 });
-const emit = defineEmits([
-  'update:modelValue',
-]);
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>();
 const close = () => emit('update:modelValue', false);
 const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
@@ -74,10 +74,10 @@ const isPlacementX = computed(() => {
     <dialog
       v-if="modelValue"
       ref="drawer"
-      class="w-screen shadow p-0 m-0 z-50"
+      class="z-50 m-0 w-screen p-0 shadow"
       :class="[
         position,
-        isFixed ? `top-0 ${(isPlacementX ? 'h-screen' : '')}` : null,
+        isFixed ? `top-0 ${(isPlacementX ? 'h-screen' : 'max-h-screen')}` : null,
         isFixed && placement !== 'end' ? 'left-0' : null,
         isFixed && placement === 'end' ? 'left-auto right-0' : null,
         isPlacementX ? 'max-w-sm' : null,
@@ -108,7 +108,7 @@ const isPlacementX = computed(() => {
         <Fade>
           <div
             v-if="modelValue"
-            class="fixed top-0 left-0 w-screen h-screen bg-black/50 z-40"
+            class="fixed left-0 top-0 z-40 h-screen w-screen bg-black/50"
             data-drawer-backdrop
           ></div>
         </Fade>

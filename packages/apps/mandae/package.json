@@ -1,0 +1,31 @@
+{
+  "name": "@cloudcommerce/app-mandae",
+  "type": "module",
+  "version": "0.33.5",
+  "description": "E-Com Plus Cloud Commerce app to integrate Mandaê shipping intermediator",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/mandae"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "Apache 2.0 with Commons Clause",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/mandae#readme",
+  "scripts": {
+    "build": "bash ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@ecomplus/utils": "1.5.0-rc.5",
+    "axios": "^1.6.2",
+    "firebase-functions": "^4.5.0"
+  },
+  "devDependencies": {
+    "@cloudcommerce/test-base": "workspace:*",
+    "@cloudcommerce/types": "workspace:*"
+  }
+}

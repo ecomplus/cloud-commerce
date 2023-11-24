@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-loyalty-points",
   "type": "module",
-  "version": "0.26.2",
+  "version": "0.33.5",
   "description": "E-Com Plus Cloud Commerce app to handle simple loyalty points programs",
   "main": "lib/loyalty-points.js",
   "exports": {
@@ -21,11 +21,12 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/loyalty-points#readme",
   "scripts": {
     "build": "bash ../../../scripts/build-lib.sh",
-    "test:e2e": "node --test tests/"
+    "test": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/firebase": "workspace:*"
+    "@cloudcommerce/firebase": "workspace:*",
+    "@ecomplus/utils": "1.5.0-rc.5"
   },
   "devDependencies": {
     "@cloudcommerce/test-base": "workspace:*",

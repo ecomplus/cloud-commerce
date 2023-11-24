@@ -1,4 +1,6 @@
 /// <reference types="./src/vue-globals" />
+/// <reference types="./.auto-imports" />
+/// <reference types="gtag.js" />
 
 type DocCleanupFields = 'body_html'
   | 'body_text'
@@ -28,3 +30,5 @@ interface Window {
   };
   $isCmsPreview?: boolean;
 }
+
+declare module 'gtag.js';

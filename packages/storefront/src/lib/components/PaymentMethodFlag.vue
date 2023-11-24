@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 export interface Props {
   as?: string;
-  flag: Exclude<SettingsContent['payment_methods'], undefined>[number];
+  flag: Exclude<SettingsContent['paymentMethods'], undefined>[number];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,7 +28,7 @@ const iconClassName = computed(() => {
 <template>
   <b
     v-if="!iconClassName"
-    class="tracking-tighter leading-none mb-1 text-black text-[57%]"
+    class="mb-1 text-[57%] leading-none tracking-tighter text-black"
   >
     {{ props.flag }}
   </b>
