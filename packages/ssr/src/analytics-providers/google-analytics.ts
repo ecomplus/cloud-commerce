@@ -51,7 +51,7 @@ const sendEvent = (
         requests.push(
           ga4Axios.post(url, {
             client_id: clientId,
-            events: [...events],
+            events,
           }),
         );
         events = [];
