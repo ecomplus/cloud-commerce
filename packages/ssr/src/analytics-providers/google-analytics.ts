@@ -36,7 +36,7 @@ const sendEvent = (
       if (body.name === 'page_view') {
         body.name = 'campaign_details';
         body.params = {
-          source: utm?.source || event.params?.page_title,
+          source: utm?.source,
           medium: utm?.medium,
           campaign: utm?.campaign,
           term: utm?.term,
