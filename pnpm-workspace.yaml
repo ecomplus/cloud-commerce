@@ -6,5 +6,3 @@ packages:
   - 'store/functions/*'
   - 'ecomplus-stores/barra-doce'
   - 'ecomplus-stores/barra-doce/functions/*'
-  - 'ecomplus-stores/monocard'
-  - 'ecomplus-stores/monocard/functions/*'
