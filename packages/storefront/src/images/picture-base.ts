@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { OutputFormat, TransformOptions, GetBuiltImage } from './get-built-image';
-import mime from 'mime';
+import mime from 'mime/lite.js';
 
 export interface GetPictureParams {
   src: string /* | ImageMetadata | Promise<{ default: ImageMetadata }> */;

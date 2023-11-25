@@ -27,14 +27,20 @@ const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 const manifestFilepath = joinPath(baseDir, 'dist/server/images.dist.csv');
-readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
-  const [filename, width, height] = line.split(',');
-  builtImages.push({
-    filename,
-    width: Number(width),
-    height: Number(height),
+try {
+  readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
+    const [filename, width, height] = line.split(',');
+    builtImages.push({
+      filename,
+      width: Number(width),
+      height: Number(height),
+    });
   });
-});
+} catch (err) {
+  if (global.$renderStorefront) {
+    console.error(err);
+  }
+}
 builtImages.sort((a, b) => {
   if (a.width < b.width) return -1;
   return 1;

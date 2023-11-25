@@ -39,7 +39,7 @@ const getAspectRatio = (src: string | ImageSize, tryImageSize: TryImageSize) => 
 export type UsePictureParams = PictureProps & {
   tryImageSize: TryImageSize;
   getPicture: ((params: GetPictureParams) => Promise<GetPictureResult>)
-    | ((params: GetBuiltPictureParams) => Promise<GetBuiltPictureResult>);
+    | ((params: GetPictureParams) => Promise<GetPictureResult>);
   assetsPrefix?: string;
 };
 
