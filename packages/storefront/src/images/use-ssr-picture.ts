@@ -1,12 +1,20 @@
-import type { PictureComponentRemoteImageProps } from '@astrojs/image/components/';
-import type {
-  GetPictureParams,
-  GetPictureResult,
-} from '@astrojs/image/dist/lib/get-picture';
-import type {
-  GetPictureParams as GetBuiltPictureParams,
-  GetPictureResult as GetBuiltPictureResult,
-} from './get-built-picture';
+/// <reference types="astro/astro-jsx" />
+import type { HTMLAttributes } from 'astro/types';
+import type { GetPictureParams, GetPictureResult } from './picture-base';
+import type { OutputFormat, TransformOptions } from './get-built-image';
+
+export interface PictureComponentRemoteImageProps
+  extends astroHTML.JSX.HTMLAttributes,
+    TransformOptions,
+    Pick<HTMLAttributes<'img'>, 'loading' | 'decoding' | 'fetchpriority'> {
+  src: string;
+  alt: string;
+  widths: number[];
+  aspectRatio: TransformOptions['aspectRatio'];
+  sizes?: HTMLImageElement['sizes'];
+  formats?: OutputFormat[];
+  background?: TransformOptions['background'];
+}
 
 export type PictureProps = Omit<PictureComponentRemoteImageProps, 'aspectRatio' | 'sizes'> & {
   sizes?: string;
@@ -31,7 +39,7 @@ const getAspectRatio = (src: string | ImageSize, tryImageSize: TryImageSize) => 
 export type UsePictureParams = PictureProps & {
   tryImageSize: TryImageSize;
   getPicture: ((params: GetPictureParams) => Promise<GetPictureResult>)
-    | ((params: GetBuiltPictureParams) => Promise<GetBuiltPictureResult>);
+    | ((params: GetPictureParams) => Promise<GetPictureResult>);
   assetsPrefix?: string;
 };
 

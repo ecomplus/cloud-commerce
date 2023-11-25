@@ -1,7 +1,11 @@
 ---
-import { resolve as resolvePath } from 'node:path';
+import type { ImageMetadata } from 'astro';
+import { resolve as resolvePath, basename } from 'node:path';
+import { copyFileSync } from 'node:fs';
+import mime from 'mime/lite.js';
+import { getImage } from 'astro:assets';
 import imageSize from 'image-size';
-import { getPicture } from '@astrojs/image';
+import { createPictureGetter } from '../../images/picture-base';
 import { type PictureProps, useSSRPicture } from '../../images/use-ssr-picture';
 
 export type Props = PictureProps;
@@ -12,7 +16,20 @@ const versionSuffix = import.meta.env.BUILD_OUTPUT !== 'static' && deployRand
   : '';
 
 const getImageFilepath = (src: string) => {
-  return resolvePath(import.meta.env.STOREFRONT_BASE_DIR, `public${src}`);
+  const filepath = resolvePath(import.meta.env.STOREFRONT_BASE_DIR, `public${src}`);
+  if (import.meta.env.BUILD_OUTPUT === 'static') {
+    try {
+      copyFileSync(filepath, resolvePath(
+        import.meta.env.STOREFRONT_BASE_DIR,
+        import.meta.env.BUILD_OUT_DIR || 'dist/client', 
+        '_astro',
+        basename(filepath),
+      ));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  return filepath;
 };
 const tryImageSize = (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
@@ -34,7 +51,33 @@ const {
 } = await useSSRPicture({
   ...Astro.props,
   tryImageSize,
-  getPicture,
+  getPicture: createPictureGetter(async (imageOptions) => {
+    let imageMetadata: ImageMetadata | undefined;
+    if (imageOptions.src.startsWith('/')) {
+      const imageFilepath = getImageFilepath(imageOptions.src);
+      const { width, height } = tryImageSize(imageOptions.src);
+      if (width && height) {
+        const mimeType = mime.getType(imageFilepath);
+        if (mimeType?.startsWith('image/')) {
+          imageMetadata = {
+            src: imageFilepath,
+            width,
+            height,
+            // @ts-ignore
+            format: mimeType.replace('image/', ''),
+          };
+        }
+      }
+    }
+    const {
+      src,
+      attributes: { width, height },
+    } = await getImage({
+      ...imageOptions,
+      src: imageMetadata || imageOptions.src,
+    });
+    return { src, width, height };
+  }),
   assetsPrefix: Astro.locals.assetsPrefix,
 });
 if (imgAttrs) {

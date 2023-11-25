@@ -1,4 +1,4 @@
-/// <reference types="@astrojs/image/client" />
+/// <reference types="astro/client" />
 /// <reference types="vite-plugin-pwa/client" />
 /// <reference types="vue/ref-macros" />
 /// <reference types="../client" />
