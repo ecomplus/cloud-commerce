@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 export interface Props {
   speed?: 'default' | 'slow' | 'slower',
-  slide?: 'down' | 'left' | 'right' | 'up',
+  slide?: 'down' | 'left' | 'right' | 'up' | null,
   isFloating?: boolean,
   isLeaveTo?: boolean,
   isEnterFrom?: boolean,
