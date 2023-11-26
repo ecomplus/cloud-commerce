@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.34.0](https://github.com/ecomplus/cloud-commerce/compare/v0.33.5...v0.34.0) (2023-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Updating to Astro v3
+
+### Features
+
+* **storefront:** Updating to Astro v3 ([7a0b529](https://github.com/ecomplus/cloud-commerce/commit/7a0b5295357c0fc9f1946e5b98578e0adaefa86c))
+
+
+### Bug Fixes
+
+* **storefront:** Updating custom `<Picture>` handlers for Astro v3 assets ([#233](https://github.com/ecomplus/cloud-commerce/issues/233)) ([5396645](https://github.com/ecomplus/cloud-commerce/commit/53966455cbd595b07300a22f8a5726ef553eef2c))
+
 ### [0.33.5](https://github.com/ecomplus/cloud-commerce/compare/v0.33.4...v0.33.5) (2023-11-24)
 
 
