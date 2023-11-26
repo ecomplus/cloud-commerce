@@ -1,4 +1,4 @@
-import type { Orders, Customers } from '@cloudcommerce/api/types';
+import type { ResourceId, Orders, Customers } from '@cloudcommerce/api/types';
 import { watch } from 'vue';
 import { phone as getPhone } from '@ecomplus/utils';
 import {
@@ -7,7 +7,7 @@ import {
   customer,
   customerName,
 } from '@@sf/state/customer-session';
-import { shoppingCart } from '@@sf/state/shopping-cart';
+import { shoppingCart, resetCartItems } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
 import utm from '@@sf/scripts/session-utm';
 
@@ -33,8 +33,8 @@ const watchAppRoutes = () => {
       emittedCheckoutSteps.push(evName);
       if (!params) {
         params = {
-          value: fixMoneyValue(shoppingCart.value.subtotal),
-          items: shoppingCart.value.items.map(getGtagItem),
+          value: fixMoneyValue(shoppingCart.subtotal || 0),
+          items: shoppingCart.items.map(getGtagItem),
         };
       }
       if (evName !== 'view_cart') {
@@ -63,8 +63,8 @@ const watchAppRoutes = () => {
           };
           const params: Gtag.EventParams = {
             transaction_id: orderId,
-            value: fixMoneyValue(amount?.total || shoppingCart.value.subtotal),
-            items: shoppingCart.value.items.map(getGtagItem),
+            value: fixMoneyValue(amount?.total || shoppingCart.subtotal || 0),
+            items: shoppingCart.items.map(getGtagItem),
             coupon: order
               ? order.extra_discount?.discount_coupon
               : getCouponApplied(),
@@ -182,19 +182,27 @@ if (!import.meta.env.SSR) {
   if (Object.keys(utm).length) {
     sessionStorage.setItem('ecomUtm', JSON.stringify(utm));
   }
+  let querystring = window.location.search;
+  if (!querystring && window.location.hash) {
+    querystring = '?' + window.location.hash.split('?')[1];
+  }
+  const searchParams = new URLSearchParams(querystring);
+  if (searchParams.get('product_id') && searchParams.get('quantity') === '1') {
+    resetCartItems([{
+      product_id: searchParams.get('product_id') as ResourceId,
+      variation_id: searchParams.get('variation_id') as ResourceId || undefined,
+      quantity: 1,
+      price: 0,
+    }]);
+  }
   const { hostname } = window.location;
   const { domain } = globalThis.$storefront.settings;
   const apiBaseUri = `https://ecomplus.io/v2/:${window.ECOM_STORE_ID}/`;
-  // @ts-ignore
-  window.ECOMCLIENT_API_STORE = apiBaseUri;
-  // @ts-ignore
-  window.ECOMCLIENT_API_STORE_CACHE = apiBaseUri;
-  // @ts-ignore
-  window.ECOMCLIENT_API_PASSPORT = apiBaseUri;
-  // @ts-ignore
-  window.ECOMCLIENT_API_SEARCH = `${apiBaseUri}/search/_els/`;
-  // @ts-ignore
-  window.ECOMCLIENT_API_MODULES = hostname !== 'localhost' && hostname !== '127.0.0.1'
+  (window as any).ECOMCLIENT_API_STORE = apiBaseUri;
+  (window as any).ECOMCLIENT_API_STORE_CACHE = apiBaseUri;
+  (window as any).ECOMCLIENT_API_PASSPORT = apiBaseUri;
+  (window as any).ECOMCLIENT_API_SEARCH = `${apiBaseUri}/search/_els/`;
+  (window as any).ECOMCLIENT_API_MODULES = ['localhost', '127.0.0.1'].includes(hostname)
     ? `https://${domain}/_api/modules/`
     : '/_api/modules/';
 
