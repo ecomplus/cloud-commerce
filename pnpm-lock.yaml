@@ -57,48 +57,48 @@ importers:
   ecomplus-stores/barra-doce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../packages/eslint
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/barra-doce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.16
         version: 1.7.16
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/types
       '@fontsource/croissant-one':
         specifier: ^5.0.17
@@ -113,13 +113,13 @@ importers:
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1167,48 +1167,48 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.16
         version: 1.7.16
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.2
@@ -1217,13 +1217,13 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.33.5
+        specifier: ^0.34.0
         version: link:../../../packages/modules
 
 packages:
@@ -1650,14 +1650,6 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-
-  /@babel/parser@7.23.0:
-    resolution: {integrity: sha512-vvPKKdMemU85V9WE/l5wZEmImpCtLqbnTvqDS2U1fJ96KrxoW7KrXhNsNCblQlg8Ck4b85yxdTyelsMUgFUXiw==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-    dependencies:
-      '@babel/types': 7.23.4
-    dev: false
 
   /@babel/parser@7.23.4:
     resolution: {integrity: sha512-vf3Xna6UEprW+7t6EtOmFpHNAuxw3xqPZghy+brsnusscJRW5BMUzzHZc5ICjULee81WeUV2jjakG09MDglJXQ==}
@@ -5245,7 +5237,7 @@ packages:
   /@vue/compiler-sfc@3.3.8:
     resolution: {integrity: sha512-WMzbUrlTjfYF8joyT84HfwwXo+8WPALuPxhy+BZ6R4Aafls+jDBnSz8PDz60uFhuqFbl3HxRfxvDzrUf3THwpA==}
     dependencies:
-      '@babel/parser': 7.23.0
+      '@babel/parser': 7.23.4
       '@vue/compiler-core': 3.3.8
       '@vue/compiler-dom': 3.3.8
       '@vue/compiler-ssr': 3.3.8
