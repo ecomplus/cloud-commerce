@@ -61,7 +61,6 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@cloudcommerce/types": "workspace:*",
-    "@vue/runtime-core": "^3.3.9"
+    "@cloudcommerce/types": "workspace:*"
   }
 }
