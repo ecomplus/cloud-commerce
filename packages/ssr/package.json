@@ -34,14 +34,14 @@
     "astro": "3.6.0",
     "astro-capo": "^0.0.1",
     "axios": "^1.6.2",
-    "firebase-admin": "^11.11.0",
+    "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0",
     "mitt": "^3.0.1",
-    "vue": "^3.3.8"
+    "vue": "^3.3.9"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@cloudflare/workers-types": "^4.20231025.0",
+    "@cloudflare/workers-types": "^4.20231121.0",
     "@firebase/app-types": "^0.9.0"
   }
 }
