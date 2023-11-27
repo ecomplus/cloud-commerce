@@ -208,7 +208,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           api(requestConfig, _retries + 1).then(resolve).catch(reject);
-        }, (retryAfter && parseInt(retryAfter, 10)) || 5000);
+        }, (retryAfter && parseInt(retryAfter, 10) * 1000) || 5000);
       });
     }
   }
