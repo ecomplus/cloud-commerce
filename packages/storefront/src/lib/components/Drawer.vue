@@ -142,10 +142,10 @@ const isPlacementX = computed(() => {
         </button>
         <slot />
       </div>
-      <Teleport v-if="!isHidden && backdropTarget" :to="backdropTarget">
+      <Teleport v-if="backdropTarget" :to="backdropTarget">
         <Fade>
           <div
-            v-if="modelValue"
+            v-if="modelValue && !isHidden"
             class="fixed left-0 top-0 z-30 h-screen w-screen bg-black/50"
             data-drawer-backdrop
           ></div>
