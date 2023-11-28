@@ -8,21 +8,25 @@ import {
 
 export interface Props {
   modelValue?: boolean;
+  isHidden?: boolean;
   placement?: 'start' | 'end' | 'top' | 'bottom';
   position?: 'fixed' | 'absolute';
   animation?: 'slide' | 'scale' | null;
   hasCloseButton?: boolean;
-  backdropTarget?: string;
+  anchorEl?: HTMLElement | null;
+  backdropTarget?: string | null;
   maxWidth?: string;
   class?: string | string[] | Record<string, string | null> | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
+  isHidden: false,
   placement: 'start',
   position: 'fixed',
   animation: 'slide',
   hasCloseButton: true,
+  hasBackdrop: true,
   backdropTarget: '#teleported-top',
 });
 const emit = defineEmits<{
@@ -32,6 +36,7 @@ const close = () => emit('update:modelValue', false);
 const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
   if (!drawer.value?.contains(ev.target as Node)) {
+    if (props.anchorEl?.contains(ev.target as Node)) return;
     close();
   }
 };
@@ -99,6 +104,7 @@ const isPlacementX = computed(() => {
   <Fade :slide="slideTo" speed="slow" is-floating>
     <dialog
       v-if="modelValue"
+      v-show="!isHidden"
       ref="drawer"
       class="z-40 w-screen p-0"
       :class="[
@@ -136,7 +142,7 @@ const isPlacementX = computed(() => {
         </button>
         <slot />
       </div>
-      <Teleport :to="backdropTarget">
+      <Teleport v-if="!isHidden && backdropTarget" :to="backdropTarget">
         <Fade>
           <div
             v-if="modelValue"
