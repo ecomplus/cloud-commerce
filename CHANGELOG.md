@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.34.0](https://github.com/ecomplus/cloud-commerce/compare/v0.33.5...v0.34.0) (2023-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Updating to Astro v3
+
+### Features
+
+* **storefront:** Updating to Astro v3 ([7a0b529](https://github.com/ecomplus/cloud-commerce/commit/7a0b5295357c0fc9f1946e5b98578e0adaefa86c))
+
+
+### Bug Fixes
+
+* **storefront:** Updating custom `<Picture>` handlers for Astro v3 assets ([#233](https://github.com/ecomplus/cloud-commerce/issues/233)) ([5396645](https://github.com/ecomplus/cloud-commerce/commit/53966455cbd595b07300a22f8a5726ef553eef2c))
+
+### [0.33.5](https://github.com/ecomplus/cloud-commerce/compare/v0.33.4...v0.33.5) (2023-11-24)
+
+
+### Bug Fixes
+
+* **api:** Prevent error Content-Length mismatch on POST ([8e642fc](https://github.com/ecomplus/cloud-commerce/commit/8e642fc0b792a070bf8d3bf526c1fdb904787a56))
+* **cli:** Update default `firebase.json` to ensure Hosting root rewrited to SSR function ([f465763](https://github.com/ecomplus/cloud-commerce/commit/f465763cefaeb5cac783f9a8125c3190d7f4b05f))
+* **jadlog:** Fixing module file exports ([6f9d195](https://github.com/ecomplus/cloud-commerce/commit/6f9d1959e0fd02a2dc2b6f20b39751c8993c0b19))
+* **modules:** Properly set modules API base URL on localhost emulators ([18befaf](https://github.com/ecomplus/cloud-commerce/commit/18befafe44171312b95511613c8091bbad70eabb))
+* **storefront:** Properly set modules API base URI on localhost emulation ([eade67b](https://github.com/ecomplus/cloud-commerce/commit/eade67bd2280affc4c7f294fc5df0ce0da4f5158))
+
+### [0.33.4](https://github.com/ecomplus/cloud-commerce/compare/v0.33.3...v0.33.4) (2023-11-24)
+
+
+### Features
+
+* **i18n:** Add `i19safeBuy` ([60cd36e](https://github.com/ecomplus/cloud-commerce/commit/60cd36e509ba38519a0fead16f07e10694e97af9))
+* **ssr:** Start sending GA4 server events with Measurement Protocol API ([#273](https://github.com/ecomplus/cloud-commerce/issues/273)) ([1f98e03](https://github.com/ecomplus/cloud-commerce/commit/1f98e035d478c9226e2352a0c55ebde156ca68cc))
+* **storefront:** Parsing pageview, items and cart events to Tiktok Pixel ([fc21d1d](https://github.com/ecomplus/cloud-commerce/commit/fc21d1d3f49efad87b6398107e8eb40fc5e028ba))
+* **storefront:** Parsing vbeta app routes to send gtag checkout and purchase events ([48a64db](https://github.com/ecomplus/cloud-commerce/commit/48a64db4f18c9aa6b6228f81967630b75d188d52))
+
+
+### Bug Fixes
+
+* **modules:** Properly getting modules base URI on checkout request ([94de8af](https://github.com/ecomplus/cloud-commerce/commit/94de8af9864b6258ca95eccd2f06ba5864da775f))
+* **storefront:** Fix sending initial add/remove cart events ([a293a98](https://github.com/ecomplus/cloud-commerce/commit/a293a983351f3372b244885e9bb81739dd640ea1))
+
 ### [0.33.3](https://github.com/ecomplus/cloud-commerce/compare/v0.33.2...v0.33.3) (2023-11-21)
 
 

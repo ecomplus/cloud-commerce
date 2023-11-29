@@ -2,10 +2,9 @@ import { fileURLToPath } from 'node:url';
 import { lstatSync, readFileSync } from 'node:fs';
 import { join as joinPath, relative as relativePath } from 'node:path';
 import * as dotenv from 'dotenv';
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
-import image from '@astrojs/image';
 import UnoCSS from 'unocss/astro';
 import AstroPWA from '@vite-pwa/astro';
 import AutoImport from 'unplugin-auto-import/astro';
@@ -209,23 +208,19 @@ const genAstroConfig = ({
     viteAlias.push({
       find: 'virtual:pwa-info',
       replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
+    }, {
+      find: 'virtual:pwa-register',
+      replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
     });
   }
-  if (!isToServerless) {
-    integrations.push(image({
-      serviceEntryPoint: '@astrojs/image/sharp',
-    }));
-  }
   return {
-    experimental: {
-      viewTransitions: true,
-    },
     output: isSSG ? 'static' : 'server',
     adapter: isSSG ? undefined : node({
       mode: 'middleware',
     }),
     outDir,
     integrations,
+    image: isToServerless ? { service: passthroughImageService() } : undefined,
     site,
     compressHTML: isToServerless,
     build: {

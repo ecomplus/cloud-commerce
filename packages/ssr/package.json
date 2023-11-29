@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/ssr",
   "type": "module",
-  "version": "0.33.3",
+  "version": "0.34.0",
   "description": "E-Com Plus Cloud Commerce storefront SSR",
   "main": "lib/index.js",
   "exports": {
@@ -25,23 +25,23 @@
     "build:workers": "npx tsc -p src/cloudflare --outDir cloudflare && npx eslint --ext .js cloudflare --fix"
   },
   "dependencies": {
-    "@astrojs/node": "5.3.6",
+    "@astrojs/node": "6.0.4",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.5",
     "@vueuse/core": "10.6.1",
-    "astro": "2.10.15",
+    "astro": "3.6.0",
     "astro-capo": "^0.0.1",
     "axios": "^1.6.2",
-    "firebase-admin": "^11.11.0",
+    "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0",
     "mitt": "^3.0.1",
-    "vue": "^3.3.8"
+    "vue": "^3.3.9"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@cloudflare/workers-types": "^4.20231025.0",
+    "@cloudflare/workers-types": "^4.20231121.0",
     "@firebase/app-types": "^0.9.0"
   }
 }

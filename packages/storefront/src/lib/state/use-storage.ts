@@ -1,4 +1,5 @@
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
+import { watchDebounced } from '@vueuse/core';
 
 const useStorage = <T extends {}>(
   key: string,
@@ -19,8 +20,10 @@ const useStorage = <T extends {}>(
     }
   }
   const state = reactive<T>(persistedValue || initialValue);
-  watch(state, () => {
+  watchDebounced(state, () => {
     storage.setItem(key, JSON.stringify(state));
+  }, {
+    debounce: 50,
   });
   return state;
 };

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-affilate-program",
   "type": "module",
-  "version": "0.33.3",
+  "version": "0.34.0",
   "description": "E-Com Plus Cloud Commerce app for simple affiliate program",
   "main": "lib/index.js",
   "repository": {
@@ -21,7 +21,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "firebase-admin": "^11.11.0",
+    "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0"
   },
   "devDependencies": {

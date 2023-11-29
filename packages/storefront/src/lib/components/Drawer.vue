@@ -8,17 +8,25 @@ import {
 
 export interface Props {
   modelValue?: boolean;
+  isHidden?: boolean;
   placement?: 'start' | 'end' | 'top' | 'bottom';
   position?: 'fixed' | 'absolute';
+  animation?: 'slide' | 'scale' | null;
   hasCloseButton?: boolean;
-  backdropTarget?: string;
+  anchorEl?: HTMLElement | null;
+  backdropTarget?: string | null;
+  maxWidth?: string;
+  class?: string | string[] | Record<string, string | null> | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
+  isHidden: false,
   placement: 'start',
   position: 'fixed',
+  animation: 'slide',
   hasCloseButton: true,
+  hasBackdrop: true,
   backdropTarget: '#teleported-top',
 });
 const emit = defineEmits<{
@@ -28,6 +36,7 @@ const close = () => emit('update:modelValue', false);
 const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
   if (!drawer.value?.contains(ev.target as Node)) {
+    if (props.anchorEl?.contains(ev.target as Node)) return;
     close();
   }
 };
@@ -54,12 +63,34 @@ watch(toRef(props, 'modelValue'), async (isOpen) => {
   }
 });
 const slideTo = computed(() => {
+  if (props.animation !== 'slide') return null;
   switch (props.placement) {
     case 'start': return 'left';
     case 'end': return 'right';
     case 'top': return 'down';
     default: return 'up';
   }
+});
+const animationClassName = ref<string | null>(null);
+if (props.animation === 'scale') {
+  watch(toRef(props, 'modelValue'), (isShown) => {
+    if (!isShown) {
+      animationClassName.value = 'transition scale-90';
+    } else {
+      nextTick(() => {
+        setTimeout(() => {
+          animationClassName.value = 'transition';
+          setTimeout(() => {
+            if (props.modelValue) animationClassName.value = '';
+          }, 300);
+        }, 50);
+      });
+    }
+  }, { immediate: true });
+}
+const customClassList = computed(() => {
+  if (Array.isArray(props.class)) return props.class;
+  return [props.class];
 });
 const isFixed = computed(() => {
   return props.position === 'fixed';
@@ -73,17 +104,24 @@ const isPlacementX = computed(() => {
   <Fade :slide="slideTo" speed="slow" is-floating>
     <dialog
       v-if="modelValue"
+      v-show="!isHidden"
       ref="drawer"
-      class="z-50 m-0 w-screen p-0 shadow"
+      class="z-40 w-screen p-0"
       :class="[
         position,
+        isPlacementX ? 'm-0' : 'mx-auto',
+        isPlacementX && !maxWidth ? 'max-w-sm' : null,
         isFixed ? `top-0 ${(isPlacementX ? 'h-screen' : 'max-h-screen')}` : null,
         isFixed && placement !== 'end' ? 'left-0' : null,
         isFixed && placement === 'end' ? 'left-auto right-0' : null,
-        isPlacementX ? 'max-w-sm' : null,
+        animationClassName,
+        ...customClassList,
       ]"
       :style="{
-        maxWidth: !isPlacementX ? `calc(100vw - ${scrollbarWidth}px)` : undefined,
+        maxWidth: maxWidth
+          ? `min(${maxWidth}, calc(100vw - ${scrollbarWidth}px))`
+          : !isPlacementX
+            ? `calc(100vw - ${scrollbarWidth}px)` : undefined,
       }"
       :open="modelValue"
       :data-drawer="placement"
@@ -104,11 +142,11 @@ const isPlacementX = computed(() => {
         </button>
         <slot />
       </div>
-      <Teleport :to="backdropTarget">
+      <Teleport v-if="backdropTarget" :to="backdropTarget">
         <Fade>
           <div
-            v-if="modelValue"
-            class="fixed left-0 top-0 z-40 h-screen w-screen bg-black/50"
+            v-if="modelValue && !isHidden"
+            class="fixed left-0 top-0 z-30 h-screen w-screen bg-black/50"
             data-drawer-backdrop
           ></div>
         </Fade>

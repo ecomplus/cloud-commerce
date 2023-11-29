@@ -36,11 +36,11 @@ const sendEvent = (
       if (body.name === 'page_view') {
         body.name = 'campaign_details';
         body.params = {
-          source: utm?.source || event.params?.page_title,
+          source: utm?.source,
           medium: utm?.medium,
           campaign: utm?.campaign,
           term: utm?.term,
-          content: utm?.content || event.params?.page_location,
+          content: utm?.content,
           session_id: sessionId,
         };
       }
@@ -51,7 +51,7 @@ const sendEvent = (
         requests.push(
           ga4Axios.post(url, {
             client_id: clientId,
-            events: [...events],
+            events,
           }),
         );
         events = [];

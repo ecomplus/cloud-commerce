@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-frenet",
   "type": "module",
-  "version": "0.33.3",
+  "version": "0.34.0",
   "description": "E-Com Plus Cloud Commerce app for Frenet shipping calculation",
   "main": "lib/frenet.js",
   "exports": {
@@ -27,7 +27,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.6.2",
-    "firebase-admin": "^11.11.0",
+    "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0"
   },
   "devDependencies": {

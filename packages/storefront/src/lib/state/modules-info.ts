@@ -67,8 +67,12 @@ if (!import.meta.env.SSR) {
     }
 
     modulesToFetch.forEach(({ modName, reqOptions }) => {
+      const { hostname } = window.location;
       const { domain } = globalThis.$storefront.settings;
-      afetch(`https://${domain}/_api/modules/${modName}`, reqOptions)
+      const modulesBaseUri = hostname !== 'localhost' && hostname !== '127.0.0.1'
+        ? `https://${domain}/_api/modules/`
+        : '/_api/modules/';
+      afetch(`${modulesBaseUri}${modName}`, reqOptions)
         .then(async (response) => {
           if (response.ok) {
             const modInfo = {};
