@@ -1,4 +1,4 @@
-import type { ResourceId, Orders, Customers } from '@cloudcommerce/api/types';
+import type { Orders, Customers } from '@cloudcommerce/api/types';
 import { watch } from 'vue';
 import { phone as getPhone } from '@ecomplus/utils';
 import {
@@ -7,7 +7,7 @@ import {
   customer,
   customerName,
 } from '@@sf/state/customer-session';
-import { shoppingCart, resetCartItems } from '@@sf/state/shopping-cart';
+import { shoppingCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
 import utm from '@@sf/scripts/session-utm';
 
@@ -188,12 +188,14 @@ if (!import.meta.env.SSR) {
   }
   const searchParams = new URLSearchParams(querystring);
   if (searchParams.get('product_id') && searchParams.get('quantity') === '1') {
-    resetCartItems([{
-      product_id: searchParams.get('product_id') as ResourceId,
-      variation_id: searchParams.get('variation_id') as ResourceId || undefined,
-      quantity: 1,
-      price: 0,
-    }]);
+    localStorage.setItem('ecomShoppingCart__tmp', JSON.stringify({
+      items: [{
+        product_id: searchParams.get('product_id'),
+        variation_id: searchParams.get('variation_id') || undefined,
+        quantity: 1,
+      }],
+    }));
+    (window as any).ECOM_CART_STORAGE_KEY = 'ecomShoppingCart__tmp';
   }
   const { hostname } = window.location;
   const { domain } = globalThis.$storefront.settings;
@@ -235,7 +237,7 @@ if (!import.meta.env.SSR) {
   };
 
   const appScript = document.createElement('script');
-  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.188/dist/lib/js/app.js';
+  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.190/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 }
