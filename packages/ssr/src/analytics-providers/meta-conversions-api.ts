@@ -15,7 +15,6 @@ const sendEvent = (
   metaEvents: AnalyticsEvent[],
   pageLocation: string,
   userData: { [x: string]: string | undefined },
-
 ) => {
   if (process.env.FB_PIXEL_ID && process.env.FB_GRAPH_TOKEN) {
     const requests: Promise<AxiosResponse<any, any>>[] = [];
