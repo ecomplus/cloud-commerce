@@ -2,6 +2,7 @@ import type { AxiosResponse } from 'axios';
 import { EventEmitter } from 'node:events';
 import ga4Events from './analytics-providers/google-analytics';
 import metaEvents from './analytics-providers/meta-conversions-api';
+import tiktokEvent from './analytics-providers/tiktok-ads';
 
 const analyticsEmitter = new EventEmitter();
 
@@ -46,15 +47,26 @@ const sendAnalyticsEvents = (
       sendingEvents.push(...listMetaEvents);
     }
   }
+  if (eventsByType.ttk) {
+    const user = {
+      ip: payload.id,
+      user_agent: payload.user_agent,
+      ttclid: payload.ttclid,
+    };
+    const lisTiktokEvents = tiktokEvent(eventsByType.ttk, user);
+    if (lisTiktokEvents) {
+      sendingEvents.push(...lisTiktokEvents);
+    }
+  }
   /* @TODO:
-  - Get credentials from env vars, e.g. `process.env.GA_MEASUREMENT_ID`;
-  - May receive multiple events in a unique request, and dispatch multiple
-  events in one POST if possible;
-  - Consider Google Click ID (`?gclid=`), Facebook Click ID (`?fbclid=`)
-  and maybe TikTok one from payload;
-  - Send the events in parallel for all APIs with `Promise.all(sendingEvents)`;
-  - No CORS!
-  */
+    - Get credentials from env vars, e.g. `process.env.GA_MEASUREMENT_ID`;
+    - May receive multiple events in a unique request, and dispatch multiple
+    events in one POST if possible;
+    - Consider Google Click ID (`?gclid=`), Facebook Click ID (`?fbclid=`)
+    and maybe TikTok one from payload;
+    - Send the events in parallel for all APIs with `Promise.all(sendingEvents)`;
+    - No CORS!
+    */
   Promise.all(sendingEvents);
 };
 
