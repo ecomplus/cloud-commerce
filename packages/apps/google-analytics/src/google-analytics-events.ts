@@ -37,10 +37,10 @@ const handleApiEvent: ApiEventHandler = async ({
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);
 
-  if (!process.env.GA_API_TOKEN) {
+  if (!process.env.GA_API_SECRET) {
     const apiSecret = appData.api_secret;
     if (typeof apiSecret === 'string' && apiSecret) {
-      process.env.GA_API_TOKEN = apiSecret;
+      process.env.GA_API_SECRET = apiSecret;
     } else {
       logger.warn('Missing Google Analytics token');
     }
@@ -65,9 +65,9 @@ const handleApiEvent: ApiEventHandler = async ({
 
   if (orderId && order.items) {
     try {
-      if (process.env.GA_MEASUREMENT_ID && process.env.GA_API_TOKEN
+      if (process.env.GA_MEASUREMENT_ID && process.env.GA_API_SECRET
         && (enabledCustonEvent || enabledRefundEvent)) {
-        const url = `/mp/collect?api_secret=${process.env.GA_API_TOKEN}`
+        const url = `/mp/collect?api_secret=${process.env.GA_API_SECRET}`
           + `&measurement_id=${process.env.GA_MEASUREMENT_ID}`;
 
         const items = order.items.map((item) => {
