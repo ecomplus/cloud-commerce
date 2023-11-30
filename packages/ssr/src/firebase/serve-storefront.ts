@@ -234,7 +234,7 @@ export default async (req: Request, res: Response) => {
       res.send('Event(s) must be sent via the `{ events }` array in the request body');
       return;
     }
-    sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
+    await sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
     res.sendStatus(204);
     return;
   }

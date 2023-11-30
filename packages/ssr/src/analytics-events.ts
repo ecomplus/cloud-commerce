@@ -1,5 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import { EventEmitter } from 'node:events';
+import { warn } from 'firebase-functions/logger';
 import ga4Events from './analytics-providers/google-analytics';
 import metaEvents from './analytics-providers/meta-conversions-api';
 
@@ -12,7 +13,7 @@ export type AnalyticsEvent = {
 
 export type GroupedAnalyticsEvents = Array<AnalyticsEvent & { type: string }>;
 
-const sendAnalyticsEvents = (
+const sendAnalyticsEvents = async (
   { url, events }: { url: string, events: GroupedAnalyticsEvents },
   payload: Record<string, any> = {},
 ) => {
@@ -24,7 +25,6 @@ const sendAnalyticsEvents = (
     }
     (eventsByType[type] as AnalyticsEvent[]).push({ name, params });
   });
-
   const sendingEvents: Promise<AxiosResponse<any, any>>[] = [];
   if (eventsByType.gtag) {
     const sessionId = payload.g_session_id || payload.session_id;
@@ -46,16 +46,11 @@ const sendAnalyticsEvents = (
       sendingEvents.push(...listMetaEvents);
     }
   }
-  /* @TODO:
-  - Get credentials from env vars, e.g. `process.env.GA_MEASUREMENT_ID`;
-  - May receive multiple events in a unique request, and dispatch multiple
-  events in one POST if possible;
-  - Consider Google Click ID (`?gclid=`), Facebook Click ID (`?fbclid=`)
-  and maybe TikTok one from payload;
-  - Send the events in parallel for all APIs with `Promise.all(sendingEvents)`;
-  - No CORS!
-  */
-  Promise.all(sendingEvents);
+  try {
+    await Promise.all(sendingEvents);
+  } catch (err) {
+    warn(err);
+  }
 };
 
 export default sendAnalyticsEvents;
