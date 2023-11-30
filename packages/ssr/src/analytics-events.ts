@@ -1,6 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import { EventEmitter } from 'node:events';
-import { warn } from 'firebase-functions/logger';
+import { warn, error } from 'firebase-functions/logger';
+import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import ga4Events from './analytics-providers/google-analytics';
 import metaEvents from './analytics-providers/meta-conversions-api';
 
@@ -26,12 +27,33 @@ const sendAnalyticsEvents = async (
     (eventsByType[type] as AnalyticsEvent[]).push({ name, params });
   });
   const sendingEvents: Promise<AxiosResponse<any, any>>[] = [];
+  const storingEvents: Promise<any>[] = [];
   if (eventsByType.gtag) {
     const sessionId = payload.g_session_id || payload.session_id;
     const clientId = payload.g_client_id || payload.client_id;
     const listGA4Events = ga4Events(eventsByType.gtag, clientId, sessionId, payload.utm);
     if (listGA4Events) {
       sendingEvents.push(...listGA4Events);
+    }
+    const pageView = eventsByType.gtag.find(({ name }) => {
+      return name === 'page_view';
+    });
+    const productView = eventsByType.gtag.find(({ name, params }) => {
+      return name === 'view_item' && params?.item_list_id === 'product-page';
+    });
+    if (pageView || productView) {
+      const db = getFirestore();
+      if (pageView && url) {
+        const storing = db.collection('ssrPageViews')
+          .add({ url, at: Timestamp.now() });
+        storingEvents.push(storing);
+      }
+      const productId = productView?.params?.object_id;
+      if (productId) {
+        const storing = db.doc(`ssrProductViews/${productId}`)
+          .set({ countUnsaved: FieldValue.increment(1) }, { merge: true });
+        storingEvents.push(storing);
+      }
     }
   }
   if (eventsByType.fbq) {
@@ -46,11 +68,17 @@ const sendAnalyticsEvents = async (
       sendingEvents.push(...listMetaEvents);
     }
   }
-  try {
-    await Promise.all(sendingEvents);
-  } catch (err) {
-    warn(err);
-  }
+  await Promise.all([
+    Promise.allSettled(sendingEvents).then((results) => {
+      for (let i = 0; i < results.length; i++) {
+        const { status } = results[i];
+        if (status === 'rejected') {
+          warn((results[i] as PromiseRejectedResult).reason);
+        }
+      }
+    }),
+    Promise.all(storingEvents).catch(error),
+  ]);
 };
 
 export default sendAnalyticsEvents;
