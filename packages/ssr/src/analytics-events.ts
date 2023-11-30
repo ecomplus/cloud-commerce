@@ -71,7 +71,7 @@ const sendAnalyticsEvents = async (
   }
   if (eventsByType.ttk) {
     const user = {
-      ip: payload.id,
+      ip: payload.ip,
       user_agent: payload.user_agent,
       ttclid: payload.ttclid,
     };
