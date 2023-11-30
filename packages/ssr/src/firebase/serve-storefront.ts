@@ -18,7 +18,8 @@ declare global {
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
-const { assetsPrefix } = config.get().settingsContent;
+const { settingsContent } = config.get();
+const { assetsPrefix } = settingsContent;
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
@@ -151,6 +152,16 @@ export default async (req: Request, res: Response) => {
       res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
       return;
     }
+  }
+
+  if (req.path === '/_logo' || req.path === '/_icon') {
+    const field = req.path.slice(2) as 'logo' | 'icon';
+    if (settingsContent[field]) {
+      res.redirect(302, settingsContent[field]);
+    } else {
+      res.sendStatus(404);
+    }
+    return;
   }
 
   if (req.path === '/_image') {
