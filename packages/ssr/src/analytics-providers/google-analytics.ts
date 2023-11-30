@@ -8,7 +8,7 @@ const ga4Axios = axios.create({
   },
 });
 
-const url = `/mp/collect?api_secret=${process.env.GA_API_TOKEN}`
+const url = `/mp/collect?api_secret=${process.env.GA_API_SECRET}`
   + `&measurement_id=${process.env.GA_MEASUREMENT_ID}`;
 
 const sendEvent = (
@@ -23,7 +23,7 @@ const sendEvent = (
     content?: string
   },
 ) => {
-  if (process.env.GA_API_TOKEN && process.env.GA_MEASUREMENT_ID) {
+  if (process.env.GA_API_SECRET && process.env.GA_MEASUREMENT_ID) {
     const requests: Promise<AxiosResponse<any, any>>[] = [];
     let events: AnalyticsEvent[] = [];
 

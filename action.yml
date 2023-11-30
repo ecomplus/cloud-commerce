@@ -52,7 +52,7 @@ inputs:
     description: 'App: Galax Pay hash'
   ga-measurement-id:
     description: 'App: Google Analytics API measurement id'
-  ga-api-token:
+  ga-api-secret:
     description: 'App: Google Analytics API secret'
   infinitepay-id:
     description: 'App: InifinitePay client ID'
@@ -244,7 +244,7 @@ runs:
         GALAXPAY_ID: ${{ inputs.galaxpay-id }}
         GALAXPAY_HASH: ${{ inputs.galaxpay-hash }}
         GA_MEASUREMENT_ID: ${{ inputs.ga-measurement-id }}
-        GA_API_TOKEN: ${{ inputs.ga-api-token }}
+        GA_API_SECRET: ${{ inputs.ga-api-secret }}
         FB_PIXEL_ID: ${{ inputs.fb-pixel-id }}
         FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
         JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
@@ -290,7 +290,7 @@ runs:
         GALAXPAY_ID=$GALAXPAY_ID
         GALAXPAY_HASH=$GALAXPAY_HASH
         GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID
-        GA_API_TOKEN=$GA_API_TOKEN
+        GA_API_SECRET=$GA_API_SECRET
         FB_PIXEL_ID=$FB_PIXEL_ID
         FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
         JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN

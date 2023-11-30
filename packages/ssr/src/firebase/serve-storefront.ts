@@ -18,7 +18,8 @@ declare global {
 
 const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
-const { assetsPrefix } = config.get().settingsContent;
+const { settingsContent } = config.get();
+const { assetsPrefix } = settingsContent;
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
@@ -153,6 +154,17 @@ export default async (req: Request, res: Response) => {
     }
   }
 
+  if (req.path === '/_logo' || req.path === '/_icon') {
+    const field = req.path.slice(2) as 'logo' | 'icon';
+    res.set('Cache-Control', 'max-age=300');
+    if (settingsContent[field]) {
+      res.redirect(302, settingsContent[field]);
+    } else {
+      res.sendStatus(404);
+    }
+    return;
+  }
+
   if (req.path === '/_image') {
     const { href } = req.query;
     if (typeof href === 'string' && href.length > 3) {
@@ -183,7 +195,9 @@ export default async (req: Request, res: Response) => {
               && filename === _builtImage.filename.replace(filenameRegExp, '');
           });
           if (builtImage) {
-            return res.redirect(301, `/_astro/${builtImage.filename}`);
+            return res
+              .set('Cache-Control', 'max-age=60')
+              .redirect(301, `/_astro/${builtImage.filename}`);
           }
           return res.redirect(302, href);
         })();
@@ -220,7 +234,7 @@ export default async (req: Request, res: Response) => {
       res.send('Event(s) must be sent via the `{ events }` array in the request body');
       return;
     }
-    sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
+    await sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
     res.sendStatus(204);
     return;
   }
