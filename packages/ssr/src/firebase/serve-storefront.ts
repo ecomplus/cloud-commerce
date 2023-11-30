@@ -156,6 +156,7 @@ export default async (req: Request, res: Response) => {
 
   if (req.path === '/_logo' || req.path === '/_icon') {
     const field = req.path.slice(2) as 'logo' | 'icon';
+    res.set('Cache-Control', 'max-age=300');
     if (settingsContent[field]) {
       res.redirect(302, settingsContent[field]);
     } else {
@@ -194,7 +195,9 @@ export default async (req: Request, res: Response) => {
               && filename === _builtImage.filename.replace(filenameRegExp, '');
           });
           if (builtImage) {
-            return res.redirect(301, `/_astro/${builtImage.filename}`);
+            return res
+              .set('Cache-Control', 'max-age=60')
+              .redirect(301, `/_astro/${builtImage.filename}`);
           }
           return res.redirect(302, href);
         })();
