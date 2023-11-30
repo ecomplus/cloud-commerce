@@ -4,6 +4,7 @@ import { warn, error } from 'firebase-functions/logger';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import ga4Events from './analytics-providers/google-analytics';
 import metaEvents from './analytics-providers/meta-conversions-api';
+import tiktokEvent from './analytics-providers/tiktok-ads';
 
 const analyticsEmitter = new EventEmitter();
 
@@ -66,6 +67,17 @@ const sendAnalyticsEvents = async (
     const listMetaEvents = metaEvents(eventsByType.fbq, payload.page_location, userData);
     if (listMetaEvents) {
       sendingEvents.push(...listMetaEvents);
+    }
+  }
+  if (eventsByType.ttk) {
+    const user = {
+      ip: payload.ip,
+      user_agent: payload.user_agent,
+      ttclid: payload.ttclid,
+    };
+    const lisTiktokEvents = tiktokEvent(eventsByType.ttk, user);
+    if (lisTiktokEvents) {
+      sendingEvents.push(...lisTiktokEvents);
     }
   }
   await Promise.all([
