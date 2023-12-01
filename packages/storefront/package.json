@@ -29,7 +29,7 @@
     "prepare-monorepo": "bash scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/node": "6.0.4",
+    "@astrojs/node": "6.1.0",
     "@astrojs/vue": "3.0.4",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
