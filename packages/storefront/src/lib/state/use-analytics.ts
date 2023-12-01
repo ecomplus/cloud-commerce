@@ -11,6 +11,7 @@ export const trackingIds: {
   g_session_id?: string,
   fbclid?: string,
   fbp?: string,
+  ttclid?: string,
   client_id?: string,
   session_id?: string,
 } = {};
@@ -242,7 +243,7 @@ export const useAnalytics = () => {
     });
   }
   const url = new URL(window.location.toString());
-  ['gclid', 'fbclid'].forEach((key) => {
+  ['gclid', 'fbclid', 'ttclid'].forEach((key) => {
     const id = trackingIds[key] || url.searchParams.get(key);
     if (id) {
       trackingIds[key] = id;
