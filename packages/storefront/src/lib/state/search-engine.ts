@@ -74,6 +74,7 @@ export class SearchEngine {
   async fetch(term?: string) {
     if (term && term !== this.term.value) {
       this.term.value = term;
+      this.pageNumber.value = 1;
     }
     const limit = this.pageSize.value;
     const offset = limit * (this.pageNumber.value - 1);
