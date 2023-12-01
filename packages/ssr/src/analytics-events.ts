@@ -1,10 +1,9 @@
-import type { AxiosResponse } from 'axios';
 import { EventEmitter } from 'node:events';
 import { warn, error } from 'firebase-functions/logger';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
-import ga4Events from './analytics-providers/google-analytics';
-import metaEvents from './analytics-providers/meta-conversions-api';
-import tiktokEvent from './analytics-providers/tiktok-ads';
+import sendToGa4 from './analytics/send-to-ga4';
+import sendToMeta from './analytics/send-to-meta';
+import sendToTiktok from './analytics/send-to-tiktok';
 
 const analyticsEmitter = new EventEmitter();
 
@@ -27,19 +26,18 @@ const sendAnalyticsEvents = async (
     }
     (eventsByType[type] as AnalyticsEvent[]).push({ name, params });
   });
-  const sendingEvents: Promise<AxiosResponse<any, any>>[] = [];
+  const sendingEvents: Promise<any>[] = [];
   const storingEvents: Promise<any>[] = [];
-  if (eventsByType.gtag) {
-    const sessionId = payload.g_session_id || payload.session_id;
-    const clientId = payload.g_client_id || payload.client_id;
-    const listGA4Events = ga4Events(eventsByType.gtag, clientId, sessionId, payload.utm);
-    if (listGA4Events) {
-      sendingEvents.push(...listGA4Events);
-    }
-    const pageView = eventsByType.gtag.find(({ name }) => {
+  const {
+    gtag: gaEvents,
+    fbq: metaEvents,
+    ttq: tiktokEvents,
+  } = eventsByType;
+  if (gaEvents) {
+    const pageView = gaEvents.find(({ name }) => {
       return name === 'page_view';
     });
-    const productView = eventsByType.gtag.find(({ name, params }) => {
+    const productView = gaEvents.find(({ name, params }) => {
       return name === 'view_item' && params?.item_list_id === 'product-page';
     });
     if (pageView || productView) {
@@ -56,29 +54,26 @@ const sendAnalyticsEvents = async (
         storingEvents.push(storing);
       }
     }
+    const sessionId = payload.g_session_id || payload.session_id;
+    const clientId = payload.g_client_id || payload.client_id;
+    sendingEvents.push(sendToGa4(gaEvents, clientId, sessionId, payload.utm));
   }
-  if (eventsByType.fbq) {
+  if (metaEvents) {
     const userData = {
-      client_ip_address: payload.id,
+      client_ip_address: payload.ip,
       client_user_agent: payload.user_agent,
       fbc: payload.fbclid,
       fbp: payload.fbp,
     };
-    const listMetaEvents = metaEvents(eventsByType.fbq, payload.page_location, userData);
-    if (listMetaEvents) {
-      sendingEvents.push(...listMetaEvents);
-    }
+    sendingEvents.push(sendToMeta(metaEvents, url, userData, payload.page_title));
   }
-  if (eventsByType.ttk) {
-    const user = {
+  if (tiktokEvents) {
+    const userData = {
       ip: payload.ip,
       user_agent: payload.user_agent,
       ttclid: payload.ttclid,
     };
-    const lisTiktokEvents = tiktokEvent(eventsByType.ttk, user);
-    if (lisTiktokEvents) {
-      sendingEvents.push(...lisTiktokEvents);
-    }
+    sendingEvents.push(sendToTiktok(tiktokEvents, url, userData));
   }
   await Promise.all([
     Promise.allSettled(sendingEvents).then((results) => {
