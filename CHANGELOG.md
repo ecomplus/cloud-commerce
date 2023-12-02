@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.35.0](https://github.com/ecomplus/cloud-commerce/compare/v0.34.0...v0.35.0) (2023-12-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ssr:** Env var renamed for GA integration, may have to change GH respo actions secrets and/or .env file
+* **storefront:** `shoppingCart` rewriten to reactive object instead of computed
+
+### Features
+
+* **ssr:** Handle /_logo and /_icon paths redirecting to respective image URLs from settings content ([df33647](https://github.com/ecomplus/cloud-commerce/commit/df33647f528f45b35c15a79666e8f7b54edada3c))
+* **ssr:** Saving page views and product views count on local Firestore ([b702e8a](https://github.com/ecomplus/cloud-commerce/commit/b702e8a33634101872a75fbeecd2b433c152bff3))
+* **storefront:** Add `isHidden` and `anchorEl` optional props to `<Drawer>` ([91c3879](https://github.com/ecomplus/cloud-commerce/commit/91c387902945a2ce3ec314147dc9ecd29dd52356))
+* **storefront:** Add `wrapperKey` optional prop to Carousel to trigger recalc wrapper size ([906f766](https://github.com/ecomplus/cloud-commerce/commit/906f7664f6f48934cc7d5d7dbf70ca73288cb140))
+* **storefront:** Add new `SearchEngine` state and class with basic paginated search and reactivity ([d99e231](https://github.com/ecomplus/cloud-commerce/commit/d99e231ca2d522b15a22e1ba94c1f127e1c91d3e))
+* **storefront:** New `<Drawer>` props to edit animation, max witdth and custom dialog styles ([bb30411](https://github.com/ecomplus/cloud-commerce/commit/bb30411bd57c34a8ffde2088d6ab8356aa822f6c))
+* **storefront:** Update vbeta-app script to support new checkout URL search params ([2fcb766](https://github.com/ecomplus/cloud-commerce/commit/2fcb76602784d9390efbc11b9693ae468db07077))
+
+
+### Bug Fixes
+
+* **api:** Rate limit retry-after is expressed in seconds ([757ccdb](https://github.com/ecomplus/cloud-commerce/commit/757ccdbfda23529b732efd5ec55adceb6f32273d))
+* **deps:** Update non-major dependencies ([#275](https://github.com/ecomplus/cloud-commerce/issues/275)) ([740a62c](https://github.com/ecomplus/cloud-commerce/commit/740a62c1edfd7f188eef0edc267ddb1e5ecc9559))
+* **ssr:** Await analytics events to send and debug (warn) requests errors ([f1f6039](https://github.com/ecomplus/cloud-commerce/commit/f1f6039995152cd81e710ce14b554b17cdce0091))
+* **ssr:** General fixes for server analytics events ([74ad091](https://github.com/ecomplus/cloud-commerce/commit/74ad09159d6377fb5854f50eb4b2415e7b79ad38))
+* **storefront:** Ensure `shoppingCart` items state reactivity ([21e3a28](https://github.com/ecomplus/cloud-commerce/commit/21e3a28ade77503579d7e6d5fbbd3f4eec2d5248))
+* **storefront:** Ensure forms base styles with selector specificity (0, 1) ([5f9836a](https://github.com/ecomplus/cloud-commerce/commit/5f9836ac20603f9e8c84cacbc407ec11542b1c18))
+* **storefront:** Handle direct buy keeping cart saved with new temporary cart for current checkout ([c26459f](https://github.com/ecomplus/cloud-commerce/commit/c26459fdde963668b9b3502c6e310c9b4bb44738))
+* **storefront:** Prevent search engine error with undefined response on fetch debounce ([46da11f](https://github.com/ecomplus/cloud-commerce/commit/46da11f5320714966db3b8d7d4833b58a676e82e))
+* **storefront:** Try getting TikTik click ID from URL for server side events ([6b16b87](https://github.com/ecomplus/cloud-commerce/commit/6b16b8766e524761e36a052da29c4a52ef30948f))
+
+
+* **ssr:** Renaming optional env var to `GA_API_SECRET` ([baa2372](https://github.com/ecomplus/cloud-commerce/commit/baa2372bf80f592ad84fff789d0a0db5cddd12fb))
+
 ## [0.34.0](https://github.com/ecomplus/cloud-commerce/compare/v0.33.5...v0.34.0) (2023-11-26)
 
 
