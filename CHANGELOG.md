@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.35.1](https://github.com/ecomplus/cloud-commerce/compare/v0.35.0...v0.35.1) (2023-12-02)
+
+
+### Bug Fixes
+
+* **storefront:** Update `loadRouteContext` with more permissive type for Astro (AstroGlobal) param ([31932db](https://github.com/ecomplus/cloud-commerce/commit/31932dbe5e73713d5be41a0562628c71b1cb9115))
+
 ## [0.35.0](https://github.com/ecomplus/cloud-commerce/compare/v0.34.0...v0.35.0) (2023-12-02)
 
 
