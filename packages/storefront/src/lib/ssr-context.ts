@@ -70,13 +70,16 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
 
 export type ApiPrefetchEndpoints = Array<ApiEndpoint | ':slug'>;
 
-const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
-  contentCollection,
-  apiPrefetchEndpoints = globalThis.$apiPrefetchEndpoints,
-}: {
-  contentCollection?: string;
-  apiPrefetchEndpoints?: ApiPrefetchEndpoints;
-} = {}) => {
+const loadRouteContext = async (
+  Astro: AstroGlobal | Readonly<AstroGlobal<any, any, any>>,
+  {
+    contentCollection,
+    apiPrefetchEndpoints = globalThis.$apiPrefetchEndpoints,
+  }: {
+    contentCollection?: string;
+    apiPrefetchEndpoints?: ApiPrefetchEndpoints;
+  } = {},
+) => {
   const startedAt = Date.now();
   let urlPath = Astro.url.pathname;
   const isPreview = urlPath.startsWith('/~preview');
@@ -114,7 +117,7 @@ const loadRouteContext = async (Astro: Readonly<AstroGlobal>, {
   const { slug } = Astro.params;
   if (isHomepage) {
     cmsContent = await config.getContent('pages/home');
-  } else if (slug) {
+  } else if (slug && typeof slug === 'string') {
     if (contentCollection) {
       cmsContent = await config.getContent(`${contentCollection}/${slug}`);
     } else if (slug.startsWith('_api/') || slug === '_analytics') {
