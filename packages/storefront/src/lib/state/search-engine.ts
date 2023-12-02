@@ -88,12 +88,13 @@ export class SearchEngine {
       url: this.url,
       fields: this.fields,
     });
-    const { data } = response;
-    if (data.meta) {
-      this.products.splice(0);
+    if (response) {
+      const { data } = response;
+      if (data.meta) {
+        this.products.splice(0);
+      }
+      data.result.forEach((item) => this.products.push(item));
     }
-    data.result.forEach((item) => this.products.push(item));
-    return response;
   }
 }
 
