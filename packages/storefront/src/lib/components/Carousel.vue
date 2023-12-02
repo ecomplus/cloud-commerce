@@ -36,7 +36,8 @@ export interface Props {
   index?: number;
   autoplay?: number; // milliseconds
   axis?: 'x' | 'y';
-  hasControls?: boolean
+  hasControls?: boolean;
+  wrapperKey?: string | number | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -203,6 +204,7 @@ onMounted(() => {
     window.addEventListener('resize', onResize);
   }
 });
+watch(toRef(props, 'wrapperKey'), calcOnInit);
 onBeforeUnmount(() => {
   if (!import.meta.env.SSR) {
     window.removeEventListener('resize', onResize);
