@@ -4,7 +4,7 @@ import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
 
 export interface Props {
-  collectionId: ResourceId | null;
+  collectionId?: ResourceId | null;
   searchQuery?: `&${string}` | '';
   sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string;
   title?: string | null;
