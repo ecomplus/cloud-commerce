@@ -11,7 +11,7 @@ const endpoint = '/mp/collect'
   + `?api_secret=${process.env.GA_API_SECRET}`
   + `&measurement_id=${process.env.GA_MEASUREMENT_ID}`;
 
-export const sendToGa4 = async (
+const sendToGa4 = async (
   events: AnalyticsEvent[],
   clientId: string,
   sessionId: string,
