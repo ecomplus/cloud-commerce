@@ -57,7 +57,7 @@
     "unplugin-auto-import": "^0.16.7",
     "vite": "^4.5.0",
     "vite-plugin-pwa": "^0.17.2",
-    "vue": "^3.3.9"
+    "vue": "3.3.8"
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",

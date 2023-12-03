@@ -21,6 +21,7 @@
       ],
       "excludePackageNames": [
         "astro",
+        "vue",
         "typescript"
       ],
       "excludePackagePrefixes": [
@@ -53,6 +54,15 @@
       ],
       "matchPackagePrefixes": [
         "@astrojs/"
+      ]
+    },
+    {
+      "groupName": "Vue",
+      "matchPackageNames": [
+        "vue"
+      ],
+      "matchPackagePrefixes": [
+        "@vue/"
       ]
     }
   ]
