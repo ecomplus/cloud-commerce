@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.36.2](https://github.com/ecomplus/cloud-commerce/compare/v0.36.1...v0.36.2) (2023-12-03)
+
+
+### Bug Fixes
+
+* **cli:** Add typescript ad pkg dep to ensure required version ([27de9b2](https://github.com/ecomplus/cloud-commerce/commit/27de9b268af2c0990bf882c28a6a3708cbf3c0ce))
+* **deps:** Bump vue to v3.3.9 (revert) ([147bcf0](https://github.com/ecomplus/cloud-commerce/commit/147bcf0800592debba7b9d45f6b7957a871226a5))
+
 ### [0.36.1](https://github.com/ecomplus/cloud-commerce/compare/v0.36.0...v0.36.1) (2023-12-03)
 
 ## [0.36.0](https://github.com/ecomplus/cloud-commerce/compare/v0.35.1...v0.36.0) (2023-12-03)
