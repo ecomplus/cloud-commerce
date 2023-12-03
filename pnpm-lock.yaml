@@ -681,13 +681,12 @@ importers:
       md5:
         specifier: ^2.3.0
         version: 2.3.0
-      zx:
-        specifier: ^7.2.3
-        version: 7.2.3
-    devDependencies:
       typescript:
         specifier: ~5.2.2
         version: 5.2.2
+      zx:
+        specifier: ^7.2.3
+        version: 7.2.3
 
   packages/config:
     dependencies:
