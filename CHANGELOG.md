@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.36.0](https://github.com/ecomplus/cloud-commerce/compare/v0.35.1...v0.36.0) (2023-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Store SSR `env.d.ts` should add `/// <reference types="@cloudcommerce/storefront/.auto-imports" />` to keep using Vue methods without manual imports on .vue/.astro/.mdx files
+
+### Bug Fixes
+
+* **storefront:** Ensure Vue imports (no auto-import expected) on lib components ([c03ad92](https://github.com/ecomplus/cloud-commerce/commit/c03ad921e43f15faa119134e96507ca80be1cc17))
+
+
+* **storefront:** Removing `.auto-import.d.ts` from `client.d.ts`, prevents internal errors ([34c1a4f](https://github.com/ecomplus/cloud-commerce/commit/34c1a4f921db777ac0a8e65fc501bebf78f73c32))
+
 ### [0.35.1](https://github.com/ecomplus/cloud-commerce/compare/v0.35.0...v0.35.1) (2023-12-02)
 
 
