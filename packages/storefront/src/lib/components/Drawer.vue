@@ -4,6 +4,7 @@ import {
   ref,
   computed,
   watch,
+  nextTick,
 } from 'vue';
 
 export interface Props {
