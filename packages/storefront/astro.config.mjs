@@ -182,10 +182,10 @@ const genAstroConfig = ({
     }),
     AutoImport({
       include: [
-        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-        /\.vue$/, /\.vue\?vue/, // .vue
-        /\.mdx?$/, // .md, .mdx
-        /\.astro$/,
+        /^(?!@@).*\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /^(?!@@).*\.vue$/, /^(?!@@).*\.vue\?vue/, // .vue
+        /^(?!@@).*\.mdx?$/, // .md, .mdx
+        /^(?!@@).*\.astro$/,
       ],
       imports: ['vue'],
       dts: isLibDev ? '.auto-imports.d.ts' : false,
