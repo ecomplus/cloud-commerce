@@ -29,7 +29,7 @@
     "@cloudcommerce/api": "workspace:*",
     "libsodium-wrappers": "^0.7.13",
     "md5": "^2.3.0",
-    "typescript": "~5.2.2",
+    "typescript": "~5.3.2",
     "zx": "^7.2.3"
   }
 }
