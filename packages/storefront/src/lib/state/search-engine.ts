@@ -30,13 +30,12 @@ export const search = async ({
       term,
     },
   });
-  if (response.data.result.length && !searchHistory.includes(term)) {
+  if (response.data.result.length) {
     const termIndex = searchHistory.findIndex((_term) => term.startsWith(_term));
     if (termIndex > -1) {
-      searchHistory[termIndex] = term;
-    } else {
-      searchHistory.unshift(term);
+      searchHistory.splice(termIndex, 1);
     }
+    searchHistory.unshift(term);
     while (searchHistory.length > 20) {
       searchHistory.pop();
     }
