@@ -50,6 +50,7 @@ export class SearchEngine {
   params = shallowReactive<Record<string, any>>({});
   pageSize = ref(24);
   pageNumber = ref(1);
+  isFetching = ref(false);
   products = shallowReactive<SearchItem[]>([]);
   #search: ReturnType<typeof useDebounceFn<typeof search>>;
   constructor({
@@ -63,7 +64,6 @@ export class SearchEngine {
   } = {}) {
     this.fields = fields;
     this.url = url;
-    this.products = shallowReactive([]);
     this.#search = useDebounceFn(search, debounce);
     watch([this.term, this.params], () => {
       this.pageNumber.value = 1;
@@ -77,6 +77,7 @@ export class SearchEngine {
     }
     const limit = this.pageSize.value;
     const offset = limit * (this.pageNumber.value - 1);
+    this.isFetching.value = true;
     const response = await this.#search({
       term: this.term.value,
       params: {
@@ -87,6 +88,7 @@ export class SearchEngine {
       url: this.url,
       fields: this.fields,
     });
+    this.isFetching.value = false;
     if (response) {
       const { data } = response;
       if (data.meta) {
