@@ -9,9 +9,10 @@ import parseProduct from '@@sf/state/shopping-cart/parse-product';
 type CartItem = CartSet['items'][0];
 const storageKey = 'ecomShoppingCart';
 const emptyCart = {
+  subtotal: 0,
   items: [],
 };
-const shoppingCart = useStorage<CartSet>(storageKey, emptyCart);
+const shoppingCart = useStorage<CartSet & { subtotal: number }>(storageKey, emptyCart);
 const totalItems = computed(() => {
   return shoppingCart.items.reduce((acc, item) => {
     return acc + item.quantity;
