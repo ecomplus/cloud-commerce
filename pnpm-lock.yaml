@@ -1086,6 +1086,9 @@ importers:
       '@iconify-json/logos':
         specifier: ^1.1.40
         version: 1.1.40
+      '@orama/orama':
+        specifier: 2.0.0-beta.8
+        version: 2.0.0-beta.8
       '@types/gtag.js':
         specifier: ^0.0.18
         version: 0.0.18
@@ -4241,6 +4244,11 @@ packages:
   /@opentelemetry/semantic-conventions@1.18.1:
     resolution: {integrity: sha512-+NLGHr6VZwcgE/2lw8zDIufOCGnzsA5CbQIMleXZTrgkBd0TanCX+MiDYJ1TOS4KL/Tqk0nFRxawnaYr6pkZkA==}
     engines: {node: '>=14'}
+    dev: false
+
+  /@orama/orama@2.0.0-beta.8:
+    resolution: {integrity: sha512-rpm2nL8I1+Rb5NSQsvHp/4BEUynOS8oSjopmjctpr8f+tfFQTZUEuzYh+ri8ffkBd+wnF/LM17mb/MK3ZTgzog==}
+    engines: {node: '>= 16.0.0'}
     dev: false
 
   /@polka/url@1.0.0-next.21:

@@ -39,6 +39,7 @@
     "@iconify-json/fa6-brands": "^1.1.17",
     "@iconify-json/heroicons": "^1.1.15",
     "@iconify-json/logos": "^1.1.40",
+    "@orama/orama": "2.0.0-beta.8",
     "@types/gtag.js": "^0.0.18",
     "@vite-pwa/astro": "^0.1.6",
     "@vueuse/core": "10.6.1",
