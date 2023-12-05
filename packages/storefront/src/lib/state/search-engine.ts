@@ -1,4 +1,4 @@
-import type { SearchItem } from '@cloudcommerce/types';
+import type { SearchItem, SearchResult } from '@cloudcommerce/types';
 import { ref, watch, shallowReactive } from 'vue';
 import { useDebounceFn } from '@vueuse/core';
 import api from '@cloudcommerce/api';
@@ -44,26 +44,31 @@ export const search = async ({
 };
 
 export class SearchEngine {
-  url: 'search/v1' | `search/v1?${string}`;
   fields?: readonly string[];
   term = ref('');
+  isWithCount = ref(true);
+  isWithBuckets = ref(true);
   params = shallowReactive<Record<string, any>>({});
   pageSize = ref(24);
   pageNumber = ref(1);
   isFetching = ref(false);
   products = shallowReactive<SearchItem[]>([]);
+  meta = shallowReactive<SearchResult<'v1'>['meta']>({
+    offset: 0,
+    limit: 0,
+    fields: [],
+    sort: [],
+    query: {},
+  });
   #search: ReturnType<typeof useDebounceFn<typeof search>>;
   constructor({
     fields,
-    url = 'search/v1',
     debounce = 150,
   }: {
     fields?: readonly string[],
-    url?: 'search/v1' | `search/v1?${string}`,
     debounce?: number,
   } = {}) {
     this.fields = fields;
-    this.url = url;
     this.#search = useDebounceFn(search, debounce);
     watch([this.term, this.params], () => {
       this.pageNumber.value = 1;
@@ -81,11 +86,12 @@ export class SearchEngine {
     const response = await this.#search({
       term: this.term.value,
       params: {
+        ...this.params,
         limit,
         offset,
-        ...this.params,
+        count: this.isWithCount.value || undefined,
+        buckets: this.isWithBuckets.value || undefined,
       },
-      url: this.url,
       fields: this.fields,
     });
     this.isFetching.value = false;
@@ -93,6 +99,7 @@ export class SearchEngine {
       const { data } = response;
       if (data.meta) {
         this.products.splice(0);
+        Object.assign(this.meta, data.meta);
       }
       data.result.forEach((item) => this.products.push(item));
     }
