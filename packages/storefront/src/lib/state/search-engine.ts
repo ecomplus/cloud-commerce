@@ -69,7 +69,10 @@ export class SearchEngine {
     debounce?: number,
   } = {}) {
     this.fields = fields;
-    this.#search = useDebounceFn(search, debounce);
+    this.#search = useDebounceFn((opts) => {
+      this.isFetching.value = true;
+      return search(opts);
+    }, debounce);
     watch([this.term, this.params], () => {
       this.pageNumber.value = 1;
     });
@@ -82,7 +85,6 @@ export class SearchEngine {
     }
     const limit = this.pageSize.value;
     const offset = limit * (this.pageNumber.value - 1);
-    this.isFetching.value = true;
     const response = await this.#search({
       term: this.term.value,
       params: {
@@ -94,8 +96,8 @@ export class SearchEngine {
       },
       fields: this.fields,
     });
-    this.isFetching.value = false;
     if (response) {
+      this.isFetching.value = false;
       const { data } = response;
       if (data.meta) {
         this.products.splice(0);
