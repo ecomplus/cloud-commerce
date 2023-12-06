@@ -11,16 +11,19 @@ export const requestIdleCallback = (fn: (...args: any[]) => any, fallbackMs = 30
   }
 };
 
-export const slugify = (str: string) => {
+export const clearAccents = (str: string) => {
   return str
-    .toLowerCase()
-    .trim()
     .replace(/[ÁáÃãÂâÀà]/g, 'a')
     .replace(/[Éé]/g, 'e')
     .replace(/[Íí]/g, 'i')
-    .replace(/[ÓóÔô]/g, 'o')
+    .replace(/[ÕõÓóÔô]/g, 'o')
     .replace(/[Úú]/g, 'u')
-    .replace(/[Çç]/g, 'c')
+    .replace(/[Çç]/g, 'c');
+};
+
+export const slugify = (str: string) => {
+  return clearAccents(str.trim())
+    .toLowerCase()
     .replace(/[\W\r\n]/gm, '-')
     .replace(/-{2,}/g, '-')
     .replace(/(^-)|(-$)/g, '');

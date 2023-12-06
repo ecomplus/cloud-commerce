@@ -3,13 +3,9 @@ import type {
   Brands,
   Collections,
 } from '@cloudcommerce/api/types';
-import type { Orama } from '@orama/orama';
 import { ref, watch, toRef } from 'vue';
-import {
-  create as oramaCreate,
-  search as oramaSearch,
-  insert as oramaInsert,
-} from '@orama/orama';
+import Wade from 'wade';
+import { clearAccents } from '@@sf/sf-lib';
 import { SearchEngine, searchHistory } from '@@sf/state/search-engine';
 
 export interface Props {
@@ -18,36 +14,37 @@ export interface Props {
   productsLimit?: number;
 }
 
-const oramaDocSchema = {
-  name: 'string',
-  slug: 'string',
-  short_description: 'string',
-} as const;
-const oramaDocs: Array<{ [k:string]:any } & { name: string, slug: string }> = [];
 const storefrontData = globalThis.$storefront.data as {
   categories?: Array<Partial<Categories>>,
   brands?: Array<Partial<Brands>>,
   collections?: Array<Partial<Collections>>,
 };
+const wadeDocs: Array<{
+  text: string,
+  type: 'categories' | 'brands' | 'collections' | 'blog',
+  data: Record<string, any> & { name: string, slug: string },
+}> = [];
 (['categories', 'brands', 'collections'] as const).forEach((resource) => {
   const docsList = storefrontData[resource];
   if (docsList) {
     for (let i = 0; i < docsList.length; i++) {
       const doc = docsList[i];
-      const { name, slug } = doc;
-      if (name && slug) {
-        oramaDocs.push({ ...doc, name, slug });
+      if (doc.name && doc.slug) {
+        wadeDocs.push({
+          text: clearAccents(`${doc.name} ${(doc as Categories).short_description}`),
+          type: resource,
+          data: doc as typeof wadeDocs[number]['data'],
+        });
       }
     }
   }
 });
-let oramaDb: Orama<typeof oramaDocSchema> | undefined;
-if (oramaDocs.length) {
-  (async () => {
-    const _oramaDb = await oramaCreate({ schema: oramaDocSchema });
-    oramaDocs.forEach((doc) => oramaInsert(_oramaDb, doc));
-    oramaDb = _oramaDb;
-  })();
+let wadeSearch: ((t: string) => { index: number, score: number }[]) | undefined;
+if (wadeDocs.length) {
+  if (globalThis.$storefront.settings.lang === 'pt_br') {
+    Wade.config.stopWords = ['e', 'a', 'o', 'de', 'para', 'com', 'tem'];
+  }
+  wadeSearch = Wade(wadeDocs.map(({ text }) => text));
 }
 
 export const useSearchModal = (props: Props) => {
@@ -61,9 +58,10 @@ export const useSearchModal = (props: Props) => {
   const linkHits = ref<Array<{ title: string, href: string }>>([]);
   watch(toRef(props, 'term'), async (term) => {
     searchEngine.fetch(term);
-    if (oramaDb) {
-      const { hits } = await oramaSearch(oramaDb, { term });
-      linkHits.value = hits.map(({ document: { name, slug } }) => {
+    if (wadeSearch) {
+      const wadeResults = wadeSearch(clearAccents(term));
+      linkHits.value = wadeResults.map(({ index }) => {
+        const { name, slug } = wadeDocs[index].data;
         return { title: name, href: `/${slug}` };
       });
     }

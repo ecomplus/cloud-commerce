@@ -39,7 +39,6 @@
     "@iconify-json/fa6-brands": "^1.1.17",
     "@iconify-json/heroicons": "^1.1.15",
     "@iconify-json/logos": "^1.1.40",
-    "@orama/orama": "2.0.0-beta.8",
     "@types/gtag.js": "^0.0.18",
     "@vite-pwa/astro": "^0.1.6",
     "@vueuse/core": "10.6.1",
@@ -58,7 +57,8 @@
     "unplugin-auto-import": "^0.16.7",
     "vite": "^4.5.1",
     "vite-plugin-pwa": "^0.17.2",
-    "vue": "3.3.10"
+    "vue": "3.3.10",
+    "wade": "0.3.3"
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
