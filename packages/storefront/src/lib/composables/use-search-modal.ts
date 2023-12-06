@@ -73,8 +73,14 @@ export const useSearchModal = (props: Props) => {
   watch(searchEngine.meta, () => {
     productCount.value = searchEngine.meta.count || 0;
   });
+  const filteredHistory = ref<string[]>([]);
+  watch(searchHistory, () => {
+    filteredHistory.value = searchHistory.filter((term) => term !== props.term);
+  }, {
+    immediate: true,
+  });
   return {
-    searchHistory,
+    searchHistory: filteredHistory,
     searchEngine,
     isFetching: searchEngine.isFetching,
     productHits: searchEngine.products,
