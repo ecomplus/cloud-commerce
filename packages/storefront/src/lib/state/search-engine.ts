@@ -8,6 +8,13 @@ const storageKey = 'ecomSeachHistory';
 
 export const searchHistory = useStorage<string[]>(storageKey, []);
 
+for (let i = 0; i < searchHistory.length; i++) {
+  if (typeof searchHistory[i] !== 'string') {
+    searchHistory.splice(i, 1);
+    i -= 1;
+  }
+}
+
 export const search = async ({
   term,
   params,
@@ -31,11 +38,20 @@ export const search = async ({
     },
   });
   if (response.data.result.length) {
-    const termIndex = searchHistory.findIndex((_term) => term.startsWith(_term));
-    if (termIndex > -1) {
-      searchHistory.splice(termIndex, 1);
+    const completeTermIndex = searchHistory.findIndex((_term) => {
+      return _term.includes(term) && !(_term.replace(term, '')).includes(' ');
+    });
+    if (completeTermIndex > -1) {
+      const completeTerm = searchHistory[completeTermIndex];
+      searchHistory.splice(completeTermIndex, 1);
+      searchHistory.unshift(completeTerm);
+    } else {
+      const termIndex = searchHistory.findIndex((_term) => term.startsWith(_term));
+      if (termIndex > -1) {
+        searchHistory.splice(termIndex, 1);
+      }
+      searchHistory.unshift(term);
     }
-    searchHistory.unshift(term);
     while (searchHistory.length > 20) {
       searchHistory.pop();
     }
