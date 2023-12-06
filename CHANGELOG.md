@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.37.0](https://github.com/ecomplus/cloud-commerce/compare/v0.36.2...v0.37.0) (2023-12-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Search engine constructor does not receive nor mantain `url` option anymore, forcing it to `search/v1`, params should be set separately
+
+### Features
+
+* **storefront:** Add `isFetching` ref to search engine class ([014640e](https://github.com/ecomplus/cloud-commerce/commit/014640e4e659d1a6b8a3d48113c9fbfe529a08ac))
+* **storefront:** Handling count and faceted search on `SearchEngine` with new public attributes ([e609e88](https://github.com/ecomplus/cloud-commerce/commit/e609e88749c23ec5ac77f410683f2abe41f13602))
+* **storefront:** New `useSearchModal` composable ([91d21d5](https://github.com/ecomplus/cloud-commerce/commit/91d21d5aef738d9570c951b041b7c720851f6b7e))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#282](https://github.com/ecomplus/cloud-commerce/issues/282)) ([0b5eb14](https://github.com/ecomplus/cloud-commerce/commit/0b5eb148ca758240045812eca5c04a5dd6b6b435))
+* **storefront:** Bump astro to v3.6.4 ([#284](https://github.com/ecomplus/cloud-commerce/issues/284)) ([04c8b55](https://github.com/ecomplus/cloud-commerce/commit/04c8b557bda1aa618e974351d7471210a25e7ff3))
+* **storefront:** Bump Vue to v3.3.10 ([6dc5924](https://github.com/ecomplus/cloud-commerce/commit/6dc5924c4de100dc62ec1e116cc83a3cd92d759e))
+* **storefront:** Ensure `shoppingCart` state type with subtotal defined (number) ([47aedfe](https://github.com/ecomplus/cloud-commerce/commit/47aedfede02499cd62d9e7b0c50861284c5e8650))
+* **storefront:** Minor edit `SearchEngine` to ensure current term is on top of history list ([6a893c1](https://github.com/ecomplus/cloud-commerce/commit/6a893c19034afd4e8aa866adf4a22b60a483b626))
+* **storefront:** Properly handling `SearchEngine` fetching state ([1fabf0a](https://github.com/ecomplus/cloud-commerce/commit/1fabf0a9b57dd565bc7157501a4da788f2d40aba))
+* **storefront:** Set `CarouselControl>` default zindex to 11 ([fb82ef0](https://github.com/ecomplus/cloud-commerce/commit/fb82ef0c8998754a1fd131afcc553410517ed176))
+
 ### [0.36.2](https://github.com/ecomplus/cloud-commerce/compare/v0.36.1...v0.36.2) (2023-12-03)
 
 
