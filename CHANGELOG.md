@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.37.1](https://github.com/ecomplus/cloud-commerce/compare/v0.37.0...v0.37.1) (2023-12-07)
+
+
+### Features
+
+* **storefront:** Edit `useShopHeader` composable to support common quick search and cart behaviors ([a24b1d3](https://github.com/ecomplus/cloud-commerce/commit/a24b1d37163943d682bc648d4ecc01bbc80de8b3))
+* **storefront:** Send search events (with terms) to analytics ([8bc75a6](https://github.com/ecomplus/cloud-commerce/commit/8bc75a679d73440a845133ccda8ed8776564d785))
+
+
+### Bug Fixes
+
+* **storefront:** Minor fix search egine to skip adding "almost duplicated" terms ([0cf1e6c](https://github.com/ecomplus/cloud-commerce/commit/0cf1e6c89fade1081e162f73a7beec1f6580016c))
+* **storefront:** Update `useSearchModal` to filter search history without current term ([969a4d5](https://github.com/ecomplus/cloud-commerce/commit/969a4d5ac763d4cbc545a265e4fc72bab6ddddee))
+
 ## [0.37.0](https://github.com/ecomplus/cloud-commerce/compare/v0.36.2...v0.37.0) (2023-12-06)
 
 
