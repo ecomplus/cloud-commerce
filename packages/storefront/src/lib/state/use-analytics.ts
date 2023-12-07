@@ -1,8 +1,10 @@
 import type { Products, Carts, SearchItem } from '@cloudcommerce/types';
+import { watch } from 'vue';
 import { watchOnce } from '@vueuse/core';
 import { price as getPrice, name as getName } from '@ecomplus/utils';
 import { customer, isLogged } from '@@sf/state/customer-session';
 import { cartEvents } from '@@sf/state/shopping-cart';
+import { searchHistory } from '@@sf/state/search-engine';
 import utm from '@@sf/scripts/session-utm';
 
 export const trackingIds: {
@@ -218,17 +220,6 @@ export const getGtagItem = (product: Partial<Products> | SearchItem | CartItem) 
 
 export const useAnalytics = () => {
   document.addEventListener('astro:beforeload', resetPageViewPromise);
-  if (isLogged.value) {
-    emitGtagEvent('login', {});
-  } else {
-    watchOnce(isLogged, () => emitGtagEvent('login', {}));
-  }
-  cartEvents.on('*', (evName, cartItem) => {
-    emitGtagEvent(
-      evName === 'addCartItem' ? 'add_to_cart' : 'remove_from_cart',
-      { items: [getGtagItem(cartItem)] },
-    );
-  });
   const {
     gtag,
     GTAG_TAG_ID,
@@ -279,6 +270,31 @@ export const useAnalytics = () => {
     }
     storage.setItem(`analytics_${key}`, trackingIds[key]);
   });
+  if (isLogged.value) {
+    emitGtagEvent('login', {});
+  } else {
+    watchOnce(isLogged, () => emitGtagEvent('login', {}));
+  }
+  cartEvents.on('*', (evName, cartItem) => {
+    emitGtagEvent(
+      evName === 'addCartItem' ? 'add_to_cart' : 'remove_from_cart',
+      { items: [getGtagItem(cartItem)] },
+    );
+  });
+  watch(searchHistory, () => {
+    const term = searchHistory[0];
+    if (term) {
+      emitGtagEvent('search', { search_term: term });
+    }
+  });
+  if (window.location.pathname === '/s') {
+    setTimeout(() => {
+      const urlSearchQ = new URLSearchParams(window.location.search).get('q');
+      if (urlSearchQ && typeof urlSearchQ === 'string') {
+        emitGtagEvent('view_search_results', { search_term: urlSearchQ });
+      }
+    }, 300);
+  }
 };
 
 export default useAnalytics;
