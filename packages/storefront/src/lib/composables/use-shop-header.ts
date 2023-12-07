@@ -1,12 +1,15 @@
 import type { Ref } from 'vue';
 import type { Categories } from '@cloudcommerce/api/types';
-import { computed } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { watchOnce } from '@vueuse/core';
+import { totalItems } from '@@sf/state/shopping-cart';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
 
 type PartCategory = Partial<Categories>;
 
 export interface Props {
   header: Ref<HTMLElement | null>;
+  searchInput?: Ref<HTMLInputElement | null>;
   categories?: PartCategory[];
   menuCategorySlugs?: string[];
   menuRandomCategories?: number;
@@ -78,6 +81,7 @@ const filterSubcategories = (
 const useShopHeader = (props: Props) => {
   const {
     header,
+    searchInput,
     categories = (globalThis.$storefront.data.categories || []) as PartCategory[],
     menuCategorySlugs,
     menuRandomCategories = 7,
@@ -120,6 +124,61 @@ const useShopHeader = (props: Props) => {
     }
     return false;
   });
+
+  const isSearchOpen = ref(false);
+  const isSearchOpenOnce = ref(false);
+  watchOnce(isSearchOpen, () => {
+    isSearchOpenOnce.value = true;
+  });
+  const searchTerm = ref('');
+  const isSearchPage = !import.meta.env.SSR && window.location.pathname === '/s';
+  const urlSearchQ = isSearchPage
+    ? new URLSearchParams(window.location.search).get('q')
+    : undefined;
+  if (typeof urlSearchQ === 'string') {
+    searchTerm.value = urlSearchQ;
+  }
+  const quickSearchTerm = computed(() => {
+    if (searchTerm.value && searchTerm.value.length >= 2
+      && searchTerm.value !== urlSearchQ) {
+      return searchTerm.value;
+    }
+    return '';
+  });
+  const toggleSearch = (ev: Event) => {
+    if (isSearchOpen.value && searchTerm.value) return;
+    ev.preventDefault();
+    isSearchOpen.value = !isSearchOpen.value;
+    if (isSearchOpen.value && searchInput) {
+      setTimeout(() => {
+        if (!searchInput.value) return;
+        const { length } = searchTerm.value;
+        searchInput.value.setSelectionRange(length, length);
+        searchInput.value.focus();
+      }, 50);
+    }
+  };
+  const isCartOpen = ref(false);
+  const isCartOpenOnce = ref(false);
+  watchOnce(isCartOpen, () => {
+    isCartOpenOnce.value = true;
+  });
+  const delayedCartItems = ref(0);
+  const handleOnMounted = () => {
+    watch(totalItems, (newTotalItems, prevTotalItems) => {
+      if (typeof prevTotalItems === 'number') {
+        if (prevTotalItems < newTotalItems) {
+          isCartOpen.value = true;
+        } else if (prevTotalItems && !newTotalItems) {
+          isCartOpen.value = false;
+        }
+      }
+      delayedCartItems.value = newTotalItems;
+    }, {
+      immediate: true,
+    });
+  };
+
   return {
     isSticky,
     staticHeight,
@@ -130,6 +189,15 @@ const useShopHeader = (props: Props) => {
     getCategoryTree,
     categoryTrees,
     inlineMenuTrees,
+    isSearchOpen,
+    isSearchOpenOnce,
+    searchTerm,
+    quickSearchTerm,
+    toggleSearch,
+    isCartOpen,
+    isCartOpenOnce,
+    cartTotalItems: delayedCartItems,
+    handleOnMounted,
   };
 };
 
