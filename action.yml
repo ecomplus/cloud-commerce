@@ -149,11 +149,11 @@ runs:
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.0.0
+        key: ${{ runner.os }}-npm-g-firebase-tools-13.0.1
 
     - if: ${{ github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true' }}
       shell: bash
-      run: npm i --location=global firebase-tools@13.0.0
+      run: npm i --location=global firebase-tools@13.0.1
 
     - if: steps.npm-cache-many.outputs.cache-hit != 'true'
       name: Install codebase "many" dependencies
