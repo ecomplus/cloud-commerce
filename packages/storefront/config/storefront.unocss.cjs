@@ -58,6 +58,7 @@ const genUnoCSSConfig = (_tailwindConfig) => {
   const tailwindConfig = _tailwindConfig || genTailwindConfig(themeOptions);
   const rules = [];
   const shortcuts = [];
+  const variants = [];
   tailwindConfig.plugins?.forEach((plugin) => {
     plugin({
       addUtilities: (utilities) => {
@@ -75,6 +76,15 @@ const genUnoCSSConfig = (_tailwindConfig) => {
           }
         });
       },
+      addVariant: (variant, selector) => {
+        variants.push((matcher) => {
+          if (!matcher.startsWith(`${variant}:`)) return matcher;
+          return {
+            matcher: matcher.slice(variant.length + 1),
+            selector: (s) => selector.replace('&', s),
+          };
+        });
+      },
     });
   });
   const theme = tailwindConfig.theme.extend;
@@ -82,6 +92,7 @@ const genUnoCSSConfig = (_tailwindConfig) => {
     preflights,
     rules,
     shortcuts,
+    variants,
     theme: {
       ...theme,
       colors: {

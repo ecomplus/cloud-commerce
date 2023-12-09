@@ -150,7 +150,7 @@ const genTailwindConfig = (themeOptions = {}) => {
       },
     },
     plugins: [
-      ({ addUtilities }) => {
+      ({ addUtilities, addVariant }) => {
         addUtilities({
           ...Object.keys(onBrandColors).reduce((utilities, colorLabel) => {
             const [colorName, tone] = colorLabel.split('-');
@@ -219,6 +219,7 @@ const genTailwindConfig = (themeOptions = {}) => {
             return utilities;
           }, {}),
         });
+        addVariant('sticky-header', 'body.StickyHeader &');
       },
     ],
   };
