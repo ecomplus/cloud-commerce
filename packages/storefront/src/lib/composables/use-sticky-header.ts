@@ -109,6 +109,8 @@ const useStickyHeader = (props: Props) => {
           const headerElm = header.value as HTMLElement;
           headerElm.style.opacity = opacity;
           headerElm.style.transform = transform;
+          const bodyClassAction = _isSticky && !opacity ? 'add' : 'remove';
+          document.body.classList[bodyClassAction]('StickyHeader');
         });
         watch(transition, (_transition) => {
           (header.value as HTMLElement).style.transition = _transition;
