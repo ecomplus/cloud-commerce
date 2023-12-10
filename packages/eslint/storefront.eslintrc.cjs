@@ -1,7 +1,11 @@
 module.exports = {
   extends: [
     './base.eslintrc.cjs',
+    'plugin:vue/vue3-essential',
     'plugin:tailwindcss/recommended',
+  ],
+  plugins: [
+    'vue',
   ],
   rules: {
     'no-console': 'off',
@@ -18,6 +22,7 @@ module.exports = {
     'import/no-dynamic-require': 'off',
     'import/prefer-default-export': 'warn',
     'import/extensions': 'off',
+    'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': ['error', {
       ignores: [
         'Fade',
