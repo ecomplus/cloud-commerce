@@ -5,6 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
+    'plugin:vue/vue3-essential',
     'airbnb-base',
   ],
   parserOptions: {
@@ -13,6 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
+    'vue',
     '@typescript-eslint',
   ],
   ignorePatterns: [
@@ -66,6 +68,7 @@ module.exports = {
     'no-continue': 'off',
     'lines-between-class-members': 'off',
     'arrow-body-style': 'off',
+    'vue/no-multiple-template-root': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
