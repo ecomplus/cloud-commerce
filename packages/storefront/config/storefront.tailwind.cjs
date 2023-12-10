@@ -80,25 +80,25 @@ Object.keys(brandColors).forEach((colorName) => {
     DEFAULT: toRGB(color),
     bold: toRGB(bold),
   };
-  const scale = chroma.scale([
-    chroma(hex).luminance(0.95), // 50
-    chroma(hex).luminance(0.84), // 100
-    chroma(hex).luminance(0.73), // 200
-    chroma(hex).luminance(0.62), // 300
-    chroma(hex).luminance(0.49), // 400
-    chroma(hex).luminance(0.35), // 500
-    chroma(hex).luminance(0.23), // 600
-    chroma(hex).luminance(0.15), // 700
-    chroma(hex).luminance(0.10), // 800
-    chroma(hex).luminance(0.05), // 900
-    chroma(hex).luminance(0.02), // 950
-  ]).colors(11);
-  scale.forEach((sHex, index) => {
-    let palleteIndex;
-    if (index === 0) palleteIndex = '50';
-    else if (index === scale.length - 1) palleteIndex = '950';
-    else palleteIndex = (100 * index).toString();
-    pallete[palleteIndex] = toRGB(chroma(sHex));
+  let scaleRefColor = '';
+  let deltaE = 101;
+  Object.keys(colors).forEach((twColor) => {
+    if (twColor !== twColor.toLowerCase()) return;
+    const twPallete = colors[twColor];
+    if (!twPallete?.['50']) return;
+    Object.values(twPallete).forEach((compareHex) => {
+      const _deltaE = chroma.deltaE(hex, compareHex);
+      if (_deltaE < deltaE) {
+        scaleRefColor = twColor;
+        deltaE = _deltaE;
+      }
+    });
+  });
+  const refPallete = colors[scaleRefColor];
+  Object.keys(refPallete).forEach((palleteIndex) => {
+    const refHex = refPallete[palleteIndex];
+    const l = chroma(refHex).luminance();
+    pallete[palleteIndex] = toRGB(color.luminance(l));
   });
   brandColorsPalletes[colorName] = pallete;
   const colorVariants = { color, subtle, bold };
