@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url';
-import path from 'node:path';
+import { join as joinPath } from 'node:path';
 import {
   $,
   argv,
@@ -7,6 +7,7 @@ import {
   echo,
   chalk,
 } from 'zx';
+import Deepmerge from '@fastify/deepmerge';
 import login from './login';
 import build, { prepareCodebases } from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
@@ -26,16 +27,16 @@ const pwd = process.cwd();
 
 let projectId = FIREBASE_PROJECT_ID;
 if (projectId) {
-  if (!fs.existsSync(path.join(pwd, '.firebaserc'))) {
+  if (!fs.existsSync(joinPath(pwd, '.firebaserc'))) {
     fs.writeFileSync(
-      path.join(pwd, '.firebaserc'),
+      joinPath(pwd, '.firebaserc'),
       JSON.stringify({ projects: { default: projectId } }, null, 2),
     );
   }
 } else {
   if (GOOGLE_APPLICATION_CREDENTIALS) {
     try {
-      const gac = fs.readJSONSync(path.join(pwd, GOOGLE_APPLICATION_CREDENTIALS));
+      const gac = fs.readJSONSync(joinPath(pwd, GOOGLE_APPLICATION_CREDENTIALS));
       projectId = gac.project_id;
     } catch (e) {
       //
@@ -43,7 +44,7 @@ if (projectId) {
   }
   if (!projectId) {
     try {
-      const firebaserc = fs.readJSONSync(path.join(pwd, '.firebaserc'));
+      const firebaserc = fs.readJSONSync(joinPath(pwd, '.firebaserc'));
       projectId = firebaserc.projects.default;
     } catch (e) {
       projectId = 'ecom2-demo';
@@ -52,7 +53,34 @@ if (projectId) {
 }
 
 export default async () => {
-  await fs.copy(path.join(__dirname, '..', 'config'), pwd);
+  const baseConfigDir = joinPath(__dirname, '..', 'config');
+  await fs.copy(baseConfigDir, pwd);
+  const userConfigDir = joinPath(pwd, 'conf');
+  if (fs.lstatSync(userConfigDir).isDirectory()) {
+    await fs.copy(userConfigDir, pwd);
+    const userFirebaseJsonPath = joinPath(userConfigDir, 'firebase.json');
+    if (fs.existsSync(userFirebaseJsonPath)) {
+      let userFirebaseConfig: Record<string, any> | undefined;
+      try {
+        userFirebaseConfig = JSON.parse(
+          fs.readFileSync(userFirebaseJsonPath, 'utf8'),
+        );
+      } catch {
+        //
+      }
+      if (userFirebaseConfig) {
+        const deepmerge = Deepmerge();
+        const baseFirebaseConfig = JSON.parse(
+          fs.readFileSync(joinPath(baseConfigDir, 'firebase.json'), 'utf8'),
+        );
+        const mergedConfig = deepmerge(baseFirebaseConfig, userFirebaseConfig);
+        fs.writeFileSync(
+          joinPath(pwd, 'firebase.json'),
+          JSON.stringify(mergedConfig, null, 2),
+        );
+      }
+    }
+  }
 
   const options: string[] = [];
   Object.keys(argv).forEach((key) => {
@@ -105,7 +133,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
   if (argv._.includes('setup')) {
     const { storeId, authenticationId, apiKey } = await login();
     await fs.writeFile(
-      path.join(pwd, 'functions', '.env'),
+      joinPath(pwd, 'functions', '.env'),
       `ECOM_AUTHENTICATION_ID=${authenticationId}
 ECOM_API_KEY=${apiKey}
 ECOM_STORE_ID=${storeId}
@@ -117,7 +145,7 @@ ECOM_STORE_ID=${storeId}
     }
     if (argv.commit !== false) {
       await fs.writeFile(
-        path.join(pwd, 'functions', 'config.json'),
+        joinPath(pwd, 'functions', 'config.json'),
         JSON.stringify({ storeId }, null, 2),
       );
 
@@ -184,7 +212,7 @@ Finish by saving the following secrets to your GitHub repository:
 
   if (argv._.includes('dev') || !argv._.length) {
     await prepareCodebases(true);
-    const prefix = path.join(pwd, 'functions/ssr');
+    const prefix = joinPath(pwd, 'functions/ssr');
     // https://docs.astro.build/en/reference/cli-reference/#astro-dev
     const host = typeof argv.host === 'string' ? argv.host : '';
     const port = typeof argv.port === 'string' || typeof argv.port === 'number' ? argv.port : '';
