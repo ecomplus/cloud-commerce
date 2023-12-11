@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /forms/{document=*} {
+    match /forms/p/{form}/{document=*} {
       allow create;
     }
     match /{document=**} {
