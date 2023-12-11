@@ -19,6 +19,7 @@ interface Window {
     appId: string,
     measurementId?: string,
   };
+  $reCaptchaSiteKey?: string;
   ECOM_STORE_ID: number;
   ECOM_LANG: string;
   ECOM_CURRENCY: string;
