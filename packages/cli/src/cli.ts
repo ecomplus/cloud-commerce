@@ -56,7 +56,7 @@ export default async () => {
   const baseConfigDir = joinPath(__dirname, '..', 'config');
   await fs.copy(baseConfigDir, pwd);
   const userConfigDir = joinPath(pwd, 'conf');
-  if (fs.lstatSync(userConfigDir).isDirectory()) {
+  if (fs.existsSync(userConfigDir) && fs.lstatSync(userConfigDir).isDirectory()) {
     await fs.copy(userConfigDir, pwd);
     const userFirebaseJsonPath = joinPath(userConfigDir, 'firebase.json');
     if (fs.existsSync(userFirebaseJsonPath)) {
