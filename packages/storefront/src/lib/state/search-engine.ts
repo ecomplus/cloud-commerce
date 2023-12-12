@@ -78,9 +78,9 @@ export class SearchEngine {
   wasFetched = computed(() => this.#wasFetched.value);
   #fetching = ref<Promise<void> | null>(null);
   #fulfillFetching: (() => void) | undefined;
-  fetching = computed(() => this.#fetching);
+  fetching = computed(() => this.#fetching.value);
   #fetchError = ref<Error | null>(null);
-  fetchError = computed(() => this.#fetchError);
+  fetchError = computed(() => this.#fetchError.value);
   products = shallowReactive<SearchItem[]>([]);
   meta = shallowReactive<SearchResult<'v1'>['meta']>({
     offset: 0,
