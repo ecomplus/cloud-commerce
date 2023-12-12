@@ -26,32 +26,35 @@ export const search = async ({
   fields,
   url = 'search/v1',
 }: {
-  term: string,
+  term: string | null,
   params?: Record<string, any>,
   fields?: readonly string[],
   url?: 'search/v1' | `search/v1?${string}`,
 }) => {
-  term = term.trim();
-  if (term.length < 2) {
-    return { data: { result: [], meta: null } };
+  if (typeof term === 'string') {
+    term = term.trim();
+    if (term.length < 2) {
+      return { data: { result: [], meta: null } };
+    }
   }
   const response = await api.get(url, {
     fields,
-    params: {
+    params: !term ? params : {
       ...params,
       term,
     },
   });
-  if (response.data.result.length) {
+  if (term && response.data.result.length) {
+    const termStr = term;
     const completeTermIndex = searchHistory.findIndex((_term) => {
-      return _term.includes(term) && !(_term.replace(term, '')).includes(' ');
+      return _term.includes(termStr) && !(_term.replace(termStr, '')).includes(' ');
     });
     if (completeTermIndex > -1) {
       const completeTerm = searchHistory[completeTermIndex];
       searchHistory.splice(completeTermIndex, 1);
       searchHistory.unshift(completeTerm);
     } else {
-      const termIndex = searchHistory.findIndex((_term) => term.startsWith(_term));
+      const termIndex = searchHistory.findIndex((_term) => termStr.startsWith(_term));
       if (termIndex > -1) {
         searchHistory.splice(termIndex, 1);
       }
@@ -66,7 +69,7 @@ export const search = async ({
 
 export class SearchEngine {
   fields?: readonly string[];
-  term = ref('');
+  term = ref<string | null>('');
   isWithCount = ref(true);
   isWithBuckets = ref(true);
   params = shallowReactive<Record<string, any>>({});
