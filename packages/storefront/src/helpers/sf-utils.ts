@@ -49,7 +49,7 @@ export const toLowerCaseAccents = (str: string) => {
 export const termify = (str: string) => {
   return toLowerCaseAccents(str.trim())
     .replace(/[\r\n]/gm, ' ')
-    .replace(/[^\w-&%]/g, ' ')
+    .replace(/[^\w-&%áãâàéêíõóôúç]/g, ' ')
     .replace(/\s{2,}/g, ' ');
 };
 
