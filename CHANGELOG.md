@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.38.0](https://github.com/ecomplus/cloud-commerce/compare/v0.37.1...v0.38.0) (2023-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Astro major version update
+* **storefront:** Return of `useSearchModal` composable refactored
+
+### Features
+
+* **cli:** Keep user Firebase config files from `/conf` path if any ([4c96a25](https://github.com/ecomplus/cloud-commerce/commit/4c96a25f253e52bce6eacb216bdb78f59f2f77be))
+* **cli:** Update default Firestore rules to allow creation on forms colelction ([54d1ff6](https://github.com/ecomplus/cloud-commerce/commit/54d1ff6dd0885c39c420c57418313bace7cb30f3))
+* **deps:** Bump Vite to v5 and Astro to v4 ([f7dab35](https://github.com/ecomplus/cloud-commerce/commit/f7dab3546f331915e840e7af578284e32a1957cd))
+* **storefront:** Accepting `term = null` on search method for no term filter search ([06f66a8](https://github.com/ecomplus/cloud-commerce/commit/06f66a8036dc637fa9bcaccfc50c0db7361c7a95))
+* **storefront:** Adding search term to page title on SSR ([950a100](https://github.com/ecomplus/cloud-commerce/commit/950a100a0bb7c05f03ac7280e08eb79a045f7be3))
+* **storefront:** New `scripts/firestore` with abstractions for forms docs and app check support ([4b39c0d](https://github.com/ecomplus/cloud-commerce/commit/4b39c0d89541dc01ce9d03d6f0f13116d0a5be19))
+* **storefront:** New properties on `SearchEngine` to control fetching state and promises ([7c45cc7](https://github.com/ecomplus/cloud-commerce/commit/7c45cc731b241438b1a6367ac2af62117f906323))
+* **storefront:** New SSR route context properties `isSearchPage` and `searchPageTerm` ([53e1dcb](https://github.com/ecomplus/cloud-commerce/commit/53e1dcb99babea36136168b2842f6c3b85418330))
+* **storefront:** New Tailwind/UnoCSS variant `sticky-header:` ([de941a6](https://github.com/ecomplus/cloud-commerce/commit/de941a68f0b4cec95053ca7dc77b9638f5ad49f7))
+* **storefront:** New utils: `toLowerCaseAccents`, `termify` and `getSearchUrl` ([e75fb37](https://github.com/ecomplus/cloud-commerce/commit/e75fb3712530c3f015c0f0b510162e04cb5acf09))
+* **storefront:** Setting up `useSearchContainer` composable and and `search-container` section ([6ffb202](https://github.com/ecomplus/cloud-commerce/commit/6ffb20252e1279a00cc585a028857bca363d3c91))
+* **storefront:** Update `useStickyHeader` composable to toggle body class ".StickyHeader" ([afc0e0f](https://github.com/ecomplus/cloud-commerce/commit/afc0e0f09b1d3f74f062fe0e38990df3abd97d23))
+
+
+### Bug Fixes
+
+* **api:** Updating `ResourceAndFind` typedef adding stores/me and authentications/me endpoints ([0c514e9](https://github.com/ecomplus/cloud-commerce/commit/0c514e91d6a7b98f78e51e9bd21dacfff208e9f0))
+* **cli:** Fix default Firestore rules to enable creation on _forms_ subcolls ([21c40c5](https://github.com/ecomplus/cloud-commerce/commit/21c40c57d8f32412d242d303b5c1e57b3377f26b))
+* **deps:** Update non-major dependencies ([#286](https://github.com/ecomplus/cloud-commerce/issues/286)) ([d35aaa9](https://github.com/ecomplus/cloud-commerce/commit/d35aaa9b4014f7dd3e835cf61b37fd1eae7a0663))
+* **storefront:** Better generating brand colors pallete on Tailwind/UnoCSS config ([b85f9df](https://github.com/ecomplus/cloud-commerce/commit/b85f9df973c6221d2dd20783e89cc934e26ca60f))
+* **storefront:** Update shop header to search submit redirecting to /s/term indexable URL ([c57a2a3](https://github.com/ecomplus/cloud-commerce/commit/c57a2a3573a4c07904be941a1577454f9dd3ecde))
+* **storefront:** Update Vue to v3.3.11 ([#287](https://github.com/ecomplus/cloud-commerce/issues/287)) ([d514012](https://github.com/ecomplus/cloud-commerce/commit/d514012ca73337bdda341108a0f1fe3ea6ac183f))
+
+
+* **storefront:** Renaming `useSearchModal` returned `products` ([cd44b51](https://github.com/ecomplus/cloud-commerce/commit/cd44b513bcec27aea0c9301d99aa5cbf7c9b1ae5))
+
 ### [0.37.1](https://github.com/ecomplus/cloud-commerce/compare/v0.37.0...v0.37.1) (2023-12-07)
 
 
