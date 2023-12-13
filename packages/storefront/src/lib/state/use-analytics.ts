@@ -100,16 +100,15 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
         default:
       }
     } else {
-      switch (window.location.pathname) {
-        case '/':
-          defaultItemsList = 'Home';
-          break;
-        case '/s':
-        case '/search':
-        case '/busca':
-          defaultItemsList = 'Search results';
-          break;
-        default:
+      const { pathname } = window.location;
+      if (pathname === '/') {
+        defaultItemsList = 'Home';
+      } else if (
+        /^\/s\/?/.test(pathname)
+        || pathname === '/search'
+        || pathname === '/busca'
+      ) {
+        defaultItemsList = 'Search results';
       }
     }
     if (pageViewState.resolve) {

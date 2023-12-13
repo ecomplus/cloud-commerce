@@ -5,6 +5,7 @@ import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
+import { termify } from '@@sf/sf-lib';
 import _getConfig from '../../config/storefront.config.mjs';
 
 export type StorefrontConfig = {
@@ -87,6 +88,14 @@ const loadRouteContext = async (
     urlPath = urlPath.replace('/~preview', '');
   }
   const isHomepage = urlPath === '/';
+  const isSearchPage = !isHomepage && (urlPath.startsWith('/s/') || urlPath === '/s');
+  let searchPageTerm: string | undefined;
+  if (isSearchPage) {
+    const pathTerm = urlPath.split('/')[2];
+    if (typeof pathTerm === 'string') {
+      searchPageTerm = termify(decodeURIComponent(pathTerm));
+    }
+  }
   const config = getConfig();
   globalThis.$storefront.settings = config.settings;
   let cmsContent: PageContent | null = { sections: [] };
@@ -117,6 +126,8 @@ const loadRouteContext = async (
   const { slug } = Astro.params;
   if (isHomepage) {
     cmsContent = await config.getContent('pages/home');
+  } else if (isSearchPage) {
+    cmsContent = await config.getContent('pages/search');
   } else if (slug && typeof slug === 'string') {
     if (contentCollection) {
       cmsContent = await config.getContent(`${contentCollection}/${slug}`);
@@ -219,11 +230,14 @@ const loadRouteContext = async (
   const routeContext = {
     ...config,
     isHomepage,
+    isSearchPage,
+    searchPageTerm,
     cmsContent,
     fetchingApiContext,
     apiContext,
     apiState,
     isPreview,
+    // Astro,
   };
   Astro.locals.routeContext = routeContext;
   emitter.emit('load', routeContext);
