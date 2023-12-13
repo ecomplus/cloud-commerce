@@ -3,7 +3,9 @@ import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
+import type { Props as UseSearchContainerProps } from '@@sf/composables/use-search-container';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
+import { useSearchContainer } from '@@sf/composables/use-search-container';
 
 export interface Props {
   routeContext: RouteContext;
@@ -56,6 +58,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'related-products', props: {} }
     | { type: 'doc-description', props: {} }
     | { type: 'product-specifications', props: {} }
+    | { type: 'search-container', props: UseSearchContainerProps }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
@@ -122,6 +125,18 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         return;
       }
 
+      if (type === 'search-container') {
+        const props: UseSearchContainerProps = { ...sectionContent };
+        if (routeContext.searchPageTerm !== undefined) {
+          props.term = routeContext.searchPageTerm || null;
+          const { searchEngine, fetching } = useSearchContainer(props);
+          await fetching;
+          props.products = searchEngine.products;
+          props.ssrError = searchEngine.fetchError.value?.message;
+        }
+        sections[index] = { type, props };
+        return;
+      }
       if (type === 'banners-grid') {
         sections[index] = {
           type,
