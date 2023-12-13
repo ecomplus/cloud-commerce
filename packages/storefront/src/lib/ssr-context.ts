@@ -5,7 +5,7 @@ import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
-import { termify } from '@@sf/sf-lib';
+import { termify } from '../helpers/sf-utils';
 import _getConfig from '../../config/storefront.config.mjs';
 
 export type StorefrontConfig = {
