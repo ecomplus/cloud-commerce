@@ -19,6 +19,7 @@ const getIconUrl = (size: number) => {
 
 const {
   storeId,
+  searchPageTerm,
   cmsContent,
   fetchingApiContext,
   apiContext,
@@ -38,11 +39,17 @@ if (fetchingApiContext) {
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
-const title = state.meta_title ||
+let title = state.meta_title ||
   state.metaTitle ||
   (state.name && `${state.name} | ${settings.name}`) ||
   (state.title && `${state.title} | ${settings.name}`) ||
   settings.name;
+if (searchPageTerm) {
+  title = title.replace('$term', searchPageTerm);
+  if (!title.includes(searchPageTerm)) {
+    title = `${searchPageTerm} | ${title}`;
+  }
+}
 const description = state.meta_description ||
   state.metaDescription ||
   state.short_description ||
