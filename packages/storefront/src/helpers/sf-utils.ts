@@ -14,7 +14,7 @@ export const requestIdleCallback = (fn: (...args: any[]) => any, fallbackMs = 30
 export const clearAccents = (str: string) => {
   return str
     .replace(/[ÁáÃãÂâÀà]/g, 'a')
-    .replace(/[Éé]/g, 'e')
+    .replace(/[ÉéÊê]/g, 'e')
     .replace(/[Íí]/g, 'i')
     .replace(/[ÕõÓóÔô]/g, 'o')
     .replace(/[Úú]/g, 'u')
@@ -27,4 +27,32 @@ export const slugify = (str: string) => {
     .replace(/[\W\r\n]/gm, '-')
     .replace(/-{2,}/g, '-')
     .replace(/(^-)|(-$)/g, '');
+};
+
+export const toLowerCaseAccents = (str: string) => {
+  return str
+    .toLowerCase()
+    .replace(/Á/g, 'á')
+    .replace(/Ã/g, 'ã')
+    .replace(/Â/g, 'â')
+    .replace(/À/g, 'à')
+    .replace(/É/g, 'é')
+    .replace(/Ê/g, 'ê')
+    .replace(/Í/g, 'í')
+    .replace(/Õ/g, 'õ')
+    .replace(/Ó/g, 'ó')
+    .replace(/Ô/g, 'ô')
+    .replace(/Ú/g, 'ú')
+    .replace(/Ç/g, 'ç');
+};
+
+export const termify = (str: string) => {
+  return toLowerCaseAccents(str.trim())
+    .replace(/[\r\n]/gm, ' ')
+    .replace(/[^\w-&%]/g, ' ')
+    .replace(/\s{2,}/g, ' ');
+};
+
+export const getSearchUrl = (term: string, baseUrl = '/s/') => {
+  return `${baseUrl}${encodeURIComponent(termify(term))}`;
 };
