@@ -81,7 +81,7 @@ export const useSearchModal = (props: Props) => {
     searchHistory: filteredHistory,
     searchEngine,
     isFetching: searchEngine.isFetching,
-    productHits: searchEngine.products,
+    products: searchEngine.products,
     productCount,
     linkHits,
   };
