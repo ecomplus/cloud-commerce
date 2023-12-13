@@ -2,6 +2,7 @@ import type { Ref } from 'vue';
 import type { Categories } from '@cloudcommerce/api/types';
 import { ref, computed, watch } from 'vue';
 import { watchOnce } from '@vueuse/core';
+import { getSearchUrl } from '@@sf/sf-lib';
 import { totalItems } from '@@sf/state/shopping-cart';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
 
@@ -131,10 +132,15 @@ const useShopHeader = (props: Props) => {
     isSearchOpenOnce.value = true;
   });
   const searchTerm = ref('');
-  const isSearchPage = !import.meta.env.SSR && window.location.pathname === '/s';
-  const urlSearchQ = isSearchPage
-    ? new URLSearchParams(window.location.search).get('q')
-    : undefined;
+  const isSearchPage = !import.meta.env.SSR && /^\/s\/?/.test(window.location.pathname);
+  let urlSearchQ: string | null | undefined;
+  if (isSearchPage) {
+    const { pathname, search } = window.location;
+    urlSearchQ = new URLSearchParams(search).get('q');
+    if (!urlSearchQ && pathname.startsWith('/s/')) {
+      urlSearchQ = decodeURIComponent(pathname.split('/')[2]);
+    }
+  }
   if (typeof urlSearchQ === 'string') {
     searchTerm.value = urlSearchQ;
   }
@@ -146,8 +152,11 @@ const useShopHeader = (props: Props) => {
     return '';
   });
   const toggleSearch = (ev: Event) => {
-    if (isSearchOpen.value && searchTerm.value) return;
     ev.preventDefault();
+    if (isSearchOpen.value && searchTerm.value) {
+      window.location.href = getSearchUrl(searchTerm.value);
+      return;
+    }
     isSearchOpen.value = !isSearchOpen.value;
     if (isSearchOpen.value && searchInput) {
       setTimeout(() => {
