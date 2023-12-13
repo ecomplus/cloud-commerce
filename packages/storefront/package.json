@@ -29,8 +29,8 @@
     "prepare-monorepo": "bash scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/node": "6.1.0",
-    "@astrojs/vue": "3.0.4",
+    "@astrojs/node": "7.0.1",
+    "@astrojs/vue": "4.0.3",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
@@ -40,9 +40,9 @@
     "@iconify-json/heroicons": "^1.1.15",
     "@iconify-json/logos": "^1.1.40",
     "@types/gtag.js": "^0.0.18",
-    "@vite-pwa/astro": "^0.1.6",
+    "@vite-pwa/astro": "^0.2.0",
     "@vueuse/core": "10.7.0",
-    "astro": "3.6.4",
+    "astro": "4.0.4",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.3.1",
@@ -54,8 +54,8 @@
     "sharp": "^0.32.6",
     "tailwindcss": "^3.3.6",
     "unocss": "^0.57.7",
-    "unplugin-auto-import": "^0.16.7",
-    "vite": "^4.5.1",
+    "unplugin-auto-import": "^0.17.2",
+    "vite": "^5.0.8",
     "vite-plugin-pwa": "^0.17.4",
     "vue": "3.3.11",
     "wade": "0.3.3"
