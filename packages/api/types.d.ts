@@ -24,7 +24,10 @@ type Resource = 'products'
 
 type ResourceId = string & { length: 24 };
 type ResourceAndId = `${Resource}/${ResourceId}`;
-type ResourceAndFind = ResourceAndId | `${Resource}/${string}:${string}`;
+type ResourceAndFind = ResourceAndId
+  | `${Resource}/${string}:${string}`
+  | 'stores/me'
+  | 'authentications/me';
 type ResourceOpQuery = Resource | `${Resource}?${string}`;
 
 type SearchOpQuery = 'search/v1'
