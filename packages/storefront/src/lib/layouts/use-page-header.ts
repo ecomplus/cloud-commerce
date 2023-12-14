@@ -4,7 +4,7 @@ import api from '@cloudcommerce/api';
 import { useSharedData } from '@@sf/composables/use-shared-data';
 import { parseLayoutContent } from '@@sf/composables/use-pitch-bar';
 
-type ShopHeaderProps = Omit<UseShopHeaderProps, 'header'>;
+type ShopHeaderProps = Omit<UseShopHeaderProps, 'header' | 'categories'>;
 
 export interface Props {
   routeContext: RouteContext;
@@ -22,9 +22,7 @@ const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
   } = layoutContent;
   const pitchBar = parseLayoutContent(layoutContent);
   let { categories } = apiState;
-  if (categories) {
-    useSharedData({ field: 'categories', value: categories });
-  } else if (listedCategoryFields !== null) {
+  if (listedCategoryFields !== null) {
     try {
       categories = (await api.get('categories', {
         fields: listedCategoryFields || ([
@@ -42,8 +40,10 @@ const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
       console.error(err);
     }
   }
+  if (categories) {
+    useSharedData({ field: 'categories', value: categories });
+  }
   const shopHeader: ShopHeaderProps = {
-    categories,
     menuCategorySlugs: inlineMenuCategories?.featured,
     menuRandomCategories: inlineMenuCategories?.random,
     isAlphabeticalSortSubmenu,
