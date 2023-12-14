@@ -1,9 +1,10 @@
-import type { ResourceId } from '@cloudcommerce/types';
+import type { ResourceId, Collections } from '@cloudcommerce/types';
 import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
 import type { Props as UseSearchContainerProps } from '@@sf/composables/use-search-container';
+import { useSharedData } from '@@sf/composables/use-shared-data';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
 import { useSearchContainer } from '@@sf/composables/use-search-container';
 
@@ -58,7 +59,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'related-products', props: {} }
     | { type: 'doc-description', props: {} }
     | { type: 'product-specifications', props: {} }
-    | { type: 'search-container', props: UseSearchContainerProps }
+    | { type: 'search-container' | 'context-showcase', props: UseSearchContainerProps }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
@@ -125,10 +126,37 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         return;
       }
 
-      if (type === 'search-container') {
+      if (type === 'search-container' || type === 'context-showcase') {
         const props: UseSearchContainerProps = { ...sectionContent };
-        if (routeContext.searchPageTerm !== undefined) {
+        if (type === 'context-showcase') {
+          if (routeContext.fetchingApiContext) {
+            await routeContext.fetchingApiContext;
+          }
+          const { resource, doc } = routeContext.apiContext;
+          if (resource === 'categories' || resource === 'brands') {
+            const params = { [`${resource}.slug`]: [doc!.slug] };
+            if (resource === 'categories') {
+              const { value: categories } = await useSharedData({ field: 'categories' });
+              categories?.forEach(({ slug, parent }) => {
+                if (
+                  slug && parent
+                  && (parent._id === doc!._id || parent.slug === doc!.slug)
+                ) {
+                  params[`categories.slug`].push(slug);
+                }
+              });
+            }
+            props.params = params;
+          } else if (resource === 'collections') {
+            const { products } = (doc as Collections);
+            if (products?.length) {
+              props.params = { _id: products };
+            }
+          }
+        } else if (routeContext.searchPageTerm !== undefined) {
           props.term = routeContext.searchPageTerm || null;
+        }
+        if (props.term !== undefined || props.params) {
           const { searchEngine, fetching } = useSearchContainer(props);
           await fetching;
           props.products = searchEngine.products;
@@ -137,6 +165,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         sections[index] = { type, props };
         return;
       }
+
       if (type === 'banners-grid') {
         sections[index] = {
           type,
