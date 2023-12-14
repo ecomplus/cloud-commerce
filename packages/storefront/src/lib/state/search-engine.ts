@@ -2,6 +2,7 @@ import type { SearchItem, SearchResult } from '@cloudcommerce/types';
 import {
   ref,
   computed,
+  reactive,
   watch,
   shallowReactive,
 } from 'vue';
@@ -72,7 +73,7 @@ export class SearchEngine {
   term = ref<string | null>('');
   isWithCount = ref(true);
   isWithBuckets = ref(true);
-  params = shallowReactive<Record<string, any>>({});
+  params = reactive<Record<string, any>>({});
   pageSize = ref(24);
   pageNumber = ref(1);
   #isFetching = ref(false);
