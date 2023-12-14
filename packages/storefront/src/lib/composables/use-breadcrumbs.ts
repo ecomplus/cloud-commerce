@@ -22,7 +22,7 @@ const useBreadcrumbs = async (props: Props = {}) => {
     apiDoc = apiContext?.doc,
     domain = settings.domain,
   } = props;
-  let categories: Props['categories'] = props.categories || data.categories;
+  let categories: Props['categories'] | null = props.categories || data.categories;
   if (!categories) {
     categories = (await useSharedData({ field: 'categories' })).value;
   }
