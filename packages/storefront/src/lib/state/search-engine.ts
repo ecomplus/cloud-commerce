@@ -70,7 +70,7 @@ export const search = async ({
 
 export class SearchEngine {
   fields?: readonly string[];
-  term = ref<string | null>('');
+  term = ref<string | null>(null);
   isWithCount = ref(true);
   isWithBuckets = ref(true);
   params = reactive<Record<string, any>>({});
@@ -115,7 +115,7 @@ export class SearchEngine {
   }
 
   async fetch(term?: string) {
-    if (term && term !== this.term.value) {
+    if (term !== undefined && term !== this.term.value) {
       this.term.value = term;
       this.pageNumber.value = 1;
     }
