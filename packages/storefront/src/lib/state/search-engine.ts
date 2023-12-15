@@ -151,8 +151,8 @@ export class SearchEngine {
       this.#wasFetched.value = true;
       const { data } = response;
       if (data.meta) {
-        this.products.splice(0);
         Object.assign(this.meta, data.meta);
+        this.products.splice(0);
       }
       data.result.forEach((item) => this.products.push(item));
       if (this.#fulfillFetching) {

@@ -1,5 +1,5 @@
 import type { SearchItem } from '@cloudcommerce/types';
-import { watch, shallowReactive } from 'vue';
+import { ref, watch, shallowReactive } from 'vue';
 import { SearchEngine } from '@@sf/state/search-engine';
 
 export interface Props {
@@ -8,6 +8,7 @@ export interface Props {
   params?: Record<string, any>;
   sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string;
   products?: SearchItem[];
+  searchMeta?: InstanceType<typeof SearchEngine>['meta'];
   ssrError?: string | null;
 }
 
@@ -38,15 +39,26 @@ const useSearchShowcase = (props: Props) => {
   if (!searchEngine.wasFetched.value && !props.products) {
     searchEngine.fetch().catch(console.error);
   }
+  searchEngine.isWithCount.value = true;
+  searchEngine.isWithBuckets.value = true;
+  const searchMeta = ref({
+    count: 0,
+    ...(props.searchMeta || searchEngine.meta),
+  });
   watch(searchEngine.products, () => {
     products.splice(0);
-    searchEngine?.products.forEach((item) => products.push(item));
+    searchEngine!.products.forEach((item) => products.push(item));
+    searchMeta.value = {
+      count: 0,
+      ...searchEngine!.meta,
+    };
   });
   return {
     searchEngine,
     fetching: searchEngine.fetching.value,
     isFetching: searchEngine.isFetching,
     products,
+    searchMeta,
   };
 };
 

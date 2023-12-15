@@ -160,6 +160,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           const { searchEngine, fetching } = useSearchShowcase(props);
           await fetching;
           props.products = searchEngine.products;
+          props.searchMeta = searchEngine.meta;
           props.ssrError = searchEngine.fetchError.value?.message;
         }
         sections[index] = { type, props };
