@@ -134,15 +134,15 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           }
           const { resource, doc } = routeContext.apiContext;
           if (resource === 'categories' || resource === 'brands') {
-            const params = { [`${resource}.slug`]: [doc!.slug] };
+            const params = { [`${resource}.name`]: [doc!.name] };
             if (resource === 'categories') {
               const { value: categories } = await useSharedData({ field: 'categories' });
-              categories?.forEach(({ slug, parent }) => {
+              categories?.forEach(({ name, parent }) => {
                 if (
-                  slug && parent
+                  name && parent
                   && (parent._id === doc!._id || parent.slug === doc!.slug)
                 ) {
-                  params[`categories.slug`].push(slug);
+                  params[`categories.name`].push(name);
                 }
               });
             }
