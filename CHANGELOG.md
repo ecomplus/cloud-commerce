@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.39.0](https://github.com/ecomplus/cloud-commerce/compare/v0.38.0...v0.39.0) (2023-12-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Section "search-container" no more working, renamed to "search-showcase", composable renamed to `useSearchShowcase`
+* **storefront:** Updaing `usePageHeader` props removing `categories` to enforce usage from `useSharedData` instead
+* **storefront:** Editing `useSharedData` return, replacing `inlineClientJs` with `getInlineClientJs` function for just-in-case execution
+
+Minor fixing prop value and return value typedef
+
+### Features
+
+* **storefront:** Better types (generic) for `useSharedData` with categories/brands ([035c518](https://github.com/ecomplus/cloud-commerce/commit/035c5182e8ff8ad116823fbc18d696a062685db0))
+* **storefront:** Setting up new section type `context-showcase` also with search container ([3dde5d6](https://github.com/ecomplus/cloud-commerce/commit/3dde5d6747d71bd6f3dbebebefe4825eacf5e673))
+* **storefront:** Updating `useSearchContainer` with new optional props `params` ([f407f30](https://github.com/ecomplus/cloud-commerce/commit/f407f3006542a46ce52e028fcd36547194a553be))
+
+
+### Bug Fixes
+
+* **storefront:** Preset `SearchEngine` term as null ([a2eb4ee](https://github.com/ecomplus/cloud-commerce/commit/a2eb4eead313a97ada8d4331510e7149aeb2a2c3))
+* **storefront:** Set `SearchEngine.params` as reactive (not shallow) ([6d0c19f](https://github.com/ecomplus/cloud-commerce/commit/6d0c19f3bfa16a7b7f0011747388e4f2dea449e7))
+
+
+* **storefront:** Ensure early set _categories_ shared data from on page header layout composable ([7ce5838](https://github.com/ecomplus/cloud-commerce/commit/7ce58381dd7ffaed3bc6162bb2adb37fdce2db50))
+* **storefront:** Renaming `useSearchContainer` to `useSearchShowcase` ([f915c05](https://github.com/ecomplus/cloud-commerce/commit/f915c05bf7c9a7833a1fe1304a6badecdaf67e61))
+* **storefront:** Update `useSharedData` preventing unecessary stringify ([b0cffcd](https://github.com/ecomplus/cloud-commerce/commit/b0cffcd93a4b4722f3a4c15dddf195d315738fb6))
+
 ## [0.38.0](https://github.com/ecomplus/cloud-commerce/compare/v0.37.1...v0.38.0) (2023-12-13)
 
 
