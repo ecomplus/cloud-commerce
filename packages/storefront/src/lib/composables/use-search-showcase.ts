@@ -11,7 +11,7 @@ export interface Props {
   ssrError?: string | null;
 }
 
-const useSearchContainer = (props: Props) => {
+const useSearchShowcase = (props: Props) => {
   let { term, searchEngine } = props;
   if (props.ssrError && !import.meta.env.SSR) {
     console.error(new Error(`SSR search error: ${props.ssrError}`));
@@ -50,6 +50,6 @@ const useSearchContainer = (props: Props) => {
   };
 };
 
-export default useSearchContainer;
+export default useSearchShowcase;
 
-export { useSearchContainer };
+export { useSearchShowcase };

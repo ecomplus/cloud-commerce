@@ -3,10 +3,10 @@ import type { PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
-import type { Props as UseSearchContainerProps } from '@@sf/composables/use-search-container';
+import type { Props as UseSearchShowcaseProps } from '@@sf/composables/use-search-showcase';
 import { useSharedData } from '@@sf/composables/use-shared-data';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
-import { useSearchContainer } from '@@sf/composables/use-search-container';
+import { useSearchShowcase } from '@@sf/composables/use-search-showcase';
 
 export interface Props {
   routeContext: RouteContext;
@@ -59,7 +59,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'related-products', props: {} }
     | { type: 'doc-description', props: {} }
     | { type: 'product-specifications', props: {} }
-    | { type: 'search-container' | 'context-showcase', props: UseSearchContainerProps }
+    | { type: 'search-showcase' | 'context-showcase', props: UseSearchShowcaseProps }
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
@@ -126,8 +126,8 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         return;
       }
 
-      if (type === 'search-container' || type === 'context-showcase') {
-        const props: UseSearchContainerProps = { ...sectionContent };
+      if (type === 'search-showcase' || type === 'context-showcase') {
+        const props: UseSearchShowcaseProps = { ...sectionContent };
         if (type === 'context-showcase') {
           if (routeContext.fetchingApiContext) {
             await routeContext.fetchingApiContext;
@@ -157,7 +157,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           props.term = routeContext.searchPageTerm || null;
         }
         if (props.term !== undefined || props.params) {
-          const { searchEngine, fetching } = useSearchContainer(props);
+          const { searchEngine, fetching } = useSearchShowcase(props);
           await fetching;
           props.products = searchEngine.products;
           props.ssrError = searchEngine.fetchError.value?.message;
