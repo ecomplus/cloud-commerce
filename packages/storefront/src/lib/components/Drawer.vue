@@ -27,7 +27,6 @@ const props = withDefaults(defineProps<Props>(), {
   position: 'fixed',
   animation: 'slide',
   hasCloseButton: true,
-  hasBackdrop: true,
   backdropTarget: '#teleported-top',
 });
 const emit = defineEmits<{
