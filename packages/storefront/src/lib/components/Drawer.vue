@@ -16,6 +16,7 @@ export interface Props {
   hasCloseButton?: boolean;
   anchorEl?: HTMLElement | null;
   backdropTarget?: string | null;
+  canLockScroll?: boolean;
   maxWidth?: string;
   class?: string | string[] | Record<string, string | null> | null;
 }
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   animation: 'slide',
   hasCloseButton: true,
   backdropTarget: '#teleported-top',
+  canLockScroll: true,
 });
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
@@ -48,16 +50,20 @@ const escClickListener = (ev: KeyboardEvent) => {
 const scrollbarWidth = ref(0);
 watch(toRef(props, 'modelValue'), async (isOpen) => {
   if (isOpen) {
-    scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${scrollbarWidth.value}px`;
+    if (props.canLockScroll) {
+      scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth.value}px`;
+    }
     setTimeout(() => {
       document.addEventListener('click', outsideClickListener, { passive: true });
       document.addEventListener('keydown', escClickListener, { passive: true });
     }, 500);
   } else {
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
+    if (props.canLockScroll) {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
     document.removeEventListener('click', outsideClickListener);
     document.removeEventListener('keydown', escClickListener);
   }
