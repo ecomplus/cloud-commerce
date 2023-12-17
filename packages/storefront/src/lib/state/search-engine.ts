@@ -73,7 +73,11 @@ export class SearchEngine {
   term = ref<string | null>(null);
   isWithCount = ref(true);
   isWithBuckets = ref(true);
-  params = reactive<Record<string, any>>({});
+  params = reactive<{
+    sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string,
+    fields?: string[] | string,
+    [k: string]: any,
+  }>({});
   pageSize = ref(24);
   pageNumber = ref(1);
   #isFetching = ref(false);

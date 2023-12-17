@@ -1,5 +1,14 @@
 import type { SearchItem } from '@cloudcommerce/types';
 import { ref, watch, shallowReactive } from 'vue';
+import {
+  i19discount,
+  i19highestPrice,
+  i19lowestPrice,
+  i19name,
+  i19releases,
+  i19relevance,
+  i19sales,
+} from '@@i18n';
 import { SearchEngine } from '@@sf/state/search-engine';
 
 export interface Props {
@@ -53,12 +62,37 @@ const useSearchShowcase = (props: Props) => {
       ...searchEngine!.meta,
     };
   });
+  const sortOptions = [
+    {
+      value: null,
+      label: i19relevance,
+    }, {
+      value: '-sales',
+      label: i19sales,
+    }, {
+      value: 'price',
+      label: i19lowestPrice,
+    }, {
+      value: '-price',
+      label: i19highestPrice,
+    }, {
+      value: '-price_discount',
+      label: i19discount,
+    }, {
+      value: '-created_at',
+      label: i19releases,
+    }, {
+      value: 'name',
+      label: i19name,
+    },
+  ];
   return {
     searchEngine,
     fetching: searchEngine.fetching.value,
     isFetching: searchEngine.isFetching,
     products,
     searchMeta,
+    sortOptions,
   };
 };
 
