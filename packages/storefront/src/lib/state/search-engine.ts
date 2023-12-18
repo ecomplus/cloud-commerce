@@ -74,8 +74,9 @@ export class SearchEngine {
   isWithCount = ref(true);
   isWithBuckets = ref(true);
   params = reactive<{
-    sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string,
-    fields?: string[] | string,
+    sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount'
+      | string | null,
+    fields?: string[] | string | null,
     [k: string]: any,
   }>({});
   pageSize = ref(24);
