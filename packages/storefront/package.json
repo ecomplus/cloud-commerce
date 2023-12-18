@@ -57,7 +57,7 @@
     "unplugin-auto-import": "^0.17.2",
     "vite": "^5.0.8",
     "vite-plugin-pwa": "^0.17.4",
-    "vue": "3.3.11",
+    "vue": "3.3.12",
     "wade": "0.3.3"
   },
   "devDependencies": {
