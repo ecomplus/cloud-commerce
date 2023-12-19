@@ -1,4 +1,8 @@
-import type { SearchItem, SearchResult } from '@cloudcommerce/types';
+import type {
+  Config as ApiConfig,
+  SearchItem,
+  SearchResult,
+} from '@cloudcommerce/api/types';
 import {
   ref,
   computed,
@@ -73,7 +77,7 @@ export class SearchEngine {
   term = ref<string | null>(null);
   isWithCount = ref(true);
   isWithBuckets = ref(true);
-  params = reactive<Record<string, string | string[]>>({});
+  params = reactive<Exclude<ApiConfig['params'], string | undefined>>({});
   pageSize = ref(24);
   pageNumber = ref(1);
   #isFetching = ref(false);
