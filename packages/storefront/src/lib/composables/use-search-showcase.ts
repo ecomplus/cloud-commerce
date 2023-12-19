@@ -11,13 +11,14 @@ import {
 } from '@@i18n';
 import { SearchEngine } from '@@sf/state/search-engine';
 
+type SearchEngineInstance = InstanceType<typeof SearchEngine>;
+
 export interface Props {
-  searchEngine?: InstanceType<typeof SearchEngine>;
+  searchEngine?: SearchEngineInstance;
   term?: string | null;
-  params?: Record<string, any>;
-  sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string;
+  params?: SearchEngineInstance['params'];
   products?: SearchItem[];
-  searchMeta?: InstanceType<typeof SearchEngine>['meta'];
+  searchMeta?: SearchEngineInstance['meta'];
   ssrError?: string | null;
 }
 
@@ -40,9 +41,6 @@ const useSearchShowcase = (props: Props) => {
     }
     if (props.params) {
       Object.assign(searchEngine.params, props.params);
-    }
-    if (props.sort) {
-      searchEngine.params.sort = props.sort;
     }
   }
   if (!searchEngine.wasFetched.value && !props.products) {
