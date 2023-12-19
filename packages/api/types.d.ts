@@ -72,7 +72,10 @@ type Config = {
   buckets?: boolean,
   verbose?: boolean,
   concise?: boolean,
-  params?: Record<string, string | number | boolean | string[] | number[]> | string,
+  params?: string | Record<
+    string,
+    string | number | boolean | string[] | number[] | undefined,
+  >,
   headers?: Headers | Record<string, string>,
   timeout?: number,
   maxRetries?: number,
