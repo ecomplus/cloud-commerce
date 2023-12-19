@@ -62,7 +62,7 @@ const useSearchShowcase = (props: Props) => {
   });
   const sortOptions = [
     {
-      value: null,
+      value: undefined,
       label: i19relevance,
     }, {
       value: '-sales',
