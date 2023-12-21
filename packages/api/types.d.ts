@@ -383,8 +383,10 @@ type ResponseBody<
   TConfig['endpoint'] extends `orders/${ResourceId}` ? Orders :
   TConfig['endpoint'] extends `customers/${ResourceId}` ? Customers :
   TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
+  TConfig['endpoint'] extends 'stores/me' ? Stores :
   TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
   TConfig['endpoint'] extends `authentications/${ResourceId}` ? Authentications :
+  TConfig['endpoint'] extends 'authentications/me' ? Authentications :
   TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
