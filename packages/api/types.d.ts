@@ -408,7 +408,7 @@ type ResponseBody<
   TConfig['endpoint'] extends 'authentications/me' ? Authentications :
   TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint'], ListFields> :
-  TConfig['endpoint'] extends SearchHistoryOpQuery ? EventsResult<TConfig['endpoint']> :
+  TConfig['endpoint'] extends SearchHistoryOpQuery ? SearchHistoryResult :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
