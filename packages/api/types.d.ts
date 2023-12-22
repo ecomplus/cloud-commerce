@@ -30,8 +30,9 @@ type ResourceAndFind = ResourceAndId
   | 'authentications/me';
 type ResourceOpQuery = Resource | `${Resource}?${string}`;
 
-type SearchOpQuery = 'search/v1'
-  | `search/v1?${string}`
+type SearchV1OpQuery = 'search/v1'
+  | `search/v1?${string}`;
+type SearchOpQuery = SearchV1OpQuery
   | 'search/_els'
   | `search/_els?${string}`;
 
@@ -291,9 +292,9 @@ type SearchItem<Fields extends null | string[] | '*' = '*'> = Omit<(
 
 type SearchResult<
   TEndpoint extends SearchOpQuery | 'v1' | 'els',
-  Fields extends string[] | null = TEndpoint extends 'search/v1' | 'v1' ? null : '*',
+  Fields extends string[] | null = TEndpoint extends SearchV1OpQuery | 'v1' ? null : '*',
 > =
-  TEndpoint extends 'search/v1' | `search/v1?${string}` | 'v1' ? {
+  TEndpoint extends SearchV1OpQuery | 'v1' ? {
     result: SearchItem<Fields>[],
     meta: BaseListResultMeta & {
       count?: number,
@@ -380,7 +381,7 @@ type EventsResult<TEndpoint extends EventsEndpoint> = {
 
 type ResponseBody<
   TConfig extends Config,
-  ListFields extends string[] | null = TConfig['endpoint'] extends Resource | 'search/v1'
+  ListFields extends string[] | null = TConfig['endpoint'] extends Resource | SearchV1OpQuery
     ? TConfig['params']['fields'] extends string ? '*'
       : TConfig['fields'] extends readonly string[] ? TConfig['fields']
       : null
