@@ -5,12 +5,29 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+/**
+ * Category object model
+ */
 export interface Categories {
+  /**
+   * Category ID (ObjectID) [auto]
+   */
   _id: string & { length: 24 };
+  /**
+   * When object was seted (POST/PUT), date and time in ISO 8601 standard representation [auto]
+   */
   created_at: string;
+  /**
+   * When was it last changed, date and time in ISO 8601 standard representation [auto]
+   */
   updated_at: string;
+  /**
+   * ID of store [auto]
+   */
   store_id: number;
   /**
+   * List of sales channels if category not available in all channels
+   *
    * @maxItems 10
    */
   channel_ids?: string[];

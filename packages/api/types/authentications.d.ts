@@ -5,11 +5,25 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+/**
+ * Authenticated API user
+ */
 export interface Authentications {
+  /**
+   * Authentication ID (ObjectID) [auto]
+   */
   _id: string & { length: 24 };
+  /**
+   * When object was seted (POST/PUT), date and time in ISO 8601 standard representation [auto]
+   */
   created_at: string;
+  /**
+   * When was it last changed, date and time in ISO 8601 standard representation [auto]
+   */
   updated_at: string;
   /**
+   * List of store IDs granted for this authentication [auto]
+   *
    * @maxItems 500
    */
   store_ids: number[];

@@ -9,9 +9,21 @@
  * Shopping cart object model
  */
 export interface Carts {
+  /**
+   * Cart ID (ObjectID) [auto]
+   */
   _id: string & { length: 24 };
+  /**
+   * When object was seted (POST/PUT), date and time in ISO 8601 standard representation [auto]
+   */
   created_at: string;
+  /**
+   * When was it last changed, date and time in ISO 8601 standard representation [auto]
+   */
   updated_at: string;
+  /**
+   * ID of store [auto]
+   */
   store_id: number;
   /**
    * Whether cart was created by staff and is trusted

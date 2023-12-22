@@ -9,9 +9,21 @@
  * Order object model
  */
 export interface Orders {
+  /**
+   * Order ID (ObjectID) [auto]
+   */
   _id: string & { length: 24 };
+  /**
+   * When object was seted (POST/PUT), date and time in ISO 8601 standard representation [auto]
+   */
   created_at: string;
+  /**
+   * When was it last changed, date and time in ISO 8601 standard representation [auto]
+   */
   updated_at: string;
+  /**
+   * ID of store [auto]
+   */
   store_id: number;
   /**
    * Whether order was created by staff and is trusted
@@ -70,6 +82,9 @@ export interface Orders {
    * User-Agent of the browser (if any) used by the customer
    */
   client_user_agent?: string;
+  /**
+   * Sales channel unique identifier or domain name
+   */
   channel_id?: string;
   /**
    * Channel type or source
