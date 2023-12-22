@@ -3,7 +3,6 @@ import type { Categories } from './types/categories';
 import type { Brands } from './types/brands';
 import type { Collections } from './types/collections';
 import type { Grids } from './types/grids';
-import type { Searches } from './types/searches';
 import type { Carts } from './types/carts';
 import type { Orders } from './types/orders';
 import type { Customers } from './types/customers';
@@ -16,7 +15,6 @@ type Resource = 'products'
   | 'brands'
   | 'collections'
   | 'grids'
-  | 'searches'
   | 'carts'
   | 'orders'
   | 'customers'
@@ -37,6 +35,9 @@ type SearchOpQuery = 'search/v1'
   | 'search/_els'
   | `search/_els?${string}`;
 
+type SearchHistoryOpQuery = 'search/v1/history'
+  | `search/v1/history?${string}`;
+
 type EventsEndpoint = `events/${Resource}`
   | `events/${ResourceAndId}`
   | 'events/me';
@@ -46,6 +47,7 @@ type Endpoint = ResourceOpQuery
   | `${ResourceAndFind}/${string}`
   | `slugs/${string}`
   | SearchOpQuery
+  | SearchHistoryOpQuery
   | EventsEndpoint
   | 'login'
   | 'authenticate'
@@ -145,14 +147,6 @@ type DefaultGridsFields = [
 type GridsList<Fields extends null | string[] | '*' = '*'> =
   ListResultDocs<Grids, Fields extends null ? DefaultGridsFields : Fields>;
 
-type DefaultSearchesFields = [
-  'term',
-  'occurrences',
-  'hits_count',
-];
-type SearchesList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Searches, Fields extends null ? DefaultSearchesFields : Fields>;
-
 type DefaultCartsFields = [
   'available',
   'completed',
@@ -244,7 +238,6 @@ type ResourceListResult<
     TEndpoint extends ListEndpoint<'brands'> ? BrandsList<Fields> :
     TEndpoint extends ListEndpoint<'collections'> ? CollectionsList<Fields> :
     TEndpoint extends ListEndpoint<'grids'> ? GridsList<Fields> :
-    TEndpoint extends ListEndpoint<'searches'> ? SearchesList<Fields> :
     TEndpoint extends ListEndpoint<'carts'> ? CartsList<Fields> :
     TEndpoint extends ListEndpoint<'orders'> ? OrdersList<Fields> :
     TEndpoint extends ListEndpoint<'customers'> ? CustomersList<Fields> :
@@ -339,6 +332,21 @@ type SearchResult<
   } :
   never;
 
+type SearchHistoryResult = {
+  result: Array<{
+    terms: string[];
+    hits_count?: number;
+    counted_at?: string;
+  }>,
+  meta: {
+    offset: number,
+    limit: number,
+    query: {
+      terms?: any,
+    },
+  },
+};
+
 type EventFieldsByEndpoint<TEndpoint extends EventsEndpoint> =
   TEndpoint extends `events/${Resource}` ? {
     resource_id: ResourceId,
@@ -390,7 +398,6 @@ type ResponseBody<
   TConfig['endpoint'] extends `brands/${ResourceId}` ? Brands :
   TConfig['endpoint'] extends `collections/${ResourceId}` ? Collections :
   TConfig['endpoint'] extends `grids/${ResourceId}` ? Grids :
-  TConfig['endpoint'] extends `searches/${ResourceId}` ? Searches :
   TConfig['endpoint'] extends `carts/${ResourceId}` ? Carts :
   TConfig['endpoint'] extends `orders/${ResourceId}` ? Orders :
   TConfig['endpoint'] extends `customers/${ResourceId}` ? Customers :
@@ -401,6 +408,7 @@ type ResponseBody<
   TConfig['endpoint'] extends 'authentications/me' ? Authentications :
   TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint'], ListFields> :
+  TConfig['endpoint'] extends SearchHistoryOpQuery ? EventsResult<TConfig['endpoint']> :
   TConfig['endpoint'] extends EventsEndpoint ? EventsResult<TConfig['endpoint']> :
   any;
 
@@ -414,7 +422,6 @@ type CategorySet = DocSchema<Categories>;
 type BrandSet = DocSchema<Brands>;
 type CollectionSet = DocSchema<Collections>;
 type GridSet = DocSchema<Grids>;
-type SearchedSet = DocSchema<Searches>;
 type StoreSet = DocSchema<Stores>;
 type ApplicationSet = DocSchema<Applications>;
 type AuthenticationSet = DocSchema<Authentications>;
@@ -430,7 +437,6 @@ type RequestBody<TConfig extends Config> =
   TConfig['endpoint'] extends SetDocEndpoint<'brands'> ? BrandSet :
   TConfig['endpoint'] extends SetDocEndpoint<'collections'> ? CollectionSet :
   TConfig['endpoint'] extends SetDocEndpoint<'grids'> ? GridSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'searches'> ? SearchedSet :
   TConfig['endpoint'] extends SetDocEndpoint<'carts'> ? CartSet :
   TConfig['endpoint'] extends SetDocEndpoint<'orders'> ? OrderSet :
   TConfig['endpoint'] extends SetDocEndpoint<'customers'> ? CustomerSet :
@@ -456,7 +462,6 @@ export type {
   Brands,
   Collections,
   Grids,
-  Searches,
   Carts,
   Orders,
   Customers,
@@ -468,7 +473,6 @@ export type {
   BrandSet,
   CollectionSet,
   GridSet,
-  SearchedSet,
   CartSet,
   OrderSet,
   CustomerSet,
@@ -480,7 +484,6 @@ export type {
   BrandsList,
   CollectionsList,
   GridsList,
-  SearchesList,
   CartsList,
   OrdersList,
   CustomersList,
