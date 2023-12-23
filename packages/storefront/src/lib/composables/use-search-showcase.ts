@@ -1,4 +1,5 @@
 import type { SearchItem } from '@cloudcommerce/types';
+import type { SearchEngineInstance } from '@@sf/state/search-engine';
 import { ref, watch, shallowReactive } from 'vue';
 import { useUrlSearchParams } from '@vueuse/core';
 import {
@@ -12,12 +13,10 @@ import {
 } from '@@i18n';
 import { SearchEngine } from '@@sf/state/search-engine';
 
-type SearchEngineInstance = InstanceType<typeof SearchEngine>;
-
 export interface Props {
   term?: string | null;
   params?: SearchEngineInstance['params'];
-  products?: SearchItem[];
+  products?: SearchItem<null>[];
   resultMeta?: SearchEngineInstance['meta'];
   ssrError?: string | null;
   canUseUrlParams?: boolean;
@@ -26,7 +25,7 @@ export interface Props {
 const useSearchShowcase = (props: Props) => {
   let { term } = props;
   const canUseUrlParams = props.canUseUrlParams !== false;
-  const urlParams = canUseUrlParams ? useUrlSearchParams('history') : {};
+  const urlParams = canUseUrlParams ? useUrlSearchParams('history') : null;
   if (props.ssrError && !import.meta.env.SSR) {
     console.error(new Error(`SSR search error: ${props.ssrError}`));
     if (window.location.pathname.startsWith('/s/')) {
@@ -41,9 +40,34 @@ const useSearchShowcase = (props: Props) => {
   if (term !== undefined) {
     searchEngine.term.value = term;
   }
-  Object.assign(searchEngine.params, props.params, urlParams);
-  if (!searchEngine.wasFetched.value && !props.products) {
-    searchEngine.fetch().catch(console.error);
+  Object.assign(searchEngine.params, props.params);
+  if (urlParams) {
+    Object.keys(urlParams).forEach((param) => {
+      if (param === 'sort') {
+        searchEngine.params.sort = urlParams.sort;
+        return;
+      }
+      if (param === 'p') {
+        const pageNumber = parseInt(String(urlParams.p), 10);
+        if (pageNumber >= 1) searchEngine.pageNumber.value = pageNumber;
+        return;
+      }
+      if (param.startsWith('f.')) {
+        const field = param.substring(2);
+        searchEngine.params[field] = urlParams[param];
+      }
+    });
+  }
+  if (!searchEngine.wasFetched.value) {
+    if (props.products || props.resultMeta) {
+      searchEngine.setResult({
+        result: props.products,
+        meta: props.resultMeta,
+      });
+    }
+    if (!props.products) {
+      searchEngine.fetch().catch(console.error);
+    }
   }
   searchEngine.isWithCount.value = true;
   searchEngine.isWithBuckets.value = true;
@@ -89,12 +113,42 @@ const useSearchShowcase = (props: Props) => {
     searchEngine.params.sort = sortOption.value || undefined;
     searchEngine.fetch();
   });
-  if (canUseUrlParams) {
+  if (urlParams) {
     if (typeof urlParams.sort === 'string' && urlParams.sort) {
       sortOption.value = urlParams.sort;
     }
     watch(searchEngine.params, (params) => {
-      Object.assign(urlParams, params);
+      Object.keys(params).forEach((param) => {
+        if (props.params?.[param]) return;
+        const val = params[param];
+        if (val === undefined) {
+          delete urlParams[param];
+          return;
+        }
+        switch (param) {
+          case 'sort':
+            urlParams.sort = String(val);
+            return;
+          case 'term':
+          case 'limit':
+          case 'offset':
+          case 'count':
+          case 'buckets':
+          case 'fields':
+            return;
+          default:
+        }
+        if (typeof val === 'string' || typeof val === 'number') {
+          urlParams[`f.${param}`] = `${val}`;
+          return;
+        }
+        if (Array.isArray(val) && typeof val[0] === 'string') {
+          urlParams[`f.${param}`] = val as string[];
+        }
+      });
+    });
+    watch(searchEngine.pageNumber, (pageNumber) => {
+      urlParams.p = `${pageNumber}`;
     });
   }
 
