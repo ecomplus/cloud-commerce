@@ -1,8 +1,4 @@
-import type {
-  Config as ApiConfig,
-  SearchItem,
-  SearchResult,
-} from '@cloudcommerce/api/types';
+import type { Config as ApiConfig, SearchResult } from '@cloudcommerce/api/types';
 import {
   ref,
   computed,
@@ -89,7 +85,7 @@ export class SearchEngine {
   fetching = computed(() => this.#fetching.value);
   #fetchError = ref<Error | null>(null);
   fetchError = computed(() => this.#fetchError.value);
-  products = shallowReactive<SearchItem[]>([]);
+  products = shallowReactive<SearchResult<'v1'>['result']>([]);
   meta = shallowReactive<SearchResult<'v1'>['meta']>({
     offset: 0,
     limit: 0,
@@ -155,15 +151,25 @@ export class SearchEngine {
       this.#wasFetched.value = true;
       const { data } = response;
       if (data.meta) {
-        Object.assign(this.meta, data.meta);
-        this.products.splice(0);
+        this.setResult(data);
       }
-      data.result.forEach((item) => this.products.push(item));
       if (this.#fulfillFetching) {
         this.#fulfillFetching();
       }
     }
   }
+
+  setResult(data: Partial<SearchResult<'v1'>>) {
+    if (data.meta) {
+      Object.assign(this.meta, data.meta);
+    }
+    if (data.result) {
+      this.products.splice(0);
+      data.result.forEach((item) => this.products.push(item));
+    }
+  }
 }
 
 export default SearchEngine;
+
+export type SearchEngineInstance = InstanceType<typeof SearchEngine>;
