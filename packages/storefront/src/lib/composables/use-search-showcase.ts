@@ -15,7 +15,7 @@ import { SearchEngine } from '@@sf/state/search-engine';
 
 export interface Props {
   term?: string | null;
-  params?: SearchEngineInstance['params'];
+  fixedParams?: SearchEngineInstance['params'];
   products?: SearchItem<null>[];
   resultMeta?: SearchEngineInstance['meta'];
   ssrError?: string | null;
@@ -40,7 +40,7 @@ const useSearchShowcase = (props: Props) => {
   if (term !== undefined) {
     searchEngine.term.value = term;
   }
-  Object.assign(searchEngine.params, props.params);
+  Object.assign(searchEngine.params, props.fixedParams);
   if (urlParams) {
     Object.keys(urlParams).forEach((param) => {
       if (param === 'sort') {
@@ -119,7 +119,7 @@ const useSearchShowcase = (props: Props) => {
     }
     watch(searchEngine.params, (params) => {
       Object.keys(params).forEach((param) => {
-        if (props.params?.[param]) return;
+        if (props.fixedParams?.[param]) return;
         const val = params[param];
         if (val === undefined) {
           delete urlParams[param];

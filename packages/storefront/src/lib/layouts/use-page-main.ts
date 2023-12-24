@@ -146,17 +146,17 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
                 }
               });
             }
-            props.params = params;
+            props.fixedParams = params;
           } else if (resource === 'collections') {
             const { products } = (doc as Collections);
             if (products?.length) {
-              props.params = { _id: products };
+              props.fixedParams = { _id: products };
             }
           }
         } else if (routeContext.searchPageTerm !== undefined) {
           props.term = routeContext.searchPageTerm || null;
         }
-        if (props.term !== undefined || props.params) {
+        if (props.term !== undefined || props.fixedParams) {
           const { searchEngine, fetching } = useSearchShowcase(props);
           await fetching;
           props.products = searchEngine.products;
