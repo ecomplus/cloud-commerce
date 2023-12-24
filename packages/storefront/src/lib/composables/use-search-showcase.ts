@@ -12,6 +12,7 @@ import {
   i19sales,
 } from '@@i18n';
 import { SearchEngine } from '@@sf/state/search-engine';
+import { useSearchActiveFilters } from '@@sf/composables/use-search-filters';
 
 export interface Props {
   term?: string | null;
@@ -84,6 +85,29 @@ const useSearchShowcase = (props: Props) => {
     };
   });
 
+  const { activeFilters, filtersCount } = useSearchActiveFilters({
+    searchEngine,
+    fixedParams: props.fixedParams,
+  });
+  if (urlParams) {
+    watch(activeFilters, (params) => {
+      if (urlParams) {
+        Object.keys(urlParams).forEach((param) => {
+          if (param.startsWith('f\\')) delete urlParams[param];
+        });
+      }
+      Object.keys(params).forEach((param) => {
+        const val = params[param];
+        if (typeof val === 'string' || typeof val === 'number') {
+          urlParams[`f\\${param}`] = `${val}`;
+          return;
+        }
+        if (Array.isArray(val) && typeof val[0] === 'string') {
+          urlParams[`f\\${param}`] = val as string[];
+        }
+      });
+    });
+  }
   const sortOptions = [
     {
       value: null,
@@ -117,40 +141,12 @@ const useSearchShowcase = (props: Props) => {
     if (typeof urlParams.sort === 'string' && urlParams.sort) {
       sortOption.value = urlParams.sort;
     }
-    watch(searchEngine.params, (params) => {
-      Object.keys(urlParams).forEach((param) => {
-        if (param.startsWith('f\\') || param === 'sort') {
-          delete urlParams[param];
-        }
-      });
-      Object.keys(params).forEach((param) => {
-        if (props.fixedParams?.[param]) return;
-        const val = params[param];
-        if (val === undefined) return;
-        switch (param) {
-          case 'sort':
-            urlParams.sort = String(val);
-            return;
-          case 'term':
-          case 'limit':
-          case 'offset':
-          case 'count':
-          case 'buckets':
-          case 'fields':
-            return;
-          default:
-        }
-        if (typeof val === 'string' || typeof val === 'number') {
-          urlParams[`f\\${param}`] = `${val}`;
-          return;
-        }
-        if (Array.isArray(val) && typeof val[0] === 'string') {
-          urlParams[`f\\${param}`] = val as string[];
-        }
-      });
-    });
     watch(searchEngine.pageNumber, (pageNumber) => {
       urlParams.p = `${pageNumber}`;
+    });
+    watch(searchEngine.params, (params) => {
+      delete urlParams.sort;
+      if (params.sort) urlParams.sort = String(params.sort);
     });
   }
 
@@ -160,6 +156,8 @@ const useSearchShowcase = (props: Props) => {
     isFetching: searchEngine.isFetching,
     products,
     resultMeta,
+    activeFilters,
+    filtersCount,
     sortOptions,
     sortOption,
   };
