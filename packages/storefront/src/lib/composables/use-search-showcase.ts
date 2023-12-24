@@ -118,13 +118,15 @@ const useSearchShowcase = (props: Props) => {
       sortOption.value = urlParams.sort;
     }
     watch(searchEngine.params, (params) => {
+      Object.keys(urlParams).forEach((param) => {
+        if (param.startsWith('f\\') || param === 'sort') {
+          delete urlParams[param];
+        }
+      });
       Object.keys(params).forEach((param) => {
         if (props.fixedParams?.[param]) return;
         const val = params[param];
-        if (val === undefined) {
-          delete urlParams[param];
-          return;
-        }
+        if (val === undefined) return;
         switch (param) {
           case 'sort':
             urlParams.sort = String(val);
