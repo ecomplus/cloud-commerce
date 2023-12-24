@@ -52,7 +52,7 @@ const useSearchShowcase = (props: Props) => {
         if (pageNumber >= 1) searchEngine.pageNumber.value = pageNumber;
         return;
       }
-      if (param.startsWith('f.')) {
+      if (param.startsWith('f\\')) {
         const field = param.substring(2);
         searchEngine.params[field] = urlParams[param];
       }
@@ -139,11 +139,11 @@ const useSearchShowcase = (props: Props) => {
           default:
         }
         if (typeof val === 'string' || typeof val === 'number') {
-          urlParams[`f.${param}`] = `${val}`;
+          urlParams[`f\\${param}`] = `${val}`;
           return;
         }
         if (Array.isArray(val) && typeof val[0] === 'string') {
-          urlParams[`f.${param}`] = val as string[];
+          urlParams[`f\\${param}`] = val as string[];
         }
       });
     });
