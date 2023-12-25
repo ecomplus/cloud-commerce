@@ -54,74 +54,6 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
-  ecomplus-stores/barra-doce:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.39.0
-        version: link:../../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^0.39.0
-        version: link:../../packages/eslint
-
-  ecomplus-stores/barra-doce/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^0.39.0
-        version: link:../../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^0.39.0
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.39.0
-        version: link:../../../../packages/passport
-
-  ecomplus-stores/barra-doce/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.39.0
-        version: link:../../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.39.0
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.39.0
-        version: link:../../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.16
-        version: 1.7.16
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.39.0
-        version: link:../../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.39.0
-        version: link:../../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.39.0
-        version: link:../../../../packages/types
-      '@fontsource/croissant-one':
-        specifier: ^5.0.17
-        version: 5.0.18
-      '@iconify-json/mingcute':
-        specifier: ^1.1.11
-        version: 1.1.14
-      photoswipe:
-        specifier: ^5.4.2
-        version: 5.4.3
-
-  ecomplus-stores/barra-doce/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.39.0
-        version: link:../../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.39.0
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.39.0
-        version: link:../../../../packages/modules
-
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -1005,8 +937,8 @@ importers:
   packages/ssr:
     dependencies:
       '@astrojs/node':
-        specifier: 7.0.1
-        version: 7.0.1(astro@4.0.6)
+        specifier: 7.0.2
+        version: 7.0.2(astro@4.0.7)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1023,11 +955,11 @@ importers:
         specifier: 10.7.0
         version: 10.7.0(vue@3.3.13)
       astro:
-        specifier: 4.0.6
-        version: 4.0.6(@types/node@18.19.3)(typescript@5.2.2)
+        specifier: 4.0.7
+        version: 4.0.7(@types/node@18.19.3)(typescript@5.2.2)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.0.6)
+        version: 0.0.1(astro@4.0.7)
       axios:
         specifier: ^1.6.2
         version: 1.6.2
@@ -1060,11 +992,11 @@ importers:
   packages/storefront:
     dependencies:
       '@astrojs/node':
-        specifier: 7.0.1
-        version: 7.0.1(astro@4.0.6)
+        specifier: 7.0.2
+        version: 7.0.2(astro@4.0.7)
       '@astrojs/vue':
-        specifier: 4.0.4
-        version: 4.0.4(astro@4.0.6)(vite@5.0.10)(vue@3.3.13)
+        specifier: 4.0.5
+        version: 4.0.5(astro@4.0.7)(vite@5.0.10)(vue@3.3.13)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1094,16 +1026,16 @@ importers:
         version: 0.0.18
       '@vite-pwa/astro':
         specifier: ^0.2.0
-        version: 0.2.0(astro@4.0.6)(vite-plugin-pwa@0.17.4)
+        version: 0.2.0(astro@4.0.7)(vite-plugin-pwa@0.17.4)
       '@vueuse/core':
         specifier: 10.7.0
         version: 10.7.0(vue@3.3.13)
       astro:
-        specifier: 4.0.6
-        version: 4.0.6(@types/node@18.19.3)(typescript@5.2.2)
+        specifier: 4.0.7
+        version: 4.0.7(@types/node@18.19.3)(typescript@5.2.2)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.0.6)
+        version: 0.0.1(astro@4.0.7)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1172,68 +1104,6 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
-
-  store:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.39.0
-        version: link:../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^0.39.0
-        version: link:../packages/eslint
-
-  store/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^0.39.0
-        version: link:../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^0.39.0
-        version: link:../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.39.0
-        version: link:../../../packages/passport
-
-  store/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.39.0
-        version: link:../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.39.0
-        version: link:../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.39.0
-        version: link:../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.16
-        version: 1.7.16
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.39.0
-        version: link:../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.39.0
-        version: link:../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.39.0
-        version: link:../../../packages/types
-      photoswipe:
-        specifier: ^5.4.3
-        version: 5.4.3
-
-  store/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.39.0
-        version: link:../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.39.0
-        version: link:../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.39.0
-        version: link:../../../packages/modules
 
 packages:
 
@@ -1306,15 +1176,15 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@7.0.1(astro@4.0.6):
-    resolution: {integrity: sha512-jzO5q1t/cwDZQHcPG0CakjPY0SC44kbGgDDoh4UurvzZcCDYQKLz6zzJVqzUiOtDhfSwVrgHoiKo2tNbXASlRQ==}
+  /@astrojs/node@7.0.2(astro@4.0.7):
+    resolution: {integrity: sha512-g07KV9JBbUubfzLyu2ql+zu09dW3a7zVX1fDr6UriQdz6BvPh0Y0Qn+DqA5P8JwSKAw93mJDuChDW7JrI7CBJg==}
     peerDependencies:
       astro: ^4.0.0
     peerDependenciesMeta:
       astro:
         optional: true
     dependencies:
-      astro: 4.0.6(@types/node@18.19.3)(typescript@5.2.2)
+      astro: 4.0.7(@types/node@18.19.3)(typescript@5.2.2)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1343,8 +1213,8 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@4.0.4(astro@4.0.6)(vite@5.0.10)(vue@3.3.13):
-    resolution: {integrity: sha512-Ju09f0x27TOCi84r7h0ZNlQLbbdZabyMYmuGAMPc4p7v4sD+hseCQ1RoReyFMiISgKM1xOPfZ9UnFjiEmqifeg==}
+  /@astrojs/vue@4.0.5(astro@4.0.7)(vite@5.0.10)(vue@3.3.13):
+    resolution: {integrity: sha512-/ulyPrBgw7NDLkfQwQyyXaThONF5Z+mvmwJUfrxLoF4dvQBQkS6W4Waa6ade+1Mt82LHBlsDClxVw4a4KDe9hQ==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
       astro: ^4.0.0
@@ -1358,8 +1228,8 @@ packages:
       '@vitejs/plugin-vue': 4.5.2(vite@5.0.10)(vue@3.3.13)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.0.10)(vue@3.3.13)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.23.3)
-      '@vue/compiler-sfc': 3.3.11
-      astro: 4.0.6(@types/node@18.19.3)(typescript@5.2.2)
+      '@vue/compiler-sfc': 3.3.13
+      astro: 4.0.7(@types/node@18.19.3)(typescript@5.2.2)
       vue: 3.3.13(typescript@5.2.2)
     transitivePeerDependencies:
       - '@babel/core'
@@ -3727,10 +3597,6 @@ packages:
     resolution: {integrity: sha512-eSkJsnhBWv5kCTSU1tSUVl9mpFu+5NXXunZc83le8GMjMlsWwQArSc7cJJ4yl+aDFY0NGLi0AjZWMn1axOrkRg==}
     dev: false
 
-  /@fontsource/croissant-one@5.0.18:
-    resolution: {integrity: sha512-5B8KfAaNqvXKYfvPdEPqFykLfN9sRuFCx2vsr4sjRIspd92ZUJmWtt5k+nVtkSd6FJ6Hb4nkg2+WzwWSUixmoQ==}
-    dev: true
-
   /@google-cloud/firestore@6.8.0:
     resolution: {integrity: sha512-JRpk06SmZXLGz0pNx1x7yU3YhkUXheKgH5hbDZ4kMsdhtfV5qPLJLRI4wv69K0cZorIk+zTMOwptue7hizo0eA==}
     engines: {node: '>=12.0.0'}
@@ -3877,16 +3743,6 @@ packages:
       yargs: 17.7.2
     dev: false
 
-  /@headlessui/vue@1.7.16:
-    resolution: {integrity: sha512-nKT+nf/q6x198SsyK54mSszaQl/z+QxtASmgMEJtpxSX2Q0OPJX0upS/9daDyiECpeAsvjkoOrm2O/6PyBQ+Qg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      vue: ^3.2.0
-    peerDependenciesMeta:
-      vue:
-        optional: true
-    dev: false
-
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -3927,14 +3783,9 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
-  /@iconify-json/mingcute@1.1.14:
-    resolution: {integrity: sha512-oWeGJzNBHPLFLdjqYFg80GL12F7vp+qCpSqt34G9CzP/20eduYLZyB1gB8GW2beTl335lssJo28QT/ObyJ3YpQ==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
-
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: false
 
   /@iconify/utils@2.1.11:
     resolution: {integrity: sha512-M/w3PkN8zQYXi8N6qK/KhnYMfEbbb6Sk8RZVn8g+Pmmu5ybw177RpsaGwpziyHeUsu4etrexYSWq3rwnIqzYCg==}
@@ -4958,7 +4809,7 @@ packages:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.2.0(astro@4.0.6)(vite-plugin-pwa@0.17.4):
+  /@vite-pwa/astro@0.2.0(astro@4.0.7)(vite-plugin-pwa@0.17.4):
     resolution: {integrity: sha512-1MBNbRo9I9fp9sUSoaQfI/xHVDRKRoUsWETDJMVoKoctZYfm4fZgb7EN76WJdejW/vup+3+uoFlDMCnca+vZzA==}
     peerDependencies:
       astro: ^1.6.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
@@ -4967,7 +4818,7 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 4.0.6(@types/node@18.19.3)(typescript@5.2.2)
+      astro: 4.0.7(@types/node@18.19.3)(typescript@5.2.2)
       vite-plugin-pwa: 0.17.4(vite@5.0.10)(workbox-build@7.0.0)(workbox-window@7.0.0)
     dev: false
 
@@ -5068,15 +4919,6 @@ packages:
       - supports-color
     dev: false
 
-  /@vue/compiler-core@3.3.11:
-    resolution: {integrity: sha512-h97/TGWBilnLuRaj58sxNrsUU66fwdRKLOLQ9N/5iNDfp+DZhYH9Obhe0bXxhedl8fjAgpRANpiZfbgWyruQ0w==}
-    dependencies:
-      '@babel/parser': 7.23.5
-      '@vue/shared': 3.3.11
-      estree-walker: 2.0.2
-      source-map-js: 1.0.2
-    dev: false
-
   /@vue/compiler-core@3.3.13:
     resolution: {integrity: sha512-bwi9HShGu7uaZLOErZgsH2+ojsEdsjerbf2cMXPwmvcgZfVPZ2BVZzCVnwZBxTAYd6Mzbmf6izcUNDkWnBBQ6A==}
     dependencies:
@@ -5086,33 +4928,11 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
-  /@vue/compiler-dom@3.3.11:
-    resolution: {integrity: sha512-zoAiUIqSKqAJ81WhfPXYmFGwDRuO+loqLxvXmfUdR5fOitPoUiIeFI9cTTyv9MU5O1+ZZglJVTusWzy+wfk5hw==}
-    dependencies:
-      '@vue/compiler-core': 3.3.11
-      '@vue/shared': 3.3.11
-    dev: false
-
   /@vue/compiler-dom@3.3.13:
     resolution: {integrity: sha512-EYRDpbLadGtNL0Gph+HoKiYqXLqZ0xSSpR5Dvnu/Ep7ggaCbjRDIus1MMxTS2Qm0koXED4xSlvTZaTnI8cYAsw==}
     dependencies:
       '@vue/compiler-core': 3.3.13
       '@vue/shared': 3.3.13
-    dev: false
-
-  /@vue/compiler-sfc@3.3.11:
-    resolution: {integrity: sha512-U4iqPlHO0KQeK1mrsxCN0vZzw43/lL8POxgpzcJweopmqtoYy9nljJzWDIQS3EfjiYhfdtdk9Gtgz7MRXnz3GA==}
-    dependencies:
-      '@babel/parser': 7.23.5
-      '@vue/compiler-core': 3.3.11
-      '@vue/compiler-dom': 3.3.11
-      '@vue/compiler-ssr': 3.3.11
-      '@vue/reactivity-transform': 3.3.11
-      '@vue/shared': 3.3.11
-      estree-walker: 2.0.2
-      magic-string: 0.30.5
-      postcss: 8.4.32
-      source-map-js: 1.0.2
     dev: false
 
   /@vue/compiler-sfc@3.3.13:
@@ -5130,28 +4950,11 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
-  /@vue/compiler-ssr@3.3.11:
-    resolution: {integrity: sha512-Zd66ZwMvndxRTgVPdo+muV4Rv9n9DwQ4SSgWWKWkPFebHQfVYRrVjeygmmDmPewsHyznCNvJ2P2d6iOOhdv8Qg==}
-    dependencies:
-      '@vue/compiler-dom': 3.3.11
-      '@vue/shared': 3.3.11
-    dev: false
-
   /@vue/compiler-ssr@3.3.13:
     resolution: {integrity: sha512-d/P3bCeUGmkJNS1QUZSAvoCIW4fkOKK3l2deE7zrp0ypJEy+En2AcypIkqvcFQOcw3F0zt2VfMvNsA9JmExTaw==}
     dependencies:
       '@vue/compiler-dom': 3.3.13
       '@vue/shared': 3.3.13
-    dev: false
-
-  /@vue/reactivity-transform@3.3.11:
-    resolution: {integrity: sha512-fPGjH0wqJo68A0wQ1k158utDq/cRyZNlFoxGwNScE28aUFOKFEnCBsvyD8jHn+0kd0UKVpuGuaZEQ6r9FJRqCg==}
-    dependencies:
-      '@babel/parser': 7.23.5
-      '@vue/compiler-core': 3.3.11
-      '@vue/shared': 3.3.11
-      estree-walker: 2.0.2
-      magic-string: 0.30.5
     dev: false
 
   /@vue/reactivity-transform@3.3.13:
@@ -5196,10 +4999,6 @@ packages:
       '@vue/compiler-ssr': 3.3.13
       '@vue/shared': 3.3.13
       vue: 3.3.13(typescript@5.2.2)
-    dev: false
-
-  /@vue/shared@3.3.11:
-    resolution: {integrity: sha512-u2G8ZQ9IhMWTMXaWqZycnK4UthG1fA238CD+DP4Dm4WJi5hdUKKLg0RMRaRpDPNMdkTwIDkp7WtD0Rd9BH9fLw==}
     dev: false
 
   /@vue/shared@3.3.13:
@@ -5494,7 +5293,7 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro-capo@0.0.1(astro@4.0.6):
+  /astro-capo@0.0.1(astro@4.0.7):
     resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
@@ -5502,12 +5301,12 @@ packages:
       astro:
         optional: true
     dependencies:
-      astro: 4.0.6(@types/node@18.19.3)(typescript@5.2.2)
+      astro: 4.0.7(@types/node@18.19.3)(typescript@5.2.2)
       ultrahtml: 1.3.0
     dev: false
 
-  /astro@4.0.6(@types/node@18.19.3)(typescript@5.2.2):
-    resolution: {integrity: sha512-P7CfFqWKzkJozzF6IoOC6qoI2ONndV8P3ULhGDgMiXPL7xVkWI5haTBSpyrcjBx643tVXspIRsSV/v+Cx+CjGw==}
+  /astro@4.0.7(@types/node@18.19.3)(typescript@5.2.2):
+    resolution: {integrity: sha512-K+Ms2AAQvi6yERPuglcI69tnHyTT44JCjzqprSjw3uOwFX7N9obpLgbhmLMH1fPFTgzt3ZD7APjmtDPN51makw==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -5552,7 +5351,7 @@ packages:
       mime: 3.0.0
       ora: 7.0.1
       p-limit: 5.0.0
-      p-queue: 7.4.1
+      p-queue: 8.0.1
       path-to-regexp: 6.2.1
       preferred-pm: 3.1.2
       probe-image-size: 7.2.3
@@ -5567,8 +5366,8 @@ packages:
       tsconfck: 3.0.0(typescript@5.2.2)
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-      vite: 5.0.8(@types/node@18.19.3)
-      vitefu: 0.2.5(vite@5.0.8)
+      vite: 5.0.10(@types/node@18.19.3)
+      vitefu: 0.2.5(vite@5.0.10)
       which-pm: 2.1.1
       yargs-parser: 21.1.1
       zod: 3.22.4
@@ -10183,17 +9982,17 @@ packages:
     dependencies:
       p-limit: 3.1.0
 
-  /p-queue@7.4.1:
-    resolution: {integrity: sha512-vRpMXmIkYF2/1hLBKisKeVYJZ8S2tZ0zEAmIJgdVKP2nq0nh4qCdf8bgw+ZgKrkh71AOCaqzwbJJk1WtdcF3VA==}
-    engines: {node: '>=12'}
+  /p-queue@8.0.1:
+    resolution: {integrity: sha512-NXzu9aQJTAzbBqOt2hwsR63ea7yvxJc0PwN/zobNAudYfb1B7R08SzB4TsLeSbUCuG467NhnoT0oO6w1qRO+BA==}
+    engines: {node: '>=18'}
     dependencies:
       eventemitter3: 5.0.1
-      p-timeout: 5.1.0
+      p-timeout: 6.1.2
     dev: false
 
-  /p-timeout@5.1.0:
-    resolution: {integrity: sha512-auFDyzzzGZZZdHz3BtET9VEz0SE/uMEAx7uWfGPucfzEwwe/xH0iVeZibQmANYE/hp9T2+UUZT5m+BKyrDp3Ew==}
-    engines: {node: '>=12'}
+  /p-timeout@6.1.2:
+    resolution: {integrity: sha512-UbD77BuZ9Bc9aABo74gfXhNvzC9Tx7SxtHSh1fxvx3jTLLYvmVhiQZZrJzqqU0jKbN32kb5VOKiLEQI/3bIjgQ==}
+    engines: {node: '>=14.16'}
     dev: false
 
   /p-try@1.0.0:
@@ -10311,11 +10110,6 @@ packages:
   /perfect-debounce@1.0.0:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
     dev: false
-
-  /photoswipe@5.4.3:
-    resolution: {integrity: sha512-9UC6oJBK4oXFZ5HcdlcvGkfEHsVrmE4csUdCQhEjHYb3PvPLO3PG7UhnPuOgjxwmhq5s17Un5NUdum01LgBDng==}
-    engines: {node: '>= 0.12.0'}
-    dev: true
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -12613,43 +12407,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vite@5.0.8(@types/node@18.19.3):
-    resolution: {integrity: sha512-jYMALd8aeqR3yS9xlHd0OzQJndS9fH5ylVgWdB+pxTwxLKdO1pgC5Dlb398BUxpfaBxa4M9oT7j1g503Gaj5IQ==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || >=20.0.0
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 18.19.3
-      esbuild: 0.19.7
-      postcss: 8.4.32
-      rollup: 4.9.0
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: false
-
-  /vitefu@0.2.5(vite@5.0.8):
+  /vitefu@0.2.5(vite@5.0.10):
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0 || ^5.0.0
@@ -12657,7 +12415,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.0.8(@types/node@18.19.3)
+      vite: 5.0.10(@types/node@18.19.3)
     dev: false
 
   /vitest@1.1.0(@types/node@18.19.3):
