@@ -72,7 +72,7 @@
         "region": "us-east4"
       },
       {
-        "source": "/repos/**/{git,contents,issues,branches,pulls,commits}/**",
+        "source": "/_api/repos/**/{git,contents,issues,branches,pulls,commits}/**",
         "function": "feeds",
         "region": "us-east4"
       },
