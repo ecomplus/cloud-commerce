@@ -29,7 +29,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
-    "@ecomplus/utils": "1.5.0-rc.5",
+    "@ecomplus/utils": "1.5.0-rc.6",
     "@vueuse/core": "10.7.0",
     "astro": "4.0.6",
     "astro-capo": "^0.0.1",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@cloudflare/workers-types": "^4.20231121.0",
+    "@cloudflare/workers-types": "^4.20231218.0",
     "@firebase/app-types": "^0.9.0",
     "typescript": "~5.2.2"
   }
