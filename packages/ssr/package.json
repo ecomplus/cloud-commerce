@@ -37,7 +37,7 @@
     "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0",
     "mitt": "^3.0.1",
-    "vue": "3.3.12"
+    "vue": "3.3.13"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
