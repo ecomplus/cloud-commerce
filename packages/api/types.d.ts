@@ -310,10 +310,10 @@ type SearchResult<
           avg: null | number,
           count: number,
         }>,
-        'brands/name'?: {
+        'brands.name'?: {
           [key: string]: number,
         },
-        'categories/name'?: {
+        'categories.name'?: {
           [key: string]: number,
         },
         specs?: {
