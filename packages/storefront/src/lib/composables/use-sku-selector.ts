@@ -1,8 +1,4 @@
-import type {
-  ResourceId,
-  Products,
-  GridsList,
-} from '@cloudcommerce/api/types';
+import type { ResourceId, Products } from '@cloudcommerce/api/types';
 import {
   ref,
   computed,
@@ -25,9 +21,8 @@ export interface Props {
 }
 
 const useSkuSelector = (props: Props) => {
-  let grids = shallowReactive<GridsList<null>>(globalThis.$storefront.data.grids);
-  if (!grids) {
-    grids = shallowReactive([]);
+  const grids = shallowReactive(globalThis.$storefront.data.grids || []);
+  if (!grids.length) {
     api.get('grids').then(({ data: { result } }) => {
       result.forEach((grid) => grids.push(grid));
     });

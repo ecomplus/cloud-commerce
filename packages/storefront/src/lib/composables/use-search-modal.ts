@@ -1,8 +1,4 @@
-import type {
-  Categories,
-  Brands,
-  Collections,
-} from '@cloudcommerce/api/types';
+import type { Categories } from '@cloudcommerce/api/types';
 import { ref, watch, toRef } from 'vue';
 import Wade from 'wade';
 import { clearAccents } from '@@sf/sf-lib';
@@ -14,18 +10,13 @@ export interface Props {
   productsLimit?: number;
 }
 
-const storefrontData = globalThis.$storefront.data as {
-  categories?: Array<Partial<Categories>>,
-  brands?: Array<Partial<Brands>>,
-  collections?: Array<Partial<Collections>>,
-};
 const wadeDocs: Array<{
   text: string,
   type: 'categories' | 'brands' | 'collections' | 'blog',
   data: Record<string, any> & { name: string, slug: string },
 }> = [];
 (['categories', 'brands', 'collections'] as const).forEach((resource) => {
-  const docsList = storefrontData[resource];
+  const docsList = globalThis.$storefront.data[resource];
   if (docsList) {
     for (let i = 0; i < docsList.length; i++) {
       const doc = docsList[i];
