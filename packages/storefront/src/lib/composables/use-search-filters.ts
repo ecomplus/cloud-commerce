@@ -46,6 +46,16 @@ const useSearchActiveFilters = ({ searchEngine, fixedParams }: Props) => {
     const fields: string[] = [];
     paramKeys.forEach((key) => {
       const field = key.replace(/[^\w.]/g, '');
+      if (field === 'specs' && Array.isArray(activeFilters.value[key])) {
+        (activeFilters.value[key] as string[]).forEach((specAndVal) => {
+          const [spec] = specAndVal.split(':');
+          const specField = `specs.${spec}`;
+          if (!fields.includes(specField)) {
+            fields.push(specField);
+          }
+        });
+        return;
+      }
       if (!fields.includes(field)) {
         fields.push(field);
       }
@@ -177,9 +187,10 @@ const useSearchFilters = (props: Props) => {
         const { grids } = globalThis.$storefront.data;
         Object.keys(buckets.specs).forEach((specAndVal) => {
           const [spec, value] = specAndVal.split(':');
-          if (value && _lastParamChanged !== spec) {
-            const title = getGridTitle(spec, grids || []);
+          if (value) {
             const field = `specs.${spec}`;
+            if (_lastParamChanged === field) return;
+            const title = getGridTitle(spec, grids || []);
             let filterOption = filterOptions.value.find((_filterOption) => {
               return _filterOption.field === field;
             });
@@ -194,7 +205,14 @@ const useSearchFilters = (props: Props) => {
     }
   }, 50);
   _updateFilterOptions();
+  const parseSpecsField = (field: string, value: string | number) => {
+    const [, spec] = field.split('.');
+    return ['specs,', `${spec}:${value}`];
+  };
   const checkFilterOption = (field: string, value: string | number) => {
+    if (field.startsWith('specs.')) {
+      [field, value] = parseSpecsField(field, value);
+    }
     const fieldParams = activeFilters.value[field];
     if (fieldParams === value) return true;
     // @ts-ignore
@@ -203,6 +221,10 @@ const useSearchFilters = (props: Props) => {
   };
   const toggleFilterOption = (field: string, value: string | number) => {
     _lastParamChanged = field;
+    console.log({ _lastParamChanged });
+    if (field.startsWith('specs.')) {
+      [field, value] = parseSpecsField(field, value);
+    }
     const isToActivate = !checkFilterOption(field, value);
     let fieldParams = searchEngine.params[field];
     if (!Array.isArray(fieldParams)) {
