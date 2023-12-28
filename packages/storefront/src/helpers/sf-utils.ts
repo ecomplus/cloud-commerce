@@ -56,3 +56,14 @@ export const termify = (str: string) => {
 export const getSearchUrl = (term: string, baseUrl = '/s/') => {
   return `${baseUrl}${encodeURIComponent(termify(term))}`;
 };
+
+export const scrollToEl = (el: HTMLElement, top = 0) => {
+  while (el.offsetParent) {
+    top += el.offsetTop;
+    el = el.offsetParent as HTMLElement;
+  }
+  return window.scroll({
+    top,
+    behavior: 'smooth',
+  });
+};
