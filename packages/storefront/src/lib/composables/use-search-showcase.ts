@@ -1,7 +1,14 @@
+import type { Ref } from 'vue';
 import type { SearchItem } from '@cloudcommerce/types';
 import type { SearchEngineInstance } from '@@sf/state/search-engine';
-import { ref, watch, shallowReactive } from 'vue';
-import { useUrlSearchParams } from '@vueuse/core';
+import {
+  ref,
+  computed,
+  watch,
+  shallowReactive,
+} from 'vue';
+import { useUrlSearchParams, watchOnce } from '@vueuse/core';
+import { isScreenLg, scrollToEl } from '@@sf/sf-lib';
 import {
   i19discount,
   i19highestPrice,
@@ -21,6 +28,7 @@ export interface Props {
   resultMeta?: SearchEngineInstance['meta'];
   ssrError?: string | null;
   canUseUrlParams?: boolean;
+  showcase?: Ref<HTMLElement | null>;
 }
 
 const useSearchShowcase = (props: Props) => {
@@ -85,6 +93,33 @@ const useSearchShowcase = (props: Props) => {
     };
   });
 
+  const totalPages = computed(() => {
+    const { count } = searchEngine.meta;
+    if (!count) return 1;
+    return Math.ceil(count / searchEngine.pageSize.value);
+  });
+  watch(searchEngine.pageNumber, (pageNumber) => {
+    if (urlParams) {
+      urlParams.p = `${pageNumber}`;
+    }
+    searchEngine.fetch();
+  });
+  const startWatchingFetch = () => {
+    watch(searchEngine.isFetching, (isFetching) => {
+      const el = props.showcase?.value;
+      if (!isFetching && el) {
+        setTimeout(() => {
+          scrollToEl(el, isScreenLg ? -25 : 0);
+        }, 50);
+      }
+    });
+  };
+  if (searchEngine.wasFetched.value) {
+    startWatchingFetch();
+  } else {
+    watchOnce(searchEngine.wasFetched, startWatchingFetch);
+  }
+
   const { activeFilters, filtersCount } = useSearchActiveFilters({
     searchEngine,
     fixedParams: props.fixedParams,
@@ -141,9 +176,6 @@ const useSearchShowcase = (props: Props) => {
     if (typeof urlParams.sort === 'string' && urlParams.sort) {
       sortOption.value = urlParams.sort;
     }
-    watch(searchEngine.pageNumber, (pageNumber) => {
-      urlParams.p = `${pageNumber}`;
-    });
     watch(searchEngine.params, (params) => {
       delete urlParams.sort;
       if (params.sort) urlParams.sort = String(params.sort);
@@ -156,6 +188,7 @@ const useSearchShowcase = (props: Props) => {
     isFetching: searchEngine.isFetching,
     products,
     resultMeta,
+    totalPages,
     activeFilters,
     filtersCount,
     sortOptions,

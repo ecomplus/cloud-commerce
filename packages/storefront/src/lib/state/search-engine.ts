@@ -167,6 +167,9 @@ export class SearchEngine {
       this.products.splice(0);
       data.result.forEach((item) => this.products.push(item));
     }
+    if (data.meta && data.result) {
+      this.#wasFetched.value = true;
+    }
   }
 }
 
