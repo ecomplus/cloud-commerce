@@ -138,12 +138,12 @@ const isPlacementX = computed(() => {
           type="button"
           :aria-label="$t.i19close"
           @click.prevent="close"
-          class="absolute top-2 z-30"
+          class="absolute top-2 z-30 rounded"
           :class="placement === 'end' ? 'left-2' : 'right-2'"
           data-drawer-close
         >
           <slot name="close">
-            <i class="i-close text-base-400 hover:text-base-600 text-3xl"></i>
+            <i class="i-close text-base-400 hover:text-base-600 m-0 text-3xl"></i>
           </slot>
         </button>
         <slot />
