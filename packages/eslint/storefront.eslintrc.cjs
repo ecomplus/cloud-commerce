@@ -29,6 +29,7 @@ module.exports = {
         'Countdown',
         'Collapse',
         'Accordion',
+        'Pagination',
       ],
     }],
     'tailwindcss/no-custom-classname': 'off',
