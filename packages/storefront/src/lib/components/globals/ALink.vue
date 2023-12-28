@@ -14,7 +14,7 @@ const linkTarget = computed(() => {
     const domain = globalThis.$storefront.settings.domain || window.location.host;
     if (props.href.startsWith(`https://${domain}`)) return undefined;
   }
-  return props.href.charAt(0) === '/' ? undefined : '_blank';
+  return undefined;
 });
 </script>
 
