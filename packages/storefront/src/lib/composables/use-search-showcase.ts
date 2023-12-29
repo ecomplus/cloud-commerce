@@ -95,7 +95,7 @@ const useSearchShowcase = (props: Props) => {
 
   const totalPages = computed(() => {
     const { count } = searchEngine.meta;
-    if (!count) return 1;
+    if (!count || products.length < 2) return 1;
     return Math.ceil(count / searchEngine.pageSize.value);
   });
   watch(searchEngine.pageNumber, (pageNumber) => {
