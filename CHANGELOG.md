@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.40.4](https://github.com/ecomplus/cloud-commerce/compare/v0.40.3...v0.40.4) (2023-12-29)
+
+
+### Bug Fixes
+
+* **storefront:** Bump Vue to v3.4.0 and fix Vue/Vite semver to prevent mismtach with Astro ([0b640cb](https://github.com/ecomplus/cloud-commerce/commit/0b640cb5f3432b1a6d60130bd2f019c465b0e21f))
+
 ### [0.40.3](https://github.com/ecomplus/cloud-commerce/compare/v0.40.2...v0.40.3) (2023-12-29)
 
 
