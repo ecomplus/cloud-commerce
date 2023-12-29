@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.40.1](https://github.com/ecomplus/cloud-commerce/compare/v0.40.0...v0.40.1) (2023-12-29)
+
+
+### Features
+
+* **storefront:** Bump Vue to v3.4.0 ([7bdd9f6](https://github.com/ecomplus/cloud-commerce/commit/7bdd9f6e885f090e20fc91b168e74ca83b486701))
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to v4.0.8 ([1f57f39](https://github.com/ecomplus/cloud-commerce/commit/1f57f39006305966a72f93aab1f00031757045cd))
+
 ## [0.40.0](https://github.com/ecomplus/cloud-commerce/compare/v0.39.0...v0.40.0) (2023-12-29)
 
 
