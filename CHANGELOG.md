@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.40.2](https://github.com/ecomplus/cloud-commerce/compare/v0.40.1...v0.40.2) (2023-12-29)
+
+
+### Bug Fixes
+
+* **storefront:** Reverting Vite to v5.0.8 and Astro to v4.0.6 ([d4ab5a5](https://github.com/ecomplus/cloud-commerce/commit/d4ab5a59484ab0025a60c372572f9208576d78e9))
+
 ### [0.40.1](https://github.com/ecomplus/cloud-commerce/compare/v0.40.0...v0.40.1) (2023-12-29)
 
 

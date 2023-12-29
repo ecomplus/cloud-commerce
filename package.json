@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "0.40.1",
+  "version": "0.40.2",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -43,7 +43,7 @@
     "turbo": "^1.11.2",
     "typescript": "~5.2.2",
     "uglify-js": "^3.17.4",
-    "vite": "^5.0.10",
+    "vite": "5.0.8",
     "vitest": "^1.1.0",
     "zx": "^7.2.3"
   },
