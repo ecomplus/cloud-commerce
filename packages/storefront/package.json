@@ -29,8 +29,8 @@
     "prepare-monorepo": "bash scripts/prepare-monorepo.sh"
   },
   "dependencies": {
-    "@astrojs/node": "7.0.2",
-    "@astrojs/vue": "4.0.5",
+    "@astrojs/node": "7.0.3",
+    "@astrojs/vue": "4.0.6",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
@@ -42,7 +42,7 @@
     "@types/gtag.js": "^0.0.18",
     "@vite-pwa/astro": "^0.2.0",
     "@vueuse/core": "10.7.0",
-    "astro": "4.0.7",
+    "astro": "4.0.8",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.3.1",
