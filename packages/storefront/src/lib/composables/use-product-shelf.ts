@@ -34,7 +34,7 @@ const useProductShelf = (props: Props) => {
       if (props.sort) {
         endpointQuery += `&sort=${props.sort}`;
       }
-      if (!props.isRelatedProducts) {
+      if (props.isRelatedProducts) {
         const { apiContext } = globalThis.$storefront;
         if (apiContext?.resource === 'products') {
           endpointQuery = `like=${apiContext.doc._id}`;
