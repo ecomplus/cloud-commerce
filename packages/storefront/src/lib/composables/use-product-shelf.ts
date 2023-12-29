@@ -2,6 +2,7 @@ import type { ResourceId, Collections, SearchItem } from '@cloudcommerce/types';
 import { ref, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
+import { i19relatedProducts } from '@@i18n';
 
 export interface Props {
   collectionId?: ResourceId | null;
@@ -13,6 +14,7 @@ export interface Props {
   limit?: number;
   page?: number;
   products?: SearchItem[];
+  isRelatedProducts?: boolean;
 }
 
 const useProductShelf = (props: Props) => {
@@ -26,31 +28,39 @@ const useProductShelf = (props: Props) => {
   if (!props.products) {
     isFetching.value = true;
     fetching = (async () => {
-      let searchQuery = props.searchQuery || '';
-      let collection: Collections | undefined;
-      if (props.collectionId) {
-        try {
-          const { data } = await api.get(`collections/${props.collectionId}`);
-          collection = data;
-        } catch (err: any) {
-          console.error(err);
-          fetchError.value = err;
-        }
-        const productIds = collection?.products;
-        if (Array.isArray(productIds) && productIds.length) {
-          searchQuery += `&_id=${productIds.slice(0, 60).join(',')}`;
-        }
-        if (!title.value && title.value !== null && collection?.name) {
-          title.value = collection?.name;
-        }
-      }
       const limit = props.limit || 24;
       const offset = props.page ? (props.page - 1) * limit : 0;
       let endpointQuery = `offset=${offset}&limit=${limit}`;
       if (props.sort) {
         endpointQuery += `&sort=${props.sort}`;
       }
-      endpointQuery += searchQuery;
+      if (!props.isRelatedProducts) {
+        const { apiContext } = globalThis.$storefront;
+        if (apiContext?.resource === 'products') {
+          endpointQuery = `like=${apiContext.doc._id}`;
+          title.value = i19relatedProducts;
+        }
+      } else {
+        let searchQuery = props.searchQuery || '';
+        let collection: Collections | undefined;
+        if (props.collectionId) {
+          try {
+            const { data } = await api.get(`collections/${props.collectionId}`);
+            collection = data;
+          } catch (err: any) {
+            console.error(err);
+            fetchError.value = err;
+          }
+          const productIds = collection?.products;
+          if (Array.isArray(productIds) && productIds.length) {
+            searchQuery += `&_id=${productIds.slice(0, 60).join(',')}`;
+          }
+          if (!title.value && title.value !== null && collection?.name) {
+            title.value = collection?.name;
+          }
+        }
+        endpointQuery += searchQuery;
+      }
       try {
         const { data } = await api.get(`search/v1?${endpointQuery}`);
         if (props.isShuffle) {
