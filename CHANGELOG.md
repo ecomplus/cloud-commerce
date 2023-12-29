@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.40.3](https://github.com/ecomplus/cloud-commerce/compare/v0.40.2...v0.40.3) (2023-12-29)
+
+
+### Bug Fixes
+
+* **storefront:** Reverting Vue to 3.3.11 ([07bae3b](https://github.com/ecomplus/cloud-commerce/commit/07bae3b33394f352eb990589f639f6551c2c7f00))
+
 ### [0.40.2](https://github.com/ecomplus/cloud-commerce/compare/v0.40.1...v0.40.2) (2023-12-29)
 
 
