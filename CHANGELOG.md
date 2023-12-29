@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.40.0](https://github.com/ecomplus/cloud-commerce/compare/v0.39.0...v0.40.0) (2023-12-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **i18n:** `i19relatedProduct` properly renamed to `i19relatedProducts`
+* **storefront:** `useSearchShowcase` prop changed from `params` to `fixedParams`
+* **storefront:** Renaming `searchMeta` prop&return to `resultMeta`
+* **storefront:** `useSearchEngine` API changed removing `sort` prop
+
+### Features
+
+* **api:** New interface and type updates adding `searches` resource ([e165a13](https://github.com/ecomplus/cloud-commerce/commit/e165a136f207404cca63400f0bdc8d53811f7692))
+* **i18n:** Add `i19anyPrice` ([4308611](https://github.com/ecomplus/cloud-commerce/commit/43086119874d86ccd4bfa95312377de8e02eaea3))
+* **i18n:** Add `i19filterOut` ([f4b31ee](https://github.com/ecomplus/cloud-commerce/commit/f4b31eecbd9874ebb872f9a52c7ce570ba549603))
+* **i18n:** Add `i19loadMoreProducts` ([40016e3](https://github.com/ecomplus/cloud-commerce/commit/40016e30a37ec86757a981c59b09ac3d2a5efcd5))
+* **storefront:** Abstract handling `sortOption` (optionally) on search showcase composable ([9e170e8](https://github.com/ecomplus/cloud-commerce/commit/9e170e88afaff6a38cb6e68cef33946b91db5f63))
+* **storefront:** Add `canLockScroll` prop to `Drawer` ([87b9b7e](https://github.com/ecomplus/cloud-commerce/commit/87b9b7e21edf4b3544c26d844eb0416830d070da))
+* **storefront:** Add `isRelatedProducts` optional prop to products shelf composable ([09c4f7a](https://github.com/ecomplus/cloud-commerce/commit/09c4f7adaf73b55f03ff453ce2d982b7bd045afb))
+* **storefront:** Add `sortOptions` to search showcase composable return ([fe41f0f](https://github.com/ecomplus/cloud-commerce/commit/fe41f0fad39f6d24e5d1e70a5dee937bd86c7460))
+* **storefront:** Adding `searchMeta` to search showcase composable ([3525402](https://github.com/ecomplus/cloud-commerce/commit/3525402ec18529cdf631da703042f0d96dc2645d))
+* **storefront:** Better defining some global `$storefront.data` types with partial resources lists ([a6f938a](https://github.com/ecomplus/cloud-commerce/commit/a6f938ab66a30efac18a55e0ead9364bb2885d93))
+* **storefront:** Bypassing sections `doc-banner` and `page-title` on `usePageSections` ([cbd7297](https://github.com/ecomplus/cloud-commerce/commit/cbd729797137ab113b4a0724af940709ce0ead42))
+* **storefront:** Completing `useSearchFilters` composable with filter options handlers ([5cdf744](https://github.com/ecomplus/cloud-commerce/commit/5cdf744a3bb1204a7926029a1cef6f11e3c4bf6d))
+* **storefront:** Completing `useSearchFilters` composable with specs filters ([92c549e](https://github.com/ecomplus/cloud-commerce/commit/92c549e87fd38a37655804098e62eb4ced75dc62))
+* **storefront:** Export new utility method `scrollToEl` ([7c5b5eb](https://github.com/ecomplus/cloud-commerce/commit/7c5b5eb73d79e36e52c8a2d416086121fca3ee2f))
+* **storefront:** New `activeFilters` and `filtersCount` also returned from search showcase ([8474db3](https://github.com/ecomplus/cloud-commerce/commit/8474db3f45a7ec84f09b5567425d9ac46a3cf93e))
+* **storefront:** New `usePagination` composable ([32877aa](https://github.com/ecomplus/cloud-commerce/commit/32877aaad4f4326c62e35031ab5f42f827e7bc1b))
+* **storefront:** New `useSearchFilters` composable ([0bc450d](https://github.com/ecomplus/cloud-commerce/commit/0bc450dd7f042104ae6dfa0597361fd2e40d02c2))
+* **storefront:** New method `setResult` to search engine class ([1c756d8](https://github.com/ecomplus/cloud-commerce/commit/1c756d89ebd8a62c4ade5fc3c178360ab13a3e53))
+* **storefront:** Properly sync filters and pagination with URL on search showcase ([8152ed1](https://github.com/ecomplus/cloud-commerce/commit/8152ed1ebfcb63298aa9fc9ca8f210abaa33ccf6))
+* **storefront:** Renaming section `doc-banners` and adding `custom-html` on `usePageSections` ([174db80](https://github.com/ecomplus/cloud-commerce/commit/174db80e6c6b32c41883e42592fe97cdb2c8e8d6))
+* **storefront:** Update search showcase composable with pagination abstractions ([5752e39](https://github.com/ecomplus/cloud-commerce/commit/5752e395aca219a799141b4136acbbd702f757a0))
+
+
+### Bug Fixes
+
+* **api:** Fixing returned result typedef for search requests with query string ([4fbfa88](https://github.com/ecomplus/cloud-commerce/commit/4fbfa8850a11a323d0934039a39c7932d1001cc0))
+* **api:** Proper typedef for stores/me and authentications/me responses ([#292](https://github.com/ecomplus/cloud-commerce/issues/292)) ([07598a7](https://github.com/ecomplus/cloud-commerce/commit/07598a775490a77acf30d6a109bf5e0b86810a27))
+* **api:** Updating config params typedef to accept undefined properties ([37175e1](https://github.com/ecomplus/cloud-commerce/commit/37175e1340b434c477648bf65a14196f597c176c))
+* **api:** Updating typdefs for search v2 response buckets ([757a485](https://github.com/ecomplus/cloud-commerce/commit/757a48592fb38b2a1aa16f8b89938802acbaec8c))
+* **deps:** Update Astro to v4.0.6 ([#288](https://github.com/ecomplus/cloud-commerce/issues/288)) ([d57416b](https://github.com/ecomplus/cloud-commerce/commit/d57416b460c77cb521b991e7a2f317a5989879b8))
+* **deps:** Update non-major dependencies ([#295](https://github.com/ecomplus/cloud-commerce/issues/295)) ([5ec12dd](https://github.com/ecomplus/cloud-commerce/commit/5ec12dd2730c11247cf0e096ac5680ab6b3dd506))
+* **deps:** Update Vue to v3.3.12 ([#289](https://github.com/ecomplus/cloud-commerce/issues/289)) ([c440202](https://github.com/ecomplus/cloud-commerce/commit/c44020239f3720c61ee0a2844a212b831ee26a55))
+* **i18n:** Fix `i19noItemSelected`, `i19noProductsFound`, `i19noProductsFoundFor$1` ([fef8b35](https://github.com/ecomplus/cloud-commerce/commit/fef8b3522e92e6fe426ae7e5176eb824c9f7d0ea))
+* **i18n:** Fix `i19reltedProducts` ([d49c2fd](https://github.com/ecomplus/cloud-commerce/commit/d49c2fd0d1d078f1d80713c8de21462b14841e7a))
+* **storefront:** Fix `SearchEngine` params reusing API client config typedef ([4313b70](https://github.com/ecomplus/cloud-commerce/commit/4313b70774c3771eb5c1d582ce10258fe7798607))
+* **storefront:** Fix `SearchEngine` params types removing null(s) following API params typedef ([0fd9c6b](https://github.com/ecomplus/cloud-commerce/commit/0fd9c6b8fe5e61765ce731ac180eda2f483195f8))
+* **storefront:** Update Astro to v4.0.6 ([#293](https://github.com/ecomplus/cloud-commerce/issues/293)) ([50adca0](https://github.com/ecomplus/cloud-commerce/commit/50adca094c169171ddbb011f27d6b4ebfc19a17f))
+* **storefront:** Update Vue to v3.3.13 ([#294](https://github.com/ecomplus/cloud-commerce/issues/294)) ([7c88a09](https://github.com/ecomplus/cloud-commerce/commit/7c88a09deccaec88dad33582f7aa3ee084480be5))
+
+
+* **storefront:** Remove `sort` prop from search showcase composable ([9dff758](https://github.com/ecomplus/cloud-commerce/commit/9dff758b988ecdf2dbd78ca7d3e898135d46d023))
+* **storefront:** Renaming prop `fixedParams` on search showcase composable ([e1404ba](https://github.com/ecomplus/cloud-commerce/commit/e1404baafbb37bc7ea45e060f87d75df08758b77))
+
 ## [0.39.0](https://github.com/ecomplus/cloud-commerce/compare/v0.38.0...v0.39.0) (2023-12-15)
 
 
