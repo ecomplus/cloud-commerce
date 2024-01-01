@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
+export * from '@cloudcommerce/ssr/events';
+
 export * from '@cloudcommerce/app-tiny-erp';
 
 export * from '@cloudcommerce/app-mercadopago/webhook';

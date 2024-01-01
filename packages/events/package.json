@@ -42,6 +42,7 @@
     "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/app-webhooks": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "@cloudcommerce/ssr": "workspace:*",
     "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0",
     "source-map-support": "^0.5.21"
