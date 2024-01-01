@@ -38,7 +38,8 @@ const sendAnalyticsEvents = async (
       return name === 'page_view';
     });
     const productView = gaEvents.find(({ name, params }) => {
-      return name === 'view_item' && params?.item_list_id === 'product-page';
+      return name === 'view_item'
+        && params?.items?.[0]?.item_list_id === 'product-page';
     });
     if (pageView || productView) {
       const db = getFirestore();
@@ -47,7 +48,7 @@ const sendAnalyticsEvents = async (
           .add({ url, at: Timestamp.now() });
         storingEvents.push(storing);
       }
-      const productId = productView?.params?.object_id;
+      const productId = productView?.params?.items?.[0]?.object_id;
       if (typeof productId === 'string' && /[0-9a-f]{24}/.test(productId)) {
         const storing = db.doc(`ssrProductViews/${productId}`)
           .set({ countUnsaved: FieldValue.increment(1) }, { merge: true });
