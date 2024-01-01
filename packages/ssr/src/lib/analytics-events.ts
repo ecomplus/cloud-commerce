@@ -40,7 +40,10 @@ const sendAnalyticsEvents = async (
     const productView = gaEvents.find(({ name, params }) => {
       return name === 'view_item' && params?.item_list_id === 'product-page';
     });
-    if (pageView || productView) {
+    const searchView = gaEvents.find(({ name }) => {
+      return name === 'view_search_results';
+    });
+    if (pageView || productView || searchView) {
       const db = getFirestore();
       if (pageView && url) {
         const storing = db.collection('ssrPageViews')
@@ -48,10 +51,27 @@ const sendAnalyticsEvents = async (
         storingEvents.push(storing);
       }
       const productId = productView?.params?.object_id;
-      if (productId) {
+      if (typeof productId === 'string' && /[0-9a-f]{24}/.test(productId)) {
         const storing = db.doc(`ssrProductViews/${productId}`)
           .set({ countUnsaved: FieldValue.increment(1) }, { merge: true });
         storingEvents.push(storing);
+      }
+      if (searchView) {
+        const searchTerm = searchView.params?.search_term;
+        if (
+          typeof searchTerm === 'string'
+          && searchTerm.length > 1 && searchTerm.length < 200
+          && /\w/.test(searchTerm) && !/__.*__/.test(searchTerm)
+        ) {
+          const searchTermId = searchTerm
+            .replace(/[/]/g, ' ')
+            .replace(/\s{2,}/g, ' ');
+          if (searchTermId.length > 1) {
+            const storing = db.doc(`ssrSearchViews/${searchTermId}`)
+              .set({ countUnsaved: FieldValue.increment(1) }, { merge: true });
+            storingEvents.push(storing);
+          }
+        }
       }
     }
     const sessionId = payload.g_session_id || payload.session_id;
