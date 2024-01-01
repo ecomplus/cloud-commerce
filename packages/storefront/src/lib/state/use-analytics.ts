@@ -286,9 +286,12 @@ export const useAnalytics = () => {
       emitGtagEvent('search', { search_term: term });
     }
   });
-  if (window.location.pathname === '/s') {
+  if (window.location.pathname.startsWith('/s')) {
     setTimeout(() => {
-      const urlSearchQ = new URLSearchParams(window.location.search).get('q');
+      let urlSearchQ = new URLSearchParams(window.location.search).get('q');
+      if (!urlSearchQ) {
+        urlSearchQ = decodeURIComponent(window.location.pathname.split('/')[2]);
+      }
       if (urlSearchQ && typeof urlSearchQ === 'string') {
         emitGtagEvent('view_search_results', { search_term: urlSearchQ });
       }
