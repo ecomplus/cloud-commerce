@@ -66,7 +66,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
   > = [];
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
-      if (type === 'product-shelf') {
+      if (type === 'product-shelf' || type === 'related-products') {
         const {
           collectionIdAndInfo,
           isHeadless,
@@ -119,12 +119,23 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           title: isHeadless ? null : title,
           titleLink,
           isShuffle,
+          isRelatedProducts: type === 'related-products',
         };
-        const { fetching, products } = useProductShelf(props);
+        const {
+          fetching,
+          products,
+          title: { value: finalTitle },
+          titleLink: { value: finalTitleLink },
+        } = useProductShelf(props);
         await fetching;
         sections[index] = {
           type,
-          props: { ...props, products },
+          props: {
+            ...props,
+            title: finalTitle,
+            titleLink: finalTitleLink,
+            products,
+          },
         };
         return;
       }
@@ -182,7 +193,6 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
       switch (type) {
         case 'breadcrumbs':
         case 'product-details':
-        case 'related-products':
         case 'doc-description':
         case 'doc-banners':
         case 'product-specifications':
