@@ -1,3 +1,3 @@
-import serveStorefront from './firebase/serve-storefront';
+import serveStorefront from './serve-storefront';
 
 export default serveStorefront;

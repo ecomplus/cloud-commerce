@@ -1,11 +1,11 @@
 import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
-import type { GroupedAnalyticsEvents } from '../analytics-events';
+import type { GroupedAnalyticsEvents } from './analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
-import { sendAnalyticsEvents } from '../analytics-events';
+import { sendAnalyticsEvents } from './analytics-events';
 
 declare global {
   // eslint-disable-next-line
