@@ -230,8 +230,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       '@types/facebook-nodejs-business-sdk':
-        specifier: ^15.0.5
-        version: 15.0.5
+        specifier: ^18.0.0
+        version: 18.0.0
 
   packages/apps/flash-courier:
     dependencies:
@@ -4428,8 +4428,8 @@ packages:
       '@types/serve-static': 1.15.2
     dev: false
 
-  /@types/facebook-nodejs-business-sdk@15.0.5:
-    resolution: {integrity: sha512-of1Mdp9H09nXzFRqtfxAlwtFbEiCBCjrwxKc/UUztf/x8fonO1x8Slt8Il37KSccYVEZwT3FySlf7ZhLOjY4Ew==}
+  /@types/facebook-nodejs-business-sdk@18.0.0:
+    resolution: {integrity: sha512-zsWWvxNo6aGMlIsLPFA664pXURY6QWPZcH6K0EGNH9MhMbBLIT2kslShDeMcvyHu5RphivtDHSRElFFUo+65ow==}
     dev: true
 
   /@types/fs-extra@11.0.1:
