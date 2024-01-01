@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.40.5](https://github.com/ecomplus/cloud-commerce/compare/v0.40.4...v0.40.5) (2024-01-01)
+
+
+### Features
+
+* **firebase:** New pkg export "lib/helpers/firestore" with `deleteQueryBatch` method ([6ae31ba](https://github.com/ecomplus/cloud-commerce/commit/6ae31ba2b3f477db9fc94bb92cfa30890520f860))
+* **ssr:** Counting search term views on Firestore ([f5b9f86](https://github.com/ecomplus/cloud-commerce/commit/f5b9f8607bf42d188881e3f9e425750391c4f671))
+* **ssr:** Setup scheduled function to save product views and delete old (90d) page views ([02f352f](https://github.com/ecomplus/cloud-commerce/commit/02f352f39e2d4c67ec35826d1f20a14a74ad8a0c))
+* **ssr:** Supporting bunny.net with Perma-Cache with on-demand purge ([b232642](https://github.com/ecomplus/cloud-commerce/commit/b2326424ea6ec077a4910f3f4b022e9ce946e898))
+
+
+### Bug Fixes
+
+* **apps:** Syntax fix for many apps cron setup ([d5fd1a3](https://github.com/ecomplus/cloud-commerce/commit/d5fd1a32f392df7e09920e2dc1590557552f0576))
+* **deps:** Update non-major dependencies ([#297](https://github.com/ecomplus/cloud-commerce/issues/297)) ([282d078](https://github.com/ecomplus/cloud-commerce/commit/282d078e19a1e4266531f77e0bcd7525cb81b913))
+* **ssr:** Properly storing product views from analytcis (gtag) events ([cb84f5b](https://github.com/ecomplus/cloud-commerce/commit/cb84f5bc5cf06b5f0fd109e372c505028b0c6ca5))
+* **storefront:** Bump Vue to v3.4.3 ([c4e806d](https://github.com/ecomplus/cloud-commerce/commit/c4e806ddea9764536fec0ee88c91fd1ae6369014))
+* **storefront:** Ensure related products fetch on SSR only ([75e8090](https://github.com/ecomplus/cloud-commerce/commit/75e80900ae7015562ba2d4803dd093642d17fbcf))
+* **storefront:** Properly send analytics `view_search_results` on SSRed search page ([a276136](https://github.com/ecomplus/cloud-commerce/commit/a2761361de6596cb3df3cef1ef33685e951ffd6d))
+
 ### [0.40.4](https://github.com/ecomplus/cloud-commerce/compare/v0.40.3...v0.40.4) (2023-12-29)
 
 
