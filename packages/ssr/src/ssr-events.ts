@@ -7,7 +7,11 @@ import saveViews from './lib/cron-ssr-save-views';
 const { httpsFunctionOptions: { region } } = config.get();
 
 export const ssr = {
-  cronSaveViews: functions.region(region).pubsub
-    .schedule(process.env.CRONTAB_SSR_SAVE_VIEWS || '49 * * * *')
+  cronSaveViews: functions.region(region).runWith({
+    timeoutSeconds: 119,
+    memory: '256MB',
+  }).pubsub
+    .schedule(process.env.CRONTAB_SSR_SAVE_VIEWS
+      || (process.env.BUNNYNET_API_KEY ? '*/2 * * * *' : '49 * * * *'))
     .onRun(saveViews),
 };

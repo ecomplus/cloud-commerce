@@ -1,4 +1,6 @@
 import { getFirestore } from 'firebase-admin/firestore';
+import { error } from 'firebase-functions/logger';
+import axios from 'axios';
 import api from '@cloudcommerce/api';
 import { deleteQueryBatch } from '@cloudcommerce/firebase/lib/helpers/firestore';
 
@@ -18,6 +20,33 @@ const saveViews = async () => {
       });
     }
     doc.ref.delete();
+  }
+  if (process.env.BUNNYNET_API_KEY) {
+    try {
+      const pageViewsSnapshot = await db.collection('ssrPageViews')
+        .where('at', '>', new Date(Date.now() - 1000 * 60 * 20))
+        .get();
+      const purgedUrls: string[] = [];
+      for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
+        const doc = pageViewsSnapshot.docs[i];
+        const { url } = doc.data() as { url: string };
+        if (url && !purgedUrls.includes(url)) {
+          await axios('https://api.bunny.net/purge', {
+            method: 'POST',
+            params: {
+              async: 'false',
+              url,
+            },
+            headers: {
+              AccessKey: process.env.BUNNYNET_API_KEY,
+            },
+          });
+          purgedUrls.push(url);
+        }
+      }
+    } catch (err) {
+      error(err);
+    }
   }
   const pageViewsQuery = db.collection('ssrPageViews')
     .where('at', '<', new Date(Date.now() - 1000 * 60 * 60 * 24 * 90));

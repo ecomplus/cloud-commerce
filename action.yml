@@ -32,6 +32,8 @@ inputs:
     description: 'Emails: SMTP username'
   smpt-pass: 
     description: 'Emails: SMTP password'
+  bunnynet-api-key: 
+    description: 'bunny.net API key (additional CDN layer)'
   sendgrid-api-key:
     description: 'App: SendGrid API key'
   tinyerp-token:
@@ -234,6 +236,7 @@ runs:
         SMTP_PORT: ${{ inputs.smpt-port }}
         SMTP_USER: ${{ inputs.smpt-user }}
         SMTP_PASS: ${{ inputs.smpt-pass }}
+        BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
         TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
@@ -280,6 +283,7 @@ runs:
         SMTP_PORT=$SMTP_PORT
         SMTP_USER=$SMTP_USER
         SMTP_PASS=$SMTP_PASS
+        BUNNYNET_API_KEY=$BUNNYNET_API_KEY
         SENDGRID_API_KEY=$SENDGRID_API_KEY
         TINYERP_TOKEN=$TINYERP_TOKEN
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
