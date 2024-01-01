@@ -13,7 +13,7 @@ export const melhorenvio = {
   cronTrackingCodes: functions.region(config.get().httpsFunctionOptions.region).pubsub
     .schedule(process.env.CRONTAB_MELHORENVIO_TRACKING_CODES || '19 * * * *')
     .onRun(() => {
-      return handleTrackingCodes;
+      return handleTrackingCodes();
     }),
 
   onStoreEvent: createAppEventsFunction(

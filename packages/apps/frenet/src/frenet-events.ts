@@ -15,7 +15,7 @@ export const frenet = {
   cronTrackingCodes: functions.region(region).pubsub
     .schedule(process.env.CRONTAB_FRENET_TRACKING_CODES || '19 * * * *')
     .onRun(() => {
-      return handleTrackingCodes;
+      return handleTrackingCodes();
     }),
 
   onStoreEvent: createAppEventsFunction(
