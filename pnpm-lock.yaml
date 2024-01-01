@@ -230,8 +230,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       '@types/facebook-nodejs-business-sdk':
-        specifier: ^15.0.5
-        version: 15.0.5
+        specifier: ^18.0.0
+        version: 18.0.0
 
   packages/apps/flash-courier:
     dependencies:
@@ -1104,68 +1104,6 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
-
-  store:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^0.40.4
-        version: link:../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^0.40.4
-        version: link:../packages/eslint
-
-  store/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^0.40.4
-        version: link:../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^0.40.4
-        version: link:../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^0.40.4
-        version: link:../../../packages/passport
-
-  store/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^0.40.4
-        version: link:../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^0.40.4
-        version: link:../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^0.40.4
-        version: link:../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.16
-        version: 1.7.16
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^0.40.4
-        version: link:../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^0.40.4
-        version: link:../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^0.40.4
-        version: link:../../../packages/types
-      photoswipe:
-        specifier: ^5.4.3
-        version: 5.4.3
-
-  store/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^0.40.4
-        version: link:../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^0.40.4
-        version: link:../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^0.40.4
-        version: link:../../../packages/modules
 
 packages:
 
@@ -3813,16 +3751,6 @@ packages:
       yargs: 17.7.2
     dev: false
 
-  /@headlessui/vue@1.7.16:
-    resolution: {integrity: sha512-nKT+nf/q6x198SsyK54mSszaQl/z+QxtASmgMEJtpxSX2Q0OPJX0upS/9daDyiECpeAsvjkoOrm2O/6PyBQ+Qg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      vue: ^3.2.0
-    peerDependenciesMeta:
-      vue:
-        optional: true
-    dev: false
-
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -4496,8 +4424,8 @@ packages:
       '@types/serve-static': 1.15.2
     dev: false
 
-  /@types/facebook-nodejs-business-sdk@15.0.5:
-    resolution: {integrity: sha512-of1Mdp9H09nXzFRqtfxAlwtFbEiCBCjrwxKc/UUztf/x8fonO1x8Slt8Il37KSccYVEZwT3FySlf7ZhLOjY4Ew==}
+  /@types/facebook-nodejs-business-sdk@18.0.0:
+    resolution: {integrity: sha512-zsWWvxNo6aGMlIsLPFA664pXURY6QWPZcH6K0EGNH9MhMbBLIT2kslShDeMcvyHu5RphivtDHSRElFFUo+65ow==}
     dev: true
 
   /@types/fs-extra@11.0.1:
@@ -10299,11 +10227,6 @@ packages:
   /perfect-debounce@1.0.0:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
     dev: false
-
-  /photoswipe@5.4.3:
-    resolution: {integrity: sha512-9UC6oJBK4oXFZ5HcdlcvGkfEHsVrmE4csUdCQhEjHYb3PvPLO3PG7UhnPuOgjxwmhq5s17Un5NUdum01LgBDng==}
-    engines: {node: '>= 0.12.0'}
-    dev: true
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
