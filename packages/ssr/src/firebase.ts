@@ -5,7 +5,7 @@ initializeApp();
 
 import { onRequest } from 'firebase-functions/v2/https';
 import config from '@cloudcommerce/firebase/lib/config';
-import serveStorefront from './serve-storefront';
+import serveStorefront from './lib/serve-storefront';
 
 const { ssrFunctionOptions } = config.get();
 

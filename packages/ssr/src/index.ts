@@ -1,3 +1,3 @@
-import serveStorefront from './serve-storefront';
+import serveStorefront from './lib/serve-storefront';
 
 export default serveStorefront;
