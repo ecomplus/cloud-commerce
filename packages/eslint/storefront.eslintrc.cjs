@@ -12,6 +12,7 @@ module.exports = {
     'comma-dangle': 'warn',
     'consistent-return': 'warn',
     'array-bracket-spacing': 'warn',
+    'no-restricted-syntax': 'warn',
     'quote-props': 'off',
     'quotes': 'off',
     'global-require': 'off',
