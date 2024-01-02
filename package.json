@@ -50,8 +50,6 @@
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
-        "astro",
-        "vue",
         "@nuxt/kit",
         "@babel/core"
       ]
