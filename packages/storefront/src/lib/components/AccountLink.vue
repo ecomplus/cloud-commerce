@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 
 export interface Props {
   to?: 'orders' | 'favorites';
@@ -10,17 +10,23 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   accountUrl: globalThis.$storefront?.settings.accountUrl || '/app/account',
-  returnUrl: globalThis.location?.href,
 });
+const locationUrl = ref('');
+if (globalThis.location?.href) {
+  nextTick(() => {
+    locationUrl.value = globalThis.location.href;
+  });
+}
 const href = computed(() => {
   let url = props.accountUrl;
+  const returnUrl = props.returnUrl || locationUrl.value;
   if (!props.to) {
     if (props.isSignUp) {
       url += '?sign_up&';
     } else {
       url += '?';
     }
-    return props.returnUrl ? `${url}return_url=${props.returnUrl}` : url;
+    return returnUrl ? `${url}return_url=${returnUrl}` : url;
   }
   const { settings } = globalThis.$storefront;
   if (props.to === 'orders' && settings.ordersUrl) {
