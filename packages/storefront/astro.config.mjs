@@ -253,6 +253,9 @@ const genAstroConfig = ({
         preserveSymlinks: lstatSync(joinPath(process.cwd(), 'src/components')).isSymbolicLink(),
         alias: viteAlias,
       },
+      define: {
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+      },
     },
   };
 };
