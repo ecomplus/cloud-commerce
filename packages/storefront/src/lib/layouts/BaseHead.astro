@@ -53,6 +53,7 @@ if (searchPageTerm) {
 const description = state.meta_description ||
   state.metaDescription ||
   state.short_description ||
+  state.description ||
   settings.description;
 const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
 const shortcutIcon = settings.icon ? getIconUrl(192) : null;

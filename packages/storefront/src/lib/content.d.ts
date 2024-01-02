@@ -38,7 +38,6 @@ export interface PageContent {
   thumbnail?: string;
   author?: string;
   description?: string;
-  body?: string;
 }
 
 export type ContentFilename = 'settings'
@@ -50,7 +49,7 @@ export type ContentData<T extends ContentFilename> =
   T extends `${string}/` ? Array<string> :
   T extends 'settings' ? SettingsContent :
   T extends 'layout' ? LayoutContent :
-  T extends `${string}/${string}` ? PageContent :
+  T extends `${string}/${string}` ? PageContent | null :
   null;
 
 export type ContentGetter = <T extends ContentFilename>(filename: T) =>

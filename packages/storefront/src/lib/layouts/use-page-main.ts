@@ -49,7 +49,8 @@ type ProductDetailsProps = { hasDescription?: boolean, hasSpecifications?: boole
 
 export const usePageSections = async <T extends CustomSection = CustomSection>
 ({ routeContext, handleCustomSection }: Props) => {
-  const sectionsContent = routeContext.cmsContent?.sections;
+  const { cmsContent } = routeContext;
+  const sectionsContent = cmsContent?.sections;
   const sections: Array<
     T
     | { type: 'product-shelf', props: UseProductShelfProps }
@@ -64,6 +65,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'page-title', props: {} }
     | { type: 'custom-html', props: { html: string } }
   > = [];
+
   if (sectionsContent) {
     await Promise.all(sectionsContent.map(async ({ type, ...sectionContent }, index) => {
       if (type === 'product-shelf' || type === 'related-products') {
@@ -181,16 +183,21 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         return;
       }
 
-      if (type === 'banners-grid') {
-        sections[index] = {
-          type,
-          props: {
-            banners: parseBanners(sectionContent.banners || []),
-          },
-        };
-        return;
-      }
       switch (type) {
+        case 'banners-grid':
+          sections[index] = {
+            type,
+            props: {
+              banners: parseBanners(sectionContent.banners || []),
+            },
+          };
+          return;
+        case 'custom-html':
+          sections[index] = {
+            type,
+            props: { html: sectionContent.html || '' },
+          };
+          return;
         case 'breadcrumbs':
         case 'product-details':
         case 'doc-description':
@@ -201,12 +208,6 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           sections[index] = {
             type,
             props: sectionContent,
-          };
-          return;
-        case 'custom-html':
-          sections[index] = {
-            type,
-            props: { html: sectionContent.html || '' },
           };
           return;
         default:
