@@ -50,7 +50,14 @@ type ProductDetailsProps = { hasDescription?: boolean, hasSpecifications?: boole
 export const usePageSections = async <T extends CustomSection = CustomSection>
 ({ routeContext, handleCustomSection }: Props) => {
   const { cmsContent } = routeContext;
-  const sectionsContent = cmsContent?.sections;
+  let sectionsContent = cmsContent?.sections;
+  if (
+    cmsContent?.markdown
+    && !sectionsContent?.find(({ type }) => type === 'content-entry')
+  ) {
+    if (!sectionsContent) sectionsContent = [];
+    sectionsContent.push({ type: 'content-entry' });
+  }
   const sections: Array<
     T
     | { type: 'product-shelf', props: UseProductShelfProps }
@@ -63,6 +70,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'product-specifications', props: {} }
     | { type: 'search-showcase' | 'context-showcase', props: UseSearchShowcaseProps }
     | { type: 'page-title', props: {} }
+    | { type: 'content-entry', props: { title: string, markdown: string } }
     | { type: 'custom-html', props: { html: string } }
   > = [];
 
@@ -196,6 +204,15 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           sections[index] = {
             type,
             props: { html: sectionContent.html || '' },
+          };
+          return;
+        case 'content-entry':
+          sections[index] = {
+            type,
+            props: {
+              title: sectionContent.title || cmsContent?.title || '',
+              markdown: sectionContent.markdown || cmsContent?.markdown || '',
+            },
           };
           return;
         case 'breadcrumbs':

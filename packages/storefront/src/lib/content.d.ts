@@ -38,6 +38,7 @@ export interface PageContent {
   thumbnail?: string;
   author?: string;
   description?: string;
+  markdown?: string;
 }
 
 export type ContentFilename = 'settings'
