@@ -27,6 +27,7 @@ module.exports = {
         'Skeleton',
         'Prices',
         'Banner',
+        'Breadcrumbs',
         'Countdown',
         'Collapse',
         'Accordion',
