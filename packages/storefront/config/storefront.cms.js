@@ -1,4 +1,4 @@
-global.__storefrontCMS = (fs, resolvePath) => {
+global.__storefrontCMS = (fs, resolvePath, _parseMatter) => {
   const { STOREFRONT_BASE_DIR } = process.env;
   let baseDir;
   if (STOREFRONT_BASE_DIR) {
@@ -8,6 +8,7 @@ global.__storefrontCMS = (fs, resolvePath) => {
   }
   process.env.STOREFRONT_BASE_DIR = baseDir;
   const dirContent = resolvePath(baseDir, 'content');
+  const resolveContent = (filename) => resolvePath(dirContent, filename);
 
   const contentCache = {};
   const getContent = (filename) => {
@@ -17,7 +18,7 @@ global.__storefrontCMS = (fs, resolvePath) => {
       let content = contentCache[filename];
       if (!content) {
         if (filename.endsWith('/')) {
-          const dirColl = resolvePath(dirContent, filename);
+          const dirColl = resolveContent(filename);
           return new Promise((resolve) => {
             const slugs = fs.existsSync(dirColl)
               ? fs.readdirSync(dirColl)
@@ -27,16 +28,22 @@ global.__storefrontCMS = (fs, resolvePath) => {
             resolve(slugs);
           });
         }
-        // @TODO: Also parse Markdown with front matter
-        const filepath = resolvePath(dirContent, `${filename}.json`);
-        content = fs.existsSync(filepath)
-          ? JSON.parse(fs.readFileSync(filepath, 'utf8'))
-          : null;
+        const jsonFilepath = resolveContent(`${filename}.json`);
+        if (fs.existsSync(jsonFilepath)) {
+          content = JSON.parse(fs.readFileSync(jsonFilepath, 'utf8'));
+        } else if (_parseMatter && fs.existsSync(resolveContent(`${filename}.md`))) {
+          const rawMd = fs.readFileSync(resolveContent(`${filename}.md`), 'utf8');
+          const { markdown, matter } = _parseMatter(rawMd);
+          content = { ...matter, markdown };
+        } else {
+          content = null;
+        }
         if (!filename.includes('/')) {
           // Caching root content only (not collections)
           contentCache[filename] = content;
         }
       }
+      if (typeof content.then === 'function') return content;
       return filename === 'settings'
         ? content
         : new Promise((resolve) => { resolve(content); });

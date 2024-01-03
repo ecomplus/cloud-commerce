@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { join as joinPath, resolve as resolvePath } from 'node:path';
+import { parse as parseYaml } from 'yaml';
 import config from '@cloudcommerce/config';
 import './storefront.cms.js';
 
@@ -15,13 +16,25 @@ export default () => {
     config.set({ storeId: Number(ECOM_STORE_ID) });
   }
 
+  const parseFrontmatter = (markdown) => {
+    let matter = {};
+    if (markdown.substring(0, 4) === '---\n') {
+      const [frontmatter, _md] = markdown.substring(4).split('\n---\n');
+      markdown = _md;
+      const _matter = parseYaml(frontmatter);
+      if (typeof _matter === 'object' && _matter && !Array.isArray(_matter)) {
+        matter = _matter;
+      }
+    }
+    return { markdown, matter };
+  };
   const {
     domain,
     primaryColor,
     secondaryColor,
     settings,
     getContent,
-  } = global.__storefrontCMS(fs, resolvePath);
+  } = global.__storefrontCMS(fs, resolvePath, parseFrontmatter);
   config.set({ settingsContent: settings });
 
   let { storeId } = config.get();
