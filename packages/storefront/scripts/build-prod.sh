@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BUILD_OUTPUT=static \
+BUILD_MINIMAL=true \
 BUILD_OUT_DIR=./.cloudcommerce/sf-tmp-dist \
   npx astro build
 DEPLOY_RUNTIME=serverless npx astro build
