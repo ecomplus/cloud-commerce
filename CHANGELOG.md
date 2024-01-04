@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.41.3](https://github.com/ecomplus/cloud-commerce/compare/v0.41.2...v0.41.3) (2024-01-04)
+
+
+### Bug Fixes
+
+* **deps:** Fix Vue semver to (latest) ^3.4.5, bump Astro to v4.1.0 (feat) ([1249e6b](https://github.com/ecomplus/cloud-commerce/commit/1249e6ba79afbc55bb6da686cbebd63ab4c9e148))
+* **storefront:** Fix base `<head>` Astro partial to not set meta title and description to all pages ([83213b3](https://github.com/ecomplus/cloud-commerce/commit/83213b3c2c2645cd6b4cf4c472b5dee4a86da37e))
+
 ### [0.41.2](https://github.com/ecomplus/cloud-commerce/compare/v0.41.1...v0.41.2) (2024-01-04)
 
 
