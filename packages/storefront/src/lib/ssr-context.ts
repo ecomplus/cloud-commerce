@@ -81,6 +81,7 @@ const loadRouteContext = async (
     apiPrefetchEndpoints?: ApiPrefetchEndpoints;
   } = {},
 ) => {
+  globalThis.astroUrl = Astro.url;
   const startedAt = Date.now();
   let urlPath = Astro.url.pathname;
   const isPreview = urlPath.startsWith('/~preview');
