@@ -32,13 +32,13 @@
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
     "@vueuse/core": "10.7.1",
-    "astro": "4.0.9",
+    "astro": "4.1.0",
     "astro-capo": "^0.0.1",
     "axios": "^1.6.3",
     "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.5.0",
     "mitt": "^3.0.1",
-    "vue": "3.4.0"
+    "vue": "^3.4.5"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
