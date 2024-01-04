@@ -1,6 +1,7 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg, price as getPrice } from '@ecomplus/utils';
+import { i19searchProducts } from '@@i18n';
 import ViewTransitions from '@@sf/components/ViewTransitions.astro';
 
 export interface Props {
@@ -19,6 +20,8 @@ const getIconUrl = (size: number) => {
 
 const {
   storeId,
+  isHomepage,
+  isSearchPage,
   searchPageTerm,
   cmsContent,
   fetchingApiContext,
@@ -39,22 +42,32 @@ if (fetchingApiContext) {
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
-let title = state.meta_title ||
+let title: string = state.meta_title ||
   state.metaTitle ||
   (state.name && `${state.name} | ${settings.name}`) ||
   (state.title && `${state.title} | ${settings.name}`) ||
-  settings.name;
-if (searchPageTerm) {
-  title = title.replace('$term', searchPageTerm);
-  if (!title.includes(searchPageTerm)) {
-    title = `${searchPageTerm} | ${title}`;
-  }
-}
-const description = state.meta_description ||
+  '';
+let description: string = state.meta_description ||
   state.metaDescription ||
   state.short_description ||
   state.description ||
-  settings.description;
+  settings.description ||
+  '';
+if (isHomepage) {
+  if (!title) title = settings.name;
+  if (!description) description = settings.description;
+}
+if (isSearchPage) {
+  if (searchPageTerm) {
+    if (!title) title = settings.name;
+    title = title.replace('$term', searchPageTerm);
+    if (!title.includes(searchPageTerm)) {
+      title = `${searchPageTerm} | ${title}`;
+    }
+  } else if (!title) {
+    title = `${i19searchProducts} | ${settings.name}`;
+  }
+}
 const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
 const shortcutIcon = settings.icon ? getIconUrl(192) : null;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
@@ -157,8 +170,8 @@ const inlineJSONLd = JSON.stringify({
 <link rel="icon" type="image/png" href={favicon} sizes="32x32" />
 {shortcutIcon &&
   <link rel="icon" type="image/png" href={shortcutIcon} sizes="192x192" />}
-<title>{title}</title>
-<meta name="description" content={description}>
+{title && <title>{title}</title>}
+{description && <meta name="description" content={description}>}
 <meta name="author" content={settings.name}>
 <meta name="generator" content={Astro.generator} />
 <link rel="canonical" href={canonicalUrl} />
