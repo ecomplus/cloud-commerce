@@ -1114,35 +1114,35 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.16
@@ -1152,13 +1152,13 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.3
@@ -1167,13 +1167,13 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^0.41.2
+        specifier: ^0.41.3
         version: link:../../../packages/modules
 
 packages:
