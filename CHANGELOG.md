@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.41.1](https://github.com/ecomplus/cloud-commerce/compare/v0.41.0...v0.41.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* **deps:** Revert Vue to exaect 3.4.0 ([576756e](https://github.com/ecomplus/cloud-commerce/commit/576756efe9e4e662778ceea9d7987acf0333c2c6))
+
 ## [0.41.0](https://github.com/ecomplus/cloud-commerce/compare/v0.40.5...v0.41.0) (2024-01-04)
 
 

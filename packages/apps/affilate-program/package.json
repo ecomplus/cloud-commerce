@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-affilate-program",
   "type": "module",
-  "version": "0.41.0",
+  "version": "0.41.1",
   "description": "E-Com Plus Cloud Commerce app for simple affiliate program",
   "main": "lib/index.js",
   "repository": {
