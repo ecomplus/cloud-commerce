@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.41.4](https://github.com/ecomplus/cloud-commerce/compare/v0.41.3...v0.41.4) (2024-01-04)
+
+
+### Bug Fixes
+
+* **ssr:** Must add `yaml` to SSR package deps ([041158a](https://github.com/ecomplus/cloud-commerce/commit/041158abdfa1af508b951a457988ae6393e7ef6e))
+
 ### [0.41.3](https://github.com/ecomplus/cloud-commerce/compare/v0.41.2...v0.41.3) (2024-01-04)
 
 
