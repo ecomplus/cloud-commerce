@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.41.0](https://github.com/ecomplus/cloud-commerce/compare/v0.40.5...v0.41.0) (2024-01-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **storefront:** Changed expected page content schema for content entry (with markdown)
+
+### Features
+
+* **storefront:** Adding support to .md files with frontmatter on (CMS) content ([1681506](https://github.com/ecomplus/cloud-commerce/commit/1681506c695c011956d209a11d982551ae42a7e1))
+* **storefront:** New section `content-entry` on page main composable ([5469278](https://github.com/ecomplus/cloud-commerce/commit/54692789aaa1f5c84a6648ee98585d6dd5911360))
+* **storefront:** Set `BUILD_MINIMAL` env on first build sted ([f5c464f](https://github.com/ecomplus/cloud-commerce/commit/f5c464f9bddb66dbd464be5c810bf17ba86d62ee))
+
+
+### Bug Fixes
+
+* **deps:** Revert Vue semver to ^3.4.0 ([4b06a30](https://github.com/ecomplus/cloud-commerce/commit/4b06a30de5891b6124ea6d1f3a75989be811da45))
+* **storefront:** Fixiing `ContentData` (may be null) and `PageContent` typedefs ([44ab06c](https://github.com/ecomplus/cloud-commerce/commit/44ab06c92e016f9c477f2dda83b7faf158aec1d2))
+* **storefront:** Prevent hydration mismatch with `<AccountLink>` and (client-only) location ([eb57285](https://github.com/ecomplus/cloud-commerce/commit/eb57285f84f84cac59bb9417a8db1c7be6ca503d))
+
 ### [0.40.5](https://github.com/ecomplus/cloud-commerce/compare/v0.40.4...v0.40.5) (2024-01-01)
 
 
