@@ -65,7 +65,7 @@ const usePagination = (props: Props) => {
     } else {
       url.searchParams.delete('p');
     }
-    baseUrl.value = url.toString();
+    baseUrl.value = `${url.pathname}${url.search}`;
   }, {
     immediate: true,
   });
