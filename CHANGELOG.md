@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.41.5](https://github.com/ecomplus/cloud-commerce/compare/v0.41.4...v0.41.5) (2024-01-05)
+
+
+### Features
+
+* **storefront:** Set `globa.astroUrl` on SSR ([b4dccad](https://github.com/ecomplus/cloud-commerce/commit/b4dccadee699ae29949880a1113e3a7d918c9fc9))
+* **storefront:** Start returning `pageLinks` from `usePgination` ([d45becf](https://github.com/ecomplus/cloud-commerce/commit/d45becf93621a8c4fba4fba6fa494830f7111f17))
+
 ### [0.41.4](https://github.com/ecomplus/cloud-commerce/compare/v0.41.3...v0.41.4) (2024-01-04)
 
 
