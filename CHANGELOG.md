@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.41.6](https://github.com/ecomplus/cloud-commerce/compare/v0.41.5...v0.41.6) (2024-01-05)
+
+
+### Bug Fixes
+
+* **storefront:** Set page links without hostname (may be proxied) on pagination composable ([6baf13c](https://github.com/ecomplus/cloud-commerce/commit/6baf13cb50b1fa6e8b4c313be5e4cff88069c72a))
+
 ### [0.41.5](https://github.com/ecomplus/cloud-commerce/compare/v0.41.4...v0.41.5) (2024-01-05)
 
 
