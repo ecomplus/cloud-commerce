@@ -162,11 +162,11 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.6.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -187,11 +187,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -238,11 +238,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -279,11 +279,11 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -304,11 +304,11 @@ importers:
         specifier: ^18.0.4
         version: 18.0.4
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -351,11 +351,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -379,11 +379,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -404,11 +404,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -483,11 +483,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -508,11 +508,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -536,11 +536,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
       pagarme:
         specifier: ^4.33.1
         version: 4.33.1
@@ -570,11 +570,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -595,11 +595,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -620,11 +620,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -648,11 +648,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
       form-data:
         specifier: 4.0.0
         version: 4.0.0
@@ -676,11 +676,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -778,7 +778,7 @@ importers:
         specifier: workspace:*
         version: link:../api
       '@cloudcommerce/app-affiliate-program':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../apps/affiliate-program
       '@cloudcommerce/app-datafrete':
         specifier: workspace:*
@@ -835,11 +835,11 @@ importers:
         specifier: workspace:*
         version: link:../ssr
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -977,11 +977,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -1008,11 +1008,11 @@ importers:
         specifier: workspace:*
         version: link:../firebase
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -1054,11 +1054,11 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       firebase-admin:
-        specifier: ^11.11.1
-        version: 11.11.1
+        specifier: ^12.0.0
+        version: 12.0.0
       firebase-functions:
-        specifier: ^4.5.0
-        version: 4.5.0(firebase-admin@11.11.1)
+        specifier: ^4.6.0
+        version: 4.6.0(firebase-admin@12.0.0)
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
@@ -3147,7 +3147,7 @@ packages:
       '@cloudcommerce/firebase': 0.40.5
       '@cloudcommerce/ssr': 0.40.5(@types/node@18.19.4)(typescript@5.2.2)
       firebase-admin: 11.11.1
-      firebase-functions: 4.5.0(firebase-admin@11.11.1)
+      firebase-functions: 4.6.0(firebase-admin@11.11.1)
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - '@types/node'
@@ -3181,7 +3181,7 @@ packages:
       '@cloudcommerce/config': 0.40.5
       '@google-cloud/pubsub': 4.1.0
       firebase-admin: 11.11.1
-      firebase-functions: 4.5.0(firebase-admin@11.11.1)
+      firebase-functions: 4.6.0(firebase-admin@11.11.1)
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - encoding
@@ -3220,7 +3220,7 @@ packages:
       ajv-formats: 2.1.1(ajv@8.12.0)
       axios: 1.6.3
       firebase-admin: 11.11.1
-      firebase-functions: 4.5.0(firebase-admin@11.11.1)
+      firebase-functions: 4.6.0(firebase-admin@11.11.1)
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - debug
@@ -3234,7 +3234,7 @@ packages:
       '@cloudcommerce/api': 0.40.5
       '@cloudcommerce/firebase': 0.40.5
       firebase-admin: 11.11.1
-      firebase-functions: 4.5.0(firebase-admin@11.11.1)
+      firebase-functions: 4.6.0(firebase-admin@11.11.1)
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - encoding
@@ -3254,7 +3254,7 @@ packages:
       astro-capo: 0.0.1(astro@4.0.8)
       axios: 1.6.3
       firebase-admin: 11.11.1
-      firebase-functions: 4.5.0(firebase-admin@11.11.1)
+      firebase-functions: 4.6.0(firebase-admin@11.11.1)
       mitt: 3.0.1
       vue: 3.4.5(typescript@5.2.2)
     transitivePeerDependencies:
