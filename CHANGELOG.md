@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/ecomplus/cloud-commerce/compare/v0.41.6...v2.0.0) (2024-01-05)
+
+
+### Bug Fixes
+
+* **affiliate-program:** Typo fix everywere from "affilate" to "affiliate" ([8dbbffd](https://github.com/ecomplus/cloud-commerce/commit/8dbbffd751814b54c92f26a1ec4f72e373de7538))
+* **deps:** Start bumping firebase-admin to v12 ([58bd5ab](https://github.com/ecomplus/cloud-commerce/commit/58bd5abb400e89aaaac55e7647474e77ab1353d9))
+* **deps:** Updating firebase-admin to v12 on all packages ([4d4400d](https://github.com/ecomplus/cloud-commerce/commit/4d4400d830df9b71581ae141e555a5e368d27e66))
+
 ### [0.41.6](https://github.com/ecomplus/cloud-commerce/compare/v0.41.5...v0.41.6) (2024-01-05)
 
 
