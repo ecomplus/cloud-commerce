@@ -1,5 +1,10 @@
 /* REFERENCE: https://jasonwatmore.com/post/2018/08/07/javascript-pure-pagination-logic-in-vanilla-js-typescript */
-import { computed } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  toRef,
+} from 'vue';
 
 export interface Props {
   totalItems?: number,
@@ -7,6 +12,7 @@ export interface Props {
   page?: number,
   pageSize?: number,
   maxPages?: number,
+  isUrlPath?: boolean,
 }
 
 const usePagination = (props: Props) => {
@@ -48,11 +54,45 @@ const usePagination = (props: Props) => {
     return Array.from(Array((endPage.value + 1) - startPage.value).keys())
       .map((i) => startPage.value + i);
   });
+
+  const baseUrl = ref('');
+  watch(toRef(props.isUrlPath), () => {
+    const url = import.meta.env.SSR
+      ? global.astroUrl
+      : new URL(window.location.toString());
+    if (props.isUrlPath && !url.pathname.endsWith('/')) {
+      url.pathname += '/';
+    } else {
+      url.searchParams.delete('p');
+    }
+    baseUrl.value = url.toString();
+  }, {
+    immediate: true,
+  });
+  const getPageLink = (pageN: number) => {
+    if (props.isUrlPath) return `../${pageN}`;
+    return `?p=${pageN}`;
+  };
+  const pageLinks = computed(() => {
+    return pages.value.map((pageN) => baseUrl.value + getPageLink(pageN));
+  });
+  const prevPageLink = computed(() => {
+    if (pageNumber.value <= 1) return null;
+    return baseUrl.value + getPageLink(pageNumber.value - 1);
+  });
+  const nextPageLink = computed(() => {
+    if (pageNumber.value >= totalPages.value) return null;
+    return baseUrl.value + getPageLink(pageNumber.value + 1);
+  });
+
   return {
     totalPages,
     startPage,
     endPage,
     pages,
+    pageLinks,
+    prevPageLink,
+    nextPageLink,
   };
 };
 
