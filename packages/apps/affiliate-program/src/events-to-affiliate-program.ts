@@ -22,7 +22,7 @@ const handleApiEvent: ApiEventHandler = async ({
   const isOrder = evName.startsWith('orders-');
   const isCustomer = evName.startsWith('customers-');
 
-  const firestoreColl = getFirestore().collection('affilateProgramOrders');
+  const firestoreColl = getFirestore().collection('affiliateProgramOrders');
 
   if (
     (Array.isArray(appData.ignore_events)

@@ -39,7 +39,7 @@ const webhooksAppEvents: ApiEventName[] = [
   'carts-delayed',
 ];
 
-const affilateProgramEvents: ApiEventName[] = [
+const affiliateProgramEvents: ApiEventName[] = [
   'orders-anyStatusSet',
   'customers-new',
 ];
@@ -159,9 +159,9 @@ const mergeConfig = {
       appId: 123113,
       events: webhooksAppEvents,
     },
-    affilateProgram: {
+    affiliateProgram: {
       appId: 119753,
-      events: affilateProgramEvents,
+      events: affiliateProgramEvents,
     },
     flashCourier: {
       appId: 104136,

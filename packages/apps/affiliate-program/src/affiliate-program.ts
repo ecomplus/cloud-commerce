@@ -4,11 +4,11 @@ import {
   createAppEventsFunction,
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import handleApiEvent from './events-to-affilate-program';
+import handleApiEvent from './events-to-affiliate-program';
 
-export const affilateapp = {
+export const affiliateapp = {
   onStoreEvent: createAppEventsFunction(
-    'affilateProgram',
+    'affiliateProgram',
     handleApiEvent as ApiEventHandler,
   ),
 };

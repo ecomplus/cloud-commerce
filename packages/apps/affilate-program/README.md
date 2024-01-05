@@ -1,1 +1,0 @@
-# `@cloudcommerce/app-affilate-program`

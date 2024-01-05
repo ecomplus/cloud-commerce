@@ -1,5 +1,5 @@
 {
-  "name": "@cloudcommerce/app-affilate-program",
+  "name": "@cloudcommerce/app-affiliate-program",
   "type": "module",
   "version": "0.41.6",
   "description": "E-Com Plus Cloud Commerce app for simple affiliate program",
@@ -7,14 +7,14 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/apps/app-affilate-program"
+    "directory": "packages/apps/app-affiliate-program"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "Apache 2.0 with Commons Clause",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/app-affilate-program#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/app-affiliate-program#readme",
   "scripts": {
     "build": "bash ../../../scripts/build-lib.sh"
   },
