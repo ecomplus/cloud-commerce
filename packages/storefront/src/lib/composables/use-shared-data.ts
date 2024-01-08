@@ -38,7 +38,8 @@ const useSharedData = async <T extends string = string>(props: Props<T>) => {
   return {
     value,
     getInlineClientJS: () => `
-window.$storefront.data['${field}'] = ${JSON.stringify(value)};`,
+window.$storefront.data['${field}'] = ${JSON.stringify(value)};
+window.dispatchEvent(new Event('storefront:data:${field}'));`,
   };
 };
 
