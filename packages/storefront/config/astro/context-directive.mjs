@@ -11,7 +11,7 @@ export default (load, opts) => {
   const next = () => {
     const arrOpts = Array.isArray(opts.value) ? opts.value : [opts.value];
     for (let i = 0; i < arrOpts.length; i++) {
-      if (arrOpts[i].startsWith('data:')) {
+      if (typeof arrOpts[i] === 'string' && arrOpts[i].startsWith('data:')) {
         const field = arrOpts[i].substring(5);
         if (!window.$storefront?.data?.[field]) {
           window.addEventListener(
