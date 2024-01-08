@@ -1,6 +1,6 @@
 /**
  * Hydrate on context script executed (`$storefront.apiContext` ready)
- * Check event emits at BaseHead.astro
+ * Check event emits at BaseHead.astro and use-shared-data.ts
  * @type {import('astro').ClientDirective}
  */
 export default (load, opts) => {
@@ -9,7 +9,21 @@ export default (load, opts) => {
     await hydrate();
   };
   const next = () => {
-    if (opts.value === 'idle') {
+    const arrOpts = Array.isArray(opts.value) ? opts.value : [opts.value];
+    for (let i = 0; i < arrOpts.length; i++) {
+      if (arrOpts[i].startsWith('data:')) {
+        const field = arrOpts[i].substring(5);
+        if (!window.$storefront?.data?.[field]) {
+          window.addEventListener(
+            `storefront:data:${field}`,
+            next,
+            { once: true },
+          );
+          return;
+        }
+      }
+    }
+    if (arrOpts.includes('idle')) {
       if (typeof window.requestIdleCallback === 'function') {
         setTimeout(() => window.requestIdleCallback(hy), 9);
         return;
