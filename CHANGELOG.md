@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/ecomplus/cloud-commerce/compare/v2.0.1...v2.0.2) (2024-01-08)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#304](https://github.com/ecomplus/cloud-commerce/issues/304)) ([63b63f4](https://github.com/ecomplus/cloud-commerce/commit/63b63f4021dd26c230f3caba6ec6d1b5b43d9fed))
+* **storefront:** Update Astro to v4.1.1 ([#305](https://github.com/ecomplus/cloud-commerce/issues/305)) ([f03756f](https://github.com/ecomplus/cloud-commerce/commit/f03756ff9b731429a45f53c089cb590a01c1302c))
+* **storefront:** Watching shared `data:grids` event on SKU selector composable ([3f9a0c3](https://github.com/ecomplus/cloud-commerce/commit/3f9a0c3a834186558814301ab9d73f32b1036459))
+
 ### [2.0.1](https://github.com/ecomplus/cloud-commerce/compare/v2.0.0...v2.0.1) (2024-01-08)
 
 
