@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/ecomplus/cloud-commerce/compare/v2.0.0...v2.0.1) (2024-01-08)
+
+
+### Bug Fixes
+
+* **storefront:** Shared data scripts should be async to perform well (reduced TBT) ([ce8ce82](https://github.com/ecomplus/cloud-commerce/commit/ce8ce820f624f489388628c816c16c9ca617fbdf))
+* **storefront:** Updating custom `client-context=` Astro directive to support awaiting shared data ([cf16fa6](https://github.com/ecomplus/cloud-commerce/commit/cf16fa6a74ef6bb87fd5f06485f0bea7640adc5f))
+
 ## [2.0.0](https://github.com/ecomplus/cloud-commerce/compare/v0.41.6...v2.0.0) (2024-01-05)
 
 
