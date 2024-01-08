@@ -3959,7 +3959,7 @@ packages:
     peerDependencies:
       vue: ^3.2.0
     dependencies:
-      vue: 3.4.5(typescript@5.2.2)
+      vue: 3.4.5
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -5408,7 +5408,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.4.5
       '@vue/shared': 3.4.5
-      vue: 3.4.5(typescript@5.2.2)
+      vue: 3.4.5
     dev: false
 
   /@vue/shared@3.4.5:
@@ -12880,6 +12880,21 @@ packages:
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /vue@3.4.5:
+    resolution: {integrity: sha512-VH6nHFhLPjgu2oh5vEBXoNZxsGHuZNr3qf4PHClwJWw6IDqw6B3x+4J+ABdoZ0aJuT8Zi0zf3GpGlLQCrGWHrw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/compiler-dom': 3.4.5
+      '@vue/compiler-sfc': 3.4.5
+      '@vue/runtime-dom': 3.4.5
+      '@vue/server-renderer': 3.4.5(vue@3.4.5)
+      '@vue/shared': 3.4.5
     dev: false
 
   /vue@3.4.5(typescript@5.2.2):
