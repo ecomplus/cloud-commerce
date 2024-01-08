@@ -1,4 +1,4 @@
-import type { ResourceId, Products } from '@cloudcommerce/api/types';
+import type { ResourceId, Products, Grids } from '@cloudcommerce/api/types';
 import {
   ref,
   computed,
@@ -7,7 +7,6 @@ import {
   watch,
   toRef,
 } from 'vue';
-import api from '@cloudcommerce/api';
 import {
   specValueByText as getSpecValueByText,
   specTextValue as getSpecTextValue,
@@ -18,14 +17,19 @@ import {
 export interface Props {
   variations: Exclude<Products['variations'], undefined>;
   variationId?: ResourceId | null;
+  grids?: Array<Partial<Grids>>;
 }
 
 const useSkuSelector = (props: Props) => {
-  const grids = shallowReactive(globalThis.$storefront.data.grids || []);
-  if (!grids.length) {
-    api.get('grids').then(({ data: { result } }) => {
-      result.forEach((grid) => grids.push(grid));
-    });
+  const grids = shallowReactive(
+    props.grids
+    || globalThis.$storefront.data.grids
+    || [],
+  );
+  if (!grids.length && !import.meta.env.SSR) {
+    window.addEventListener('storefront:data:data', () => {
+      globalThis.$storefront.data.grids?.forEach((grid) => grids.push(grid));
+    }, { once: true });
   }
   const variationsGrids = reactive<Record<string, string[]>>({});
   const activeVariationsGrids = reactive<Record<string, string[]>>({});
