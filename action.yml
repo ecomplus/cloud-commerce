@@ -338,7 +338,7 @@ runs:
         if [ ! -f ".firebaserc" ]; then
           echo '{ "projects": { "default": "ecom2-demo" } }' > .firebaserc
         fi
-        npm --prefix "functions/ssr/" run build:static && npm run build -- --codebase ssr
+        npm --prefix "functions/ssr/" run build:static
 
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview
