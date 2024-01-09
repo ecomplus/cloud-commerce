@@ -192,7 +192,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
     if (response.ok) {
       const res = {
         ...response,
-        data: await response.json(),
+        data: response.status !== 204 ? await response.json() : null,
       };
       if (canCache && cacheKey) {
         globalThis.__apiCache[cacheKey] = {
