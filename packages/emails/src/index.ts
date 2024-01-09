@@ -56,12 +56,13 @@ const sendEmail = (
   } = emailData;
 
   const { settingsContent } = config.get();
+  const senderEmail = MAIL_SENDER || settingsContent.email;
+  const senderName = MAIL_SENDER_NAME || settingsContent.name;
 
   if (!templateId && !template && !html) {
     throw new Error('TemplateId, template or html not found');
   }
-
-  if (!MAIL_SENDER) {
+  if (!senderEmail) {
     throw new Error('Sender email not configured');
   }
 
@@ -72,14 +73,13 @@ const sendEmail = (
     sender,
     bcc,
     from: {
-      name: MAIL_SENDER_NAME || settingsContent.name,
-      email: MAIL_SENDER,
+      name: senderName,
+      email: senderEmail,
     },
   };
-
   if (MAIL_REPLY_TO) {
     emailHeaders.replyTo = {
-      name: MAIL_SENDER_NAME || settingsContent.name,
+      name: senderName,
       email: MAIL_REPLY_TO,
     };
   }
