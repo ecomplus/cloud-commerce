@@ -190,17 +190,16 @@ const api = async <T extends Config & { body?: any, data?: any }>(
 
   if (response) {
     if (response.ok) {
-      const res = {
-        ...response,
-        data: response.status !== 204 ? await response.json() : null,
-      };
+      const res = response as Response & { data: any, config: Config };
+      res.data = response.status !== 204 ? await response.json() : null;
       if (canCache && cacheKey) {
         globalThis.__apiCache[cacheKey] = {
           timestamp: Date.now(),
-          res,
+          res: res as Response & { data: any },
         };
       }
-      return { ...res, config };
+      res.config = config;
+      return res;
     }
     const { status } = response;
     if (maxRetries < _retries && (status === 429 || status >= 500)) {
