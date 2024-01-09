@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv';
 import { test, expect } from 'vitest';
 import api, { type ApiError } from '../src/api';
 
@@ -15,9 +16,10 @@ test('Read product and typecheck SKU', async () => {
 });
 
 test('404 with different Store ID from env', async () => {
-  process.env.ECOM_STORE_ID = '1011';
   try {
-    const { data } = await api.get(`products/${productId}`);
+    const { data } = await api.get(`products/${productId}`, {
+      storeId: 1011,
+    });
     console.log(data);
     throw new Error('Should have thrown not found');
   } catch (err: any) {
@@ -28,6 +30,7 @@ test('404 with different Store ID from env', async () => {
 });
 
 test('List categories and typecheck result', async () => {
+  process.env.ECOM_STORE_ID = '1056';
   const { data } = await api.get('categories', {
     fields: ['name'] as const,
   });
@@ -79,4 +82,13 @@ test('401 to create category and body typecheck', async () => {
     expect(error.statusCode).toBe(401);
     expect(error.response?.status).toBe(401);
   }
+});
+
+test('204 to update products views', async () => {
+  dotenv.config();
+  const isAuthenticating = !!process.env.ECOM_API_KEY;
+  const { status } = await api.patch(`products/${productId}`, {
+    views: 100,
+  });
+  expect(status).toBe(isAuthenticating ? 204 : 401);
 });
