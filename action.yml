@@ -19,20 +19,20 @@ inputs:
   deploy-codebase:
     description: 'Specific Firebase Functions codebase for partial deploy'
   mail-sender:
-    description: 'Emails: sender email'
+    description: 'Emails: sender email (default from settings contact email)'
   mail-sender-name:
     description: 'Emails: sender name (default is store name)'
   mail-reply-to:
     description: 'Emails: Reply email'
-  smpt-host: 
+  smpt-host:
     description: 'Emails: SMTP hostname'
-  smpt-port: 
+  smpt-port:
     description: 'Emails: SMTP port number'
-  smpt-user: 
+  smpt-user:
     description: 'Emails: SMTP username'
-  smpt-pass: 
+  smpt-pass:
     description: 'Emails: SMTP password'
-  bunnynet-api-key: 
+  bunnynet-api-key:
     description: 'bunny.net API key (additional CDN layer)'
   sendgrid-api-key:
     description: 'App: SendGrid API key'
