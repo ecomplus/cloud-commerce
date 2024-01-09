@@ -57,11 +57,7 @@ type Endpoint = ResourceOpQuery
   | `$aggregate/${Exclude<Resource, 'stores' | 'applications' | 'authentications'>}`
   | `schemas/${Resource}`;
 
-type Method = 'get' | 'GET'
-  | 'post' | 'POST'
-  | 'put' | 'PUT'
-  | 'patch' | 'PATCH'
-  | 'delete' | 'DELETE';
+type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 type Config = {
   baseUrl?: string,
