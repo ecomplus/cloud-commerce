@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.4](https://github.com/ecomplus/cloud-commerce/compare/v2.0.3...v2.0.4) (2024-01-09)
+
+
+### Bug Fixes
+
+* **api:** Do not get fetch response `.json()` on status 204 (No Content) ([6d9034f](https://github.com/ecomplus/cloud-commerce/commit/6d9034f03b07cabb9fd0c5ad122597e1f0c44c29))
+* **api:** Properly returning Response instance with additional `data` and `config` ([7a1f1b2](https://github.com/ecomplus/cloud-commerce/commit/7a1f1b2ced36acb3f3a351d9684f74c657dab17a))
+* **api:** Properly set HTTP verbs uppercased on fetch config ([4c49fa1](https://github.com/ecomplus/cloud-commerce/commit/4c49fa1d45c629c99a280f1c3fddaa38a515c634))
+
 ### [2.0.3](https://github.com/ecomplus/cloud-commerce/compare/v2.0.2...v2.0.3) (2024-01-09)
 
 
