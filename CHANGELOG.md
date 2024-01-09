@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.3](https://github.com/ecomplus/cloud-commerce/compare/v2.0.2...v2.0.3) (2024-01-09)
+
+
+### Bug Fixes
+
+* **emails:** Using contact email from settings as default sender if `MAIL_SENDER` env not set ([b843a35](https://github.com/ecomplus/cloud-commerce/commit/b843a3550a3d4cf3f4c3daaae83e397b975639f2))
+* **ssr:** Prevent rejection and proper debug API errors on cron save views ([f8f9bdd](https://github.com/ecomplus/cloud-commerce/commit/f8f9bddd0f166f9a2bf6657d1a51210d6ce44296))
+
 ### [2.0.2](https://github.com/ecomplus/cloud-commerce/compare/v2.0.1...v2.0.2) (2024-01-08)
 
 
