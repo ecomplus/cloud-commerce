@@ -143,13 +143,13 @@ const api = async <T extends Config & { body?: any, data?: any }>(
     ? { ...globalThis.$apiMergeConfig, ...requestConfig }
     : requestConfig;
   const { url, headers } = def.middleware(config);
+  const method = config.method?.toUpperCase() || 'GET';
   const {
-    method = 'get',
     timeout = 20000,
     maxRetries = 3,
     cacheMaxAge = 600000, // 10 minutes
   } = config;
-  const canCache = method === 'get' && config.canCache;
+  const canCache = method === 'GET' && config.canCache;
   let cacheKey: string | undefined;
   if (canCache) {
     cacheKey = `${url}${JSON.stringify(headers)}`;
