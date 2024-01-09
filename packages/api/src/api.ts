@@ -147,7 +147,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   const {
     timeout = 20000,
     maxRetries = 3,
-    cacheMaxAge = 600000, // 10 minutes
+    cacheMaxAge = 600000, /* 10 minutes */
   } = config;
   const canCache = method === 'GET' && config.canCache;
   let cacheKey: string | undefined;
