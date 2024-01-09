@@ -14,12 +14,17 @@ const saveViews = async () => {
     const { countUnsaved } = doc.data() as { countUnsaved: number };
     if (countUnsaved > 0) {
       const productId = doc.id as string & { length: 24 };
-      const { views } = (await api.get(`products/${productId}`)).data;
-      await api.patch(`products/${productId}`, {
-        views: countUnsaved + (views || 0),
-      });
+      try {
+        const { views } = (await api.get(`products/${productId}`)).data;
+        await api.patch(`products/${productId}`, {
+          views: countUnsaved + (views || 0),
+        });
+        doc.ref.delete();
+      } catch (err) {
+        error(err);
+        break;
+      }
     }
-    doc.ref.delete();
   }
   if (process.env.BUNNYNET_API_KEY) {
     try {
@@ -44,8 +49,14 @@ const saveViews = async () => {
           purgedUrls.push(url);
         }
       }
-    } catch (err) {
-      error(err);
+    } catch (err: any) {
+      if (typeof err.toJSON === 'function') {
+        const _err: any = new Error('Cant purge bunny.net cache');
+        _err.info = err.toJSON();
+        error(_err);
+      } else {
+        error(err);
+      }
     }
   }
   const pageViewsQuery = db.collection('ssrPageViews')
