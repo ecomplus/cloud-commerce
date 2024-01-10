@@ -258,12 +258,18 @@ const put = <E extends Exclude<Endpoint, ResourceOpQuery>, C extends AbstractedC
   });
 };
 
-const patch = (endpoint: Endpoint, body: any, config?: AbstractedConfig) => api({
-  ...config,
-  method: 'patch',
-  endpoint,
-  body,
-});
+const patch = <E extends Endpoint, C extends AbstractedConfig>(
+  endpoint: E,
+  body: RequestBody<{ endpoint: E, method: 'patch' }>,
+  config?: C,
+) => {
+  return api({
+    ...config,
+    method: 'patch',
+    endpoint,
+    body,
+  });
+};
 
 const del = (endpoint: Endpoint, config?: AbstractedConfig) => api({
   ...config,

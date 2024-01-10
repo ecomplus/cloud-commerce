@@ -431,19 +431,28 @@ type SetDocEndpoint<TResource extends Resource> = TResource | `${TResource}/${Re
 
 type RequestBody<TConfig extends Config> =
   TConfig['method'] extends undefined | 'get' | 'delete' ? undefined :
-  TConfig['method'] extends 'patch' ? any : // TODO: partial body
-  // method: 'post' | 'put'
-  TConfig['endpoint'] extends SetDocEndpoint<'products'> ? ProductSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'categories'> ? CategorySet :
-  TConfig['endpoint'] extends SetDocEndpoint<'brands'> ? BrandSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'collections'> ? CollectionSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'grids'> ? GridSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'carts'> ? CartSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'orders'> ? OrderSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'customers'> ? CustomerSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'stores'> ? StoreSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'applications'> ? ApplicationSet :
-  TConfig['endpoint'] extends SetDocEndpoint<'authentications'> ? AuthenticationSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'products'>
+    ? TConfig['method'] extends 'patch' ? Partial<ProductSet> : ProductSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'categories'>
+    ? TConfig['method'] extends 'patch' ? Partial<CategorySet> : CategorySet :
+  TConfig['endpoint'] extends SetDocEndpoint<'brands'>
+    ? TConfig['method'] extends 'patch' ? Partial<BrandSet> : BrandSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'collections'>
+    ? TConfig['method'] extends 'patch' ? Partial<CollectionSet> : CollectionSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'grids'>
+    ? TConfig['method'] extends 'patch' ? Partial<GridSet> : GridSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'carts'>
+    ? TConfig['method'] extends 'patch' ? Partial<CartSet> : CartSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'orders'>
+    ? TConfig['method'] extends 'patch' ? Partial<OrderSet> : OrderSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'customers'>
+    ? TConfig['method'] extends 'patch' ? Partial<CustomerSet> : CustomerSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'stores'>
+    ? TConfig['method'] extends 'patch' ? Partial<StoreSet> : StoreSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'applications'>
+    ? TConfig['method'] extends 'patch' ? Partial<ApplicationSet> : ApplicationSet :
+  TConfig['endpoint'] extends SetDocEndpoint<'authentications'>
+    ? TConfig['method'] extends 'patch' ? Partial<AuthenticationSet> : AuthenticationSet :
   any;
 
 type ErrorBody = {
