@@ -83,7 +83,7 @@ const cancelOrder = async (
       return new Promise((resolve) => {
         setTimeout(async () => {
           const body = {
-            status: 'cancelled',
+            status: 'cancelled' as const,
             staff_notes: staffNotes,
           };
           if (errorMessage) {
