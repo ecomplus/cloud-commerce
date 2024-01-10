@@ -60,48 +60,48 @@ importers:
   ecomplus-stores/barra-doce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../packages/eslint
 
   ecomplus-stores/barra-doce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/passport
 
   ecomplus-stores/barra-doce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.16
-        version: 1.7.17(vue@3.4.5)
+        version: 1.7.17(vue@3.4.8)
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/types
       '@iconify-json/mingcute':
         specifier: ^1.1.15
@@ -113,13 +113,13 @@ importers:
   ecomplus-stores/barra-doce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1185,51 +1185,51 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../packages/eslint
 
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.16
-        version: 1.7.17(vue@3.4.5)
+        version: 1.7.17(vue@3.4.8)
       micromark:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.3
@@ -1238,13 +1238,13 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/modules
 
 packages:
@@ -3825,14 +3825,14 @@ packages:
       yargs: 17.7.2
     dev: false
 
-  /@headlessui/vue@1.7.17(vue@3.4.5):
+  /@headlessui/vue@1.7.17(vue@3.4.8):
     resolution: {integrity: sha512-hmJChv8HzKorxd9F70RGnECAwZfkvmmwOqreuKLWY/19d5qbWnSdw+DNbuA/Uo6X5rb4U5B3NrT+qBKPmjhRqw==}
     engines: {node: '>=10'}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
-      '@tanstack/vue-virtual': 3.0.1(vue@3.4.5)
-      vue: 3.4.5(typescript@5.2.2)
+      '@tanstack/vue-virtual': 3.0.1(vue@3.4.8)
+      vue: 3.4.8(typescript@5.2.2)
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -4391,13 +4391,13 @@ packages:
     resolution: {integrity: sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg==}
     dev: false
 
-  /@tanstack/vue-virtual@3.0.1(vue@3.4.5):
+  /@tanstack/vue-virtual@3.0.1(vue@3.4.8):
     resolution: {integrity: sha512-85Cyi8m7h1xzGB2FyXMurPVFOZvatycVU7OfhQ8QFk27E4tQ7ISNfYEMrakTTaE0ZyNsKRFlAzHuwL1Bv1vuMw==}
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
     dependencies:
       '@tanstack/virtual-core': 3.0.0
-      vue: 3.4.5(typescript@5.2.2)
+      vue: 3.4.8(typescript@5.2.2)
     dev: false
 
   /@tootallnate/once@2.0.0:
@@ -5179,11 +5179,28 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
+  /@vue/compiler-core@3.4.8:
+    resolution: {integrity: sha512-GjAwOydZV6UyVBi1lYW5v4jjfU6wOeyi3vBATKJOwV7muYF0/nZi4kfdJc0pwdT5lXwbbx57lyA2Y356rFpw1A==}
+    dependencies:
+      '@babel/parser': 7.23.6
+      '@vue/shared': 3.4.8
+      entities: 4.5.0
+      estree-walker: 2.0.2
+      source-map-js: 1.0.2
+    dev: false
+
   /@vue/compiler-dom@3.4.5:
     resolution: {integrity: sha512-J8YlxknJVd90SXFJ4HwGANSAXsx5I0lK30sO/zvYV7s5gXf7gZR7r/1BmZ2ju7RGH1lnc6bpBc6nL61yW+PsAQ==}
     dependencies:
       '@vue/compiler-core': 3.4.5
       '@vue/shared': 3.4.5
+    dev: false
+
+  /@vue/compiler-dom@3.4.8:
+    resolution: {integrity: sha512-GsPyji42zmkSJlaDFKXvwB97ukTlHzlFH/iVzPFYz/APnSzuhu/CMFQbsYmrtsnc2yscF39eC4rKzvKR27aBug==}
+    dependencies:
+      '@vue/compiler-core': 3.4.8
+      '@vue/shared': 3.4.8
     dev: false
 
   /@vue/compiler-sfc@3.4.5:
@@ -5200,6 +5217,20 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
+  /@vue/compiler-sfc@3.4.8:
+    resolution: {integrity: sha512-3ZcurOa6bQdZ6VZLtMqYSUZqpsMqfX0MC3oCxQG0VIJFCqouZAgRYJN1c8QvGs7HW5wW8aXVvUOQU0ILVlYHKA==}
+    dependencies:
+      '@babel/parser': 7.23.6
+      '@vue/compiler-core': 3.4.8
+      '@vue/compiler-dom': 3.4.8
+      '@vue/compiler-ssr': 3.4.8
+      '@vue/shared': 3.4.8
+      estree-walker: 2.0.2
+      magic-string: 0.30.5
+      postcss: 8.4.32
+      source-map-js: 1.0.2
+    dev: false
+
   /@vue/compiler-ssr@3.4.5:
     resolution: {integrity: sha512-DDdEcDzj2lWTMfUMMtEpLDhURai9LhM0zSZ219jCt7b2Vyl0/jy3keFgCPMitG0V1S1YG4Cmws3lWHWdxHQOpg==}
     dependencies:
@@ -5207,10 +5238,23 @@ packages:
       '@vue/shared': 3.4.5
     dev: false
 
+  /@vue/compiler-ssr@3.4.8:
+    resolution: {integrity: sha512-nxN79LHeAemhBpIa2PQ6rz57cW7W4C/XIJCOMSn2g49u6q2ekirmJI0osAOTErQPApOR0KwP2QyeTexX4zQCrw==}
+    dependencies:
+      '@vue/compiler-dom': 3.4.8
+      '@vue/shared': 3.4.8
+    dev: false
+
   /@vue/reactivity@3.4.5:
     resolution: {integrity: sha512-BcWkKvjdvqJwb7BhhFkXPLDCecX4d4a6GATvCduJQDLv21PkPowAE5GKuIE5p6RC07/Lp9FMkkq4AYCTVF5KlQ==}
     dependencies:
       '@vue/shared': 3.4.5
+    dev: false
+
+  /@vue/reactivity@3.4.8:
+    resolution: {integrity: sha512-UJYMQ3S2rqIGw9IvKomD4Xw2uS5VlcKEEmwcfboGOdrI79oqebxnCgTvXWLMClvg3M5SF0Cyn+9eDQoyGMLu9Q==}
+    dependencies:
+      '@vue/shared': 3.4.8
     dev: false
 
   /@vue/runtime-core@3.4.5:
@@ -5220,11 +5264,26 @@ packages:
       '@vue/shared': 3.4.5
     dev: false
 
+  /@vue/runtime-core@3.4.8:
+    resolution: {integrity: sha512-sMRXOy89KnwY6fWG5epgPOsCWzpo/64FrA0QkjIeNeGnoA2YyZ6bBUxpFUyqhJ8VbrDhXEFH+6LHMOYrpzX/ZQ==}
+    dependencies:
+      '@vue/reactivity': 3.4.8
+      '@vue/shared': 3.4.8
+    dev: false
+
   /@vue/runtime-dom@3.4.5:
     resolution: {integrity: sha512-n5ewvOjyG3IEpqGBahdPXODFSpVlSz3H4LF76Sx0XAqpIOqyJ5bIb2PrdYuH2ogBMAQPh+o5tnoH4nJpBr8U0Q==}
     dependencies:
       '@vue/runtime-core': 3.4.5
       '@vue/shared': 3.4.5
+      csstype: 3.1.3
+    dev: false
+
+  /@vue/runtime-dom@3.4.8:
+    resolution: {integrity: sha512-L4gZcYo8f3d7rQqQIHkPvyczkjjQ55cJqz2G0v6Ptmqa1mO2zkqN9F8lBT6aGPYy3hd0RDiINbs4jxhSvvy10Q==}
+    dependencies:
+      '@vue/runtime-core': 3.4.8
+      '@vue/shared': 3.4.8
       csstype: 3.1.3
     dev: false
 
@@ -5238,8 +5297,22 @@ packages:
       vue: 3.4.5(typescript@5.2.2)
     dev: false
 
+  /@vue/server-renderer@3.4.8(vue@3.4.8):
+    resolution: {integrity: sha512-pBeHM59Owevr3P0Fl1XOjBmq4DTy5JDcjMG4NuzJEVDlZYzY8fHybx0wdjkY5lK5mCtUyBtw6Mz4d87aosc1Sw==}
+    peerDependencies:
+      vue: 3.4.8
+    dependencies:
+      '@vue/compiler-ssr': 3.4.8
+      '@vue/shared': 3.4.8
+      vue: 3.4.8(typescript@5.2.2)
+    dev: false
+
   /@vue/shared@3.4.5:
     resolution: {integrity: sha512-6XptuzlMvN4l4cDnDw36pdGEV+9njYkQ1ZE0Q6iZLwrKefKaOJyiFmcP3/KBDHbt72cJZGtllAc1GaHe6XGAyg==}
+    dev: false
+
+  /@vue/shared@3.4.8:
+    resolution: {integrity: sha512-ChLCWzXiJboQ009oVkemhEoUdrxHme7v3ip+Kh+/kDDeF1WtHWGt0knRLGm1Y4YqCRTSs9QxsZIY8paJj5Szrw==}
     dev: false
 
   /@vueuse/core@10.7.1(vue@3.4.5):
@@ -12198,6 +12271,22 @@ packages:
       '@vue/runtime-dom': 3.4.5
       '@vue/server-renderer': 3.4.5(vue@3.4.5)
       '@vue/shared': 3.4.5
+      typescript: 5.2.2
+    dev: false
+
+  /vue@3.4.8(typescript@5.2.2):
+    resolution: {integrity: sha512-vJffFOe6DqWsAI10v3tDhb1nJrj7CF3CbdQwOznywAsFNoyvrQ1AWQdcIWJpmRpRnw7NFzstzh6fh4w7n1PNdg==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/compiler-dom': 3.4.8
+      '@vue/compiler-sfc': 3.4.8
+      '@vue/runtime-dom': 3.4.8
+      '@vue/server-renderer': 3.4.8(vue@3.4.8)
+      '@vue/shared': 3.4.8
       typescript: 5.2.2
     dev: false
 
