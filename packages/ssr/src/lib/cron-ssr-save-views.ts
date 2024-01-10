@@ -2,6 +2,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { error } from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
+import config from '@cloudcommerce/firebase/lib/config';
 import { deleteQueryBatch } from '@cloudcommerce/firebase/lib/helpers/firestore';
 
 const saveViews = async () => {
@@ -26,7 +27,8 @@ const saveViews = async () => {
       }
     }
   }
-  if (process.env.BUNNYNET_API_KEY) {
+  const { domain } = config.get().settingsContent;
+  if (domain && process.env.BUNNYNET_API_KEY) {
     try {
       const pageViewsSnapshot = await db.collection('ssrPageViews')
         .where('at', '>', new Date(Date.now() - 1000 * 60 * 20))
@@ -35,7 +37,7 @@ const saveViews = async () => {
       for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
         const doc = pageViewsSnapshot.docs[i];
         const { url } = doc.data() as { url: string };
-        if (url && !purgedUrls.includes(url)) {
+        if (url?.startsWith(`https://${domain}`) && !purgedUrls.includes(url)) {
           await axios('https://api.bunny.net/purge', {
             method: 'POST',
             params: {
@@ -50,9 +52,11 @@ const saveViews = async () => {
         }
       }
     } catch (err: any) {
-      if (typeof err.toJSON === 'function') {
+      if (err.response) {
         const _err: any = new Error('Cant purge bunny.net cache');
-        _err.info = err.toJSON();
+        _err.config = err.config;
+        _err.statusCode = err.response.status;
+        _err.data = err.response.data;
         error(_err);
       } else {
         error(err);
