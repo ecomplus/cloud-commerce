@@ -394,19 +394,19 @@ type ResponseBody<
   TConfig['method'] extends 'put' | 'patch' | 'delete' ? null :
   // method?: 'get'
   TConfig['endpoint'] extends `${string}/${ResourceId}/${string}` ? any :
-  TConfig['endpoint'] extends `products/${ResourceId}` ? Products :
-  TConfig['endpoint'] extends `categories/${ResourceId}` ? Categories :
-  TConfig['endpoint'] extends `brands/${ResourceId}` ? Brands :
-  TConfig['endpoint'] extends `collections/${ResourceId}` ? Collections :
-  TConfig['endpoint'] extends `grids/${ResourceId}` ? Grids :
-  TConfig['endpoint'] extends `carts/${ResourceId}` ? Carts :
-  TConfig['endpoint'] extends `orders/${ResourceId}` ? Orders :
-  TConfig['endpoint'] extends `customers/${ResourceId}` ? Customers :
-  TConfig['endpoint'] extends `stores/${ResourceId}` ? Stores :
-  TConfig['endpoint'] extends 'stores/me' ? Stores :
-  TConfig['endpoint'] extends `applications/${ResourceId}` ? Applications :
-  TConfig['endpoint'] extends `authentications/${ResourceId}` ? Authentications :
-  TConfig['endpoint'] extends 'authentications/me' ? Authentications :
+  TConfig['endpoint'] extends ResourceAndFind ?
+    TConfig['endpoint'] extends `products/${string}` ? Products :
+    TConfig['endpoint'] extends `categories/${string}` ? Categories :
+    TConfig['endpoint'] extends `brands/${string}` ? Brands :
+    TConfig['endpoint'] extends `collections/${string}` ? Collections :
+    TConfig['endpoint'] extends `grids/${string}` ? Grids :
+    TConfig['endpoint'] extends `carts/${string}` ? Carts :
+    TConfig['endpoint'] extends `orders/${string}` ? Orders :
+    TConfig['endpoint'] extends `customers/${string}` ? Customers :
+    TConfig['endpoint'] extends `applications/${string}` ? Applications :
+    TConfig['endpoint'] extends `authentications/${string}` ? Authentications :
+    TConfig['endpoint'] extends `stores/${string}` ? Stores :
+    any :
   TConfig['endpoint'] extends ResourceOpQuery ? ResourceListResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends SearchOpQuery ? SearchResult<TConfig['endpoint'], ListFields> :
   TConfig['endpoint'] extends SearchHistoryOpQuery ? SearchHistoryResult :

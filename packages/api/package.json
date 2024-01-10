@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/api#readme",
   "scripts": {
     "build": "bash ../../scripts/build-lib.sh",
-    "test": "tsc -p ../../tsconfig.test.json && vitest run"
+    "test": "tsc -p ../../tsconfig.test.json && vitest run",
+    "test:echo":  "tsc -p ../../tsconfig.test.json && vitest run --silent=false"
   }
 }

@@ -11,8 +11,17 @@ test('Read product and typecheck SKU', async () => {
   if (data.sku === '123') {
     console.log('\\o/');
   }
+  console.log(data.sku);
   expect(data.sku).toBeTypeOf('string');
   expect(data._id).toBe(productId);
+});
+
+test('Find and read product by SKU', async () => {
+  const { data } = await api({
+    storeId: 1056,
+    endpoint: 'products/sku:GFJ4714',
+  });
+  expect(data.sku).toBe('GFJ4714');
 });
 
 test('404 with different Store ID from env', async () => {
