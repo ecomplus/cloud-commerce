@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.5](https://github.com/ecomplus/cloud-commerce/compare/v2.0.4...v2.0.5) (2024-01-10)
+
+
+### Bug Fixes
+
+* **api:** Fixing types for PATCH request body (partial resource doc set) ([5fb5088](https://github.com/ecomplus/cloud-commerce/commit/5fb508860d3cd8c078e6ea5eb647412f6fccadb2))
+* **api:** Returning proper resource interface on doc find by field (e.g `products/sku:123`) ([f94021b](https://github.com/ecomplus/cloud-commerce/commit/f94021b0179b94b41a905cfa207762c4fc999276))
+* **ssr:** Purge bunny.net cache only for page view URLs of current store domain (from settings) ([6e7dd91](https://github.com/ecomplus/cloud-commerce/commit/6e7dd91a4864f60c9eb4446f2684387f2bf486fe))
+
 ### [2.0.4](https://github.com/ecomplus/cloud-commerce/compare/v2.0.3...v2.0.4) (2024-01-09)
 
 
