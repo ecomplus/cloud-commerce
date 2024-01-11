@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.6](https://github.com/ecomplus/cloud-commerce/compare/v2.0.5...v2.0.6) (2024-01-11)
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to v4.1.12 ([d6eb8bc](https://github.com/ecomplus/cloud-commerce/commit/d6eb8bc8ff986878ecdfca537bc4053da52829f6))
+* **storefront:** Edit global `<ALink>` to properly set target blank for external links ([f1cde20](https://github.com/ecomplus/cloud-commerce/commit/f1cde2019eb047dbbce6e0685de9d4d007bd2b7c))
+* **storefront:** Properly add all available `.i-<iconset>-<icon>` to Tailwind config ([3907943](https://github.com/ecomplus/cloud-commerce/commit/3907943b3d2e841b78b0d37ba100a189333a4db1))
+
 ### [2.0.5](https://github.com/ecomplus/cloud-commerce/compare/v2.0.4...v2.0.5) (2024-01-10)
 
 
