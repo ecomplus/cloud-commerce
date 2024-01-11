@@ -178,8 +178,8 @@ const genTailwindConfig = (themeOptions = {}) => {
             })),
           ].reduce((utilities, { iconset, shortcuts }) => {
             if (iconset) {
+              const { icons } = require(`@iconify-json/${iconset}`);
               if (!shortcuts) {
-                const { icons } = require(`@iconify-json/${iconset}`);
                 shortcuts = Object.keys(icons.icons);
                 Object.keys(iconAliases).forEach((alias) => {
                   if (alias !== iconAliases[alias]) {
@@ -201,6 +201,15 @@ const genTailwindConfig = (themeOptions = {}) => {
                   // Same shortcut from previous icon set
                   return;
                 }
+                utilities[selector] = {
+                  '--collection': iconset,
+                  '--icon': icon,
+                  '--view': `"https://icones.js.org/collection/${iconset}?s=${icon}"`,
+                };
+              });
+              Object.keys(icons.icons).forEach((icon) => {
+                const selector = `.i-${iconset}-${icon}`;
+                if (utilities[selector]) return;
                 utilities[selector] = {
                   '--collection': iconset,
                   '--icon': icon,
