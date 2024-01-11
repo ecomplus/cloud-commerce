@@ -13,6 +13,7 @@ const linkTarget = computed(() => {
   if (props.href.startsWith('http')) {
     const domain = globalThis.$storefront.settings.domain || window.location.host;
     if (props.href.startsWith(`https://${domain}`)) return undefined;
+    return '_blank';
   }
   return undefined;
 });
