@@ -167,7 +167,7 @@ runs:
       name: Install codebase "ssr" dependencies
       shell: bash
       working-directory: functions/ssr
-      run: npm ci --omit=optional
+      run: npm ci
 
     - if: steps.npm-cache-with-apps.outputs.cache-hit != 'true'
       name: Install codebase "with-apps" dependencies
