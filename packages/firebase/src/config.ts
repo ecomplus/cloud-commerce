@@ -1,7 +1,18 @@
 import type { ApiEventName, SettingsContent } from '@cloudcommerce/types';
 import { join as joinPath } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
+import * as dotenv from 'dotenv';
 import config, { BaseConfig } from '@cloudcommerce/config';
+
+if (
+  !process.env.DEPLOY_REGION
+  && !process.env.DEPLOY_REGION
+  && !process.env.ECOM_STORE_ID
+) {
+  const pwd = process.cwd();
+  dotenv.config();
+  dotenv.config({ path: joinPath(pwd, 'functions/.env') });
+}
 
 const tinyErpEvents: ApiEventName[] = [
   'orders-anyStatusSet',
