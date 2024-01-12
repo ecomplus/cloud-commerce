@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.7](https://github.com/ecomplus/cloud-commerce/compare/v2.0.6...v2.0.7) (2024-01-12)
+
+
+### Bug Fixes
+
+* **firebase:** Use `dotenv` on `firebase/lib/config` to ensure vars on deployment ([9e7b8d4](https://github.com/ecomplus/cloud-commerce/commit/9e7b8d404690f8148349c07c4679ba8265786ed1))
+* **storefront:** Bump Vie to latest v.3.4.11 ([f9ad320](https://github.com/ecomplus/cloud-commerce/commit/f9ad320f50d05b5f360d539511560d740c0014c2))
+
 ### [2.0.6](https://github.com/ecomplus/cloud-commerce/compare/v2.0.5...v2.0.6) (2024-01-11)
 
 
