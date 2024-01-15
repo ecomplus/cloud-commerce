@@ -19,12 +19,12 @@
     "build": "echo '@ecomplus/eslint'"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.18.0",
-    "@typescript-eslint/parser": "^6.18.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-tailwindcss": "3.13.1",
-    "eslint-plugin-vue": "^9.19.2"
+    "eslint-plugin-tailwindcss": "3.14.0",
+    "eslint-plugin-vue": "^9.20.1"
   }
 }
