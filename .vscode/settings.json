@@ -19,5 +19,6 @@
     "ecomplus-stores/tia-sonia/functions/ssr/tailwind.config.cjs": "ecomplus-stores/tia-sonia/**",
     "ecomplus-stores/barra-doce/functions/ssr/tailwind.config.cjs": "ecomplus-stores/barra-doce/**"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.run": "onSave"
 }
