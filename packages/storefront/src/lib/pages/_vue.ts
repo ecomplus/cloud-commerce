@@ -20,8 +20,9 @@ const createApp = (app: App) => {
       };
       app.config.globalProperties.$money = formatMoney;
       app.config.globalProperties.$percentage = formatPercentage;
-      app.config.globalProperties.$settings = globalThis.$storefront.settings;
-      app.config.globalProperties.$apiContext = globalThis.$storefront.apiContext;
+      const { settings, apiContext } = globalThis.$storefront || {};
+      app.config.globalProperties.$settings = settings;
+      app.config.globalProperties.$apiContext = apiContext;
     },
   });
   app.component('Fade', Fade);
