@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.8](https://github.com/ecomplus/cloud-commerce/compare/v2.0.7...v2.0.8) (2024-01-17)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#307](https://github.com/ecomplus/cloud-commerce/issues/307)) ([73ef543](https://github.com/ecomplus/cloud-commerce/commit/73ef5432d509985195dc5217d3ab754661217dfd))
+* **storefront:** Also prevent error on default Vue global instance setup without `$storefront` set ([9b25f5f](https://github.com/ecomplus/cloud-commerce/commit/9b25f5fc74a78a63bbcbb4f446bda09e5f339b9d))
+* **storefront:** Bump Vue to latest v3.4.14 ([6b1a251](https://github.com/ecomplus/cloud-commerce/commit/6b1a25157eab3cf7bd207a10040e00a2b9ecc3e4))
+* **storefront:** Prevent fatal error on `@@sf/sf-lib` import without global `$storefront` ([ca05109](https://github.com/ecomplus/cloud-commerce/commit/ca051098f63373ec23b7b898a06156abec28053c))
+
 ### [2.0.7](https://github.com/ecomplus/cloud-commerce/compare/v2.0.6...v2.0.7) (2024-01-12)
 
 
