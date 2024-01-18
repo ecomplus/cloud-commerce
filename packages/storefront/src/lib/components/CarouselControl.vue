@@ -17,7 +17,7 @@ const isX = axis === 'x';
   <button
     type="button"
     :aria-label="!isPrev ? $t.i19next : $t.i19previous"
-    @click.stop="changeSlide(!isPrev ? 1 : -1)"
+    @click.stop.prevent="changeSlide(!isPrev ? 1 : -1)"
     class="group absolute z-[11]"
     :class="isX
       ? `${(!isPrev ? 'right-0' : 'left-0')} top-0`
