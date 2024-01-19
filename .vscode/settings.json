@@ -16,9 +16,7 @@
   "tailwindCSS.experimental.configFile": {
     "packages/storefront/tailwind.config.cjs": "packages/**",
     "store/functions/ssr/tailwind.config.cjs": "store/**",
-    "ecomplus-stores/tia-sonia/functions/ssr/tailwind.config.cjs": "ecomplus-stores/tia-sonia/**",
     "ecomplus-stores/barra-doce/functions/ssr/tailwind.config.cjs": "ecomplus-stores/barra-doce/**"
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.run": "onSave"
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
