@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
     './base.eslintrc.cjs',
+    'plugin:astro/recommended',
   ],
   rules: {
     'no-console': 'off',
@@ -34,4 +35,14 @@ module.exports = {
       ],
     }],
   },
+  overrides: [
+    {
+      files: ['*.astro'],
+      parser: 'astro-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        extraFileExtensions: ['.astro'],
+      },
+    },
+  ],
 };
