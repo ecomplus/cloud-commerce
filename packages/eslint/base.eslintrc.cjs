@@ -31,6 +31,8 @@ module.exports = {
       'error',
       {
         ignore: [
+          'virtual:*',
+          'astro:*',
           // https://github.com/import-js/eslint-plugin-import/issues/1810
           'firebase-functions/logger',
           'firebase-functions/v2/https',
@@ -41,7 +43,6 @@ module.exports = {
           '@astrojs/[^/]+$',
           'astro/config',
           'astro/middleware',
-          'astro:content',
           'unocss/astro',
           'unplugin-auto-import/astro',
           '@@.*',
