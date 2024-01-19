@@ -16,14 +16,14 @@ const { settings } = Astro.locals.routeContext;
   <slot />
   <slot name="before-body-end" />
   <div id="teleported-bottom" class="relative z-[19]"></div>
-  {settings.icon &&
-    <Picture
+  {settings.icon
+    && <Picture
       src={settings.icon}
       alt="Icon"
       formats={['png']}
       widths={[32, 192, 512]}
       sizes="32px"
-      class="hidden absolute"
+      class="absolute hidden"
       style="bottom: -1000px"
       hasImg={false}
     />

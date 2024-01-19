@@ -21,7 +21,7 @@ const getImageFilepath = (src: string) => {
     try {
       copyFileSync(filepath, resolvePath(
         import.meta.env.STOREFRONT_BASE_DIR,
-        import.meta.env.BUILD_OUT_DIR || 'dist/client', 
+        import.meta.env.BUILD_OUT_DIR || 'dist/client',
         '_astro',
         basename(filepath),
       ));
@@ -90,7 +90,7 @@ if (imgAttrs) {
     if (versionSuffix) {
       attrs.srcset = attrs.srcset.replace(/\s(\w+)$/, `${versionSuffix} $1`);
     }
-    return <source {...attrs} sizes={sizes} />
+    return <source {...attrs} sizes={sizes} />;
   })}
   {imgAttrs && <img {...imgAttrs} />}
 </picture>

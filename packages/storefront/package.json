@@ -26,7 +26,8 @@
     "build:prod": "bash scripts/build-prod.sh",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare-monorepo": "bash scripts/prepare-monorepo.sh"
+    "prepare-monorepo": "bash scripts/prepare-monorepo.sh",
+    "lint:fix": "eslint -c ../eslint/storefront.staged.eslintrc.cjs src/lib/**/*.{ts,vue,astro} --fix"
   },
   "dependencies": {
     "@astrojs/node": "7.0.4",

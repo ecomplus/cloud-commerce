@@ -26,7 +26,7 @@ const isX = axis === 'x';
   >
     <slot>
       <i
-        class="i-chevron-right m-0"
+        class="m-0 i-chevron-right"
         :class="{
           'group-active:translate-x-1': isX && !isPrev,
           'rotate-180 group-active:-translate-x-1': isX && isPrev,

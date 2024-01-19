@@ -11,6 +11,7 @@ const { fallback = 'animate' } = Astro.props as Props;
 <meta name="astro-view-transitions-enabled" content="true" />
 <meta name="astro-view-transitions-fallback" content={fallback} />
 <script>
+  /* eslint-disable */
   type Fallback = 'none' | 'animate' | 'swap';
   type Direction = 'forward' | 'back';
   type State = {

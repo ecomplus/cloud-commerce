@@ -12,12 +12,6 @@ export interface Props {
 const isPWA = pwaInfo !== false; // config/astro/mock-pwa-info.mjs
 const hasViewTransitions = Astro.props.hasViewTransitions !== false
   && !Astro.url.pathname.startsWith('/app/');
-const deployRand = import.meta.env.DEPLOY_RAND || '_';
-const getIconUrl = (size: number) => {
-  return `/_image?f=png&w=${size}&h=${size}`
-    + `&href=${encodeURIComponent(settings.icon)}&V=${deployRand}`;
-};
-
 const {
   storeId,
   isHomepage,
@@ -39,20 +33,25 @@ const {
 if (fetchingApiContext) {
   await fetchingApiContext;
 }
+const deployRand = import.meta.env.DEPLOY_RAND || '_';
+const getIconUrl = (size: number) => {
+  return `/_image?f=png&w=${size}&h=${size}`
+    + `&href=${encodeURIComponent(settings.icon)}&V=${deployRand}`;
+};
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
-let title: string = state.meta_title ||
-  state.metaTitle ||
-  (state.name && `${state.name} | ${settings.name}`) ||
-  (state.title && `${state.title} | ${settings.name}`) ||
-  '';
-let description: string = state.meta_description ||
-  state.metaDescription ||
-  state.short_description ||
-  state.description ||
-  settings.description ||
-  '';
+let title: string = state.meta_title
+  || state.metaTitle
+  || (state.name && `${state.name} | ${settings.name}`)
+  || (state.title && `${state.title} | ${settings.name}`)
+  || '';
+let description: string = state.meta_description
+  || state.metaDescription
+  || state.short_description
+  || state.description
+  || settings.description
+  || '';
 if (isHomepage) {
   if (!title) title = settings.name;
   if (!description) description = settings.description;
@@ -135,10 +134,10 @@ if (apiDoc) {
 window._firstLoadContextId = '${apiDoc._id}';`;
   contextInlineClientJS = `
 $storefront.apiContext = ${JSON.stringify({
-  resource: apiContext.resource,
-  doc: minifyApiDoc({ ...apiDoc }),
-  timestamp: Date.now(),
-})};
+    resource: apiContext.resource,
+    doc: minifyApiDoc({ ...apiDoc }),
+    timestamp: Date.now(),
+  })};
 $storefront.context /* DEPRECATED */ = $storefront.apiContext;
 _emitApiContext('${apiDoc._id}');`;
 } else {
@@ -168,8 +167,8 @@ const inlineJSONLd = JSON.stringify({
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content={primaryColor}>
 <link rel="icon" type="image/png" href={favicon} sizes="32x32" />
-{shortcutIcon &&
-  <link rel="icon" type="image/png" href={shortcutIcon} sizes="192x192" />}
+{shortcutIcon
+  && <link rel="icon" type="image/png" href={shortcutIcon} sizes="192x192" />}
 {title && <title>{title}</title>}
 {description && <meta name="description" content={description}>}
 <meta name="author" content={settings.name}>
@@ -185,21 +184,22 @@ const inlineJSONLd = JSON.stringify({
 <meta property="og:type" content="website">
 <meta property="og:locale" content={ogLocale}>
 {ogImage && <meta property="og:image" content={ogImage} />}
-{metatagsContent?.fbAppId &&
-  <meta property="fb:app_id" content={metatagsContent.fbAppId} />}
+{metatagsContent?.fbAppId
+  && <meta property="fb:app_id" content={metatagsContent.fbAppId} />}
 <meta name="twitter:card" content="summary">
-{metatagsContent?.twitterUsername &&
-  <meta name="twitter:site" content={metatagsContent.twitterUsername} />}
+{metatagsContent?.twitterUsername
+  && <meta name="twitter:site" content={metatagsContent.twitterUsername} />}
 <meta name="ecom-store-id" content={String(storeId)}>
 
 {isPWA && <>
   <script>
+    /* eslint-disable */
     import { registerSW } from 'virtual:pwa-register';
     registerSW({ immediate: false });
   </script>
   {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
-  {(!pwaInfo && !import.meta.env.DEV) &&
-    <link rel="manifest" href="/manifest.webmanifest" />}
+  {(!pwaInfo && !import.meta.env.DEV)
+    && <link rel="manifest" href="/manifest.webmanifest" />}
 </>}
 
 <script is:inline set:html={inlineClientJS} transition:persist />

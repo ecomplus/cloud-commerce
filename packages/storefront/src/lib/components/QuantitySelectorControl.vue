@@ -20,8 +20,8 @@ const {
 <template>
   <button
     type="button"
-    class="leading-12 enabled:text-primary enabled:hover:bg-primary-100/70
-    h-12 w-10 text-xl disabled:opacity-40"
+    class="leading-12 h-12 w-10 text-xl
+    enabled:text-primary enabled:hover:bg-primary-100/70 disabled:opacity-40"
     :data-quantity-selector-control="isMinus ? 'minus' : 'plus'"
     :aria-label="isMinus ? $t.i19minus : $t.i19plus"
     :disabled="isMinus ? isBoundMin : isBoundMax"

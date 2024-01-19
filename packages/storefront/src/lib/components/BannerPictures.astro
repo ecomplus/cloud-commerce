@@ -38,23 +38,24 @@ if (!mobileWidths?.length) {
 }
 ---
 
-{img &&
-  <Picture
+{img
+  && <Picture
     src={img}
     alt={alt || ''}
     widths={widths}
     fetchpriority={index === 0 ? 'high' : 'low'}
     loading={index === 0 ? 'eager' : 'lazy'}
-    class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto text-sm text-opacity-70 ${className}`}
+    class={`${(mobileImg ? 'hidden md:block ' : '')}mx-auto
+    text-sm text-opacity-70 ${className}`}
   />
 }
-{mobileImg &&
-  <Picture
+{mobileImg
+  && <Picture
     src={mobileImg}
     alt={alt || ''}
     widths={mobileWidths}
     fetchpriority={index === 0 ? 'high' : 'low'}
     loading={index === 0 ? 'eager' : 'lazy'}
-    class={`md:hidden mx-auto text-sm text-opacity-70 ${mobileClass}`}
+    class={`mx-auto text-sm text-opacity-70 md:hidden ${mobileClass}`}
   />
 }

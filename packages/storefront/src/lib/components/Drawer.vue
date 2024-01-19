@@ -143,7 +143,7 @@ const isPlacementX = computed(() => {
           data-drawer-close
         >
           <slot name="close">
-            <i class="i-close text-base-400 hover:text-base-600 m-0 text-3xl"></i>
+            <i class="m-0 text-3xl text-base-400 i-close hover:text-base-600"></i>
           </slot>
         </button>
         <slot />
@@ -152,7 +152,7 @@ const isPlacementX = computed(() => {
         <Fade>
           <div
             v-if="modelValue && !isHidden"
-            class="fixed left-0 top-0 z-30 h-screen w-screen bg-black/50"
+            class="size-screen fixed left-0 top-0 z-30 bg-black/50"
             data-drawer-backdrop
           ></div>
         </Fade>
