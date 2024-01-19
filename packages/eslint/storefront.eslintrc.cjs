@@ -1,7 +1,6 @@
 module.exports = {
   extends: [
     './base.eslintrc.cjs',
-    'plugin:tailwindcss/recommended',
   ],
   rules: {
     'no-console': 'off',
@@ -34,6 +33,5 @@ module.exports = {
         'Pagination',
       ],
     }],
-    'tailwindcss/no-custom-classname': 'off',
   },
 };
