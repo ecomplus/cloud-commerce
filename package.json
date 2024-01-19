@@ -30,6 +30,10 @@
       "precommit": "bash scripts/on-version.sh"
     }
   },
+  "lint-staged": {
+    "packages/storefront/**/*.{vue,ts}": "eslint -c ./packages/eslint/storefront.staged.eslintrc.cjs --fix",
+    "packages/!(storefront)/**/*.ts": "eslint -c ./packages/eslint/base.staged.eslintrc.cjs --fix"
+  },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@commitlint/cli": "^18.4.4",
@@ -39,6 +43,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.56.0",
     "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.2",
     "turbo": "^1.11.3",
