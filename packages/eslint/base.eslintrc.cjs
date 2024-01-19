@@ -33,6 +33,7 @@ module.exports = {
         ignore: [
           'virtual:*',
           'astro:*',
+          'uno.css',
           // https://github.com/import-js/eslint-plugin-import/issues/1810
           'firebase-functions/logger',
           'firebase-functions/v2/https',

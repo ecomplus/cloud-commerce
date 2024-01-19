@@ -45,6 +45,12 @@ module.exports = {
         parser: '@typescript-eslint/parser',
         extraFileExtensions: ['.astro'],
       },
+      rules: {
+        'no-await-in-loop': 'off',
+        'import/prefer-default-export': 'off',
+        'consistent-return': 'off',
+        'no-shadow': 'off',
+      },
     },
   ],
 };

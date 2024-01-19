@@ -31,8 +31,8 @@
     }
   },
   "lint-staged": {
-    "packages/storefront/**/*.{vue,ts}": "eslint -c ./packages/eslint/storefront.staged.eslintrc.cjs --fix",
-    "packages/!(storefront)/**/*.ts": "eslint -c ./packages/eslint/base.staged.eslintrc.cjs --fix"
+    "packages/storefront/**/*.{ts,vue,astro}": "eslint -c ./packages/eslint/storefront.staged.eslintrc.cjs --fix",
+    "packages/!(storefront)/**/*.ts": "eslint --fix"
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
