@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.9](https://github.com/ecomplus/cloud-commerce/compare/v2.0.8...v2.0.9) (2024-01-20)
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to latest v4.2.1 ([dd6b65a](https://github.com/ecomplus/cloud-commerce/commit/dd6b65a62ae585870f4cdf00496df2f2392cf96a))
+* **storefront:** Bump Vue to latest v3.4.15 ([46fd6f5](https://github.com/ecomplus/cloud-commerce/commit/46fd6f59beb95e85ef2ed4b0479f912cf8eb4fd8))
+* **storefront:** Stop `click` event propagation and prevent default (a) on `<CarouselControl>` ([94defd8](https://github.com/ecomplus/cloud-commerce/commit/94defd8b6e03d1821f605325c23d9c9f42cd9881))
+* **storefront:** Stop `click` event propagation on `<CarouselControl>` by default ([b44ff85](https://github.com/ecomplus/cloud-commerce/commit/b44ff85c4382ef912c434bf1f251134697156098))
+
 ### [2.0.8](https://github.com/ecomplus/cloud-commerce/compare/v2.0.7...v2.0.8) (2024-01-17)
 
 
