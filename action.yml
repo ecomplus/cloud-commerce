@@ -134,7 +134,7 @@ runs:
 
     - if: steps.npm-cache-root.outputs.cache-hit != 'true'
       shell: bash
-      run: npm ci --omit=dev
+      run: npm ci --omit=dev --ignore-scripts
 
     - name: Get npm global directories
       id: npm-paths
