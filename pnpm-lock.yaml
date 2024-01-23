@@ -60,6 +60,77 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/barra-doce:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.0.9
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.0.9
+        version: link:../../packages/eslint
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
+      lint-staged:
+        specifier: ^15.2.0
+        version: 15.2.0
+
+  ecomplus-stores/barra-doce/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.0.9
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^2.0.9
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^2.0.9
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/barra-doce/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.0.9
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^2.0.9
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^2.0.9
+        version: link:../../../../packages/ssr
+      '@headlessui/vue':
+        specifier: ^1.7.17
+        version: 1.7.17(vue@3.4.15)
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.0.9
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^2.0.9
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^2.0.9
+        version: link:../../../../packages/types
+      '@iconify-json/mingcute':
+        specifier: ^1.1.15
+        version: 1.1.15
+      photoswipe:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  ecomplus-stores/barra-doce/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.0.9
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^2.0.9
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^2.0.9
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -1125,6 +1196,77 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.0.9
+        version: link:../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.0.9
+        version: link:../packages/eslint
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
+      lint-staged:
+        specifier: ^15.2.0
+        version: 15.2.0
+
+  store/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.0.9
+        version: link:../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^2.0.9
+        version: link:../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^2.0.9
+        version: link:../../../packages/passport
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.0.9
+        version: link:../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^2.0.9
+        version: link:../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^2.0.9
+        version: link:../../../packages/ssr
+      '@headlessui/vue':
+        specifier: ^1.7.17
+        version: 1.7.17(vue@3.4.15)
+      micromark:
+        specifier: ^4.0.0
+        version: 4.0.0
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.0.9
+        version: link:../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^2.0.9
+        version: link:../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^2.0.9
+        version: link:../../../packages/types
+      photoswipe:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  store/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.0.9
+        version: link:../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^2.0.9
+        version: link:../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^2.0.9
+        version: link:../../../packages/modules
 
 packages:
 
@@ -3696,6 +3838,16 @@ packages:
       yargs: 17.7.2
     dev: false
 
+  /@headlessui/vue@1.7.17(vue@3.4.15):
+    resolution: {integrity: sha512-hmJChv8HzKorxd9F70RGnECAwZfkvmmwOqreuKLWY/19d5qbWnSdw+DNbuA/Uo6X5rb4U5B3NrT+qBKPmjhRqw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@tanstack/vue-virtual': 3.0.2(vue@3.4.15)
+      vue: 3.4.15(typescript@5.2.2)
+    dev: false
+
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -3736,9 +3888,14 @@ packages:
       '@iconify/types': 2.0.0
     dev: false
 
+  /@iconify-json/mingcute@1.1.15:
+    resolution: {integrity: sha512-QipLTzA5xE8gJiq9ajlqVuQufFzoMy18vKIqimJRV39+X1qqKbj8vDEbnIJPlfMpLlmBqmHtIdpiRSf4+S/wLA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-    dev: false
 
   /@iconify/utils@2.1.13:
     resolution: {integrity: sha512-6uWvJIo715xYRy1KmCCyZYW0YYkLjaojEExoEkxpOHKhi9cyHW8hVKo+m8zrxzNVSqjUx9OuVRa2BWXeXfkp5A==}
@@ -4058,6 +4215,19 @@ packages:
       json5: 2.2.3
       magic-string: 0.25.9
       string.prototype.matchall: 4.0.8
+    dev: false
+
+  /@tanstack/virtual-core@3.0.0:
+    resolution: {integrity: sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg==}
+    dev: false
+
+  /@tanstack/vue-virtual@3.0.2(vue@3.4.15):
+    resolution: {integrity: sha512-1iFpX+yZswHuf4wrA6GU9yJ/YzQ/8SacABwqghwCkcwrkZbOPLlRSdOAqZ1WQ50SftmfhZpaiZl2KmpV7cgfMQ==}
+    peerDependencies:
+      vue: ^2.7.0 || ^3.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.0.0
+      vue: 3.4.15(typescript@5.2.2)
     dev: false
 
   /@tootallnate/once@2.0.0:
@@ -9883,6 +10053,11 @@ packages:
   /perfect-debounce@1.0.0:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
     dev: false
+
+  /photoswipe@5.4.3:
+    resolution: {integrity: sha512-9UC6oJBK4oXFZ5HcdlcvGkfEHsVrmE4csUdCQhEjHYb3PvPLO3PG7UhnPuOgjxwmhq5s17Un5NUdum01LgBDng==}
+    engines: {node: '>= 0.12.0'}
+    dev: true
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
