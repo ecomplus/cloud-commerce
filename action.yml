@@ -350,4 +350,4 @@ runs:
         repoToken: ${{ inputs.github-token }}
         firebaseServiceAccount: ${{ inputs.firebase-service-account }}
         channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
-        expires: ${{ (startsWith(env.git_branch, 'main-') && '365d') || null }}
+        expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || null }}
