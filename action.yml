@@ -175,7 +175,7 @@ runs:
       working-directory: functions/with-apps
       run: npm ci
 
-    - name: Set ECOM_STORE_ID and GITHUB_REF env
+    - name: Set ecom_store_id and git_branch env
       shell: bash
       working-directory: functions
       env:
@@ -349,3 +349,4 @@ runs:
       with:
         repoToken: ${{ inputs.github-token }}
         firebaseServiceAccount: ${{ inputs.firebase-service-account }}
+        channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
