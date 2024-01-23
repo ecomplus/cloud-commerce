@@ -182,7 +182,7 @@ runs:
         ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
       run: |
         echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
-        echo "git_branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+        echo "git_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
     - uses: dorny/paths-filter@v2.11.1
       id: changes
