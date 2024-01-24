@@ -1,7 +1,6 @@
 module.exports = {
   extends: [
     './base.eslintrc.cjs',
-    'plugin:vue/vue3-essential',
     'plugin:astro/recommended',
   ],
   rules: {
@@ -20,7 +19,6 @@ module.exports = {
     'import/no-dynamic-require': 'off',
     'import/prefer-default-export': 'warn',
     'import/extensions': 'off',
-    'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': ['error', {
       ignores: [
         'Fade',
