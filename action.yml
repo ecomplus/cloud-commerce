@@ -345,9 +345,25 @@ runs:
 
     - if: github.event_name == 'pull_request'
       name: Deploy Firebase Hosting PR preview
+      id: deploy-preview
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
         repoToken: ${{ inputs.github-token }}
         firebaseServiceAccount: ${{ inputs.firebase-service-account }}
         channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
         expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || null }}
+
+    - if: ${{ github.event_name == 'pull_request' && startsWith(env.git_branch, 'main-') }}
+      name: Purge Bunny CDN homepage cache for A/B testing
+      shell: bash
+      env:
+        GIT_BRANCH: ${{ env.git_branch }}
+        BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
+        CHANNEL_URL: steps.deploy-preview.outputs.details_url
+      run: |
+        if [ ! -z "$BUNNYNET_API_KEY" ]; then
+          domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
+          if [ ! -z "$domain" ]; then
+            bash packages/cli/ci/bunny-prepare-ab.sh $domain $CHANNEL_URL
+          fi
+        fi
