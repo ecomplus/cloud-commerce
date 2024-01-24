@@ -357,6 +357,7 @@ runs:
       name: Prepare bunny.net CDN for A/B testing
       shell: bash
       env:
+        ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GIT_BRANCH: ${{ env.git_branch }}
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         CHANNEL_URL: ${{ steps.deploy-preview.outputs.details_url }}
