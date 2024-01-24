@@ -354,12 +354,12 @@ runs:
         expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || null }}
 
     - if: ${{ github.event_name == 'pull_request' && startsWith(env.git_branch, 'main-') }}
-      name: Purge Bunny CDN homepage cache for A/B testing
+      name: Prepare bunny.net CDN for A/B testing
       shell: bash
       env:
         GIT_BRANCH: ${{ env.git_branch }}
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
-        CHANNEL_URL: steps.deploy-preview.outputs.details_url
+        CHANNEL_URL: ${{ steps.deploy-preview.outputs.details_url }}
       run: |
         if [ ! -z "$BUNNYNET_API_KEY" ]; then
           domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
