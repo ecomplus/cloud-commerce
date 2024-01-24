@@ -352,6 +352,10 @@ runs:
         firebaseServiceAccount: ${{ inputs.firebase-service-account }}
         channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
         expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || null }}
+    
+    - if: github.event_name == 'pull_request'
+      shell: bash
+      run: echo "${{ github.action_path }}" >> $GITHUB_PATH
 
     - if: ${{ github.event_name == 'pull_request' && startsWith(env.git_branch, 'main-') }}
       name: Prepare bunny.net CDN for A/B testing
