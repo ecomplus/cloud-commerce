@@ -368,6 +368,6 @@ runs:
         if [ ! -z "$BUNNYNET_API_KEY" ]; then
           domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
           if [ ! -z "$domain" ]; then
-            bash packages/cli/ci/bunny-prepare-ab.sh $domain $CHANNEL_URL
+            packages/cli/ci/bunny-prepare-ab.sh $domain $CHANNEL_URL
           fi
         fi
