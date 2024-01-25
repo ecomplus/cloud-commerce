@@ -110,8 +110,28 @@ ab_testing_data="
       \"Parameter1\": \"\"
     }
   ],
-  \"TriggerMatchingType\": 0,
+  \"TriggerMatchingType\": 1,
   \"Description\": \"A/B testing [$GIT_BRANCH]\",
+  \"Enabled\": true
+}"
+
+ab_testing_cookie_data="
+{
+  \"ActionType\": 2,
+  \"ActionParameter1\": \"$channel_url\",
+  \"ActionParameter2\": \"\",
+  \"Triggers\": [
+    {
+      \"Type\": 10,
+      \"PatternMatches\": [
+        \"main-b\"
+      ],
+      \"PatternMatchingType\": 0,
+      \"Parameter1\": "branch"
+    }
+  ],
+  \"TriggerMatchingType\": 1,
+  \"Description\": \"A/B testing cookie [$GIT_BRANCH]\",
   \"Enabled\": true
 }"
 
@@ -130,10 +150,11 @@ ab_testing_bypass_data="
       \"Parameter1\": \"\"
     }
   ],
-  \"TriggerMatchingType\": 0,
+  \"TriggerMatchingType\": 1,
   \"Description\": \"A/B testing cache bypass\",
   \"Enabled\": true
 }"
 
 configure_edge_rule "A/B testing [$GIT_BRANCH]" "$ab_testing_data"
+configure_edge_rule "A/B testing cookie [$GIT_BRANCH]" "$ab_testing_cookie_data"
 configure_edge_rule "A/B testing cache bypass" "$ab_testing_bypass_data"
