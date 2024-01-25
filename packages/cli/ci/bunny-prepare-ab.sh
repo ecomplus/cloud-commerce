@@ -70,11 +70,15 @@ configure_edge_rule() {
   printf "\n"
   local description=$1
   local rule_data=$2
+  local is_additional_patterns=${3:-true}
   local found_rule=$(echo $edge_rules | jq --arg description "$description" '.[] | select(.Description == $description)')
   local guid=$(echo $found_rule | jq -r '.Guid // empty')
 
-  local additional_patterns_json=$(printf '%s\n' "${additional_patterns[@]}" | jq -s '.')
-  local json_data=$(echo $rule_data | jq --argjson additionalPatterns "$additional_patterns_json" '.Triggers[0].PatternMatches += $additionalPatterns')
+  local json_data="$rule_data"
+  if [ "$is_additional_patterns" = true ]; then
+    local additional_patterns_json=$(printf '%s\n' "${additional_patterns[@]}" | jq -s '.')
+    json_data=$(echo $json_data | jq --argjson additionalPatterns "$additional_patterns_json" '.Triggers[0].PatternMatches += $additionalPatterns')
+  fi
   if [ -n "$guid" ]; then
     json_data=$(echo $json_data | jq --arg guid "$guid" '. + {Guid: $guid}')
   fi
@@ -124,10 +128,10 @@ ab_testing_cookie_data="
     {
       \"Type\": 10,
       \"PatternMatches\": [
-        \"main-b\"
+        \"$GIT_BRANCH\"
       ],
       \"PatternMatchingType\": 0,
-      \"Parameter1\": "branch"
+      \"Parameter1\": \"branch\"
     }
   ],
   \"TriggerMatchingType\": 1,
@@ -156,5 +160,5 @@ ab_testing_bypass_data="
 }"
 
 configure_edge_rule "A/B testing [$GIT_BRANCH]" "$ab_testing_data"
-configure_edge_rule "A/B testing cookie [$GIT_BRANCH]" "$ab_testing_cookie_data"
+configure_edge_rule "A/B testing cookie [$GIT_BRANCH]" "$ab_testing_cookie_data" false
 configure_edge_rule "A/B testing cache bypass" "$ab_testing_bypass_data"
