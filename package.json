@@ -5,7 +5,7 @@
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
-  "license": "Apache 2.0 with Commons Clause",
+  "license": "MIT",
   "engines": {
     "node": ">=18",
     "pnpm": ">=7"

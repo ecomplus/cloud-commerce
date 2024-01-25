@@ -17,7 +17,7 @@
     "directory": "packages/cli"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
-  "license": "Apache 2.0 with Commons Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
