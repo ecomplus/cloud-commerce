@@ -89,6 +89,19 @@
     ],
     "headers": [
       {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Set-Cookie",
+            "value": "bid={{BUILD_ID}}"
+          },
+          {
+            "key": "Set-Cookie",
+            "value": "branch={{GIT_BRANCH}}"
+          }
+        ]
+      },
+      {
         "source": "/img/**",
         "headers": [
           {
