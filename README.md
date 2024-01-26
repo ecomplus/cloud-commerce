@@ -1,12 +1,12 @@
-# E-Com Plus Open Cloud Commerce
+# e-com.plus Open Cloud Commerce
 
-Open fair-code eCommerce platform to use on top of headless commerce APIs, it includes:
+Open source eCommerce platform to use on top of headless commerce APIs, it includes:
 - High performant and fully customizable [Astro](https://astro.build/) + [Vue](https://vuejs.org/) storefront;
 - Storefront CMS and page builder;
 - Analytics and A/B testing;
 - Integrations for payments, shipping, ERPs, CRMs and others.
 
-Easy deployment on [Firebase](https://firebase.google.com/), plug & play with **[E-Com Plus APIs](https://developers.e-com.plus/)**.
+Easy deployment on [Firebase](https://firebase.google.com/), plug & play with **[e-com.plus APIs](https://developers.e-com.plus/)**.
 
 ## Concepts
 
@@ -19,7 +19,3 @@ Easy deployment on [Firebase](https://firebase.google.com/), plug & play with **
 7. Easy third-party integrations.
 
 > WIP 🚧
-
-## License
-
-[Fair-code](http://faircode.io) distributed under [**Apache 2.0 with Commons Clause**](https://github.com/ecomplus/cloud-commerce/blob/main/LICENSE.md) license.
