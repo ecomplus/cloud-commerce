@@ -14,7 +14,7 @@ import build, { prepareCodebases } from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
 import createGhSecrets from './setup-gh';
 
-if (!process.env.FIREBASE_PROJECT_ID && !process.env.ECOM_STORE_ID) {
+if (!process.env.FIREBASE_PROJECT_ID && !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
   const pwd = process.cwd();
   dotenv.config();
   dotenv.config({ path: joinPath(pwd, 'functions/.env') });
@@ -23,9 +23,6 @@ const {
   FIREBASE_PROJECT_ID,
   GOOGLE_APPLICATION_CREDENTIALS,
   GITHUB_TOKEN,
-  BUILD_ID,
-  DEPLOY_RAND,
-  GIT_BRANCH,
 } = process.env;
 
 // https://github.com/google/zx/issues/124
@@ -62,14 +59,8 @@ if (projectId) {
 }
 
 export default async () => {
-  const buildId = BUILD_ID || DEPLOY_RAND || `${Math.random()}`;
   const baseConfigDir = joinPath(__dirname, '..', 'config');
   await fs.copy(baseConfigDir, pwd);
-  const firebaseJsonPath = joinPath(pwd, 'firebase.json');
-  const firebaseJson = fs.readFileSync(firebaseJsonPath, 'utf8')
-    .replace('{{BUILD_ID}}', buildId)
-    .replace('{{GIT_BRANCH}}', GIT_BRANCH || '_');
-  fs.writeFileSync(firebaseJsonPath, firebaseJson);
   const userConfigDir = joinPath(pwd, 'conf');
   if (fs.existsSync(userConfigDir) && fs.lstatSync(userConfigDir).isDirectory()) {
     await fs.copy(userConfigDir, pwd);
@@ -85,9 +76,14 @@ export default async () => {
       }
       if (userFirebaseConfig) {
         const deepmerge = Deepmerge();
-        const baseFirebaseConfig = JSON.parse(firebaseJson);
+        const baseFirebaseConfig = JSON.parse(
+          fs.readFileSync(joinPath(baseConfigDir, 'firebase.json'), 'utf8'),
+        );
         const mergedConfig = deepmerge(baseFirebaseConfig, userFirebaseConfig);
-        fs.writeFileSync(firebaseJsonPath, JSON.stringify(mergedConfig, null, 2));
+        fs.writeFileSync(
+          joinPath(pwd, 'firebase.json'),
+          JSON.stringify(mergedConfig, null, 2),
+        );
       }
     }
   }
