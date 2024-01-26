@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/ecomplus/cloud-commerce/compare/v2.0.9...v2.1.0) (2024-01-26)
+
+
+### Features
+
+* **cli:** New `ci/bunny-config-base.sh` script to fix bunny.net CDN pull zone basic configs ([5e525ec](https://github.com/ecomplus/cloud-commerce/commit/5e525ecd94589221886421bede6ab8901ad3c46f))
+* **cli:** New `ci/bunny-prepare-ab.sh` script to purge cache and setup edge rules for A/B testing ([61ad030](https://github.com/ecomplus/cloud-commerce/commit/61ad030dd9285bd45a2f70e6d65b82576394e588))
+
+
+### Bug Fixes
+
+* **api:** Reduce default `cacheMaxAge` to 2min ([6353d6a](https://github.com/ecomplus/cloud-commerce/commit/6353d6a9a830437a4fbf49bf161ef67c0760c762))
+* **cli:** Ensure env vars with dotenv, set per-deploy cookies on Hosting response ([b9bc5e0](https://github.com/ecomplus/cloud-commerce/commit/b9bc5e0bf2a7b013854ef443e47cc955db7509dd))
+
 ### [2.0.9](https://github.com/ecomplus/cloud-commerce/compare/v2.0.8...v2.0.9) (2024-01-20)
 
 
