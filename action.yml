@@ -96,6 +96,8 @@ inputs:
     description: 'App: Tiktok pixel ID'
   tiktok-access-token: 
     description: 'App: Tiktok access token'
+  public-dotenv:
+    description: 'Raw `public.env` file content to set additional public env vars'
 
 outputs: {}
 
@@ -266,6 +268,7 @@ runs:
         PAGARMEV5_PUBLIC_KEY: ${{ inputs.pagarmev5-public-key }}
         TIKTOK_ACCESS_TOKEN: ${{ inputs.tiktok-access-token }}
         TIKTOK_PIXEL_ID: ${{ inputs.tiktok-pixel-id }}
+        PUBLIC_DOTENV: ${{ inputs.public-dotenv }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
@@ -314,6 +317,9 @@ runs:
         TIKTOK_ACCESS_TOKEN=$TIKTOK_ACCESS_TOKEN
         TIKTOK_PIXEL_ID=$TIKTOK_PIXEL_ID
         " > functions/.env
+        if [[ -n "$PUBLIC_DOTENV" ]]; then
+          echo "$PUBLIC_DOTENV" >> functions/.env
+        fi
         if [ -z "$DEPLOY_CODEBASE" ]; then
           BUNNYNET_API_KEY=$BUNNYNET_API_KEY \
           GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME \
