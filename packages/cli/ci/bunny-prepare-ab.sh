@@ -12,7 +12,7 @@ fi
 domain=$1
 channel_url=$2
 
-curl --request POST \
+curl --silent --request POST \
   --url "https://api.bunny.net/purge?url=https://$domain/&async=false" \
   --header "AccessKey: $BUNNYNET_API_KEY"
 echo "> Purged https://$domain/ cache"
@@ -27,7 +27,7 @@ fetch_and_purge() {
 
   for slug in $slugs; do
     if [ -n "$slug" ]; then
-      curl --request POST \
+      curl --silent --request POST \
         --url "https://api.bunny.net/purge?url=https://$domain/$slug" \
         --header "AccessKey: $BUNNYNET_API_KEY"
       additional_patterns+=("\"https://$domain/$slug\"")
@@ -36,7 +36,7 @@ fetch_and_purge() {
   done
 }
 
-if [ ! -z "$ECOM_STORE_ID" ]; then
+if [ -n "$ECOM_STORE_ID" ]; then
   base_uri="https://ecomplus.io/v2/:$ECOM_STORE_ID/"
 
   fetch_and_purge 'products?fields=slug&sort=-sales&limit=2'

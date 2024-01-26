@@ -51,9 +51,7 @@ curl --silent --request POST \
     "css"
   ],
   "EnableAccessControlOriginHeader": true,
-  "DisableCookies": false,
-  "EnableOriginShield": true,
-  "CacheControlMaxAgeOverride": -1,
+  "DisableCookies": true,
   "CacheControlPublicMaxAgeOverride": -1,
   "BurstSize": 0,
   "RequestLimit": 0,
@@ -70,11 +68,8 @@ curl --silent --request POST \
   "EnableAvifVary": false,
   "EnableCountryCodeVary": false,
   "EnableMobileVary": false,
-  "EnableCookieVary": true,
-  "CookieVaryParameters": [
-    "bid",
-    "branch"
-  ],
+  "EnableCookieVary": false,
+  "CookieVaryParameters": [],
   "EnableHostnameVary": false,
   "LoggingIPAnonymizationEnabled": true,
   "EnableTLS1": true,
@@ -87,7 +82,6 @@ curl --silent --request POST \
   "LogForwardingEnabled": false,
   "LoggingSaveToStorage": false,
   "FollowRedirects": false,
-  "PermaCacheStorageZoneId": 0,
   "OriginRetries": 0,
   "OriginConnectTimeout": 5,
   "OriginResponseTimeout": 15,
@@ -112,7 +106,7 @@ curl --silent --request POST \
   "LogForwardingFormat": 1,
   "ShieldDDosProtectionType": 1,
   "ShieldDDosProtectionEnabled": false,
-  "EnableRequestCoalescing": true,
+  "EnableRequestCoalescing": false,
   "RequestCoalescingTimeout": 30,
   "DisableLetsEncrypt": false,
   "EnableBunnyImageAi": false,
@@ -162,8 +156,65 @@ configure_edge_rule "APIs bypass CDN cache" '
       "Parameter1": ""
     }
   ],
-  "TriggerMatchingType": 0,
+  "TriggerMatchingType": 1,
   "Description": "APIs bypass CDN cache",
+  "Enabled": true
+}
+'
+
+configure_edge_rule "APIs bypass perma-cache" '
+{
+  "ActionType": 15,
+  "ActionParameter1": null,
+  "ActionParameter2": null,
+  "Triggers": [
+    {
+      "Type": 0,
+      "PatternMatches": [
+        "*/_api/*",
+        "*/_feeds/*",
+        "*/.*/git/*",
+        "*/_analytics"
+      ],
+      "PatternMatchingType": 0,
+      "Parameter1": ""
+    }
+  ],
+  "TriggerMatchingType": 1,
+  "Description": "APIs bypass perma-cache",
+  "Enabled": true
+}
+'
+
+configure_edge_rule "SSR browser cache" '
+{
+  "ActionType": 16,
+  "ActionParameter1": "120",
+  "ActionParameter2": null,
+  "Triggers": [
+    {
+      "Type": 0,
+      "PatternMatches": [
+        "*/_astro/*"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    },
+    {
+      "Type": 3,
+      "PatternMatches": [
+        "webp",
+        "png",
+        "jpg",
+        "woff2",
+        "mp4"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    }
+  ],
+  "TriggerMatchingType": 1,
+  "Description": "SSR browser cache",
   "Enabled": true
 }
 '
