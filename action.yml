@@ -155,7 +155,7 @@ runs:
           ~/.npm-global/bin
         key: ${{ runner.os }}-npm-g-firebase-tools-13.0.3
 
-    - if: ${{ github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true' }}
+    - if: github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true'
       shell: bash
       run: npm i --location=global firebase-tools@13.0.3
 
@@ -364,7 +364,7 @@ runs:
         fi
         npm --prefix "functions/ssr/" run build:static && npx cloudcommerce prepare
 
-    - if: github.event_name == 'pull_request'
+    - if: github.event_name == 'pull_request' && env.git_branch != 'main'
       name: Deploy Firebase Hosting PR preview
       id: deploy-preview
       uses: FirebaseExtended/action-hosting-deploy@v0
@@ -374,7 +374,7 @@ runs:
         channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
         expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || null }}
 
-    - if: ${{ github.event_name == 'pull_request' && startsWith(env.git_branch, 'main-') }}
+    - if: github.event_name == 'pull_request' && startsWith(env.git_branch, 'main-')
       name: Prepare bunny.net CDN for A/B testing
       shell: bash
       env:
