@@ -328,6 +328,21 @@ runs:
             npm run deploy -- --only functions:$DEPLOY_CODEBASE
           fi
         fi
+    
+    - if: github.event_name == 'push' && contains(github.event.head_commit.message, '[config bunny]')
+      name: Set bunny.net CDN pull zone basic configs
+      shell: bash
+      env:
+        ECOM_STORE_ID: ${{ env.ecom_store_id }}
+        GIT_BRANCH: ${{ env.git_branch }}
+        BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
+      run: |
+        if [ ! -z "$BUNNYNET_API_KEY" ]; then
+          domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
+          if [ ! -z "$domain" ]; then
+            bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-config-base.sh $domain
+          fi
+        fi
 
     - if: github.event_name == 'pull_request'
       name: Build storefront static
