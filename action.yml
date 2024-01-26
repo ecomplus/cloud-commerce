@@ -335,19 +335,19 @@ runs:
           fi
         fi
     
-    - if: github.event_name == 'push' && contains(github.event.head_commit.message, '[config bunny]')
-      name: Set bunny.net CDN pull zone basic configs
+    - if: github.event_name == 'push' && contains(github.event.head_commit.message, '[setup bunny]')
+      name: Setup bunny.net CDN for ISR
       shell: bash
       env:
         ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GIT_BRANCH: ${{ env.git_branch }}
+        FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
       run: |
-        if [ ! -z "$BUNNYNET_API_KEY" ]; then
+        if [ -n "$BUNNYNET_API_KEY" ]; then
+          project_id=$(echo "$FIREBASE_SERVICE_ACCOUNT" | jq -r .project_id 2>/dev/null)
           domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
-          if [ ! -z "$domain" ]; then
-            bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-config-base.sh $domain
-          fi
+          bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-setup.sh $project_id $domain
         fi
 
     - if: github.event_name == 'pull_request'
@@ -383,9 +383,9 @@ runs:
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         CHANNEL_URL: ${{ steps.deploy-preview.outputs.details_url }}
       run: |
-        if [ ! -z "$BUNNYNET_API_KEY" ]; then
+        if [ -n "$BUNNYNET_API_KEY" ]; then
           domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
-          if [ ! -z "$domain" ]; then
+          if [ -n "$domain" ]; then
             bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-prepare-ab.sh $domain $CHANNEL_URL
           fi
         fi
