@@ -335,19 +335,22 @@ runs:
           fi
         fi
     
-    - if: github.event_name == 'push' && contains(github.event.head_commit.message, '[setup bunny]')
-      name: Setup bunny.net CDN for ISR
+    - if: github.event_name == 'push' && contains(github.event.head_commit.message, '[run:')
+      name: Run script from `@cloudcommerce/cli/ci/`
       shell: bash
       env:
+        COMMIT_MSG: ${{ github.event.head_commit.message }}
         ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GIT_BRANCH: ${{ env.git_branch }}
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
       run: |
         if [ -n "$BUNNYNET_API_KEY" ]; then
+          script_name="${COMMIT_MSG#*\[run:}"
+          script_name="${script_name%%\]*}"
           project_id=$(echo "$FIREBASE_SERVICE_ACCOUNT" | jq -r .project_id 2>/dev/null)
           domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
-          bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-setup.sh $project_id $domain
+          bash $GITHUB_ACTION_PATH/packages/cli/ci/$script_name.sh $project_id $domain
         fi
 
     - if: github.event_name == 'pull_request'
