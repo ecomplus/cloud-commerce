@@ -5,12 +5,17 @@ if [ -z "$BUNNYNET_API_KEY" ]; then
   exit 1
 fi
 if [ $# -eq 0 ]; then
+  echo "Provide the Firebase product ID as the first argument"
+  exit 1
+fi
+if [ $# -eq 1 ]; then
   echo "Provide the domain as the first argument"
   exit 1
 fi
 
-domain=$1
-channel_url=$2
+project_id=$1
+domain=$2
+channel_url=$3
 
 curl --silent --request POST \
   --url "https://api.bunny.net/purge?url=https://$domain/&async=false" \

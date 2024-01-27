@@ -5,11 +5,16 @@ if [ -z "$BUNNYNET_API_KEY" ]; then
   exit 1
 fi
 if [ $# -eq 0 ]; then
+  echo "Provide the Firebase product ID as the first argument"
+  exit 1
+fi
+if [ $# -eq 1 ]; then
   echo "Provide the domain as the first argument"
   exit 1
 fi
 
-domain=$1
+project_id=$1
+domain=$2
 
 response=$(curl --silent --request GET \
   --url https://api.bunny.net/pullzone \

@@ -389,6 +389,6 @@ runs:
         if [ -n "$BUNNYNET_API_KEY" ]; then
           domain=$(cat functions/ssr/content/settings.json | jq -r '.domain')
           if [ -n "$domain" ]; then
-            bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-prepare-ab.sh $domain $CHANNEL_URL
+            bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-prepare-ab.sh 1 $domain $CHANNEL_URL
           fi
         fi
