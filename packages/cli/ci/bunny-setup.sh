@@ -5,7 +5,7 @@ if [ -z "$BUNNYNET_API_KEY" ]; then
   exit 1
 fi
 if [ $# -eq 0 ]; then
-  echo "Provide the Firebase product ID as the first argument"
+  echo "Provide the Firebase project ID as the first argument"
   exit 1
 fi
 
