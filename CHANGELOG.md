@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/ecomplus/cloud-commerce/compare/v2.1.0...v2.2.0) (2024-01-28)
+
+
+### Features
+
+* **cli:** New `ci/bunny-remove-ab.sh` script to clear A/B edge rules on experiment end ([d5c7fc9](https://github.com/ecomplus/cloud-commerce/commit/d5c7fc9d9b34a7e1dc4231c4eeb7b4d5e8adcb37))
+* **cli:** New `ci/bunny-setup.sh` script to setup bunny.net CDN for ISR with perma-cache ([c4bfc14](https://github.com/ecomplus/cloud-commerce/commit/c4bfc14ba9af404bb66e39e585426ea1c1b2542f))
+* **ssr:** Supporting ISR with bunny.net perma-cache ([0bfbf45](https://github.com/ecomplus/cloud-commerce/commit/0bfbf45e4f84ce23920910de02f99f22ce244cd1))
+* **storefront:** Integrating branch based A/B tests with GA4 ([69def97](https://github.com/ecomplus/cloud-commerce/commit/69def9782516afbe77d42131a3def54c6a875031))
+
+
+### Bug Fixes
+
+* **cli:** Normalizing ci scripts with first arg project ID and second domain ([3c65466](https://github.com/ecomplus/cloud-commerce/commit/3c6546633edfcaedb415dee8acd1cbc5decd603f))
+
 ## [2.1.0](https://github.com/ecomplus/cloud-commerce/compare/v2.0.9...v2.1.0) (2024-01-26)
 
 
