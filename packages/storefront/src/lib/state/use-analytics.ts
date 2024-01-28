@@ -217,7 +217,11 @@ export const getGtagItem = (product: Partial<Products> | SearchItem | CartItem) 
   return item;
 };
 
-export const useAnalytics = () => {
+export const useAnalytics = ({
+  experimentId = window.AB_EXPERIMENT_ID,
+}: {
+  experimentId?: string,
+} = {}) => {
   document.addEventListener('astro:beforeload', resetPageViewPromise);
   const {
     gtag,
@@ -225,12 +229,26 @@ export const useAnalytics = () => {
     GA_TRACKING_ID,
   } = window as { [k:string]: any, gtag?: Gtag.Gtag };
   const tagId = GTAG_TAG_ID || GA_TRACKING_ID;
-  if (tagId && typeof gtag === 'function') {
-    ['client_id', 'session_id', 'gclid'].forEach((key) => {
-      gtag('get', tagId, key, (id) => {
-        trackingIds[key === 'gclid' ? key : `g_${key}`] = id;
+  if (typeof gtag === 'function') {
+    if (tagId) {
+      ['client_id', 'session_id', 'gclid'].forEach((key) => {
+        gtag('get', tagId, key, (id) => {
+          trackingIds[key === 'gclid' ? key : `g_${key}`] = id;
+        });
       });
-    });
+    }
+    const { GIT_BRANCH } = window;
+    if (GIT_BRANCH) {
+      // https://developers.google.com/analytics/devguides/collection/ga4/integration
+      const expVariantString = experimentId
+        ? `${experimentId}-${window.GIT_BRANCH}`
+        : GIT_BRANCH.startsWith('main-') && GIT_BRANCH;
+      if (expVariantString) {
+        gtag('event', 'experience_impression', {
+          exp_variant_string: expVariantString,
+        });
+      }
+    }
   }
   const url = new URL(window.location.toString());
   ['gclid', 'fbclid', 'ttclid'].forEach((key) => {
