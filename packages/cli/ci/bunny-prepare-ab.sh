@@ -17,11 +17,6 @@ project_id=$1
 domain=$2
 channel_url=$3
 
-curl --silent --request POST \
-  --url "https://api.bunny.net/purge?url=https://$domain/&async=false" \
-  --header "AccessKey: $BUNNYNET_API_KEY"
-echo "> Purged https://$domain/ cache"
-
 base_uri=""
 additional_patterns=()
 
@@ -32,11 +27,7 @@ fetch_and_purge() {
 
   for slug in $slugs; do
     if [ -n "$slug" ]; then
-      curl --silent --request POST \
-        --url "https://api.bunny.net/purge?url=https://$domain/$slug" \
-        --header "AccessKey: $BUNNYNET_API_KEY"
       additional_patterns+=("\"https://$domain/$slug\"")
-      echo "> Purged https://$domain/$slug cache"
     fi
   done
 }
@@ -124,26 +115,6 @@ ab_testing_data="
   \"Enabled\": true
 }"
 
-ab_testing_cookie_data="
-{
-  \"ActionType\": 2,
-  \"ActionParameter1\": \"$channel_url\",
-  \"ActionParameter2\": \"\",
-  \"Triggers\": [
-    {
-      \"Type\": 10,
-      \"PatternMatches\": [
-        \"$GIT_BRANCH\"
-      ],
-      \"PatternMatchingType\": 0,
-      \"Parameter1\": \"branch\"
-    }
-  ],
-  \"TriggerMatchingType\": 1,
-  \"Description\": \"A/B testing cookie [$GIT_BRANCH]\",
-  \"Enabled\": true
-}"
-
 ab_testing_bypass_data="
 {
   \"ActionType\": 3,
@@ -160,10 +131,43 @@ ab_testing_bypass_data="
     }
   ],
   \"TriggerMatchingType\": 1,
-  \"Description\": \"A/B testing cache bypass\",
+  \"Description\": \"A/B CDN cache bypass [$GIT_BRANCH]\",
+  \"Enabled\": true
+}"
+
+ab_testing_perma_bypass_data="
+{
+  \"ActionType\": 15,
+  \"ActionParameter1\": null,
+  \"ActionParameter2\": null,
+  \"Triggers\": [
+    {
+      \"Type\": 0,
+      \"PatternMatches\": [
+        \"https://$domain/\"
+      ],
+      \"PatternMatchingType\": 0,
+      \"Parameter1\": \"\"
+    }
+  ],
+  \"TriggerMatchingType\": 1,
+  \"Description\": \"A/B perma-cache bypass [$GIT_BRANCH]\",
   \"Enabled\": true
 }"
 
 configure_edge_rule "A/B testing [$GIT_BRANCH]" "$ab_testing_data"
-configure_edge_rule "A/B testing cookie [$GIT_BRANCH]" "$ab_testing_cookie_data" false
-configure_edge_rule "A/B testing cache bypass" "$ab_testing_bypass_data"
+configure_edge_rule "A/B CDN cache bypass [$GIT_BRANCH]" "$ab_testing_bypass_data"
+configure_edge_rule "A/B perma-cache bypass [$GIT_BRANCH]" "$ab_testing_perma_bypass_data"
+
+curl --silent --request POST \
+  --url "https://api.bunny.net/purge?url=https://$domain/" \
+  --header "AccessKey: $BUNNYNET_API_KEY"
+printf "\n> Purged https://$domain/ cache"
+
+for slug_url in "${additional_patterns[@]}"; do
+  clean_url=${slug_url//\"/}
+  curl --silent --request POST \
+    --url "https://api.bunny.net/purge?url=$clean_url" \
+    --header "AccessKey: $BUNNYNET_API_KEY"
+  echo "> Purged $clean_url cache"
+done
