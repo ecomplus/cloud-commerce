@@ -23,6 +23,7 @@ import { useSearchActiveFilters } from '@@sf/composables/use-search-filters';
 
 export interface Props {
   term?: string | null;
+  pageSize?: number;
   fixedParams?: SearchEngineInstance['params'];
   products?: SearchItem<null>[];
   resultMeta?: SearchEngineInstance['meta'];
@@ -48,6 +49,9 @@ const useSearchShowcase = (props: Props) => {
   }
   if (term !== undefined) {
     searchEngine.term.value = term;
+  }
+  if (props.pageSize) {
+    searchEngine.pageSize.value = props.pageSize;
   }
   Object.assign(searchEngine.params, props.fixedParams);
   let hasChangedInitParams = false;
@@ -79,9 +83,9 @@ const useSearchShowcase = (props: Props) => {
         const pageNumber = parseInt(String(urlParams.p), 10);
         if (pageNumber >= 1) {
           searchEngine.pageNumber.value = pageNumber;
-          if (props.resultMeta?.offset) {
+          if (props.resultMeta?.limit) {
             const { offset, limit } = props.resultMeta;
-            const fetchedPage = Math.ceil(offset / limit);
+            const fetchedPage = offset ? Math.ceil(offset / limit) : 1;
             if (fetchedPage === pageNumber) return;
           }
           hasChangedInitParams = true;
