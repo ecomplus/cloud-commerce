@@ -107,7 +107,10 @@ export class SearchEngine {
       return search(opts);
     }, debounce);
     watch([this.term, this.params, this.pageSize], () => {
-      this.pageNumber.value = 1;
+      if (this.wasFetched.value) {
+        this.pageNumber.value = 1;
+        this.#wasFetched.value = false;
+      }
     });
     watch(this.pageNumber, () => {
       this.#wasFetched.value = false;
@@ -168,7 +171,9 @@ export class SearchEngine {
       data.result.forEach((item) => this.products.push(item));
     }
     if (data.meta && data.result) {
-      this.#wasFetched.value = true;
+      /* nextTick */ setTimeout(() => {
+        this.#wasFetched.value = true;
+      }, 9);
     }
   }
 }

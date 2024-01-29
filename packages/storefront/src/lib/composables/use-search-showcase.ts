@@ -50,31 +50,53 @@ const useSearchShowcase = (props: Props) => {
     searchEngine.term.value = term;
   }
   Object.assign(searchEngine.params, props.fixedParams);
+  let hasChangedInitParams = false;
   if (urlParams) {
     Object.keys(urlParams).forEach((param) => {
+      if (!urlParams[param]) return;
+      if (param.startsWith('f\\')) {
+        const field = param.substring(2);
+        searchEngine.params[field] = urlParams[param];
+        if (props.fixedParams?.[field] !== urlParams[param]) {
+          hasChangedInitParams = true;
+        }
+        return;
+      }
       if (param === 'sort') {
         searchEngine.params.sort = urlParams.sort;
+        if (
+          typeof urlParams.sort === 'string'
+          && props.resultMeta?.sort?.length === 1
+        ) {
+          const { field, order } = props.resultMeta.sort[0];
+          const fetchedSort = order ? field : `-${field}`;
+          if (fetchedSort === urlParams.sort) return;
+        }
+        hasChangedInitParams = true;
         return;
       }
       if (param === 'p') {
         const pageNumber = parseInt(String(urlParams.p), 10);
-        if (pageNumber >= 1) searchEngine.pageNumber.value = pageNumber;
-        return;
-      }
-      if (param.startsWith('f\\')) {
-        const field = param.substring(2);
-        searchEngine.params[field] = urlParams[param];
+        if (pageNumber >= 1) {
+          searchEngine.pageNumber.value = pageNumber;
+          if (props.resultMeta?.offset) {
+            const { offset, limit } = props.resultMeta;
+            const fetchedPage = Math.ceil(offset / limit);
+            if (fetchedPage === pageNumber) return;
+          }
+          hasChangedInitParams = true;
+        }
       }
     });
   }
   if (!searchEngine.wasFetched.value) {
-    if (props.products || props.resultMeta) {
+    if ((props.products || props.resultMeta) && !hasChangedInitParams) {
       searchEngine.setResult({
         result: props.products,
         meta: props.resultMeta,
       });
     }
-    if (!props.products) {
+    if (!props.products || hasChangedInitParams) {
       searchEngine.fetch().catch(console.error);
     }
   }
