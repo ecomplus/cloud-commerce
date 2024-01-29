@@ -12,7 +12,7 @@
   },
   "scripts": {
     "fix-install": "bash scripts/pre-install.sh && pnpm i",
-    "postinstall": "husky install && pnpm run -r prepare-monorepo",
+    "postinstall": "husky && pnpm run -r prepare-monorepo",
     "new-pkg": "bash scripts/new-package.sh",
     "build": "turbo run build --filter='!./ecomplus-stores/**'",
     "build:apps": "turbo run build --filter='./packages/{apps/**,modules}'",
@@ -42,7 +42,7 @@
     "@types/node": "^18.19.10",
     "dotenv": "^16.4.1",
     "eslint": "^8.56.0",
-    "husky": "^8.0.3",
+    "husky": "^9.0.7",
     "lint-staged": "^15.2.0",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.2",
