@@ -153,11 +153,11 @@ runs:
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.0.3
+        key: ${{ runner.os }}-npm-g-firebase-tools-13.1.0
 
     - if: github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true'
       shell: bash
-      run: npm i --location=global firebase-tools@13.0.3
+      run: npm i --location=global firebase-tools@13.1.0
 
     - if: steps.npm-cache-many.outputs.cache-hit != 'true'
       name: Install codebase "many" dependencies
@@ -186,7 +186,7 @@ runs:
         echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
         echo "git_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
-    - uses: dorny/paths-filter@v2.12.0
+    - uses: dorny/paths-filter@v3.0.0
       id: changes
       with:
         filters: |
