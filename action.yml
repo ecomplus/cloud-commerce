@@ -116,24 +116,6 @@ runs:
         path: node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
 
-    - uses: actions/cache@v3
-      id: npm-cache-many
-      with:
-        path: functions/many/node_modules
-        key: ${{ runner.os }}-npm-${{ hashFiles('functions/many/package-lock.json') }}
-    
-    - uses: actions/cache@v3
-      id: npm-cache-ssr
-      with:
-        path: functions/ssr/node_modules
-        key: ${{ runner.os }}-npm-${{ hashFiles('functions/ssr/package-lock.json') }}
-    
-    - uses: actions/cache@v3
-      id: npm-cache-with-apps
-      with:
-        path: functions/with-apps/node_modules
-        key: ${{ runner.os }}-npm-${{ hashFiles('functions/with-apps/package-lock.json') }}
-
     - if: steps.npm-cache-root.outputs.cache-hit != 'true'
       shell: bash
       run: npm ci --omit=dev --ignore-scripts
@@ -159,33 +141,6 @@ runs:
       shell: bash
       run: npm i --location=global firebase-tools@13.1.0
 
-    - if: steps.npm-cache-many.outputs.cache-hit != 'true'
-      name: Install codebase "many" dependencies
-      shell: bash
-      working-directory: functions/many
-      run: npm ci
-
-    - if: steps.npm-cache-ssr.outputs.cache-hit != 'true'
-      name: Install codebase "ssr" dependencies
-      shell: bash
-      working-directory: functions/ssr
-      run: npm ci
-
-    - if: steps.npm-cache-with-apps.outputs.cache-hit != 'true'
-      name: Install codebase "with-apps" dependencies
-      shell: bash
-      working-directory: functions/with-apps
-      run: npm ci
-
-    - name: Set ecom_store_id and git_branch env
-      shell: bash
-      working-directory: functions
-      env:
-        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
-      run: |
-        echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
-        echo "git_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
-
     - uses: dorny/paths-filter@v3.0.0
       id: changes
       with:
@@ -196,7 +151,7 @@ runs:
             - 'functions/with-apps/**'
           ssr:
             - 'functions/ssr/**'
-    
+
     - name: Check functions codebase to deploy
       shell: bash
       env:
@@ -219,6 +174,60 @@ runs:
           deploy_codebase=$DEPLOY_CODEBASE
         fi
         echo "deploy_codebase=$deploy_codebase" >> $GITHUB_ENV
+
+    - if: env.deploy_codebase == '' || env.deploy_codebase == 'many'
+      uses: actions/cache@v3
+      id: npm-cache-many
+      with:
+        path: functions/many/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('functions/many/package-lock.json') }}
+    
+    - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
+      uses: actions/cache@v3
+      id: npm-cache-ssr
+      with:
+        path: functions/ssr/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('functions/ssr/package-lock.json') }}
+    
+    - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
+      uses: actions/cache@v3
+      id: npm-cache-with-apps
+      with:
+        path: functions/with-apps/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('functions/with-apps/package-lock.json') }}
+
+    - if: |
+        (env.deploy_codebase == '' || env.deploy_codebase == 'many')
+        && steps.npm-cache-many.outputs.cache-hit != 'true'
+      name: Install codebase "many" dependencies
+      shell: bash
+      working-directory: functions/many
+      run: npm ci
+
+    - if: |
+        (env.deploy_codebase == '' || env.deploy_codebase == 'ssr')
+        && steps.npm-cache-ssr.outputs.cache-hit != 'true'
+      name: Install codebase "ssr" dependencies
+      shell: bash
+      working-directory: functions/ssr
+      run: npm ci
+
+    - if: |
+        (env.deploy_codebase == '' || env.deploy_codebase == 'with-apps')
+        && steps.npm-cache-with-apps.outputs.cache-hit != 'true'
+      name: Install codebase "with-apps" dependencies
+      shell: bash
+      working-directory: functions/with-apps
+      run: npm ci
+
+    - name: Set ecom_store_id and git_branch env
+      shell: bash
+      working-directory: functions
+      env:
+        ECOM_STORE_ID: ${{ inputs.ecom-store-id }}
+      run: |
+        echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
+        echo "git_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
     - if: github.event_name == 'push'
       name: Deploy to Firebase live
