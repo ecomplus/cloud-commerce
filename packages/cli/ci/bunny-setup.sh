@@ -99,5 +99,5 @@ if [ -n "$domain" ]; then
   printf "\n\n> Added hostname \"$domain\" to pull zone"
 
   script_dir=$(dirname $0)
-  bash $script_dir/bunny-config-base.sh $domain
+  bash $script_dir/bunny-config-base.sh $project_id $domain
 fi
