@@ -219,6 +219,7 @@ const genAstroConfig = ({
       mode: 'middleware',
     }),
     outDir,
+    cacheDir: './.astro/cache',
     integrations,
     image: isToServerless ? { service: passthroughImageService() } : undefined,
     site,
