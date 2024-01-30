@@ -242,6 +242,7 @@ const loadRouteContext = async (
   };
   Astro.locals.routeContext = routeContext;
   emitter.emit('load', routeContext);
+  globalThis.__sfIds = {}; // see helpers/sf-utils.ts
   return routeContext;
 };
 

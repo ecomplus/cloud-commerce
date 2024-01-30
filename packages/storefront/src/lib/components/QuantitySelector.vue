@@ -38,7 +38,7 @@ const emit = defineEmits<{
   'update:modelValue': [value: number]
 }>();
 const input = ref<HTMLInputElement | null>(null);
-const inputId = `NInput${useId()}`;
+const inputId = useId('NInput');
 const value = computed({
   get() {
     return props.modelValue;

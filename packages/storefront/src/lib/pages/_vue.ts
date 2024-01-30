@@ -4,6 +4,7 @@ import Fade from '@@sf/components/globals/Fade.vue';
 import ALink from '@@sf/components/globals/ALink.vue';
 import AImg from '@@sf/components/globals/AImg.vue';
 import Skeleton from '@@sf/components/globals/Skeleton.vue';
+import { useId } from '../../helpers/sf-utils';
 
 const formatPercentage = (value: number, digits = 1) => {
   return Number.isInteger(value) ? `${value}%` : `${value.toFixed(digits)}%`;
@@ -23,6 +24,7 @@ const createApp = (app: App) => {
       const { settings, apiContext } = globalThis.$storefront || {};
       app.config.globalProperties.$settings = settings;
       app.config.globalProperties.$apiContext = apiContext;
+      app.config.globalProperties.$useId = useId;
     },
   });
   app.component('Fade', Fade);

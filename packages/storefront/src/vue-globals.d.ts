@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     $percentage: FormatPercentage;
     $settings: $Storefront['settings'];
     $apiContext: $Storefront['apiContext'];
+    $useId: (prefix?: string) => string;
   }
 
   export interface GlobalComponents {

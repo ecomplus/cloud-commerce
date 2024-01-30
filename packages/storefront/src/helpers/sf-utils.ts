@@ -1,7 +1,11 @@
-let id = -1;
+// See ssr-context.ts
+if (!globalThis.__sfIds) globalThis.__sfIds = {};
 
-/* eslint-disable-next-line no-plusplus */
-export const useId = () => String(++id);
+export const useId = (prefix = '_') => {
+  if (typeof globalThis.__sfIds[prefix] !== 'number') globalThis.__sfIds[prefix] = -1;
+  /* eslint-disable-next-line no-plusplus */
+  return `${prefix}${++globalThis.__sfIds[prefix]}`;
+};
 
 export const requestIdleCallback = (fn: (...args: any[]) => any, fallbackMs = 300) => {
   if (typeof window.requestIdleCallback === 'function') {
