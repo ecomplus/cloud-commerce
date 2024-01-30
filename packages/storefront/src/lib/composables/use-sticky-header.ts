@@ -48,7 +48,7 @@ const useStickyHeader = (props: Props) => {
   watchDebounced(_y, (nextY) => {
     y.value = nextY;
   }, {
-    debounce: isMobile ? 100 : 50,
+    debounce: isMobile ? 100 : 20,
     maxWait: isMobile ? 800 : 400,
   });
   const isSticky = computed(() => ready.value && y.value > staticY.value * 1.2);
