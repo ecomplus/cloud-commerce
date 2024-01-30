@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/ecomplus/cloud-commerce/compare/v2.2.0...v2.2.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* **storefront:** Fix `useSearchShowcase` to ensure URL params respected on initial (maybe) fetch ([1ecc3df](https://github.com/ecomplus/cloud-commerce/commit/1ecc3dfd2973c22e4186d37ee05cc266f5a56e31))
+* **storefront:** New optional `pageSize` prop to search showcase compsable ([5b3fa04](https://github.com/ecomplus/cloud-commerce/commit/5b3fa04d837a4d54488ca7cc4e3b78131c0589b3))
+* **storefront:** Update Astro to latest v4.2.6 ([#312](https://github.com/ecomplus/cloud-commerce/issues/312)) ([76ddf9a](https://github.com/ecomplus/cloud-commerce/commit/76ddf9ab17fc6bd31c674b580c185747260fc17f))
+
 ## [2.2.0](https://github.com/ecomplus/cloud-commerce/compare/v2.1.0...v2.2.0) (2024-01-28)
 
 
