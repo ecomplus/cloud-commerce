@@ -43,7 +43,7 @@
     "@types/gtag.js": "^0.0.18",
     "@vite-pwa/astro": "^0.2.0",
     "@vueuse/core": "10.7.2",
-    "astro": "4.2.6",
+    "astro": "4.2.7",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.4.1",
