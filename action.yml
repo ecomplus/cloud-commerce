@@ -104,6 +104,9 @@ outputs: {}
 runs:
   using: "composite"
   steps:
+    - shell: bash
+      run: echo "year=$(date +'%Y')" >> $GITHUB_ENV
+
     - uses: actions/setup-node@v4
       with:
         node-version: 18
@@ -141,7 +144,8 @@ runs:
       shell: bash
       run: npm i --location=global firebase-tools@13.1.0
 
-    - uses: dorny/paths-filter@v3.0.0
+    - if: github.event_name == 'push'
+      uses: dorny/paths-filter@v3.0.0
       id: changes
       with:
         filters: |
@@ -152,7 +156,8 @@ runs:
           ssr:
             - 'functions/ssr/**'
 
-    - name: Check functions codebase to deploy
+    - if: github.event_name == 'push'
+      name: Check functions codebase to deploy
       shell: bash
       env:
         DEPLOY_CODEBASE: ${{ inputs.deploy-codebase }}
@@ -175,20 +180,30 @@ runs:
         fi
         echo "deploy_codebase=$deploy_codebase" >> $GITHUB_ENV
 
+    - if: github.event_name == 'pull_request'
+      shell: bash
+      run: echo "deploy_codebase=ssr" >> $GITHUB_ENV
+
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'many'
       uses: actions/cache@v3
       id: npm-cache-many
       with:
         path: functions/many/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('functions/many/package-lock.json') }}
-    
+
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
       uses: actions/cache@v3
       id: npm-cache-ssr
       with:
         path: functions/ssr/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('functions/ssr/package-lock.json') }}
-    
+
+    - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
+      uses: actions/cache@v3
+      with:
+        path: functions/ssr/.astro
+        key: ${{ runner.os }}-${{ env.year }}-astro
+
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
       uses: actions/cache@v3
       id: npm-cache-with-apps
@@ -343,7 +358,7 @@ runs:
             npm run deploy -- --only functions:$DEPLOY_CODEBASE
           fi
         fi
-    
+
     - if: github.event_name == 'push' && contains(github.event.head_commit.message, '[run:')
       name: Run script from `@cloudcommerce/cli/ci/`
       shell: bash
@@ -405,7 +420,7 @@ runs:
             bash $GITHUB_ACTION_PATH/packages/cli/ci/bunny-prepare-ab.sh 1 $domain $CHANNEL_URL
           fi
         fi
-    
+
     - if: |
         github.event_name == 'pull_request' && github.event.action == 'closed'
         && startsWith(env.git_branch, 'main-')
