@@ -201,8 +201,8 @@ runs:
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
       uses: actions/cache@v3
       with:
-        path: functions/ssr/.astro
-        key: ${{ runner.os }}-${{ env.year }}-astro
+        path: functions/ssr/.cache
+        key: ${{ runner.os }}-${{ env.year }}-storefront
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
       uses: actions/cache@v3

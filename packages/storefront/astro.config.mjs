@@ -219,7 +219,7 @@ const genAstroConfig = ({
       mode: 'middleware',
     }),
     outDir,
-    cacheDir: './.astro/cache',
+    cacheDir: './.cache/astro',
     integrations,
     image: isToServerless ? { service: passthroughImageService() } : undefined,
     site,
@@ -230,6 +230,7 @@ const genAstroConfig = ({
       ...settings.build,
     },
     vite: {
+      cacheDir: './.cache/vite',
       plugins: [
         {
           name: 'vue-i18n',
