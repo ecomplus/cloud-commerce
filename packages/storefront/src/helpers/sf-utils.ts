@@ -1,4 +1,4 @@
-// See ssr-context.ts
+// See ssr-context.ts and BaseHead.astro
 if (!globalThis.__sfIds) globalThis.__sfIds = {};
 
 export const useId = (prefix = '_') => {

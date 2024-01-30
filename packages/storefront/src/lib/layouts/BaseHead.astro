@@ -91,6 +91,7 @@ window._emitApiContext = (id = null) => {
   console.log('[ctx] emit ' + id);
   window.dispatchEvent(new Event('storefront:apiContext'));
   window._emitedContextId = id;
+  window.__sfIds = {};
 };
 window.ECOM_STORE_ID = ${storeId};
 window.ECOM_LANG = '${lang}';
