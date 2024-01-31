@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.2](https://github.com/ecomplus/cloud-commerce/compare/v2.2.1...v2.2.2) (2024-01-31)
+
+
+### Bug Fixes
+
+* **cli:** Call `ci/bunny-config-base.sh` with correct args on setup ([4e816c1](https://github.com/ecomplus/cloud-commerce/commit/4e816c174a5b02fbb660adda297717cf30c36692))
+* **ssr:** Purge bunny.net cache only for page views older than 3min ([391ed21](https://github.com/ecomplus/cloud-commerce/commit/391ed21011fa28b342ed95b1e3cb99a7157374a9))
+* **storefront:** Bump Astro to latest v4.2.7 ([a32bf15](https://github.com/ecomplus/cloud-commerce/commit/a32bf15037131af22dbfa2ae7bc7f27ac5318eb1))
+* **storefront:** Preventing hydration mismatch with random `useId`s ([481518a](https://github.com/ecomplus/cloud-commerce/commit/481518a1f5375871f01b882dd8714731fbb41808))
+* **storefront:** Preventing hydration mismatch with random `useId`s ([bfc4f8c](https://github.com/ecomplus/cloud-commerce/commit/bfc4f8c5e363d28dc30f085eab97e6e2fc88530b))
+* **storefront:** Reducing sticky header scroll watcher debounce to 20ms ([aff44e5](https://github.com/ecomplus/cloud-commerce/commit/aff44e5e5f8185472a848b83b42bdc82f374ed12))
+
 ### [2.2.1](https://github.com/ecomplus/cloud-commerce/compare/v2.2.0...v2.2.1) (2024-01-30)
 
 
