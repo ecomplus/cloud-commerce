@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.3](https://github.com/ecomplus/cloud-commerce/compare/v2.2.2...v2.2.3) (2024-01-31)
+
+
+### Bug Fixes
+
+* **ssr:** Fixing Firestore query on `ssrPageViews` to purge CDN cache ([9d4f208](https://github.com/ecomplus/cloud-commerce/commit/9d4f208b38ac79ce2fbc2a35e3b8e9162d03d573))
+
 ### [2.2.2](https://github.com/ecomplus/cloud-commerce/compare/v2.2.1...v2.2.2) (2024-01-31)
 
 
