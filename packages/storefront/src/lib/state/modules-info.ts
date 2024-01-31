@@ -1,6 +1,10 @@
 import type {
+  AppModuleName,
+  ListPaymentsParams,
   ListPaymentsResponse,
+  CalculateShippingParams,
   CalculateShippingResponse,
+  ApplyDiscountParams,
   ApplyDiscountResponse,
 } from '@cloudcommerce/types';
 import { reactive, computed } from 'vue';
@@ -32,6 +36,36 @@ loadingGlobalInfoPreset.then((modulesInfoPreset) => {
   Object.assign(modulesInfo, modulesInfoPreset);
 });
 
+export type ModuleName = Exclude<AppModuleName, 'create_transaction'>;
+
+export type ModulePayload<M extends ModuleName> =
+  M extends 'list_payments' ? ListPaymentsParams :
+  M extends 'calculate_shipping' ? CalculateShippingParams :
+  M extends 'apply_discount' ? ApplyDiscountParams :
+  Record<string, any>;
+
+type FetchModule = <M extends ModuleName>(
+  modName: M,
+  reqOptions?: {
+    method: 'get',
+    params?: Record<string, string>,
+  } | {
+    method: 'post',
+    body: ModulePayload<M>,
+  },
+) => Promise<Response & {
+  json<P = ModulePayload<M>>(): Promise<P>,
+}>;
+
+export const fetchModule: FetchModule = (modName, reqOptions) => {
+  const { hostname } = window.location;
+  const { domain } = globalThis.$storefront.settings;
+  const modulesBaseUri = hostname !== 'localhost' && hostname !== '127.0.0.1'
+    ? `https://${domain}/_api/modules/`
+    : '/_api/modules/';
+  return afetch(`${modulesBaseUri}${modName}`, reqOptions);
+};
+
 if (!import.meta.env.SSR) {
   const storageKey = 'MODULES_INFO';
   const sessionJson = sessionStorage.getItem(storageKey);
@@ -50,8 +84,8 @@ if (!import.meta.env.SSR) {
   }
 
   const fetchInfo = () => {
-    const modulesToFetch: { modName: string, reqOptions?: Record<string, any> }[] = [];
-    ['list_payments', 'calculate_shipping'].forEach((modName) => {
+    const modulesToFetch: { modName: ModuleName, reqOptions?: any }[] = [];
+    (['list_payments', 'calculate_shipping'] as const).forEach((modName) => {
       if (!Object.keys(modulesInfo[modName]).length) {
         modulesToFetch.push({ modName });
       }
@@ -67,12 +101,7 @@ if (!import.meta.env.SSR) {
     }
 
     modulesToFetch.forEach(({ modName, reqOptions }) => {
-      const { hostname } = window.location;
-      const { domain } = globalThis.$storefront.settings;
-      const modulesBaseUri = hostname !== 'localhost' && hostname !== '127.0.0.1'
-        ? `https://${domain}/_api/modules/`
-        : '/_api/modules/';
-      afetch(`${modulesBaseUri}${modName}`, reqOptions)
+      fetchModule(modName, reqOptions)
         .then(async (response) => {
           if (response.ok) {
             const modInfo = {};
