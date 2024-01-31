@@ -87,8 +87,11 @@ const saveViews = async () => {
           }
         }
       }
+      const sMaxAge = Number(process.env.SSR_CACHE_MAX_AGE) || 179;
       const pageViewsSnapshot = await db.collection('ssrPageViews')
         .where('at', '>', new Date(Date.now() - 1000 * 60 * 20))
+        .where('at', '<', new Date(Date.now() - 1000 * sMaxAge))
+        .where('isCachePurged', '!=', true)
         .get();
       const purgedUrls: string[] = [];
       for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
@@ -121,8 +124,11 @@ const saveViews = async () => {
               headers: {
                 AccessKey: bunnyStoragePass,
               },
+            }).catch((err) => {
+              if (err.response?.status !== 404) throw err;
             });
           }
+          doc.ref.update({ isCachePurged: true });
         }
       }
     } catch (err: any) {
