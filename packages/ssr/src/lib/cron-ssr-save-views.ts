@@ -91,12 +91,18 @@ const saveViews = async () => {
       const pageViewsSnapshot = await db.collection('ssrPageViews')
         .where('at', '>', new Date(Date.now() - 1000 * 60 * 20))
         .where('at', '<', new Date(Date.now() - 1000 * sMaxAge))
-        .where('isCachePurged', '!=', true)
         .get();
       const purgedUrls: string[] = [];
       for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
         const doc = pageViewsSnapshot.docs[i];
-        const { url } = doc.data() as { url: string };
+        const {
+          url,
+          isCachePurged,
+        } = doc.data() as { url: string, isCachePurged?: true };
+        if (isCachePurged) {
+          continue;
+        }
+        doc.ref.update({ isCachePurged: true });
         if (url?.startsWith(`https://${domain}`) && !purgedUrls.includes(url)) {
           await bunnyAxios('/purge', {
             method: 'POST',
@@ -128,7 +134,6 @@ const saveViews = async () => {
               if (err.response?.status !== 404) throw err;
             });
           }
-          doc.ref.update({ isCachePurged: true });
         }
       }
     } catch (err: any) {
