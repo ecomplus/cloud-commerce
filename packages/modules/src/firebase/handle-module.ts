@@ -26,7 +26,8 @@ async function runModule(
   modName: string,
   validate: ValidateFunction,
   responseValidate: ValidateFunction,
-  appId?: any,
+  appId?: number,
+  skipAppIds?: number[],
 ) {
   const respond = (result: any[]) => res.send({
     result,
@@ -44,13 +45,7 @@ async function runModule(
     [`modules.${modName}.enabled`]: true,
     fields: `_id,app_id,version,data,hidden_data,modules.${modName}`,
   };
-  if (
-    appId
-    && (typeof appId === 'number' || (typeof appId === 'string' && /^\d+$/.test(appId)))
-  ) {
-    if (typeof appId === 'string') {
-      appId = parseInt(appId, 10);
-    }
+  if (appId) {
     canCache = false;
     listAppsParams.app_id = appId;
     listAppsParams.limit = 1;
@@ -103,6 +98,9 @@ async function runModule(
       }
       if (!application.data) {
         application.data = {};
+      }
+      if (!appId && skipAppIds?.find((id) => id === application.app_id)) {
+        continue;
       }
       const appModuleUrl = application.modules[modName].endpoint as string;
       // Handle request with big timeout if proxying one app (by ID) only
@@ -203,7 +201,37 @@ export default (
       runModule(req.query, res, modName, validate, responseValidate);
     },
     POST() {
-      runModule(req.body, res, modName, validate, responseValidate, req.query.app_id);
+      let appId: undefined | number;
+      const qAppId = req.query.app_id;
+      if (qAppId) {
+        if (typeof qAppId === 'string' && /^\d+$/.test(qAppId)) {
+          appId = parseInt(qAppId, 10);
+        }
+        if (typeof qAppId === 'number' && qAppId > 1) {
+          appId = qAppId;
+        }
+      }
+      const skipAppIds: number[] = [];
+      const qSkipIds = req.query.skip_ids;
+      if (qSkipIds) {
+        (Array.isArray(qSkipIds) ? qSkipIds : [qSkipIds]).forEach((qSkipId: any) => {
+          if (typeof qSkipId === 'string') {
+            qSkipId = parseInt(qSkipId, 10);
+          }
+          if (typeof qSkipId === 'number' && qSkipId > 1) {
+            skipAppIds.push(qSkipId);
+          }
+        });
+      }
+      runModule(
+        req.body,
+        res,
+        modName,
+        validate,
+        responseValidate,
+        appId,
+        skipAppIds,
+      );
     },
   };
 };
