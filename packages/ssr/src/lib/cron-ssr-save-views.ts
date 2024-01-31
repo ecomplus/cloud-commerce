@@ -148,6 +148,12 @@ const saveViews = async () => {
       }
     }
   }
+  const date = new Date();
+  if (date.getHours() > 1) return;
+  if (!process.env.CRONTAB_SSR_SAVE_VIEWS) {
+    const dateMinutes = date.getMinutes();
+    if (dateMinutes < 48 || dateMinutes > 50) return;
+  }
   const pageViewsQuery = db.collection('ssrPageViews')
     .where('at', '<', new Date(Date.now() - 1000 * 60 * 60 * 24 * 90));
   await deleteQueryBatch(db, pageViewsQuery);
