@@ -38,7 +38,47 @@ import type { CreateTransactionParams } from './modules/create_transaction:param
 import type { CreateTransactionResponse } from './modules/create_transaction:response';
 import type { CheckoutBody } from './modules/@checkout:params';
 
-type ApiEventName = 'orders-new'
+export type {
+  Products,
+  Categories,
+  Brands,
+  Collections,
+  Grids,
+  Carts,
+  Orders,
+  Customers,
+  Stores,
+  Applications,
+  Authentications,
+  ProductSet,
+  CategorySet,
+  BrandSet,
+  CollectionSet,
+  GridSet,
+  CartSet,
+  OrderSet,
+  CustomerSet,
+  StoreSet,
+  ApplicationSet,
+  AuthenticationSet,
+  Resource,
+  ResourceId,
+  ResourceListResult,
+  SearchItem,
+  SearchResult,
+  EventsResult,
+  ApplyDiscountParams,
+  ApplyDiscountResponse,
+  CalculateShippingParams,
+  CalculateShippingResponse,
+  ListPaymentsParams,
+  ListPaymentsResponse,
+  CreateTransactionParams,
+  CreateTransactionResponse,
+  CheckoutBody,
+};
+
+export type ApiEventName = 'orders-new'
   | 'orders-anyStatusSet'
   | 'orders-paid'
   | 'orders-readyForShipping'
@@ -54,7 +94,7 @@ type ApiEventName = 'orders-new'
   | 'customers-new'
   | 'applications-dataSet';
 
-type AppEventsPayload = {
+export type AppEventsPayload = {
   evName: ApiEventName,
   apiEvent: EventsResult<'events/orders'>['result'][0],
   apiDoc: Record<string, any>,
@@ -67,18 +107,52 @@ type AppEventsPayload = {
   isInternal?: boolean,
 };
 
-type AppModuleName = 'apply_discount'
+export type AppModuleName = 'apply_discount'
   | 'calculate_shipping'
   | 'list_payments'
   | 'create_transaction';
 
-type AppModuleBody = {
+export type AppModuleBody<M extends AppModuleName | undefined = undefined> = {
   storeId: number,
   module: AppModuleName,
-  params: {
-    [key: string]: any,
-  },
+  params:
+    M extends 'list_payments' ? ListPaymentsParams :
+    M extends 'calculate_shipping' ? CalculateShippingParams :
+    M extends 'apply_discount' ? ApplyDiscountParams :
+    M extends 'create_transaction' ? CreateTransactionParams :
+    Record<string, any>,
   application: Applications,
+};
+
+export type AppModuleResponse<M extends AppModuleName | undefined = undefined> =
+  M extends 'list_payments' ? ListPaymentsResponse :
+  M extends 'calculate_shipping' ? CalculateShippingResponse :
+  M extends 'apply_discount' ? ApplyDiscountResponse :
+  M extends 'create_transaction' ? CreateTransactionResponse :
+  Record<string, any>;
+
+export type ModuleApiEndpoint = Exclude<AppModuleName, 'create_transaction'> | '@checkout';
+
+export type ModuleApiParams<M extends ModuleApiEndpoint> =
+  M extends 'list_payments' ? ListPaymentsParams :
+  M extends 'calculate_shipping' ? CalculateShippingParams :
+  M extends 'apply_discount' ? ApplyDiscountParams :
+  M extends '@checkout' ? CheckoutBody :
+  never;
+
+export type ModuleApiResult<M extends ModuleApiEndpoint> = {
+  result: {
+    _id: Applications['_id'],
+    app_id: Applications['app_id'],
+    took: number,
+    version: Applications['version'],
+    validated: boolean,
+    response_errors: null | string,
+    error: boolean,
+    error_message: null | string,
+    response: M extends AppModuleName ? AppModuleResponse<M> : Record<string, any>,
+  }[],
+  meta: ModuleApiParams<M>,
 };
 
 type PaymentMethodFlag = 'pix'
@@ -91,7 +165,7 @@ type PaymentMethodFlag = 'pix'
   | 'diners'
   | 'discover';
 
-type SettingsContent = {
+export type SettingsContent = {
   domain: string,
   name: string,
   description: string,
@@ -146,49 +220,4 @@ type SettingsContent = {
   ordersUrl?: string,
   favoritesUrl?: string,
   metafields?: Record<string, any>,
-};
-
-export type {
-  Products,
-  Categories,
-  Brands,
-  Collections,
-  Grids,
-  Carts,
-  Orders,
-  Customers,
-  Stores,
-  Applications,
-  Authentications,
-  ProductSet,
-  CategorySet,
-  BrandSet,
-  CollectionSet,
-  GridSet,
-  CartSet,
-  OrderSet,
-  CustomerSet,
-  StoreSet,
-  ApplicationSet,
-  AuthenticationSet,
-  Resource,
-  ResourceId,
-  ResourceListResult,
-  SearchItem,
-  SearchResult,
-  EventsResult,
-  ApiEventName,
-  AppEventsPayload,
-  AppModuleName,
-  AppModuleBody,
-  ApplyDiscountParams,
-  ApplyDiscountResponse,
-  CalculateShippingParams,
-  CalculateShippingResponse,
-  ListPaymentsParams,
-  ListPaymentsResponse,
-  CreateTransactionParams,
-  CreateTransactionResponse,
-  CheckoutBody,
-  SettingsContent,
 };
