@@ -1,11 +1,10 @@
 import type {
-  AppModuleName,
-  ListPaymentsParams,
   ListPaymentsResponse,
-  CalculateShippingParams,
   CalculateShippingResponse,
-  ApplyDiscountParams,
   ApplyDiscountResponse,
+  ModuleApiEndpoint,
+  ModuleApiParams,
+  ModuleApiResult,
 } from '@cloudcommerce/types';
 import { reactive, computed } from 'vue';
 import { formatMoney } from '@ecomplus/utils';
@@ -36,25 +35,21 @@ loadingGlobalInfoPreset.then((modulesInfoPreset) => {
   Object.assign(modulesInfo, modulesInfoPreset);
 });
 
-export type ModuleName = Exclude<AppModuleName, 'create_transaction'>;
-
-export type ModulePayload<M extends ModuleName> =
-  M extends 'list_payments' ? ListPaymentsParams :
-  M extends 'calculate_shipping' ? CalculateShippingParams :
-  M extends 'apply_discount' ? ApplyDiscountParams :
-  Record<string, any>;
-
-type FetchModule = <M extends ModuleName>(
+type FetchModule = <M extends ModuleApiEndpoint>(
   modName: M,
   reqOptions?: {
-    method: 'get',
-    params?: Record<string, string>,
+    method: 'GET',
+    params?: Record<string, string | number | (string | number)[]>,
   } | {
-    method: 'post',
-    body: ModulePayload<M>,
+    method: 'POST',
+    params?: {
+      app_id?: number,
+      skip_ids?: number | number[],
+    },
+    body: ModuleApiParams<M>,
   },
-) => Promise<Response & {
-  json<P = ModulePayload<M>>(): Promise<P>,
+) => Promise<Omit<Response, 'json'> & {
+  json(): Promise<ModuleApiResult<M>>,
 }>;
 
 export const fetchModule: FetchModule = (modName, reqOptions) => {
@@ -84,7 +79,7 @@ if (!import.meta.env.SSR) {
   }
 
   const fetchInfo = () => {
-    const modulesToFetch: { modName: ModuleName, reqOptions?: any }[] = [];
+    const modulesToFetch: { modName: ModuleApiEndpoint, reqOptions?: any }[] = [];
     (['list_payments', 'calculate_shipping'] as const).forEach((modName) => {
       if (!Object.keys(modulesInfo[modName]).length) {
         modulesToFetch.push({ modName });
@@ -94,7 +89,7 @@ if (!import.meta.env.SSR) {
       modulesToFetch.push({
         modName: 'apply_discount',
         reqOptions: {
-          method: 'post',
+          method: 'POST',
           body: { utm },
         },
       });
@@ -137,7 +132,7 @@ if (!import.meta.env.SSR) {
                       field = 'discount_option';
                       val = data[field];
                       if (val && (!modInfo[field] || val.value > modInfo[field].value)) {
-                        data.payment_gateways.forEach(({ discount }) => {
+                        (data as ListPaymentsResponse).payment_gateways.forEach(({ discount }) => {
                           if (
                             discount && discount.apply_at !== 'freight'
                             && discount.value === val.value
