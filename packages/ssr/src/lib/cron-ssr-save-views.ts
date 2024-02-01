@@ -95,13 +95,11 @@ const saveViews = async () => {
       const purgedUrls: string[] = [];
       for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
         const doc = pageViewsSnapshot.docs[i];
-        const {
-          url,
-          isCachePurged,
-        } = doc.data() as { url: string, isCachePurged?: true };
-        if (isCachePurged) {
+        const data = doc.data() as { url: string, isCachePurged?: true };
+        if (data.isCachePurged) {
           continue;
         }
+        const url = data.url.replace(/\?.*$/, '');
         doc.ref.update({ isCachePurged: true });
         if (url?.startsWith(`https://${domain}`) && !purgedUrls.includes(url)) {
           await bunnyAxios('/purge', {
@@ -130,9 +128,10 @@ const saveViews = async () => {
               headers: {
                 AccessKey: bunnyStoragePass,
               },
-            }).catch((err) => {
-              if (err.response?.status !== 404) throw err;
-            });
+            })
+              .catch((err) => {
+                if (err.response?.status !== 404) throw err;
+              });
           }
         }
       }
