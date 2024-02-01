@@ -11,6 +11,8 @@ import afetch from '../../helpers/afetch';
 import parseGtagToFbq from '../../analytics/event-to-fbq';
 import parseGtagToTtq from '../../analytics/event-to-ttq';
 
+const deployRand = import.meta.env.DEPLOY_RAND || '_';
+
 type AnalyticsEvent = {
   type: 'gtag' | 'fbq' | 'ttq',
   name: string,
@@ -32,7 +34,10 @@ const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
   _sendServerEvents();
 };
 
-if (!import.meta.env.SSR) {
+if (
+  !import.meta.env.SSR
+  && !window.location.search.includes(`__isrV=${deployRand}`)
+) {
   useAnalytics();
   watchGtagEvents(async (evMessage) => {
     const { name, params } = evMessage.event;

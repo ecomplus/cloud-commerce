@@ -6,6 +6,7 @@ import config from '@cloudcommerce/firebase/lib/config';
 import { deleteQueryBatch } from '@cloudcommerce/firebase/lib/helpers/firestore';
 
 const saveViews = async () => {
+  const deployRand = process.env.DEPLOY_RAND || '_';
   /* eslint-disable no-await-in-loop */
   const db = getFirestore();
   const productViewsSnapshot = await db.collection('ssrProductViews')
@@ -129,6 +130,9 @@ const saveViews = async () => {
                 AccessKey: bunnyStoragePass,
               },
             })
+              .then(() => {
+                axios.get(`${url}?__isrV=${deployRand}`).catch(error);
+              })
               .catch((err) => {
                 if (err.response?.status !== 404) throw err;
               });
