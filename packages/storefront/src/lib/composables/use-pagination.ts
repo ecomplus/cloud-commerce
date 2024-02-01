@@ -56,7 +56,7 @@ const usePagination = (props: Props) => {
   });
 
   const baseUrl = ref('');
-  watch(toRef(props.isUrlPath), () => {
+  watch(toRef(props, 'isUrlPath'), () => {
     const url = import.meta.env.SSR
       ? global.astroUrl
       : new URL(window.location.toString());
