@@ -19,7 +19,7 @@ type AnalyticsEvent = {
 let eventsToSend: Array<AnalyticsEvent> = [];
 const _sendServerEvents = useDebounceFn(() => {
   afetch(`/_analytics`, {
-    method: 'post',
+    method: 'POST',
     body: {
       ...getAnalyticsContext(),
       events: eventsToSend,
