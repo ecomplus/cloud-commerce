@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/ecomplus/cloud-commerce/compare/v2.2.3...v2.3.0) (2024-02-01)
+
+
+### Features
+
+* **modules:** Supporting `?skip_ids` param on Modules API POST requests ([200e7da](https://github.com/ecomplus/cloud-commerce/commit/200e7da07744f3fc1f5990cb9ee71432f614f6be))
+* **storefront:** New `useShippingCalculator` composable ([be8b43d](https://github.com/ecomplus/cloud-commerce/commit/be8b43d7ee50771070c6de835d7d034ed7556222))
+* **storefront:** New typed `fetchModule` function exported on `@@sf/state/modules-info` ([e75e45d](https://github.com/ecomplus/cloud-commerce/commit/e75e45db571b94cfa0df3dfa5c9cece412717008))
+* **types:** Add `ModuleApiEndpoint`, `ModuleApiParams` and `ModuleApiResult` to exported types ([104be19](https://github.com/ecomplus/cloud-commerce/commit/104be19e41ec4efb2d2bccf6922be7c86c29c697))
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to latest v4.2.8 ([ca93a6d](https://github.com/ecomplus/cloud-commerce/commit/ca93a6d63098c4903ead042f5ca0bc0700f8e7c0))
+* **storefront:** Fix watching `isUrlPath` optional prop value change ([1aca5f4](https://github.com/ecomplus/cloud-commerce/commit/1aca5f42963c600873b434d787f86ae269eedec1))
+* **storefront:** Properly handle params to URL query on `afetch` wrapper ([733f608](https://github.com/ecomplus/cloud-commerce/commit/733f6088128f14c51d18d6344f7c5ce2d7e714d3))
+
 ### [2.2.3](https://github.com/ecomplus/cloud-commerce/compare/v2.2.2...v2.2.3) (2024-01-31)
 
 
