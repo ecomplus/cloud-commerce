@@ -221,7 +221,9 @@ const loadRouteContext = async (
   } else {
     Astro.locals.assetsPrefix = '';
   }
-  if (urlPath === '/~fallback') {
+  if (isPreview) {
+    setResponseCache(Astro, 0);
+  } else if (urlPath === '/~fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else if (isHomepage) {
     setResponseCache(Astro, 180);
