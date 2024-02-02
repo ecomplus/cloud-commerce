@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/ecomplus/cloud-commerce/compare/v2.3.0...v2.3.1) (2024-02-02)
+
+
+### Bug Fixes
+
+* **cli:** Add `*/~*` pattern to "APIs" cache bypass on bunny.net edge rules ([2efa863](https://github.com/ecomplus/cloud-commerce/commit/2efa863447db76199b1e8435d7d95e468519f644))
+* **cli:** Edit default `firestore.rules` with allwo read on `publicContent` collection ([a7e36c8](https://github.com/ecomplus/cloud-commerce/commit/a7e36c8750b3126e400ad06e43f568dde2fb501f))
+* **ssr:** Sanitize URL without querystring to purge CDN cache ([4dc48b6](https://github.com/ecomplus/cloud-commerce/commit/4dc48b68280beb8da74395f0d61761958fdc8e29))
+* **storefront:** Bump Astro to latest v4.3 ([faf58c7](https://github.com/ecomplus/cloud-commerce/commit/faf58c71cbab707474a140e64b618d06445ad425))
+* **storefront:** Bump Astro to latest v4.3.1 ([734f8ef](https://github.com/ecomplus/cloud-commerce/commit/734f8efb9cd95e5603d4c28833fbee97e6dbaba9))
+* **storefront:** Set Cache-Control `max-age=0` on CMS preview responses (_/~preview/**_) ([a0ace64](https://github.com/ecomplus/cloud-commerce/commit/a0ace643c5ab7b28bf810cc83c74008b1e552c19))
+
 ## [2.3.0](https://github.com/ecomplus/cloud-commerce/compare/v2.2.3...v2.3.0) (2024-02-01)
 
 
