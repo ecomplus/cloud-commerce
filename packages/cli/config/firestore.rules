@@ -4,6 +4,9 @@ service cloud.firestore {
     match /forms/p/{form}/{document=*} {
       allow create;
     }
+    match /publicContent/{document=**} {
+      allow read;
+    }
     match /{document=**} {
       allow read, write: if false;
     }
