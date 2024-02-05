@@ -18,27 +18,29 @@ type AnalyticsEvent = {
   name: string,
   params?: Record<string, any>,
 };
+type AnalyticsVariantCtx = Partial<ReturnType<typeof useAnalytics>>;
 let eventsToSend: Array<AnalyticsEvent> = [];
-const _sendServerEvents = useDebounceFn(() => {
+const _sendServerEvents = useDebounceFn((variantCtx?: AnalyticsVariantCtx) => {
   afetch(`/_analytics`, {
     method: 'POST',
     body: {
+      exp_variant_string: variantCtx?.expVariantString,
       ...getAnalyticsContext(),
       events: eventsToSend,
     },
   });
   eventsToSend = [];
 }, 200);
-const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
-  eventsToSend.push(analyticsEvent);
-  _sendServerEvents();
-};
 
 if (
   !import.meta.env.SSR
   && !window.location.search.includes(`__isrV=${deployRand}`)
 ) {
-  useAnalytics();
+  const variantCtx = useAnalytics();
+  const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
+    eventsToSend.push(analyticsEvent);
+    _sendServerEvents(variantCtx);
+  };
   watchGtagEvents(async (evMessage) => {
     const { name, params } = evMessage.event;
     sendServerEvent({ type: 'gtag', name, params });

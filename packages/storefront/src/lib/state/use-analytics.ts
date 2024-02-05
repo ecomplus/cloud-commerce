@@ -227,8 +227,13 @@ export const useAnalytics = ({
     gtag,
     GTAG_TAG_ID,
     GA_TRACKING_ID,
+    GIT_BRANCH,
   } = window as { [k:string]: any, gtag?: Gtag.Gtag };
   const tagId = GTAG_TAG_ID || GA_TRACKING_ID;
+  // https://developers.google.com/analytics/devguides/collection/ga4/integration
+  const expVariantString: string | null = GIT_BRANCH && experimentId
+    ? `${experimentId}-${GIT_BRANCH}`
+    : (GIT_BRANCH?.startsWith('main-') && GIT_BRANCH) || null;
   if (typeof gtag === 'function') {
     if (tagId) {
       ['client_id', 'session_id', 'gclid'].forEach((key) => {
@@ -237,17 +242,10 @@ export const useAnalytics = ({
         });
       });
     }
-    const { GIT_BRANCH } = window;
-    if (GIT_BRANCH) {
-      // https://developers.google.com/analytics/devguides/collection/ga4/integration
-      const expVariantString = experimentId
-        ? `${experimentId}-${window.GIT_BRANCH}`
-        : GIT_BRANCH.startsWith('main-') && GIT_BRANCH;
-      if (expVariantString) {
-        gtag('event', 'experience_impression', {
-          exp_variant_string: expVariantString,
-        });
-      }
+    if (expVariantString) {
+      gtag('event', 'experience_impression', {
+        exp_variant_string: expVariantString,
+      });
     }
   }
   const url = new URL(window.location.toString());
@@ -315,6 +313,9 @@ export const useAnalytics = ({
       }
     }, 300);
   }
+  return {
+    expVariantString,
+  };
 };
 
 export default useAnalytics;
