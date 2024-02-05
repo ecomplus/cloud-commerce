@@ -220,8 +220,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       facebook-nodejs-business-sdk:
-        specifier: ^18.0.4
-        version: 18.0.4
+        specifier: ^19.0.0
+        version: 19.0.0
       firebase-admin:
         specifier: ^12.0.0
         version: 12.0.0
@@ -7388,8 +7388,8 @@ packages:
     requiresBuild: true
     dev: false
 
-  /facebook-nodejs-business-sdk@18.0.4:
-    resolution: {integrity: sha512-a1kKCWQwdOQfuj4wzJHRzwZa9CqJ9laf+p32b5c311UPsxZyC/p9yNoj8VgEsCiwOv5vnsvEKwfYirLHkiyvKg==}
+  /facebook-nodejs-business-sdk@19.0.0:
+    resolution: {integrity: sha512-/e8MoXj7gI5xdNQzq454QdCrPs1WWa0Bo1ovKo9927mrFNGiMugoJeXvzXxqEu0Iabm02ZFpIRCpdODj0LUL2g==}
     dependencies:
       axios: 1.6.7
       currency-codes: 1.5.1
