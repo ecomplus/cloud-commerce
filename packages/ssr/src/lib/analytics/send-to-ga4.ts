@@ -15,6 +15,7 @@ const sendToGa4 = async (
   events: AnalyticsEvent[],
   clientId: string,
   sessionId: string,
+  userProperties?: { [k: string]: { value: string } },
   utm: {
     source?: string,
     medium?: string,
@@ -26,6 +27,7 @@ const sendToGa4 = async (
   if (process.env.GA_API_SECRET && process.env.GA_MEASUREMENT_ID) {
     const data = {
       client_id: clientId,
+      user_properties: userProperties,
       events: [] as AnalyticsEvent[],
     };
     for (let i = 0; i < events.length; i++) {

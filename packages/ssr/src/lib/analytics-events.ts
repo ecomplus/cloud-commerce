@@ -57,7 +57,17 @@ const sendAnalyticsEvents = async (
     }
     const sessionId = payload.g_session_id || payload.session_id;
     const clientId = payload.g_client_id || payload.client_id;
-    sendingEvents.push(sendToGa4(gaEvents, clientId, sessionId, payload.utm));
+    // https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties?client_type=gtag
+    const userProperties = payload.user_agent
+      ? {
+        user_agent: { value: payload.user_agent },
+      } as Record<string, { value: string }>
+      : undefined;
+    if (userProperties && payload.exp_variant_string) {
+      userProperties.exp_variant_string = { value: payload.exp_variant_string };
+    }
+    const toGa4 = sendToGa4(gaEvents, clientId, sessionId, userProperties, payload.utm);
+    sendingEvents.push(toGa4);
   }
   if (metaEvents) {
     const userData = {
