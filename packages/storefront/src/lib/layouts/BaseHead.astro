@@ -135,11 +135,16 @@ if (apiDoc) {
   inlineClientJS += `
 window._firstLoadContextId = '${apiDoc._id}';`;
   contextInlineClientJS = `
+$storefront.url = new URL(window.location.toString());
 $storefront.apiContext = ${JSON.stringify({
     resource: apiContext.resource,
     doc: minifyApiDoc({ ...apiDoc }),
     timestamp: Date.now(),
   })};
+$storefront.getSession = (/* sid */) => {
+  url: $storefront.url,
+  apiContext: $storefront.apiContext,
+};
 $storefront.context /* DEPRECATED */ = $storefront.apiContext;
 _emitApiContext('${apiDoc._id}');`;
 } else {

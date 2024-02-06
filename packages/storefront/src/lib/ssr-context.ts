@@ -3,7 +3,9 @@ import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
+import type { StorefrontApiContext } from '@@sf/$storefront';
 import { EventEmitter } from 'node:events';
+import { inject, getCurrentInstance } from 'vue';
 import api from '@cloudcommerce/api';
 import _getConfig from '../../config/storefront.config.mjs';
 import { termify } from '../helpers/sf-utils';
@@ -38,14 +40,42 @@ declare global {
 if (!globalThis.$apiPrefetchEndpoints) {
   globalThis.$apiPrefetchEndpoints = [];
 }
+const sessions: Record<string, {
+  url: URL,
+  apiContext?: StorefrontApiContext,
+  _timer?: NodeJS.Timeout,
+}> = {};
+// Internal global just to early clear session objects from memory
+global.__sfSessions = sessions;
 if (!globalThis.$storefront) {
-  globalThis.$storefront = {
+  globalThis.$storefront = new Proxy({
     settings: {},
+    data: {},
+    url: undefined as any,
+    getSession(sid?: string) {
+      if (!sid && !!getCurrentInstance()) {
+        sid = inject('sid');
+      }
+      const {
+        url,
+        apiContext,
+      } = (sid && sessions[sid]) || (global.__sfSession as typeof sessions[string]);
+      return { url, apiContext };
+    },
     onLoad(callback: (...args: any[]) => void) {
       emitter.once('load', callback);
     },
-    data: {},
-  };
+  }, {
+    get(target, prop) {
+      if (prop === 'apiContext') {
+        return target.getSession().apiContext;
+      }
+      if (prop === 'url') {
+        return target.getSession().url;
+      }
+      return target[prop];
+    },
+  });
 }
 
 declare global {
@@ -81,7 +111,9 @@ const loadRouteContext = async (
     apiPrefetchEndpoints?: ApiPrefetchEndpoints;
   } = {},
 ) => {
-  globalThis.astroUrl = Astro.url;
+  const sid = `${Date.now() + Math.random()}`;
+  sessions[sid] = { url: Astro.url };
+  global.__sfSession = sessions[sid];
   const startedAt = Date.now();
   let urlPath = Astro.url.pathname;
   const isPreview = urlPath.startsWith('/~preview');
@@ -154,11 +186,16 @@ const loadRouteContext = async (
               .catch(console.warn);
             const apiDoc = apiContext.doc as Record<string, any>;
             apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
-            globalThis.$storefront.apiContext = {
+            sessions[sid].apiContext = {
               resource: apiResource,
               doc: apiDoc as any,
               timestamp: Date.now(),
             };
+            sessions[sid]._timer = setTimeout(() => {
+              // @ts-ignore
+              sessions[sid] = null;
+              delete sessions[sid];
+            }, 6000);
             resolve(null);
           })
           .catch((err: ApiError) => {
@@ -240,10 +277,13 @@ const loadRouteContext = async (
     apiContext,
     apiState,
     isPreview,
+    sid,
     // Astro,
   };
   Astro.locals.routeContext = routeContext;
-  emitter.emit('load', routeContext);
+  Astro.cookies.set('sid', sid);
+  Astro.response.headers.set('X-SId', sid);
+  emitter.emit('load', { ...config, apiState });
   globalThis.__sfIds = {}; // see helpers/sf-utils.ts
   return routeContext;
 };

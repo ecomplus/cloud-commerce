@@ -11,7 +11,6 @@ declare global {
       assetsPrefix: string,
     }
   }
-  var astroUrl: URL;
 
   var $storefront: $Storefront & {
     onLoad: (callback: (...args: any[]) => void) => void,

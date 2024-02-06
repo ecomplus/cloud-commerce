@@ -7,24 +7,31 @@ import type {
 } from '@cloudcommerce/api/types';
 import type { SettingsContent } from '@@sf/content';
 
+export type StorefrontApiContext = {
+  resource: 'products',
+  doc: Products,
+  timestamp: number,
+} | {
+  resource: 'categories',
+  doc: Categories,
+  timestamp: number,
+} | {
+  resource: 'brands',
+  doc: Brands,
+  timestamp: number,
+} | {
+  resource: 'collections',
+  doc: Collections,
+  timestamp: number,
+};
+
 export type $Storefront = {
   settings: Partial<SettingsContent>,
-  apiContext?: {
-    resource: 'products',
-    doc: Products,
-    timestamp: number,
-  } | {
-    resource: 'categories',
-    doc: Categories,
-    timestamp: number,
-  } | {
-    resource: 'brands',
-    doc: Brands,
-    timestamp: number,
-  } | {
-    resource: 'collections',
-    doc: Collections,
-    timestamp: number,
+  url: URL,
+  apiContext?: StorefrontApiContext,
+  getSession: (sid?: string) => {
+    url: URL,
+    apiContext?: StorefrontApiContext,
   },
   data: Record<string, any> & {
     categories?: Array<Partial<Categories>>,
