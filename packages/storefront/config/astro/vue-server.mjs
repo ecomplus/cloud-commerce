@@ -41,6 +41,7 @@ async function renderToStaticMarkup(Component, inputProps, slotted, metadata) {
   const slots = {};
   const props = { ...inputProps };
   delete props.slot;
+  const sid = this.result?.cookies?.get('sid')?.value;
   for (const [key, value] of Object.entries(slotted)) {
     slots[key] = () => h(StaticHtml, {
       value,
@@ -50,6 +51,7 @@ async function renderToStaticMarkup(Component, inputProps, slotted, metadata) {
     });
   }
   const app = createSSRApp({ render: () => h(Component, props, slots) });
+  app.provide('sid', sid);
   await setup(app);
   const html = await renderToString(app);
   return { html };

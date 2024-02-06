@@ -146,7 +146,10 @@ const _vitePWAOptions = {
   },
 };
 
-const viteAlias = [];
+const viteAlias = [{
+  find: '@astrojs/vue/server.js',
+  replacement: joinPath(__dirname, 'config/astro/vue-server.mjs'),
+}];
 if (isToServerless) {
   viteAlias.push({
     find: '@@sf/components/Picture.astro',
