@@ -266,30 +266,44 @@ export default async (req: Request, res: Response) => {
   const canSetLinkHeader = SSR_SET_LINK_HEADER
     ? String(SSR_SET_LINK_HEADER).toLowerCase() !== 'false'
     : true;
-  if (canSetLinkHeader) {
-    /*
-    Check Response methods used by Astro Node.js integration:
-    https://github.com/withastro/astro/blob/main/packages/integrations/node/src/nodeMiddleware.ts
-    */
-    const _writeHead = res.writeHead;
-    /* eslint-disable prefer-rest-params */
-    // @ts-ignore
-    res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
-      if (status === 200 && headers && cssFilepath) {
-        // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
-        const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
-        if (!headers.link) {
-          headers.Link = cssLink;
-        } else {
-          if (typeof headers.link === 'string') {
-            headers.link = [headers.link];
-          }
-          headers.link.push(cssLink);
+  /*
+  Check Response methods used by Astro Node.js integration:
+  https://github.com/withastro/astro/blob/main/packages/astro/src/core/app/node.ts
+  */
+  const _writeHead = res.writeHead;
+  /* eslint-disable prefer-rest-params */
+  // @ts-ignore
+  res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
+    if (canSetLinkHeader && status === 200 && headers && cssFilepath) {
+      // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
+      const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
+      if (!headers.link) {
+        headers.Link = cssLink;
+      } else {
+        if (typeof headers.link === 'string') {
+          headers.link = [headers.link];
         }
+        headers.link.push(cssLink);
       }
-      _writeHead.apply(res, [status, headers]);
-    };
-  }
+    }
+    // Try to early clear session objects, see storefront/src/lib/ssr-context.ts
+    const sessions = global.__sfSessions;
+    if (sessions && typeof headers['x-sid'] === 'string') {
+      const sid = headers['x-sid'];
+      if (sessions[sid]) {
+        headers['x-sid'] += '_';
+        const _end = res.end;
+        // @ts-ignore
+        res.end = function end(...args: any) {
+          if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
+          sessions[sid] = null;
+          delete sessions[sid];
+          _end.apply(res, args);
+        };
+      }
+    }
+    _writeHead.apply(res, [status, headers]);
+  };
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
