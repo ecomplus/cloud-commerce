@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",

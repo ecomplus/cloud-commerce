@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://github.com/ecomplus/cloud-commerce/compare/v2.3.1...v2.3.2) (2024-02-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#322](https://github.com/ecomplus/cloud-commerce/issues/322)) ([293386e](https://github.com/ecomplus/cloud-commerce/commit/293386e2bff2e68b913ab184db99332b9d893b2c))
+* **ssr:** Update GA4 server handler to send user agent as user property and support A/B experiment ([256b134](https://github.com/ecomplus/cloud-commerce/commit/256b134067fa577558414de8242ce75e7c99ef36))
+* **storefront:** Sync browser storage states between tabs with `BroadcastChannel` ([77bffb9](https://github.com/ecomplus/cloud-commerce/commit/77bffb9cc1bb6430cb1b4d038546e5af67cc56eb))
+* **storefront:** Update Astro to v4.3.2 ([#321](https://github.com/ecomplus/cloud-commerce/issues/321)) ([c21838c](https://github.com/ecomplus/cloud-commerce/commit/c21838c72037aa48aa5e038cf393e40b8251b300))
+* **storefront:** Updating `useAnalytics` to return A/B testing `expVariantString` ([25a5e4b](https://github.com/ecomplus/cloud-commerce/commit/25a5e4b9fd5424bd6efba196f6c83d4763d4ae17))
+* **storefront:** Using session IDs to prevent SSR context mismatch ([a34d66f](https://github.com/ecomplus/cloud-commerce/commit/a34d66f322d077345ec7c7cc133641a68409d084))
+
 ### [2.3.1](https://github.com/ecomplus/cloud-commerce/compare/v2.3.0...v2.3.1) (2024-02-02)
 
 
