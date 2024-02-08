@@ -6,4 +6,4 @@
 	url = git@github.com:ecomplus-stores/tia-sonia.git
 [submodule "ecomplus-stores/barra-doce"]
 	path = ecomplus-stores/barra-doce
-	url = git@github.com:ecomplus-stores/barra-doce.git
+	url = git@github.com:barradoce/barradoce.git
