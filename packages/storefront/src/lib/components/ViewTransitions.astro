@@ -291,7 +291,8 @@ const { fallback = 'animate' } = Astro.props as Props;
 
   if (
     (supportsViewTransitions || getFallback() !== 'none') &&
-    !location.pathname.startsWith('/app/')
+    !location.pathname.startsWith('/app/') &&
+    !location.pathname.startsWith('/admin/')
   ) {
     markScriptsExec();
 
@@ -310,6 +311,7 @@ const { fallback = 'animate' } = Astro.props as Props;
         link.hasAttribute('download') ||
         !link.href ||
         link.pathname.startsWith('/app/') || // "real" SPA routes
+        link.pathname.startsWith('/admin/') || // CMS route
         (link.target && link.target !== '_self') ||
         link.origin !== location.origin ||
         ev.button !== 0 || // left clicks only
@@ -390,6 +392,7 @@ const { fallback = 'animate' } = Astro.props as Props;
               el.origin === location.origin &&
               el.pathname !== location.pathname &&
               !el.pathname.startsWith('/app/') && // "real" SPA routes
+              !el.pathname.startsWith('/admin/') && // CMS route
               el.dataset.astroReload === undefined &&
               !el.hasAttribute('download') &&
               /* <a role=button> commonly used as no-JS interaction fallback,
