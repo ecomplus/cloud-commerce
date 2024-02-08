@@ -45,6 +45,7 @@ module.exports = {
       },
       rules: {
         'no-await-in-loop': 'off',
+        'no-case-declarations': 'off',
         'import/prefer-default-export': 'off',
         'consistent-return': 'off',
         'no-shadow': 'off',
