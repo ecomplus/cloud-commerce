@@ -64,6 +64,7 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@cloudcommerce/types": "workspace:*"
+    "@cloudcommerce/types": "workspace:*",
+    "@webcontainer/api": "^1.1.9"
   }
 }
