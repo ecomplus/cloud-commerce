@@ -48,10 +48,6 @@ export interface Categories {
    */
   body_html?: string;
   /**
-   * Full category description, plain text only
-   */
-  body_text?: string;
-  /**
    * Title tag for page SEO
    */
   meta_title?: string;
@@ -82,10 +78,6 @@ export interface Categories {
        * Full category description, may use HTML tags
        */
       body_html?: string;
-      /**
-       * Full category description, plain text only
-       */
-      body_text?: string;
       /**
        * Title tag for page SEO
        */

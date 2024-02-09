@@ -128,11 +128,22 @@ export interface Stores {
    */
   contact_cellphone?: string;
   /**
+   * Store sales channel list
+   *
    * @maxItems 30
    */
   sales_channels?: {
+    /**
+     * Sales channel unique identifier or domain name
+     */
     channel_id: string;
+    /**
+     * Sales channel type
+     */
     type?: 'ecommerce' | 'mobile' | 'pos' | 'button' | 'social' | 'chatbot' | 'live';
+    /**
+     * Sales channel title
+     */
     title?: string;
   }[];
 }

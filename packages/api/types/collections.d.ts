@@ -42,10 +42,6 @@ export interface Collections {
    */
   body_html?: string;
   /**
-   * Full collection description, plain text only
-   */
-  body_text?: string;
-  /**
    * Title tag for page SEO
    */
   meta_title?: string;
@@ -76,10 +72,6 @@ export interface Collections {
        * Full collection description, may use HTML tags
        */
       body_html?: string;
-      /**
-       * Full collection description, plain text only
-       */
-      body_text?: string;
       /**
        * Title tag for page SEO
        */

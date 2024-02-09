@@ -72,10 +72,6 @@ export interface Products {
    */
   body_html?: string;
   /**
-   * Full product description, plain text only
-   */
-  body_text?: string;
-  /**
    * Title tag for page SEO
    */
   meta_title?: string;
@@ -106,10 +102,6 @@ export interface Products {
        * Full product description, may use HTML tags
        */
       body_html?: string;
-      /**
-       * Full product description, plain text only
-       */
-      body_text?: string;
       /**
        * Title tag for page SEO
        */
