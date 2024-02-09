@@ -267,6 +267,11 @@ const loadRouteContext = async (
   } else {
     setResponseCache(Astro, 120, 180);
   }
+  if (isPreview || urlPath.startsWith('/admin/')) {
+    // https://webcontainers.io/guides/configuring-headers#configuring-headers
+    Astro.response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+    Astro.response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+  }
   const routeContext = {
     ...config,
     isHomepage,
