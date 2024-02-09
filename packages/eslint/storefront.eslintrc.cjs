@@ -5,6 +5,7 @@ module.exports = {
   ],
   rules: {
     'no-console': 'off',
+    'class-methods-use-this': 'off',
     'max-len': 'warn',
     'semi': 'warn',
     'arrow-parens': 'warn',
