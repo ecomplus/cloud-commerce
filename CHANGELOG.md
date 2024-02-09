@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.3](https://github.com/ecomplus/cloud-commerce/compare/v2.3.2...v2.3.3) (2024-02-09)
+
+
+### Bug Fixes
+
+* **api:** Removing missused `body_text` field on catalog resources types ([1faaed7](https://github.com/ecomplus/cloud-commerce/commit/1faaed743aca7005098f1b242dd61e5c204ed455))
+* **storefront:** Also disabling view transitions on /admin/ (CMS) route ([486d356](https://github.com/ecomplus/cloud-commerce/commit/486d356e2c3a9ff21f9a1cae67682684fe6f1d9c))
+* **storefront:** Bump Astro to latest v4.3.5 ([91cd2a5](https://github.com/ecomplus/cloud-commerce/commit/91cd2a535ea08191114ae18bde3fee36d6c96f20))
+* **storefront:** Properly set global `$storefront.getSession` and `$storefront.url` client side ([37bf33c](https://github.com/ecomplus/cloud-commerce/commit/37bf33cbe9eaf53155160e3d7311c58bea8f18bc))
+
 ### [2.3.2](https://github.com/ecomplus/cloud-commerce/compare/v2.3.1...v2.3.2) (2024-02-06)
 
 
