@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/ecomplus/cloud-commerce/compare/v2.3.4...v2.4.0) (2024-02-10)
+
+
+### Features
+
+* **storefront:** Getting startep with new `scripts/decap-cms` ([bac0d21](https://github.com/ecomplus/cloud-commerce/commit/bac0d21fd1bd03abe53b283bda92c1c36b08098f)), closes [#320](https://github.com/ecomplus/cloud-commerce/issues/320)
+
 ### [2.3.4](https://github.com/ecomplus/cloud-commerce/compare/v2.3.3...v2.3.4) (2024-02-09)
 
 ### [2.3.3](https://github.com/ecomplus/cloud-commerce/compare/v2.3.2...v2.3.3) (2024-02-09)
