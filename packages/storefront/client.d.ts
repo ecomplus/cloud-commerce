@@ -26,7 +26,11 @@ interface Window {
   ECOM_CURRENCY_SYMBOL: string;
   ECOM_COUNTRY_CODE: string;
   GIT_BRANCH: string;
+  GIT_REPO?: string;
   AB_EXPERIMENT_ID?: string;
+  CMS_CUSTOM_CONFIG?: Record<string, any>;
+  CMS_SSO_URL?: string | null;
+  CMS_REPO_BASE_DIR?: string;
   $storefront?: import('@@sf/$storefront').$Storefront & {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
