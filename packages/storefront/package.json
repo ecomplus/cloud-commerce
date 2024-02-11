@@ -43,6 +43,7 @@
     "@types/gtag.js": "^0.0.18",
     "@vite-pwa/astro": "^0.2.0",
     "@vueuse/core": "10.7.2",
+    "@webcontainer/api": "^1.1.9",
     "astro": "4.3.5",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.4.2",
@@ -65,7 +66,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.2.55",
-    "@webcontainer/api": "^1.1.9"
+    "@types/react": "^18.2.55"
   }
 }
