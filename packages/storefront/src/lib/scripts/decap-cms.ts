@@ -6,18 +6,9 @@ import genPreviewContainer from '../../decap-cms/gen-preview-container';
 let cmsConfig: Record<string, any> = getCmsConfig();
 let ghToken: string | undefined;
 const initCmsWithPreview = () => {
-  const { React, CMS, WebContainer } = window as any as {
-    React: any,
-    CMS: Record<string, any>,
-    WebContainer: any,
-  };
+  const { React, CMS } = window as any;
   CMS.init({ config: cmsConfig });
-  const Preview = genPreviewContainer({
-    React,
-    WebContainer,
-    cmsConfig,
-    ghToken,
-  });
+  const Preview = genPreviewContainer({ React, cmsConfig, ghToken });
   CMS.registerPreviewTemplate('general', Preview);
 };
 
@@ -138,13 +129,10 @@ if (!import.meta.env.SSR) {
     import(/* @vite-ignore */ 'https://esm.sh/react@^18'),
     // @ts-ignore
     import(/* @vite-ignore */ 'https://esm.sh/decap-cms-app@^3'),
-    // @ts-ignore
-    import(/* @vite-ignore */ 'https://esm.sh/@webcontainer/api@^1'),
   ])
-    .then(([React, { default: CMS }, { WebContainer }]) => {
+    .then(([React, { default: CMS }]) => {
       (window as any).React = React;
       (window as any).CMS = CMS;
-      (window as any).WebContainer = WebContainer;
       authAndInitCms();
     })
     .catch((err) => {
