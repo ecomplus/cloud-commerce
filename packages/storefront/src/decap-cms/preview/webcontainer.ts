@@ -71,15 +71,15 @@ export const initWebcontainer = async ({ repo, ghToken, cliTextarea }: {
     const cliArgs = args.reduce((acc, opt) => `${acc} ${opt}`, '');
     const cli = `$ ${command}${cliArgs}\n`;
     cliTextarea.value += cli;
-    const cmd = await webcontainerInstance.spawn(command, args);
+    const proc = await webcontainerInstance.spawn(command, args);
     if (import.meta.env.DEV || (window as any).DEBUG) {
-      cmd.output.pipeTo(new WritableStream({
+      proc.output.pipeTo(new WritableStream({
         write(stdout) {
           console.debug?.('webcontainer', { stdout });
         },
       }));
     }
-    if (await cmd.exit !== 0) {
+    if (await proc.exit !== 0) {
       throw new Error(`${command} failed`);
     }
   };
@@ -93,6 +93,8 @@ export const initWebcontainer = async ({ repo, ghToken, cliTextarea }: {
   );
   const startDevServer = async () => {
     await exec('npm', ['--prefix', ssrDir, 'run', 'dev']);
+    // Keep restarting dev server (can crash)
+    startDevServer();
   };
   return {
     webcontainerInstance,

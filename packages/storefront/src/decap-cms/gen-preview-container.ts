@@ -38,11 +38,11 @@ export const genPreviewContainer = ({ React, cmsConfig, ghToken }: {
         .getElementById(serverIframeId) as HTMLIFrameElement;
       initWebcontainer({ repo, ghToken, cliTextarea })
         .then(({ webcontainerInstance, startDevServer }) => {
-          startDevServer();
           webcontainerInstance.on('server-ready', (port, url) => {
             console.log({ port, url });
             previewIframe.src = `${url}${previewIframe.dataset.url}`;
           });
+          startDevServer();
         });
     }
   };
