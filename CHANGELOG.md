@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.2](https://github.com/ecomplus/cloud-commerce/compare/v2.4.1...v2.4.2) (2024-02-12)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#325](https://github.com/ecomplus/cloud-commerce/issues/325)) ([9facbaf](https://github.com/ecomplus/cloud-commerce/commit/9facbafbd60eef8da9c4f033e1b2fb76567c07e5))
+* **storefront:** Bump Vue to latest v3.4.18 ([ae61990](https://github.com/ecomplus/cloud-commerce/commit/ae619902e2fde3a3e5e5d7ab18e5198fcaf2f50e))
+* **storefront:** Keep restarting CMS preview dev server on WebContainer [[#320](https://github.com/ecomplus/cloud-commerce/issues/320)] ([f463729](https://github.com/ecomplus/cloud-commerce/commit/f463729891819723f3cb769a0a406594450fce59))
+
 ### [2.4.1](https://github.com/ecomplus/cloud-commerce/compare/v2.4.0...v2.4.1) (2024-02-10)
 
 ## [2.4.0](https://github.com/ecomplus/cloud-commerce/compare/v2.3.4...v2.4.0) (2024-02-10)
