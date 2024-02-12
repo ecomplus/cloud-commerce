@@ -1,4 +1,7 @@
 ---
+import * as url from 'node:url';
+import { join as joinPath } from 'node:path';
+import { readFileSync } from 'node:fs';
 import '@@sf/assets/reset.css';
 import '@@sf/assets/base.css';
 import '@@sf/assets/forms.css';
@@ -7,6 +10,15 @@ import '@@sf/assets/tooltip.css';
 // import 'uno.css';
 import Picture from '@@sf/components/Picture.astro';
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const pkgJson = readFileSync(joinPath(__dirname, '../../../package.json'), 'utf-8');
+const {
+  name: pkgName,
+  version: pkgVersion,
+} = JSON.parse(pkgJson);
+const getInlineVersionLog = () => {
+  return `console.log('%c${pkgName} v${pkgVersion}', 'font-weight:bold')`;
+};
 const { settings } = Astro.locals.routeContext;
 ---
 
@@ -28,4 +40,5 @@ const { settings } = Astro.locals.routeContext;
       hasImg={false}
     />
   }
+  <script is:inline set:html={getInlineVersionLog()} />
 </body>
