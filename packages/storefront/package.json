@@ -58,7 +58,7 @@
     "unocss": "^0.58.5",
     "unplugin-auto-import": "^0.17.5",
     "vite": "^5.0.11",
-    "vite-plugin-pwa": "^0.17.5",
+    "vite-plugin-pwa": "^0.18.1",
     "vue": "^3.4.18",
     "wade": "0.3.3",
     "yaml": "^2.3.4"
