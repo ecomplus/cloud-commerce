@@ -273,7 +273,7 @@ export default async (req: Request, res: Response) => {
   const _writeHead = res.writeHead;
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
-  res.writeHead = function writeHead(status: number, headers: OutgoingHttpHeaders) {
+  res.writeHead = function writeHead(status: number, headers?: OutgoingHttpHeaders) {
     if (canSetLinkHeader && status === 200 && headers && cssFilepath) {
       // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
       const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
@@ -288,7 +288,7 @@ export default async (req: Request, res: Response) => {
     }
     // Try to early clear session objects, see storefront/src/lib/ssr-context.ts
     const sessions = global.__sfSessions;
-    if (sessions && typeof headers['x-sid'] === 'string') {
+    if (sessions && typeof headers?.['x-sid'] === 'string') {
       const sid = headers['x-sid'];
       if (sessions[sid]) {
         headers['x-sid'] += '_';
