@@ -60,7 +60,7 @@ const authAndInitCms = async () => {
       ...cmsConfig.backend,
     };
     if (cmsConfig.backend.api_root?.startsWith('https://ecomplus.app/')) {
-      const res = await afetch('https://ecomplus.app/api/github-installation', {
+      const res = await afetch('https://ecomplus.app/api/github-installations', {
         headers: {
           'X-Store-ID': `${ECOM_STORE_ID}`,
           Authorization: `Bearer ${ssoToken}`,

@@ -40,7 +40,7 @@ export const genPreviewContainer = ({ React, cmsConfig, ghToken }: {
         .then(({ webcontainerInstance, startDevServer }) => {
           webcontainerInstance.on('server-ready', (port, url) => {
             console.log({ port, url });
-            previewIframe.src = `${url}${previewIframe.dataset.url}`;
+            previewIframe.src = url;
           });
           startDevServer();
         });
