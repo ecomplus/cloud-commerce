@@ -43,8 +43,7 @@
     "@types/gtag.js": "^0.0.19",
     "@vite-pwa/astro": "^0.2.0",
     "@vueuse/core": "10.7.2",
-    "@webcontainer/api": "^1.1.9",
-    "astro": "4.3.5",
+    "astro": "4.3.7",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.4.2",
@@ -59,7 +58,7 @@
     "unplugin-auto-import": "^0.17.5",
     "vite": "^5.0.11",
     "vite-plugin-pwa": "^0.18.1",
-    "vue": "^3.4.18",
+    "vue": "^3.4.19",
     "wade": "0.3.3",
     "yaml": "^2.3.4"
   },
