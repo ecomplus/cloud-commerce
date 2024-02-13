@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.3](https://github.com/ecomplus/cloud-commerce/compare/v2.4.2...v2.4.3) (2024-02-13)
+
+
+### Bug Fixes
+
+* **cli:** Add `*/admin/` pattern to "APIs" cache bypass on bunny.net edge rules ([bdbf89e](https://github.com/ecomplus/cloud-commerce/commit/bdbf89ec49f6f774f993980593fdba985428e591))
+* **storefront:** Fixing route to GH installations for GH token ([4f127dd](https://github.com/ecomplus/cloud-commerce/commit/4f127dda01b635c79e0838b37c02e7c94a2eed05))
+* **storefront:** Using frozen lock file for CMS preview on WebContainer [[#320](https://github.com/ecomplus/cloud-commerce/issues/320)] ([476d256](https://github.com/ecomplus/cloud-commerce/commit/476d2568ef49e3ef1f6ee85a68480b69581a49f6))
+
 ### [2.4.2](https://github.com/ecomplus/cloud-commerce/compare/v2.4.1...v2.4.2) (2024-02-12)
 
 

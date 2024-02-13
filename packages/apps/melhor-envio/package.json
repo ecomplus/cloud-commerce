@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-melhor-envio",
   "type": "module",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "E-Com Plus Cloud Commerce app to integrate Melhor Envio",
   "main": "lib/index.js",
   "exports": {
