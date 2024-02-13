@@ -1,4 +1,5 @@
 import { WebContainer } from '@webcontainer/api';
+import { json as frozenSsrPkgJson, lock as frozenSsrPkgLock } from './ssr-package';
 
 export const genContainerFiles = ({ repo, ghToken, repoDir }: {
   repo: string,
@@ -85,16 +86,19 @@ export const initWebcontainer = async ({ repo, ghToken, cliTextarea }: {
   };
   await exec('npm', ['install']);
   await exec('npm', ['run', 'git:clone']);
+  await exec('npm', ['--prefix', repoDir, 'ci']);
   const ssrDir = `${repoDir}/functions/ssr`;
-  await exec('npm', ['--prefix', ssrDir, 'i']);
+  webcontainerInstance.fs.writeFile(`${ssrDir}/package.json`, frozenSsrPkgJson);
+  webcontainerInstance.fs.writeFile(`${ssrDir}/package-lock.json`, frozenSsrPkgLock);
+  await exec('npm', ['--prefix', ssrDir, 'ci']);
   await webcontainerInstance.fs.writeFile(
     `${ssrDir}/.env`,
     `ECOM_STORE_ID=${window.ECOM_STORE_ID}\n`,
   );
   const startDevServer = async () => {
-    await exec('npm', ['--prefix', ssrDir, 'run', 'dev']);
+    await exec('npm', ['--prefix', repoDir, 'run', 'dev']);
     // Keep restarting dev server (can crash)
-    startDevServer();
+    // startDevServer();
   };
   return {
     webcontainerInstance,

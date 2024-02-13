@@ -19,7 +19,7 @@ export const genPreviewContainer = ({ React, cmsConfig, ghToken }: {
       const html = `
       <textarea id="${cliTextareaId}"></textarea>
       <iframe
-        if="${serverIframeId}"
+        id="${serverIframeId}"
         data-url="${urlPath}"
         border="0"
         width="100%"
