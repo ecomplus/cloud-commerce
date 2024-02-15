@@ -5,8 +5,22 @@ export type SettingsContent = _SettingsContent &
 
 type _LayoutContent = typeof import('content/layout.json');
 
+type _PitchBarSlide = {
+  href?: string;
+  target?: string;
+  html: string;
+};
+
 export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
-  header: { custom?: Record<string, unknown> } & _LayoutContent['header'],
+  header: { custom?: Record<string, unknown> } &
+    Omit<_LayoutContent['header'], 'pitchBar'> &
+    {
+      pitchBar: Array<
+        _LayoutContent['header']['pitchBar'][0] extends undefined
+          ? _PitchBarSlide
+          : Partial<_LayoutContent['header']['pitchBar'][0]> & _PitchBarSlide,
+      >,
+    },
   footer: { custom?: Record<string, unknown> } & Partial<_LayoutContent['footer']>,
   custom?: Record<string, unknown>,
 };

@@ -1,38 +1,58 @@
-import type { ContentFilename, ContentData } from '@@sf/content';
+import type { ContentFilename, ContentData as _ContentData } from '@@sf/content';
 import { shallowRef } from 'vue';
 
-function getCmsUpdates<T extends ContentFilename>(
-  filename: T,
-  cb: (newData: NonNullable<ContentData<T>>) => void,
-) {
-  if (!import.meta.env.SSR) {
+type ContentData<T extends ContentFilename> = NonNullable<_ContentData<T>>;
+
+type SubfieldContentKeys<
+  T extends ContentFilename,
+  F extends undefined | keyof ContentData<T>,
+> = F extends keyof ContentData<T> ? keyof ContentData<T>[F] : undefined;
+
+type NestedContentData<
+  T extends ContentFilename,
+  F extends undefined | keyof ContentData<T>,
+  S extends SubfieldContentKeys<T, F>,
+> = F extends keyof ContentData<T>
+  ? S extends keyof ContentData<T>[F]
+    ? ContentData<T>[F][S] : ContentData<T>[F]
+  : ContentData<T>;
+
+export function useCmsPreview<
+  T extends ContentFilename,
+  F extends keyof ContentData<T>,
+  S extends SubfieldContentKeys<T, F>,
+>(filename: T | [T] | [T, F] | [T, F, S]) {
+  let field: F | undefined;
+  let subfield: S | undefined;
+  if (Array.isArray(filename)) {
+    field = filename[1];
+    subfield = filename[2];
+    filename = filename[0];
+  }
+  const liveContent = shallowRef<NestedContentData<T, F, S> | undefined>();
+  if (!import.meta.env.SSR && window.$isCmsPreview) {
     const id = btoa(JSON.stringify({ filename }));
-    window.parent.postMessage(
-      JSON.parse(JSON.stringify({
-        type: 'open',
-        filename,
-        id,
-      })),
-      window.location.origin,
-    );
+    const openMessage = {
+      type: 'open',
+      filename,
+      field,
+      subfield,
+      id,
+    };
+    window.parent.postMessage(openMessage, window.location.origin);
     window.addEventListener('message', (event) => {
       if (event.data.id === id) {
-        cb(event.data.data);
+        if (field) {
+          liveContent.value = subfield
+            ? event.data.data[field][subfield]
+            : event.data.data[field];
+        } else {
+          liveContent.value = event.data.data;
+        }
       }
     });
   }
+  return { liveContent };
 }
 
-const useCmsPreview = <T extends ContentFilename>(filename: T) => {
-  const liveContent = shallowRef<NonNullable<ContentData<T>> | null>(null);
-  if (!import.meta.env.SSR && window.$isCmsPreview) {
-    getCmsUpdates(filename, (newData) => {
-      liveContent.value = newData;
-    });
-  }
-  return { liveContent };
-};
-
 export default useCmsPreview;
-
-export { useCmsPreview, getCmsUpdates };

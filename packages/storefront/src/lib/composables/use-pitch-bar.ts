@@ -4,11 +4,7 @@ import { parseShippingPhrase } from '@@sf/state/modules-info';
 import { useCmsPreview } from '@@sf/state/use-cms-preview';
 
 export interface Props {
-  slides: Array<{
-    href?: string;
-    target?: string;
-    html: string;
-  }>;
+  slides: LayoutContent['header']['pitchBar'];
 }
 
 const parseLayoutContent = (layoutContent: LayoutContent) => {
@@ -20,11 +16,9 @@ const parseLayoutContent = (layoutContent: LayoutContent) => {
 };
 
 const usePitchBar = (props: Props) => {
-  const { liveContent } = useCmsPreview('layout');
+  const { liveContent } = useCmsPreview(['layout', 'header', 'pitchBar']);
   const parsedContents = computed(() => {
-    const slides = liveContent.value
-      ? parseLayoutContent(liveContent.value).slides
-      : props.slides;
+    const slides = liveContent.value || props.slides;
     return slides.map(({ html }) => {
       return parseShippingPhrase(html).value
         .replace(/<\/?p>/g, '')
