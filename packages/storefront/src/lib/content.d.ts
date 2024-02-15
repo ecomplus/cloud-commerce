@@ -6,13 +6,14 @@ export type SettingsContent = _SettingsContent &
 type _LayoutContent = typeof import('content/layout.json');
 
 export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
-  header: Record<string, unknown> & _LayoutContent['header'],
-  footer: Record<string, unknown> & Partial<_LayoutContent['footer']>,
+  header: { custom?: Record<string, unknown> } & _LayoutContent['header'],
+  footer: { custom?: Record<string, unknown> } & Partial<_LayoutContent['footer']>,
+  custom?: Record<string, unknown>,
 };
 
 export interface PageContent {
-  meta_title?: string;
-  meta_description?: string;
+  metaTitle?: string;
+  metaDescription?: string;
   hero?: {
     [k: string]: unknown,
     autoplay?: number,
