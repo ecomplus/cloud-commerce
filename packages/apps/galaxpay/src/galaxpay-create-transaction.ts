@@ -54,7 +54,7 @@ export default async (appData: AppModuleBody) => {
 
   if (!process.env.GALAXPAY_ID) {
     const galaxpayId = configApp.galaxpay_id;
-    if (typeof galaxpayId === 'string' && galaxpayId) {
+    if (galaxpayId && typeof galaxpayId === 'string') {
       process.env.GALAXPAY_ID = galaxpayId;
     } else {
       logger.warn('Missing GalaxPay ID');
@@ -63,7 +63,7 @@ export default async (appData: AppModuleBody) => {
 
   if (!process.env.GALAXPAY_HASH) {
     const galaxpayHash = configApp.galaxpay_hash;
-    if (typeof galaxpayHash === 'string' && galaxpayHash) {
+    if (galaxpayHash && typeof galaxpayHash === 'string') {
       process.env.GALAXPAY_HASH = galaxpayHash;
     } else {
       logger.warn('Missing GalaxPay Hash');
@@ -118,14 +118,14 @@ export default async (appData: AppModuleBody) => {
     [plan] = configApp.plans;
   }
 
-  const finalAmount = amount.total;
+  const finalAmount = Math.floor(parseFloat((amount.total).toFixed(2)) * 1000) / 10;
   const fristPayment = new Date();
 
-  const quantity = plan?.quantity || 0;
+  const quantity = 0;
   const galaxpaySubscriptions: GalaxPaySubscriptions = {
     myId: `${orderId}`, // requered
-    value: Math.floor(finalAmount * 100),
-    quantity, //  recorrence quantity
+    value: finalAmount,
+    quantity,
     periodicity: parsePeriodicityToGalaxPay(plan?.periodicity) || 'monthly',
     Customer: galaxpayCustomer,
     ExtraFields: extraFields,
@@ -191,7 +191,7 @@ export default async (appData: AppModuleBody) => {
       if (type === 'recurrence') {
         const { data: { Subscription } } = await axios.post('/subscriptions', galaxpaySubscriptions);
 
-        logger.log('>(App: GalaxPay) New Subscription ', Subscription, ' <');
+        logger.log(`>(App: GalaxPay) New Subscription ${JSON.stringify(Subscription)}`);
         transaction.payment_link = Subscription.paymentLink;
         const transactionGalaxPay = Subscription.Transactions[0];
 
@@ -201,7 +201,8 @@ export default async (appData: AppModuleBody) => {
         };
 
         transaction.intermediator = {
-          transaction_id: transactionGalaxPay.tid,
+          transaction_id: transactionGalaxPay.galaxPayId,
+          transaction_reference: transactionGalaxPay.tid,
           transaction_code: transactionGalaxPay.authorizationCode,
         };
 
@@ -215,6 +216,7 @@ export default async (appData: AppModuleBody) => {
             quantity,
             create_at: new Date().toISOString(),
             plan,
+            value: finalAmount,
           })
             .catch(logger.error);
         }
