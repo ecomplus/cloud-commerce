@@ -93,7 +93,7 @@ window._emitApiContext = (id = null) => {
     url: $storefront.url,
     apiContext: $storefront.apiContext,
   });
-  console.log('[ctx] emit ' + id);
+  console.debug('[ctx] emit ' + id);
   window.dispatchEvent(new Event('storefront:apiContext'));
   window._emitedContextId = id;
   window.__sfIds = {};
