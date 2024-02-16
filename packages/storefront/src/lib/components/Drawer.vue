@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  toRef,
   ref,
   computed,
   watch,
@@ -8,7 +7,6 @@ import {
 } from 'vue';
 
 export interface Props {
-  modelValue?: boolean;
   isHidden?: boolean;
   placement?: 'start' | 'end' | 'top' | 'bottom';
   position?: 'fixed' | 'absolute';
@@ -22,7 +20,6 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: false,
   isHidden: false,
   placement: 'start',
   position: 'fixed',
@@ -31,10 +28,8 @@ const props = withDefaults(defineProps<Props>(), {
   backdropTarget: '#teleported-top',
   canLockScroll: true,
 });
-const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-}>();
-const close = () => emit('update:modelValue', false);
+const model = defineModel<boolean>({ default: false });
+const close = () => { model.value = false; };
 const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
   if (!drawer.value?.contains(ev.target as Node)) {
@@ -48,7 +43,7 @@ const escClickListener = (ev: KeyboardEvent) => {
   }
 };
 const scrollbarWidth = ref(0);
-watch(toRef(props, 'modelValue'), async (isOpen) => {
+watch(model, async (isOpen) => {
   if (isOpen) {
     if (props.canLockScroll) {
       scrollbarWidth.value = window.innerWidth - document.documentElement.clientWidth;
@@ -79,7 +74,7 @@ const slideTo = computed(() => {
 });
 const animationClassName = ref<string | null>(null);
 if (props.animation === 'scale') {
-  watch(toRef(props, 'modelValue'), (isShown) => {
+  watch(model, (isShown) => {
     if (!isShown) {
       animationClassName.value = 'transition scale-90';
     } else {
@@ -87,7 +82,7 @@ if (props.animation === 'scale') {
         setTimeout(() => {
           animationClassName.value = 'transition';
           setTimeout(() => {
-            if (props.modelValue) animationClassName.value = '';
+            if (model.value) animationClassName.value = '';
           }, 300);
         }, 50);
       });
@@ -109,7 +104,7 @@ const isPlacementX = computed(() => {
 <template>
   <Fade :slide="slideTo" speed="slow" is-floating>
     <dialog
-      v-if="modelValue"
+      v-if="model"
       v-show="!isHidden"
       ref="drawer"
       class="z-40 w-screen p-0"
@@ -129,7 +124,7 @@ const isPlacementX = computed(() => {
           : !isPlacementX
             ? `calc(100vw - ${scrollbarWidth}px)` : undefined,
       }"
-      :open="modelValue"
+      :open="model"
       :data-drawer="placement"
     >
       <div class="relative h-full">
@@ -151,7 +146,7 @@ const isPlacementX = computed(() => {
       <Teleport v-if="backdropTarget" :to="backdropTarget">
         <Fade>
           <div
-            v-if="modelValue && !isHidden"
+            v-if="model && !isHidden"
             class="size-screen fixed left-0 top-0 z-30 bg-black/50"
             data-drawer-backdrop
           ></div>

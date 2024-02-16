@@ -22,7 +22,6 @@ export const quantitySelectorKey = Symbol('quantitySelector') as
 
 <script setup lang="ts">
 export interface Props {
-  modelValue?: number;
   min?: number;
   max?: number;
   step?: number;
@@ -31,28 +30,24 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: 1,
   min: 1,
 });
-const emit = defineEmits<{
-  'update:modelValue': [value: number]
-}>();
+const model = defineModel<number>({ default: 1 });
 const input = ref<HTMLInputElement | null>(null);
 const inputId = useId('NInput');
 const value = computed({
   get() {
-    return props.modelValue;
+    return model.value;
   },
   set(_value) {
     if (_value < props.min) {
       _value = props.min;
       (input.value as HTMLInputElement).value = `${_value}`;
-    }
-    if (props.max && _value > props.max) {
+    } else if (props.max && _value > props.max) {
       _value = props.max;
       (input.value as HTMLInputElement).value = `${_value}`;
     }
-    emit('update:modelValue', _value);
+    model.value = _value;
   },
 });
 const isBoundMin = computed(() => {
