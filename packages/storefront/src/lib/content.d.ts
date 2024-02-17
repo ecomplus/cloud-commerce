@@ -18,7 +18,7 @@ export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
       pitchBar: Array<
         _LayoutContent['header']['pitchBar'][0] extends undefined
           ? _PitchBarSlide
-          : Partial<_LayoutContent['header']['pitchBar'][0]> & _PitchBarSlide,
+          : Partial<_LayoutContent['header']['pitchBar'][0]> & _PitchBarSlide
       >,
     },
   footer: { custom?: Record<string, unknown> } & Partial<_LayoutContent['footer']>,
