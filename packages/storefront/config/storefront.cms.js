@@ -7,8 +7,8 @@ global.__storefrontCMS = (fs, resolvePath, _parseMatter) => {
     baseDir = process.cwd();
   }
   process.env.STOREFRONT_BASE_DIR = baseDir;
-  const dirContent = resolvePath(baseDir, 'content');
-  const resolveContent = (filename) => resolvePath(dirContent, filename);
+  const contentDir = resolvePath(baseDir, 'content');
+  const resolveContent = (filename) => resolvePath(contentDir, filename);
 
   const contentCache = {};
   const getContent = (filename) => {
@@ -51,7 +51,7 @@ global.__storefrontCMS = (fs, resolvePath, _parseMatter) => {
     const handler = globalThis.$storefrontCmsHandler;
     if (typeof handler === 'function') {
       try {
-        const content = handler({ dirContent, filename, loadLocal });
+        const content = handler({ contentDir, filename, loadLocal });
         if (content) {
           return content;
         }
