@@ -118,7 +118,7 @@ ab_testing_data="
 ab_testing_bypass_data="
 {
   \"ActionType\": 3,
-  \"ActionParameter1\": \"0\",
+  \"ActionParameter1\": \"120\",
   \"ActionParameter2\": \"\",
   \"Triggers\": [
     {
@@ -131,7 +131,7 @@ ab_testing_bypass_data="
     }
   ],
   \"TriggerMatchingType\": 1,
-  \"Description\": \"A/B CDN cache bypass [$GIT_BRANCH]\",
+  \"Description\": \"A/B CDN short cache [$GIT_BRANCH]\",
   \"Enabled\": true
 }"
 
@@ -156,7 +156,7 @@ ab_testing_perma_bypass_data="
 }"
 
 configure_edge_rule "A/B testing [$GIT_BRANCH]" "$ab_testing_data"
-configure_edge_rule "A/B CDN cache bypass [$GIT_BRANCH]" "$ab_testing_bypass_data"
+configure_edge_rule "A/B CDN short cache [$GIT_BRANCH]" "$ab_testing_bypass_data"
 configure_edge_rule "A/B perma-cache bypass [$GIT_BRANCH]" "$ab_testing_perma_bypass_data"
 
 curl --silent --request POST \
