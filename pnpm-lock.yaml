@@ -1046,8 +1046,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@vite-pwa/astro':
-        specifier: ^0.2.0
-        version: 0.2.0(astro@4.4.0)(vite-plugin-pwa@0.19.0)
+        specifier: ^0.3.0
+        version: 0.3.0(astro@4.4.0)(vite-plugin-pwa@0.19.0)
       '@vueuse/core':
         specifier: 10.7.2
         version: 10.7.2(vue@3.4.19)
@@ -4861,11 +4861,15 @@ packages:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.2.0(astro@4.4.0)(vite-plugin-pwa@0.19.0):
-    resolution: {integrity: sha512-1MBNbRo9I9fp9sUSoaQfI/xHVDRKRoUsWETDJMVoKoctZYfm4fZgb7EN76WJdejW/vup+3+uoFlDMCnca+vZzA==}
+  /@vite-pwa/astro@0.3.0(astro@4.4.0)(vite-plugin-pwa@0.19.0):
+    resolution: {integrity: sha512-2fH9ifzMW8dmeydJ6SuttLR5FCDvSoaTpyxblasR6icsJbR1he4igJhauw4jvmQXOb99Psl+bsBSoUwsdSnSJA==}
     peerDependencies:
+      '@vite-pwa/assets-generator': ^0.2.4
       astro: ^1.6.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
-      vite-plugin-pwa: '>=0.17.3 <1'
+      vite-plugin-pwa: '>=0.19.0 <1'
+    peerDependenciesMeta:
+      '@vite-pwa/assets-generator':
+        optional: true
     dependencies:
       astro: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
       vite-plugin-pwa: 0.19.0(vite@5.0.11)(workbox-build@7.0.0)(workbox-window@7.0.0)
