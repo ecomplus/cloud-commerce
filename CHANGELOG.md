@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/ecomplus/cloud-commerce/compare/v2.4.3...v2.5.0) (2024-02-19)
+
+
+### Features
+
+* **storefront:** Handling SSR preview content on URL params and live preview with post messages ([a3978f5](https://github.com/ecomplus/cloud-commerce/commit/a3978f5df9c3804b429b165737902c36e6fa89d6)), closes [#320](https://github.com/ecomplus/cloud-commerce/issues/320)
+* **storefront:** New `assets/decap-cms.css` optional customizations for Decap CMS [[#320](https://github.com/ecomplus/cloud-commerce/issues/320)] ([1f4e2c5](https://github.com/ecomplus/cloud-commerce/commit/1f4e2c597309fe176c807c0472141e507f1ec773))
+* **storefront:** New `client:sf` Astro directive with lazy, load, eager, interaction strategies ([a12f985](https://github.com/ecomplus/cloud-commerce/commit/a12f985be796faf0cf7ce58c2a942582975ec900))
+* **storefront:** New `useSectionPreview` to abstract live content on page sections ([e6ebb12](https://github.com/ecomplus/cloud-commerce/commit/e6ebb12301106c22781faedeedd1dc6508cbdafd))
+
+
+### Bug Fixes
+
+* **ssr:** Prevent error with undefined (unset) headers on custom `writeHead` middleware ([d3343fd](https://github.com/ecomplus/cloud-commerce/commit/d3343fd0828084fe3cfbefa83a0640e60a9235f0))
+* **storefront:** Bump Astro to latest v4.3.7 and Vue v3.4.19 ([bb4b3b8](https://github.com/ecomplus/cloud-commerce/commit/bb4b3b81e7418963c6317ffe62d53a63ef836cc5))
+* **storefront:** Bump Astro to latest v4.4.0 ([eae97f6](https://github.com/ecomplus/cloud-commerce/commit/eae97f67a36be4b18d158d168ca3af645cb90f53))
+* **storefront:** Set `layout` content customizations inside `custom` prop for better type inference ([067e817](https://github.com/ecomplus/cloud-commerce/commit/067e8172739a36d82e48c12c2d246e881a74f874))
+* **storefront:** Update experimental `useCmsPreview` with field, subfield declaration ([76a86ca](https://github.com/ecomplus/cloud-commerce/commit/76a86ca91339d52a8064e000638065d578d2b1d2))
+
 ### [2.4.3](https://github.com/ecomplus/cloud-commerce/compare/v2.4.2...v2.4.3) (2024-02-13)
 
 
