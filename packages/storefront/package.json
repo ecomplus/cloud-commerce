@@ -41,7 +41,7 @@
     "@iconify-json/heroicons": "^1.1.20",
     "@iconify-json/logos": "^1.1.42",
     "@types/gtag.js": "^0.0.19",
-    "@vite-pwa/astro": "^0.2.0",
+    "@vite-pwa/astro": "^0.3.0",
     "@vueuse/core": "10.7.2",
     "astro": "4.4.0",
     "astro-capo": "^0.0.1",
