@@ -1,15 +1,30 @@
 import Deepmerge from '@fastify/deepmerge';
 import afetch from '../../helpers/afetch';
 import getCmsConfig from '../../decap-cms/get-cms-config';
-import genPreviewContainer from '../../decap-cms/gen-preview-container';
+import createPreviewComponent from '../../decap-cms/create-preview-component';
 
-let cmsConfig: Record<string, any> = getCmsConfig();
-let ghToken: string | undefined;
+let cmsConfig: Record<string, any> = {};
 const initCmsWithPreview = () => {
-  const { React, CMS } = window as any;
+  const { createClass, h, CMS } = window as any;
   CMS.init({ config: cmsConfig });
-  const Preview = genPreviewContainer({ React, cmsConfig, ghToken });
-  CMS.registerPreviewTemplate('general', Preview);
+  if (createClass && h) {
+    const Preview = createPreviewComponent({
+      createClass,
+      h,
+      cmsConfig,
+    });
+    cmsConfig.collections.forEach(({ name, files }) => {
+      const char = name.charAt(0);
+      if (char === '_' || char === '.') return;
+      if (files) {
+        files.forEach((file: Record<string, any>) => {
+          CMS.registerPreviewTemplate(file.name, Preview);
+        });
+        return;
+      }
+      CMS.registerPreviewTemplate(name, Preview);
+    });
+  }
 };
 
 const authAndInitCms = async () => {
@@ -18,8 +33,14 @@ const authAndInitCms = async () => {
     sessionStorage,
     ECOM_STORE_ID,
     GIT_REPO,
+    CMS_CUSTOM_CONFIG,
     CMS_SSO_URL = 'https://app.e-com.plus/pages/login?api_version=2',
   } = window;
+  cmsConfig = getCmsConfig();
+  if (CMS_CUSTOM_CONFIG) {
+    const deepmerge = Deepmerge();
+    cmsConfig = deepmerge(cmsConfig, CMS_CUSTOM_CONFIG);
+  }
   if (import.meta.env.DEV) {
     cmsConfig.local_backend = true;
     cmsConfig.backend = {
@@ -76,7 +97,7 @@ const authAndInitCms = async () => {
           if (installation?.gh_token && installation.gh_token.charAt(0) !== '*') {
             // Consume GitHub REST API directly
             token = installation.gh_token as string;
-            ghToken = token;
+            // ghToken = token;
             delete cmsConfig.backend.api_root;
             cmsConfig.backend.repo = installation.repository;
             cmsConfig.backend.name = 'github';
@@ -118,26 +139,13 @@ const authAndInitCms = async () => {
 };
 
 if (!import.meta.env.SSR) {
-  if (window.CMS_CUSTOM_CONFIG) {
-    const deepmerge = Deepmerge();
-    cmsConfig = deepmerge(cmsConfig, window.CMS_CUSTOM_CONFIG);
-  }
   (window as any).CMS_MANUAL_INIT = true;
-  /* eslint-disable import/no-unresolved */
-  Promise.all([
-    // @ts-ignore
-    import(/* @vite-ignore */ 'https://esm.sh/react@^18'),
-    // @ts-ignore
-    import(/* @vite-ignore */ 'https://esm.sh/decap-cms-app@^3'),
-  ])
-    .then(([React, { default: CMS }]) => {
-      (window as any).React = React;
-      (window as any).CMS = CMS;
-      authAndInitCms();
-    })
-    .catch((err) => {
-      console.error(err);
-      // eslint-disable-next-line
-      window.alert('Failed importing Decap CMS app or preview dependencies');
-    });
+  if (window.CMS) {
+    authAndInitCms();
+  } else {
+    const cmsScript = document.createElement('script');
+    cmsScript.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+    cmsScript.onload = authAndInitCms;
+    document.body.appendChild(cmsScript);
+  }
 }

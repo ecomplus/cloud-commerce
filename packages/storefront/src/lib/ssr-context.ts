@@ -118,7 +118,27 @@ const loadRouteContext = async (
   let urlPath = Astro.url.pathname;
   const isPreview = urlPath.startsWith('/~preview');
   if (isPreview) {
-    urlPath = urlPath.replace('/~preview', '');
+    urlPath = urlPath.replace(/^\/~[^/]+\/?/, '/');
+    const getQueryContent = (filename: string) => {
+      const contentJson = Astro.url.searchParams.get(`content:${filename}`);
+      if (typeof contentJson === 'string') {
+        try {
+          const content = JSON.parse(contentJson);
+          return content;
+        } catch {
+          //
+        }
+      }
+      return null;
+    };
+    global.$storefrontCmsHandler = ({ filename, loadLocal }) => {
+      const content = getQueryContent(filename);
+      if (filename === 'settings') return content || loadLocal();
+      return new Promise((resolve) => {
+        if (content) resolve(content);
+        loadLocal().then(resolve);
+      });
+    };
   }
   const isHomepage = urlPath === '/';
   const isSearchPage = !isHomepage && (urlPath.startsWith('/s/') || urlPath === '/s');
@@ -131,7 +151,9 @@ const loadRouteContext = async (
   }
   const config = getConfig();
   globalThis.$storefront.settings = config.settings;
-  let cmsContent: PageContent | null = { sections: [] };
+  let cmsContent: PageContent & { $filename?: `${string}/${string}` } | null = {
+    sections: [],
+  };
   const apiState: {
     categories?: CategoriesList,
     brands?: BrandsList,
@@ -157,13 +179,14 @@ const loadRouteContext = async (
     error: null,
   };
   const { slug } = Astro.params;
+  let contentFilename: `${string}/${string}` | undefined;
   if (isHomepage) {
-    cmsContent = await config.getContent('pages/home');
+    contentFilename = 'pages/home';
   } else if (isSearchPage) {
-    cmsContent = await config.getContent('pages/search');
+    contentFilename = 'pages/search';
   } else if (slug && typeof slug === 'string') {
     if (contentCollection) {
-      cmsContent = await config.getContent(`${contentCollection}/${slug}`);
+      contentFilename = `${contentCollection}/${slug}`;
     } else if (slug.startsWith('_api/') || slug === '_analytics') {
       const err: any = new Error(`/${slug} route not implemented on SSR directly`);
       Astro.response.status = 501;
@@ -177,10 +200,12 @@ const loadRouteContext = async (
             Object.assign(apiContext, response.data);
             const apiResource = apiContext.resource as
               Exclude<typeof apiContext.resource, undefined>;
-            config.getContent(`pages/${apiResource}`)
+            contentFilename = `pages/${apiResource}`;
+            config.getContent(contentFilename)
               .then((_cmsContent) => {
                 if (cmsContent && _cmsContent) {
                   Object.assign(cmsContent, _cmsContent);
+                  cmsContent.$filename = contentFilename;
                 }
               })
               .catch(console.warn);
@@ -211,6 +236,10 @@ const loadRouteContext = async (
         apiPrefetchings[prefetchingsIndex] = fetchingApiContext;
       }
     }
+  }
+  if (contentFilename) {
+    cmsContent = await config.getContent(contentFilename);
+    if (cmsContent) cmsContent.$filename = contentFilename;
   }
   try {
     (await Promise.all(apiPrefetchings)).forEach((response) => {
@@ -266,11 +295,6 @@ const loadRouteContext = async (
     setResponseCache(Astro, 180);
   } else {
     setResponseCache(Astro, 120, 180);
-  }
-  if (isPreview || urlPath.startsWith('/admin/')) {
-    // https://webcontainers.io/guides/configuring-headers#configuring-headers
-    Astro.response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
-    Astro.response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
   }
   const routeContext = {
     ...config,

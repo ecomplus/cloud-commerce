@@ -31,6 +31,9 @@ interface Window {
   CMS_CUSTOM_CONFIG?: Record<string, any>;
   CMS_SSO_URL?: string | null;
   CMS_REPO_BASE_DIR?: string;
+  CMS_LANG?: string;
+  CMS_MAX_FILE_SIZE?: number;
+  CMS?: Record<string, any>;
   $storefront?: import('@@sf/$storefront').$Storefront & {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
