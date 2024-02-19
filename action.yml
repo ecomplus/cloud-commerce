@@ -145,7 +145,7 @@ runs:
       run: npm i --location=global firebase-tools@13.3.0
 
     - if: github.event_name == 'push'
-      uses: dorny/paths-filter@v3.0.0
+      uses: dorny/paths-filter@v3.0.1
       id: changes
       with:
         filters: |
