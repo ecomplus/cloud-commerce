@@ -1,10 +1,12 @@
 import type { ResourceId, Collections, SearchItem } from '@cloudcommerce/types';
+import type { SectionPreviewProps } from '@@sf/state/use-cms-preview';
 import { ref, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
 import { i19relatedProducts } from '@@i18n';
+import { useSectionPreview } from '@@sf/state/use-cms-preview';
 
-export interface Props {
+export interface Props extends Partial<SectionPreviewProps> {
   collectionId?: ResourceId | null;
   searchQuery?: `&${string}` | '';
   sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string;
@@ -24,6 +26,7 @@ const useProductShelf = (props: Props) => {
   let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
   const products = shallowReactive<SearchItem[]>(props.products || []);
+  useSectionPreview(props, { title, titleLink, products });
 
   if (!props.products) {
     isFetching.value = true;

@@ -1,5 +1,6 @@
+import type { Ref, ShallowRef, ShallowReactive } from 'vue';
 import type { ContentFilename, ContentData as _ContentData } from '@@sf/content';
-import { shallowRef } from 'vue';
+import { watch, shallowRef } from 'vue';
 
 type ContentData<T extends ContentFilename> = NonNullable<_ContentData<T>>;
 
@@ -56,3 +57,43 @@ export function useCmsPreview<
 }
 
 export default useCmsPreview;
+
+export interface SectionPreviewProps {
+  cmsPreview?: {
+    contentFilename: `${string}/${string}`;
+    sectionIndex: number;
+  };
+}
+
+export const useSectionPreview = (
+  { cmsPreview }: SectionPreviewProps,
+  refs?: Record<string, Ref<any> | ShallowRef<any> | ShallowReactive<any>>,
+) => {
+  if (cmsPreview) {
+    const { contentFilename, sectionIndex } = cmsPreview;
+    const {
+      liveContent,
+    } = useCmsPreview([contentFilename, 'sections', sectionIndex]);
+    if (refs) {
+      watch(liveContent, (data) => {
+        if (!data) return;
+        Object.keys(refs).forEach((key) => {
+          if (refs[key].value !== undefined) {
+            if (data[key] === undefined) return;
+            refs[key].value = data[key];
+            return;
+          }
+          if (!data[key]) return;
+          if (Array.isArray(refs[key])) {
+            refs[key].splice(0);
+            data[key].forEach((v: any) => refs[key].push(v));
+            return;
+          }
+          Object.assign(refs[key], data[key]);
+        });
+      });
+    }
+    return { liveContent };
+  }
+  return null;
+};
