@@ -115,7 +115,7 @@ ab_testing_data="
   \"Enabled\": true
 }"
 
-ab_testing_bypass_data="
+ab_testing_ttl_data="
 {
   \"ActionType\": 3,
   \"ActionParameter1\": \"120\",
@@ -156,7 +156,7 @@ ab_testing_perma_bypass_data="
 }"
 
 configure_edge_rule "A/B testing [$GIT_BRANCH]" "$ab_testing_data"
-configure_edge_rule "A/B CDN short cache [$GIT_BRANCH]" "$ab_testing_bypass_data"
+configure_edge_rule "A/B CDN short cache [$GIT_BRANCH]" "$ab_testing_ttl_data"
 configure_edge_rule "A/B perma-cache bypass [$GIT_BRANCH]" "$ab_testing_perma_bypass_data"
 
 curl --silent --request POST \
