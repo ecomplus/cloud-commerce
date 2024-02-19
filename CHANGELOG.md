@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.1](https://github.com/ecomplus/cloud-commerce/compare/v2.5.0...v2.5.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **storefront:** Removing version debug at all ([2615483](https://github.com/ecomplus/cloud-commerce/commit/261548384b6914de432403c7711a8b325ee1999d))
+
 ## [2.5.0](https://github.com/ecomplus/cloud-commerce/compare/v2.4.3...v2.5.0) (2024-02-19)
 
 
