@@ -1030,7 +1030,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 8.2.0
-        version: 8.2.0(astro@4.4.0)
+        version: 8.2.0(astro@4.4.1)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1044,14 +1044,14 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       '@vueuse/core':
-        specifier: 10.7.2
-        version: 10.7.2(vue@3.4.19)
+        specifier: 10.8.0
+        version: 10.8.0(vue@3.4.19)
       astro:
-        specifier: 4.4.0
-        version: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
+        specifier: 4.4.1
+        version: 4.4.1(@types/node@18.19.17)(typescript@5.2.2)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.4.0)
+        version: 0.0.1(astro@4.4.1)
       axios:
         specifier: ^1.6.7
         version: 1.6.7
@@ -1088,10 +1088,10 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 8.2.0
-        version: 8.2.0(astro@4.4.0)
+        version: 8.2.0(astro@4.4.1)
       '@astrojs/vue':
         specifier: 4.0.8
-        version: 4.0.8(astro@4.4.0)(vite@5.0.11)(vue@3.4.19)
+        version: 4.0.8(astro@4.4.1)(vite@5.0.11)(vue@3.4.19)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1121,16 +1121,16 @@ importers:
         version: 0.0.19
       '@vite-pwa/astro':
         specifier: ^0.3.0
-        version: 0.3.0(astro@4.4.0)(vite-plugin-pwa@0.19.0)
+        version: 0.3.0(astro@4.4.1)(vite-plugin-pwa@0.19.0)
       '@vueuse/core':
-        specifier: 10.7.2
-        version: 10.7.2(vue@3.4.19)
+        specifier: 10.8.0
+        version: 10.8.0(vue@3.4.19)
       astro:
-        specifier: 4.4.0
-        version: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
+        specifier: 4.4.1
+        version: 4.4.1(@types/node@18.19.17)(typescript@5.2.2)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.4.0)
+        version: 0.0.1(astro@4.4.1)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1163,7 +1163,7 @@ importers:
         version: 0.58.5(postcss@8.4.35)(rollup@2.79.1)(vite@5.0.11)
       unplugin-auto-import:
         specifier: ^0.17.5
-        version: 0.17.5(@vueuse/core@10.7.2)(rollup@2.79.1)
+        version: 0.17.5(@vueuse/core@10.8.0)(rollup@2.79.1)
       vite:
         specifier: ^5.0.11
         version: 5.0.11(@types/node@18.19.17)
@@ -1352,12 +1352,12 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@8.2.0(astro@4.4.0):
+  /@astrojs/node@8.2.0(astro@4.4.1):
     resolution: {integrity: sha512-keQIPvdx8hquG+KnWoJp7io/GoczBEJer9X8WzPHK2fnVRXYDKGzXWZw3Dbg0ZhXJreVV3xzniN7nr6e7hgDXg==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
+      astro: 4.4.1(@types/node@18.19.17)(typescript@5.2.2)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1386,7 +1386,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@4.0.8(astro@4.4.0)(vite@5.0.11)(vue@3.4.19):
+  /@astrojs/vue@4.0.8(astro@4.4.1)(vite@5.0.11)(vue@3.4.19):
     resolution: {integrity: sha512-RnNA4wFy4HvQxU4vswH3c6sa7Br1F/JVzWdQvHYLP4CEe5OZ6yhEqxAUUo3LDkF+sNn23XznFLOPqZak6ziBwg==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
@@ -1397,7 +1397,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.0.11)(vue@3.4.19)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.23.9)
       '@vue/compiler-sfc': 3.4.19
-      astro: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
+      astro: 4.4.1(@types/node@18.19.17)(typescript@5.2.2)
       vue: 3.4.19(typescript@5.2.2)
     transitivePeerDependencies:
       - '@babel/core'
@@ -5034,7 +5034,7 @@ packages:
       - rollup
     dev: false
 
-  /@vite-pwa/astro@0.3.0(astro@4.4.0)(vite-plugin-pwa@0.19.0):
+  /@vite-pwa/astro@0.3.0(astro@4.4.1)(vite-plugin-pwa@0.19.0):
     resolution: {integrity: sha512-2fH9ifzMW8dmeydJ6SuttLR5FCDvSoaTpyxblasR6icsJbR1he4igJhauw4jvmQXOb99Psl+bsBSoUwsdSnSJA==}
     peerDependencies:
       '@vite-pwa/assets-generator': ^0.2.4
@@ -5044,7 +5044,7 @@ packages:
       '@vite-pwa/assets-generator':
         optional: true
     dependencies:
-      astro: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
+      astro: 4.4.1(@types/node@18.19.17)(typescript@5.2.2)
       vite-plugin-pwa: 0.19.0(vite@5.0.11)(workbox-build@7.0.0)(workbox-window@7.0.0)
     dev: false
 
@@ -5213,26 +5213,26 @@ packages:
     resolution: {integrity: sha512-/KliRRHMF6LoiThEy+4c1Z4KB/gbPrGjWwJR+crg2otgrf/egKzRaCPvJ51S5oetgsgXLfc4Rm5ZgrKHZrtMSw==}
     dev: false
 
-  /@vueuse/core@10.7.2(vue@3.4.19):
-    resolution: {integrity: sha512-AOyAL2rK0By62Hm+iqQn6Rbu8bfmbgaIMXcE3TSr7BdQ42wnSFlwIdPjInO62onYsEMK/yDMU8C6oGfDAtZ2qQ==}
+  /@vueuse/core@10.8.0(vue@3.4.19):
+    resolution: {integrity: sha512-G9Ok9fjx10TkNIPn8V1dJmK1NcdJCtYmDRyYiTMUyJ1p0Tywc1zmOoCQ2xhHYyz8ULBU4KjIJQ9n+Lrty74iVw==}
     dependencies:
       '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 10.7.2
-      '@vueuse/shared': 10.7.2(vue@3.4.19)
-      vue-demi: 0.14.6(vue@3.4.19)
+      '@vueuse/metadata': 10.8.0
+      '@vueuse/shared': 10.8.0(vue@3.4.19)
+      vue-demi: 0.14.7(vue@3.4.19)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: false
 
-  /@vueuse/metadata@10.7.2:
-    resolution: {integrity: sha512-kCWPb4J2KGrwLtn1eJwaJD742u1k5h6v/St5wFe8Quih90+k2a0JP8BS4Zp34XUuJqS2AxFYMb1wjUL8HfhWsQ==}
+  /@vueuse/metadata@10.8.0:
+    resolution: {integrity: sha512-Nim/Vle5OgXcXhAvGOgkJQXB1Yb+Kq/fMbLuv3YYDYbiQrwr39ljuD4k9fPeq4yUyokYRo2RaNQmbbIMWB/9+w==}
     dev: false
 
-  /@vueuse/shared@10.7.2(vue@3.4.19):
-    resolution: {integrity: sha512-qFbXoxS44pi2FkgFjPvF4h7c9oMDutpyBdcJdMYIMg9XyXli2meFMuaKn+UMgsClo//Th6+beeCgqweT/79BVA==}
+  /@vueuse/shared@10.8.0(vue@3.4.19):
+    resolution: {integrity: sha512-dUdy6zwHhULGxmr9YUg8e+EnB39gcM4Fe2oKBSrh3cOsV30JcMPtsyuspgFCUo5xxFNaeMf/W2yyKfST7Bg8oQ==}
     dependencies:
-      vue-demi: 0.14.6(vue@3.4.19)
+      vue-demi: 0.14.7(vue@3.4.19)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -5514,12 +5514,12 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro-capo@0.0.1(astro@4.4.0):
+  /astro-capo@0.0.1(astro@4.4.1):
     resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
     dependencies:
-      astro: 4.4.0(@types/node@18.19.17)(typescript@5.2.2)
+      astro: 4.4.1(@types/node@18.19.17)(typescript@5.2.2)
       ultrahtml: 1.3.0
     dev: false
 
@@ -5540,8 +5540,8 @@ packages:
       - supports-color
     dev: false
 
-  /astro@4.4.0(@types/node@18.19.17)(typescript@5.2.2):
-    resolution: {integrity: sha512-JAsMrm1Z6W4Iqg9Q7LW/6lCXrqa4jndEOlR/yu7NGNP0BrPwSM8i4+yzya6hxgsNvyyVK8ywthaNhFmqd8Z+cg==}
+  /astro@4.4.1(@types/node@18.19.17)(typescript@5.2.2):
+    resolution: {integrity: sha512-nJLgNg8UXKBJYXjWtekgv1TYZES++LAdShgyKL8L5yJMeiqlDSO+/Laq5VfRKoL9hzBdyolJMB0WDE/+bRZytg==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -5597,7 +5597,6 @@ packages:
       rehype: 13.0.1
       resolve: 1.22.8
       semver: 7.6.0
-      server-destroy: 1.0.1
       shikiji: 0.9.19
       shikiji-core: 0.9.19
       string-width: 7.0.0
@@ -12357,7 +12356,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /unplugin-auto-import@0.17.5(@vueuse/core@10.7.2)(rollup@2.79.1):
+  /unplugin-auto-import@0.17.5(@vueuse/core@10.8.0)(rollup@2.79.1):
     resolution: {integrity: sha512-fHNDkDSxv3PGagX1wmKBYBkgaM4AKAgZmdJw/bxjhNljx9KSXSgHpGfX0MwUrq9qw6q1bhHIZVWyOwoY2koo4w==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -12371,7 +12370,7 @@ packages:
     dependencies:
       '@antfu/utils': 0.7.7
       '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
-      '@vueuse/core': 10.7.2(vue@3.4.19)
+      '@vueuse/core': 10.8.0(vue@3.4.19)
       fast-glob: 3.3.2
       local-pkg: 0.5.0
       magic-string: 0.30.5
@@ -12671,8 +12670,8 @@ packages:
       - terser
     dev: true
 
-  /vue-demi@0.14.6(vue@3.4.19):
-    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
+  /vue-demi@0.14.7(vue@3.4.19):
+    resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
