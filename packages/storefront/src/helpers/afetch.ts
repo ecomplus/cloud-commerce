@@ -32,6 +32,7 @@ const afetch = (url: FetchParams[0], init?: AFetchInit, timeout = 10000) => {
     let query = '';
     Object.keys(init.params).forEach((key) => {
       const value: string | number | (string | number)[] = init.params![key];
+      if (value === undefined) return;
       if (Array.isArray(value)) {
         value.forEach((val) => {
           query += `&${key}=${val}`;
