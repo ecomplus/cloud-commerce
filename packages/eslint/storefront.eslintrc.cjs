@@ -26,6 +26,7 @@ module.exports = {
         'Carousel',
         'Drawer',
         'Skeleton',
+        'Spinner',
         'Prices',
         'Banner',
         'Breadcrumbs',
