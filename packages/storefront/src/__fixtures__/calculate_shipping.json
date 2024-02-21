@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "to": {
+      "zip": "30333111"
+    },
+    "items": [
+      {
+        "product_id": "5c701c8ac626be23430d4fe5",
+        "sku": "hd-csr-303",
+        "name": "Headset Gamer Corsair HS40 Raptor CA-9011122-NA(AP)",
+        "quantity": 1,
+        "currency_id": "BRL",
+        "currency_symbol": "R$",
+        "price": 285,
+        "dimensions": {
+          "width": {
+            "value": 10,
+            "unit": "cm"
+          },
+          "height": {
+            "value": 10,
+            "unit": "cm"
+          },
+          "length": {
+            "value": 10,
+            "unit": "cm"
+          }
+        },
+        "weight": {
+          "value": 500,
+          "unit": "g"
+        }
+      }
+    ],
+    "subtotal": 285,
+    "own_hand": false,
+    "receipt": false,
+    "is_checkout_confirmation": false
+  },
+  "result": [
+    {
+      "_id": "645e84cf0332fe172e2d7c75",
+      "app_id": 1253,
+      "queue_took": 45,
+      "took": 69,
+      "version": "1.3.0",
+      "validated": false,
+      "response_errors": null,
+      "error": true,
+      "error_message": "Request failed with status code 400",
+      "response": {
+        "error": "CALCULATE_ERR",
+        "message": "Zip code is unset on app hidden data (merchant must configure the app)"
+      }
+    },
+    {
+      "_id": "5fc529c069274c73fcdebb61",
+      "app_id": 1248,
+      "queue_took": 25,
+      "took": 423,
+      "version": "1.0.5",
+      "validated": false,
+      "response_errors": null,
+      "error": true,
+      "error_message": "Request failed with status code 400",
+      "response": {
+        "error": "CALCULATE_FAILED",
+        "message": "undefined- connect ECONNREFUSED 201.48.198.97:80- Results from offline data invalidated"
+      }
+    },
+    {
+      "_id": "5f15da8614ff772fde810435",
+      "app_id": 119348,
+      "queue_took": 5,
+      "took": 526,
+      "version": "1.1.2",
+      "validated": true,
+      "response_errors": null,
+      "error": false,
+      "error_message": null,
+      "response": {
+        "shipping_services": [
+          {
+            "label": "SEDEX",
+            "carrier": "Correios (Manda Bem)",
+            "service_name": "SEDEX",
+            "shipping_line": {
+              "from": {
+                "zip": "35701274"
+              },
+              "to": {
+                "zip": "30333111"
+              },
+              "price": 11.73,
+              "total_price": 11.73,
+              "declared_value": 285,
+              "discount": 0,
+              "delivery_time": {
+                "days": 1,
+                "working_days": true
+              },
+              "posting_deadline": {
+                "days": 3,
+                "working_days": true,
+                "after_approval": true
+              },
+              "package": {
+                "weight": {
+                  "value": 0.5,
+                  "unit": "kg"
+                }
+              },
+              "flags": [
+                "mandabem-ws"
+              ],
+              "own_hand": false,
+              "receipt": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

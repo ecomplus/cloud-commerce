@@ -123,6 +123,15 @@ export const useShippingCalculator = (props: Props) => {
       body.subtotal = amountSubtotal.value;
     }
     isFetching.value = true;
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line
+      return import('../../__fixtures__/calculate_shipping.json')
+        .then(({ default: data }) => {
+          isFetching.value = false;
+          // eslint-disable-next-line no-use-before-define
+          parseShippingResult(data.result as any, isRetry);
+        });
+    }
     fetchModule('calculate_shipping', {
       method: 'POST',
       params: {
@@ -258,6 +267,7 @@ export const useShippingCalculator = (props: Props) => {
     amountSubtotal,
     submitZipCode,
     fetchShippingServices,
+    isFetching,
     freeFromValue,
     shippingServices,
     parseShippingResult,
