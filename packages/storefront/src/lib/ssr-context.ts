@@ -296,6 +296,15 @@ const loadRouteContext = async (
   } else {
     setResponseCache(Astro, 120, 180);
   }
+  if (
+    Astro.url.searchParams.get('webcontainer') !== null
+    || urlPath.startsWith('/admin/ide')
+  ) {
+    // https://webcontainers.io/guides/quickstart#cross-origin-isolation
+    Astro.response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+    Astro.response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+    Astro.response.headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  }
   const routeContext = {
     ...config,
     isHomepage,
