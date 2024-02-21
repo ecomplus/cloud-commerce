@@ -29,8 +29,7 @@ type CartOrProductItem = Carts['items'][0] | (Partial<Products> & {
 });
 
 export interface Props {
-  zipInput?: Ref<HTMLInputElement | null>;
-  zipCode?: string;
+  zipCode?: Ref<string>;
   canSelectService?: boolean;
   countryCode?: string;
   shippedItems?: (ShippedItem | CartOrProductItem)[];
@@ -86,12 +85,11 @@ const reduceItemBody = (itemOrProduct: Record<string, any>) => {
 };
 
 export const useShippingCalculator = (props: Props) => {
-  const localZipCode = ref(props.zipCode);
-  const zipCode = ref<string | null>(null);
-  if (!localZipCode.value && localStorage) {
+  const zipCode = props.zipCode || ref('');
+  if (!zipCode.value && localStorage) {
     const storedZip = localStorage.getItem(ZIP_STORAGE_KEY);
     if (storedZip) {
-      localZipCode.value = storedZip;
+      zipCode.value = storedZip;
     }
   }
   const countryCode = props.countryCode || config.get().countryCode;
@@ -117,7 +115,7 @@ export const useShippingCalculator = (props: Props) => {
       ...props.baseParams,
       to: {
         ...props.baseParams?.to,
-        zip: localZipCode.value!,
+        zip: zipCode.value,
       },
     };
     if (shippedItems.value.length) {
@@ -133,6 +131,7 @@ export const useShippingCalculator = (props: Props) => {
       body,
     })
       .then(async (response) => {
+        if (response.status === 501) return;
         const data = await response.json();
         // eslint-disable-next-line no-use-before-define
         parseShippingResult(data.result, isRetry);
@@ -220,43 +219,38 @@ export const useShippingCalculator = (props: Props) => {
   };
 
   const submitZipCode = () => {
-    const _zipCode = localZipCode.value;
+    const _zipCode = zipCode.value;
     if (countryCode === 'BR') {
       if (_zipCode?.replace(/\D/g, '').length !== 8) return;
     } else if (!_zipCode) {
       return;
     }
-    zipCode.value = _zipCode;
     if (localStorage) {
-      localStorage.setItem(ZIP_STORAGE_KEY, zipCode.value);
+      localStorage.setItem(ZIP_STORAGE_KEY, _zipCode);
     }
     fetchShippingServices();
   };
-  watch(localZipCode, submitZipCode, {
+  watch(zipCode, (value) => {
+    if (value.length) {
+      if (countryCode === 'BR') {
+        const fmt = value.replace(/\D/g, '');
+        if (fmt.length > 5) {
+          zipCode.value = fmt.substring(0, 5) + '-' + fmt.substring(5, 8);
+          submitZipCode();
+        }
+      } else {
+        zipCode.value = value.substring(0, 30);
+      }
+    }
+  }, {
     immediate: !props.shippingResult,
   });
   watch(toRef(props, 'shippingResult'), (shippingResult) => {
     if (!shippingResult?.length) return;
-    if (localZipCode.value) zipCode.value = localZipCode.value;
     parseShippingResult(shippingResult);
   }, {
     immediate: true,
   });
-  const zipInput = props.zipInput?.value;
-  if (zipInput) {
-    zipInput.addEventListener('input', (ev) => {
-      const value = (ev.target as HTMLInputElement).value;
-      if (value.length) {
-        if (countryCode === 'BR') {
-          const fmt = value.replace(/\D/g, '').padEnd(8, '_');
-          zipInput.innerHTML = fmt.substring(0, 5) + '-' + fmt.substring(5, 8);
-        } else {
-          zipInput.innerHTML = value.substring(0, 30);
-        }
-      }
-      localZipCode.value = value;
-    });
-  }
 
   return {
     zipCode,
