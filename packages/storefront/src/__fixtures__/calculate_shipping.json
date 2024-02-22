@@ -86,7 +86,7 @@
             "service_name": "SEDEX",
             "shipping_line": {
               "from": {
-                "zip": "35701274"
+                "zip": "35701399"
               },
               "to": {
                 "zip": "30333111"
@@ -97,6 +97,43 @@
               "discount": 0,
               "delivery_time": {
                 "days": 1,
+                "working_days": true
+              },
+              "posting_deadline": {
+                "days": 3,
+                "working_days": true,
+                "after_approval": true
+              },
+              "package": {
+                "weight": {
+                  "value": 0.5,
+                  "unit": "kg"
+                }
+              },
+              "flags": [
+                "mandabem-ws"
+              ],
+              "own_hand": false,
+              "receipt": false
+            }
+          },
+          {
+            "label": "PAC",
+            "carrier": "Correios (Manda Bem)",
+            "service_name": "PAC",
+            "shipping_line": {
+              "from": {
+                "zip": "35701399"
+              },
+              "to": {
+                "zip": "30333111"
+              },
+              "price": 0,
+              "total_price": 0,
+              "declared_value": 285,
+              "discount": 0,
+              "delivery_time": {
+                "days": 5,
                 "working_days": true
               },
               "posting_deadline": {
