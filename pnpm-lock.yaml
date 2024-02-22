@@ -1219,10 +1219,10 @@ importers:
         specifier: ^2.6.0
         version: link:../packages/eslint
       husky:
-        specifier: ^9.0.10
+        specifier: ^9.0.11
         version: 9.0.11
       lint-staged:
-        specifier: ^15.2.1
+        specifier: ^15.2.2
         version: 15.2.2
 
   store/functions/many:
@@ -1249,7 +1249,7 @@ importers:
         specifier: ^2.6.0
         version: link:../../../packages/ssr
       '@headlessui/vue':
-        specifier: ^1.7.18
+        specifier: ^1.7.19
         version: 1.7.19(vue@3.4.19)
       micromark:
         specifier: ^4.0.0
