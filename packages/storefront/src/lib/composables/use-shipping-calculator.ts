@@ -14,23 +14,34 @@ import {
   toRef,
 } from 'vue';
 import { useDebounceFn, watchOnce } from '@vueuse/core';
-import { price as getPrice } from '@ecomplus/utils';
+import { price as getPrice, formatMoney } from '@ecomplus/utils';
 import config from '@cloudcommerce/config';
+import {
+  i19days,
+  i19free,
+  i19freeShipping,
+  i19pickUpToday,
+  i19receiveToday,
+  i19untilTomorrow,
+  i19upTo,
+  i19workingDays,
+} from '@@i18n';
 import { fetchModule } from '@@sf/state/modules-info';
 
 export type ShippedItem = Exclude<CalculateShippingParams['items'], undefined>[0];
 
 export type ShippingService = CalculateShippingResponse['shipping_services'][0];
 
-type CartOrProductItem = Carts['items'][0] | (Partial<Products> & {
-  product_id: string & { length: 24 },
-  price: number,
-  quantity: number,
-});
+type CartOrProductItem = Carts['items'][0]
+  | (Partial<Products>
+    & { price: number, quantity: number }
+    & ({ product_id: string & { length: 24 } } | { _id: string & { length: 24 } })
+  );
 
 export interface Props {
   zipCode?: Ref<string>;
-  canSelectService?: boolean;
+  canAutoSubmit?: boolean;
+  // canSelectService?: boolean;
   countryCode?: string;
   shippedItems?: (ShippedItem | CartOrProductItem)[];
   shippingResult?: ModuleApiResult<'calculate_shipping'>['result'];
@@ -61,6 +72,9 @@ const sortApps = (results: any, order: number[]) => {
   });
 };
 const reduceItemBody = (itemOrProduct: Record<string, any>) => {
+  if (!itemOrProduct.product_id) {
+    itemOrProduct.product_id = itemOrProduct._id;
+  }
   const shippedItem = {};
   const fields: (keyof ShippedItem)[] = [
     'product_id',
@@ -127,9 +141,11 @@ export const useShippingCalculator = (props: Props) => {
       // eslint-disable-next-line
       return import('../../__fixtures__/calculate_shipping.json')
         .then(({ default: data }) => {
-          isFetching.value = false;
-          // eslint-disable-next-line no-use-before-define
-          parseShippingResult(data.result as any, isRetry);
+          setTimeout(() => {
+            isFetching.value = false;
+            // eslint-disable-next-line no-use-before-define
+            parseShippingResult(data.result as any, isRetry);
+          }, 1500);
         });
     }
     fetchModule('calculate_shipping', {
@@ -245,7 +261,7 @@ export const useShippingCalculator = (props: Props) => {
         const fmt = value.replace(/\D/g, '');
         if (fmt.length > 5) {
           zipCode.value = fmt.substring(0, 5) + '-' + fmt.substring(5, 8);
-          submitZipCode();
+          if (props.canAutoSubmit) submitZipCode();
         }
       } else {
         zipCode.value = value.substring(0, 30);
@@ -261,6 +277,42 @@ export const useShippingCalculator = (props: Props) => {
     immediate: true,
   });
 
+  const productionDeadline = computed(() => {
+    let maxDeadline = 0;
+    _shippedItems.value?.forEach((item: Partial<Products>) => {
+      if (item.quantity && item.production_time) {
+        const { days, cumulative } = item.production_time;
+        const itemDeadline = cumulative ? days * item.quantity : days;
+        if (itemDeadline > maxDeadline) {
+          maxDeadline = itemDeadline;
+        }
+      }
+    });
+    return maxDeadline;
+  });
+  const getShippingDeadline = (shipping: ShippingService['shipping_line']) => {
+    const isWorkingDays = Boolean(shipping.posting_deadline?.working_days
+      || shipping.delivery_time?.working_days);
+    let days = shipping.posting_deadline?.days || 0;
+    if (shipping.delivery_time) {
+      days += shipping.delivery_time.days;
+    }
+    days += productionDeadline.value;
+    if (days > 1) {
+      return `${i19upTo} ${days} `
+        + (isWorkingDays ? i19workingDays : i19days).toLowerCase();
+    }
+    if (days === 1) return i19untilTomorrow;
+    return shipping.pick_up ? i19pickUpToday : i19receiveToday;
+  };
+  const getShippingPrice = (shipping: ShippingService['shipping_line']) => {
+    const freight = typeof shipping.total_price === 'number'
+      ? shipping.total_price
+      : shipping.price;
+    if (freight) return formatMoney(freight);
+    return shipping.pick_up ? i19free : i19freeShipping;
+  };
+
   return {
     zipCode,
     shippedItems,
@@ -271,6 +323,9 @@ export const useShippingCalculator = (props: Props) => {
     freeFromValue,
     shippingServices,
     parseShippingResult,
+    productionDeadline,
+    getShippingDeadline,
+    getShippingPrice,
   };
 };
 
