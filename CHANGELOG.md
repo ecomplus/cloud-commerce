@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/ecomplus/cloud-commerce/compare/v2.5.1...v2.6.0) (2024-02-22)
+
+
+### Features
+
+* **storefront:** New `<Spinner>` basic component ([b83b594](https://github.com/ecomplus/cloud-commerce/commit/b83b594c133635413829bf4fca15b9177187cf3c))
+* **storefront:** New `getShippingDeadline` and `getShippingPrice` methods on calculator composable ([4dc32e1](https://github.com/ecomplus/cloud-commerce/commit/4dc32e1c2a3d1b235c6d46f91602a263b393d432))
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to latest v4.4.1 and VueUse v10.8 ([e01fb6d](https://github.com/ecomplus/cloud-commerce/commit/e01fb6d2d307c93fbdf34e413b4b7bad5f939a5c))
+* **storefront:** Exporting `isFetching` state from shipping calculator composable ([9266d0c](https://github.com/ecomplus/cloud-commerce/commit/9266d0c8d4a5c7dd6ffa99b44170988891e7257a))
+* **storefront:** Prevent "=undefined" params on modules (and other internals) fetch ([a4f594e](https://github.com/ecomplus/cloud-commerce/commit/a4f594ea40269c6ef8b22cb166c3298fa877023d))
+* **storefront:** Receiving `zipCode` ref instead of input on shipping calculator composable ([813dcb1](https://github.com/ecomplus/cloud-commerce/commit/813dcb16943f922ac52995778c42840d96195d67))
+
 ### [2.5.1](https://github.com/ecomplus/cloud-commerce/compare/v2.5.0...v2.5.1) (2024-02-19)
 
 
