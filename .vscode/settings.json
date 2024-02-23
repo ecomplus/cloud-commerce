@@ -16,7 +16,7 @@
   "tailwindCSS.experimental.configFile": {
     "packages/storefront/tailwind.config.cjs": "packages/**",
     "store/functions/ssr/tailwind.config.cjs": "store/**",
-    "ecomplus-stores/barra-doce/functions/ssr/tailwind.config.cjs": "ecomplus-stores/barra-doce/**"
+    "ecomplus-stores/barradoce/functions/ssr/tailwind.config.cjs": "ecomplus-stores/barradoce/**"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": [
