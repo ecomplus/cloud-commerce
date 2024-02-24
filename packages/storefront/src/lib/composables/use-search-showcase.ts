@@ -1,6 +1,7 @@
 import type { Ref } from 'vue';
 import type { SearchItem } from '@cloudcommerce/types';
 import type { SearchEngineInstance } from '@@sf/state/search-engine';
+import type { SectionPreviewProps } from '@@sf/state/use-cms-preview';
 import {
   ref,
   computed,
@@ -21,7 +22,7 @@ import {
 import { SearchEngine } from '@@sf/state/search-engine';
 import { useSearchActiveFilters } from '@@sf/composables/use-search-filters';
 
-export interface Props {
+export interface Props extends Partial<SectionPreviewProps> {
   term?: string | null;
   pageSize?: number;
   fixedParams?: SearchEngineInstance['params'];
