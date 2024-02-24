@@ -76,7 +76,7 @@ export class SearchEngine {
   params = reactive<Exclude<ApiConfig['params'], string | undefined>>({});
   pageSize = ref(24);
   pageNumber = ref(1);
-  #middlewares: Array<(term?: string) => Promise<void>> = [];
+  #middlewares: Array<(term?: string) => void> = [];
   #isFetching = ref(false);
   isFetching = computed(() => this.#isFetching.value);
   #wasFetched = ref(false);
@@ -133,8 +133,7 @@ export class SearchEngine {
     let response: Awaited<ReturnType<typeof search>> | null | undefined;
     try {
       for (let i = 0; i < this.#middlewares.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        await this.#middlewares[i](term);
+        this.#middlewares[i](term);
       }
       response = await this.#search({
         term: this.term.value,
@@ -167,7 +166,7 @@ export class SearchEngine {
     }
   }
 
-  addMiddleware(cb: (term?: string) => Promise<void>) {
+  addMiddleware(cb: (term?: string) => void) {
     this.#middlewares.push(cb);
   }
   setResult(data: Partial<SearchResult<'v1'>>) {
