@@ -1,4 +1,5 @@
 import type { Categories } from '@cloudcommerce/api/types';
+import type { SearchEngineInstance } from '@@sf/state/search-engine';
 import { ref, watch, toRef } from 'vue';
 import Wade from 'wade';
 import { clearAccents } from '@@sf/sf-lib';
@@ -8,6 +9,7 @@ export interface Props {
   term: string;
   fetchDebounce?: number;
   productsLimit?: number;
+  searchEngine?: SearchEngineInstance;
 }
 
 const wadeDocs: Array<{
@@ -39,7 +41,7 @@ if (wadeDocs.length) {
 }
 
 export const useSearchModal = (props: Props) => {
-  const searchEngine = new SearchEngine({
+  const searchEngine = props.searchEngine || new SearchEngine({
     debounce: props.fetchDebounce || 300,
   });
   searchEngine.pageSize.value = props.productsLimit || 12;

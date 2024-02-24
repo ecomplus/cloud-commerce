@@ -30,6 +30,7 @@ export interface Props {
   ssrError?: string | null;
   canUseUrlParams?: boolean;
   showcase?: Ref<HTMLElement | null>;
+  searchEngine?: SearchEngineInstance;
 }
 
 const useSearchShowcase = (props: Props) => {
@@ -43,7 +44,7 @@ const useSearchShowcase = (props: Props) => {
     }
   }
   const products = shallowReactive<SearchItem[]>(props.products || []);
-  const searchEngine = new SearchEngine({ debounce: 50 });
+  const searchEngine = props.searchEngine || new SearchEngine({ debounce: 50 });
   if (term === undefined && !import.meta.env.SSR) {
     term = new URLSearchParams(window.location.search).get('q') || null;
   }
