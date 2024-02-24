@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/ecomplus/cloud-commerce/compare/v2.6.0...v2.6.1) (2024-02-24)
+
+
+### Bug Fixes
+
+* **storefront:** Add `searchEngine` as custom prop of SSR `usePageSections` composable ([74f3078](https://github.com/ecomplus/cloud-commerce/commit/74f307807406d30a891990c5a6da44d125e8e9dc))
+* **storefront:** Better handle search engine middlewares passing search options object ([daf2084](https://github.com/ecomplus/cloud-commerce/commit/daf2084203561402ef72493d7840c7081eabac6e))
+* **storefront:** New optional `searchEngine` on search modal and showcase composables ([65c6e21](https://github.com/ecomplus/cloud-commerce/commit/65c6e21b3503227be2cb11d6c40558d480b0f72e))
+* **storefront:** Only sync middlewares (no promises) for `SearchEngine` fetch ([4fa8965](https://github.com/ecomplus/cloud-commerce/commit/4fa89658c409b90203ac76f8ee54cfbefdca44a3))
+* **storefront:** Properly support `SearchEngine` extendability with new `addMiddleware` method ([0142368](https://github.com/ecomplus/cloud-commerce/commit/01423686f3c915da63a3e476521d7cf275d67dd0))
+
 ## [2.6.0](https://github.com/ecomplus/cloud-commerce/compare/v2.5.1...v2.6.0) (2024-02-22)
 
 
