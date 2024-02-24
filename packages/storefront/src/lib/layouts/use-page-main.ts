@@ -12,6 +12,7 @@ export interface Props {
   routeContext: RouteContext;
   handleCustomSection?: (type: `${string}:${string}`, content: Record<string, any>) =>
     Promise<{ props: Record<string, any> }>;
+  searchEngine?: UseSearchShowcaseProps['searchEngine'];
 }
 
 type PageContentHero = Exclude<PageContent['hero'], undefined>;
@@ -48,7 +49,7 @@ type CustomSection = { type: `${string}:${string}`, props: any };
 type ProductDetailsProps = { hasDescription?: boolean, hasSpecifications?: boolean };
 
 export const usePageSections = async <T extends CustomSection = CustomSection>
-({ routeContext, handleCustomSection }: Props) => {
+({ routeContext, handleCustomSection, searchEngine }: Props) => {
   const { cmsContent } = routeContext;
   let sectionsContent = cmsContent?.sections;
   if (
@@ -181,11 +182,14 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           props.term = routeContext.searchPageTerm || null;
         }
         if (props.term !== undefined || props.fixedParams) {
-          const { searchEngine, fetching } = useSearchShowcase(props);
+          const {
+            searchEngine: resultSearchEngine,
+            fetching,
+          } = useSearchShowcase({ ...props, searchEngine });
           await fetching;
-          props.products = searchEngine.products;
-          props.resultMeta = searchEngine.meta;
-          props.ssrError = searchEngine.fetchError.value?.message;
+          props.products = resultSearchEngine.products;
+          props.resultMeta = resultSearchEngine.meta;
+          props.ssrError = resultSearchEngine.fetchError.value?.message;
         }
         sections[index] = { type, props };
         return;
