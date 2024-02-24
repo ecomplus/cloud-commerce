@@ -168,6 +168,7 @@ const inlineJSONLd = JSON.stringify({
   url: `https://${domain}/`,
   logo: `https://${domain}${settings.logo}`,
 });
+const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
 ---
 
 <meta charset="UTF-8">
@@ -179,10 +180,7 @@ const inlineJSONLd = JSON.stringify({
 {title && <title>{title}</title>}
 {description && <meta name="description" content={description}>}
 <meta name="author" content={settings.name}>
-<meta
-  name="generator"
-  content={`e-com.plus @cloudcommerce/storefront, ${Astro.generator}`}
-/>
+<meta name="generator" content={generator}>
 <link rel="canonical" href={canonicalUrl} />
 {shortcutIcon && <link rel="apple-touch-icon" href={shortcutIcon} />}
 <meta name="apple-mobile-web-app-capable" content="yes">
