@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.3](https://github.com/ecomplus/cloud-commerce/compare/v2.6.2...v2.6.3) (2024-02-24)
+
+
+### Bug Fixes
+
+* **ssr:** Update (PUT) bunny.net perma cache with fresh HTML instead of delete and further get ([46a69eb](https://github.com/ecomplus/cloud-commerce/commit/46a69ebd3808884be74eeaebad0796be7da2e342))
+* **storefront:** Bump Astro to latest v4.4.4 ([7943c78](https://github.com/ecomplus/cloud-commerce/commit/7943c786bcdd2788ac7d29e9e9fb3b06c5422ba9))
+* **storefront:** Prevent warnings with undeclared `cmsPreview` prop on composables for sections ([2b6eec4](https://github.com/ecomplus/cloud-commerce/commit/2b6eec4ad101c252a131de30dbc9fcd9d97dc1d7))
+
 ### [2.6.2](https://github.com/ecomplus/cloud-commerce/compare/v2.6.1...v2.6.2) (2024-02-24)
 
 
