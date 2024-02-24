@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.2](https://github.com/ecomplus/cloud-commerce/compare/v2.6.1...v2.6.2) (2024-02-24)
+
+
+### Bug Fixes
+
+* **ssr:** Ensure cache refresh req is sent after CDN cache purge on cron save views ([943f001](https://github.com/ecomplus/cloud-commerce/commit/943f00128e618354b84fd203db071b6245351281))
+
 ### [2.6.1](https://github.com/ecomplus/cloud-commerce/compare/v2.6.0...v2.6.1) (2024-02-24)
 
 
