@@ -68,6 +68,8 @@ export const search = async ({
   return response;
 };
 
+type SearchOptions = Parameters<typeof search>[0];
+
 export class SearchEngine {
   fields?: readonly string[];
   term = ref<string | null>(null);
@@ -76,7 +78,7 @@ export class SearchEngine {
   params = reactive<Exclude<ApiConfig['params'], string | undefined>>({});
   pageSize = ref(24);
   pageNumber = ref(1);
-  #middlewares: Array<(term?: string) => void> = [];
+  #middlewares: Array<(opt: SearchOptions) => void> = [];
   #isFetching = ref(false);
   isFetching = computed(() => this.#isFetching.value);
   #wasFetched = ref(false);
@@ -131,21 +133,22 @@ export class SearchEngine {
       });
     }
     let response: Awaited<ReturnType<typeof search>> | null | undefined;
+    const searchOptions = {
+      term: this.term.value,
+      params: {
+        ...this.params,
+        limit,
+        offset,
+        count: this.isWithCount.value || undefined,
+        buckets: this.isWithBuckets.value || undefined,
+      },
+      fields: this.fields,
+    };
     try {
       for (let i = 0; i < this.#middlewares.length; i++) {
-        this.#middlewares[i](term);
+        this.#middlewares[i](searchOptions);
       }
-      response = await this.#search({
-        term: this.term.value,
-        params: {
-          ...this.params,
-          limit,
-          offset,
-          count: this.isWithCount.value || undefined,
-          buckets: this.isWithBuckets.value || undefined,
-        },
-        fields: this.fields,
-      });
+      response = await this.#search(searchOptions);
     } catch (err: any) {
       if (this.#fulfillFetching) {
         this.#fetchError.value = err;
@@ -166,7 +169,7 @@ export class SearchEngine {
     }
   }
 
-  addMiddleware(cb: (term?: string) => void) {
+  addMiddleware(cb: (options: SearchOptions) => void) {
     this.#middlewares.push(cb);
   }
   setResult(data: Partial<SearchResult<'v1'>>) {
