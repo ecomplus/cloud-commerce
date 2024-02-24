@@ -1,5 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import { error } from 'firebase-functions/logger';
+import { info, error } from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -103,13 +103,15 @@ const saveViews = async () => {
         const url = data.url.replace(/\?.*$/, '');
         doc.ref.update({ isCachePurged: true });
         if (url?.startsWith(`https://${domain}`) && !purgedUrls.includes(url)) {
-          await bunnyAxios('/purge', {
-            method: 'POST',
-            params: {
-              async: 'false',
-              url,
-            },
-          });
+          const reqs: Promise<any>[] = [
+            bunnyAxios('/purge', {
+              method: 'POST',
+              params: {
+                async: permaCacheZoneFolder ? 'true' : 'false',
+                url,
+              },
+            }),
+          ];
           purgedUrls.push(url);
           if (permaCacheZoneFolder) {
             let pathname = url.replace(`https://${domain}`, '');
@@ -123,20 +125,25 @@ const saveViews = async () => {
             // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
             const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
               + `/${folderpath}___${filename}___/___file___`;
-            await axios({
-              method: 'DELETE',
-              url: `https://storage.bunnycdn.com/${bunnyStorageName}/${permaCachePath}`,
-              headers: {
-                AccessKey: bunnyStoragePass,
-              },
-            })
-              .then(() => {
-                axios.get(`${url}?__isrV=${deployRand}`).catch(error);
-              })
-              .catch((err) => {
+            reqs.push(
+              axios({
+                method: 'DELETE',
+                url: `https://storage.bunnycdn.com/${bunnyStorageName}/${permaCachePath}`,
+                headers: {
+                  AccessKey: bunnyStoragePass,
+                },
+              }).catch((err) => {
                 if (err.response?.status !== 404) throw err;
-              });
+              }),
+            );
           }
+          await Promise.all(reqs).then(([, deletePermaCacheRes]) => {
+            if (deletePermaCacheRes) {
+              info(`Full cache bump ${url}`);
+              return axios.get(`${url}?__isrV=${deployRand}`).catch(error);
+            }
+            return null;
+          });
         }
       }
     } catch (err: any) {
