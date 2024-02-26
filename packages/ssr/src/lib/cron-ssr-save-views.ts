@@ -122,7 +122,8 @@ const saveViews = async () => {
           purgedUrls.push(url);
           if (permaCacheZoneFolder) {
             let pathname = url.replace(`https://${domain}`, '');
-            const freshHtmlUrl = `https://${projectId}.web.app${pathname}?__isrV=${deployRand}`;
+            const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
+              + `?__isrV=${deployRand}&t=${Date.now()}`;
             purgeReqs.push(
               // eslint-disable-next-line no-loop-func
               axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
