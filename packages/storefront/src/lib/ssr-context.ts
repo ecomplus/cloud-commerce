@@ -51,7 +51,8 @@ if (!globalThis.$storefront) {
   globalThis.$storefront = new Proxy({
     settings: {},
     data: {},
-    url: undefined as any,
+    // @ts-expect-error
+    url: undefined,
     getSession(sid?: string) {
       if (!sid && !!getCurrentInstance()) {
         sid = inject('sid');
@@ -62,7 +63,7 @@ if (!globalThis.$storefront) {
       } = (sid && sessions[sid]) || (global.__sfSession as typeof sessions[string]);
       return { url, apiContext };
     },
-    onLoad(callback: (...args: any[]) => void) {
+    onLoad(callback: () => void) {
       emitter.once('load', callback);
     },
   }, {
@@ -213,11 +214,12 @@ const loadRouteContext = async (
             apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
             sessions[sid].apiContext = {
               resource: apiResource,
-              doc: apiDoc as any,
+              // @ts-expect-error
+              doc: apiDoc,
               timestamp: Date.now(),
             };
             sessions[sid]._timer = setTimeout(() => {
-              // @ts-ignore
+              // @ts-expect-error
               sessions[sid] = null;
               delete sessions[sid];
             }, 6000);
