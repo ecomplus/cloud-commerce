@@ -51,7 +51,7 @@ if (!globalThis.$storefront) {
   globalThis.$storefront = new Proxy({
     settings: {},
     data: {},
-    // @ts-expect-error
+    // @ts-expect-error: URL is retrived from `target.getSession().url`
     url: undefined,
     getSession(sid?: string) {
       if (!sid && !!getCurrentInstance()) {
@@ -214,12 +214,12 @@ const loadRouteContext = async (
             apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
             sessions[sid].apiContext = {
               resource: apiResource,
-              // @ts-expect-error
+              // @ts-expect-error: `apiDoc` not strictly typed as resource interface
               doc: apiDoc,
               timestamp: Date.now(),
             };
             sessions[sid]._timer = setTimeout(() => {
-              // @ts-expect-error
+              // @ts-expect-error: mem clearing
               sessions[sid] = null;
               delete sessions[sid];
             }, 6000);
