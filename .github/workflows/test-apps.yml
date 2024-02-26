@@ -1,4 +1,4 @@
-name: Run module and app tests
+name: Module and app tests
 
 on:
   pull_request:
