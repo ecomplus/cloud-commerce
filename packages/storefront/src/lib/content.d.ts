@@ -1,4 +1,5 @@
 import type { SettingsContent as _SettingsContent } from '@cloudcommerce/types';
+import type { CustomContent } from '@@sf/custom-content';
 
 export type SettingsContent = _SettingsContent &
   Omit<typeof import('content/settings.json'), Exclude<keyof _SettingsContent, 'metafields'>>;
@@ -58,13 +59,15 @@ export interface PageContent {
 
 export type ContentFilename = 'settings'
   | 'layout'
+  | keyof CustomContent
   | `${string}/`
   | `${string}/${string}`;
 
 export type ContentData<T extends ContentFilename> =
-  T extends `${string}/` ? Array<string> :
   T extends 'settings' ? SettingsContent :
   T extends 'layout' ? LayoutContent :
+  T extends keyof CustomContent ? CustomContent[T] :
+  T extends `${string}/` ? Array<string> :
   T extends `${string}/${string}` ? PageContent | null :
   null;
 
