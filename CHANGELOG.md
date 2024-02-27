@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.4](https://github.com/ecomplus/cloud-commerce/compare/v2.6.3...v2.6.4) (2024-02-27)
+
+
+### Bug Fixes
+
+* **deps:** Bump nodemailer to latest v6.9.10 [security] ([e4fa4a0](https://github.com/ecomplus/cloud-commerce/commit/e4fa4a0f8332c8d1003fa8bbe0ea74d0e9386a45))
+* **deps:** Bump Vite to latest v5.1.4 (security) ([d511823](https://github.com/ecomplus/cloud-commerce/commit/d511823200f8aee1aa0479693954e95ae694980d))
+* **deps:** Update non-major dependencies ([#333](https://github.com/ecomplus/cloud-commerce/issues/333)) ([2b4e6b1](https://github.com/ecomplus/cloud-commerce/commit/2b4e6b1ad25be1beb1a830e728e493d9c8d04948))
+* **ssr:** Ensure "ISR" fetching fresh HTML (skip CDN cache) on update ([c40ca88](https://github.com/ecomplus/cloud-commerce/commit/c40ca888f2d8a6e1e9ddfe5598dc362a39c9fa8b))
+* **storefront:** Bump Vue to latest v3.4.20 ([8270105](https://github.com/ecomplus/cloud-commerce/commit/8270105dab4c059a38426619c1f22a3a4a08dd17))
+* **storefront:** Handle custom content types with new `@@sf/custom-content` module ([f6507fd](https://github.com/ecomplus/cloud-commerce/commit/f6507fdd37a57e146f06bea7d3c21ab1665543df))
+
 ### [2.6.3](https://github.com/ecomplus/cloud-commerce/compare/v2.6.2...v2.6.3) (2024-02-24)
 
 

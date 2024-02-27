@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-emails",
   "type": "module",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "E-Com Plus Cloud Commerce default transactional email app",
   "main": "lib/index.js",
   "repository": {
