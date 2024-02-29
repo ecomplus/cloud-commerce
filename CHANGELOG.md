@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.5](https://github.com/ecomplus/cloud-commerce/compare/v2.6.4...v2.6.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* **ssr:** Revert bump bunny.net CDN cache with /purge request only, then refresh with simple URL get ([72518e0](https://github.com/ecomplus/cloud-commerce/commit/72518e0bdfcfca308696f47a10699f8b9c53239b))
+* **storefront:** Bump Astro to latest v4.4.6 ([be8239b](https://github.com/ecomplus/cloud-commerce/commit/be8239bf7966cb742ddac0365163d3281ea0c41a))
+* **storefront:** Prevent `<Carousel>` scroll reset on mobile browser bar toogle ([9817280](https://github.com/ecomplus/cloud-commerce/commit/9817280dd4f16931de50dddb662208a21a83ed56))
+
 ### [2.6.4](https://github.com/ecomplus/cloud-commerce/compare/v2.6.3...v2.6.4) (2024-02-27)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-discounts",
   "type": "module",
-  "version": "2.6.4",
+  "version": "2.6.5",
   "description": "E-Com Plus Cloud Commerce app for complex discount rules",
   "main": "lib/discounts.js",
   "repository": {
