@@ -174,16 +174,22 @@ watch(isHovered, (_isHovered: boolean) => {
     restartAutoplay();
   }
 });
+let initWrapperWidth = 0;
+let initWrapperHeight = 0;
 const calcOnInit = () => {
   if (!wrapper.value) {
     return;
   }
+  initWrapperWidth = wrapper.value.clientWidth;
+  initWrapperHeight = wrapper.value.clientHeight;
   calcWrapperSize();
   calcSlidesSize();
   calcCurrentIndex();
 };
 const onResize = useDebounceFn(() => {
   if (!wrapper.value) return;
+  const { clientWidth, clientHeight } = wrapper.value;
+  if (clientWidth === initWrapperWidth && clientHeight === initWrapperHeight) return;
   if (isX) {
     wrapper.value.scrollLeft = 0;
   } else {
