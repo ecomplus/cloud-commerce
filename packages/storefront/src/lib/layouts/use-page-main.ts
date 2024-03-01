@@ -102,7 +102,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         }
         let collectionId: ResourceId | null = null;
         let searchQuery: `&${string}` | undefined;
-        let titleLink: string | undefined;
+        let titleLink: string | undefined = sectionContent.titleLink;
         if (collectionIdAndInfo) {
           const [_id, resource, name, path] = (collectionIdAndInfo as string)
             .split(':') as [
@@ -118,10 +118,8 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           } else if (resource === 'brands') {
             searchQuery = `&brands._id=${_id}`;
           }
-          if (!title && title !== null && name) {
-            title = name;
-          }
-          titleLink = path;
+          if (!title && title !== null && name) title = name;
+          if (!titleLink) titleLink = path;
         }
         const props = {
           ...rest,
