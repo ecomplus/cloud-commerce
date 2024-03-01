@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/ecomplus/cloud-commerce/compare/v2.6.5...v2.7.0) (2024-03-01)
+
+
+### Features
+
+* **storefront:** New `orderedProductIds` optional prop to product shelf composable ([2ee2f6b](https://github.com/ecomplus/cloud-commerce/commit/2ee2f6bd8902fe105d28115704f34082a1fa213a))
+
+
+### Bug Fixes
+
+* **emails:** Bump nodemailer to v6.9.11 ([d2bbb33](https://github.com/ecomplus/cloud-commerce/commit/d2bbb33f6b27412702e733b9036d7686dcdf55a0))
+* **storefront:** Fix parsing shelf `collectionIdAndInfo` from CMS content for categories/brands ([88640ba](https://github.com/ecomplus/cloud-commerce/commit/88640ba9534e72e165c77a1fdd1d5c8abddddf4a))
+* **storefront:** Update `usePageMain` to properly support `titleLink` from section CMS content ([162a7a0](https://github.com/ecomplus/cloud-commerce/commit/162a7a05d787f143f14b8e88bb80e2423d92aa6f))
+* **storefront:** Update Vue to latest v3.4.21 ([482dc36](https://github.com/ecomplus/cloud-commerce/commit/482dc360f68d6a02afd01c1276884df8fa9758ae))
+
 ### [2.6.5](https://github.com/ecomplus/cloud-commerce/compare/v2.6.4...v2.6.5) (2024-02-29)
 
 
