@@ -37,7 +37,7 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@commitlint/cli": "^18.6.1",
-    "@commitlint/config-conventional": "^18.6.2",
+    "@commitlint/config-conventional": "^19.0.3",
     "@commitlint/rules": "^18.6.1",
     "@types/node": "^18.19.18",
     "dotenv": "^16.4.5",
