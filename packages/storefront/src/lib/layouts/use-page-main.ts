@@ -111,8 +111,9 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
               string | undefined,
               string | undefined,
             ];
-          collectionId = _id;
-          if (resource === 'categories') {
+          if (!resource || resource === 'collection') {
+            collectionId = _id;
+          } else if (resource === 'categories') {
             searchQuery = `&categories._id=${_id}`;
           } else if (resource === 'brands') {
             searchQuery = `&brands._id=${_id}`;
