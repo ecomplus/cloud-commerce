@@ -1,5 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import { info, error } from 'firebase-functions/logger';
+import { error } from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -63,7 +63,7 @@ const saveViews = async () => {
             doc.ref.update({ isCachePurged: true });
             const freshHtmlUrl = `${url}?__isrV=${deployRand}&t=${Date.now()}`;
             await axios.get(freshHtmlUrl);
-            info(`Cache bump ${url}`);
+            // info(`Cache bump ${url}`);
           }));
           purgedUrls.push(url);
         }
