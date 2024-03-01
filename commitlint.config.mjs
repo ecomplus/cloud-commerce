@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const rulesChecks = require('@commitlint/rules').default;
+import rulesChecks from '@commitlint/rules';
 
 const forceTypeCase = (field, parsed) => {
   switch (parsed.type) {
@@ -21,7 +21,7 @@ const forceTypeCase = (field, parsed) => {
   return [true];
 };
 
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   plugins: [
     {
