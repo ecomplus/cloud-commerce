@@ -16,6 +16,7 @@ export interface Props extends Partial<SectionPreviewProps> {
   limit?: number;
   page?: number;
   products?: SearchItem[];
+  orderedProductIds?: ResourceId[];
   isRelatedProducts?: boolean;
 }
 
@@ -48,6 +49,7 @@ const useProductShelf = (props: Props) => {
       } else {
         let searchQuery = props.searchQuery || '';
         let collection: Collections | undefined;
+        let productIds: ResourceId[] | undefined;
         if (props.collectionId) {
           try {
             const { data } = await api.get(`collections/${props.collectionId}`);
@@ -56,13 +58,15 @@ const useProductShelf = (props: Props) => {
             console.error(err);
             fetchError.value = err;
           }
-          const productIds = collection?.products;
-          if (Array.isArray(productIds) && productIds.length) {
-            searchQuery += `&_id=${productIds.slice(0, 60).join(',')}`;
-          }
+          productIds = collection?.products;
           if (!title.value && title.value !== null && collection?.name) {
             title.value = collection?.name;
           }
+        } else if (!searchQuery && props.orderedProductIds) {
+          productIds = props.orderedProductIds;
+        }
+        if (productIds?.length) {
+          searchQuery += `&_id=${productIds.slice(0, 60).join(',')}`;
         }
         endpointQuery += searchQuery;
       }
@@ -81,6 +85,21 @@ const useProductShelf = (props: Props) => {
             data.result[m] = data.result[i];
             data.result[i] = t;
           }
+        }
+        const { orderedProductIds } = props;
+        if (orderedProductIds) {
+          data.result.sort((a, b) => {
+            if (b.available && checkInStock(b)) {
+              if (!a.available || !checkInStock(a)) return 1;
+              const indexA = orderedProductIds.indexOf(a._id);
+              const indexB = orderedProductIds.indexOf(b._id);
+              if (indexA === -1 && indexB > -1) return 1;
+              if (indexB === -1 && indexA > -1) return -1;
+              return indexA - indexB;
+            }
+            if (a.available && checkInStock(a)) return -1;
+            return 0;
+          });
         }
         data.result.forEach((item) => products.push(item));
       } catch (err: any) {
