@@ -227,3 +227,24 @@ configure_edge_rule "SSR browser cache" '
   "Enabled": true
 }
 '
+
+configure_edge_rule "Force mime text/html" '
+{
+  "ActionType": 5,
+  "ActionParameter1": "Content-Type",
+  "ActionParameter2": "text/html",
+  "Triggers": [
+    {
+      "Type": 2,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
+        "application/octet-stream"
+      ],
+      "Parameter1": "Content-Type"
+    }
+  ],
+  "TriggerMatchingType": 1,
+  "Description": "Force mime text/html",
+  "Enabled": true
+}
+'
