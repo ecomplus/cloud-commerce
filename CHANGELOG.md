@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.4](https://github.com/ecomplus/cloud-commerce/compare/v2.7.3...v2.7.4) (2024-03-02)
+
+
+### Bug Fixes
+
+* **cli:** Add "Force mime text/html" edge rule to bunny.net CI config base ([37d2c2b](https://github.com/ecomplus/cloud-commerce/commit/37d2c2bc942aa1033fe6be6f5395b54fead16b3e))
+* **ssr:** Revert ISR with bunny.net by directly updating perma-cache storage files ([858f883](https://github.com/ecomplus/cloud-commerce/commit/858f88309dc7c85c3e98ae4462f2f671c409dc9c))
+* **storefront:** Bump Astro to latest v4.4.9 ([3a315f0](https://github.com/ecomplus/cloud-commerce/commit/3a315f09958812d0d23a4c65b0ae262c94515f8e))
+
 ### [2.7.3](https://github.com/ecomplus/cloud-commerce/compare/v2.7.2...v2.7.3) (2024-03-01)
 
 ### [2.7.2](https://github.com/ecomplus/cloud-commerce/compare/v2.7.1...v2.7.2) (2024-03-01)
