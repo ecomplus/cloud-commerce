@@ -13,10 +13,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: Akryum/release-tag@8eeb62bcf949a368763f4057c34e7eb834467122
+      - uses: Akryum/release-tag@v4.0.7
         id: release_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          preset: angular
