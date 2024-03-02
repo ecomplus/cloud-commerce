@@ -1,10 +1,86 @@
 import type { DocumentReference } from 'firebase-admin/firestore';
+import type { AxiosInstance } from 'axios';
 import { getFirestore } from 'firebase-admin/firestore';
 import { error } from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 import { deleteQueryBatch } from '@cloudcommerce/firebase/lib/helpers/firestore';
+
+const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef }: {
+  projectId: string,
+  bunnyAxios: AxiosInstance,
+  bunnyStorageKeysRef: DocumentReference,
+}) => {
+  let bunnyStorageName = process.env.BUNNYNET_STORAGE_NAME;
+  let bunnyStoragePass = process.env.BUNNYNET_STORAGE_PASS;
+  const bunnyZoneName = process.env.BUNNYNET_ZONE_NAME || projectId;
+  let permaCacheZoneFolder = '';
+  if (!bunnyStorageName || !bunnyStoragePass) {
+    const savedKeysData = (await bunnyStorageKeysRef.get()).data();
+    if (savedKeysData) {
+      bunnyStorageName = savedKeysData.bunnyStorageName;
+      bunnyStoragePass = savedKeysData.bunnyStoragePass;
+      permaCacheZoneFolder = savedKeysData.permaCacheZoneFolder;
+    } else {
+      const { data } = await bunnyAxios.get('/storagezone');
+      for (let i = 0; i < data.length; i++) {
+        const bunnyStorage = data[i];
+        if (bunnyStorageName) {
+          if (bunnyStorage.Name === bunnyStorageName) {
+            bunnyStoragePass = bunnyStorage.Password;
+            break;
+          }
+          continue;
+        }
+        if (bunnyStorage.Name.startsWith('storefront-isr-')) {
+          bunnyStorageName = bunnyStorage.Name;
+          bunnyStoragePass = bunnyStorage.Password;
+          break;
+        }
+      }
+    }
+  }
+  if (bunnyStorageName && bunnyStoragePass && !permaCacheZoneFolder) {
+    const { data } = await axios({
+      url: `https://storage.bunnycdn.com/${bunnyStorageName}/__bcdn_perma_cache__/`,
+      headers: {
+        AccessKey: bunnyStoragePass,
+      },
+    });
+    for (let i = 0; i < data.length; i++) {
+      const { ObjectName } = data[i];
+      if (
+        ObjectName.startsWith(`pullzone__${bunnyZoneName}__`)
+        && (!permaCacheZoneFolder || permaCacheZoneFolder < ObjectName)
+      ) {
+        permaCacheZoneFolder = ObjectName;
+      }
+    }
+    if (permaCacheZoneFolder) {
+      bunnyStorageKeysRef.set({
+        bunnyStorageName,
+        bunnyStoragePass,
+        permaCacheZoneFolder,
+      });
+    }
+  }
+  const bunnyStorageAxios = axios.create({
+    baseURL: `https://storage.bunnycdn.com/${bunnyStorageName}/`,
+    headers: {
+      'Content-Type': 'text/html',
+      Accept: 'application/json',
+      AccessKey: bunnyStoragePass,
+    },
+  });
+  return {
+    bunnyStorageName,
+    bunnyStoragePass,
+    bunnyStorageAxios,
+    bunnyZoneName,
+    permaCacheZoneFolder,
+  };
+};
 
 const saveViews = async () => {
   const deployRand = process.env.DEPLOY_RAND || '_';
@@ -49,70 +125,22 @@ const saveViews = async () => {
       pageViewDocs.push({ ref: doc.ref, url });
     }
     if (pageViewDocs.length) {
-      let bunnyStorageName = process.env.BUNNYNET_STORAGE_NAME;
-      let bunnyStoragePass = process.env.BUNNYNET_STORAGE_PASS;
-      let bunnyZoneName = process.env.BUNNYNET_ZONE_NAME;
-      let permaCacheZoneFolder = '';
       const bunnyAxios = axios.create({
         baseURL: 'https://api.bunny.net/',
         headers: {
           AccessKey: process.env.BUNNYNET_API_KEY,
         },
       });
+      const bunnyStorageKeysRef = db.doc('ssrBunnyNet/storageKeys');
       try {
-        const storageAuthReqs: Promise<any>[] = [];
-        if (!bunnyStorageName || !bunnyStoragePass) {
-          storageAuthReqs.push(
-            bunnyAxios.get('/storagezone').then(({ data }) => {
-              for (let i = 0; i < data.length; i++) {
-                const bunnyStorage = data[i];
-                if (bunnyStorageName) {
-                  if (bunnyStorage.Name === bunnyStorageName) {
-                    bunnyStoragePass = bunnyStorage.Password;
-                    break;
-                  }
-                  continue;
-                }
-                if (bunnyStorage.Name.startsWith('storefront-isr-')) {
-                  bunnyStorageName = bunnyStorage.Name;
-                  bunnyStoragePass = bunnyStorage.Password;
-                  break;
-                }
-              }
-            }),
-          );
-        }
-        if (!bunnyZoneName) {
-          storageAuthReqs.push(
-            bunnyAxios.get('/pullzone').then(({ data }) => {
-              for (let i = 0; i < data.length; i++) {
-                const pullZone = data[i];
-                if (pullZone.Hostnames.find(({ Value }) => Value === domain)) {
-                  bunnyZoneName = pullZone.Name;
-                  break;
-                }
-              }
-            }),
-          );
-        }
-        await Promise.all(storageAuthReqs);
-        if (bunnyStorageName && bunnyStoragePass && bunnyZoneName) {
-          const { data } = await axios({
-            url: `https://storage.bunnycdn.com/${bunnyStorageName}/__bcdn_perma_cache__/`,
-            headers: {
-              AccessKey: bunnyStoragePass,
-            },
-          });
-          for (let i = 0; i < data.length; i++) {
-            const { ObjectName } = data[i];
-            if (
-              ObjectName.startsWith(`pullzone__${bunnyZoneName}__`)
-              && (!permaCacheZoneFolder || permaCacheZoneFolder < ObjectName)
-            ) {
-              permaCacheZoneFolder = ObjectName;
-            }
-          }
-        }
+        const {
+          bunnyStorageAxios,
+          permaCacheZoneFolder,
+        } = await loadBunnyStorageKeys({
+          projectId,
+          bunnyAxios,
+          bunnyStorageKeysRef,
+        });
         const purgedUrls: string[] = [];
         const purgeReqs: Promise<any>[] = [];
         for (let i = 0; i < pageViewDocs.length; i++) {
@@ -144,14 +172,9 @@ const saveViews = async () => {
                   // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
                   const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
                     + `/${folderpath}___${filename}___/___file___`;
-                  axios({
+                  bunnyStorageAxios({
                     method: 'PUT',
-                    url: `https://storage.bunnycdn.com/${bunnyStorageName}/${permaCachePath}`,
-                    headers: {
-                      'Content-Type': 'text/html',
-                      Accept: 'application/json',
-                      AccessKey: bunnyStoragePass,
-                    },
+                    url: `/${permaCachePath}`,
                     data: freshHtml,
                   });
                 }),
@@ -161,6 +184,7 @@ const saveViews = async () => {
         }
         await Promise.all(purgeReqs);
       } catch (err: any) {
+        bunnyStorageKeysRef.delete();
         if (err.response) {
           const _err: any = new Error('Cant purge bunny.net cache');
           _err.config = err.config;
