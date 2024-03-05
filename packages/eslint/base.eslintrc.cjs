@@ -19,6 +19,7 @@ module.exports = {
   ignorePatterns: [
     '**/dist',
     '**/types/*.d.ts',
+    '**/*.md',
   ],
   settings: {
     'import/resolver': {
