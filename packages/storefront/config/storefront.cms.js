@@ -43,7 +43,7 @@ global.__storefrontCMS = (fs, resolvePath, _parseMatter) => {
           contentCache[filename] = content;
         }
       }
-      if (typeof content.then === 'function') return content;
+      if (typeof content?.then === 'function') return content;
       return filename === 'settings'
         ? content
         : new Promise((resolve) => { resolve(content); });

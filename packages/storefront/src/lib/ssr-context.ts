@@ -244,6 +244,12 @@ const loadRouteContext = async (
     if (cmsContent) cmsContent.$filename = contentFilename;
   }
   try {
+    if (contentFilename && !cmsContent) {
+      const error = new Error('Content file does not exist by current slug') as
+        Partial<ApiError> & { message: string };
+      error.statusCode = 404;
+      throw error;
+    }
     (await Promise.all(apiPrefetchings)).forEach((response) => {
       if (response) {
         const { config: { endpoint }, data } = response;
@@ -256,7 +262,7 @@ const loadRouteContext = async (
       }
     });
   } catch (err: any) {
-    const error: ApiError = err;
+    const error: Partial<ApiError> & { message: string } = err;
     const status = error.statusCode || 500;
     if (status === 404) {
       if (urlPath.endsWith('/')) {
