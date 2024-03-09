@@ -105,9 +105,13 @@ watch(shoppingCart.items, (items) => {
       || Number.isNaN(item.quantity)
       || item.quantity < min
     ) {
-      item.quantity = min;
+      setTimeout(() => {
+        item.quantity = min;
+      }, 9);
     } else if (max && item.quantity > max) {
-      item.quantity = max;
+      setTimeout(() => {
+        item.quantity = max;
+      }, 9);
     }
   });
   shoppingCart.subtotal = items.reduce((acc, item) => {
