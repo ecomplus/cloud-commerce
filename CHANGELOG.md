@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.5](https://github.com/ecomplus/cloud-commerce/compare/v2.7.4...v2.7.5) (2024-03-09)
+
+
+### Bug Fixes
+
+* **deps:** update non-major dependencies ([#342](https://github.com/ecomplus/cloud-commerce/issues/342)) ([be0f962](https://github.com/ecomplus/cloud-commerce/commit/be0f9624c6f4c5349e5b5b5de2eb665447d6c01c))
+* **storefront:** Fix item quantitymin-max on next tick (9ms) ([6a003e7](https://github.com/ecomplus/cloud-commerce/commit/6a003e73126bccefcbc95c2d0f0b4b8a6baf3440))
+* **storefront:** Properly catching not found content files by slug on route context ([32dd183](https://github.com/ecomplus/cloud-commerce/commit/32dd183e24c0258994f8143a09d8cdfaf380a54b))
+* **storefront:** Supporting custom animations from Tailwind config to UnoCSS rules ([220315c](https://github.com/ecomplus/cloud-commerce/commit/220315c05a468dbbe00ff5a9e808f01da93804b4))
+
 ### [2.7.4](https://github.com/ecomplus/cloud-commerce/compare/v2.7.3...v2.7.4) (2024-03-02)
 
 
