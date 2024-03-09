@@ -87,7 +87,37 @@ const genUnoCSSConfig = (_tailwindConfig) => {
       },
     });
   });
-  const theme = tailwindConfig.theme.extend;
+  const {
+    colors: themeColors,
+    animation: themeAnimation,
+    keyframes: themeKeyframes,
+    ...theme
+  } = tailwindConfig.theme.extend;
+  if (themeAnimation) {
+    Object.keys(themeAnimation).forEach((animation) => {
+      let keyframes = '';
+      const keyframesObj = themeKeyframes?.[animation];
+      if (keyframesObj) {
+        Object.keys(keyframesObj).forEach((point) => {
+          const css = keyframesObj[point];
+          keyframes += ` ${point} {`;
+          Object.keys(css).forEach((prop) => {
+            keyframes += ` ${prop}: ${css[prop]};`;
+          });
+          keyframes += ' }';
+        });
+      }
+      rules.push([
+        `animate-${animation}`,
+        [
+          keyframes
+            ? `@keyframes ${animation} {${keyframes} }`
+            : '',
+          { animation: themeAnimation[animation] },
+        ],
+      ]);
+    });
+  }
   return defineConfig({
     preflights,
     rules,
@@ -96,7 +126,7 @@ const genUnoCSSConfig = (_tailwindConfig) => {
     theme: {
       ...theme,
       colors: {
-        ...theme.colors,
+        ...themeColors,
         // Generate runtime themeable brand colors utilities with CSS vars
         ...Object.keys(brandColors).reduce((colors, colorName) => {
           colors[colorName] = {};
