@@ -61,11 +61,11 @@
     "vite-plugin-pwa": "^0.19.2",
     "vue": "^3.4.21",
     "wade": "0.3.3",
-    "yaml": "^2.4.0"
+    "yaml": "^2.4.1"
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.2.62"
+    "@types/react": "^18.2.64"
   }
 }
