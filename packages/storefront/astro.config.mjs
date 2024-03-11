@@ -228,6 +228,7 @@ const genAstroConfig = ({
     outDir,
     cacheDir: './.cache/astro',
     integrations,
+    prefetch: true,
     image: isToServerless ? { service: passthroughImageService() } : undefined,
     site,
     compressHTML: isToServerless,

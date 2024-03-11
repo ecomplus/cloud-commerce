@@ -2,16 +2,9 @@
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg, price as getPrice } from '@ecomplus/utils';
 import { i19searchProducts } from '@@i18n';
-import ViewTransitions from '@@sf/components/ViewTransitions.astro';
-
-export interface Props {
-  hasViewTransitions?: boolean;
-}
 
 // @ts-ignore
 const isPWA = pwaInfo !== false; // config/astro/mock-pwa-info.mjs
-const hasViewTransitions = Astro.props.hasViewTransitions !== false
-  && !Astro.url.pathname.startsWith('/app/');
 const {
   storeId,
   isHomepage,
@@ -214,7 +207,11 @@ const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
 </>}
 
 <script is:inline set:html={inlineClientJS} transition:persist />
-<script type="application/ld+json" set:html={inlineJSONLd} />
+<script is:inline type="application/ld+json" set:html={inlineJSONLd} />
 
-{hasViewTransitions && <ViewTransitions fallback="none" />}
+<script>
+  /* eslint-disable */
+  import { prefetch } from 'astro:prefetch';
+  window.$prefetch = prefetch;
+</script>
 {contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  onMounted,
+} from 'vue';
+import { useElementVisibility } from '@vueuse/core';
 
 export interface Props {
   href?: string | null;
@@ -7,6 +13,7 @@ export interface Props {
 }
 
 const props = defineProps<Props>();
+const link = ref<HTMLElement | null>(null);
 const linkTarget = computed(() => {
   if (!props.href) return undefined;
   if (props.target) return props.target;
@@ -17,10 +24,27 @@ const linkTarget = computed(() => {
   }
   return undefined;
 });
+const checkLinkPrefetch = () => {
+  return props.href && !props.href.startsWith('/app/') && !linkTarget.value;
+};
+if (checkLinkPrefetch()) {
+  onMounted(() => {
+    const isVisible = useElementVisibility(link.value);
+    const unwatch = watch(isVisible, (_isVisible) => {
+      if (!_isVisible || !window.$prefetch) return;
+      unwatch();
+      if (!checkLinkPrefetch()) return;
+      window.$prefetch(props.href!);
+    }, {
+      immediate: true,
+    });
+  });
+}
 </script>
 
 <template>
   <component
+    ref="link"
     :is="href ? 'a' : 'span'"
     :href="href"
     :target="linkTarget"

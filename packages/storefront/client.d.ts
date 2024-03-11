@@ -38,6 +38,7 @@ interface Window {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
   $isCmsPreview?: boolean;
+  $prefetch?: typeof import('astro:prefetch').prefetch;
 }
 
 declare module 'gtag.js';
