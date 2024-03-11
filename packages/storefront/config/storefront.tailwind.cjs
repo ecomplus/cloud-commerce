@@ -227,15 +227,19 @@ const genTailwindConfig = (themeOptions = {}) => {
             };
             return utilities;
           }, {}),
+          // Inspired by https://www.tailwindcss-animated.com/configurator.html
           '.animate-once': {
             'animation-iteration-count': '1',
           },
-          ...Array.from({ length: 9 }, (_, i) => i + 2).reduce((utilities, n) => {
-            utilities[`.animate-repeat-${n}`] = {
-              'animation-iteration-count': `${n}`,
-            };
-            return utilities;
-          }, {}),
+          '.animate-twice': {
+            'animation-iteration-count': '2',
+          },
+          '.animate-thrice': {
+            'animation-iteration-count': '3',
+          },
+          '.animate-infinite': {
+            'animation-iteration-count': 'infinite',
+          },
         });
         addVariant('sticky-header', 'body.StickyHeader &');
       },

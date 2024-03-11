@@ -94,6 +94,8 @@ const genUnoCSSConfig = (_tailwindConfig) => {
     ...theme
   } = tailwindConfig.theme.extend;
   if (themeAnimation) {
+    // Ref.: https://github.com/animated-unocss/animated-unocss/blob/main/src/animated.ts
+    // Copy paste keyframes: https://animate.zyob.top/
     rules.push([
       new RegExp(`^animate-(${Object.keys(themeAnimation).join('|')})$`),
       ([, animation]) => {
