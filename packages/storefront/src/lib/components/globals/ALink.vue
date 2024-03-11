@@ -6,6 +6,7 @@ import {
   onMounted,
 } from 'vue';
 import { useElementVisibility } from '@vueuse/core';
+import { requestIdleCallback } from '@@sf/sf-lib';
 
 export interface Props {
   href?: string | null;
@@ -34,7 +35,9 @@ if (checkLinkPrefetch()) {
       if (!_isVisible || !window.$prefetch) return;
       unwatch();
       if (!checkLinkPrefetch()) return;
-      window.$prefetch(props.href!);
+      requestIdleCallback(() => {
+        window.$prefetch!(props.href!);
+      });
     }, {
       immediate: true,
     });
