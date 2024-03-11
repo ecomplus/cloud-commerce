@@ -107,6 +107,9 @@ window.GIT_BRANCH = '${import.meta.env.GIT_BRANCH || ''}';
 window.$storefront = ${JSON.stringify({ settings, data: {} })};`;
 if (apiContext.error) {
   const { message, statusCode } = apiContext.error;
+  if (statusCode) {
+    Astro.response.status = statusCode;
+  }
   const url = Astro.url.pathname;
   inlineClientJS += `
 console.error(${JSON.stringify(message)});
