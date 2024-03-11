@@ -44,8 +44,16 @@ if (!import.meta.env.SSR) {
 }
 
 export const getPageViewParams = () => {
+  let pageLocation = '';
+  if (window.location.pathname.startsWith('/~')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    pageLocation = urlParams.get('url') || '';
+  }
+  if (!pageLocation) {
+    pageLocation = window.location.toString();
+  }
   return {
-    page_location: window.location.toString(),
+    page_location: pageLocation,
     language: globalThis.$storefront.settings.lang || 'pt_br',
     page_title: document.title,
     user_agent: navigator.userAgent,

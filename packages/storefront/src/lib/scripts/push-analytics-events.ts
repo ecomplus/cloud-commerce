@@ -84,16 +84,15 @@ if (
     });
   });
 
-  let lastPageLocation = '';
+  let lastHref = '';
   const sendPageView = () => {
-    const pageLocation = window.location.toString();
-    if (pageLocation === lastPageLocation) return;
+    const href = window.location.toString();
+    if (href === lastHref) return;
     emitGtagEvent('page_view', {
       ...getPageViewParams(),
-      page_location: pageLocation,
       client_id: trackingIds.g_client_id || trackingIds.client_id,
     });
-    lastPageLocation = pageLocation;
+    lastHref = href;
   };
   sendPageView();
   window.addEventListener('storefront:apiContext', () => {
