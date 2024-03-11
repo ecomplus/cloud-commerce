@@ -32,7 +32,7 @@ const useProductShelf = (props: Props) => {
   if (!props.products) {
     isFetching.value = true;
     fetching = (async () => {
-      const limit = props.limit || 24;
+      const limit = props.limit || 12;
       const offset = props.page ? (props.page - 1) * limit : 0;
       let endpointQuery = `offset=${offset}&limit=${limit}`;
       if (props.sort) {
@@ -41,7 +41,7 @@ const useProductShelf = (props: Props) => {
       if (props.isRelatedProducts) {
         const { apiContext } = globalThis.$storefront;
         if (apiContext?.resource === 'products') {
-          endpointQuery = `like=${apiContext.doc._id}`;
+          endpointQuery += `like=${apiContext.doc._id}`;
           if (!title.value && title.value !== null) {
             title.value = i19relatedProducts;
           }
