@@ -227,6 +227,15 @@ const genTailwindConfig = (themeOptions = {}) => {
             };
             return utilities;
           }, {}),
+          '.animate-once': {
+            'animation-iteration-count': 1,
+          },
+          ...Array.from({ length: 9 }, (_, i) => i + 2).reduce((utilities, n) => {
+            utilities[`.animate-repeat-${n}`] = {
+              'animation-iteration-count': `${n}`,
+            };
+            return utilities;
+          }, {}),
         });
         addVariant('sticky-header', 'body.StickyHeader &');
       },

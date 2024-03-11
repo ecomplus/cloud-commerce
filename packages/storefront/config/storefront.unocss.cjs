@@ -94,29 +94,29 @@ const genUnoCSSConfig = (_tailwindConfig) => {
     ...theme
   } = tailwindConfig.theme.extend;
   if (themeAnimation) {
-    Object.keys(themeAnimation).forEach((animation) => {
-      let keyframes = '';
-      const keyframesObj = themeKeyframes?.[animation];
-      if (keyframesObj) {
-        Object.keys(keyframesObj).forEach((point) => {
-          const css = keyframesObj[point];
-          keyframes += ` ${point} {`;
-          Object.keys(css).forEach((prop) => {
-            keyframes += ` ${prop}: ${css[prop]};`;
+    rules.push([
+      new RegExp(`^animate-(${Object.keys(themeAnimation).join('|')})$`),
+      ([, animation]) => {
+        let keyframes = '';
+        const keyframesObj = themeKeyframes?.[animation];
+        if (keyframesObj) {
+          Object.keys(keyframesObj).forEach((point) => {
+            const css = keyframesObj[point];
+            keyframes += ` ${point} {`;
+            Object.keys(css).forEach((prop) => {
+              keyframes += ` ${prop}: ${css[prop]};`;
+            });
+            keyframes += ' }';
           });
-          keyframes += ' }';
-        });
-      }
-      rules.push([
-        `animate-${animation}`,
-        [
+        }
+        return [
           keyframes
             ? `@keyframes ${animation} {${keyframes} }`
             : '',
           { animation: themeAnimation[animation] },
-        ],
-      ]);
-    });
+        ];
+      },
+    ]);
   }
   return defineConfig({
     preflights,
