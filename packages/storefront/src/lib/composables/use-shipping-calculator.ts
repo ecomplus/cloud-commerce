@@ -13,7 +13,7 @@ import {
   watch,
   toRef,
 } from 'vue';
-import { useDebounceFn, watchOnce } from '@vueuse/core';
+import { useDebounceFn } from '@vueuse/core';
 import { price as getPrice, formatMoney } from '@ecomplus/utils';
 import config from '@cloudcommerce/config';
 import {
@@ -120,8 +120,11 @@ export const useShippingCalculator = (props: Props) => {
   const isFetching = ref(false);
   const fetchShippingServices = useDebounceFn((isRetry?: boolean) => {
     if (isFetching.value) {
-      watchOnce((isFetching), (_isFetching) => {
-        if (!_isFetching) fetchShippingServices();
+      const unwatch = watch((isFetching), (_isFetching) => {
+        if (!_isFetching) {
+          fetchShippingServices();
+          unwatch();
+        }
       });
       return;
     }

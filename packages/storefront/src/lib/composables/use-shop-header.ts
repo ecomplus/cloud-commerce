@@ -1,7 +1,6 @@
 import type { Ref } from 'vue';
 import type { Categories } from '@cloudcommerce/api/types';
 import { ref, computed, watch } from 'vue';
-import { watchOnce } from '@vueuse/core';
 import { getSearchUrl } from '@@sf/sf-lib';
 import { totalItems } from '@@sf/state/shopping-cart';
 import useStickyHeader from '@@sf/composables/use-sticky-header';
@@ -128,9 +127,11 @@ const useShopHeader = (props: Props) => {
 
   const isSearchOpen = ref(false);
   const isSearchOpenOnce = ref(false);
-  watchOnce(isSearchOpen, () => {
-    isSearchOpenOnce.value = true;
-  });
+  if (!import.meta.env.SSR) {
+    watch(isSearchOpen, () => {
+      isSearchOpenOnce.value = true;
+    }, { once: true });
+  }
   const searchTerm = ref('');
   const isSearchPage = !import.meta.env.SSR && /^\/s\/?/.test(window.location.pathname);
   let urlSearchQ: string | null | undefined;
@@ -169,9 +170,11 @@ const useShopHeader = (props: Props) => {
   };
   const isCartOpen = ref(false);
   const isCartOpenOnce = ref(false);
-  watchOnce(isCartOpen, () => {
-    isCartOpenOnce.value = true;
-  });
+  if (!import.meta.env.SSR) {
+    watch(isCartOpen, () => {
+      isCartOpenOnce.value = true;
+    }, { once: true });
+  }
   const delayedCartItems = ref(0);
   const handleOnMounted = () => {
     watch(totalItems, (newTotalItems, prevTotalItems) => {

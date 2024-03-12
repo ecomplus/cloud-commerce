@@ -1,6 +1,5 @@
 import type { Products, Carts, SearchItem } from '@cloudcommerce/types';
 import { watch } from 'vue';
-import { watchOnce } from '@vueuse/core';
 import { price as getPrice, name as getName } from '@ecomplus/utils';
 import { customer, isLogged } from '@@sf/state/customer-session';
 import { cartEvents } from '@@sf/state/shopping-cart';
@@ -296,7 +295,7 @@ export const useAnalytics = ({
   if (isLogged.value) {
     emitGtagEvent('login', {});
   } else {
-    watchOnce(isLogged, () => emitGtagEvent('login', {}));
+    watch(isLogged, () => emitGtagEvent('login', {}), { once: true });
   }
   cartEvents.on('*', (evName, cartItem) => {
     emitGtagEvent(

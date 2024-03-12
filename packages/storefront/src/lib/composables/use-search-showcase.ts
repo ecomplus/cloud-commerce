@@ -8,7 +8,7 @@ import {
   watch,
   shallowReactive,
 } from 'vue';
-import { useUrlSearchParams, watchOnce } from '@vueuse/core';
+import { useUrlSearchParams } from '@vueuse/core';
 import { isScreenLg, scrollToEl } from '@@sf/sf-lib';
 import {
   i19discount,
@@ -145,7 +145,7 @@ const useSearchShowcase = (props: Props) => {
   if (searchEngine.wasFetched.value) {
     startWatchingFetch();
   } else {
-    watchOnce(searchEngine.wasFetched, startWatchingFetch);
+    watch(searchEngine.wasFetched, startWatchingFetch, { once: true });
   }
 
   const { activeFilters, filtersCount } = useSearchActiveFilters({
