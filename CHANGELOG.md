@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/ecomplus/cloud-commerce/compare/v2.7.5...v2.8.0) (2024-03-12)
+
+
+### Features
+
+* **ssr:** Start setting `CDN-Tag` header when bunny.net CDN detected for advanced cache purge ([fba85fc](https://github.com/ecomplus/cloud-commerce/commit/fba85fc67cf024343f216b647635340efc040ef7))
+* **storefront:** New optional `prefetch` prop to `<ALink>` global component ([547998c](https://github.com/ecomplus/cloud-commerce/commit/547998c3317551dd7ec24e064a67e26e9fa5111c))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#345](https://github.com/ecomplus/cloud-commerce/issues/345)) ([c5b9fa7](https://github.com/ecomplus/cloud-commerce/commit/c5b9fa79d09ab3ac63f783c680e029c84620603b))
+* **storefront:** Bump Astro to v4.5.0 ([#344](https://github.com/ecomplus/cloud-commerce/issues/344)) ([8e04667](https://github.com/ecomplus/cloud-commerce/commit/8e04667320321132353a343512327cedd4202f2d))
+* **storefront:** Ensure offset,limit is respected on related products shelf ([e05db9d](https://github.com/ecomplus/cloud-commerce/commit/e05db9d72556f1d2adbe3f8a5fd2e631f2ed4121))
+* **storefront:** Fix parsing extra animate utilities and keyframes from Tailwind config to UnoCSS ([df9c170](https://github.com/ecomplus/cloud-commerce/commit/df9c17037633608e757580bce76e7cc04511ccbd))
+* **storefront:** Programatically prefetch visible links on global `<ALink>` ([0a3aa96](https://github.com/ecomplus/cloud-commerce/commit/0a3aa9690fbf9da80aaac1015f2d92340b958abf))
+* **storefront:** Properly set status 404 (or 5xx) on async API context error ([b371cb4](https://github.com/ecomplus/cloud-commerce/commit/b371cb4dc2fb4494f685d1d810ffe2b9baeda3d6))
+* **storefront:** Send analytics page view as origin URL on error fallback page ([bd9a47b](https://github.com/ecomplus/cloud-commerce/commit/bd9a47b2f652f30465f58544257208f75dc1862d))
+
 ### [2.7.5](https://github.com/ecomplus/cloud-commerce/compare/v2.7.4...v2.7.5) (2024-03-09)
 
 
