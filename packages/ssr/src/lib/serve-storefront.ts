@@ -262,7 +262,7 @@ export default async (req: Request, res: Response) => {
     }
   };
 
-  const { SSR_SET_LINK_HEADER } = process.env;
+  const { SSR_SET_LINK_HEADER, DEPLOY_RAND, BUNNYNET_API_KEY } = process.env;
   const canSetLinkHeader = SSR_SET_LINK_HEADER
     ? String(SSR_SET_LINK_HEADER).toLowerCase() !== 'false'
     : true;
@@ -301,6 +301,10 @@ export default async (req: Request, res: Response) => {
           _end.apply(res, args);
         };
       }
+    }
+    if (headers && BUNNYNET_API_KEY && DEPLOY_RAND) {
+      // Tag for CDN cache purge
+      headers['CDN-Tag'] = `-d:${DEPLOY_RAND}-`;
     }
     _writeHead.apply(res, [status, headers]);
   };
