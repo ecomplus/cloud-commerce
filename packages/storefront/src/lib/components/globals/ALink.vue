@@ -5,15 +5,18 @@ import {
   watch,
   onMounted,
 } from 'vue';
-import { useElementVisibility } from '@vueuse/core';
+import { useElementVisibility, useElementHover } from '@vueuse/core';
 import { requestIdleCallback } from '@@sf/sf-lib';
 
 export interface Props {
   href?: string | null;
   target?: string;
+  prefetch?: 'hover' | 'visible' | 'never';
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  prefetch: 'hover',
+});
 const link = ref<HTMLElement | null>(null);
 const linkTarget = computed(() => {
   if (!props.href) return undefined;
@@ -25,19 +28,33 @@ const linkTarget = computed(() => {
   }
   return undefined;
 });
-const checkLinkPrefetch = () => {
-  return props.href && !props.href.startsWith('/app/') && !linkTarget.value;
-};
-if (checkLinkPrefetch()) {
+const prefetchHref = computed(() => {
+  if (import.meta.env.SSR || !props.href || linkTarget.value) return null;
+  const pathname = props.href.replace(/^(https:\/\/[^/]+)?([^#?]+).*$/i, '$2');
+  if (pathname.startsWith('/app/') || pathname === window.location.pathname) {
+    return null;
+  }
+  return pathname;
+});
+if (prefetchHref.value) {
   onMounted(() => {
-    const isVisible = useElementVisibility(link.value);
-    const unwatch = watch(isVisible, (_isVisible) => {
-      if (!_isVisible || !window.$prefetch) return;
+    const { prefetch } = props;
+    const isOnVisible = prefetch === 'visible';
+    const use = isOnVisible
+      ? useElementVisibility
+      : prefetch === 'hover' && useElementHover;
+    if (!use) return;
+    const is = use(link.value);
+    const unwatch = watch(is, (_is) => {
+      if (!_is || !window.$prefetch) return;
       unwatch();
-      if (!checkLinkPrefetch()) return;
-      requestIdleCallback(() => {
-        window.$prefetch!(props.href!);
-      });
+      setTimeout(() => {
+        if (isOnVisible && !is.value) return;
+        requestIdleCallback(() => {
+          if (!prefetchHref.value) return;
+          window.$prefetch!(prefetchHref.value);
+        });
+      }, isOnVisible ? 100 : 1);
     }, {
       immediate: true,
     });
