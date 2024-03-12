@@ -6,7 +6,7 @@ import {
   onMounted,
 } from 'vue';
 import { useElementVisibility, useElementHover } from '@vueuse/core';
-import { requestIdleCallback } from '@@sf/sf-lib';
+import { isMobile, requestIdleCallback } from '@@sf/sf-lib';
 
 export interface Props {
   href?: string | null;
@@ -39,10 +39,12 @@ const prefetchHref = computed(() => {
 if (prefetchHref.value) {
   onMounted(() => {
     const { prefetch } = props;
+    const isOnHover = prefetch === 'hover';
+    if (isMobile && isOnHover) return;
     const isOnVisible = prefetch === 'visible';
     const use = isOnVisible
       ? useElementVisibility
-      : prefetch === 'hover' && useElementHover;
+      : isOnHover && useElementHover;
     if (!use) return;
     const is = use(link.value);
     const unwatch = watch(is, (_is) => {
