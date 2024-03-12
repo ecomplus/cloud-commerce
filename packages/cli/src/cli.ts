@@ -103,7 +103,7 @@ export default async () => {
     return $`firebase --project=${projectId} ${cmd} ${options}`;
   };
 
-  if (argv._.includes('serve')) {
+  if (argv._.includes('serve') || argv._.includes('preview')) {
     if (argv.build !== false) {
       await build(argv.codebase);
     }
@@ -119,7 +119,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
     });
   }
 
-  if (argv._.find((cmd) => /^(\w+:)?(shell|start)$/.test(cmd))) {
+  if (argv._.find((cmd) => /^(\w+:)?shell$/.test(cmd))) {
     return $firebase('functions:shell');
   }
   if (argv._.find((cmd) => /^(\w+:)?logs?$/.test(cmd))) {
@@ -216,7 +216,7 @@ Finish by saving the following secrets to your GitHub repository:
     return prepareCodebases();
   }
 
-  if (argv._.includes('dev') || !argv._.length) {
+  if (argv._.includes('dev') || argv._.includes('start') || !argv._.length) {
     await prepareCodebases(true);
     const prefix = joinPath(pwd, 'functions/ssr');
     // https://docs.astro.build/en/reference/cli-reference/#astro-dev
