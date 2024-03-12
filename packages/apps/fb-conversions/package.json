@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-fb-conversions",
   "type": "module",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "description": "E-Com Plus Cloud Commerce app to send carts/orders to Facebook Conversions API",
   "main": "lib/index.js",
   "repository": {
