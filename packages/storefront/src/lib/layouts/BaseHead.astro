@@ -206,7 +206,7 @@ const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
     && <link rel="manifest" href="/manifest.webmanifest" />}
 </>}
 
-<script is:inline set:html={inlineClientJS} transition:persist />
+<script is:inline set:html={inlineClientJS} />
 <script is:inline type="application/ld+json" set:html={inlineJSONLd} />
 
 {contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}

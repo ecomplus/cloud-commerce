@@ -229,7 +229,6 @@ export const useAnalytics = ({
 }: {
   experimentId?: string,
 } = {}) => {
-  document.addEventListener('astro:beforeload', resetPageViewPromise);
   const {
     gtag,
     GTAG_TAG_ID,

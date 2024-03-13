@@ -88,9 +88,6 @@ export default (load, opts, el) => {
   const id = window.$storefront?.apiContext?.doc._id || null;
   if (window._firstLoadContextId === id && window._emitedContextId === id) {
     next();
-    document.addEventListener('astro:beforeload', () => {
-      delete window._firstLoadContextId;
-    }, { once: true });
     return;
   }
   window.addEventListener('storefront:apiContext', next, { once: true });
