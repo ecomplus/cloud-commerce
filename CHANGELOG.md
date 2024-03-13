@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.8](https://github.com/ecomplus/cloud-commerce/compare/v2.8.7...v2.8.8) (2024-03-13)
+
+
+### Bug Fixes
+
+* **cli:** Handle `start` (npm start) with ssr dev server ([0093426](https://github.com/ecomplus/cloud-commerce/commit/009342688ee2e753abd943c3fd07b161e08ccf3e))
+* **storefront:** Move script importing `astro:prefetch` to body, within `base-body-scripts` slot ([141cca4](https://github.com/ecomplus/cloud-commerce/commit/141cca42733a7a9b13b83fb0556d39a1e953dd8d))
+* **storefront:** Properly listen grids data load on SKU selector composable ([5c0ad4f](https://github.com/ecomplus/cloud-commerce/commit/5c0ad4f6ef1b60bb5bea0834a23c2f92dd66597c))
+
 ### [2.8.7](https://github.com/ecomplus/cloud-commerce/compare/v2.8.6...v2.8.7) (2024-03-12)
 
 ### [2.8.6](https://github.com/ecomplus/cloud-commerce/compare/v2.8.5...v2.8.6) (2024-03-12)
