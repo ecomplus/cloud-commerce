@@ -21,6 +21,11 @@ const { customCode } = await getContent('layout');
   <slot name="base-body-scripts">
     <script src="../scripts/session-utm"></script>
     <script src="../scripts/push-analytics-events"></script>
+    <script>
+      /* eslint-disable */
+      import { prefetch } from 'astro:prefetch';
+      window.$prefetch = prefetch;
+    </script>
   </slot>
   <slot name="before-body-end" />
 </BaseBody>

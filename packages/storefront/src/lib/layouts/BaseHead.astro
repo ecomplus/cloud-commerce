@@ -209,9 +209,4 @@ const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
 <script is:inline set:html={inlineClientJS} transition:persist />
 <script is:inline type="application/ld+json" set:html={inlineJSONLd} />
 
-<script>
-  /* eslint-disable */
-  import { prefetch } from 'astro:prefetch';
-  window.$prefetch = prefetch;
-</script>
 {contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}

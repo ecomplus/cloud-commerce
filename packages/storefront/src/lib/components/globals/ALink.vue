@@ -42,16 +42,16 @@ if (prefetchHref.value) {
     const isOnHover = prefetch === 'hover';
     if (isMobile && isOnHover) return;
     const isOnVisible = prefetch === 'visible';
-    const use = isOnVisible
+    const useElementEv = isOnVisible
       ? useElementVisibility
       : isOnHover && useElementHover;
-    if (!use) return;
-    const is = use(link.value);
-    const unwatch = watch(is, (_is) => {
-      if (!_is || !window.$prefetch) return;
+    if (!useElementEv) return;
+    const isActive = useElementEv(link.value);
+    const unwatch = watch(isActive, (_isActive) => {
+      if (!_isActive || !window.$prefetch) return;
       unwatch();
       setTimeout(() => {
-        if (isOnVisible && !is.value) return;
+        if (isOnVisible && !isActive.value) return;
         requestIdleCallback(() => {
           if (!prefetchHref.value) return;
           window.$prefetch!(prefetchHref.value);
