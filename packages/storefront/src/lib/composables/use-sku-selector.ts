@@ -27,7 +27,7 @@ const useSkuSelector = (props: Props) => {
     || [],
   );
   if (!grids.length && !import.meta.env.SSR) {
-    window.addEventListener('storefront:data:data', () => {
+    window.addEventListener('storefront:data:grids', () => {
       globalThis.$storefront.data.grids?.forEach((grid) => grids.push(grid));
     }, { once: true });
   }
