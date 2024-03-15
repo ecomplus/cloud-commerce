@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/ecomplus/cloud-commerce/compare/v2.8.8...v2.9.0) (2024-03-15)
+
+
+### Features
+
+* **storefront:** Secure prefetch links for instant INP without TBT ([2b4bbb4](https://github.com/ecomplus/cloud-commerce/commit/2b4bbb48f1c35d7fe2f99b398137ebf6ee5c0092))
+
+
+### Bug Fixes
+
+* **storefront:** Ensure context storage for global `$storefront` with Node `AsyncLocalStorage` ([42a9322](https://github.com/ecomplus/cloud-commerce/commit/42a932298eccf171516e1601da57a558a1fbfc2f))
+
 ### [2.8.8](https://github.com/ecomplus/cloud-commerce/compare/v2.8.7...v2.8.8) (2024-03-13)
 
 
