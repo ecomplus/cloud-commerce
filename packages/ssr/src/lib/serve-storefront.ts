@@ -304,7 +304,7 @@ export default async (req: Request, res: Response) => {
     }
     if (headers && BUNNYNET_API_KEY && DEPLOY_RAND) {
       // Tag for CDN cache purge
-      headers['CDN-Tag'] = `-d:${DEPLOY_RAND}-`;
+      headers['CDN-Tag'] = `[${DEPLOY_RAND}]`;
     }
     _writeHead.apply(res, [status, headers]);
   };
