@@ -1,3 +1,4 @@
+import type { AsyncLocalStorage } from 'node:async_hooks';
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
@@ -5,8 +6,8 @@ import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import type { StorefrontApiContext } from '@@sf/$storefront';
 import { EventEmitter } from 'node:events';
-import { inject, getCurrentInstance } from 'vue';
 import api from '@cloudcommerce/api';
+import { asyncLocalStorage as _als } from '../../config/astro/node-middleware.mjs';
 import _getConfig from '../../config/storefront.config.mjs';
 import { termify } from '../helpers/sf-utils';
 
@@ -22,6 +23,8 @@ export type StorefrontConfig = {
   settings: SettingsContent,
   getContent: ContentGetter,
 };
+
+export const asyncLocalStorage = _als as AsyncLocalStorage<{ sid: string }>;
 
 const emitter = new EventEmitter();
 const getConfig: () => StorefrontConfig = _getConfig;
@@ -54,8 +57,8 @@ if (!globalThis.$storefront) {
     // @ts-expect-error: URL is retrived from `target.getSession().url`
     url: undefined,
     getSession(sid?: string) {
-      if (!sid && !!getCurrentInstance()) {
-        sid = inject('sid');
+      if (!sid) {
+        sid = asyncLocalStorage.getStore()?.sid;
       }
       const {
         url,
@@ -112,7 +115,7 @@ const loadRouteContext = async (
     apiPrefetchEndpoints?: ApiPrefetchEndpoints;
   } = {},
 ) => {
-  const sid = `${Date.now() + Math.random()}`;
+  const sid = asyncLocalStorage.getStore()?.sid || `${Date.now()}`;
   sessions[sid] = { url: Astro.url };
   global.__sfSession = sessions[sid];
   const startedAt = Date.now();

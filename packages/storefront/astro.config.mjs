@@ -146,10 +146,7 @@ const _vitePWAOptions = {
   },
 };
 
-const viteAlias = [{
-  find: '@astrojs/vue/server.js',
-  replacement: joinPath(__dirname, 'config/astro/vue-server.mjs'),
-}];
+const viteAlias = [];
 if (isToServerless) {
   viteAlias.push({
     find: '@@sf/components/Picture.astro',
@@ -196,10 +193,14 @@ const genAstroConfig = ({
     {
       name: 'client:context',
       hooks: {
-        'astro:config:setup': ({ addClientDirective }) => {
+        'astro:config:setup': ({ addClientDirective, addMiddleware }) => {
           addClientDirective({
             name: 'sf',
             entrypoint: joinPath(__dirname, 'config/astro/client-sf-directive.mjs'),
+          });
+          addMiddleware({
+            entrypoint: joinPath(__dirname, 'config/astro/node-middleware.mjs'),
+            order: 'pre',
           });
         },
       },
