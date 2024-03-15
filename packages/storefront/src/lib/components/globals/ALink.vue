@@ -37,6 +37,19 @@ const prefetchHref = computed(() => {
   return pathname;
 });
 if (prefetchHref.value) {
+  const prefetchOnNext = () => {
+    requestIdleCallback(() => {
+      const next = () => {
+        if (!prefetchHref.value) return;
+        window.$prefetch!(prefetchHref.value);
+      };
+      if (!window.$firstInteraction) {
+        window.addEventListener('firstInteraction', next, { once: true });
+      } else {
+        window.$firstInteraction.then(next);
+      }
+    });
+  };
   onMounted(() => {
     const { prefetch } = props;
     const isOnHover = prefetch === 'hover';
@@ -52,10 +65,7 @@ if (prefetchHref.value) {
       unwatch();
       setTimeout(() => {
         if (isOnVisible && !isActive.value) return;
-        requestIdleCallback(() => {
-          if (!prefetchHref.value) return;
-          window.$prefetch!(prefetchHref.value);
-        });
+        prefetchOnNext();
       }, isOnVisible ? 100 : 1);
     }, {
       immediate: true,

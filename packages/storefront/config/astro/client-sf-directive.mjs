@@ -28,11 +28,13 @@ const firstInteraction = new Promise((resolve) => {
       () => {
         resolve();
         controller.abort();
+        window.dispatchEvent(new Event('firstInteraction'));
       },
       { once: true, passive: true, signal: controller.signal },
     );
   });
 });
+window.$firstInteraction = firstInteraction;
 
 /**
  * Hydrate on context script executed (`$storefront.apiContext` ready)

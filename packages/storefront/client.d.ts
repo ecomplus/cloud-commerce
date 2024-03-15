@@ -37,8 +37,9 @@ interface Window {
   $storefront?: import('@@sf/$storefront').$Storefront & {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
-  $isCmsPreview?: boolean;
+  $firstInteraction?: Promise<void>;
   $prefetch?: typeof import('astro:prefetch').prefetch;
+  $isCmsPreview?: boolean;
 }
 
 declare module 'gtag.js';
