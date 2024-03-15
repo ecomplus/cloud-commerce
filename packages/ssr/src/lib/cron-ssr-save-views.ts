@@ -1,6 +1,6 @@
 import type { DocumentReference } from 'firebase-admin/firestore';
 import type { AxiosInstance } from 'axios';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { error } from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
@@ -19,10 +19,15 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
   if (!bunnyStorageName || !bunnyStoragePass) {
     const savedKeysData = (await bunnyStorageKeysRef.get()).data();
     if (savedKeysData) {
-      bunnyStorageName = savedKeysData.bunnyStorageName;
-      bunnyStoragePass = savedKeysData.bunnyStoragePass;
-      permaCacheZoneFolder = savedKeysData.permaCacheZoneFolder;
-    } else {
+      const expiresIn = 1000 * 60 * 60;
+      const now = Timestamp.now().toMillis();
+      if (((savedKeysData.at?.toMillis() || 0) + expiresIn) > now) {
+        bunnyStorageName = savedKeysData.bunnyStorageName;
+        bunnyStoragePass = savedKeysData.bunnyStoragePass;
+        permaCacheZoneFolder = savedKeysData.permaCacheZoneFolder;
+      }
+    }
+    if (!bunnyStorageName || !bunnyStoragePass) {
       const { data } = await bunnyAxios.get('/storagezone');
       for (let i = 0; i < data.length; i++) {
         const bunnyStorage = data[i];
@@ -62,6 +67,7 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
         bunnyStorageName,
         bunnyStoragePass,
         permaCacheZoneFolder,
+        at: Timestamp.now(),
       });
     }
   }
