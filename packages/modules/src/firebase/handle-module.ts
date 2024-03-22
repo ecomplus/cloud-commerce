@@ -14,6 +14,19 @@ import {
 } from './ajv';
 import callAppModule from './call-app-module';
 
+declare global {
+  // eslint-disable-next-line
+  var $activeModuleApps: undefined | Array<Partial<Applications> & {
+    _id: Applications['_id'],
+    state?: 'active',
+    app_id: Applications['app_id'],
+    version: Applications['version'],
+    modules: Exclude<Applications['modules'], undefined>,
+    data: Applications['data'],
+    hidden_data: Applications['hidden_data'],
+  }>;
+}
+
 const ajvAppsResponse = addFormats(new Ajv({ ...ajvOptions, allErrors: true }));
 
 // Cache apps list and no params modules results
@@ -59,7 +72,12 @@ async function runModule(
   }
 
   let appsList: Partial<Applications>[];
-  if (canCache && appsCache[cacheKey]) {
+  const mockedModApps = global.$activeModuleApps?.filter(({ modules }) => {
+    return modules[modName as 'list_payments']?.enabled;
+  });
+  if (mockedModApps?.length) {
+    appsList = mockedModApps;
+  } else if (canCache && appsCache[cacheKey]) {
     appsList = appsCache[cacheKey];
   } else {
     try {
