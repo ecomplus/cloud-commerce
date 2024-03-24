@@ -179,12 +179,13 @@ const watchAppRoutes = () => {
 
 // https://github.com/ecomplus/storefront/tree/master/%40ecomplus/storefront-app compat
 if (!import.meta.env.SSR) {
+  const { location } = window;
   if (Object.keys(utm).length) {
     sessionStorage.setItem('ecomUtm', JSON.stringify(utm));
   }
-  let querystring = window.location.search;
-  if (!querystring && window.location.hash) {
-    querystring = '?' + window.location.hash.split('?')[1];
+  let querystring = location.search;
+  if (!querystring && location.hash) {
+    querystring = '?' + location.hash.split('?')[1];
   }
   const searchParams = new URLSearchParams(querystring);
   if (searchParams.get('product_id') && searchParams.get('quantity') === '1') {
@@ -197,16 +198,18 @@ if (!import.meta.env.SSR) {
     }));
     (window as any).ECOM_CART_STORAGE_KEY = 'ecomShoppingCart__tmp';
   }
-  const { hostname } = window.location;
   const { domain } = globalThis.$storefront.settings;
+  const isLocalhost = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const hostApiBaseUri = isLocalhost
+    && Number(location.port) !== 5000 // Hosting on Firebase Emulators
+    ? `https://${domain}/_api/` : '/_api/';
   const apiBaseUri = `https://ecomplus.io/v2/:${window.ECOM_STORE_ID}/`;
   (window as any).ECOMCLIENT_API_STORE = apiBaseUri;
   (window as any).ECOMCLIENT_API_STORE_CACHE = apiBaseUri;
   (window as any).ECOMCLIENT_API_PASSPORT = apiBaseUri;
+  (window as any).ECOMCLIENT_API_PASSPORT_IDENTITY = `${hostApiBaseUri}passport/`;
   (window as any).ECOMCLIENT_API_SEARCH = `${apiBaseUri}/search/_els/`;
-  (window as any).ECOMCLIENT_API_MODULES = ['localhost', '127.0.0.1'].includes(hostname)
-    ? `https://${domain}/_api/modules/`
-    : '/_api/modules/';
+  (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
   const onLoad = () => {
     const { ecomPassport } = window as Record<string, any>;
@@ -237,7 +240,7 @@ if (!import.meta.env.SSR) {
   };
 
   const appScript = document.createElement('script');
-  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.190/dist/lib/js/app.js';
+  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.195/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 }
