@@ -4,6 +4,12 @@
   "version": "2.9.0",
   "description": "E-Com Plus Cloud Commerce app for complex discount rules",
   "main": "lib/discounts.js",
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

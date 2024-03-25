@@ -4,6 +4,11 @@
   "version": "2.9.0",
   "description": "E-Com Plus Cloud Commerce reusable type definitions",
   "main": "index.ts",
+  "files": [
+    "/lib",
+    "/*.{js,mjs,ts}",
+    "/**/*.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

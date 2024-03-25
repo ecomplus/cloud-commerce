@@ -5,6 +5,12 @@
   "version": "2.9.0",
   "description": "E-Com Plus Cloud Commerce basic setup for testing",
   "main": "lib/index.js",
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}",
+    "/payloads/**/*.{json,js,mjs}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

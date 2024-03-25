@@ -7,6 +7,14 @@
     "storefront": "./scripts/build-prod.sh"
   },
   "main": "src/index.js",
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}",
+    "/config/**/*.{json,js,mjs,cjs,ts}",
+    "/scripts/**/*.{sh,mjs}",
+    "/src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

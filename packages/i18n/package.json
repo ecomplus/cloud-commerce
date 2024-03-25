@@ -11,6 +11,11 @@
     "./src/pt_br.ts": "./src/pt_br.ts",
     "./src/en_us.ts": "./src/en_us.ts"
   },
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

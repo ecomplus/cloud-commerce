@@ -9,6 +9,11 @@
     "./lib/config": "./lib/config.js",
     "./lib/env": "./lib/env.js"
   },
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

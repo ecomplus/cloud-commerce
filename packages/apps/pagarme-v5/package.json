@@ -8,6 +8,12 @@
     ".": "./lib/index.js",
     "./events": "./lib/pagarme-v5-events.js"
   },
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

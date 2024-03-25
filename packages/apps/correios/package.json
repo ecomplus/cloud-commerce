@@ -4,6 +4,12 @@
   "version": "2.9.0",
   "description": "E-Com Plus Cloud Commerce app for Correios shipping calculation",
   "main": "lib/index.js",
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "exports": {
     ".": "./lib/index.js",
     "./fill-database": "./lib-mjs/correios-db.mjs"

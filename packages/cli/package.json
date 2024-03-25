@@ -11,6 +11,13 @@
     ".": "./lib/cli.js",
     "./create-auth": "./create-auth.js"
   },
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}",
+    "/ci/**/*.{sh,mjs}",
+    "/config/**/*.{json,rules,mjs,cjs}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

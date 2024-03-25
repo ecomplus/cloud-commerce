@@ -5,6 +5,11 @@
   "description": "E-Com Plus Cloud Commerce email sender",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

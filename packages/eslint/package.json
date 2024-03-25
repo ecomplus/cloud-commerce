@@ -4,6 +4,9 @@
   "version": "2.9.0",
   "description": "E-Com Plus Cloud Commerce ESLint config",
   "main": "lib/index.js",
+  "files": [
+    "/**/*.eslintrc.*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

@@ -15,6 +15,11 @@
     "./lib/helpers/firestore": "./lib/helpers/firestore.js",
     "./lib/helpers/update-app-data": "./lib/helpers/update-app-data.js"
   },
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

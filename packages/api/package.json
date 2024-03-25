@@ -9,6 +9,11 @@
     ".": "./lib/api.js",
     "./types": "./types.d.ts"
   },
+  "files": [
+    "/lib",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",

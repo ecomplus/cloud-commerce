@@ -4,6 +4,12 @@
   "version": "2.9.0",
   "description": "E-Com Plus Cloud Commerce app for custom shipping methods",
   "main": "lib/custom-shipping.js",
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
