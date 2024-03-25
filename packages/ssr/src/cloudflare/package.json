@@ -1,0 +1,14 @@
+{
+  "name": "swr-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc --outDir ../../cloudflare"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240320.1"
+  }
+}

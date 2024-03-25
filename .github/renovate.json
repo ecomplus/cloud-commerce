@@ -12,6 +12,10 @@
     "node",
     "pnpm"
   ],
+  "ignorePaths": [
+    "**/src/**",
+    "**/lib/**"
+  ],
   "packageRules": [
     {
       "groupName": "Non-major dependencies",

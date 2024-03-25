@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@cloudflare/workers-types": "^4.20240320.1",
     "@firebase/app-types": "^0.9.0",
     "typescript": "~5.4.3"
   }
