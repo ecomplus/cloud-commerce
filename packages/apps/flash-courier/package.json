@@ -25,8 +25,8 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "axios": "^1.6.7",
-    "firebase-functions": "^4.8.0"
+    "axios": "^1.6.8",
+    "firebase-functions": "^4.8.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"
