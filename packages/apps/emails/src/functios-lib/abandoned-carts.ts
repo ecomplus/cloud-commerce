@@ -1,11 +1,11 @@
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import transactionalMails from '@ecomplus/transactional-mails';
 import { getFirestore } from 'firebase-admin/firestore';
 import email from '@cloudcommerce/emails';
 import config from '@cloudcommerce/firebase/lib/config';
 import triggerActions from './trigger-actions';
 import { getStore } from './utils';
+import getMailRender from './get-mail-render';
 
 export default async () => {
   try {
@@ -56,8 +56,9 @@ export default async () => {
           // eslint-disable-next-line no-await-in-loop
           const customer = (await api.get(`customers/${customerId}`)).data;
           if (cart && customer) {
+            const render = getMailRender('abandonedCart');
             // eslint-disable-next-line no-await-in-loop
-            const html = await transactionalMails.abandonedCart(store, customer, cart, lang);
+            const html = await render(store, customer, cart, lang);
             const subject = triggerActions.abandonedCart.subject[lang];
             const to = [{
               name: customer.display_name,

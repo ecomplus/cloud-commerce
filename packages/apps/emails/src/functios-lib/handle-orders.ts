@@ -1,10 +1,10 @@
 import type { AppEventsPayload, Orders } from '@cloudcommerce/types';
-import transactionalMails from '@ecomplus/transactional-mails';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import email from '@cloudcommerce/emails';
 import { toCamelCase, updateOrderSubresource, getStore } from './utils';
 import triggerActions from './trigger-actions';
+import getMailRender from './get-mail-render';
 
 const orderStatus = [
   'pending',
@@ -141,7 +141,8 @@ export default async (
                     customMessage = undefined;
                   }
                   templateId = appData.new_order && appData.new_order.templateId;
-                  html = await transactionalMails.new_order(
+                  const render = getMailRender('new_order');
+                  html = await render(
                     store,
                     customer,
                     order,
@@ -153,9 +154,9 @@ export default async (
                   || Date.now() - new Date(order.created_at).getTime() > 180000
                 ) {
                   // TODO: appData[ ] is in SnakeCase
-
                   templateId = appData[checkStatus] && appData[checkStatus].templateId;
-                  html = await transactionalMails[triggerStatus](
+                  const render = getMailRender(triggerStatus);
+                  html = await render(
                     store,
                     customer,
                     order,
@@ -169,10 +170,10 @@ export default async (
                     current: checkStatus as Exclude<Orders['fulfillment_status'], undefined>['current'],
                   };
                 }
-
                 // TODO: appData[ ] is in SnakeCase
                 templateId = appData[checkStatus] && appData[checkStatus].templateId;
-                html = await transactionalMails[triggerStatus](
+                const render = getMailRender(triggerStatus);
+                html = await render(
                   store,
                   customer,
                   order,
