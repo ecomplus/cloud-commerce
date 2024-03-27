@@ -1,24 +1,36 @@
-// eslint-disable-next-line import/no-unresolved
+import type { Resource, Customers } from '@cloudcommerce/api/types';
 import { getFirestore } from 'firebase-admin/firestore';
-// eslint-disable-next-line import/no-unresolved
 import { getAuth } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
 import getEnv from '@cloudcommerce/firebase/lib/env';
 
-const findCustomerByEmail = async (email: string | undefined, isOnlyId = true) => {
-  let params = `main_email=${email}`;
-  if (isOnlyId) {
-    params += '&fields=_id';
+export const findCustomerByEmail = async (email: string, docNumber?: string) => {
+  const params: Partial<Record<keyof Customers, string>> = {
+    main_email: email,
+  };
+  if (docNumber) {
+    params.doc_number = docNumber;
   }
-  const { data } = await api.get(`customers?${params}`);
+  const { data } = await api.get('customers', {
+    params,
+    fields: ['_id', 'login', 'enabled'] as const,
+  });
   if (data.result.length) {
     return data.result[0];
   }
   return null;
 };
 
-const generateAccessToken = async (customerId: string): Promise<{
+type ApiPermissions = Partial<Record<
+  Resource | '*',
+  ('GET' | 'PATCH')[] | ['all']
+>>;
+
+export const generateAccessToken = async (
+  customerId: string,
+  permissions?: ApiPermissions,
+): Promise<{
   customer_id: string,
   access_token: string,
   expires: string,
@@ -31,6 +43,7 @@ const generateAccessToken = async (customerId: string): Promise<{
       _id: apiAuth.authenticationId,
       api_key: apiAuth.apiKey,
       customer_id: customerId,
+      permissions,
     },
   });
   return {
@@ -50,13 +63,17 @@ const checkFirebaseAuth = async (authToken: string) => {
   }
 };
 
-const authenticateCustomer = async (firebaseAuthToken: string) => {
+export const authenticateCustomer = async (firebaseAuthToken: string) => {
   const firebaseAuthUser = await checkFirebaseAuth(firebaseAuthToken);
   if (firebaseAuthUser) {
     const { name, email, email_verified: isEmailVerified } = firebaseAuthUser;
     if (email && isEmailVerified) {
-      const customerId = (await findCustomerByEmail(email))?._id;
+      const customerMatch = await findCustomerByEmail(email);
+      const customerId = customerMatch?._id;
       if (customerId) {
+        if (customerMatch.login === false) {
+          return null;
+        }
         const docRef = getFirestore().doc(`customerTokens/${customerId}`);
         const storedToken = (await docRef.get()).data() as undefined | {
           customer_id: string,
@@ -67,7 +84,11 @@ const authenticateCustomer = async (firebaseAuthToken: string) => {
         if (expires && new Date(expires).getTime() - Date.now() >= 2 * 60 * 1000) {
           return storedToken;
         }
-        const customerToken = await generateAccessToken(customerId);
+        const permissions: ApiPermissions = { '*': ['all'] };
+        if (customerMatch.enabled === false) {
+          permissions.orders = ['GET', 'PATCH'];
+        }
+        const customerToken = await generateAccessToken(customerId, permissions);
         docRef.set(customerToken).catch(logger.error);
         return customerToken;
       }
@@ -87,8 +108,3 @@ const authenticateCustomer = async (firebaseAuthToken: string) => {
 };
 
 export default authenticateCustomer;
-
-export {
-  findCustomerByEmail,
-  generateAccessToken,
-};

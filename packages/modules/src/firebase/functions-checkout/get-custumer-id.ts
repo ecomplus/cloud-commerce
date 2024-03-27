@@ -5,7 +5,10 @@ import logger from 'firebase-functions/logger';
 
 const findCustomerByEmail = async (email: string) => {
   try {
-    const { data } = await api.get(`customers?main_email=${email}&fields=_id`);
+    const { data } = await api.get('customers', {
+      params: { main_email: email },
+      fields: ['_id'] as const,
+    });
     if (data.result.length) {
       return data.result[0]._id;
     }
