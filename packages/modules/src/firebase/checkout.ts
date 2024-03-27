@@ -8,7 +8,7 @@ import type {
 import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
-import getCustomerId from './functions-checkout/get-custumerId';
+import getCustomerId from './functions-checkout/get-custumer-id';
 import requestModule from './functions-checkout/request-to-module';
 import {
   sendError,
