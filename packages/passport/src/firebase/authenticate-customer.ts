@@ -106,5 +106,3 @@ export const authenticateCustomer = async (firebaseAuthToken: string) => {
   }
   return null;
 };
-
-export default authenticateCustomer;
