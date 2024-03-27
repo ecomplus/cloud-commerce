@@ -7,7 +7,7 @@
   "types": "lib/api.d.ts",
   "exports": {
     ".": "./lib/api.js",
-    "./types": "./types.d.ts"
+    "./types": "./types.ts"
   },
   "files": [
     "/lib",
