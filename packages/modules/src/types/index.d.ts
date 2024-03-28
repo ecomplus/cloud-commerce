@@ -19,7 +19,7 @@ type CheckoutBodyWithItems = Omit<CheckoutBody, 'items'> & {
   amount: Amount
 }
 
-type CustomerCheckout = Exclude<CheckoutBody['customer'], undefined>
+type CheckoutCustomer = Exclude<CheckoutBody['customer'], undefined>
 
 type TransactionOrder = Exclude<Orders['transactions'], undefined>[number]
 type StatusTransactionOrder = Pick<TransactionOrder, 'status'>['status']
@@ -50,7 +50,7 @@ export {
   Payment,
   Items,
   Item,
-  CustomerCheckout,
+  CheckoutCustomer,
   PaymentMethod,
   Amount,
   ShippingSerive,
