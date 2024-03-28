@@ -16,6 +16,7 @@ const maskCustomerFields = (customer: Customers) => {
       given_name: customer.name.given_name,
       family_name: '***',
     },
+    registry_type: customer.registry_type,
     state: customer.state,
     enabled: customer.enabled,
     login: customer.login,
@@ -30,7 +31,7 @@ const maskCustomerFields = (customer: Customers) => {
     last_visited_products: customer.last_visited_products,
     phones: customer.phones?.map((phone) => ({
       ...phone,
-      number: '***' + phone.number.substring(phone.number.length - 2),
+      number: '000' + phone.number.substring(phone.number.length - 2),
     })),
     addresses: customer.addresses?.map((address) => ({
       zip: address.zip,
