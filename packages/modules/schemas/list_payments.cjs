@@ -309,13 +309,8 @@ const schema = {
           'items': {
             'type': 'object',
             'additionalProperties': false,
-            'required': [ '_id', 'zip' ],
+            'required': [ 'zip' ],
             'properties': {
-              '_id': {
-                'type': 'string',
-                'pattern': '^[a-f0-9]{24}$',
-                'description': 'Unique ID (ObjectID)'
-              },
               'zip': {
                 'type': 'string',
                 'maxLength': 30,

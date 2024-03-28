@@ -213,10 +213,6 @@ export interface ListPaymentsParams {
      */
     addresses?: {
       /**
-       * Unique ID (ObjectID)
-       */
-      _id: string;
-      /**
        * ZIP (CEP, postal...) code
        */
       zip: string;
