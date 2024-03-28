@@ -179,7 +179,7 @@ const watchAppRoutes = () => {
 
 // https://github.com/ecomplus/storefront/tree/master/%40ecomplus/storefront-app compat
 if (!import.meta.env.SSR) {
-  const { location } = window;
+  const { location, ECOM_STORE_ID } = window;
   if (Object.keys(utm).length) {
     sessionStorage.setItem('ecomUtm', JSON.stringify(utm));
   }
@@ -203,12 +203,12 @@ if (!import.meta.env.SSR) {
   const hostApiBaseUri = isLocalhost
     && Number(location.port) !== 5000 // Hosting on Firebase Emulators
     ? `https://${domain}/_api/` : '/_api/';
-  const apiBaseUri = `https://ecomplus.io/v2/:${window.ECOM_STORE_ID}/`;
+  const apiBaseUri = 'https://ecomplus.io/v2/';
   (window as any).ECOMCLIENT_API_STORE = apiBaseUri;
-  (window as any).ECOMCLIENT_API_STORE_CACHE = apiBaseUri;
-  (window as any).ECOMCLIENT_API_PASSPORT = apiBaseUri;
+  (window as any).ECOMCLIENT_API_STORE_CACHE = `${apiBaseUri}:${ECOM_STORE_ID}/`;
+  (window as any).ECOMCLIENT_API_PASSPORT = `${apiBaseUri}:`;
   (window as any).ECOMCLIENT_API_PASSPORT_IDENTITY = `${hostApiBaseUri}passport/`;
-  (window as any).ECOMCLIENT_API_SEARCH = `${apiBaseUri}/search/_els/`;
+  (window as any).ECOMCLIENT_API_SEARCH = `${apiBaseUri}search/_els/`;
   (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
   const onLoad = () => {
@@ -240,7 +240,7 @@ if (!import.meta.env.SSR) {
   };
 
   const appScript = document.createElement('script');
-  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.195/dist/lib/js/app.js';
+  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.197/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 }
