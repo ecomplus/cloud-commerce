@@ -18,14 +18,29 @@ const props = withDefaults(defineProps<Props>(), {
   prefetch: 'hover',
 });
 const link = ref<HTMLElement | null>(null);
-const linkTarget = computed(() => {
-  if (!props.href) return undefined;
-  if (props.target) return props.target;
-  if (props.href.startsWith('http')) {
+const isExternalLink = computed(() => {
+  if (props.href?.startsWith('https:')) {
     const domain = globalThis.$storefront.settings.domain || window.location.host;
-    if (props.href.startsWith(`https://${domain}`)) return undefined;
-    return '_blank';
+    if (props.href.startsWith(`https://${domain}`)) return false;
+    return true;
   }
+  return false;
+});
+const trackedHref = computed(() => {
+  const { domain } = globalThis.$storefront.settings;
+  if (!isExternalLink.value || !domain || !props.href) {
+    return props.href;
+  }
+  let arg = '?';
+  if (props.href.includes('?')) {
+    if (/[?&]ref=/.test(props.href)) return props.href;
+    arg = '&';
+  }
+  return `${props.href}${arg}ref=${domain}`;
+});
+const linkTarget = computed(() => {
+  if (props.target) return props.target;
+  if (isExternalLink.value) return '_blank';
   return undefined;
 });
 const prefetchHref = computed(() => {
@@ -78,7 +93,7 @@ if (prefetchHref.value) {
   <component
     ref="link"
     :is="href ? 'a' : 'span'"
-    :href="href"
+    :href="trackedHref"
     :target="linkTarget"
     :rel="linkTarget === '_blank' ? 'noopener' : undefined"
   ><slot /></component>
