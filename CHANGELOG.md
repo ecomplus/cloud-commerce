@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0](https://github.com/ecomplus/cloud-commerce/compare/v2.9.0...v2.10.0) (2024-03-28)
+
+
+### Features
+
+* **app-emails:** Supporting custom mail renders within optional `global.$transactionalMails` ([30790f9](https://github.com/ecomplus/cloud-commerce/commit/30790f960f9d2d37b766ba9c50ebf032cc03f241))
+* **modules:** Handle optional `global.$activeModuleApps` to mock active apps for modules ([a1f5df1](https://github.com/ecomplus/cloud-commerce/commit/a1f5df18d2961b7e531026a97d354d86bc21dc80)), closes [#237](https://github.com/ecomplus/cloud-commerce/issues/237)
+* **modules:** Supporting masked icustomer fields on checkout for low level (unverified) login ([4d11a3d](https://github.com/ecomplus/cloud-commerce/commit/4d11a3dc96bf7a51348b2f3ae6bc53224b1e7124))
+* **passport:** Handle `identify` endpoint (from v1) for low level login returning masked info ([5360ed1](https://github.com/ecomplus/cloud-commerce/commit/5360ed1bb5797b10f37f6b1b5020620dcffdf00f))
+* **storefront:** Add `?ref=` to external links on global `<ALink>` ([498b146](https://github.com/ecomplus/cloud-commerce/commit/498b1466f7e1b77968ad13557ffe7f7ebe271056))
+
+
+### Bug Fixes
+
+* **api:** Exporting all interfaces and API client types on `@cloudcommerce/api/types` ([c376a03](https://github.com/ecomplus/cloud-commerce/commit/c376a036b504064fe7c99eb072207ecd98615b64))
+* **deps:** Update non-major dependencies ([#350](https://github.com/ecomplus/cloud-commerce/issues/350)) ([c76551e](https://github.com/ecomplus/cloud-commerce/commit/c76551e80913879cf663215204e49ba4ec2b4343))
+* **modules:** Update list payments schema and types removing (unrequiring) `addresses[]._id` field ([17bd088](https://github.com/ecomplus/cloud-commerce/commit/17bd0882d9c604766b4ea697b0197373c348918a))
+* **passport:** Check customer login and orders enabled on match ([5058dcf](https://github.com/ecomplus/cloud-commerce/commit/5058dcf46579c827dc507ca78338cdc46a99b12c))
+* **passport:** Fixing build error with named/default export ([ff75fac](https://github.com/ecomplus/cloud-commerce/commit/ff75facbf0799c71118c31b854cd4a1fa87928d0))
+* **ssr:** Consider saved bunny.net storage keys expired after 1h ([f161157](https://github.com/ecomplus/cloud-commerce/commit/f161157dd9f26740be6c4d59eef825bbaa288ad9))
+* **storefront:** Bump Astro to latest v4.5.12 ([c0fecb7](https://github.com/ecomplus/cloud-commerce/commit/c0fecb71dcef414dd5a12996d60fd0f2eeebece3))
+* **storefront:** Bump Astro to latest v4.5.6 ([#346](https://github.com/ecomplus/cloud-commerce/issues/346)) ([0da115b](https://github.com/ecomplus/cloud-commerce/commit/0da115bbfb3830d76863db6454d9b4a4b959da5d))
+* **storefront:** Update Astro to v4.5.9 ([#348](https://github.com/ecomplus/cloud-commerce/issues/348)) ([4b1e7ab](https://github.com/ecomplus/cloud-commerce/commit/4b1e7ab08b527ad28a5f65760508f60e3252a02a))
+* **storefront:** Update vbeta-app script with `@ecomplus/storefront-app@2.0.0-beta.195` ([68e2d07](https://github.com/ecomplus/cloud-commerce/commit/68e2d077c956467ac007a2ad383314cadfc659f6))
+* **storefront:** Update vbeta-app script with `@ecomplus/storefront-app@2.0.0-beta.197` ([f29800f](https://github.com/ecomplus/cloud-commerce/commit/f29800f553eb4444762912fdb59a93ab987c9f95))
+
 ## [2.9.0](https://github.com/ecomplus/cloud-commerce/compare/v2.8.8...v2.9.0) (2024-03-15)
 
 
