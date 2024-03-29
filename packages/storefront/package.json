@@ -13,7 +13,10 @@
     "/*.{js,mjs,ts}",
     "/config/**/*.{json,js,mjs,cjs,ts}",
     "/scripts/**/*.{sh,mjs}",
-    "/src"
+    "/src",
+    "/*.config.cjs",
+    "/tsconfig.json",
+    "/example.env"
   ],
   "repository": {
     "type": "git",
