@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.10.1](https://github.com/ecomplus/cloud-commerce/compare/v2.10.0...v2.10.1) (2024-03-29)
+
+
+### Bug Fixes
+
+* **storefront:** Fixing package.json missing files ([88b9ef9](https://github.com/ecomplus/cloud-commerce/commit/88b9ef9f9edc2bad7900e4203cb06ad97aa48059))
+
 ## [2.10.0](https://github.com/ecomplus/cloud-commerce/compare/v2.9.0...v2.10.0) (2024-03-28)
 
 
