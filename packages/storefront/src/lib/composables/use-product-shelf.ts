@@ -41,7 +41,7 @@ const useProductShelf = (props: Props) => {
       if (props.isRelatedProducts) {
         const { apiContext } = globalThis.$storefront;
         if (apiContext?.resource === 'products') {
-          endpointQuery += `like=${apiContext.doc._id}`;
+          endpointQuery += `&like=${apiContext.doc._id}`;
           if (!title.value && title.value !== null) {
             title.value = i19relatedProducts;
           }
