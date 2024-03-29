@@ -12,7 +12,11 @@ const listFolders = async (parentPath) => {
 // await $`npx standard-version`;
 const pwd = (await quiet($`pwd`)).stdout.trim();
 const { version } = JSON.parse(fs.readFileSync('package.json'));
-const packages = await globby(['packages/**/package.json', '!**/node_modules']);
+const packages = await globby([
+  'packages/*/package.json',
+  'packages/apps/*/package.json',
+  '!**/node_modules',
+]);
 
 for (let i = 0; i < packages.length; i++) {
   const pkgPath = packages[i];
