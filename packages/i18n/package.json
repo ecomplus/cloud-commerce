@@ -14,7 +14,8 @@
   "files": [
     "/lib",
     "/types",
-    "/*.{js,mjs,ts}"
+    "/*.{js,mjs,ts}",
+    "/src/**/*.ts"
   ],
   "repository": {
     "type": "git",
