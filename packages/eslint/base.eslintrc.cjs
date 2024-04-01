@@ -48,6 +48,7 @@ module.exports = {
           'astro/middleware',
           'unocss/astro',
           'unplugin-auto-import/astro',
+          'mime/lite',
           '@@.*',
           'content/.*',
           '~/.*',
