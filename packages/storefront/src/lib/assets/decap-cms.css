@@ -4,6 +4,19 @@ body {
     text-transform: none;
     font-weight: 500;
     width: calc(100% - 30px);
+    > span {
+      display: none;
+    }
+    &[class*="1qu85o2"] {
+      background: none;
+      &:has(span) {
+        color: #4b5563;
+      }
+      &:not(:has(span)) {
+        color: #1f2937;
+        font-weight: 600;
+      }
+    }
     ~ input,
     ~ textarea {
       padding: 12px 14px;
@@ -26,9 +39,6 @@ body {
         border-width: 1px;
       }
     }
-  }
-  [class*="1qu85o2-FieldLabel"] {
-    background: none;
   }
   [class*="TopBarContainer"] {
     [class*="ExpandButtonContainer"] {

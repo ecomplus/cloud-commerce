@@ -16,7 +16,6 @@ export const getCmsConfig = () => {
   const deepmerge = Deepmerge();
   CMS.registerLocale(locale, deepmerge(CMS.getLocale(locale), {
     editor: {
-      editorControl: { field: { optional: '?' } },
       editorWidgets: {
         image: {
           chooseDifferent: i18n({ en: 'Change image', pt: 'Mudar imagem' }),
