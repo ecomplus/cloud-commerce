@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.10.4](https://github.com/ecomplus/cloud-commerce/compare/v2.10.3...v2.10.4) (2024-04-01)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#352](https://github.com/ecomplus/cloud-commerce/issues/352)) ([240749f](https://github.com/ecomplus/cloud-commerce/commit/240749f74099e2c9b0d3a4ba32b3a1494dbdebe3))
+* **storefront:** Fixing imports to `mime/lite` with mime v4 ([76b91f5](https://github.com/ecomplus/cloud-commerce/commit/76b91f521b1a0890fe461626cd000d3f1058c542))
+
 ### [2.10.3](https://github.com/ecomplus/cloud-commerce/compare/v2.10.2...v2.10.3) (2024-03-30)
 
 
