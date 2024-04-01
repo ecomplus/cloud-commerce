@@ -17,9 +17,9 @@
     "https://json.schemastore.org/github-action": "/action.yml"
   },
   "tailwindCSS.experimental.configFile": {
-    "packages/storefront/tailwind.config.cjs": "packages/**",
-    "store/functions/ssr/tailwind.config.cjs": "store/**",
-    "ecomplus-stores/barradoce/functions/ssr/tailwind.config.cjs": "ecomplus-stores/barradoce/**"
+    "packages/storefront/tailwind.config.js": "packages/**",
+    "store/functions/ssr/tailwind.config.js": "store/**",
+    "ecomplus-stores/barradoce/functions/ssr/tailwind.config.js": "ecomplus-stores/barradoce/**"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": [

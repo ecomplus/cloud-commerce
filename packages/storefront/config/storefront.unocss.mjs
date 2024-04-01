@@ -1,20 +1,21 @@
-const deepmerge = require('@fastify/deepmerge')();
-const {
+import Deepmerge from '@fastify/deepmerge';
+import {
   defineConfig,
   presetUno,
   presetIcons,
   presetTypography,
   transformerCompileClass,
   transformerDirectives,
-} = require('unocss');
-const {
+} from 'unocss';
+import {
   genTailwindConfig,
   defaultThemeOptions,
   brandColors,
   brandColorsPalletes,
   onBrandColors,
-} = require('./storefront.tailwind.cjs');
+} from './storefront.tailwind.mjs';
 
+const deepmerge = Deepmerge();
 const colorCSSVars = {};
 Object.keys(brandColors).forEach((colorName) => {
   Object.keys(brandColorsPalletes[colorName]).forEach((tone) => {
@@ -43,7 +44,9 @@ Object.keys(onBrandColors).forEach((colorLabel) => {
   }
 });
 
-const genUnoCSSConfig = (_tailwindConfig) => {
+export { colorCSSVars };
+
+export const genUnoCSSConfig = (_tailwindConfig) => {
   const themeOptions = _tailwindConfig?.themeOptions || {};
   const {
     preflights = [{
@@ -163,6 +166,3 @@ const genUnoCSSConfig = (_tailwindConfig) => {
     ],
   });
 };
-
-exports.genUnoCSSConfig = genUnoCSSConfig;
-exports.colorCSSVars = colorCSSVars;

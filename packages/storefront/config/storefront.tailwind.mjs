@@ -1,11 +1,12 @@
-const fs = require('fs');
-const { resolve: resolvePath } = require('path');
-const deepmerge = require('@fastify/deepmerge')();
-const colors = require('tailwindcss/colors');
-const chroma = require('chroma-js');
-require('./storefront.cms.js');
+import fs from 'node:fs';
+import { resolve as resolvePath } from 'node:path';
+import Deepmerge from '@fastify/deepmerge';
+import colors from 'tailwindcss/colors';
+import chroma from 'chroma-js';
+import './storefront.cms.js';
 
-let defaultThemeOptions = {
+const deepmerge = Deepmerge();
+const _defaultThemeOptions = {
   baseColor: 'slate',
   successColor: 'emerald',
   warningColor: 'amber',
@@ -46,9 +47,10 @@ let defaultThemeOptions = {
     'chevron-right': 'chevron-right',
   },
 };
-if (globalThis.$storefrontThemeOptions) {
-  defaultThemeOptions = deepmerge(defaultThemeOptions, globalThis.$storefrontThemeOptions);
-}
+
+export const defaultThemeOptions = globalThis.$storefrontThemeOptions
+  ? deepmerge(_defaultThemeOptions, globalThis.$storefrontThemeOptions)
+  : _defaultThemeOptions;
 
 const { primaryColor, secondaryColor } = global.__storefrontCMS(fs, resolvePath);
 const brandColors = {
@@ -117,7 +119,13 @@ Object.keys(brandColors).forEach((colorName) => {
   });
 });
 
-const genTailwindConfig = (themeOptions = {}) => {
+export {
+  brandColors,
+  brandColorsPalletes,
+  onBrandColors,
+};
+
+export const genTailwindConfig = (themeOptions = {}) => {
   const {
     baseColor,
     successColor,
@@ -290,12 +298,4 @@ const genTailwindConfig = (themeOptions = {}) => {
     return deepmerge(config, globalThis.$storefrontTailwindConfig);
   }
   return config;
-};
-
-module.exports = {
-  genTailwindConfig,
-  defaultThemeOptions,
-  brandColors,
-  brandColorsPalletes,
-  onBrandColors,
 };
