@@ -31,11 +31,11 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "firebase-admin": "^12.0.0",
-    "firebase-functions": "^4.8.1",
+    "firebase-functions": "^4.8.2",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.9.0"
+    "@firebase/app-types": "^0.9.1"
   }
 }
