@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-loyalty-points",
   "type": "module",
-  "version": "2.10.5",
+  "version": "2.10.6",
   "description": "E-Com Plus Cloud Commerce app to handle simple loyalty points programs",
   "main": "lib/loyalty-points.js",
   "files": [
