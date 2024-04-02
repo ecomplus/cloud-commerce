@@ -6,7 +6,6 @@ import { defineConfig, passthroughImageService } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
 import UnoCSS from 'unocss/astro';
-import AstroPWA from '@vite-pwa/astro';
 import AutoImport from 'unplugin-auto-import/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
 import getConfig from './config/storefront.config.mjs';
@@ -164,7 +163,8 @@ viteAlias.push(
 
 const genAstroConfig = ({
   site = `https://${domain}`,
-  isPWA = false,
+  AstroPWA,
+  isPWA = true,
   vitePWAOptions = _vitePWAOptions,
 } = {}) => {
   const integrations = [
@@ -206,6 +206,7 @@ const genAstroConfig = ({
       },
     },
   ];
+  isPWA = isPWA && typeof AstroPWA === 'function';
   if (isPWA && !isSSG) {
     integrations.push(AstroPWA(vitePWAOptions));
   } else {

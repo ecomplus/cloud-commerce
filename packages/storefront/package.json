@@ -52,7 +52,6 @@
     "@iconify-json/heroicons": "^1.1.20",
     "@iconify-json/logos": "^1.1.42",
     "@types/gtag.js": "^0.0.19",
-    "@vite-pwa/astro": "^0.3.1",
     "@vueuse/core": "10.9.0",
     "astro": "4.5.12",
     "astro-capo": "^0.0.1",
@@ -66,8 +65,6 @@
     "tailwindcss": "^3.4.3",
     "unocss": "^0.58.9",
     "unplugin-auto-import": "^0.17.5",
-    "vite": "^5.2.7",
-    "vite-plugin-pwa": "^0.19.7",
     "vue": "^3.4.21",
     "wade": "0.3.3",
     "yaml": "^2.4.1"
