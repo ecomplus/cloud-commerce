@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.10.5](https://github.com/ecomplus/cloud-commerce/compare/v2.10.4...v2.10.5) (2024-04-02)
+
+
+### Bug Fixes
+
+* **storefront:** Removing `mime` from pkg dependencies to use "peer" Astro dependency semver ([a6e5902](https://github.com/ecomplus/cloud-commerce/commit/a6e59021af547e7fe68c71d75632343dd86564b4))
+
 ### [2.10.4](https://github.com/ecomplus/cloud-commerce/compare/v2.10.3...v2.10.4) (2024-04-01)
 
 
