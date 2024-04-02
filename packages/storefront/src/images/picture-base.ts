@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { OutputFormat, TransformOptions, GetBuiltImage } from './get-built-image';
-import mime from 'mime/lite';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import mime from 'mime/lite'; // peer astro dep
 
 export interface GetPictureParams {
   src: string /* | ImageMetadata | Promise<{ default: ImageMetadata }> */;
