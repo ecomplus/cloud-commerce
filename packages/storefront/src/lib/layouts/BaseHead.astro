@@ -1,4 +1,5 @@
 ---
+// @ts-ignore: tsconfig.json missing `"types": ["vite-plugin-pwa/info"]`
 import { pwaInfo } from 'virtual:pwa-info';
 import { img as getImg, price as getPrice } from '@ecomplus/utils';
 import { i19searchProducts } from '@@i18n';
@@ -198,6 +199,7 @@ const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
 {isPWA && <>
   <script>
     /* eslint-disable */
+    // @ts-ignore: tsconfig.json missing `"types": ["vite-plugin-pwa/info"]`
     import { registerSW } from 'virtual:pwa-register';
     registerSW({ immediate: false });
   </script>

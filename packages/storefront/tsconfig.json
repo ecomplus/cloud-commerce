@@ -10,7 +10,6 @@
       "@@sf/*": ["./src/lib/*"],
       "~/*": ["./src/*"],
       "content/*": ["./content/*"],
-    },
-    "types": ["vite-plugin-pwa/info"]
+    }
   }
 }
