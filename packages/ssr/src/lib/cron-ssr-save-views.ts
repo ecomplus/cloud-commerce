@@ -127,7 +127,7 @@ const saveViews = async () => {
       if (data.isCachePurged) {
         continue;
       }
-      const url = data.url.replace(/\?.*$/, '');
+      const url = data.url.replace(/[?#].*$/, '');
       pageViewDocs.push({ ref: doc.ref, url });
     }
     if (pageViewDocs.length) {
