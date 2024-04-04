@@ -4,7 +4,7 @@ import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
 import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
-import type { StorefrontApiContext } from '@@sf/$storefront';
+import type { StorefrontApiContext, Server$Storefront } from '@@sf/$storefront';
 import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 import { asyncLocalStorage as _als } from '../../config/astro/node-middleware.mjs';
@@ -51,10 +51,10 @@ const sessions: Record<string, {
 // Internal global just to early clear session objects from memory
 global.__sfSessions = sessions;
 if (!globalThis.$storefront) {
+  // @ts-expect-error: URL is retrived from `target.getSession().url`
   globalThis.$storefront = new Proxy({
     settings: {},
     data: {},
-    // @ts-expect-error: URL is retrived from `target.getSession().url`
     url: undefined,
     getSession(sid?: string) {
       if (!sid) {
@@ -69,7 +69,7 @@ if (!globalThis.$storefront) {
     onLoad(callback: () => void) {
       emitter.once('load', callback);
     },
-  }, {
+  } as Server$Storefront, {
     get(target, prop) {
       if (prop === 'apiContext') {
         return target.getSession().apiContext;

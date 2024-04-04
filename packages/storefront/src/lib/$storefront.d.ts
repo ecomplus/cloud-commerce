@@ -40,3 +40,7 @@ export type $Storefront = {
     grids?: Array<Partial<Grids>>,
   },
 };
+
+export type Server$Storefront = $Storefront & {
+  onLoad: (callback: (...args: any[]) => void) => void,
+};
