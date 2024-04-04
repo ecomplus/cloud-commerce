@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.10.7](https://github.com/ecomplus/cloud-commerce/compare/v2.10.6...v2.10.7) (2024-04-04)
+
+
+### Bug Fixes
+
+* **ssr:** Properly remove querystring AND hash from page view URLs to purge CDN (ISR) cache ([e33c473](https://github.com/ecomplus/cloud-commerce/commit/e33c473656cf30b7beb295fa0af77262a03fa05d))
+* **storefront:** Bump Astro to latest v4.5.15 ([7d41f5e](https://github.com/ecomplus/cloud-commerce/commit/7d41f5e86c60bdbdd18cad79060b75f2e85d95b4))
+
 ### [2.10.6](https://github.com/ecomplus/cloud-commerce/compare/v2.10.5...v2.10.6) (2024-04-02)
 
 
