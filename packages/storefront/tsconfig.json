@@ -1,15 +1,7 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "noImplicitAny": false,
-    "allowJs": false,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@@i18n": ["./node_modules/@cloudcommerce/i18n/src/pt_br.ts"],
-      "@@sf/*": ["./src/lib/*"],
-      "~/*": ["./src/*"],
-      "content/*": ["./content/*"],
-    }
-  }
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "src",
+    "content",
+  ],
 }

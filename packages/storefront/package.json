@@ -15,7 +15,7 @@
     "/scripts/**/*.{sh,mjs}",
     "/src",
     "/*.config.cjs",
-    "/tsconfig.json",
+    "/tsconfig*.json",
     "/example.env"
   ],
   "repository": {
