@@ -1030,7 +1030,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 8.2.5
-        version: 8.2.5(astro@4.5.16)
+        version: 8.2.5(astro@4.5.10)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1047,11 +1047,11 @@ importers:
         specifier: 10.9.0
         version: 10.9.0(vue@3.4.21)
       astro:
-        specifier: 4.5.16
-        version: 4.5.16(@types/node@18.19.28)(typescript@5.4.3)
+        specifier: 4.5.10
+        version: 4.5.10(@types/node@18.19.28)(typescript@5.4.3)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.5.16)
+        version: 0.0.1(astro@4.5.10)
       axios:
         specifier: ^1.6.8
         version: 1.6.8
@@ -1085,10 +1085,10 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 8.2.5
-        version: 8.2.5(astro@4.5.16)
+        version: 8.2.5(astro@4.5.10)
       '@astrojs/vue':
         specifier: 4.0.10
-        version: 4.0.10(astro@4.5.16)(vite@5.2.7)(vue@3.4.21)
+        version: 4.0.10(astro@4.5.10)(vite@5.2.7)(vue@3.4.21)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1120,11 +1120,11 @@ importers:
         specifier: 10.9.0
         version: 10.9.0(vue@3.4.21)
       astro:
-        specifier: 4.5.16
-        version: 4.5.16(@types/node@18.19.28)(typescript@5.4.3)
+        specifier: 4.5.10
+        version: 4.5.10(@types/node@18.19.28)(typescript@5.4.3)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.5.16)
+        version: 0.0.1(astro@4.5.10)
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1300,12 +1300,12 @@ packages:
     resolution: {integrity: sha512-/POejAYuj8WEw7ZI0J8JBvevjfp9jQ9Wmu/Bg52RiNwGXkMV7JnYpsenVfHvvf1G7R5sXHGKlTcxlQWhoUTiGQ==}
     dev: false
 
-  /@astrojs/internal-helpers@0.4.0:
-    resolution: {integrity: sha512-6B13lz5n6BrbTqCTwhXjJXuR1sqiX/H6rTxzlXx+lN1NnV4jgnq/KJldCQaUWJzPL5SiWahQyinxAbxQtwgPHA==}
+  /@astrojs/internal-helpers@0.3.0:
+    resolution: {integrity: sha512-tGmHvrhpzuz0JBHaJX8GywN9g4rldVNHtkoVDC3m/DdzBO70jGoVuc0uuNVglRYnsdwkbG0K02Iw3nOOR3/Y4g==}
     dev: false
 
-  /@astrojs/markdown-remark@5.0.0:
-    resolution: {integrity: sha512-QBXbxXZamVRoqCNN2gjDXa7qYPUkJZq7KYFfg3DX7rze3QL6xiz4N+Wg202dNPRaIkQa16BV6D8+EHibQFubRg==}
+  /@astrojs/markdown-remark@4.3.2:
+    resolution: {integrity: sha512-4Oa4VaYiBd0MatB+rWIU/0A8pZH/sK3c2QkRYb+OO2lPl+qzevJtWaZY8hAQc4qurIOlRdn6B6ofDAGhWw+DSg==}
     dependencies:
       '@astrojs/prism': 3.0.0
       github-slugger: 2.0.0
@@ -1329,12 +1329,12 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@8.2.5(astro@4.5.16):
+  /@astrojs/node@8.2.5(astro@4.5.10):
     resolution: {integrity: sha512-IdVD4dBNyg+ScmCATZ0FM7vNLAHq0TSdiJ3LpR4jcWIUhpN1ps5Jg+9CfzMaLmCCe/SJUZejK5EnzqUJdnGYyg==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.5.16(@types/node@18.19.28)(typescript@5.4.3)
+      astro: 4.5.10(@types/node@18.19.28)(typescript@5.4.3)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1363,7 +1363,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@4.0.10(astro@4.5.16)(vite@5.2.7)(vue@3.4.21):
+  /@astrojs/vue@4.0.10(astro@4.5.10)(vite@5.2.7)(vue@3.4.21):
     resolution: {integrity: sha512-RIGqy3d4XFme2O8/6gPmJ9eRr++e7XkVYRV+liTFQmyCsVpXq36EX9MjJs0TZ87z3SpTQSlqH76BjLU/wvx3UA==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
@@ -1374,7 +1374,7 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.2.7)(vue@3.4.21)
       '@vue/babel-plugin-jsx': 1.2.1(@babel/core@7.24.3)
       '@vue/compiler-sfc': 3.4.21
-      astro: 4.5.16(@types/node@18.19.28)(typescript@5.4.3)
+      astro: 4.5.10(@types/node@18.19.28)(typescript@5.4.3)
       vue: 3.4.21(typescript@5.4.3)
     transitivePeerDependencies:
       - '@babel/core'
@@ -4536,12 +4536,12 @@ packages:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
     dev: true
 
-  /astro-capo@0.0.1(astro@4.5.16):
+  /astro-capo@0.0.1(astro@4.5.10):
     resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
     dependencies:
-      astro: 4.5.16(@types/node@18.19.28)(typescript@5.4.3)
+      astro: 4.5.10(@types/node@18.19.28)(typescript@5.4.3)
       ultrahtml: 1.5.3
     dev: false
 
@@ -4562,14 +4562,14 @@ packages:
       - supports-color
     dev: false
 
-  /astro@4.5.16(@types/node@18.19.28)(typescript@5.4.3):
-    resolution: {integrity: sha512-1nOVsMq2OJiXnG6gO0Y77vTAboGN9nLQSy/8SGazq4h6x+alzbsMbQbArBgvaLzOSUXD0m91XLs3D8bOSuavrQ==}
+  /astro@4.5.10(@types/node@18.19.28)(typescript@5.4.3):
+    resolution: {integrity: sha512-xW/ZTSqSHEQyzWzXHJa9gEQXC+MUD3mhzEBJyrMp/JWT+geLgUK2m0Rrc/AnBl8EfdS/6uFadiJV1fWao4lc7w==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 2.7.1
-      '@astrojs/internal-helpers': 0.4.0
-      '@astrojs/markdown-remark': 5.0.0
+      '@astrojs/internal-helpers': 0.3.0
+      '@astrojs/markdown-remark': 4.3.2
       '@astrojs/telemetry': 3.0.4
       '@babel/core': 7.24.3
       '@babel/generator': 7.24.1
