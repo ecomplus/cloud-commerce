@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/ssr",
   "type": "module",
-  "version": "2.10.7",
+  "version": "2.11.0",
   "description": "E-Com Plus Cloud Commerce storefront SSR",
   "main": "lib/index.js",
   "exports": {

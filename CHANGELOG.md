@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0](https://github.com/ecomplus/cloud-commerce/compare/v2.10.7...v2.11.0) (2024-04-05)
+
+
+### Features
+
+* **api:** Improving `ApiError` for debug with `url` property (string) ([d8cfaee](https://github.com/ecomplus/cloud-commerce/commit/d8cfaee339bf6dd552edabec8788307914f8cc4b))
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to latest v4.5.16 ([8f52440](https://github.com/ecomplus/cloud-commerce/commit/8f5244025dd653a5680b8313a4f5b2ee1b07a23c))
+* **storefront:** Ensure `global.$storefront` typedef is properly set ([cdf92d6](https://github.com/ecomplus/cloud-commerce/commit/cdf92d6acee551ab44e954086fae926aaaa59f4e))
+* **storefront:** New `tsconfig.base.json` file to deal with include/exclude when usign extends ([55fd330](https://github.com/ecomplus/cloud-commerce/commit/55fd3308a1ad5b9e89e15a9cb46b10ff0867a027))
+* **storefront:** Revert Astro to 4.5.10 ([7d3d05d](https://github.com/ecomplus/cloud-commerce/commit/7d3d05d4c16d5fa5479baf501eaccfdc7359ac79))
+
 ### [2.10.7](https://github.com/ecomplus/cloud-commerce/compare/v2.10.6...v2.10.7) (2024-04-04)
 
 
