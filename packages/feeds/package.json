@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/feeds",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "description": "E-Com Plus Cloud Commerce catalog feeds",
   "main": "lib/index.js",
   "exports": {

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/types",
   "type": "module",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "description": "E-Com Plus Cloud Commerce reusable type definitions",
   "main": "index.ts",
   "files": [
