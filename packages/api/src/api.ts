@@ -29,16 +29,24 @@ const _env = (
 
 class ApiError extends Error {
   config: Config;
+  url?: string;
   response?: Response & { data?: ErrorBody };
   statusCode?: number;
   data?: ErrorBody;
   isTimeout: boolean;
-  constructor(
+  constructor({
+    config,
+    url,
+    response,
+    msg,
+    isTimeout = false,
+  }: {
     config: Config,
+    url?: string,
     response?: ApiError['response'],
     msg?: string,
-    isTimeout: boolean = false,
-  ) {
+    isTimeout?: boolean,
+  }) {
     if (response) {
       super(response.statusText);
       this.data = response.data;
@@ -46,6 +54,7 @@ class ApiError extends Error {
     } else {
       super(msg || 'Request error');
     }
+    this.url = url;
     this.config = config;
     this.response = response;
     this.isTimeout = isTimeout;
@@ -184,7 +193,13 @@ const api = async <T extends Config & { body?: any, data?: any }>(
     if (err.cause) {
       msg += ` - ${err.cause}`;
     }
-    throw new ApiError(config, response, msg, isTimeout);
+    throw new ApiError({
+      config,
+      url,
+      response,
+      msg,
+      isTimeout,
+    });
   }
   clearTimeout(timer);
 
@@ -216,7 +231,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   } catch (e) {
     //
   }
-  throw new ApiError(config, response);
+  throw new ApiError({ config, url, response });
 };
 
 type AbstractedConfig = Omit<Config, 'endpoint' | 'method'>;
