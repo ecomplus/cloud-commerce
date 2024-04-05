@@ -304,7 +304,9 @@ export default async (req: Request, res: Response) => {
     }
     if (headers && BUNNYNET_API_KEY && DEPLOY_RAND) {
       // Tag for CDN cache purge
-      headers['CDN-Tag'] = `[${DEPLOY_RAND}]`;
+      // headers['CDN-Tag'] = `[${DEPLOY_RAND}]`;
+      // FIXME: Disabled while having unexpected troubles with bunny.net CDN cache purge
+      delete headers['CDN-Tag'];
     }
     _writeHead.apply(res, [status, headers]);
   };
