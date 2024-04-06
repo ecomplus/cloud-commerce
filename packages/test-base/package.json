@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "2.11.2",
-  "description": "E-Com Plus Cloud Commerce basic setup for testing",
+  "description": "e-com.plus Cloud Commerce basic setup for testing",
   "main": "lib/index.js",
   "files": [
     "/lib",

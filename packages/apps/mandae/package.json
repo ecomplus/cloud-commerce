@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/app-mandae",
   "type": "module",
   "version": "2.11.2",
-  "description": "E-Com Plus Cloud Commerce app to integrate Mandaê shipping intermediator",
+  "description": "e-com.plus Cloud Commerce app to integrate Mandaê shipping intermediator",
   "main": "lib/index.js",
   "files": [
     "/lib",

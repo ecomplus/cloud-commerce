@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/passport",
   "type": "module",
   "version": "2.11.2",
-  "description": "E-Com Plus Cloud Commerce customers authentication (passport) API",
+  "description": "e-com.plus Cloud Commerce customers authentication (passport) API",
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",

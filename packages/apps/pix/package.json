@@ -2,7 +2,7 @@
   "name": "@cloudcommerce/app-pix",
   "type": "module",
   "version": "2.11.2",
-  "description": "E-Com Plus Cloud Commerce app to integrate Pix API (Bacen)",
+  "description": "e-com.plus Cloud Commerce app to integrate Pix API (Bacen)",
   "main": "lib/pix.js",
   "exports": {
     ".": "./lib/pix.js",

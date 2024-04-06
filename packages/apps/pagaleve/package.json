@@ -1,8 +1,8 @@
 {
-  "name": "@cloudcommerce/__skeleton",
+  "name": "@cloudcommerce/app-pagaleve",
   "type": "module",
   "version": "0.0.0",
-  "description": "e-com.plus Cloud Commerce",
+  "description": "e-com.plus Cloud Commerce app to integrate Pagaleve",
   "main": "lib/index.js",
   "files": [
     "/lib",
@@ -14,16 +14,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/__skeleton"
+    "directory": "packages/app-pagaleve"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/__skeleton#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/pagaleve#readme",
   "scripts": {
-    "build": "echo '@ecomplus/__skeleton'"
+    "build": "echo '@ecomplus/app-pagaleve'"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
