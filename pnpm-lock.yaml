@@ -517,6 +517,31 @@ importers:
         specifier: ^0.9.1
         version: 0.9.1
 
+  packages/apps/pagaleve:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:*
+        version: link:../../firebase
+      '@ecomplus/utils':
+        specifier: 1.5.0-rc.6
+        version: 1.5.0-rc.6
+      axios:
+        specifier: ^1.6.8
+        version: 1.6.8
+      firebase-admin:
+        specifier: ^12.0.0
+        version: 12.0.0
+      firebase-functions:
+        specifier: ^4.8.2
+        version: 4.8.2(firebase-admin@12.0.0)
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/pagarme:
     dependencies:
       '@cloudcommerce/api':
@@ -809,6 +834,9 @@ importers:
       '@cloudcommerce/app-mercadopago':
         specifier: workspace:*
         version: link:../apps/mercadopago
+      '@cloudcommerce/app-pagaleve':
+        specifier: workspace:*
+        version: link:../apps/pagaleve
       '@cloudcommerce/app-pagarme':
         specifier: workspace:*
         version: link:../apps/pagarme
@@ -951,6 +979,9 @@ importers:
       '@cloudcommerce/app-mercadopago':
         specifier: workspace:*
         version: link:../apps/mercadopago
+      '@cloudcommerce/app-pagaleve':
+        specifier: workspace:^
+        version: link:../apps/pagaleve
       '@cloudcommerce/app-pagarme':
         specifier: workspace:*
         version: link:../apps/pagarme
@@ -2433,10 +2464,6 @@ packages:
       - '@firebase/app'
     dev: false
 
-  /@firebase/app-check-interop-types@0.3.0:
-    resolution: {integrity: sha512-xAxHPZPIgFXnI+vb4sbBjZcde7ZluzPPaSK7Lx3/nmuVk4TjZvnL8ONnkd4ERQKL8WePQySU+pRcWkh8rDf5Sg==}
-    dev: false
-
   /@firebase/app-check-interop-types@0.3.1:
     resolution: {integrity: sha512-NILZbe6RH3X1pZmJnfOfY2gLIrlKmrkUMMrrK6VSXHcSE0eQv28xFEcw16D198i9JYZpy5Kwq394My62qCMaIw==}
     dev: false
@@ -2465,10 +2492,6 @@ packages:
       '@firebase/logger': 0.4.1
       '@firebase/util': 1.9.5
       tslib: 2.6.2
-    dev: false
-
-  /@firebase/app-types@0.9.0:
-    resolution: {integrity: sha512-AeweANOIo0Mb8GiYm3xhTEBVCmPwTYAu9Hcd2qSkLuga/6+j9b1Jskl5bpiSQWy9eJ/j5pavxj6eYogmnuzm+Q==}
     dev: false
 
   /@firebase/app-types@0.9.1:
@@ -2502,10 +2525,6 @@ packages:
       - '@react-native-async-storage/async-storage'
     dev: false
 
-  /@firebase/auth-interop-types@0.2.1:
-    resolution: {integrity: sha512-VOaGzKp65MY6P5FI84TfYKBXEPi6LmOCSMMzys6o2BN2LOsqy7pCuZCup7NYnfbk5OkkQKzvIfHOzTm0UDpkyg==}
-    dev: false
-
   /@firebase/auth-interop-types@0.2.2:
     resolution: {integrity: sha512-k3NA28Jfoo0+o391bFjoV9X5QLnUL1WbLhZZRbTQhZdmdGYJfX8ixtNNlHsYQ94bwG0QRbsmvkzDnzuhHrV11w==}
     dev: false
@@ -2537,28 +2556,10 @@ packages:
       undici: 5.28.3
     dev: false
 
-  /@firebase/component@0.6.5:
-    resolution: {integrity: sha512-2tVDk1ixi12sbDmmfITK8lxSjmcb73BMF6Qwc3U44hN/J1Fi1QY/Hnnb6klFlbB9/G16a3J3d4nXykye2EADTw==}
-    dependencies:
-      '@firebase/util': 1.9.4
-      tslib: 2.6.2
-    dev: false
-
   /@firebase/component@0.6.6:
     resolution: {integrity: sha512-pp7sWqHmAAlA3os6ERgoM3k5Cxff510M9RLXZ9Mc8KFKMBc2ct3RkZTWUF7ixJNvMiK/iNgRLPDrLR2gtRJ9iQ==}
     dependencies:
       '@firebase/util': 1.9.5
-      tslib: 2.6.2
-    dev: false
-
-  /@firebase/database-compat@1.0.3:
-    resolution: {integrity: sha512-7tHEOcMbK5jJzHWyphPux4osogH/adWwncxdMxdBpB9g1DNIyY4dcz1oJdlkXGM/i/AjUBesZsd5CuwTRTBNTw==}
-    dependencies:
-      '@firebase/component': 0.6.5
-      '@firebase/database': 1.0.3
-      '@firebase/database-types': 1.0.1
-      '@firebase/logger': 0.4.0
-      '@firebase/util': 1.9.4
       tslib: 2.6.2
     dev: false
 
@@ -2573,30 +2574,11 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@firebase/database-types@1.0.1:
-    resolution: {integrity: sha512-Tmcmx5XgiI7UVF/4oGg2P3AOTfq3WKEPsm2yf+uXtN7uG/a4WTWhVMrXGYRY2ZUL1xPxv9V33wQRJ+CcrUhVXw==}
-    dependencies:
-      '@firebase/app-types': 0.9.0
-      '@firebase/util': 1.9.4
-    dev: false
-
   /@firebase/database-types@1.0.2:
     resolution: {integrity: sha512-JRigr5JNLEHqOkI99tAGHDZF47469/cJz1tRAgGs8Feh+3ZmQy/vVChSqwMp2DuVUGp9PlmGsNSlpINJ/hDuIA==}
     dependencies:
       '@firebase/app-types': 0.9.1
       '@firebase/util': 1.9.5
-    dev: false
-
-  /@firebase/database@1.0.3:
-    resolution: {integrity: sha512-9fjqLt9JzL46gw9+NRqsgQEMjgRwfd8XtzcKqG+UYyhVeFCdVRQ0Wp6Dw/dvYHnbH5vNEKzNv36dcB4p+PIAAA==}
-    dependencies:
-      '@firebase/app-check-interop-types': 0.3.0
-      '@firebase/auth-interop-types': 0.2.1
-      '@firebase/component': 0.6.5
-      '@firebase/logger': 0.4.0
-      '@firebase/util': 1.9.4
-      faye-websocket: 0.11.4
-      tslib: 2.6.2
     dev: false
 
   /@firebase/database@1.0.4:
@@ -2721,12 +2703,6 @@ packages:
       '@firebase/component': 0.6.6
       '@firebase/util': 1.9.5
       idb: 7.1.1
-      tslib: 2.6.2
-    dev: false
-
-  /@firebase/logger@0.4.0:
-    resolution: {integrity: sha512-eRKSeykumZ5+cJPdxxJRgAC3G5NknY2GwEbKfymdnXtnT0Ucm4pspfR6GT4MUQEDuJwRVbVcSx85kgJulMoFFA==}
-    dependencies:
       tslib: 2.6.2
     dev: false
 
@@ -2870,12 +2846,6 @@ packages:
       '@firebase/util': 1.9.5
       tslib: 2.6.2
       undici: 5.28.3
-    dev: false
-
-  /@firebase/util@1.9.4:
-    resolution: {integrity: sha512-WLonYmS1FGHT97TsUmRN3qnTh5TeeoJp1Gg5fithzuAgdZOUtsYECfy7/noQ3llaguios8r5BuXSEiK82+UrxQ==}
-    dependencies:
-      tslib: 2.6.2
     dev: false
 
   /@firebase/util@1.9.5:
@@ -6612,8 +6582,8 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       '@fastify/busboy': 1.2.1
-      '@firebase/database-compat': 1.0.3
-      '@firebase/database-types': 1.0.1
+      '@firebase/database-compat': 1.0.4
+      '@firebase/database-types': 1.0.2
       '@types/node': 20.11.24
       jsonwebtoken: 9.0.2
       jwks-rsa: 3.1.0

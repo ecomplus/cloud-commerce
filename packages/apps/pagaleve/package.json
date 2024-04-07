@@ -3,7 +3,11 @@
   "type": "module",
   "version": "0.0.0",
   "description": "e-com.plus Cloud Commerce app to integrate Pagaleve",
-  "main": "lib/index.js",
+  "main": "lib/pagaleve.js",
+  "exports": {
+    ".": "./lib/pagaleve.js",
+    "./webhook": "./lib/pagaleve-webhook.js"
+  },
   "files": [
     "/lib",
     "/lib-mjs",
@@ -14,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/app-pagaleve"
+    "directory": "packages/apps/pagaleve"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "MIT",
@@ -23,10 +27,15 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/pagaleve#readme",
   "scripts": {
-    "build": "echo '@ecomplus/app-pagaleve'"
+    "build": "bash ../../../scripts/build-lib.sh"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
+    "@ecomplus/utils": "1.5.0-rc.6",
+    "axios": "^1.6.8",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^4.8.2"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

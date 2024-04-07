@@ -159,6 +159,9 @@ const mergeConfig = {
       appId: 122241,
       events: googleAnalyticsEvents,
     },
+    pagaleve: {
+      appId: 113537,
+    },
     pagHiper: {
       appId: 1251,
     },

@@ -136,6 +136,12 @@ export default async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagaleve.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-pagaleve')
+          .then(({ listPayments }) => listPayments(_data as any));
+      };
+    }
     if (appId === apps.pagarMeV5.appId) {
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-pagarme-v5')
@@ -183,6 +189,12 @@ export default async (
       internalModuleFn = async (_data: AppModuleBody = data) => {
         return import('@cloudcommerce/app-paghiper')
           .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.pagaleve.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-pagaleve')
+          .then(({ createTransaction }) => createTransaction(_data as any));
       };
     }
     if (appId === apps.pagarMeV5.appId) {
