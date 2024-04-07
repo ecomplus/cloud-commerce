@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/ecomplus/cloud-commerce/compare/v2.11.2...v2.12.0) (2024-04-07)
+
+
+### Features
+
+* **pagaleve:** Add new app for Pagaleve payment method ([2bc30d0](https://github.com/ecomplus/cloud-commerce/commit/2bc30d0f3019d1d6938dd344e5a030a232eb9c56))
+
+
+### Bug Fixes
+
+* Add `/assets` dir to exported `files` on many apps package.json (common for payments) ([bd776ac](https://github.com/ecomplus/cloud-commerce/commit/bd776acda9281545df321631a056f35298694edf))
+
 ### [2.11.2](https://github.com/ecomplus/cloud-commerce/compare/v2.11.1...v2.11.2) (2024-04-05)
 
 ### [2.11.1](https://github.com/ecomplus/cloud-commerce/compare/v2.11.0...v2.11.1) (2024-04-05)
