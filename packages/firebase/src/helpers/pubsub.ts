@@ -25,7 +25,9 @@ const createPubSubFunction = (
     .pubsub.topic(pubSubTopic).onPublish((message, context) => {
       const eventAgeMs = Date.now() - Date.parse(context.timestamp);
       if (eventAgeMs > eventMaxAgeMs) {
-        logger.warn(`Dropping event ${context.eventId} with age[ms]: ${eventAgeMs}`);
+        logger.warn(`Dropping event ${context.eventId} with age[ms]: ${eventAgeMs}`, {
+          data: message.json,
+        });
       }
       return fn(message.json, context, message);
     });
