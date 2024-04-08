@@ -369,7 +369,7 @@ type EventsResult<TEndpoint extends EventsEndpoint> = {
     resource?: string,
     authentication_id?: ResourceId | null,
     resource_id?: ResourceId,
-    action: string,
+    action: 'create' | 'update' | 'delete',
     modified_fields: string[],
     method?: number | undefined,
     endpoint?: string,
