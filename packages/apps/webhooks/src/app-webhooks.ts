@@ -4,9 +4,9 @@ import {
   createAppEventsFunction,
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import handleApiEvent from './events-to-webhooks-app';
+import handleApiEvent from './events-to-webhooks';
 
-export const webhooksapp = {
+export const webhooks = {
   onStoreEvent: createAppEventsFunction(
     'webhooksApp',
     handleApiEvent as ApiEventHandler,

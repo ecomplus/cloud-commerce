@@ -51,7 +51,6 @@ const handleWehook = async (req, res) => {
       }
     }
     const pagarmeAxios = axios(process.env.PAGARMEV5_API_TOKEN);
-    logger.log(`>> webhook ${JSON.stringify(body)}, type:${type}`);
     if (type === 'subscription.created' && body.data) {
       const orderOriginalId = body.data?.code;
       const subscriptionPagarmeId = body.data?.id;

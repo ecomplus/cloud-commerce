@@ -8,14 +8,14 @@ import {
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from '../lib-mjs/events-to-pagarme5.mjs';
-import handlePagarmeV5Webhook from '../lib-mjs/pagarme5-webhooks.mjs';
+import handlePagarmeV5Webhook from '../lib-mjs/pagarme5-webhook.mjs';
 
 export const pagarmev5 = {
   onStoreEvent: createAppEventsFunction(
     'pagarMeV5',
     handleApiEvent as ApiEventHandler,
   ),
-  webhooks: functions
+  webhook: functions
     .region(config.get().httpsFunctionOptions.region)
     .https.onRequest((req, res) => {
       if (req.method !== 'POST') {
