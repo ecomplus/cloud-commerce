@@ -74,7 +74,7 @@ const parseEventName = (
   });
   return { resource, params, actionName } as {
     resource: Resource,
-    params: Exclude<ApiConfig['params'], undefined>,
+    params: Exclude<ApiConfig['params'], undefined | string>,
     actionName: string
   };
 };
@@ -163,7 +163,10 @@ export default async () => {
       }
     }
     let { data: { result } } = await api.get(`events/${resource}`, {
-      params,
+      params: {
+        ...params,
+        fields: 'body',
+      },
     });
     /*
     global.$transformApiEvents = async (resource: string, result: EventsResult) => {
@@ -182,6 +185,7 @@ export default async () => {
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
       const resourceId = apiEvent.resource_id;
+      apiEvent.resource = resource;
       if (resourceIdsRead.includes(resourceId)) {
         return;
       }
