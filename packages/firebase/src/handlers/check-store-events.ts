@@ -163,10 +163,7 @@ export default async () => {
       }
     }
     let { data: { result } } = await api.get(`events/${resource}`, {
-      params: {
-        ...params,
-        fields: 'body',
-      },
+      params,
     });
     /*
     global.$transformApiEvents = async (resource: string, result: EventsResult) => {
@@ -185,7 +182,6 @@ export default async () => {
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
       const resourceId = apiEvent.resource_id;
-      apiEvent.resource = resource;
       if (resourceIdsRead.includes(resourceId)) {
         return;
       }
