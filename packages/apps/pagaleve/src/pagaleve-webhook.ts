@@ -33,7 +33,7 @@ const parseStatusToEcom = (pagaleveTransactionStatus: string) => {
   return 'unknown';
 };
 
-export const pagarme = {
+export const pagaleve = {
   webhook: functions
     .region(httpsFunctionOptions.region)
     .runWith(httpsFunctionOptions)
@@ -112,15 +112,15 @@ export const pagarme = {
           } as Partial<Exclude<(typeof order)['transactions'], undefined>[0]>);
 
           if (state.toLowerCase() === 'authorized') {
-            const pagaleve = new Pagaleve(appData.username, appData.password, isSandbox);
-            await pagaleve.preparing;
+            const _pagaleve = new Pagaleve(appData.username, appData.password, isSandbox);
+            await _pagaleve.preparing;
             const pagalevePayment = {
               checkout_id: id,
               currency: 'BRL',
               amount,
               intent: 'CAPTURE',
             };
-            await pagaleve.axios.post('/v1/payments', pagalevePayment, {
+            await _pagaleve.axios.post('/v1/payments', pagalevePayment, {
               maxRedirects: 0,
             });
           }
