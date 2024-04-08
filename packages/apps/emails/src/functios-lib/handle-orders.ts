@@ -56,14 +56,13 @@ export default async (
   let html: string | undefined;
   let templateId: string | undefined;
 
-  if (action !== 'delete' && trigger.body) {
+  if (action !== 'delete') {
     const resourceId = trigger.resource_id;
-    const insertedId = trigger.body._id || null;
     const orderId = resourceId;
 
     if (store && order && order.buyers && order.buyers) {
       let checkStatus: string | undefined = order.status;
-      let lastValidRecord: { status: string; };
+      let lastValidRecord: { status: string, customer_notified: boolean, _id: string };
       const customerId = order.buyers[0]._id;
       const customer = (await api.get(`customers/${customerId}`)).data;
       // fulfillment payments_history
@@ -78,21 +77,15 @@ export default async (
                 a: { [x: string]: any; },
                 b: { [x: string]: any; },
               ) => (a.date_time > b.date_time ? -1 : 1));
-
-            lastValidRecord = sortedRecords.find(
-              ({ status }) => orderStatus.includes(status),
-            );
-
+            lastValidRecord = sortedRecords.find(({ status }) => {
+              return orderStatus.includes(status);
+            });
             if (lastValidRecord) {
               checkStatus = lastValidRecord.status;
             }
-
-            isCustomerNotified = Boolean(order[subresource]
-              .find((entry) => entry._id === insertedId && entry.customer_notified));
-
+            isCustomerNotified = Boolean(lastValidRecord.customer_notified);
             if (!isCustomerNotified) {
               const lastNotification = sortedRecords.find((entry) => entry.customer_notified);
-
               if (lastNotification) {
                 lastNotifiedStatus = lastNotification.status;
               }
@@ -211,7 +204,6 @@ export default async (
                     orderId,
                     subresource,
                     lastValidRecord,
-                    insertedId,
                   );
                 }
               }

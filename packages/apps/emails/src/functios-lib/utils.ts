@@ -5,15 +5,12 @@ import config from '@cloudcommerce/firebase/lib/config';
 const updateOrderSubresource = (
   orderId: ResourceId,
   subresource: string,
-  lastValidRecord: { [key: string]: any },
-  insertedId: string,
+  lastValidRecord: Record<string, any> & { _id: string },
 ) => {
-  const statusRecordId: string = lastValidRecord ? lastValidRecord._id : insertedId;
-
   const body = {
     customer_notified: true,
   };
-  return api.patch(`orders/${orderId}/${subresource}/${statusRecordId}`, body);
+  return api.patch(`orders/${orderId}/${subresource}/${lastValidRecord._id}`, body);
 };
 
 const toCamelCase = (status: string) => {
