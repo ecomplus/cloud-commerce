@@ -56,10 +56,9 @@ export default async (
   let html: string | undefined;
   let templateId: string | undefined;
 
-  if (action !== 'delete') {
-    const triggerBody = trigger.body;
+  if (action !== 'delete' && trigger.body) {
     const resourceId = trigger.resource_id;
-    const insertedId = triggerBody._id || null;
+    const insertedId = trigger.body._id || null;
     const orderId = resourceId;
 
     if (store && order && order.buyers && order.buyers) {
