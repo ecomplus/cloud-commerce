@@ -50,6 +50,6 @@
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.1",
-    "typescript": "~5.4.3"
+    "typescript": "~5.4.4"
   }
 }
