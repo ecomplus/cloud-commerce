@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.12.2](https://github.com/ecomplus/cloud-commerce/compare/v2.12.1...v2.12.2) (2024-04-09)
+
+
+### Bug Fixes
+
+* **api:** Improving `EventsResult` type def ([ffd7d87](https://github.com/ecomplus/cloud-commerce/commit/ffd7d871bd52ef06e066b3e205aa069eae5566a3))
+* **apps:** Not relying on api event body anymore ([0e999d6](https://github.com/ecomplus/cloud-commerce/commit/0e999d68266e22a57535261424acc99770b5a1c1))
+* **emails:** Prevent fatal error with undefined API event body ([22ab548](https://github.com/ecomplus/cloud-commerce/commit/22ab548ad4b5a049f93e0fb9d3271f788a7541c5))
+* Ensure `body` and `resource` fields on store event objects ([65e7796](https://github.com/ecomplus/cloud-commerce/commit/65e7796093069ab47dc897f9a520e02e8b67cdfc))
+
 ### [2.12.1](https://github.com/ecomplus/cloud-commerce/compare/v2.12.0...v2.12.1) (2024-04-08)
 
 
