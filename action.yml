@@ -24,13 +24,13 @@ inputs:
     description: 'Emails: sender name (default is store name)'
   mail-reply-to:
     description: 'Emails: Reply email'
-  smpt-host:
+  smtp-host:
     description: 'Emails: SMTP hostname'
-  smpt-port:
+  smtp-port:
     description: 'Emails: SMTP port number'
-  smpt-user:
+  smtp-user:
     description: 'Emails: SMTP username'
-  smpt-pass:
+  smtp-pass:
     description: 'Emails: SMTP password'
   bunnynet-api-key:
     description: 'bunny.net API key (additional CDN layer)'
@@ -258,10 +258,10 @@ runs:
         MAIL_SENDER: ${{ inputs.mail-sender }}
         MAIL_SENDER_NAME: ${{ inputs.mail-sender-name }}
         MAIL_REPLY_TO: ${{ inputs.mail-reply-to }}
-        SMTP_HOST: ${{ inputs.smpt-host }}
-        SMTP_PORT: ${{ inputs.smpt-port }}
-        SMTP_USER: ${{ inputs.smpt-user }}
-        SMTP_PASS: ${{ inputs.smpt-pass }}
+        SMTP_HOST: ${{ inputs.smtp-host }}
+        SMTP_PORT: ${{ inputs.smtp-port }}
+        SMTP_USER: ${{ inputs.smtp-user }}
+        SMTP_PASS: ${{ inputs.smtp-pass }}
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
         TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
