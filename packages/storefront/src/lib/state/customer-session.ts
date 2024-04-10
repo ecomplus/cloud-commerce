@@ -45,10 +45,11 @@ const isLogged = computed(() => {
   return isAuthenticated.value || !!firebaseAuth?.currentUser?.emailVerified;
 });
 const logout = () => {
-  session.auth = emptySession.auth;
-  session.customer = emptySession.customer;
-  localStorage.removeItem(storageKey);
-  firebaseAuth.signOut();
+  firebaseAuth.signOut().then(() => {
+    session.auth = emptySession.auth;
+    session.customer = emptySession.customer;
+    localStorage.removeItem(storageKey);
+  });
 };
 
 const throwNoAuth = (msg = 'Not authenticated') => {
@@ -123,13 +124,11 @@ const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
             const isEmailChanged = user.email !== customerEmail.value;
             if (isEmailChanged || !isAuthenticated.value) {
               await authenticate();
-              if (isEmailChanged || !customerName.value) {
-                await fetchCustomer();
-              }
+            }
+            if (isEmailChanged || !session.customer.doc_number) {
+              await fetchCustomer();
             }
           }
-        } else {
-          logout();
         }
       });
       if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
