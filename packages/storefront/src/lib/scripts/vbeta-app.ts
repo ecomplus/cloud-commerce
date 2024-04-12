@@ -240,7 +240,7 @@ if (!import.meta.env.SSR) {
   };
 
   const appScript = document.createElement('script');
-  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.197/dist/lib/js/app.js';
+  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.198/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 }
