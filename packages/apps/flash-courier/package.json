@@ -32,7 +32,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.6.8",
-    "firebase-functions": "^4.8.2"
+    "firebase-functions": "^4.9.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"
