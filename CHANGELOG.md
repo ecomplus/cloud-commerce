@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0](https://github.com/ecomplus/cloud-commerce/compare/v2.12.2...v2.13.0) (2024-04-15)
+
+
+### Features
+
+* **feeds:** Start rendering products XML catalog (Meta and GMC) at `/_feeds/catalog` endpoint ([8968e73](https://github.com/ecomplus/cloud-commerce/commit/8968e73089662d2564da529efc2a68b1b74f5510))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#364](https://github.com/ecomplus/cloud-commerce/issues/364)) ([92066a1](https://github.com/ecomplus/cloud-commerce/commit/92066a16c79c53f214ae6945f495c91c3f721599))
+* **storefront:** Prevent antecipated logout and ensure logout reactivity on customer session state ([36c2b5d](https://github.com/ecomplus/cloud-commerce/commit/36c2b5d76ac368688b8d631b629b835c56dbc27c))
+* **storefront:** Update vbeta-app script with `@ecomplus/storefront-app@2.0.0-beta.198` ([4781d32](https://github.com/ecomplus/cloud-commerce/commit/4781d32a1d4b3ed2cf537e3ad86241167aab71ec))
+
 ### [2.12.2](https://github.com/ecomplus/cloud-commerce/compare/v2.12.1...v2.12.2) (2024-04-09)
 
 
