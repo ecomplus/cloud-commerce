@@ -36,4 +36,21 @@ ls ./dist/client/_astro/* \
   2>/dev/null
 sed -i -e 's/.\/dist\/client//g' ./dist/server/static-builds.csv
 
+if [[ -n $STOREFRONT_BASE_DIR ]]; then
+  base_dir=$(realpath "$STOREFRONT_BASE_DIR")
+else
+  base_dir=$(pwd)
+fi
+content_dir=$(realpath "$base_dir/content")
+settings_path="$content_dir/settings.json"
+domain=$(grep '"domain"' $settings_path | awk -F\" '{ print $4 }')
+
+robots_file="./dist/client/robots.txt"
+if [[ -f $robots_file ]]; then
+  if ! grep -q "Sitemap: " "$robots_file"; then
+    echo "" >> "$robots_file"
+    echo "Sitemap: https://$domain/sitemap-index.xml" >> "$robots_file"
+  fi
+fi
+
 exit 0
