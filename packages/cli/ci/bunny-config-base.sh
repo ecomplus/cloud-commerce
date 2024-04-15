@@ -153,7 +153,7 @@ configure_edge_rule "APIs bypass CDN cache" '
       "Type": 0,
       "PatternMatches": [
         "*/_api/*",
-        "*/_feeds/*",
+        "*.xml",
         "*/.*/git/*",
         "*/_analytics",
         "*/admin/",
@@ -179,7 +179,7 @@ configure_edge_rule "APIs bypass perma-cache" '
       "Type": 0,
       "PatternMatches": [
         "*/_api/*",
-        "*/_feeds/*",
+        "*.xml",
         "*/.*/git/*",
         "*/_analytics",
         "*/admin/",
