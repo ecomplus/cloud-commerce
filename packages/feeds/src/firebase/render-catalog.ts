@@ -28,8 +28,7 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
   }
   const isFacebook = (req.get('User-Agent') || '').includes('facebook');
 
-  let xml = `
-  <?xml version="1.0"?>
+  let xml = `<?xml version="1.0"?>
   <feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0">
     <title><![CDATA[${title}]]></title>
     <link href="https://${domain}/" rel="alternate" type="text/html"/>

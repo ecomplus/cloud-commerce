@@ -98,8 +98,12 @@ const serveFeeds = async (req: Request, res: Response) => {
     case '/catalog.xml':
       await renderCatalog(req, res, products);
       break;
-    case '/sitemap.xml':
+    case '/sitemap-catalog.xml':
       await renderSitemap(req, res, products);
+      break;
+    case '/sitemap':
+    case '/sitemap.xml':
+      res.redirect(302, '/sitemap-catalog.xml');
       break;
     default:
       res.sendStatus(404);

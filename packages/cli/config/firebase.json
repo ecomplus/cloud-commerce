@@ -67,7 +67,7 @@
         "region": "us-east4"
       },
       {
-        "source": "/sitemap.xml",
+        "source": "/sitemap-catalog.xml",
         "function": "feeds",
         "region": "us-east4"
       },
