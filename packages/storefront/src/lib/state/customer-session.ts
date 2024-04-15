@@ -112,6 +112,7 @@ const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
       signInWithEmailLink,
     }) => {
       firebaseAuth = getAuth();
+      firebaseAuth.languageCode = window.$storefront.settings.lang || 'pt_br';
       onAuthStateChanged(firebaseAuth, async (user) => {
         if (user) {
           if (user.displayName && !customerName.value) {
