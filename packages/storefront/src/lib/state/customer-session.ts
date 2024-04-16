@@ -2,7 +2,7 @@ import type { Customers } from '@cloudcommerce/api/types';
 import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
 
@@ -40,18 +40,10 @@ const customerEmail = computed({
   },
 });
 
-let firebaseAuth: Auth;
+let firebaseAuth: Auth | undefined;
 const isLogged = computed(() => {
   return isAuthenticated.value || !!firebaseAuth?.currentUser?.emailVerified;
 });
-const logout = () => {
-  firebaseAuth.signOut().then(() => {
-    session.auth = emptySession.auth;
-    session.customer = emptySession.customer;
-    localStorage.removeItem(storageKey);
-  });
-};
-
 const throwNoAuth = (msg = 'Not authenticated') => {
   const err: any = new Error(msg);
   err.isNoAuth = true;
@@ -59,7 +51,7 @@ const throwNoAuth = (msg = 'Not authenticated') => {
 };
 
 const authenticate = async () => {
-  const authToken = await firebaseAuth.currentUser?.getIdToken();
+  const authToken = await firebaseAuth?.currentUser?.getIdToken();
   if (!authToken) {
     throwNoAuth('Can\'t get Firebase user ID token');
     return;
@@ -153,6 +145,19 @@ const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
   } else {
     runImport();
   }
+};
+
+const logout = () => {
+  if (!firebaseAuth) {
+    initializeFirebaseAuth();
+    watch(isAuthReady, () => logout(), { once: true });
+    return;
+  }
+  firebaseAuth.signOut().then(() => {
+    session.auth = emptySession.auth;
+    session.customer = emptySession.customer;
+    localStorage.removeItem(storageKey);
+  });
 };
 
 export default session;

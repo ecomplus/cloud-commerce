@@ -218,7 +218,7 @@ if (!import.meta.env.SSR) {
       if (isAuthenticated.value) {
         ecomPassport.setSession({
           auth: {
-            ...session.auth,
+            token: session.auth,
             id: session.auth?.customer_id,
             level: 3,
           },
@@ -242,7 +242,9 @@ if (!import.meta.env.SSR) {
       ecomPassport.on('logout', () => {
         if (isAuthenticated.value) {
           logout();
-          window.location.href = '/';
+          watch(isAuthenticated, () => {
+            window.location.href = '/';
+          }, { once: true });
         }
       });
     }, 400);
