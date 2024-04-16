@@ -38,10 +38,12 @@ const nextRowsClassName = computed(() => {
       v-if="numRows > 4"
       :class="[nextRowsClassName, isLarge ? 'max-w-[600px]' : 'max-w-[300px]']"
     ></div>
-    <div
-      v-for="n in (numRows - 5)" :key="n"
-      :class="[nextRowsClassName, isLarge ? 'max-w-[720px]' : 'max-w-[360px]']"
-    ></div>
+    <template v-if="numRows > 5">
+      <div
+        v-for="n in (numRows - 5)" :key="n"
+        :class="[nextRowsClassName, isLarge ? 'max-w-[720px]' : 'max-w-[360px]']"
+      ></div>
+    </template>
     <span class="sr-only">Loading...</span>
   </div>
 </template>
