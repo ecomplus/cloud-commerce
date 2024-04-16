@@ -6,6 +6,7 @@ import {
   isAuthenticated,
   customer,
   customerName,
+  logout,
 } from '@@sf/state/customer-session';
 import { shoppingCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
@@ -236,11 +237,19 @@ if (!import.meta.env.SSR) {
     }, {
       immediate: true,
     });
-    setTimeout(watchAppRoutes, 400);
+    setTimeout(() => {
+      watchAppRoutes();
+      ecomPassport.on('logout', () => {
+        if (isAuthenticated.value) {
+          logout();
+          window.location.href = '/';
+        }
+      });
+    }, 400);
   };
 
   const appScript = document.createElement('script');
-  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.198/dist/lib/js/app.js';
+  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.199/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 }
