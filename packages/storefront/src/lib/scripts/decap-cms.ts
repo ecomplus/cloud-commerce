@@ -64,7 +64,7 @@ const authAndInitCms = async () => {
     }
     cmsConfig.backend = {
       repo: GIT_REPO || '_owner/_name',
-      api_root: `https://ecomplus.app/api/${ECOM_STORE_ID}/git/github/`,
+      api_root: `https://ecomplus.app/api/${ECOM_STORE_ID}/git/github`,
       name: 'github',
       base_url: `https://${location.hostname}`,
       auth_endpoint: location.pathname, // self
