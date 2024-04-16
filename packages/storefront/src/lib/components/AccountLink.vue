@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue';
+import { isLogged } from '@@sf/state/customer-session';
 
 export interface Props {
-  to?: 'orders' | 'favorites';
-  accountUrl?: string;
+  to?: 'orders' | 'favorites' | 'account';
+  loginUrl?: string;
   returnUrl?: string | null;
   isSignUp?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  accountUrl: globalThis.$storefront?.settings.accountUrl || '/app/account',
+  loginUrl: '/app/account',
 });
 const locationUrl = ref('');
 if (globalThis.location?.href) {
@@ -18,24 +19,28 @@ if (globalThis.location?.href) {
   });
 }
 const href = computed(() => {
-  let url = props.accountUrl;
   const returnUrl = props.returnUrl || locationUrl.value;
-  if (!props.to) {
+  const loggedTo = !isLogged.value ? null : (props.to || 'account');
+  if (!loggedTo) {
+    let { loginUrl } = props;
     if (props.isSignUp) {
-      url += '?sign_up&';
+      loginUrl += '?sign_up&';
     } else {
-      url += '?';
+      loginUrl += '?';
     }
-    return returnUrl ? `${url}return_url=${returnUrl}` : url;
+    return returnUrl ? `${loginUrl}return_url=${returnUrl}` : loginUrl;
   }
   const { settings } = globalThis.$storefront;
-  if (props.to === 'orders' && settings.ordersUrl) {
+  if (loggedTo === 'orders' && settings.ordersUrl) {
     return settings.ordersUrl;
   }
-  if (props.to === 'favorites' && settings.favoritesUrl) {
+  if (loggedTo === 'favorites' && settings.favoritesUrl) {
     return settings.favoritesUrl;
   }
-  return `${url}/${props.to}`;
+  if (loggedTo === 'account' && settings.accountUrl) {
+    return settings.accountUrl;
+  }
+  return `/app/#/account/${loggedTo}`;
 });
 </script>
 
