@@ -2,7 +2,7 @@ import type { Customers } from '@cloudcommerce/api/types';
 import type { Auth } from 'firebase/auth';
 import api from '@cloudcommerce/api';
 import { nickname as getNickname } from '@ecomplus/utils';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
 
@@ -97,6 +97,7 @@ const fetchCustomer = async () => {
   return data;
 };
 
+const isAuthReady = ref(false);
 let isAuthInitialized = false;
 const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
   if (import.meta.env.SSR || isAuthInitialized) return;
@@ -131,16 +132,20 @@ const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
             }
           }
         }
+        isAuthReady.value = true;
       });
       if (isSignInWithEmailLink(firebaseAuth, window.location.href)) {
         const urlParams = new URLSearchParams(window.location.search);
         const email = urlParams.get('email');
         if (email) {
+          isAuthReady.value = !!firebaseAuth.currentUser;
           signInWithEmailLink(firebaseAuth, email, window.location.href)
             .then(() => window.localStorage.removeItem(EMAIL_STORAGE_KEY))
             .catch(console.error);
+          return;
         }
       }
+      isAuthReady.value = true;
     })
     .catch(console.error);
   if (canWaitIdle) {
@@ -164,4 +169,5 @@ export {
   getAccessToken,
   fetchCustomer,
   initializeFirebaseAuth,
+  isAuthReady,
 };

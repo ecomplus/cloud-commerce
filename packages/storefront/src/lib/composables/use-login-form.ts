@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useUrlSearchParams, useThrottleFn } from '@vueuse/core';
 import {
   getAuth,
@@ -9,6 +9,7 @@ import {
   EMAIL_STORAGE_KEY,
   customerEmail as email,
   initializeFirebaseAuth,
+  isAuthReady,
 } from '@@sf/state/customer-session';
 
 export interface Props {
@@ -36,6 +37,9 @@ const useLoginForm = (props?: Props) => {
   });
   const password = ref('');
   const isSubmitting = ref(false);
+  const isSubmitReady = computed(() => {
+    return !isSubmitting.value && isAuthReady.value;
+  });
   const submitLogin = useThrottleFn(async (linkActionUrl?: string | null) => {
     isSubmitting.value = true;
     const timestamp = Date.now();
@@ -71,6 +75,7 @@ const useLoginForm = (props?: Props) => {
     email,
     password,
     isSubmitting,
+    isSubmitReady,
     submitLogin,
   };
 };
