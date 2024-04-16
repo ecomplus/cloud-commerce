@@ -77,11 +77,6 @@
         "region": "us-east4"
       },
       {
-        "source": "/.*/git/**",
-        "function": "feeds",
-        "region": "us-east4"
-      },
-      {
         "source": "**/!(*(*.)ico|*(*.)png|*(*.)map)",
         "function": "ssr",
         "region": "us-east4"
