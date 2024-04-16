@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0](https://github.com/ecomplus/cloud-commerce/compare/v2.13.1...v2.14.0) (2024-04-16)
+
+
+### Features
+
+* **feeds:** Start rendering catalog sitemap (categories/brands/products) on /sitemap-catalog.xml ([c52ffd7](https://github.com/ecomplus/cloud-commerce/commit/c52ffd738f72c00902e306c8565a0950b1d35c1b))
+
+
+### Bug Fixes
+
+* **cli:** Properly bypass CMS (/admin/) routes on bunny.net CDN ([a35df9d](https://github.com/ecomplus/cloud-commerce/commit/a35df9d1ab000a0f6be0b4caeb5c47afe6993216))
+* **cli:** Update bunny.net edge rules config to bypass all .xml URLs (sitemap and catalogs) ([31dc5c1](https://github.com/ecomplus/cloud-commerce/commit/31dc5c18f12c41d50b8fb0198369564cc92fd0ff))
+* **feeds:** Properly set response headers on products catalog ([269d30a](https://github.com/ecomplus/cloud-commerce/commit/269d30a0e9d9e8c559e49148b91559c0d94f18c3))
+* **storefront:** Add `isSubmitReady` state to login form composable ([4ce2418](https://github.com/ecomplus/cloud-commerce/commit/4ce2418f720ab0d8e82e33a4ec9a1cd5574cbf71))
+* **storefront:** Edit production build script to add sitemap URL (with domain) on static robots.txt ([4f19fae](https://github.com/ecomplus/cloud-commerce/commit/4f19fae9a49aa5db77b15be9e7c8fe202f9cb4bb))
+* **storefront:** Fix `<AccountLink>` with separated login URL ([26ba81d](https://github.com/ecomplus/cloud-commerce/commit/26ba81d9e2ef7590cfb1759a8f9f303b39991701))
+* **storefront:** Prevent error with skeleton with less than 5 rows ([2c9c009](https://github.com/ecomplus/cloud-commerce/commit/2c9c0099d49915d93eb5ae0dbcd041c843be108e))
+* **storefront:** Set Firebase Auth `languageCode` with default store settings language ([15c93b6](https://github.com/ecomplus/cloud-commerce/commit/15c93b6fe0e3186b38ac3a5659a4be0622ea8de1))
+* **storefront:** Update vbeta-app script with `@ecomplus/storefront-app@2.0.0-beta.199` ([57f6878](https://github.com/ecomplus/cloud-commerce/commit/57f68787f684a0d9d56d747b7c9a1a5acfe45ee5))
+
 ### [2.13.1](https://github.com/ecomplus/cloud-commerce/compare/v2.13.0...v2.13.1) (2024-04-15)
 
 ## [2.13.0](https://github.com/ecomplus/cloud-commerce/compare/v2.12.2...v2.13.0) (2024-04-15)

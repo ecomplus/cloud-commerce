@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-datafrete",
   "type": "module",
-  "version": "2.13.1",
+  "version": "2.14.0",
   "description": "e-com.plus Cloud Commerce app to integrate Datafrete shipping gateway ",
   "main": "lib/datafrete.js",
   "exports": {
