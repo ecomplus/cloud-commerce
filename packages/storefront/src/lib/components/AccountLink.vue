@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue';
+import {
+  ref,
+  computed,
+  nextTick,
+  onMounted,
+} from 'vue';
 import { isLogged } from '@@sf/state/customer-session';
 
 export interface Props {
@@ -18,9 +23,13 @@ if (globalThis.location?.href) {
     locationUrl.value = globalThis.location.href;
   });
 }
+const isMounted = ref(false);
+onMounted(() => { isMounted.value = true; });
 const href = computed(() => {
   const returnUrl = props.returnUrl || locationUrl.value;
-  const loggedTo = !isLogged.value ? null : (props.to || 'account');
+  const loggedTo = isMounted.value && isLogged.value
+    ? (props.to || 'account')
+    : null;
   if (!loggedTo) {
     let { loginUrl } = props;
     if (props.isSignUp) {
@@ -28,7 +37,9 @@ const href = computed(() => {
     } else {
       loginUrl += '?';
     }
-    return returnUrl ? `${loginUrl}return_url=${returnUrl}` : loginUrl;
+    return returnUrl
+      ? `${loginUrl}return_url=${returnUrl}`
+      : `${loginUrl}#/account/${props.to || ''}`;
   }
   const { settings } = globalThis.$storefront;
   if (loggedTo === 'orders' && settings.ordersUrl) {
