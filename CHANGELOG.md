@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.14.1](https://github.com/ecomplus/cloud-commerce/compare/v2.14.0...v2.14.1) (2024-04-16)
+
+
+### Bug Fixes
+
+* **storefront:** Prevent hydration mismatch with `<AccountLink>` on logged state ([a4d1be9](https://github.com/ecomplus/cloud-commerce/commit/a4d1be9a171fe292794da2b0013f34d9b690a567))
+* **storefront:** Properly set `ecomPassport` session auth for vbeta-app ([a6d8e4e](https://github.com/ecomplus/cloud-commerce/commit/a6d8e4ebf27f134fc29da0ab5025c8bc73431426))
+
 ## [2.14.0](https://github.com/ecomplus/cloud-commerce/compare/v2.13.1...v2.14.0) (2024-04-16)
 
 
