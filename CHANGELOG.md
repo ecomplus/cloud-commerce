@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.14.3](https://github.com/ecomplus/cloud-commerce/compare/v2.14.2...v2.14.3) (2024-04-17)
+
+
+### Bug Fixes
+
+* **emails:** Set "reply to" with content settings email by default ([e643573](https://github.com/ecomplus/cloud-commerce/commit/e6435739aa7240c484a32929f749048880b369f6))
+* **feeds:** Properly handling nested entry values (fixes `additional_image_link`) ([5f20936](https://github.com/ecomplus/cloud-commerce/commit/5f20936ff7168f9ecba275e7de421b5910f296c4))
+
 ### [2.14.2](https://github.com/ecomplus/cloud-commerce/compare/v2.14.1...v2.14.2) (2024-04-17)
 
 
