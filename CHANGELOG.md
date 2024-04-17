@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.14.2](https://github.com/ecomplus/cloud-commerce/compare/v2.14.1...v2.14.2) (2024-04-17)
+
+
+### Bug Fixes
+
+* **cli:** Fix bunny.net CI to bypass perma-cache for /app/ (SPA) routes ([739caec](https://github.com/ecomplus/cloud-commerce/commit/739caec3dc0c0e8659f98317d89d6e2faaea05b1))
+* **emails:** Properly settings default email sender (from) and mask sender ([e199706](https://github.com/ecomplus/cloud-commerce/commit/e19970613b66ec258a98024ba5f7f3ac7bd69322))
+* **storefront:** Bump Vue to latest v3.4.23 ([553572d](https://github.com/ecomplus/cloud-commerce/commit/553572d10b30828df207db45024cb123b515ae4f))
+* **storefront:** Minor fix Decap CMS `backend.api_root` with no trailing slash ([81abc3c](https://github.com/ecomplus/cloud-commerce/commit/81abc3c7976d4e596dbc2306b791234bb52ee7d4))
+
 ### [2.14.1](https://github.com/ecomplus/cloud-commerce/compare/v2.14.0...v2.14.1) (2024-04-16)
 
 
