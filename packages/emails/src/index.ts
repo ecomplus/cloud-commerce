@@ -67,17 +67,15 @@ const sendEmail = (
       name: MAIL_SENDER_NAME || settingsContent.name,
       email: MAIL_SENDER || 'lojas@e-com.plus',
     },
+    replyTo: {
+      name: settingsContent.name,
+      email: MAIL_REPLY_TO || settingsContent.email,
+    },
   };
   if (!MAIL_SENDER && !emailHeaders.sender) {
     emailHeaders.sender = {
       email: settingsContent.email,
       name: settingsContent.name,
-    };
-  }
-  if (MAIL_REPLY_TO) {
-    emailHeaders.replyTo = {
-      name: settingsContent.name,
-      email: MAIL_REPLY_TO,
     };
   }
   if ((templateId || template || html) && SENDGRID_API_KEY) {
