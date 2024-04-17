@@ -28,5 +28,6 @@
     "astro",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "vue.server.hybridMode": true
 }
