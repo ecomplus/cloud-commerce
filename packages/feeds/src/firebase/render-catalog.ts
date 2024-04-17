@@ -239,9 +239,8 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
         const val = entry[key];
         if (val === undefined || val === null) return;
         if (typeof val === 'object' && val) {
-          Object.keys(entry).forEach((nKey) => {
-            const nested = val[nKey];
-            xml += `<g:${key}><![CDATA[${nested}]]></g:${key}>`;
+          Object.keys(val).forEach((nKey) => {
+            xml += `<g:${key}><![CDATA[${val[nKey]}]]></g:${key}>`;
           });
           return;
         }
