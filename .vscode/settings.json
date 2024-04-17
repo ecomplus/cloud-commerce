@@ -19,7 +19,8 @@
   "tailwindCSS.experimental.configFile": {
     "packages/storefront/tailwind.config.js": "packages/**",
     "store/functions/ssr/tailwind.config.js": "store/**",
-    "ecomplus-stores/barradoce/functions/ssr/tailwind.config.js": "ecomplus-stores/barradoce/**"
+    "ecomplus-stores/barradoce/functions/ssr/tailwind.config.js": "ecomplus-stores/barradoce/**",
+    "ecomplus-stores/tiasonia/functions/ssr/tailwind.config.js": "ecomplus-stores/tiasonia/**"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": [

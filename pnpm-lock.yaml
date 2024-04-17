@@ -134,6 +134,77 @@ importers:
         specifier: ^2.14.3
         version: link:../../../../packages/modules
 
+  ecomplus-stores/tiasonia:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.14.3
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.14.3
+        version: link:../../packages/eslint
+      husky:
+        specifier: ^9.0.11
+        version: 9.0.11
+      lint-staged:
+        specifier: ^15.2.2
+        version: 15.2.2
+
+  ecomplus-stores/tiasonia/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.14.3
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^2.14.3
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/tiasonia/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.14.3
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^2.14.3
+        version: link:../../../../packages/ssr
+      '@headlessui/vue':
+        specifier: ^1.7.19
+        version: 1.7.20(vue@3.4.23)
+      micromark:
+        specifier: ^4.0.0
+        version: 4.0.0
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.14.3
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^2.14.3
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^2.14.3
+        version: link:../../../../packages/types
+      photoswipe:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  ecomplus-stores/tiasonia/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.14.3
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^2.14.3
+        version: link:../../../../packages/modules
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':

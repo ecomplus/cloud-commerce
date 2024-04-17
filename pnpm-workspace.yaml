@@ -6,3 +6,5 @@ packages:
   - 'store/functions/*'
   - 'ecomplus-stores/barradoce'
   - 'ecomplus-stores/barradoce/functions/*'
+  - 'ecomplus-stores/tiasonia'
+  - 'ecomplus-stores/tiasonia/functions/*'
