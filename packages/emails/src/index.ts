@@ -41,7 +41,7 @@ const sendEmail = (
     SMTP_TLS,
     SENDGRID_API_KEY,
   } = process.env;
-
+  const { settingsContent } = config.get();
   const {
     templateData,
     templateId,
@@ -54,18 +54,9 @@ const sendEmail = (
     text,
     html,
   } = emailData;
-
-  const { settingsContent } = config.get();
-  const senderEmail = MAIL_SENDER || settingsContent.email;
-  const senderName = MAIL_SENDER_NAME || settingsContent.name;
-
   if (!templateId && !template && !html) {
     throw new Error('TemplateId, template or html not found');
   }
-  if (!senderEmail) {
-    throw new Error('Sender email not configured');
-  }
-
   const emailHeaders: EmailHeaders = {
     to,
     subject,
@@ -73,17 +64,22 @@ const sendEmail = (
     sender,
     bcc,
     from: {
-      name: senderName,
-      email: senderEmail,
+      name: MAIL_SENDER_NAME || settingsContent.name,
+      email: MAIL_SENDER || 'lojas@e-com.plus',
     },
   };
+  if (!MAIL_SENDER && !emailHeaders.sender) {
+    emailHeaders.sender = {
+      email: settingsContent.email,
+      name: settingsContent.name,
+    };
+  }
   if (MAIL_REPLY_TO) {
     emailHeaders.replyTo = {
-      name: senderName,
+      name: settingsContent.name,
       email: MAIL_REPLY_TO,
     };
   }
-
   if ((templateId || template || html) && SENDGRID_API_KEY) {
     return sendEmailSendGrid(
       emailHeaders,
@@ -95,7 +91,6 @@ const sendEmail = (
       },
     );
   }
-
   if (!smtpConfig && SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS) {
     const port = parseInt(SMTP_PORT, 10);
     const secure = SMTP_TLS && SMTP_TLS.toUpperCase() === 'TRUE' ? true : port === 465;
@@ -108,7 +103,6 @@ const sendEmail = (
     };
     setConfigSmtp(smtpConfig);
   }
-
   if ((template || html) && smtpConfig) {
     return sendEmailSmpt(
       emailHeaders,
@@ -120,8 +114,7 @@ const sendEmail = (
       },
     );
   }
-
-  throw new Error('Provider settings or smtp not found');
+  throw new Error('Provider settings or SMTP not found');
 };
 
 const sendGrid = {
