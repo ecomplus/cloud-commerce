@@ -65,7 +65,7 @@
     "tailwindcss": "^3.4.3",
     "unocss": "^0.58.9",
     "unplugin-auto-import": "^0.17.5",
-    "vue": "^3.4.21",
+    "vue": "^3.4.23",
     "wade": "0.3.3",
     "yaml": "^2.4.1"
   },
