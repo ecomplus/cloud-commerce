@@ -60,6 +60,163 @@ importers:
         specifier: ^7.2.3
         version: 7.2.3
 
+  ecomplus-stores/barradoce:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.14.3
+        version: 2.14.3
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.14.3
+        version: 2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
+      husky:
+        specifier: ^9.0.10
+        version: 9.0.11
+      lint-staged:
+        specifier: ^15.2.2
+        version: 15.2.2
+
+  ecomplus-stores/barradoce/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/passport':
+        specifier: ^2.14.3
+        version: 2.14.3
+
+  ecomplus-stores/barradoce/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/ssr':
+        specifier: ^2.14.3
+        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@headlessui/vue':
+        specifier: ^1.7.18
+        version: 1.7.20(vue@3.4.23(typescript@5.4.5))
+      micromark:
+        specifier: ^4.0.0
+        version: 4.0.0
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/storefront':
+        specifier: ^2.14.3
+        version: 2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+      '@cloudcommerce/types':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@iconify-json/mingcute':
+        specifier: ^1.1.16
+        version: 1.1.17
+      photoswipe:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  ecomplus-stores/barradoce/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.14.3
+        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/modules':
+        specifier: ^2.14.3
+        version: 2.14.3
+
+  ecomplus-stores/tiasonia:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.14.3
+        version: 2.14.3
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.14.3
+        version: 2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
+      husky:
+        specifier: ^9.0.11
+        version: 9.0.11
+      lint-staged:
+        specifier: ^15.2.2
+        version: 15.2.2
+
+  ecomplus-stores/tiasonia/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/passport':
+        specifier: ^2.14.3
+        version: 2.14.3
+
+  ecomplus-stores/tiasonia/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/ssr':
+        specifier: ^2.14.3
+        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@headlessui/vue':
+        specifier: ^1.7.19
+        version: 1.7.20(vue@3.4.23(typescript@5.4.5))
+      micromark:
+        specifier: ^4.0.0
+        version: 4.0.0
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/storefront':
+        specifier: ^2.14.3
+        version: 2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+      '@cloudcommerce/types':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@fontsource-variable/inter':
+        specifier: ^5.0.17
+        version: 5.0.18
+      '@fontsource/dm-serif-display':
+        specifier: ^5.0.19
+        version: 5.0.20
+      '@iconify-json/lucide':
+        specifier: ^1.1.182
+        version: 1.1.184
+      fontaine:
+        specifier: ^0.5.0
+        version: 0.5.0
+      photoswipe:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  ecomplus-stores/tiasonia/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.14.3
+        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/modules':
+        specifier: ^2.14.3
+        version: 2.14.3
+
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -1148,6 +1305,77 @@ importers:
         specifier: workspace:*
         version: link:../api
 
+  store:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.14.3
+        version: 2.14.3
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.14.3
+        version: 2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
+      husky:
+        specifier: ^9.0.11
+        version: 9.0.11
+      lint-staged:
+        specifier: ^15.2.2
+        version: 15.2.2
+
+  store/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/passport':
+        specifier: ^2.14.3
+        version: 2.14.3
+
+  store/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/ssr':
+        specifier: ^2.14.3
+        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@headlessui/vue':
+        specifier: ^1.7.20
+        version: 1.7.20(vue@3.4.23(typescript@5.4.5))
+      micromark:
+        specifier: ^4.0.0
+        version: 4.0.0
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/storefront':
+        specifier: ^2.14.3
+        version: 2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+      '@cloudcommerce/types':
+        specifier: ^2.14.3
+        version: 2.14.3
+      photoswipe:
+        specifier: ^5.4.3
+        version: 5.4.3
+
+  store/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.14.3
+        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@cloudcommerce/firebase':
+        specifier: ^2.14.3
+        version: 2.14.3
+      '@cloudcommerce/modules':
+        specifier: ^2.14.3
+        version: 2.14.3
+
 packages:
 
   '@aashutoshrathi/word-wrap@1.2.6':
@@ -1355,6 +1583,128 @@ packages:
   '@bcherny/json-schema-ref-parser@10.0.5-fork':
     resolution: {integrity: sha512-E/jKbPoca1tfUPj3iSbitDZTGnq6FUFjkH6L8U2oDwSuwK1WhnnVtCG7oFOTg/DDnyoXbQYUiUiGOibHqaGVnw==}
     engines: {node: '>= 16'}
+
+  '@capsizecss/metrics@2.2.0':
+    resolution: {integrity: sha512-DkFIser1KbGxWyG2hhQQeCit72TnOQDx5pr9bkA7+XlIy7qv+4lYtslH3bidVxm2qkY2guAgypSIPYuQQuk70A==}
+
+  '@capsizecss/unpack@2.1.0':
+    resolution: {integrity: sha512-k+wAZylHNaBwfcGGeKV+tTf6G0Zd4SyiTMmzlVFKkkBVV70DzwC7KOtmV/ojLbjwRT4QSPcMvjmiws309CSPgQ==}
+
+  '@cloudcommerce/api@2.14.3':
+    resolution: {integrity: sha512-PfoYsep+H5YgBAgLBqnfdO979DvtDZCzcnf734DStEHgVqyave2aazXofu6jcRQlsZZYF+7FwneMIztwGS2j0Q==}
+
+  '@cloudcommerce/app-affiliate-program@2.14.3':
+    resolution: {integrity: sha512-R0mD1icRlWruSeAP51YMSfVZ0BDQ9zMBtN+aH7PApqwCF4gBSHiGYKMZ2/w+cCfkxP+MEv90NdfkrNabZQ/eTw==}
+
+  '@cloudcommerce/app-correios@2.14.3':
+    resolution: {integrity: sha512-qBszLmEZ/dSyguN26YyCvz1ehUdI/bp+FHseU48rpraYVw9g9bVTDK447MnsWJ9/HzUs6puY9AWL5IA24fGNWQ==}
+
+  '@cloudcommerce/app-custom-payment@2.14.3':
+    resolution: {integrity: sha512-S+8SW1Jr+gLj7cXo3UXS46fRFTAxsOqu89szzC/fgKn4O7AlLYkq3NYVc/UrozhuF5v7cbpnKrt6qQ3zvuY6vg==}
+
+  '@cloudcommerce/app-custom-shipping@2.14.3':
+    resolution: {integrity: sha512-PjlPEsjCScHBwclHK24BU+lrSFIePr7ZiE5HorBMmDAgU7pmDT1zXeuSrejSEoCiX7JU32bMfn7HSTjpD51nWQ==}
+
+  '@cloudcommerce/app-datafrete@2.14.3':
+    resolution: {integrity: sha512-nVjybNDYQM/Ts/iM2Qf/V7Tkv83j6qT2Q8znPs14NduYT3p0HLCIWZKpsS+T1Z500p3CnPObfgLJ+ouFQlb/Hg==}
+
+  '@cloudcommerce/app-discounts@2.14.3':
+    resolution: {integrity: sha512-YDDP9qniRE9c3fW562hn8UerabWw1adhapO83Mwn4JllggueDbKYfy7tMcdXU87sV+xTMRtjQDT4tHvCEhkQ7w==}
+
+  '@cloudcommerce/app-emails@2.14.3':
+    resolution: {integrity: sha512-XttHKEW0YjLD+KvAMksx28buI7g4C9q4Doc+EZ+CqBhskBMYo8y0lU0JEF9MCzBnahgkeL8i11qyxufi5WXfSg==}
+
+  '@cloudcommerce/app-fb-conversions@2.14.3':
+    resolution: {integrity: sha512-Cy9J9zmbj7Th5j+l6TnROr2Hb6IANvFtifWUaTVDJiEEAr8Zc1Bra9D6BJ3P961Hqw4m7jmjKAXVFE/0XWA5Ag==}
+
+  '@cloudcommerce/app-flash-courier@2.14.3':
+    resolution: {integrity: sha512-qnnVCA5H6jN7NMa8GwU9IA1un05NtaPvWiw9Ul5EepOJ1dl3qpNyR96FVcBdSrCzUbq7jN8q9S9wTuP1efnysQ==}
+
+  '@cloudcommerce/app-frenet@2.14.3':
+    resolution: {integrity: sha512-cmSSZvSsJol6MKp6Mvn31CE6M+Maxo3RK1ebYLva9umvF5oSN9uYqd/xZlidbCMYJG+FssTsiCp1E1qZpl7S3Q==}
+
+  '@cloudcommerce/app-galaxpay@2.14.3':
+    resolution: {integrity: sha512-KrP3HDKoeosOT9UMP5+X4yh5VRtZ/j4HWbER9EZ9dHdr+rHIan/7oOs33zdA+U5HJw3A2XN7nfxKSPls2A7NCQ==}
+
+  '@cloudcommerce/app-google-analytics@2.14.3':
+    resolution: {integrity: sha512-ejDtIEFs/r2Bdr9M9ITQL0+rqDsa8Aqw0bBQg6Z62W2u/jKXjyBdpVpGLfxlsUleNKL/AAtkROT9uUbXcwiIsQ==}
+
+  '@cloudcommerce/app-jadlog@2.14.3':
+    resolution: {integrity: sha512-zZwEnboZeOGe0XXE+58P/9+LB8tq6X4mK6ieLSUX1/xRG5n8j4EQiR1wAB8eU0wogTTnbwNRfB9+8ZkMTclW2g==}
+
+  '@cloudcommerce/app-loyalty-points@2.14.3':
+    resolution: {integrity: sha512-TvJSKxg5FYAZme+3E29UFeqmtTKCK4PrXNiwh1MHEUTFfS0rJmkTIrRoJV1MWXlltnXSgxo101DZmHnz5k43DQ==}
+
+  '@cloudcommerce/app-mandae@2.14.3':
+    resolution: {integrity: sha512-FWpzr5x6KFJjLAEg+mCEvKaie82V69MAc9rAvIqjkOZH/gzMfcleHwo4O5RvNwQcIO5BVsdNMl0FDdwlvbt03w==}
+
+  '@cloudcommerce/app-melhor-envio@2.14.3':
+    resolution: {integrity: sha512-IlWm00BwVjAZHwVJgGLbhAzSbN3GJRInnMsfqiCNoHeYYVFYdmvvEJokRZI75ej3+PjLqYV/Ggr6TP1oRNTQZQ==}
+
+  '@cloudcommerce/app-mercadopago@2.14.3':
+    resolution: {integrity: sha512-37KW79QBAtfWSUiUQIteEsftCuuPvs/j+akWLMi4foyLn+6JN9gNQq8GDo+KlivbzNZECal1q+nUDGpduYS9Lw==}
+
+  '@cloudcommerce/app-pagaleve@2.14.3':
+    resolution: {integrity: sha512-WJCcqz4pYT9CfVWZBZp4fTnbjQL16TIGG3tJofQbEHJzFtb60hBlisE9V9Ej5YJSyAJ5W0iE8mUjtSzwj4ghjQ==}
+
+  '@cloudcommerce/app-pagarme-v5@2.14.3':
+    resolution: {integrity: sha512-KnGWOfA7zmo8EIL2Nv3rfmzD6K0GwYEB1rkyLnul4HdWE8eWcSKTC3RvUDm3CQo3xd/zVMoCeUGDOlrBEBe6zg==}
+
+  '@cloudcommerce/app-pagarme@2.14.3':
+    resolution: {integrity: sha512-1YXIYhusL7F6Xb5cNSIlDGSVsGZjsKN4gOFRtaT7CnnxEmRUwcN61yJ23Kg7ZEVe10g85x4ASnH/whz9GGCCXg==}
+
+  '@cloudcommerce/app-paghiper@2.14.3':
+    resolution: {integrity: sha512-NBbVM7QeZMEP+EdEm/tw78u76++QhqymATpCyN3/3IDS0f4yqonv9FaX6PTDugQnLnGdXDvbvA/iTNR6auesDA==}
+
+  '@cloudcommerce/app-pix@2.14.3':
+    resolution: {integrity: sha512-9EXCgnQccHppYPEoFY0MfRHdmvIg7qP1vyWYGVVvrCl5EzyPEcZ2qbWDqsR3t4y9t1Hl4r+95s9HXUmuIHygrg==}
+
+  '@cloudcommerce/app-tiny-erp@2.14.3':
+    resolution: {integrity: sha512-izwqg4vY0/uFtmwNWiiPdmuvsWpt1n/uVEXxdl/Z1kX1Gue5w6z1fPBFMyd17WZIx8mepO0Y1qim7tltYAxlDg==}
+
+  '@cloudcommerce/app-webhooks@2.14.3':
+    resolution: {integrity: sha512-rc1Z5w1PtyONF4YhksLMPlHsYatqjY1S+msjKAxYnoMjUV/HhHZ9sAsOmW9+812FOn1R7rwifK1cSxRg0LJrDg==}
+
+  '@cloudcommerce/cli@2.14.3':
+    resolution: {integrity: sha512-4ool99yZ68WJCNUdMBaB8qn9nzAptwjeO19xNZ+bTZtp4X70UvQ4/Ko2JzQ733dvQu95Za4ThLsTD1nWiVH/7g==}
+    hasBin: true
+
+  '@cloudcommerce/config@2.14.3':
+    resolution: {integrity: sha512-/IzSIdxfUYbPIvLhDf/Pcx9MedW5CB2dD1YgvE6aTTpdBoYVrTHwGSOps6w0PFXUNAtut1t2KNQOixcDw6MHuQ==}
+
+  '@cloudcommerce/emails@2.14.3':
+    resolution: {integrity: sha512-4dQ5KWut0yttOVJWpLmvCc19PCqUx5gyjBUsvjgqgd7MqIGY5aK38+qySs8E95dsPaTolIWhJHVZ77DatoT5Lw==}
+
+  '@cloudcommerce/eslint@2.14.3':
+    resolution: {integrity: sha512-NZLsHoxSR3pUnXggRoMbWuw7pRQ/v7QadEoyN0FK3Pn1vYGcE7yBJa6o9Q3As3Pli8uLPptbYn01YgdxJ1w00w==}
+
+  '@cloudcommerce/events@2.14.3':
+    resolution: {integrity: sha512-IjQgXbTqnnTmg9oUQpov8hQjre0NDwc7semfkfl/IgrRk8fWbL+CAIeqRKlE2e+cByhsA3SayiSg04eqB6/o0g==}
+
+  '@cloudcommerce/feeds@2.14.3':
+    resolution: {integrity: sha512-Sm2ggxZCtcq4Lnd3Cd3QTWVvlRt0XRm58mSvbE+Q8kFOrZXn3X+89F7IYlOkNoEl/+nanUzDQxHmTPDyQiOD3A==}
+
+  '@cloudcommerce/firebase@2.14.3':
+    resolution: {integrity: sha512-qiHIHpRxgCDIjanfMJ+5+AEMgfngQ01wne9FB5cv56YanCwmcKrE3yc/hFULwry0XdJuwtFXBIavAxZIJO9Tkw==}
+
+  '@cloudcommerce/i18n@2.14.3':
+    resolution: {integrity: sha512-sjCygSPaXiFp1BU0zLzV6da3RbYBcgKLqSgDREx0VYbJjBSVvu2eJBMz6t+MP/xhS096jVb1yCkmsrNHNMfARA==}
+
+  '@cloudcommerce/modules@2.14.3':
+    resolution: {integrity: sha512-G+VC1KuqeiPE/mJ3WNMRFWllH8N3bzmlATTEFY2ZZGln8Wg1J3ToUs8AI66EBn3W6VMoJoLgDe/rtyHOH9VnaQ==}
+
+  '@cloudcommerce/passport@2.14.3':
+    resolution: {integrity: sha512-mutql1eDNQHQRlvU/3QS+vydPjDMdkS2UHx8odzyM20oTtGj25dSp7rN9RMjSJyTZW8kVVmBzWomnJYJsT8T6Q==}
+
+  '@cloudcommerce/ssr@2.14.3':
+    resolution: {integrity: sha512-c0ri9qEi69DOgxXZvbeXXxtT94Atbn2aryAdSlzAgYg75UTU4m8jHilttVLxttWx0k0TTzDHw1zrm5GPwutWEg==}
+
+  '@cloudcommerce/storefront@2.14.3':
+    resolution: {integrity: sha512-JEoOwrhToPcgW17p8UB4k+KFFiLVmlluSKIIMR4yiXR9QGwoWR6iTghbV/8b0E7N0Y5O4l5KTELE9EhLCcF5Mg==}
+    hasBin: true
+
+  '@cloudcommerce/types@2.14.3':
+    resolution: {integrity: sha512-T1he1ypzZ4ZwwoNR+wfdu2PqhWvnc29Nd8i1vqoTRXqEkRDTZa/pyyf/VXmTEbODg1BzNvEdIHflPaeCR2ejVg==}
 
   '@commitlint/cli@19.2.2':
     resolution: {integrity: sha512-P8cbOHfg2PQRzfICLSrzUVOCVMqjEZ8Hlth6mtJ4yOEjT47Q5PbIGymgX3rLVylNw+3IAT2Djn9IJ2wHbXFzBg==}
@@ -1921,6 +2271,12 @@ packages:
   '@firebase/webchannel-wrapper@0.10.6':
     resolution: {integrity: sha512-EnfRJvrnzkHwN3BPMCayCFT5lCqInzg3RdlRsDjDvB1EJli6Usj26T6lJ67BU2UcYXBS5xcp1Wj4+zRzj2NaZg==}
 
+  '@fontsource-variable/inter@5.0.18':
+    resolution: {integrity: sha512-rJzSrtJ3b7djiGFvRuTe6stDfbYJGhdQSfn2SI2WfXviee7Er0yKAHE5u7FU7OWVQQQ1x3+cxdmx9NdiAkcrcA==}
+
+  '@fontsource/dm-serif-display@5.0.20':
+    resolution: {integrity: sha512-/2lKZzzbEJMNsqizgZPPCL9PquWTWgeA2hLrq74XVDwoI3HOLSaopmOusuD8eDke33WoM/EbpKeB0/jnpv8Ogg==}
+
   '@google-cloud/firestore@7.3.0':
     resolution: {integrity: sha512-2IftQLAbCuVp0nTd3neeu+d3OYIegJpV/V9R4USQj51LzJcXPe8h8jZ7j3+svSNhJVGy6JsN0T1QqlJdMDhTwg==}
     engines: {node: '>=14.0.0'}
@@ -1962,6 +2318,12 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  '@headlessui/vue@1.7.20':
+    resolution: {integrity: sha512-y83833wFo/+0FOrblgESiuvGwcHnfu8T2XQHb3iVA9GVSUVs3VLptp2bXlF5IR4IFD3Klr+jQEfreF6bSJNdOA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.2.0
+
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
@@ -1985,6 +2347,12 @@ packages:
 
   '@iconify-json/logos@1.1.42':
     resolution: {integrity: sha512-/f+frtPm3m3Z30oy8Pk+QqRDkbmAiIaWGPl5CmsCXm15MVfvw9a/V/gD7WzdyuSGAZcFuQaqbHXj92y/n+2ifg==}
+
+  '@iconify-json/lucide@1.1.184':
+    resolution: {integrity: sha512-vptROqbT+ilOBZXncJzYFx5hLtbpA/jxiWGRyNdFBxJokXfJ8k09FWDIPweGvbW0V8MUQYlh0FDfV1qpyZGW3w==}
+
+  '@iconify-json/mingcute@1.1.17':
+    resolution: {integrity: sha512-WTKnn5OicUo18dE3rkJs00sUjOIAui8Ut9yZSXamRfjzmLxuX9FKqYQAbFXaV6lw0T4QwBQ8/y4ftaWl/1Entg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -2164,6 +2532,20 @@ packages:
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+
+  '@swc/helpers@0.4.14':
+    resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
+
+  '@swc/helpers@0.4.36':
+    resolution: {integrity: sha512-5lxnyLEYFskErRPenYItLRSge5DjrJngYKdVjRSrWfza9G6KkgHEXi0vUZiyUeMU5JfXH1YnvXZzSp8ul88o2Q==}
+
+  '@tanstack/virtual-core@3.4.0':
+    resolution: {integrity: sha512-75jXqXxqq5M5Veb9KP1STi8kA5u408uOOAefk2ftHDGCpUk3RP6zX++QqfbmHJTBiU72NQ+ghgCZVts/Wocz8Q==}
+
+  '@tanstack/vue-virtual@3.4.0':
+    resolution: {integrity: sha512-OHZGsmE89rpouVDGDOCtJTu64gLUzVq5FGkL2YY/wtZXu5QRSi5ep3T25Ivd53HQI3A169H01uwVPD0mEXKm9A==}
+    peerDependencies:
+      vue: ^2.7.0 || ^3.0.0
 
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
@@ -2764,6 +3146,10 @@ packages:
     peerDependencies:
       astro: '>= 2.8'
 
+  astro-eslint-parser@0.16.3:
+    resolution: {integrity: sha512-CGaBseNtunAV2DCpwBXqTKq8+9Tw65XZetMaC0FsMoZuLj0gxNIkbCf2QyKYScVrNOU7/ayfNdVw8ZCSHBiqCg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+
   astro-eslint-parser@0.17.0:
     resolution: {integrity: sha512-yTgzioUI9MKgBF4LxP7YI+uuZLrnXgHDeW4dpa3VqCNbDmPzL7ix93tc0JJIwWGcskoSAAHZZVaBSp8bHyZZZA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -2842,6 +3228,9 @@ packages:
   bl@5.1.0:
     resolution: {integrity: sha512-tv1ZJHLfTDnXE6tMHv73YgSJaWR2AFuPwMntBe7XL/GBFHnT0CLnsHMogfk5+GzCDC5ZWarSCYaIGATZt9dNsQ==}
 
+  blob-to-buffer@1.2.9:
+    resolution: {integrity: sha512-BF033y5fN6OCofD3vgHmNtwZWRcq9NLyyxyILx9hfMy1sXYy4ojFl765hJ2lP0YaN2fuxPaLO2Vzzoxy0FLFFA==}
+
   body-parser@1.20.2:
     resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -2862,6 +3251,9 @@ packages:
   braces@3.0.2:
     resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
     engines: {node: '>=8'}
+
+  brotli@1.3.3:
+    resolution: {integrity: sha512-oTKjJdShmDuGW94SyyaoQvAjf30dZaHnjJ8uAF+u2/vGJkJbJPJAT1gDiOJP5v1Zb6f9KEyW/1HpuaWIXtGHPg==}
 
   browserslist@4.23.0:
     resolution: {integrity: sha512-QW8HiM1shhT2GuzkvklfjcKDiWFXHOeFCIA/huJPwHsslwcydgk7X+z2zXpEijP98UCY7HbubZt5J2Zgvf0CaQ==}
@@ -3000,6 +3392,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  clone@2.1.2:
+    resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
+    engines: {node: '>=0.8'}
 
   clsx@2.0.0:
     resolution: {integrity: sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==}
@@ -3202,6 +3598,9 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
+  cross-fetch@3.1.8:
+    resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
+
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -3344,6 +3743,9 @@ packages:
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+
+  dfa@1.2.0:
+    resolution: {integrity: sha512-ED3jP8saaweFTjeGX8HQPjeC1YYyZs98jGNZx6IiBvxW7JG5v492kamAQB3m2wop07CvU/RQmzcKr6bgcC5D/Q==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -3561,6 +3963,12 @@ packages:
         optional: true
       eslint-import-resolver-webpack:
         optional: true
+
+  eslint-plugin-astro@0.33.1:
+    resolution: {integrity: sha512-wVyxAf8Ulmljv5qJQLgspWe17LR4hLXcksIENtUlEC3W7rleBVEKXS+hIqzBfCbpkBLZpl1tsYes1AGpYHd13w==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      eslint: '>=7.0.0'
 
   eslint-plugin-astro@0.34.0:
     resolution: {integrity: sha512-nzw2H4g7HPXPLsWVpGUxuJ/ViVPLI8lM/AaUCJ51qTLTWtaMhvlvoe2d7yIPMFc+7xeCzQdo1POK8eR7NFsdKQ==}
@@ -3793,6 +4201,12 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+
+  fontaine@0.5.0:
+    resolution: {integrity: sha512-vPDSWKhVAfTx4hRKT777+N6Szh2pAosAuzLpbppZ6O3UdD/1m6OlHjNcC3vIbgkRTIcLjzySLHXzPeLO2rE8cA==}
+
+  fontkit@2.0.2:
+    resolution: {integrity: sha512-jc4k5Yr8iov8QfS6u8w2CnHWVmbOGtdBtOXMze5Y+QD966Rx6PEVWXSEGwXlsDlKtu1G12cJjcsybnqhSk/+LA==}
 
   for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -4680,6 +5094,9 @@ packages:
   lru-queue@0.1.0:
     resolution: {integrity: sha512-BpdYkt9EvGl8OfWHDQPISVpcl5xZthb+XPsbELj5AQXxIC8IriDZIQYjBJPEm5rS420sjZ0TLEzRcq5KdBhYrQ==}
 
+  magic-regexp@0.8.0:
+    resolution: {integrity: sha512-lOSLWdE156csDYwCTIGiAymOLN7Epu/TU5e/oAnISZfU6qP+pgjkE+xbVjVn3yLPKN8n1G2yIAYTAM5KRk6/ow==}
+
   magic-string@0.30.7:
     resolution: {integrity: sha512-8vBuFF/I/+OSLRmdf2wwFCJCz+nSn0m6DPvGH1fS/KiQoSaR+sETbov0eIk9KhEKy8CYqIkIAnbohxT/4H0kuA==}
     engines: {node: '>=12'}
@@ -5177,6 +5594,9 @@ packages:
   pagarme@4.34.1:
     resolution: {integrity: sha512-3MQ4u6cWpqTEjOQ2Z6kg4WzWMO+LDG9SytyhmS9XYmWwP/PGu4UEK1PhAl8BgALSA1L7HNzWGpuqt2H1BxDFBg==}
 
+  pako@0.2.9:
+    resolution: {integrity: sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==}
+
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -5255,6 +5675,10 @@ packages:
 
   perfect-debounce@1.0.0:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
+
+  photoswipe@5.4.3:
+    resolution: {integrity: sha512-9UC6oJBK4oXFZ5HcdlcvGkfEHsVrmE4csUdCQhEjHYb3PvPLO3PG7UhnPuOgjxwmhq5s17Un5NUdum01LgBDng==}
+    engines: {node: '>= 0.12.0'}
 
   picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -5485,6 +5909,10 @@ packages:
     resolution: {integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==}
     engines: {node: '>=8'}
 
+  regexp-tree@0.1.27:
+    resolution: {integrity: sha512-iETxpjK6YoRWJG5o6hXLwvjYAoW+FEZn9os0PD/b6AP6xQwsa/Y7lCVgIixBbUPMfhu+i2LtdeAqVTgGlQarfA==}
+    hasBin: true
+
   regexp.prototype.flags@1.5.1:
     resolution: {integrity: sha512-sy6TXMN+hnP/wMy+ISxg3krXx7BAtWVO4UouuCN/ziM9UEne0euamVNafDfvC83bRNr95y0V5iijeDQFUNpvrg==}
     engines: {node: '>= 0.4'}
@@ -5544,6 +5972,9 @@ packages:
   restore-cursor@4.0.0:
     resolution: {integrity: sha512-I9fPXU9geO9bHOt9pHHOhOkYerIMsmVaWB0rA2AI9ERh/+x/i7MV5HKBNrg+ljO5eoPVgCcnFuRjJ9uH6I/3eg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  restructure@3.0.1:
+    resolution: {integrity: sha512-6neDpI/yE9eogQo22qmWwKIA9wFPRyYjQleDEh6zaNAf2ZPqLJYUvNBJBWEWNoBlCeQMQkvIOe2YI/K2GOag+g==}
 
   retext-latin@3.1.0:
     resolution: {integrity: sha512-5MrD1tuebzO8ppsja5eEu+ZbBeUNCjoEarn70tkXOS7Bdsdf6tNahsv2bY0Z8VooFF6cw7/6S+d3yI/TMlMVVQ==}
@@ -5957,6 +6388,9 @@ packages:
   timers-ext@0.1.7:
     resolution: {integrity: sha512-b85NUNzTSdodShTIbky6ZF02e8STtVVfD+fu4aXXShEELpozH+bCpJLYMPZbsABN2wDH7fJpqIoXxJpzbf0NqQ==}
 
+  tiny-inflate@1.0.3:
+    resolution: {integrity: sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==}
+
   tinybench@2.6.0:
     resolution: {integrity: sha512-N8hW3PG/3aOoZAN5V/NSAEDz0ZixDSSt5b/a05iqtpgfLWMSVuCo7w0k2vVvEjdrIoeGqZzweX2WlyioNIHchA==}
 
@@ -6118,6 +6552,9 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
+  type-level-regexp@0.1.17:
+    resolution: {integrity: sha512-wTk4DH3cxwk196uGLK/E9pE45aLfeKJacKmcEgEOA/q5dnPGNxXt0cfYdFxb57L+sEpf1oJH4Dnx/pnRcku9jg==}
+
   type@1.2.0:
     resolution: {integrity: sha512-+5nt5AAniqsCnu2cEQQdpzCAh33kVx8n0VoFidKpB1dVVLAN/F+bgVOqOJqOnEnrhp222clB5p3vUlD+1QAnfg==}
 
@@ -6189,6 +6626,12 @@ packages:
 
   unherit@3.0.1:
     resolution: {integrity: sha512-akOOQ/Yln8a2sgcLj4U0Jmx0R5jpIg2IUyRrWOzmEbjBtGzBdHtSeFKgoEcoH4KYIG/Pb8GQ/BwtYm0GCq1Sqg==}
+
+  unicode-properties@1.4.1:
+    resolution: {integrity: sha512-CLjCCLQ6UuMxWnbIylkisbRj31qxHPAurvena/0iwSVbQ2G1VY5/HjV0IRabOEbDHlzZlRdCrD4NhB0JtU40Pg==}
+
+  unicode-trie@2.0.0:
+    resolution: {integrity: sha512-x7bc76x0bm4prf1VLg79uhAzKw8DVboClSN5VxJuQ+LKDOVEW9CdH+VY7SP+vX7xCYQqzzgQpFqz15zeLvAtZQ==}
 
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
@@ -6273,6 +6716,10 @@ packages:
         optional: true
       '@vueuse/core':
         optional: true
+
+  unplugin@1.10.1:
+    resolution: {integrity: sha512-d6Mhq8RJeGA8UfKCu54Um4lFA0eSaRa3XxdAJg8tIdxbu1ubW0hBCZUL7yI2uGyYCRndvbK8FLHzqy2XKfeMsg==}
+    engines: {node: '>=14.0.0'}
 
   unplugin@1.7.1:
     resolution: {integrity: sha512-JqzORDAPxxs8ErLV4x+LL7bk5pk3YlcWqpSNsIkAZj972KzFZLClc/ekppahKkOczGkwIG6ElFgdOgOlK4tXZw==}
@@ -6688,6 +7135,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@astrojs/vue@4.0.10(@babel/core@7.24.3)(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))':
+    dependencies:
+      '@vitejs/plugin-vue': 5.0.4(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))
+      '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))
+      '@vue/babel-plugin-jsx': 1.2.1(@babel/core@7.24.3)
+      '@vue/compiler-sfc': 3.4.23
+      astro: 4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      vue: 3.4.23(typescript@5.4.5)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+      - vite
+
   '@astrojs/vue@4.0.10(@babel/core@7.24.3)(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))':
     dependencies:
       '@vitejs/plugin-vue': 5.0.4(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))
@@ -6914,6 +7374,517 @@ snapshots:
       '@types/json-schema': 7.0.15
       call-me-maybe: 1.0.2
       js-yaml: 4.1.0
+
+  '@capsizecss/metrics@2.2.0': {}
+
+  '@capsizecss/unpack@2.1.0':
+    dependencies:
+      blob-to-buffer: 1.2.9
+      cross-fetch: 3.1.8
+      fontkit: 2.0.2
+    transitivePeerDependencies:
+      - encoding
+
+  '@cloudcommerce/api@2.14.3': {}
+
+  '@cloudcommerce/app-affiliate-program@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-correios@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@google-cloud/pubsub': 4.3.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-custom-payment@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+
+  '@cloudcommerce/app-custom-shipping@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+
+  '@cloudcommerce/app-datafrete@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-discounts@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+
+  '@cloudcommerce/app-emails@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/emails': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/transactional-mails': 2.0.3
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-fb-conversions@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      facebook-nodejs-business-sdk: 19.0.3
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-flash-courier@2.14.3(firebase-admin@12.1.0)':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - firebase-admin
+      - supports-color
+
+  '@cloudcommerce/app-frenet@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-galaxpay@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-google-analytics@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-jadlog@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      axios: 1.6.8
+    transitivePeerDependencies:
+      - debug
+
+  '@cloudcommerce/app-loyalty-points@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-mandae@2.14.3(firebase-admin@12.1.0)':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      axios: 1.6.8
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - firebase-admin
+      - supports-color
+
+  '@cloudcommerce/app-melhor-envio@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-mercadopago@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-pagaleve@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-pagarme-v5@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-pagarme@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      pagarme: 4.34.1
+      qs: 6.12.1
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-paghiper@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-pix@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-tiny-erp@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      form-data: 4.0.0
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/app-webhooks@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/cli@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@fastify/deepmerge': 1.3.0
+      dotenv: 16.4.5
+      libsodium-wrappers: 0.7.13
+      md5: 2.3.0
+      typescript: 5.4.5
+      zx: 7.2.3
+
+  '@cloudcommerce/config@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@fastify/deepmerge': 1.3.0
+
+  '@cloudcommerce/emails@2.14.3':
+    dependencies:
+      '@cloudcommerce/firebase': 2.14.3
+      axios: 1.6.8
+      ejs: 3.1.10
+      nodemailer: 6.9.13
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/eslint@2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
+      eslint: 8.57.0
+      eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-astro: 0.33.1(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
+      eslint-plugin-tailwindcss: 3.15.1(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))
+      eslint-plugin-vue: 9.25.0(eslint@8.57.0)
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
+      - supports-color
+      - tailwindcss
+      - typescript
+
+  '@cloudcommerce/events@2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/app-affiliate-program': 2.14.3
+      '@cloudcommerce/app-datafrete': 2.14.3
+      '@cloudcommerce/app-emails': 2.14.3
+      '@cloudcommerce/app-fb-conversions': 2.14.3
+      '@cloudcommerce/app-flash-courier': 2.14.3(firebase-admin@12.1.0)
+      '@cloudcommerce/app-frenet': 2.14.3
+      '@cloudcommerce/app-galaxpay': 2.14.3
+      '@cloudcommerce/app-google-analytics': 2.14.3
+      '@cloudcommerce/app-loyalty-points': 2.14.3
+      '@cloudcommerce/app-melhor-envio': 2.14.3
+      '@cloudcommerce/app-mercadopago': 2.14.3
+      '@cloudcommerce/app-pagaleve': 2.14.3
+      '@cloudcommerce/app-pagarme': 2.14.3
+      '@cloudcommerce/app-pagarme-v5': 2.14.3
+      '@cloudcommerce/app-paghiper': 2.14.3
+      '@cloudcommerce/app-pix': 2.14.3
+      '@cloudcommerce/app-tiny-erp': 2.14.3
+      '@cloudcommerce/app-webhooks': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/ssr': 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      source-map-support: 0.5.21
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vue/composition-api'
+      - debug
+      - encoding
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - typescript
+
+  '@cloudcommerce/feeds@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/firebase@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/config': 2.14.3
+      '@google-cloud/pubsub': 4.3.3
+      dotenv: 16.4.5
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      source-map-support: 0.5.21
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/i18n@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+
+  '@cloudcommerce/modules@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/app-correios': 2.14.3
+      '@cloudcommerce/app-custom-payment': 2.14.3
+      '@cloudcommerce/app-custom-shipping': 2.14.3
+      '@cloudcommerce/app-datafrete': 2.14.3
+      '@cloudcommerce/app-discounts': 2.14.3
+      '@cloudcommerce/app-flash-courier': 2.14.3(firebase-admin@12.1.0)
+      '@cloudcommerce/app-frenet': 2.14.3
+      '@cloudcommerce/app-galaxpay': 2.14.3
+      '@cloudcommerce/app-jadlog': 2.14.3
+      '@cloudcommerce/app-loyalty-points': 2.14.3
+      '@cloudcommerce/app-mandae': 2.14.3(firebase-admin@12.1.0)
+      '@cloudcommerce/app-melhor-envio': 2.14.3
+      '@cloudcommerce/app-mercadopago': 2.14.3
+      '@cloudcommerce/app-pagaleve': 2.14.3
+      '@cloudcommerce/app-pagarme': 2.14.3
+      '@cloudcommerce/app-pagarme-v5': 2.14.3
+      '@cloudcommerce/app-paghiper': 2.14.3
+      '@cloudcommerce/app-pix': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      ajv: 8.12.0
+      ajv-formats: 2.1.1(ajv@8.12.0)
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      source-map-support: 0.5.21
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/passport@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      source-map-support: 0.5.21
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@cloudcommerce/ssr@2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)':
+    dependencies:
+      '@astrojs/node': 8.2.5(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/i18n': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      '@vueuse/core': 10.9.0(vue@3.4.23(typescript@5.4.5))
+      astro: 4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      astro-capo: 0.0.1(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))
+      axios: 1.6.8
+      firebase-admin: 12.1.0
+      firebase-functions: 4.9.0(firebase-admin@12.1.0)
+      mitt: 3.0.1
+      vue: 3.4.23(typescript@5.4.5)
+      yaml: 2.4.1
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vue/composition-api'
+      - debug
+      - encoding
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - typescript
+
+  '@cloudcommerce/storefront@2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))':
+    dependencies:
+      '@astrojs/node': 8.2.5(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))
+      '@astrojs/vue': 4.0.10(@babel/core@7.24.3)(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))
+      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/config': 2.14.3
+      '@cloudcommerce/i18n': 2.14.3
+      '@ecomplus/utils': 1.5.0-rc.6
+      '@fastify/deepmerge': 1.3.0
+      '@iconify-json/fa6-brands': 1.1.19
+      '@iconify-json/heroicons': 1.1.20
+      '@iconify-json/logos': 1.1.42
+      '@types/gtag.js': 0.0.19
+      '@vueuse/core': 10.9.0(vue@3.4.23(typescript@5.4.5))
+      astro: 4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      astro-capo: 0.0.1(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))
+      chroma-js: 2.4.2
+      dotenv: 16.4.5
+      firebase: 10.11.0
+      image-size: 1.1.1
+      mitt: 3.0.1
+      semver: 7.6.0
+      sharp: 0.32.6
+      tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))
+      unocss: 0.58.9(postcss@8.4.38)(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+      unplugin-auto-import: 0.17.5(@vueuse/core@10.9.0(vue@3.4.23(typescript@5.4.5)))(rollup@4.13.0)
+      vue: 3.4.23(typescript@5.4.5)
+      wade: 0.3.3
+      yaml: 2.4.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@nuxt/kit'
+      - '@react-native-async-storage/async-storage'
+      - '@types/node'
+      - '@unocss/webpack'
+      - '@vue/composition-api'
+      - less
+      - lightningcss
+      - postcss
+      - rollup
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - ts-node
+      - typescript
+      - vite
+
+  '@cloudcommerce/types@2.14.3':
+    dependencies:
+      '@cloudcommerce/api': 2.14.3
 
   '@commitlint/cli@19.2.2(@types/node@18.19.31)(typescript@5.4.5)':
     dependencies:
@@ -7514,6 +8485,10 @@ snapshots:
 
   '@firebase/webchannel-wrapper@0.10.6': {}
 
+  '@fontsource-variable/inter@5.0.18': {}
+
+  '@fontsource/dm-serif-display@5.0.20': {}
+
   '@google-cloud/firestore@7.3.0':
     dependencies:
       fast-deep-equal: 3.1.3
@@ -7599,6 +8574,11 @@ snapshots:
       protobufjs: 7.2.6
       yargs: 17.7.2
 
+  '@headlessui/vue@1.7.20(vue@3.4.23(typescript@5.4.5))':
+    dependencies:
+      '@tanstack/vue-virtual': 3.4.0(vue@3.4.23(typescript@5.4.5))
+      vue: 3.4.23(typescript@5.4.5)
+
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.2
@@ -7622,6 +8602,14 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/logos@1.1.42':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/lucide@1.1.184':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/mingcute@1.1.17':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -7772,6 +8760,22 @@ snapshots:
   '@shikijs/core@1.1.7': {}
 
   '@sinclair/typebox@0.27.8': {}
+
+  '@swc/helpers@0.4.14':
+    dependencies:
+      tslib: 2.6.2
+
+  '@swc/helpers@0.4.36':
+    dependencies:
+      legacy-swc-helpers: '@swc/helpers@0.4.14'
+      tslib: 2.6.2
+
+  '@tanstack/virtual-core@3.4.0': {}
+
+  '@tanstack/vue-virtual@3.4.0(vue@3.4.23(typescript@5.4.5))':
+    dependencies:
+      '@tanstack/virtual-core': 3.4.0
+      vue: 3.4.23(typescript@5.4.5)
 
   '@tootallnate/once@2.0.0': {}
 
@@ -8088,6 +9092,16 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
+  '@unocss/astro@0.58.9(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))':
+    dependencies:
+      '@unocss/core': 0.58.9
+      '@unocss/reset': 0.58.9
+      '@unocss/vite': 0.58.9(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+    optionalDependencies:
+      vite: 5.2.10(@types/node@18.19.31)(sass@1.71.1)
+    transitivePeerDependencies:
+      - rollup
+
   '@unocss/astro@0.58.9(rollup@4.13.0)(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))':
     dependencies:
       '@unocss/core': 0.58.9
@@ -8225,6 +9239,22 @@ snapshots:
     dependencies:
       '@unocss/core': 0.58.9
 
+  '@unocss/vite@0.58.9(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))':
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@rollup/pluginutils': 5.1.0(rollup@4.13.0)
+      '@unocss/config': 0.58.9
+      '@unocss/core': 0.58.9
+      '@unocss/inspector': 0.58.9
+      '@unocss/scope': 0.58.9
+      '@unocss/transformer-directives': 0.58.9
+      chokidar: 3.6.0
+      fast-glob: 3.3.2
+      magic-string: 0.30.8
+      vite: 5.2.10(@types/node@18.19.31)(sass@1.71.1)
+    transitivePeerDependencies:
+      - rollup
+
   '@unocss/vite@0.58.9(rollup@4.13.0)(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))':
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -8241,6 +9271,16 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
+  '@vitejs/plugin-vue-jsx@3.1.0(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))':
+    dependencies:
+      '@babel/core': 7.24.3
+      '@babel/plugin-transform-typescript': 7.24.1(@babel/core@7.24.3)
+      '@vue/babel-plugin-jsx': 1.2.1(@babel/core@7.24.3)
+      vite: 5.2.10(@types/node@18.19.31)(sass@1.71.1)
+      vue: 3.4.23(typescript@5.4.5)
+    transitivePeerDependencies:
+      - supports-color
+
   '@vitejs/plugin-vue-jsx@3.1.0(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))':
     dependencies:
       '@babel/core': 7.24.3
@@ -8250,6 +9290,11 @@ snapshots:
       vue: 3.4.23(typescript@5.4.5)
     transitivePeerDependencies:
       - supports-color
+
+  '@vitejs/plugin-vue@5.0.4(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))':
+    dependencies:
+      vite: 5.2.10(@types/node@18.19.31)(sass@1.71.1)
+      vue: 3.4.23(typescript@5.4.5)
 
   '@vitejs/plugin-vue@5.0.4(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))':
     dependencies:
@@ -8565,6 +9610,20 @@ snapshots:
       astro: 4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       ultrahtml: 1.5.3
 
+  astro-eslint-parser@0.16.3:
+    dependencies:
+      '@astrojs/compiler': 2.7.1
+      '@typescript-eslint/scope-manager': 5.62.0
+      '@typescript-eslint/types': 5.62.0
+      astrojs-compiler-sync: 0.3.5(@astrojs/compiler@2.7.1)
+      debug: 4.3.4
+      entities: 4.5.0
+      eslint-visitor-keys: 3.4.3
+      espree: 9.6.1
+      semver: 7.6.0
+    transitivePeerDependencies:
+      - supports-color
+
   astro-eslint-parser@0.17.0(typescript@5.4.5):
     dependencies:
       '@astrojs/compiler': 2.7.1
@@ -8737,6 +9796,8 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
+  blob-to-buffer@1.2.9: {}
+
   body-parser@1.20.2:
     dependencies:
       bytes: 3.1.2
@@ -8779,6 +9840,10 @@ snapshots:
   braces@3.0.2:
     dependencies:
       fill-range: 7.0.1
+
+  brotli@1.3.3:
+    dependencies:
+      base64-js: 1.5.1
 
   browserslist@4.23.0:
     dependencies:
@@ -8922,6 +9987,8 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+
+  clone@2.1.2: {}
 
   clsx@2.0.0: {}
 
@@ -9153,6 +10220,12 @@ snapshots:
 
   create-require@1.1.1: {}
 
+  cross-fetch@3.1.8:
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
@@ -9262,6 +10335,8 @@ snapshots:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
+
+  dfa@1.2.0: {}
 
   didyoumean@1.2.2: {}
 
@@ -9579,6 +10654,20 @@ snapshots:
       '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
+    transitivePeerDependencies:
+      - supports-color
+
+  eslint-plugin-astro@0.33.1(eslint@8.57.0):
+    dependencies:
+      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
+      '@jridgewell/sourcemap-codec': 1.4.15
+      '@typescript-eslint/types': 5.62.0
+      astro-eslint-parser: 0.16.3
+      eslint: 8.57.0
+      eslint-compat-utils: 0.5.0(eslint@8.57.0)
+      globals: 13.24.0
+      postcss: 8.4.38
+      postcss-selector-parser: 6.0.15
     transitivePeerDependencies:
       - supports-color
 
@@ -9993,6 +11082,30 @@ snapshots:
   flattie@1.1.0: {}
 
   follow-redirects@1.15.6: {}
+
+  fontaine@0.5.0:
+    dependencies:
+      '@capsizecss/metrics': 2.2.0
+      '@capsizecss/unpack': 2.1.0
+      magic-regexp: 0.8.0
+      magic-string: 0.30.8
+      pathe: 1.1.2
+      ufo: 1.5.3
+      unplugin: 1.10.1
+    transitivePeerDependencies:
+      - encoding
+
+  fontkit@2.0.2:
+    dependencies:
+      '@swc/helpers': 0.4.36
+      brotli: 1.3.3
+      clone: 2.1.2
+      dfa: 1.2.0
+      fast-deep-equal: 3.1.3
+      restructure: 3.0.1
+      tiny-inflate: 1.0.3
+      unicode-properties: 1.4.1
+      unicode-trie: 2.0.0
 
   for-each@0.3.3:
     dependencies:
@@ -10958,6 +12071,16 @@ snapshots:
     dependencies:
       es5-ext: 0.10.62
 
+  magic-regexp@0.8.0:
+    dependencies:
+      estree-walker: 3.0.3
+      magic-string: 0.30.8
+      mlly: 1.6.1
+      regexp-tree: 0.1.27
+      type-level-regexp: 0.1.17
+      ufo: 1.5.3
+      unplugin: 1.10.1
+
   magic-string@0.30.7:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -11622,6 +12745,8 @@ snapshots:
 
   pagarme@4.34.1: {}
 
+  pako@0.2.9: {}
+
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
@@ -11688,6 +12813,8 @@ snapshots:
       through: 2.3.8
 
   perfect-debounce@1.0.0: {}
+
+  photoswipe@5.4.3: {}
 
   picocolors@1.0.0: {}
 
@@ -11955,6 +13082,8 @@ snapshots:
       indent-string: 4.0.0
       strip-indent: 3.0.0
 
+  regexp-tree@0.1.27: {}
+
   regexp.prototype.flags@1.5.1:
     dependencies:
       call-bind: 1.0.7
@@ -12051,6 +13180,8 @@ snapshots:
     dependencies:
       onetime: 5.1.2
       signal-exit: 3.0.7
+
+  restructure@3.0.1: {}
 
   retext-latin@3.1.0:
     dependencies:
@@ -12621,6 +13752,8 @@ snapshots:
       es5-ext: 0.10.62
       next-tick: 1.1.0
 
+  tiny-inflate@1.0.3: {}
+
   tinybench@2.6.0: {}
 
   tinypool@0.8.3: {}
@@ -12762,6 +13895,8 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
+  type-level-regexp@0.1.17: {}
+
   type@1.2.0: {}
 
   type@2.7.2: {}
@@ -12856,6 +13991,16 @@ snapshots:
       '@fastify/busboy': 2.1.0
 
   unherit@3.0.1: {}
+
+  unicode-properties@1.4.1:
+    dependencies:
+      base64-js: 1.5.1
+      unicode-trie: 2.0.0
+
+  unicode-trie@2.0.0:
+    dependencies:
+      pako: 0.2.9
+      tiny-inflate: 1.0.3
 
   unicorn-magic@0.1.0: {}
 
@@ -12960,6 +14105,35 @@ snapshots:
 
   universalify@2.0.1: {}
 
+  unocss@0.58.9(postcss@8.4.38)(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1)):
+    dependencies:
+      '@unocss/astro': 0.58.9(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+      '@unocss/cli': 0.58.9(rollup@4.13.0)
+      '@unocss/core': 0.58.9
+      '@unocss/extractor-arbitrary-variants': 0.58.9
+      '@unocss/postcss': 0.58.9(postcss@8.4.38)
+      '@unocss/preset-attributify': 0.58.9
+      '@unocss/preset-icons': 0.58.9
+      '@unocss/preset-mini': 0.58.9
+      '@unocss/preset-tagify': 0.58.9
+      '@unocss/preset-typography': 0.58.9
+      '@unocss/preset-uno': 0.58.9
+      '@unocss/preset-web-fonts': 0.58.9
+      '@unocss/preset-wind': 0.58.9
+      '@unocss/reset': 0.58.9
+      '@unocss/transformer-attributify-jsx': 0.58.9
+      '@unocss/transformer-attributify-jsx-babel': 0.58.9
+      '@unocss/transformer-compile-class': 0.58.9
+      '@unocss/transformer-directives': 0.58.9
+      '@unocss/transformer-variant-group': 0.58.9
+      '@unocss/vite': 0.58.9(rollup@4.13.0)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+    optionalDependencies:
+      vite: 5.2.10(@types/node@18.19.31)(sass@1.71.1)
+    transitivePeerDependencies:
+      - postcss
+      - rollup
+      - supports-color
+
   unocss@0.58.9(postcss@8.4.38)(rollup@4.13.0)(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1)):
     dependencies:
       '@unocss/astro': 0.58.9(rollup@4.13.0)(vite@5.2.8(@types/node@18.19.31)(sass@1.71.1))
@@ -13005,6 +14179,13 @@ snapshots:
       '@vueuse/core': 10.9.0(vue@3.4.23(typescript@5.4.5))
     transitivePeerDependencies:
       - rollup
+
+  unplugin@1.10.1:
+    dependencies:
+      acorn: 8.11.3
+      chokidar: 3.6.0
+      webpack-sources: 3.2.3
+      webpack-virtual-modules: 0.6.1
 
   unplugin@1.7.1:
     dependencies:
