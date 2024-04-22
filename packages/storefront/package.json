@@ -72,6 +72,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.2.78"
+    "@types/react": "^18.2.79"
   }
 }
