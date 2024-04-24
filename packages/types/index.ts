@@ -121,7 +121,15 @@ export type AppModuleBody<M extends AppModuleName | undefined = undefined> = {
     M extends 'apply_discount' ? ApplyDiscountParams :
     M extends 'create_transaction' ? CreateTransactionParams :
     Record<string, any>,
-  application: Applications,
+  application: Partial<Applications> & {
+    _id: Applications['_id'],
+    state?: 'active',
+    app_id: Applications['app_id'],
+    version: Applications['version'],
+    modules: Exclude<Applications['modules'], undefined>,
+    data: Applications['data'],
+    hidden_data: Applications['hidden_data'],
+  },
 };
 
 export type AppModuleResponse<M extends AppModuleName | undefined = undefined> =
