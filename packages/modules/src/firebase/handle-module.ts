@@ -1,5 +1,5 @@
 import type { Request, Response } from 'firebase-functions';
-import type { Applications, AppModuleName, AppModuleBody } from '@cloudcommerce/types';
+import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import type { ApiError, ApiConfig } from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
 import Ajv, { ValidateFunction } from 'ajv';
@@ -16,15 +16,7 @@ import callAppModule from './call-app-module';
 
 declare global {
   // eslint-disable-next-line
-  var $activeModuleApps: undefined | Array<Partial<Applications> & {
-    _id: Applications['_id'],
-    state?: 'active',
-    app_id: Applications['app_id'],
-    version: Applications['version'],
-    modules: Exclude<Applications['modules'], undefined>,
-    data: Applications['data'],
-    hidden_data: Applications['hidden_data'],
-  }>;
+  var $activeModuleApps: undefined | Array<AppModuleBody['application']>;
 }
 
 const ajvAppsResponse = addFormats(new Ajv({ ...ajvOptions, allErrors: true }));
@@ -71,10 +63,10 @@ async function runModule(
     canCacheResults = true;
   }
 
-  let appsList: Partial<Applications>[];
   const mockedModApps = global.$activeModuleApps?.filter(({ modules }) => {
     return modules[modName as 'list_payments']?.enabled;
   });
+  let appsList: Array<AppModuleBody['application']>;
   if (mockedModApps?.length) {
     appsList = mockedModApps;
   } else if (canCache && appsCache[cacheKey]) {
@@ -84,7 +76,7 @@ async function runModule(
       const { data } = await api.get('applications', {
         params: listAppsParams,
       });
-      appsList = data.result;
+      appsList = data.result as Array<AppModuleBody['application']>;
     } catch (err: any) {
       logger.error(err);
       const error = err as ApiError;
@@ -110,7 +102,7 @@ async function runModule(
     }
     const moduleReqs: Promise<any>[] = [];
     for (let i = 0; i < appsList.length; i++) {
-      const application = appsList[i] as Applications & { modules: { [key: string]: any } };
+      const application = structuredClone(appsList[i]);
       if (!application.hidden_data) {
         application.hidden_data = {};
       }
