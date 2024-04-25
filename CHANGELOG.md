@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.14.4](https://github.com/ecomplus/cloud-commerce/compare/v2.14.3...v2.14.4) (2024-04-25)
+
+
+### Bug Fixes
+
+* **modules:** Prevent app data unexpected manipulation on deep objects ([b811d98](https://github.com/ecomplus/cloud-commerce/commit/b811d983d48d49bb4f0b80b3f1e6466ae58ef383))
+* **storefront:** Handle optional `window.GOOGLE_ADS_ID` to emit GAds conversion on purchase ([26e2455](https://github.com/ecomplus/cloud-commerce/commit/26e2455e31b6df1850b50e7453846e47aebddc60))
+* **storefront:** Update vbeta-app script with `@ecomplus/storefront-app@2.0.0-beta.200` ([0484e82](https://github.com/ecomplus/cloud-commerce/commit/0484e8241807ed1f6e8b1f531e27f37a5771f7a6))
+
 ### [2.14.3](https://github.com/ecomplus/cloud-commerce/compare/v2.14.2...v2.14.3) (2024-04-17)
 
 
