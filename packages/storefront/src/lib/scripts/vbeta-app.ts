@@ -251,7 +251,8 @@ if (!import.meta.env.SSR) {
   };
 
   const appScript = document.createElement('script');
-  appScript.src = 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.199/dist/lib/js/app.js';
+  appScript.src = (window as any)._appScriptSrc
+    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.200/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 }
