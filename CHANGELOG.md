@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.14.6](https://github.com/ecomplus/cloud-commerce/compare/v2.14.5...v2.14.6) (2024-04-25)
+
 ### [2.14.5](https://github.com/ecomplus/cloud-commerce/compare/v2.14.4...v2.14.5) (2024-04-25)
 
 ### [2.14.4](https://github.com/ecomplus/cloud-commerce/compare/v2.14.3...v2.14.4) (2024-04-25)
