@@ -234,7 +234,7 @@ export const useAnalytics = ({
     GTAG_TAG_ID,
     GA_TRACKING_ID,
     GIT_BRANCH,
-  } = window as { [k:string]: any, gtag?: Gtag.Gtag };
+  } = window as Window & { gtag?: Gtag.Gtag };
   const tagId = GTAG_TAG_ID || GA_TRACKING_ID;
   // https://developers.google.com/analytics/devguides/collection/ga4/integration
   const expVariantString: string | null = GIT_BRANCH && experimentId

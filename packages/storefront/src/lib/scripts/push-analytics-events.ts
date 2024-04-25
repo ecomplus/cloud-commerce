@@ -49,7 +49,7 @@ if (
       dataLayer,
       fbq,
       ttq,
-    } = window as {
+    } = window as Window & {
       gtag?: Gtag.Gtag,
       dataLayer?: Array<any>,
       fbq?: (action: string, value: string, payload?: any) => any,
@@ -57,6 +57,14 @@ if (
     };
     if (typeof gtag === 'function') {
       gtag('event', name, params);
+      if (window.GOOGLE_ADS_ID && name === 'purchase') {
+        gtag('event', 'conversion', {
+          send_to: window.GOOGLE_ADS_ID,
+          value: Number(params.value),
+          currency: params.currency,
+          transaction_id: params.transaction_id,
+        });
+      }
     }
     // https://developers.google.com/analytics/devguides/migration/ecommerce/gtm-ga4-to-ua#4_enable_the_gtagjs_api
     if (dataLayer && typeof dataLayer.push === 'function') {

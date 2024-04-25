@@ -28,6 +28,9 @@ interface Window {
   GIT_BRANCH: string;
   GIT_REPO?: string;
   AB_EXPERIMENT_ID?: string;
+  GTAG_TAG_ID?: string;
+  GA_TRACKING_ID?: string;
+  GOOGLE_ADS_ID?: string;
   CMS_CUSTOM_CONFIG?: Record<string, any>;
   CMS_SSO_URL?: string | null;
   CMS_REPO_BASE_DIR?: string;
