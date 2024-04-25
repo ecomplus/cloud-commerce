@@ -9,7 +9,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=18",
-    "pnpm": ">=7"
+    "pnpm": ">=7 <9"
   },
   "scripts": {
     "fix-install": "bash scripts/pre-install.sh && pnpm i",
