@@ -63,12 +63,12 @@ importers:
   ecomplus-stores/barradoce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.14.3
-        version: 2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
       husky:
         specifier: ^9.0.10
         version: 9.0.11
@@ -79,26 +79,26 @@ importers:
   ecomplus-stores/barradoce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/passport':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
 
   ecomplus-stores/barradoce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/ssr':
-        specifier: ^2.14.3
-        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       '@headlessui/vue':
         specifier: ^1.7.18
         version: 1.7.20(vue@3.4.23(typescript@5.4.5))
@@ -107,14 +107,14 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/storefront':
-        specifier: ^2.14.3
-        version: 2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+        specifier: ^2.14.6
+        version: 2.14.6(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
       '@cloudcommerce/types':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@iconify-json/mingcute':
         specifier: ^1.1.16
         version: 1.1.17
@@ -125,24 +125,24 @@ importers:
   ecomplus-stores/barradoce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.14.3
-        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/modules':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
 
   ecomplus-stores/tiasonia:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.14.3
-        version: 2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -153,26 +153,26 @@ importers:
   ecomplus-stores/tiasonia/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/passport':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
 
   ecomplus-stores/tiasonia/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/ssr':
-        specifier: ^2.14.3
-        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       '@headlessui/vue':
         specifier: ^1.7.19
         version: 1.7.20(vue@3.4.23(typescript@5.4.5))
@@ -181,14 +181,14 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/storefront':
-        specifier: ^2.14.3
-        version: 2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+        specifier: ^2.14.6
+        version: 2.14.6(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
       '@cloudcommerce/types':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@fontsource-variable/inter':
         specifier: ^5.0.17
         version: 5.0.18
@@ -208,14 +208,14 @@ importers:
   ecomplus-stores/tiasonia/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.14.3
-        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/modules':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
 
   packages/__skeleton:
     dependencies:
@@ -1308,12 +1308,12 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.14.3
-        version: 2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -1324,26 +1324,26 @@ importers:
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/passport':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/ssr':
-        specifier: ^2.14.3
-        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       '@headlessui/vue':
         specifier: ^1.7.20
         version: 1.7.20(vue@3.4.23(typescript@5.4.5))
@@ -1352,14 +1352,14 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/storefront':
-        specifier: ^2.14.3
-        version: 2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
+        specifier: ^2.14.6
+        version: 2.14.6(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))
       '@cloudcommerce/types':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       photoswipe:
         specifier: ^5.4.3
         version: 5.4.3
@@ -1367,14 +1367,14 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.14.3
-        version: 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+        specifier: ^2.14.6
+        version: 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       '@cloudcommerce/firebase':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
       '@cloudcommerce/modules':
-        specifier: ^2.14.3
-        version: 2.14.3
+        specifier: ^2.14.6
+        version: 2.14.6
 
 packages:
 
@@ -1590,121 +1590,121 @@ packages:
   '@capsizecss/unpack@2.1.0':
     resolution: {integrity: sha512-k+wAZylHNaBwfcGGeKV+tTf6G0Zd4SyiTMmzlVFKkkBVV70DzwC7KOtmV/ojLbjwRT4QSPcMvjmiws309CSPgQ==}
 
-  '@cloudcommerce/api@2.14.3':
-    resolution: {integrity: sha512-PfoYsep+H5YgBAgLBqnfdO979DvtDZCzcnf734DStEHgVqyave2aazXofu6jcRQlsZZYF+7FwneMIztwGS2j0Q==}
+  '@cloudcommerce/api@2.14.6':
+    resolution: {integrity: sha512-1bhb9SwjSH2aOnPEPub7BpqRnkrcyiZJKK/7uGNg+KJAW24OceBTS94u/6vgst9add7xiWmSyLADQyQySb3mDg==}
 
-  '@cloudcommerce/app-affiliate-program@2.14.3':
-    resolution: {integrity: sha512-R0mD1icRlWruSeAP51YMSfVZ0BDQ9zMBtN+aH7PApqwCF4gBSHiGYKMZ2/w+cCfkxP+MEv90NdfkrNabZQ/eTw==}
+  '@cloudcommerce/app-affiliate-program@2.14.6':
+    resolution: {integrity: sha512-yxWIaDLm2sqrLtIFR1AOzkCu1L58JsbsXBG8QXaR5x7Sj4bi1kfb6IAw1zNTZ5kXHdB2ds8kCKSAylxZdqNytw==}
 
-  '@cloudcommerce/app-correios@2.14.3':
-    resolution: {integrity: sha512-qBszLmEZ/dSyguN26YyCvz1ehUdI/bp+FHseU48rpraYVw9g9bVTDK447MnsWJ9/HzUs6puY9AWL5IA24fGNWQ==}
+  '@cloudcommerce/app-correios@2.14.6':
+    resolution: {integrity: sha512-vH16KFCeyvCLExt8tdFEPsw7S4taDRLXPxVrrbljVCOwNvbn6zH2fqsr4fDSvMu496bwh6MNDp7pbdNieTt7vg==}
 
-  '@cloudcommerce/app-custom-payment@2.14.3':
-    resolution: {integrity: sha512-S+8SW1Jr+gLj7cXo3UXS46fRFTAxsOqu89szzC/fgKn4O7AlLYkq3NYVc/UrozhuF5v7cbpnKrt6qQ3zvuY6vg==}
+  '@cloudcommerce/app-custom-payment@2.14.6':
+    resolution: {integrity: sha512-LsmbWjhbSLSe1eXvsT/AWCJ4Q6X+gR0rKYCPvuyimN6E4xpVgXrfAJSqU5CaAI/h6VuOqO9RrR6ULewkqjFbcQ==}
 
-  '@cloudcommerce/app-custom-shipping@2.14.3':
-    resolution: {integrity: sha512-PjlPEsjCScHBwclHK24BU+lrSFIePr7ZiE5HorBMmDAgU7pmDT1zXeuSrejSEoCiX7JU32bMfn7HSTjpD51nWQ==}
+  '@cloudcommerce/app-custom-shipping@2.14.6':
+    resolution: {integrity: sha512-6kU2FeaAkmwWaOER69fUGvyWtScYYf3kAXoBYSv6rcgz5MN6pJeVyYVKoAWxo/Woi3HDrKlF09DSsMURutfXIw==}
 
-  '@cloudcommerce/app-datafrete@2.14.3':
-    resolution: {integrity: sha512-nVjybNDYQM/Ts/iM2Qf/V7Tkv83j6qT2Q8znPs14NduYT3p0HLCIWZKpsS+T1Z500p3CnPObfgLJ+ouFQlb/Hg==}
+  '@cloudcommerce/app-datafrete@2.14.6':
+    resolution: {integrity: sha512-4Xwx21hnUemIwRepXb0dh99JC4ChVOLm1dqkVc1T3CN8ox/VIQY2yOM2hWhmHBl9d4vt4YJ23eGn2mNOB/DkOg==}
 
-  '@cloudcommerce/app-discounts@2.14.3':
-    resolution: {integrity: sha512-YDDP9qniRE9c3fW562hn8UerabWw1adhapO83Mwn4JllggueDbKYfy7tMcdXU87sV+xTMRtjQDT4tHvCEhkQ7w==}
+  '@cloudcommerce/app-discounts@2.14.6':
+    resolution: {integrity: sha512-x7j7DAGoVjyKo9vcfDE11RojcSFd5wPKgFLnJkyBKiOU9h1es+PVGk6Q6UisgMrTyKMO8qd/WSocvSFGk/csuQ==}
 
-  '@cloudcommerce/app-emails@2.14.3':
-    resolution: {integrity: sha512-XttHKEW0YjLD+KvAMksx28buI7g4C9q4Doc+EZ+CqBhskBMYo8y0lU0JEF9MCzBnahgkeL8i11qyxufi5WXfSg==}
+  '@cloudcommerce/app-emails@2.14.6':
+    resolution: {integrity: sha512-Ux9lqnkWX9veDZUnyLG73UIwcCvFQDIb0zRljKLDMu2bh0ZnpAjBzpFVGSTVXtPKEujYFjpuzqH+d827bLsdiA==}
 
-  '@cloudcommerce/app-fb-conversions@2.14.3':
-    resolution: {integrity: sha512-Cy9J9zmbj7Th5j+l6TnROr2Hb6IANvFtifWUaTVDJiEEAr8Zc1Bra9D6BJ3P961Hqw4m7jmjKAXVFE/0XWA5Ag==}
+  '@cloudcommerce/app-fb-conversions@2.14.6':
+    resolution: {integrity: sha512-Qn9ijyr3Sr1qLiiEj5WhKFKmTYuiwLxzOnvfgOzFolcxfTMUHpVCxPmzYT6riTnyHI283cNhBJb0aenTWeUOew==}
 
-  '@cloudcommerce/app-flash-courier@2.14.3':
-    resolution: {integrity: sha512-qnnVCA5H6jN7NMa8GwU9IA1un05NtaPvWiw9Ul5EepOJ1dl3qpNyR96FVcBdSrCzUbq7jN8q9S9wTuP1efnysQ==}
+  '@cloudcommerce/app-flash-courier@2.14.6':
+    resolution: {integrity: sha512-l5uRg0RzASg88Ly28JWqZ4WJoA1DrGXCYh6sxQIKMEE9L6MhXFZ51w86OviMgnkX9oOvm9J/PhUeLOpyoiKEqA==}
 
-  '@cloudcommerce/app-frenet@2.14.3':
-    resolution: {integrity: sha512-cmSSZvSsJol6MKp6Mvn31CE6M+Maxo3RK1ebYLva9umvF5oSN9uYqd/xZlidbCMYJG+FssTsiCp1E1qZpl7S3Q==}
+  '@cloudcommerce/app-frenet@2.14.6':
+    resolution: {integrity: sha512-vX3CbmGffzKQmku+OpNmMH5fGUCOK+KLMO3ykEIVEzPKsSMQ/o0tdP2Mzlr1B2u8VYRyzO06vLUXdQvTDqiydg==}
 
-  '@cloudcommerce/app-galaxpay@2.14.3':
-    resolution: {integrity: sha512-KrP3HDKoeosOT9UMP5+X4yh5VRtZ/j4HWbER9EZ9dHdr+rHIan/7oOs33zdA+U5HJw3A2XN7nfxKSPls2A7NCQ==}
+  '@cloudcommerce/app-galaxpay@2.14.6':
+    resolution: {integrity: sha512-4QHLfP0GjQ/9vtmj5Crb426O+znPsGEBZnnQ64Mxa0qnWJ23rkHrq0ttpHvZZaMIxLCAvKdR+uhNuafKb8k/aA==}
 
-  '@cloudcommerce/app-google-analytics@2.14.3':
-    resolution: {integrity: sha512-ejDtIEFs/r2Bdr9M9ITQL0+rqDsa8Aqw0bBQg6Z62W2u/jKXjyBdpVpGLfxlsUleNKL/AAtkROT9uUbXcwiIsQ==}
+  '@cloudcommerce/app-google-analytics@2.14.6':
+    resolution: {integrity: sha512-7KeBbGFaKamOeAuLjgnNqb/0Rp4pgaqg+clDPj83lzkf2cj6go2CnZ2ai8ZX5EXZfa+2sRWLBHrHeGBC0HCAag==}
 
-  '@cloudcommerce/app-jadlog@2.14.3':
-    resolution: {integrity: sha512-zZwEnboZeOGe0XXE+58P/9+LB8tq6X4mK6ieLSUX1/xRG5n8j4EQiR1wAB8eU0wogTTnbwNRfB9+8ZkMTclW2g==}
+  '@cloudcommerce/app-jadlog@2.14.6':
+    resolution: {integrity: sha512-S+fWrH2dKX9AfXip+jjD6bXrQd8wwbWcVFtTqNAzZw+9Htvksz9jq1NjqXTmAXNHRt+kozYzM+W+EhhqM4Ag5g==}
 
-  '@cloudcommerce/app-loyalty-points@2.14.3':
-    resolution: {integrity: sha512-TvJSKxg5FYAZme+3E29UFeqmtTKCK4PrXNiwh1MHEUTFfS0rJmkTIrRoJV1MWXlltnXSgxo101DZmHnz5k43DQ==}
+  '@cloudcommerce/app-loyalty-points@2.14.6':
+    resolution: {integrity: sha512-W0ZxZ69+anCYXBZuWClo/CVis3bBDxWkyMiQ8azCNdyyvj3hYC7KDEEx66MEKZi3PjK6pWn6tvIkuSWFyS+MHQ==}
 
-  '@cloudcommerce/app-mandae@2.14.3':
-    resolution: {integrity: sha512-FWpzr5x6KFJjLAEg+mCEvKaie82V69MAc9rAvIqjkOZH/gzMfcleHwo4O5RvNwQcIO5BVsdNMl0FDdwlvbt03w==}
+  '@cloudcommerce/app-mandae@2.14.6':
+    resolution: {integrity: sha512-p/+lbmWxWMSjNS2znizE6tI5sxfqtSaAR9mu7/EYQSOmNzlzPF1RwsSrKqZzH9ISVQ0RV8vd/94UcEeEmvzrlg==}
 
-  '@cloudcommerce/app-melhor-envio@2.14.3':
-    resolution: {integrity: sha512-IlWm00BwVjAZHwVJgGLbhAzSbN3GJRInnMsfqiCNoHeYYVFYdmvvEJokRZI75ej3+PjLqYV/Ggr6TP1oRNTQZQ==}
+  '@cloudcommerce/app-melhor-envio@2.14.6':
+    resolution: {integrity: sha512-iOYbIfXdPVeCuJSQeqgjC35nQVhkxoduyKfkbhQkb29ffWvJ3vyVuPcKtdE8jSMsspHAe6k+4kVcnjd109FgJQ==}
 
-  '@cloudcommerce/app-mercadopago@2.14.3':
-    resolution: {integrity: sha512-37KW79QBAtfWSUiUQIteEsftCuuPvs/j+akWLMi4foyLn+6JN9gNQq8GDo+KlivbzNZECal1q+nUDGpduYS9Lw==}
+  '@cloudcommerce/app-mercadopago@2.14.6':
+    resolution: {integrity: sha512-B5wvdnXV4eLecxe4qJPjv19NqbcBaaiBUtuQytRfoJwzHqMEDwPEy7hmI9fvJUm7z5FkfbRfcVvg+H5yL9X72g==}
 
-  '@cloudcommerce/app-pagaleve@2.14.3':
-    resolution: {integrity: sha512-WJCcqz4pYT9CfVWZBZp4fTnbjQL16TIGG3tJofQbEHJzFtb60hBlisE9V9Ej5YJSyAJ5W0iE8mUjtSzwj4ghjQ==}
+  '@cloudcommerce/app-pagaleve@2.14.6':
+    resolution: {integrity: sha512-7CvHPewG9IQLiyhj9bcvjcce3nFRNRDMqJv+RG2WRQCEHka2cWEgp6b+lOmhM+6V7msxtXC91fXQq+724JrnIg==}
 
-  '@cloudcommerce/app-pagarme-v5@2.14.3':
-    resolution: {integrity: sha512-KnGWOfA7zmo8EIL2Nv3rfmzD6K0GwYEB1rkyLnul4HdWE8eWcSKTC3RvUDm3CQo3xd/zVMoCeUGDOlrBEBe6zg==}
+  '@cloudcommerce/app-pagarme-v5@2.14.6':
+    resolution: {integrity: sha512-vuPDv+/45aFVxbnmmOOIuGTbtbNlyGxtWcozuVM0Sp5oOuPdHqvNetVL8fqWOna9KldZTpUcpis6eDj7ffKN6Q==}
 
-  '@cloudcommerce/app-pagarme@2.14.3':
-    resolution: {integrity: sha512-1YXIYhusL7F6Xb5cNSIlDGSVsGZjsKN4gOFRtaT7CnnxEmRUwcN61yJ23Kg7ZEVe10g85x4ASnH/whz9GGCCXg==}
+  '@cloudcommerce/app-pagarme@2.14.6':
+    resolution: {integrity: sha512-qsycjwa9hywGpXbyILHjJ0+S1h4fUzLcOgMEiynWVWLjg99sv5MHHPQJg6rVbgGXLNfm5/fD3HgYBe74ou85/Q==}
 
-  '@cloudcommerce/app-paghiper@2.14.3':
-    resolution: {integrity: sha512-NBbVM7QeZMEP+EdEm/tw78u76++QhqymATpCyN3/3IDS0f4yqonv9FaX6PTDugQnLnGdXDvbvA/iTNR6auesDA==}
+  '@cloudcommerce/app-paghiper@2.14.6':
+    resolution: {integrity: sha512-EFXqtsHWVQ0MWcfl0m7j7rEOnT/MhRZaKBU5p9+IRVp8uAEzAdWAVnI1mlAdo4i7O3klcueMKMw81f1EL3nJtA==}
 
-  '@cloudcommerce/app-pix@2.14.3':
-    resolution: {integrity: sha512-9EXCgnQccHppYPEoFY0MfRHdmvIg7qP1vyWYGVVvrCl5EzyPEcZ2qbWDqsR3t4y9t1Hl4r+95s9HXUmuIHygrg==}
+  '@cloudcommerce/app-pix@2.14.6':
+    resolution: {integrity: sha512-LG5A0LDh8R/UX1GQF4KCJ0u8px/SO/+YtyRIFQm8yxX2Frc7E2B8Y1uiVxumgn2tbITL+KP1U4XMBHuh+0/SxA==}
 
-  '@cloudcommerce/app-tiny-erp@2.14.3':
-    resolution: {integrity: sha512-izwqg4vY0/uFtmwNWiiPdmuvsWpt1n/uVEXxdl/Z1kX1Gue5w6z1fPBFMyd17WZIx8mepO0Y1qim7tltYAxlDg==}
+  '@cloudcommerce/app-tiny-erp@2.14.6':
+    resolution: {integrity: sha512-X+YbnYGwsVJ3w3qkPr0oUh2UdnitrKIOITZsFWZE8HfS+pP2ZcDhZ87BcMHejNSpXOe+Jfzb4+9q5O712R5oIg==}
 
-  '@cloudcommerce/app-webhooks@2.14.3':
-    resolution: {integrity: sha512-rc1Z5w1PtyONF4YhksLMPlHsYatqjY1S+msjKAxYnoMjUV/HhHZ9sAsOmW9+812FOn1R7rwifK1cSxRg0LJrDg==}
+  '@cloudcommerce/app-webhooks@2.14.6':
+    resolution: {integrity: sha512-NaMrRvVujbKeizzgPjTNvRzoioIEFEHLZnyCpNgz+bRBVQCWhfJUCtUt8jn8R4i2cdw4du4Q+CDEujOC54ECWw==}
 
-  '@cloudcommerce/cli@2.14.3':
-    resolution: {integrity: sha512-4ool99yZ68WJCNUdMBaB8qn9nzAptwjeO19xNZ+bTZtp4X70UvQ4/Ko2JzQ733dvQu95Za4ThLsTD1nWiVH/7g==}
+  '@cloudcommerce/cli@2.14.6':
+    resolution: {integrity: sha512-pP2ARvH0BDD4CXfuEHlew4zIRS/nPDklNgfu888EdLgVptHtR9veuK9TnAjC/DwVlHX8gINQ2C6IyuaR1HpPvA==}
     hasBin: true
 
-  '@cloudcommerce/config@2.14.3':
-    resolution: {integrity: sha512-/IzSIdxfUYbPIvLhDf/Pcx9MedW5CB2dD1YgvE6aTTpdBoYVrTHwGSOps6w0PFXUNAtut1t2KNQOixcDw6MHuQ==}
+  '@cloudcommerce/config@2.14.6':
+    resolution: {integrity: sha512-xFieq4dSurzlQhAxMyAFuwvSBKAOHAST270OWQAV2xdBcqOoSN6mCYgc7jjZgApw8haQr0f7XLIIDRX6tfLH+g==}
 
-  '@cloudcommerce/emails@2.14.3':
-    resolution: {integrity: sha512-4dQ5KWut0yttOVJWpLmvCc19PCqUx5gyjBUsvjgqgd7MqIGY5aK38+qySs8E95dsPaTolIWhJHVZ77DatoT5Lw==}
+  '@cloudcommerce/emails@2.14.6':
+    resolution: {integrity: sha512-g0i+4Zbt2ZF+16LHJXW1PerK4CAKiaUNHgwDvmOpZ27A0ZCi6WqLWfevr0ZuPYGOFSUTLrdGCfd0zKvmXw3hPA==}
 
-  '@cloudcommerce/eslint@2.14.3':
-    resolution: {integrity: sha512-NZLsHoxSR3pUnXggRoMbWuw7pRQ/v7QadEoyN0FK3Pn1vYGcE7yBJa6o9Q3As3Pli8uLPptbYn01YgdxJ1w00w==}
+  '@cloudcommerce/eslint@2.14.6':
+    resolution: {integrity: sha512-DZRllAiMWaCVbZpy1Ntv9tp0XHwt6ApFFc82vDuuBJZC2Fb75pcex4humtRxrK0zzb9OiqJxo0aGnrzaSzlvog==}
 
-  '@cloudcommerce/events@2.14.3':
-    resolution: {integrity: sha512-IjQgXbTqnnTmg9oUQpov8hQjre0NDwc7semfkfl/IgrRk8fWbL+CAIeqRKlE2e+cByhsA3SayiSg04eqB6/o0g==}
+  '@cloudcommerce/events@2.14.6':
+    resolution: {integrity: sha512-aIwiOUm3L+PtgVXf5ZsqzMB8hdAubnZOTdhZsvK4+xoKVwdH1kfV8/ap+Foev/46rSnF1f1S72MV6X6478t4sg==}
 
-  '@cloudcommerce/feeds@2.14.3':
-    resolution: {integrity: sha512-Sm2ggxZCtcq4Lnd3Cd3QTWVvlRt0XRm58mSvbE+Q8kFOrZXn3X+89F7IYlOkNoEl/+nanUzDQxHmTPDyQiOD3A==}
+  '@cloudcommerce/feeds@2.14.6':
+    resolution: {integrity: sha512-HdbFTHJRoBs+f0AMHK7VlqMfHCBZdV+ScD2XT4SQVOSSHXiF56UVnwndtLfRP9KZP4F4+0aex1F1H/l2/LeDOg==}
 
-  '@cloudcommerce/firebase@2.14.3':
-    resolution: {integrity: sha512-qiHIHpRxgCDIjanfMJ+5+AEMgfngQ01wne9FB5cv56YanCwmcKrE3yc/hFULwry0XdJuwtFXBIavAxZIJO9Tkw==}
+  '@cloudcommerce/firebase@2.14.6':
+    resolution: {integrity: sha512-ZC8OJlNGIOox3o7k7jYrNXKkh0SXr/7sUTj2ag/Ar15jLcQ6f6VzgExyOSxSv8rl1xdhZX83ASfacIt8uXxjVQ==}
 
-  '@cloudcommerce/i18n@2.14.3':
-    resolution: {integrity: sha512-sjCygSPaXiFp1BU0zLzV6da3RbYBcgKLqSgDREx0VYbJjBSVvu2eJBMz6t+MP/xhS096jVb1yCkmsrNHNMfARA==}
+  '@cloudcommerce/i18n@2.14.6':
+    resolution: {integrity: sha512-YDU+OHEyeY8hpV6iyr6DQ9PjkHiL87gorO/kBjd6Fk/ShPNcTx+mZdczGcYjI87SXWqJqVYwasjFGdDk+xySrQ==}
 
-  '@cloudcommerce/modules@2.14.3':
-    resolution: {integrity: sha512-G+VC1KuqeiPE/mJ3WNMRFWllH8N3bzmlATTEFY2ZZGln8Wg1J3ToUs8AI66EBn3W6VMoJoLgDe/rtyHOH9VnaQ==}
+  '@cloudcommerce/modules@2.14.6':
+    resolution: {integrity: sha512-9bxsBlfEuTXkZisyqmiMQC4KXhj4vUGR7E84jDV5EbV8w1dnDyuF7duuY1kJcp3qMirWYiPug/gwFBlW9Tjh0A==}
 
-  '@cloudcommerce/passport@2.14.3':
-    resolution: {integrity: sha512-mutql1eDNQHQRlvU/3QS+vydPjDMdkS2UHx8odzyM20oTtGj25dSp7rN9RMjSJyTZW8kVVmBzWomnJYJsT8T6Q==}
+  '@cloudcommerce/passport@2.14.6':
+    resolution: {integrity: sha512-8ewSS56YVtrHQx5gIlOn+wSUzTSM3ZsGmXGT2q2N8wZDTh5yPGhremplBcKlYztq4JZBINBNNgyzBbyk+7j1aw==}
 
-  '@cloudcommerce/ssr@2.14.3':
-    resolution: {integrity: sha512-c0ri9qEi69DOgxXZvbeXXxtT94Atbn2aryAdSlzAgYg75UTU4m8jHilttVLxttWx0k0TTzDHw1zrm5GPwutWEg==}
+  '@cloudcommerce/ssr@2.14.6':
+    resolution: {integrity: sha512-ilJ2rfGmnmJVuGhRycCgQq28jK5uq5+NGsnvotck0Jf4XsIHv4/4sSW3GQy5m6xt5kJRwBcnonO7rxVK+urKbw==}
 
-  '@cloudcommerce/storefront@2.14.3':
-    resolution: {integrity: sha512-JEoOwrhToPcgW17p8UB4k+KFFiLVmlluSKIIMR4yiXR9QGwoWR6iTghbV/8b0E7N0Y5O4l5KTELE9EhLCcF5Mg==}
+  '@cloudcommerce/storefront@2.14.6':
+    resolution: {integrity: sha512-MqpDtbFhVc3IIL0e447hETC9QZkfrPoNmqg6HXexZ9XTa4QMA+rx1PfDmo6TmN0lR9r6BK3e99IwtTUWvG950g==}
     hasBin: true
 
-  '@cloudcommerce/types@2.14.3':
-    resolution: {integrity: sha512-T1he1ypzZ4ZwwoNR+wfdu2PqhWvnc29Nd8i1vqoTRXqEkRDTZa/pyyf/VXmTEbODg1BzNvEdIHflPaeCR2ejVg==}
+  '@cloudcommerce/types@2.14.6':
+    resolution: {integrity: sha512-E+TASALWXzAsY0RfQaI/qpwh/hnWHe56ax+h+R0pZJsyvE+icCzCqM5rJAWSbNAhO8wa7FNhIvFdOwuSUph00w==}
 
   '@commitlint/cli@19.2.2':
     resolution: {integrity: sha512-P8cbOHfg2PQRzfICLSrzUVOCVMqjEZ8Hlth6mtJ4yOEjT47Q5PbIGymgX3rLVylNw+3IAT2Djn9IJ2wHbXFzBg==}
@@ -3146,10 +3146,6 @@ packages:
     peerDependencies:
       astro: '>= 2.8'
 
-  astro-eslint-parser@0.16.3:
-    resolution: {integrity: sha512-CGaBseNtunAV2DCpwBXqTKq8+9Tw65XZetMaC0FsMoZuLj0gxNIkbCf2QyKYScVrNOU7/ayfNdVw8ZCSHBiqCg==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-
   astro-eslint-parser@0.17.0:
     resolution: {integrity: sha512-yTgzioUI9MKgBF4LxP7YI+uuZLrnXgHDeW4dpa3VqCNbDmPzL7ix93tc0JJIwWGcskoSAAHZZVaBSp8bHyZZZA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -3963,12 +3959,6 @@ packages:
         optional: true
       eslint-import-resolver-webpack:
         optional: true
-
-  eslint-plugin-astro@0.33.1:
-    resolution: {integrity: sha512-wVyxAf8Ulmljv5qJQLgspWe17LR4hLXcksIENtUlEC3W7rleBVEKXS+hIqzBfCbpkBLZpl1tsYes1AGpYHd13w==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    peerDependencies:
-      eslint: '>=7.0.0'
 
   eslint-plugin-astro@0.34.0:
     resolution: {integrity: sha512-nzw2H4g7HPXPLsWVpGUxuJ/ViVPLI8lM/AaUCJ51qTLTWtaMhvlvoe2d7yIPMFc+7xeCzQdo1POK8eR7NFsdKQ==}
@@ -7385,22 +7375,22 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@cloudcommerce/api@2.14.3': {}
+  '@cloudcommerce/api@2.14.6': {}
 
-  '@cloudcommerce/app-affiliate-program@2.14.3':
+  '@cloudcommerce/app-affiliate-program@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-correios@2.14.3':
+  '@cloudcommerce/app-correios@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@google-cloud/pubsub': 4.3.3
       axios: 1.6.8
       firebase-admin: 12.1.0
@@ -7410,18 +7400,18 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-custom-payment@2.14.3':
+  '@cloudcommerce/app-custom-payment@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
 
-  '@cloudcommerce/app-custom-shipping@2.14.3':
+  '@cloudcommerce/app-custom-shipping@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
 
-  '@cloudcommerce/app-datafrete@2.14.3':
+  '@cloudcommerce/app-datafrete@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       axios: 1.6.8
       firebase-admin: 12.1.0
@@ -7431,16 +7421,16 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-discounts@2.14.3':
+  '@cloudcommerce/app-discounts@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
 
-  '@cloudcommerce/app-emails@2.14.3':
+  '@cloudcommerce/app-emails@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/emails': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/emails': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/transactional-mails': 2.0.3
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7449,10 +7439,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-fb-conversions@2.14.3':
+  '@cloudcommerce/app-fb-conversions@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       facebook-nodejs-business-sdk: 19.0.3
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7461,10 +7451,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-flash-courier@2.14.3(firebase-admin@12.1.0)':
+  '@cloudcommerce/app-flash-courier@2.14.6(firebase-admin@12.1.0)':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
     transitivePeerDependencies:
@@ -7473,10 +7463,10 @@ snapshots:
       - firebase-admin
       - supports-color
 
-  '@cloudcommerce/app-frenet@2.14.3':
+  '@cloudcommerce/app-frenet@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7485,10 +7475,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-galaxpay@2.14.3':
+  '@cloudcommerce/app-galaxpay@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7497,10 +7487,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-google-analytics@2.14.3':
+  '@cloudcommerce/app-google-analytics@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7509,25 +7499,25 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-jadlog@2.14.3':
+  '@cloudcommerce/app-jadlog@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
       axios: 1.6.8
     transitivePeerDependencies:
       - debug
 
-  '@cloudcommerce/app-loyalty-points@2.14.3':
+  '@cloudcommerce/app-loyalty-points@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-mandae@2.14.3(firebase-admin@12.1.0)':
+  '@cloudcommerce/app-mandae@2.14.6(firebase-admin@12.1.0)':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       axios: 1.6.8
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7536,10 +7526,10 @@ snapshots:
       - firebase-admin
       - supports-color
 
-  '@cloudcommerce/app-melhor-envio@2.14.3':
+  '@cloudcommerce/app-melhor-envio@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7548,10 +7538,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-mercadopago@2.14.3':
+  '@cloudcommerce/app-mercadopago@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7560,10 +7550,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-pagaleve@2.14.3':
+  '@cloudcommerce/app-pagaleve@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       axios: 1.6.8
       firebase-admin: 12.1.0
@@ -7573,10 +7563,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-pagarme-v5@2.14.3':
+  '@cloudcommerce/app-pagarme-v5@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       axios: 1.6.8
       firebase-admin: 12.1.0
@@ -7586,10 +7576,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-pagarme@2.14.3':
+  '@cloudcommerce/app-pagarme@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7600,10 +7590,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-paghiper@2.14.3':
+  '@cloudcommerce/app-paghiper@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7612,10 +7602,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-pix@2.14.3':
+  '@cloudcommerce/app-pix@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7624,10 +7614,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-tiny-erp@2.14.3':
+  '@cloudcommerce/app-tiny-erp@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       axios: 1.6.8
       firebase-admin: 12.1.0
@@ -7638,10 +7628,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/app-webhooks@2.14.3':
+  '@cloudcommerce/app-webhooks@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
@@ -7650,9 +7640,9 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/cli@2.14.3':
+  '@cloudcommerce/cli@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
       '@fastify/deepmerge': 1.3.0
       dotenv: 16.4.5
       libsodium-wrappers: 0.7.13
@@ -7660,14 +7650,14 @@ snapshots:
       typescript: 5.4.5
       zx: 7.2.3
 
-  '@cloudcommerce/config@2.14.3':
+  '@cloudcommerce/config@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
       '@fastify/deepmerge': 1.3.0
 
-  '@cloudcommerce/emails@2.14.3':
+  '@cloudcommerce/emails@2.14.6':
     dependencies:
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/firebase': 2.14.6
       axios: 1.6.8
       ejs: 3.1.10
       nodemailer: 6.9.13
@@ -7676,13 +7666,13 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/eslint@2.14.3(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)':
+  '@cloudcommerce/eslint@2.14.6(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))(typescript@5.4.5)':
     dependencies:
       '@typescript-eslint/eslint-plugin': 7.7.0(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-astro: 0.33.1(eslint@8.57.0)
+      eslint-plugin-astro: 0.34.0(eslint@8.57.0)(typescript@5.4.5)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
       eslint-plugin-tailwindcss: 3.15.1(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5)))
       eslint-plugin-vue: 9.25.0(eslint@8.57.0)
@@ -7693,29 +7683,29 @@ snapshots:
       - tailwindcss
       - typescript
 
-  '@cloudcommerce/events@2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)':
+  '@cloudcommerce/events@2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/app-affiliate-program': 2.14.3
-      '@cloudcommerce/app-datafrete': 2.14.3
-      '@cloudcommerce/app-emails': 2.14.3
-      '@cloudcommerce/app-fb-conversions': 2.14.3
-      '@cloudcommerce/app-flash-courier': 2.14.3(firebase-admin@12.1.0)
-      '@cloudcommerce/app-frenet': 2.14.3
-      '@cloudcommerce/app-galaxpay': 2.14.3
-      '@cloudcommerce/app-google-analytics': 2.14.3
-      '@cloudcommerce/app-loyalty-points': 2.14.3
-      '@cloudcommerce/app-melhor-envio': 2.14.3
-      '@cloudcommerce/app-mercadopago': 2.14.3
-      '@cloudcommerce/app-pagaleve': 2.14.3
-      '@cloudcommerce/app-pagarme': 2.14.3
-      '@cloudcommerce/app-pagarme-v5': 2.14.3
-      '@cloudcommerce/app-paghiper': 2.14.3
-      '@cloudcommerce/app-pix': 2.14.3
-      '@cloudcommerce/app-tiny-erp': 2.14.3
-      '@cloudcommerce/app-webhooks': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
-      '@cloudcommerce/ssr': 2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/app-affiliate-program': 2.14.6
+      '@cloudcommerce/app-datafrete': 2.14.6
+      '@cloudcommerce/app-emails': 2.14.6
+      '@cloudcommerce/app-fb-conversions': 2.14.6
+      '@cloudcommerce/app-flash-courier': 2.14.6(firebase-admin@12.1.0)
+      '@cloudcommerce/app-frenet': 2.14.6
+      '@cloudcommerce/app-galaxpay': 2.14.6
+      '@cloudcommerce/app-google-analytics': 2.14.6
+      '@cloudcommerce/app-loyalty-points': 2.14.6
+      '@cloudcommerce/app-melhor-envio': 2.14.6
+      '@cloudcommerce/app-mercadopago': 2.14.6
+      '@cloudcommerce/app-pagaleve': 2.14.6
+      '@cloudcommerce/app-pagarme': 2.14.6
+      '@cloudcommerce/app-pagarme-v5': 2.14.6
+      '@cloudcommerce/app-paghiper': 2.14.6
+      '@cloudcommerce/app-pix': 2.14.6
+      '@cloudcommerce/app-tiny-erp': 2.14.6
+      '@cloudcommerce/app-webhooks': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
+      '@cloudcommerce/ssr': 2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
       source-map-support: 0.5.21
@@ -7733,18 +7723,18 @@ snapshots:
       - terser
       - typescript
 
-  '@cloudcommerce/feeds@2.14.3':
+  '@cloudcommerce/feeds@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  '@cloudcommerce/firebase@2.14.3':
+  '@cloudcommerce/firebase@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/config': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/config': 2.14.6
       '@google-cloud/pubsub': 4.3.3
       dotenv: 16.4.5
       firebase-admin: 12.1.0
@@ -7754,32 +7744,32 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/i18n@2.14.3':
+  '@cloudcommerce/i18n@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
 
-  '@cloudcommerce/modules@2.14.3':
+  '@cloudcommerce/modules@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/app-correios': 2.14.3
-      '@cloudcommerce/app-custom-payment': 2.14.3
-      '@cloudcommerce/app-custom-shipping': 2.14.3
-      '@cloudcommerce/app-datafrete': 2.14.3
-      '@cloudcommerce/app-discounts': 2.14.3
-      '@cloudcommerce/app-flash-courier': 2.14.3(firebase-admin@12.1.0)
-      '@cloudcommerce/app-frenet': 2.14.3
-      '@cloudcommerce/app-galaxpay': 2.14.3
-      '@cloudcommerce/app-jadlog': 2.14.3
-      '@cloudcommerce/app-loyalty-points': 2.14.3
-      '@cloudcommerce/app-mandae': 2.14.3(firebase-admin@12.1.0)
-      '@cloudcommerce/app-melhor-envio': 2.14.3
-      '@cloudcommerce/app-mercadopago': 2.14.3
-      '@cloudcommerce/app-pagaleve': 2.14.3
-      '@cloudcommerce/app-pagarme': 2.14.3
-      '@cloudcommerce/app-pagarme-v5': 2.14.3
-      '@cloudcommerce/app-paghiper': 2.14.3
-      '@cloudcommerce/app-pix': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/app-correios': 2.14.6
+      '@cloudcommerce/app-custom-payment': 2.14.6
+      '@cloudcommerce/app-custom-shipping': 2.14.6
+      '@cloudcommerce/app-datafrete': 2.14.6
+      '@cloudcommerce/app-discounts': 2.14.6
+      '@cloudcommerce/app-flash-courier': 2.14.6(firebase-admin@12.1.0)
+      '@cloudcommerce/app-frenet': 2.14.6
+      '@cloudcommerce/app-galaxpay': 2.14.6
+      '@cloudcommerce/app-jadlog': 2.14.6
+      '@cloudcommerce/app-loyalty-points': 2.14.6
+      '@cloudcommerce/app-mandae': 2.14.6(firebase-admin@12.1.0)
+      '@cloudcommerce/app-melhor-envio': 2.14.6
+      '@cloudcommerce/app-mercadopago': 2.14.6
+      '@cloudcommerce/app-pagaleve': 2.14.6
+      '@cloudcommerce/app-pagarme': 2.14.6
+      '@cloudcommerce/app-pagarme-v5': 2.14.6
+      '@cloudcommerce/app-paghiper': 2.14.6
+      '@cloudcommerce/app-pix': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       ajv: 8.12.0
       ajv-formats: 2.1.1(ajv@8.12.0)
@@ -7792,10 +7782,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/passport@2.14.3':
+  '@cloudcommerce/passport@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
       firebase-admin: 12.1.0
       firebase-functions: 4.9.0(firebase-admin@12.1.0)
       source-map-support: 0.5.21
@@ -7803,12 +7793,12 @@ snapshots:
       - encoding
       - supports-color
 
-  '@cloudcommerce/ssr@2.14.3(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)':
+  '@cloudcommerce/ssr@2.14.6(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)':
     dependencies:
       '@astrojs/node': 8.2.5(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/firebase': 2.14.3
-      '@cloudcommerce/i18n': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/firebase': 2.14.6
+      '@cloudcommerce/i18n': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       '@vueuse/core': 10.9.0(vue@3.4.23(typescript@5.4.5))
       astro: 4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
@@ -7833,13 +7823,13 @@ snapshots:
       - terser
       - typescript
 
-  '@cloudcommerce/storefront@2.14.3(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))':
+  '@cloudcommerce/storefront@2.14.6(@babel/core@7.24.3)(@types/node@18.19.31)(postcss@8.4.38)(rollup@4.13.0)(sass@1.71.1)(ts-node@10.9.2(@types/node@18.19.31)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))':
     dependencies:
       '@astrojs/node': 8.2.5(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))
       '@astrojs/vue': 4.0.10(@babel/core@7.24.3)(astro@4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5))(vite@5.2.10(@types/node@18.19.31)(sass@1.71.1))(vue@3.4.23(typescript@5.4.5))
-      '@cloudcommerce/api': 2.14.3
-      '@cloudcommerce/config': 2.14.3
-      '@cloudcommerce/i18n': 2.14.3
+      '@cloudcommerce/api': 2.14.6
+      '@cloudcommerce/config': 2.14.6
+      '@cloudcommerce/i18n': 2.14.6
       '@ecomplus/utils': 1.5.0-rc.6
       '@fastify/deepmerge': 1.3.0
       '@iconify-json/fa6-brands': 1.1.19
@@ -7882,9 +7872,9 @@ snapshots:
       - typescript
       - vite
 
-  '@cloudcommerce/types@2.14.3':
+  '@cloudcommerce/types@2.14.6':
     dependencies:
-      '@cloudcommerce/api': 2.14.3
+      '@cloudcommerce/api': 2.14.6
 
   '@commitlint/cli@19.2.2(@types/node@18.19.31)(typescript@5.4.5)':
     dependencies:
@@ -9610,20 +9600,6 @@ snapshots:
       astro: 4.5.10(@types/node@18.19.31)(sass@1.71.1)(typescript@5.4.5)
       ultrahtml: 1.5.3
 
-  astro-eslint-parser@0.16.3:
-    dependencies:
-      '@astrojs/compiler': 2.7.1
-      '@typescript-eslint/scope-manager': 5.62.0
-      '@typescript-eslint/types': 5.62.0
-      astrojs-compiler-sync: 0.3.5(@astrojs/compiler@2.7.1)
-      debug: 4.3.4
-      entities: 4.5.0
-      eslint-visitor-keys: 3.4.3
-      espree: 9.6.1
-      semver: 7.6.0
-    transitivePeerDependencies:
-      - supports-color
-
   astro-eslint-parser@0.17.0(typescript@5.4.5):
     dependencies:
       '@astrojs/compiler': 2.7.1
@@ -10654,20 +10630,6 @@ snapshots:
       '@typescript-eslint/parser': 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-    transitivePeerDependencies:
-      - supports-color
-
-  eslint-plugin-astro@0.33.1(eslint@8.57.0):
-    dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
-      '@jridgewell/sourcemap-codec': 1.4.15
-      '@typescript-eslint/types': 5.62.0
-      astro-eslint-parser: 0.16.3
-      eslint: 8.57.0
-      eslint-compat-utils: 0.5.0(eslint@8.57.0)
-      globals: 13.24.0
-      postcss: 8.4.38
-      postcss-selector-parser: 6.0.15
     transitivePeerDependencies:
       - supports-color
 
