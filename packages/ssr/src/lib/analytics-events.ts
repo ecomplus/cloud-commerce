@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import { EventEmitter } from 'node:events';
 import { warn, error } from 'firebase-functions/logger';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
@@ -91,7 +92,27 @@ const sendAnalyticsEvents = async (
       for (let i = 0; i < results.length; i++) {
         const { status } = results[i];
         if (status === 'rejected') {
-          warn((results[i] as PromiseRejectedResult).reason);
+          const reason: AxiosError = (results[i] as PromiseRejectedResult).reason;
+          const err: any = new Error(reason.message);
+          err.statusCode = reason.response?.status;
+          if (reason.config) {
+            err.config = {
+              url: reason.config.url,
+              method: reason.config.method,
+              headers: reason.config.headers,
+              data: reason.config.data,
+            };
+          }
+          if (reason.response) {
+            err.response = {
+              headers: reason.response.headers,
+              data: reason.response.data,
+            };
+          }
+          warn(err, {
+            request: err.config,
+            response: err.response,
+          });
         }
       }
     }),
