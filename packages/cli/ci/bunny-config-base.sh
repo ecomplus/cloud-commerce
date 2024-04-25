@@ -143,31 +143,37 @@ configure_edge_rule() {
   printf "\n\n> Configured edge rule \"$description\"\n"
 }
 
-configure_edge_rule "APIs bypass CDN cache" '
+configure_edge_rule "Bypass CDN cache" '
 {
   "ActionType": 3,
+  "TriggerMatchingType": 0,
   "ActionParameter1": "0",
-  "ActionParameter2": "",
   "Triggers": [
     {
       "Type": 0,
+      "PatternMatchingType": 0,
       "PatternMatches": [
         "*/_api/*",
         "*.xml",
         "*/admin/*",
         "*/~*"
-      ],
-      "PatternMatchingType": 0,
-      "Parameter1": ""
+      ]
+    },
+    {
+      "Type": 8,
+      "PatternMatchingType": 2,
+      "PatternMatches": [
+        "200",
+        "301"
+      ]
     }
   ],
-  "TriggerMatchingType": 1,
-  "Description": "APIs bypass CDN cache",
+  "Description": "Bypass CDN cache",
   "Enabled": true
 }
 '
 
-configure_edge_rule "APIs bypass perma-cache" '
+configure_edge_rule "Bypass perma-cache" '
 {
   "ActionType": 15,
   "ActionParameter1": null,
@@ -187,7 +193,7 @@ configure_edge_rule "APIs bypass perma-cache" '
     }
   ],
   "TriggerMatchingType": 1,
-  "Description": "APIs bypass perma-cache",
+  "Description": "Bypass perma-cache",
   "Enabled": true
 }
 '
