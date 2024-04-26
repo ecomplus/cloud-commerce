@@ -21,9 +21,6 @@ const sendToTiktok = async (
     let data: Array<Record<string, any>> = [];
     for (let i = 0; i < events.length; i++) {
       const event = events[i];
-      if (event.name === 'PageView') {
-        event.name = 'Contact';
-      }
       data.push({
         event: event.name,
         event_time: Date.now(),
@@ -33,7 +30,7 @@ const sendToTiktok = async (
         },
         properties: event.params,
       });
-      if (data.length === 999 || i === events.length - 1) {
+      if (data.length === 99 || i === events.length - 1) {
         // eslint-disable-next-line no-await-in-loop
         await ttkAxios.post('/', {
           event_source: 'web',

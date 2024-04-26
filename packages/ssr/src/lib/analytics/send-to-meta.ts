@@ -22,23 +22,20 @@ const sendToMeta = async (
     let data: Array<Record<string, any>> = [];
     for (let i = 0; i < events.length; i++) {
       const event = events[i];
-      if (event.name === 'PageView') {
-        event.name = 'Lead';
-        if (pageTitle) {
-          event.params = {
-            content_name: pageTitle,
-          };
-        }
-      }
       data.push({
         event_name: event.name,
         event_time: Date.now(),
         event_source_url: pageLocation,
         action_source: 'website',
         user_data: userData,
-        custom_data: event.params,
+        custom_data: event.name === 'PageView'
+          ? {
+            content_name: pageTitle || '',
+            ...event.params,
+          }
+          : event.params,
       });
-      if (data.length === 999 || i === events.length - 1) {
+      if (data.length === 99 || i === events.length - 1) {
         // eslint-disable-next-line no-await-in-loop
         await metaAxios.post(endpoint, { data });
         data = [];

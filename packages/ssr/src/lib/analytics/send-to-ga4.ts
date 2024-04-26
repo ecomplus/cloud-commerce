@@ -31,22 +31,24 @@ const sendToGa4 = async (
       events: [] as AnalyticsEvent[],
     };
     for (let i = 0; i < events.length; i++) {
-      const event = events[i];
-      if (event.name === 'page_view') {
-        event.name = 'campaign_details';
-        event.params = {
-          source: utm.source,
-          medium: utm.medium,
-          campaign: utm.campaign,
-          term: utm.term,
-          content: utm.content,
-          session_id: sessionId,
-        };
-      } else if (event.params) {
-        Object.assign(event.params, { session_id: sessionId });
-      }
+      const { name, params } = events[i];
+      const event = { name, params: { ...params } };
+      event.params.session_id = sessionId;
       data.events.push(event);
-      if (data.events.length === 25 || i === events.length - 1) {
+      if (name === 'page_view') {
+        data.events.push({
+          name: 'campaign_details',
+          params: {
+            source: utm.source,
+            medium: utm.medium,
+            campaign: utm.campaign,
+            term: utm.term,
+            content: utm.content,
+            session_id: sessionId,
+          },
+        });
+      }
+      if (data.events.length === 24 || i === events.length - 1) {
         // eslint-disable-next-line no-await-in-loop
         await ga4Axios.post(endpoint, data);
         data.events = [];
