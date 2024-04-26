@@ -17,6 +17,7 @@ module.exports = {
     'quote-props': 'off',
     'quotes': 'off',
     'global-require': 'off',
+    'prefer-rest-params': 'off',
     'import/no-dynamic-require': 'off',
     'import/prefer-default-export': 'warn',
     'import/extensions': 'off',
