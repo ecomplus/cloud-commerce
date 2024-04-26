@@ -67,25 +67,39 @@ const sendAnalyticsEvents = async (
     if (userProperties && payload.exp_variant_string) {
       userProperties.exp_variant_string = { value: payload.exp_variant_string };
     }
-    const toGa4 = sendToGa4(gaEvents, clientId, sessionId, userProperties, payload.utm);
-    sendingEvents.push(toGa4);
+    sendingEvents.push(sendToGa4({
+      events: gaEvents,
+      clientId,
+      sessionId,
+      userProperties,
+      utm: payload.utm,
+      originIp: payload.ip,
+      originUserAgent: payload.user_agent,
+    }));
   }
   if (metaEvents) {
-    const userData = {
-      client_ip_address: payload.ip,
-      client_user_agent: payload.user_agent,
-      fbc: payload.fbclid,
-      fbp: payload.fbp,
-    };
-    sendingEvents.push(sendToMeta(metaEvents, url, userData, payload.page_title));
+    sendingEvents.push(sendToMeta({
+      events: metaEvents,
+      pageLocation: url,
+      userData: {
+        client_ip_address: payload.ip,
+        client_user_agent: payload.user_agent,
+        fbc: payload.fbclid,
+        fbp: payload.fbp,
+      },
+      pageTitle: payload.page_title,
+    }));
   }
   if (tiktokEvents) {
-    const userData = {
-      ip: payload.ip,
-      user_agent: payload.user_agent,
-      ttclid: payload.ttclid,
-    };
-    sendingEvents.push(sendToTiktok(tiktokEvents, url, userData));
+    sendingEvents.push(sendToTiktok({
+      events: tiktokEvents,
+      pageLocation: url,
+      user: {
+        ip: payload.ip,
+        user_agent: payload.user_agent,
+        ttclid: payload.ttclid,
+      },
+    }));
   }
   await Promise.all([
     Promise.allSettled(sendingEvents).then((results) => {

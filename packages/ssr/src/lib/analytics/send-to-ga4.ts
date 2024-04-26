@@ -11,24 +11,38 @@ const endpoint = '/mp/collect'
   + `?api_secret=${process.env.GA_API_SECRET}`
   + `&measurement_id=${process.env.GA_MEASUREMENT_ID}`;
 
-const sendToGa4 = async (
+const sendToGa4 = async ({
+  events,
+  clientId,
+  sessionId,
+  userProperties,
+  utm = {},
+  originIp,
+  originUserAgent,
+}: {
   events: AnalyticsEvent[],
   clientId: string,
   sessionId: string,
   userProperties?: { [k: string]: { value: string } },
-  utm: {
+  utm?: {
     source?: string,
     medium?: string,
     campaign?: string,
     term?: string,
     content?: string
-  } = {},
-) => {
+  },
+  originIp?: string,
+  originUserAgent?: string,
+}) => {
   if (process.env.GA_API_SECRET && process.env.GA_MEASUREMENT_ID) {
     const data = {
       client_id: clientId,
       user_properties: userProperties,
       events: [] as AnalyticsEvent[],
+    };
+    const headers: Record<string, string | undefined> = {
+      'X-Forwarded-For': originIp,
+      'User-Agent': originUserAgent,
     };
     for (let i = 0; i < events.length; i++) {
       const { name, params } = events[i];
@@ -50,7 +64,7 @@ const sendToGa4 = async (
       }
       if (data.events.length === 24 || i === events.length - 1) {
         // eslint-disable-next-line no-await-in-loop
-        await ga4Axios.post(endpoint, data);
+        await ga4Axios.post(endpoint, data, { headers });
         data.events = [];
       }
     }

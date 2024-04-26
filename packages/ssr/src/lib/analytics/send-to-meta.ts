@@ -12,12 +12,17 @@ const metaAxios = axios.create({
 const endpoint = `/${process.env.FB_PIXEL_ID}/events`
   + `?access_token=${process.env.FB_GRAPH_TOKEN}`;
 
-const sendToMeta = async (
+const sendToMeta = async ({
+  events,
+  pageLocation,
+  userData,
+  pageTitle,
+}: {
   events: AnalyticsEvent[],
   pageLocation: string,
   userData: { [x: string]: string | undefined },
   pageTitle?: string,
-) => {
+}) => {
   if (process.env.FB_PIXEL_ID && process.env.FB_GRAPH_TOKEN) {
     let data: Array<Record<string, any>> = [];
     for (let i = 0; i < events.length; i++) {

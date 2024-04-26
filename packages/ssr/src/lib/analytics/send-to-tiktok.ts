@@ -12,11 +12,15 @@ const ttkAxios = axios.create({
   },
 });
 
-const sendToTiktok = async (
+const sendToTiktok = async ({
+  events,
+  pageLocation,
+  user,
+}: {
   events: AnalyticsEvent[],
   pageLocation: string,
   user: { [x: string]: string | undefined },
-) => {
+}) => {
   if (process.env.TIKTOK_ACCESS_TOKEN && process.env.TIKTOK_PIXEL_ID) {
     let data: Array<Record<string, any>> = [];
     for (let i = 0; i < events.length; i++) {
