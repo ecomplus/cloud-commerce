@@ -85,6 +85,14 @@ export type GtagEventMessage = typeof trackingIds &
     },
   };
 
+type GtagEventMiddleware = (data: GtagEventMessage) => GtagEventMessage;
+
+export const gtagEventMiddlewares: GtagEventMiddleware[] = [];
+
+export const addGtagEventMiddleware = (midd: GtagEventMiddleware) => {
+  gtagEventMiddlewares.push(midd);
+};
+
 let countItemsPerList: Record<string, number> = {};
 let defaultItemsList = '';
 
@@ -157,7 +165,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
     }
   }
   try {
-    const data: GtagEventMessage = {
+    let data: GtagEventMessage = {
       type: GTAG_EVENT_TYPE,
       ...getAnalyticsContext(),
       event: {
@@ -165,6 +173,9 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
         params,
       },
     };
+    gtagEventMiddlewares.forEach((midd) => {
+      data = midd(data);
+    });
     window.postMessage(data, window.origin);
   } catch (e) {
     console.error(e);
