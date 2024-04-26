@@ -3,8 +3,9 @@ import type { Request, Response } from 'firebase-functions';
 import type { GroupedAnalyticsEvents } from './analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import logger from 'firebase-functions/logger';
+import { warn, error } from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
+import proxy from './reverse-proxy';
 import { sendAnalyticsEvents } from './analytics-events';
 
 declare global {
@@ -20,6 +21,7 @@ const { STOREFRONT_BASE_DIR } = process.env;
 const baseDir = STOREFRONT_BASE_DIR || process.cwd();
 const { settingsContent } = config.get();
 const { assetsPrefix } = settingsContent;
+const execId = `${Date.now() + Math.random()}`;
 let imagesManifest: string;
 type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
@@ -45,86 +47,7 @@ readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
       }
     }
   })
-  .catch(logger.warn);
-
-const proxy = async (req: Request, res: Response) => {
-  const { SSR_PROXY_DEBUG, SSR_PROXY_TIMEOUT } = process.env;
-  const isDebug = SSR_PROXY_DEBUG ? String(SSR_PROXY_DEBUG).toLowerCase() === 'true' : false;
-  const timeout = SSR_PROXY_TIMEOUT ? Number(SSR_PROXY_TIMEOUT) : 3000;
-  let proxyURL: URL | undefined;
-  try {
-    proxyURL = new URL(req.query.url as any);
-  } catch {
-    //
-  }
-  if (proxyURL) {
-    const { headers } = req;
-    /* eslint-disable dot-notation */
-    headers['origin'] = String(headers['x-forwarded-host']);
-    headers['host'] = proxyURL.hostname;
-    if (!headers['accept']) {
-      headers['accept'] = 'text/plain,text/html,application/javascript,application/x-javascript';
-    }
-    headers['accept-encoding'] = 'gzip';
-    delete headers['forwarded'];
-    delete headers['via'];
-    delete headers['traceparent'];
-    delete headers['upgrade-insecure-requests'];
-    delete headers['x-timer'];
-    delete headers['x-varnish'];
-    delete headers['x-orig-accept-language'];
-    /* eslint-enable dot-notation */
-    Object.keys(headers).forEach((headerName) => {
-      if (
-        headerName.startsWith('x-forwarded-')
-        || headerName.startsWith('cdn-')
-        || headerName.startsWith('fastly-')
-        || headerName.startsWith('x-firebase-')
-        || headerName.startsWith('x-cloud-')
-        || headerName.startsWith('x-appengine-')
-        || headerName.startsWith('function-')
-        || typeof headers[headerName] !== 'string'
-      ) {
-        delete headers[headerName];
-      }
-    });
-    if (isDebug) {
-      logger.info({ proxy: proxyURL.href });
-    }
-    try {
-      const abortController = new AbortController();
-      const timer = setTimeout(() => {
-        abortController.abort();
-      }, timeout);
-      const response = await fetch(proxyURL, {
-        method: 'get',
-        headers: (headers as Record<string, string>),
-        signal: abortController.signal,
-      });
-      clearTimeout(timer);
-      res.status(response.status);
-      Object.keys(response.headers).forEach((headerName) => {
-        switch (headerName) {
-          case 'transfer-encoding':
-          case 'connection':
-          case 'strict-transport-security':
-          case 'alt-svc':
-          case 'server':
-            break;
-          default:
-            res.set(headerName, response.headers[headerName]);
-        }
-      });
-      res.set('access-control-allow-origin', '*');
-      res.send(await response.text());
-    } catch (err: any) {
-      logger.warn(err);
-      res.status(400).send(err.message);
-    }
-    return;
-  }
-  res.sendStatus(400);
-};
+  .catch(warn);
 
 export default async (req: Request, res: Response) => {
   if (req.path.startsWith('/~partytown')) {
@@ -274,11 +197,15 @@ export default async (req: Request, res: Response) => {
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
   res.writeHead = async function writeHead(status: number, headers?: OutgoingHttpHeaders) {
+    const startedAt = Date.now();
     let resolveHeadersSent: ((v: any) => any) | undefined;
     const waitingHeadersSent = new Promise((resolve) => {
       resolveHeadersSent = resolve;
     });
-    if (canSetLinkHeader && status === 200 && headers && cssFilepath) {
+    if (!headers) {
+      headers = {};
+    }
+    if (canSetLinkHeader && status === 200 && cssFilepath) {
       // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
       const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
       if (!headers.link) {
@@ -292,55 +219,54 @@ export default async (req: Request, res: Response) => {
     }
     // Try to early clear session objects, see storefront/src/lib/ssr-context.ts
     const sessions = global.__sfSessions;
-    if (sessions && typeof headers?.['x-sid'] === 'string') {
-      const sid = headers['x-sid'];
-      if (sessions[sid]) {
-        headers['x-sid'] += '_';
-        /* Wait to reset status for async context error handling */
-        const { fetchingApiContext } = sessions[sid];
-        const waitingStatus: Promise<boolean> = fetchingApiContext
-          ? new Promise((resolve) => {
-            fetchingApiContext.finally(() => {
-              const apiContextStatus = sessions[sid].apiContextError?.statusCode;
-              if (apiContextStatus >= 400 && status === 200) {
-                status = apiContextStatus;
-              }
-              resolve(true);
-            });
-          })
-          : Promise.resolve(false);
-        const _write = res.write;
-        const writes: Promise<any>[] = [];
-        // @ts-ignore
-        res.write = function write(...args: any) {
-          writes.push(new Promise((resolve) => {
-            waitingHeadersSent.finally(() => {
-              _write.apply(res, args);
-              resolve(null);
-            });
-          }));
-        };
-        const _end = res.end;
-        // @ts-ignore
-        res.end = async function end(...args: any) {
-          await waitingHeadersSent;
-          setTimeout(async () => {
-            await Promise.all(writes);
-            if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
-            sessions[sid] = null;
-            delete sessions[sid];
-            _end.apply(res, args);
-          }, 1);
-        };
-        await waitingStatus;
-      }
+    const sid = headers['x-sid'];
+    if (sessions && typeof sid === 'string' && sessions[sid]) {
+      headers['x-sid'] += '_';
+      /* Wait to reset status for async context error handling */
+      const { fetchingApiContext } = sessions[sid];
+      const waitingStatus: Promise<boolean> = fetchingApiContext
+        ? new Promise((resolve) => {
+          fetchingApiContext.finally(() => {
+            const apiContextStatus = sessions[sid].apiContextError?.statusCode;
+            if (apiContextStatus >= 400 && status === 200) {
+              status = apiContextStatus;
+            }
+            resolve(true);
+          });
+        })
+        : Promise.resolve(false);
+      const _write = res.write;
+      const writes: Promise<any>[] = [];
+      // @ts-ignore
+      res.write = function write(...args: any) {
+        writes.push(new Promise((resolve) => {
+          waitingHeadersSent.finally(() => {
+            _write.apply(res, args);
+            resolve(null);
+          });
+        }));
+      };
+      const _end = res.end;
+      // @ts-ignore
+      res.end = async function end(...args: any) {
+        await waitingHeadersSent;
+        setTimeout(async () => {
+          await Promise.all(writes);
+          if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
+          sessions[sid] = null;
+          delete sessions[sid];
+          _end.apply(res, args);
+        }, 1);
+      };
+      await waitingStatus;
     }
-    if (headers && BUNNYNET_API_KEY && DEPLOY_RAND) {
+    if (BUNNYNET_API_KEY && DEPLOY_RAND) {
       // Tag for CDN cache purge
       // headers['CDN-Tag'] = `[${DEPLOY_RAND}]`;
       // FIXME: Disabled while having unexpected troubles with bunny.net CDN cache purge
       delete headers['CDN-Tag'];
     }
+    headers['X-Async-Ex'] = `${execId}_${Date.now() - startedAt}`;
     _writeHead.apply(res, [status, headers]);
     resolveHeadersSent?.(null);
   };
@@ -353,11 +279,11 @@ export default async (req: Request, res: Response) => {
   global.$renderStorefront(req, res, async (err: any) => {
     if (err) {
       if (res.headersSent) {
-        logger.error(err);
+        error(err);
         res.end();
         return;
       }
-      logger.warn(err);
+      warn(err);
       res.set('X-SSR-Error', err.message);
       res.set('X-SSR-Error-Stack', err.stack);
       fallback(err);
