@@ -18,8 +18,12 @@ type AnalyticsEvent = {
   name: string,
   params?: Record<string, any>,
 };
+type EventToServerSend = AnalyticsEvent & {
+  id: string,
+  time: number,
+};
 type AnalyticsVariantCtx = Partial<ReturnType<typeof useAnalytics>>;
-let eventsToSend: Array<AnalyticsEvent> = [];
+let eventsToSend: Array<EventToServerSend> = [];
 const _sendServerEvents = useDebounceFn((variantCtx?: AnalyticsVariantCtx) => {
   afetch(`/_analytics`, {
     method: 'POST',
@@ -37,11 +41,15 @@ if (
   && !window.location.search.includes(`__isrV=${deployRand}`)
 ) {
   const variantCtx = useAnalytics();
-  const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
-    eventsToSend.push(analyticsEvent);
-    _sendServerEvents(variantCtx);
-  };
   watchGtagEvents(async (evMessage) => {
+    const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
+      eventsToSend.push({
+        ...analyticsEvent,
+        id: evMessage.event_id,
+        time: evMessage.timestamp,
+      });
+      _sendServerEvents(variantCtx);
+    };
     const { name, params } = evMessage.event;
     sendServerEvent({ type: 'gtag', name, params });
     const {
@@ -52,8 +60,8 @@ if (
     } = window as Window & {
       gtag?: Gtag.Gtag,
       dataLayer?: Array<any>,
-      fbq?: (action: string, value: string, payload?: any) => any,
-      ttq?: { page: () => any, track: (value: string, payload?: any) => any },
+      fbq?: (act: string, val: string, payload?: any, ctx?: any) => any,
+      ttq?: { page: () => any, track: (val: string, payload?: any, ctx?: any) => any },
     };
     if (typeof gtag === 'function') {
       gtag('event', name, params);
@@ -75,7 +83,7 @@ if (
       if (!fbqEvent.name) return;
       sendServerEvent({ type: 'fbq', ...fbqEvent });
       if (typeof fbq === 'function') {
-        fbq('track', fbqEvent.name, fbqEvent.params);
+        fbq('track', fbqEvent.name, fbqEvent.params, { eventID: evMessage.event_id });
       }
     });
     const ttqEvents = await parseGtagToTtq(evMessage);
@@ -86,7 +94,7 @@ if (
         if (ttqEvent.name === 'PageView') {
           ttq.page();
         } else {
-          ttq.track(ttqEvent.name, ttqEvent.params);
+          ttq.track(ttqEvent.name, ttqEvent.params, { event_id: evMessage.event_id });
         }
       }
     });

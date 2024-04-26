@@ -72,7 +72,6 @@ export const GTAG_EVENT_TYPE = 'GtagEvent';
 
 export type GtagEventMessage = typeof trackingIds &
   PageViewParams &
-  { utm: typeof utm } &
   {
     type: typeof GTAG_EVENT_TYPE,
     user_id?: string & { length: 24 },
@@ -83,6 +82,9 @@ export type GtagEventMessage = typeof trackingIds &
       name: Exclude<Gtag.EventNames, 'page_view'>,
       params: Gtag.EventParams,
     },
+    utm: typeof utm,
+    event_id: string,
+    timestamp: number,
   };
 
 type GtagEventMiddleware = (data: GtagEventMessage) => GtagEventMessage;
@@ -164,6 +166,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
       params.currency = window.ECOM_CURRENCY || 'BRL';
     }
   }
+  const timestamp = Date.now();
   try {
     let data: GtagEventMessage = {
       type: GTAG_EVENT_TYPE,
@@ -172,6 +175,8 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
         name: name as 'view_item',
         params,
       },
+      event_id: `${name}.${timestamp}`,
+      timestamp,
     };
     gtagEventMiddlewares.forEach((midd) => {
       data = midd(data);
