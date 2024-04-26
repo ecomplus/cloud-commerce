@@ -38,7 +38,7 @@ const sendToGa4 = async ({
     const data = {
       client_id: clientId,
       user_properties: userProperties,
-      events: [] as AnalyticsEvent[],
+      events: [] as Array<{ name: string, params: Record<string, any> }>,
     };
     const headers: Record<string, string | undefined> = {
       'X-Forwarded-For': originIp,

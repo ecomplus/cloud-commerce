@@ -9,11 +9,16 @@ import sendToTiktok from './analytics/send-to-tiktok';
 const analyticsEmitter = new EventEmitter();
 
 export type AnalyticsEvent = {
+  id: string,
+  time: number,
   name: string,
   params?: Record<string, any>,
+  type?: string,
 }
 
-export type GroupedAnalyticsEvents = Array<AnalyticsEvent & { type: string }>;
+export type GroupedAnalyticsEvents = Array<AnalyticsEvent & {
+  type: 'gtag' | 'fbq' | 'ttq',
+}>;
 
 const sendAnalyticsEvents = async (
   { url, events }: { url: string, events: GroupedAnalyticsEvents },
@@ -21,11 +26,11 @@ const sendAnalyticsEvents = async (
 ) => {
   analyticsEmitter.emit('send', { url, events });
   const eventsByType: Record<string, AnalyticsEvent[] | undefined> = {};
-  events.forEach(({ type, name, params }) => {
-    if (!eventsByType[type]) {
-      eventsByType[type] = [];
+  events.forEach((ev) => {
+    if (!eventsByType[ev.type]) {
+      eventsByType[ev.type] = [];
     }
-    (eventsByType[type] as AnalyticsEvent[]).push({ name, params });
+    (eventsByType[ev.type] as AnalyticsEvent[]).push(ev);
   });
   const sendingEvents: Promise<any>[] = [];
   const storingEvents: Promise<any>[] = [];
