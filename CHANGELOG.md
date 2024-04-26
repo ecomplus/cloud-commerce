@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.14.7](https://github.com/ecomplus/cloud-commerce/compare/v2.14.6...v2.14.7) (2024-04-26)
+
+
+### Bug Fixes
+
+* **cli:** Fix bunny.net CI to bypass CDN cache on status not 200 nor 301 ([42c3123](https://github.com/ecomplus/cloud-commerce/commit/42c3123fc843e99cfc29f527dfd38b434e6318af))
+* **ssr:** Better debugging server-side analytics error responses ([dadb09a](https://github.com/ecomplus/cloud-commerce/commit/dadb09a02dbcd8091f72147db53b47c30a02ff38))
+* **ssr:** Keep page view events to server-side analytics APIs ([97ba9db](https://github.com/ecomplus/cloud-commerce/commit/97ba9db8d48662410bdce91f08ec7d62711078fb))
+* **ssr:** Try fowaring user agent and IP addr to GA4 measurment protocol API with request headers ([73513cb](https://github.com/ecomplus/cloud-commerce/commit/73513cb5a7585f9d7236d64c552769e38c2c3d7a))
+* **ssr:** Wait async API context handling to reset status on error (404) ([3858206](https://github.com/ecomplus/cloud-commerce/commit/3858206afa49a8a80b5e8cdc8966a964d5d8a9c6))
+
 ### [2.14.6](https://github.com/ecomplus/cloud-commerce/compare/v2.14.5...v2.14.6) (2024-04-25)
 
 ### [2.14.5](https://github.com/ecomplus/cloud-commerce/compare/v2.14.4...v2.14.5) (2024-04-25)
