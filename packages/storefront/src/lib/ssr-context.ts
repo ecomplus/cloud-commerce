@@ -45,7 +45,9 @@ if (!globalThis.$apiPrefetchEndpoints) {
 }
 const sessions: Record<string, {
   url: URL,
+  fetchingApiContext?: Promise<any>,
   apiContext?: StorefrontApiContext,
+  apiContextError?: ApiError;
   _timer?: NodeJS.Timeout,
 }> = {};
 // Internal global just to early clear session objects from memory
@@ -233,10 +235,12 @@ const loadRouteContext = async (
               reject(err);
             } else {
               apiContext.error = err;
+              sessions[sid].apiContextError = err;
               resolve(null);
             }
           });
       }) as Promise<null>;
+      sessions[sid].fetchingApiContext = fetchingApiContext;
       if (prefetchingsIndex > -1) {
         apiPrefetchings[prefetchingsIndex] = fetchingApiContext;
       }
@@ -282,7 +286,7 @@ const loadRouteContext = async (
     Astro.response.status = status;
     err.responseHTML = `<head>
       <meta http-equiv="refresh" content="0;
-        url=/~fallback?status=${status}&url=${encodeURIComponent(urlPath)}"/>
+        url=/~fallback?status=${status}&url=${encodeURIComponent(urlPath)}&__"/>
       </head>
       <body></body>`;
     throw err;

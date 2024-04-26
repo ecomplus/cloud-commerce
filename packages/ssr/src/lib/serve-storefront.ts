@@ -273,7 +273,11 @@ export default async (req: Request, res: Response) => {
   const _writeHead = res.writeHead;
   /* eslint-disable prefer-rest-params */
   // @ts-ignore
-  res.writeHead = function writeHead(status: number, headers?: OutgoingHttpHeaders) {
+  res.writeHead = async function writeHead(status: number, headers?: OutgoingHttpHeaders) {
+    let resolveHeadersSent: ((v: any) => any) | undefined;
+    const waitingHeadersSent = new Promise((resolve) => {
+      resolveHeadersSent = resolve;
+    });
     if (canSetLinkHeader && status === 200 && headers && cssFilepath) {
       // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
       const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
@@ -292,14 +296,43 @@ export default async (req: Request, res: Response) => {
       const sid = headers['x-sid'];
       if (sessions[sid]) {
         headers['x-sid'] += '_';
+        /* Wait to reset status for async context error handling */
+        const { fetchingApiContext } = sessions[sid];
+        const waitingStatus: Promise<boolean> = fetchingApiContext
+          ? new Promise((resolve) => {
+            fetchingApiContext.finally(() => {
+              const apiContextStatus = sessions[sid].apiContextError?.statusCode;
+              if (apiContextStatus >= 400 && status === 200) {
+                status = apiContextStatus;
+              }
+              resolve(true);
+            });
+          })
+          : Promise.resolve(false);
+        const _write = res.write;
+        const writes: Promise<any>[] = [];
+        // @ts-ignore
+        res.write = function write(...args: any) {
+          writes.push(new Promise((resolve) => {
+            waitingHeadersSent.finally(() => {
+              _write.apply(res, args);
+              resolve(null);
+            });
+          }));
+        };
         const _end = res.end;
         // @ts-ignore
-        res.end = function end(...args: any) {
-          if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
-          sessions[sid] = null;
-          delete sessions[sid];
-          _end.apply(res, args);
+        res.end = async function end(...args: any) {
+          await waitingHeadersSent;
+          setTimeout(async () => {
+            await Promise.all(writes);
+            if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
+            sessions[sid] = null;
+            delete sessions[sid];
+            _end.apply(res, args);
+          }, 1);
         };
+        await waitingStatus;
       }
     }
     if (headers && BUNNYNET_API_KEY && DEPLOY_RAND) {
@@ -309,6 +342,7 @@ export default async (req: Request, res: Response) => {
       delete headers['CDN-Tag'];
     }
     _writeHead.apply(res, [status, headers]);
+    resolveHeadersSent?.(null);
   };
 
   /*
