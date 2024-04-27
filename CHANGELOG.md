@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0](https://github.com/ecomplus/cloud-commerce/compare/v2.14.7...v2.15.0) (2024-04-27)
+
+
+### Features
+
+* **storefront:** New `addGtagEventMiddleware` on use analytics state ([7e3099d](https://github.com/ecomplus/cloud-commerce/commit/7e3099d8b528a45bad6f6c7c55e30489d6f4ebe6))
+* **storefront:** Parsing checkout gtag events to Meta (fbq) and TikTok (ttq) `InitiateCheckout` ([6c8f9bf](https://github.com/ecomplus/cloud-commerce/commit/6c8f9bfb2ae183ec3ddaacacbae4238980a0086c))
+* **storefront:** Parsing gtag purchase event to Meta (fbq) and TikTok (ttq) ([487ed1c](https://github.com/ecomplus/cloud-commerce/commit/487ed1c232d1cffd0eeccc8e3a40280f9577f732))
+
+
+### Bug Fixes
+
+* **ssr:** Properly send Meta and TikTok events with correct ID (deduplication) and timestamp ([d1ab94e](https://github.com/ecomplus/cloud-commerce/commit/d1ab94e6ceb54e5ebcfceaaa76fe023fa475f8e9))
+* **storefront:** Update analytics state to emit events with ID and timestamp for deduplication ([35e367e](https://github.com/ecomplus/cloud-commerce/commit/35e367e2e1e396580018081d9d8959d9ad138461))
+
 ### [2.14.7](https://github.com/ecomplus/cloud-commerce/compare/v2.14.6...v2.14.7) (2024-04-26)
 
 
