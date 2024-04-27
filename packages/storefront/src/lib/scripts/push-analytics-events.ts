@@ -46,7 +46,7 @@ if (
       eventsToSend.push({
         ...analyticsEvent,
         id: evMessage.event_id,
-        time: evMessage.timestamp,
+        time: Math.round(evMessage.timestamp / 1000),
       });
       _sendServerEvents(variantCtx);
     };
