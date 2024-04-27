@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.1](https://github.com/ecomplus/cloud-commerce/compare/v2.15.0...v2.15.1) (2024-04-27)
+
+
+### Bug Fixes
+
+* **storefront:** Send analytics events time in seconds as expected by Meta and TikTok APIs ([67c7576](https://github.com/ecomplus/cloud-commerce/commit/67c757638eac6f8439329d792897b96561a4fdaf))
+
 ## [2.15.0](https://github.com/ecomplus/cloud-commerce/compare/v2.14.7...v2.15.0) (2024-04-27)
 
 
