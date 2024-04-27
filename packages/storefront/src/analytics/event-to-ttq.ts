@@ -25,6 +25,15 @@ const parseGtagItem = (
   return params;
 };
 
+const parsePurchaseParams = (params: Gtag.EventParams) => {
+  return {
+    value: params.value,
+    currency: params.currency || 'BRL',
+    content_type: 'product',
+    contents: params.items?.map((item) => parseGtagItem(item, true)) || [],
+  };
+};
+
 // https://ads.tiktok.com/help/article/standard-events-parameters?lang=en#
 // https://ads.tiktok.com/help/article/about-parameters#
 export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
@@ -35,7 +44,7 @@ export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
     pageContentState.params.description = event.params.page_title;
     return [{ name: 'PageView' }];
   }
-  const { items, currency } = event.params;
+  const { items, currency = 'BRL' } = event.params;
   if (event.name === 'view_item' && items) {
     const firstItem = items[0];
     if (firstItem) {
@@ -88,16 +97,16 @@ export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
       };
     });
   }
+  if (event.name === 'view_cart' || event.name === 'begin_checkout') {
+    return [{
+      name: 'InitiateCheckout',
+      params: parsePurchaseParams(event.params),
+    }];
+  }
   if (event.name === 'purchase') {
-    const { params } = event;
     return [{
       name: 'PlaceAnOrder',
-      params: {
-        value: params.value,
-        currency,
-        content_type: 'product',
-        contents: items?.map((item) => parseGtagItem(item, true)),
-      },
+      params: parsePurchaseParams(event.params),
     }];
   }
   return [{ name: null }];

@@ -34,6 +34,19 @@ const parseGtagItem = (
   return params;
 };
 
+const parsePurchaseParams = (params: Gtag.EventParams) => {
+  return {
+    value: params.value,
+    currency: params.currency || 'BRL',
+    content_type: 'product',
+    contents: params.items?.map(({ item_id: id, quantity }) => ({
+      id,
+      quantity,
+    })),
+    order_id: params.transaction_id,
+  };
+};
+
 // https://developers.facebook.com/docs/meta-pixel/reference#standard-events
 export const parseGtagToFbq = async ({ event }: GtagEventMessage) => {
   if (event.name === 'page_view') {
@@ -79,20 +92,16 @@ export const parseGtagToFbq = async ({ event }: GtagEventMessage) => {
       }, currency, true),
     }));
   }
+  if (event.name === 'view_cart' || event.name === 'begin_checkout') {
+    return [{
+      name: 'InitiateCheckout',
+      params: parsePurchaseParams(event.params),
+    }];
+  }
   if (event.name === 'purchase') {
-    const { params } = event;
     return [{
       name: 'Purchase',
-      params: {
-        value: params.value,
-        currency,
-        content_type: 'product',
-        contents: items?.map(({ item_id: id, quantity }) => ({
-          id,
-          quantity,
-        })),
-        order_id: params.transaction_id,
-      },
+      params: parsePurchaseParams(event.params),
     }];
   }
   return [{ name: null }];
