@@ -88,6 +88,18 @@ export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
       };
     });
   }
+  if (event.name === 'purchase') {
+    const { params } = event;
+    return [{
+      name: 'PlaceAnOrder',
+      params: {
+        value: params.value,
+        currency,
+        content_type: 'product',
+        contents: items?.map((item) => parseGtagItem(item, true)),
+      },
+    }];
+  }
   return [{ name: null }];
 };
 
