@@ -35,7 +35,7 @@ const parseGtagItem = (
 };
 
 const parsePurchaseParams = (params: Gtag.EventParams) => {
-  return {
+  const data: Record<string, any> = {
     value: params.value,
     currency: params.currency || 'BRL',
     content_type: 'product',
@@ -43,8 +43,11 @@ const parsePurchaseParams = (params: Gtag.EventParams) => {
       id,
       quantity,
     })),
-    order_id: params.transaction_id,
   };
+  if (params.transaction_id) {
+    data.order_id = params.transaction_id;
+  }
+  return data;
 };
 
 // https://developers.facebook.com/docs/meta-pixel/reference#standard-events
