@@ -48,8 +48,16 @@ class ApiError extends Error {
     isTimeout?: boolean,
   }) {
     if (response) {
-      super(response.statusText);
-      this.data = response.data;
+      let errorMsg = response.statusText;
+      const { data } = response;
+      if (data?.error_code) {
+        errorMsg += ` (${data?.error_code})`;
+      }
+      if (url) {
+        errorMsg += ` at ${url}`;
+      }
+      super(errorMsg);
+      this.data = data;
       this.statusCode = response.status;
     } else {
       super(msg || 'Request error');
