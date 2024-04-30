@@ -63,11 +63,11 @@ importers:
   ecomplus-stores/barradoce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../packages/eslint
       husky:
         specifier: ^9.0.10
@@ -79,25 +79,25 @@ importers:
   ecomplus-stores/barradoce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/passport
 
   ecomplus-stores/barradoce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.21
@@ -107,13 +107,13 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/types
       '@iconify-json/mingcute':
         specifier: ^1.1.16
@@ -125,23 +125,23 @@ importers:
   ecomplus-stores/barradoce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/modules
 
   ecomplus-stores/tiasonia:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../packages/eslint
       husky:
         specifier: ^9.0.11
@@ -153,25 +153,25 @@ importers:
   ecomplus-stores/tiasonia/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/passport
 
   ecomplus-stores/tiasonia/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.21
@@ -181,13 +181,13 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/types
       '@fontsource-variable/inter':
         specifier: ^5.0.17
@@ -208,13 +208,13 @@ importers:
   ecomplus-stores/tiasonia/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1176,7 +1176,7 @@ importers:
         version: 10.9.0(vue@3.4.25)
       astro:
         specifier: 4.5.10
-        version: 4.5.10
+        version: 4.5.10(@types/node@18.19.31)(typescript@5.4.5)
       astro-capo:
         specifier: ^0.0.1
         version: 0.0.1(astro@4.5.10)
@@ -1203,7 +1203,7 @@ importers:
         version: 0.32.6
       tailwindcss:
         specifier: ^3.4.3
-        version: 3.4.3
+        version: 3.4.3(ts-node@10.9.2)
       unocss:
         specifier: ^0.58.9
         version: 0.58.9(postcss@8.4.38)(vite@5.2.10)
@@ -1212,7 +1212,7 @@ importers:
         version: 0.17.5(@vueuse/core@10.9.0)
       vue:
         specifier: ^3.4.23
-        version: 3.4.25
+        version: 3.4.25(typescript@5.4.5)
       wade:
         specifier: 0.3.3
         version: 0.3.3
@@ -1249,11 +1249,11 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../packages/eslint
       husky:
         specifier: ^9.0.11
@@ -1265,25 +1265,25 @@ importers:
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.21
@@ -1293,13 +1293,13 @@ importers:
         version: 4.0.0
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.3
@@ -1308,13 +1308,13 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.15.5
+        specifier: ^2.15.8
         version: link:../../../packages/modules
 
 packages:
@@ -1385,7 +1385,7 @@ packages:
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.5.10
+      astro: 4.5.10(@types/node@18.19.31)(typescript@5.4.5)
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1425,8 +1425,8 @@ packages:
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.2.10)(vue@3.4.25)
       '@vue/babel-plugin-jsx': 1.2.2(@babel/core@7.24.4)
       '@vue/compiler-sfc': 3.4.25
-      astro: 4.5.10
-      vue: 3.4.25
+      astro: 4.5.10(@types/node@18.19.31)(typescript@5.4.5)
+      vue: 3.4.25(typescript@5.4.5)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3879,7 +3879,7 @@ packages:
       '@unocss/core': 0.58.9
       '@unocss/reset': 0.58.9
       '@unocss/vite': 0.58.9(vite@5.2.10)
-      vite: 5.2.10
+      vite: 5.2.10(@types/node@18.19.31)
     transitivePeerDependencies:
       - rollup
     dev: false
@@ -4077,7 +4077,7 @@ packages:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      vite: 5.2.10
+      vite: 5.2.10(@types/node@18.19.31)
     transitivePeerDependencies:
       - rollup
     dev: false
@@ -4092,8 +4092,8 @@ packages:
       '@babel/core': 7.24.4
       '@babel/plugin-transform-typescript': 7.24.4(@babel/core@7.24.4)
       '@vue/babel-plugin-jsx': 1.2.2(@babel/core@7.24.4)
-      vite: 5.2.10
-      vue: 3.4.25
+      vite: 5.2.10(@types/node@18.19.31)
+      vue: 3.4.25(typescript@5.4.5)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4105,8 +4105,8 @@ packages:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.2.10
-      vue: 3.4.25
+      vite: 5.2.10(@types/node@18.19.31)
+      vue: 3.4.25(typescript@5.4.5)
     dev: false
 
   /@vitest/expect@1.5.2:
@@ -4258,7 +4258,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.4.25
       '@vue/shared': 3.4.25
-      vue: 3.4.25
+      vue: 3.4.25(typescript@5.4.5)
     dev: false
 
   /@vue/shared@3.4.25:
@@ -4554,7 +4554,7 @@ packages:
     peerDependencies:
       astro: '>= 2.8'
     dependencies:
-      astro: 4.5.10
+      astro: 4.5.10(@types/node@18.19.31)(typescript@5.4.5)
       ultrahtml: 1.5.3
     dev: false
 
@@ -4576,87 +4576,6 @@ packages:
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
-      - typescript
-    dev: false
-
-  /astro@4.5.10:
-    resolution: {integrity: sha512-xW/ZTSqSHEQyzWzXHJa9gEQXC+MUD3mhzEBJyrMp/JWT+geLgUK2m0Rrc/AnBl8EfdS/6uFadiJV1fWao4lc7w==}
-    engines: {node: '>=18.14.1', npm: '>=6.14.0'}
-    hasBin: true
-    dependencies:
-      '@astrojs/compiler': 2.7.1
-      '@astrojs/internal-helpers': 0.3.0
-      '@astrojs/markdown-remark': 4.3.2
-      '@astrojs/telemetry': 3.0.4
-      '@babel/core': 7.24.4
-      '@babel/generator': 7.24.4
-      '@babel/parser': 7.24.4
-      '@babel/plugin-transform-react-jsx': 7.23.4(@babel/core@7.24.4)
-      '@babel/traverse': 7.24.1
-      '@babel/types': 7.24.0
-      '@types/babel__core': 7.20.5
-      acorn: 8.11.3
-      aria-query: 5.3.0
-      axobject-query: 4.0.0
-      boxen: 7.1.1
-      chokidar: 3.6.0
-      ci-info: 4.0.0
-      clsx: 2.1.1
-      common-ancestor-path: 1.0.1
-      cookie: 0.6.0
-      cssesc: 3.0.0
-      debug: 4.3.4
-      deterministic-object-hash: 2.0.2
-      devalue: 4.3.3
-      diff: 5.2.0
-      dlv: 1.1.3
-      dset: 3.1.3
-      es-module-lexer: 1.5.0
-      esbuild: 0.19.12
-      estree-walker: 3.0.3
-      execa: 8.0.1
-      fast-glob: 3.3.2
-      flattie: 1.1.1
-      github-slugger: 2.0.0
-      gray-matter: 4.0.3
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.1.1
-      js-yaml: 4.1.0
-      kleur: 4.1.5
-      magic-string: 0.30.10
-      mime: 3.0.0
-      ora: 7.0.1
-      p-limit: 5.0.0
-      p-queue: 8.0.1
-      path-to-regexp: 6.2.2
-      preferred-pm: 3.1.3
-      prompts: 2.4.2
-      rehype: 13.0.1
-      resolve: 1.22.8
-      semver: 7.6.0
-      shiki: 1.3.0
-      string-width: 7.1.0
-      strip-ansi: 7.1.0
-      tsconfck: 3.0.3
-      unist-util-visit: 5.0.0
-      vfile: 6.0.1
-      vite: 5.2.10
-      vitefu: 0.2.5(vite@5.2.10)
-      which-pm: 2.1.1
-      yargs-parser: 21.1.1
-      zod: 3.23.4
-      zod-to-json-schema: 3.23.0(zod@3.23.4)
-    optionalDependencies:
-      sharp: 0.32.6
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
       - typescript
     dev: false
 
@@ -9469,23 +9388,6 @@ packages:
       postcss: 8.4.38
     dev: false
 
-  /postcss-load-config@4.0.2(postcss@8.4.38):
-    resolution: {integrity: sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==}
-    engines: {node: '>= 14'}
-    peerDependencies:
-      postcss: '>=8.0.9'
-      ts-node: '>=9.0.0'
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-      ts-node:
-        optional: true
-    dependencies:
-      lilconfig: 3.1.1
-      postcss: 8.4.38
-      yaml: 2.4.2
-    dev: false
-
   /postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2):
     resolution: {integrity: sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==}
     engines: {node: '>= 14'}
@@ -10611,37 +10513,6 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /tailwindcss@3.4.3:
-    resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.2
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.0
-      lilconfig: 2.1.0
-      micromatch: 4.0.5
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.0
-      postcss: 8.4.38
-      postcss-import: 15.1.0(postcss@8.4.38)
-      postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)
-      postcss-nested: 6.0.1(postcss@8.4.38)
-      postcss-selector-parser: 6.0.16
-      resolve: 1.22.8
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-    dev: false
-
   /tailwindcss@3.4.3(ts-node@10.9.2):
     resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
     engines: {node: '>=14.0.0'}
@@ -10870,17 +10741,6 @@ packages:
       typescript: 5.4.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-
-  /tsconfck@3.0.3:
-    resolution: {integrity: sha512-4t0noZX9t6GcPTfBAbIbbIU4pfpCwh0ueq3S4O/5qXI1VwK1outmxhe9dOiEWqMz3MW2LKgDTpqWV+37IWuVbA==}
-    engines: {node: ^18 || >=20}
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dev: false
 
   /tsconfck@3.0.3(typescript@5.4.5):
     resolution: {integrity: sha512-4t0noZX9t6GcPTfBAbIbbIU4pfpCwh0ueq3S4O/5qXI1VwK1outmxhe9dOiEWqMz3MW2LKgDTpqWV+37IWuVbA==}
@@ -11321,7 +11181,7 @@ packages:
       '@unocss/transformer-directives': 0.58.9
       '@unocss/transformer-variant-group': 0.58.9
       '@unocss/vite': 0.58.9(vite@5.2.10)
-      vite: 5.2.10
+      vite: 5.2.10(@types/node@18.19.31)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -11477,41 +11337,6 @@ packages:
       - terser
     dev: true
 
-  /vite@5.2.10:
-    resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || >=20.0.0
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      esbuild: 0.20.2
-      postcss: 8.4.38
-      rollup: 4.16.4
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: false
-
   /vite@5.2.10(@types/node@18.19.31):
     resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -11555,7 +11380,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.2.10
+      vite: 5.2.10(@types/node@18.19.31)
     dev: false
 
   /vitest@1.5.2(@types/node@18.19.31):
@@ -11626,7 +11451,7 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      vue: 3.4.25
+      vue: 3.4.25(typescript@5.4.5)
     dev: false
 
   /vue-eslint-parser@9.4.2(eslint@8.57.0):
@@ -11645,21 +11470,6 @@ packages:
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /vue@3.4.25:
-    resolution: {integrity: sha512-HWyDqoBHMgav/OKiYA2ZQg+kjfMgLt/T0vg4cbIF7JbXAjDexRf5JRg+PWAfrAkSmTd2I8aPSXtooBFWHB98cg==}
-    peerDependencies:
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@vue/compiler-dom': 3.4.25
-      '@vue/compiler-sfc': 3.4.25
-      '@vue/runtime-dom': 3.4.25
-      '@vue/server-renderer': 3.4.25(vue@3.4.25)
-      '@vue/shared': 3.4.25
     dev: false
 
   /vue@3.4.25(typescript@5.4.5):
