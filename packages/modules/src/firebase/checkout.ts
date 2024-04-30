@@ -5,6 +5,7 @@ import type {
   Amount,
   Payment,
 } from '../types/index';
+import { fullName as getFullname } from '@ecomplus/utils';
 import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
@@ -79,6 +80,7 @@ export default async (req: Request, res: Response) => {
       const savedAddr = savedCustomer.addresses?.find(({ zip }) => zip === bodyAddr.zip);
       if (savedAddr) {
         Object.assign(bodyAddr, savedAddr);
+        delete bodyAddr.line_address;
       }
     }
   };
@@ -143,6 +145,13 @@ export default async (req: Request, res: Response) => {
   const transactions = Array.isArray(body.transaction) ? body.transaction : [body.transaction];
   transactions.forEach((transaction) => {
     transaction.buyer.customer_id = customerId;
+    (['buyer', 'payer'] as const).forEach((field) => {
+      const buyerOrPayer = transaction[field];
+      if (buyerOrPayer?.fullname?.includes('***')) {
+        buyerOrPayer.fullname = getFullname(customer);
+        if (customer.phones?.[0]) buyerOrPayer.phone = customer.phones[0];
+      }
+    });
     (['billing_address', 'to'] as const).forEach((field) => {
       const addr = transaction[field];
       if (addr) fixMaskedAddr(addr);
