@@ -33,29 +33,29 @@ class ApiError extends Error {
   response?: Response & { data?: ErrorBody };
   statusCode?: number;
   data?: ErrorBody;
+  retries?: number;
   isTimeout: boolean;
   constructor({
     config,
     url,
     response,
     msg,
+    retries,
     isTimeout = false,
   }: {
     config: Config,
     url?: string,
     response?: ApiError['response'],
     msg?: string,
+    retries?: number;
     isTimeout?: boolean,
   }) {
     if (response) {
       let errorMsg = response.statusText;
       const { data } = response;
-      if (data?.error_code) {
-        errorMsg += ` (${data?.error_code})`;
-      }
-      if (url) {
-        errorMsg += ` at ${url}`;
-      }
+      if (data?.error_code) errorMsg += ` (${data?.error_code})`;
+      if (retries) errorMsg += ` ${retries}a`;
+      if (url) errorMsg += ` at ${url}`;
       super(errorMsg);
       this.data = data;
       this.statusCode = response.status;
@@ -65,6 +65,7 @@ class ApiError extends Error {
     this.url = url;
     this.config = config;
     this.response = response;
+    this.retries = retries;
     this.isTimeout = isTimeout;
   }
 }
@@ -151,7 +152,7 @@ const setMiddleware = (middleware: typeof def.middleware) => {
 
 const api = async <T extends Config & { body?: any, data?: any }>(
   requestConfig: T,
-  _retries = 0,
+  retries = 0,
 ): Promise<Response & {
   config: Config,
   data: ResponseBody<T>,
@@ -206,6 +207,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
       url,
       response,
       msg,
+      retries,
       isTimeout,
     });
   }
@@ -225,11 +227,11 @@ const api = async <T extends Config & { body?: any, data?: any }>(
       return res;
     }
     const { status } = response;
-    if (maxRetries < _retries && (status === 429 || status >= 500)) {
+    if (maxRetries > retries && (status === 429 || status >= 500)) {
       const retryAfter = response.headers.get('retry-after');
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          api(requestConfig, _retries + 1).then(resolve).catch(reject);
+          api(requestConfig, retries + 1).then(resolve).catch(reject);
         }, (retryAfter && parseInt(retryAfter, 10) * 1000) || 5000);
       });
     }
@@ -239,7 +241,12 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   } catch (e) {
     //
   }
-  throw new ApiError({ config, url, response });
+  throw new ApiError({
+    config,
+    url,
+    response,
+    retries,
+  });
 };
 
 type AbstractedConfig = Omit<Config, 'endpoint' | 'method'>;
