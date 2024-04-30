@@ -76,8 +76,7 @@ export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
       }];
     }
   }
-  if ((event.name === 'add_to_cart' || event.name === 'remove_from_cart') && items) {
-    const isAdd = event.name === 'add_to_cart';
+  if (event.name === 'add_to_cart' && items) {
     return items.map((item) => {
       const quantity = (item.quantity || 1);
       const { price } = item;
@@ -85,14 +84,11 @@ export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
         name: 'AddToCart',
         params: {
           contents: [
-            parseGtagItem({
-              ...item,
-              quantity: isAdd ? quantity : -quantity,
-            }, true),
+            parseGtagItem({ ...item, quantity }, true),
           ],
           content_type: 'product',
           currency,
-          value: isAdd && typeof price === 'number' ? quantity * price : 0,
+          value: typeof price === 'number' ? quantity * price : 0,
         },
       };
     });

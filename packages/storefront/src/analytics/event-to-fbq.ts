@@ -85,13 +85,12 @@ export const parseGtagToFbq = async ({ event }: GtagEventMessage) => {
       }];
     }
   }
-  if ((event.name === 'add_to_cart' || event.name === 'remove_from_cart') && items) {
-    const isAdd = event.name === 'add_to_cart';
+  if (event.name === 'add_to_cart' && items) {
     return items.map((item) => ({
       name: 'AddToCart',
       params: parseGtagItem({
         ...item,
-        quantity: isAdd ? (item.quantity || 1) : -(item.quantity || 1),
+        quantity: (item.quantity || 1),
       }, currency, true),
     }));
   }
