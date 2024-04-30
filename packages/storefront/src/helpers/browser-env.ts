@@ -13,3 +13,6 @@ export const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(userAgent);
 export const isScreenXs = screenWidth < 640;
 
 export const isScreenLg = screenWidth >= 1024;
+
+export const looksLikeBot = !/^Mozilla\//i.test(userAgent)
+  || /bot|spider|crawl|http|lighthouse|inspect/i.test(userAgent);

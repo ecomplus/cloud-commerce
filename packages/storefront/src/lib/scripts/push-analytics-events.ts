@@ -7,6 +7,7 @@ import {
   emitGtagEvent,
   watchGtagEvents,
 } from '@@sf/state/use-analytics';
+import { looksLikeBot } from '@@sf/sf-lib';
 import afetch from '../../helpers/afetch';
 import parseGtagToFbq from '../../analytics/event-to-fbq';
 import parseGtagToTtq from '../../analytics/event-to-ttq';
@@ -43,6 +44,7 @@ if (
   const variantCtx = useAnalytics();
   watchGtagEvents(async (evMessage) => {
     const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
+      if (looksLikeBot) return;
       eventsToSend.push({
         ...analyticsEvent,
         id: evMessage.event_id,
