@@ -89,7 +89,7 @@ const sendAnalyticsEvents = async (
       userData: {
         client_ip_address: payload.ip,
         client_user_agent: payload.user_agent,
-        fbc: payload.fbclid,
+        fbc: payload.fbc,
         fbp: payload.fbp,
       },
       pageTitle: payload.page_title,

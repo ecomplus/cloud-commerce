@@ -10,7 +10,7 @@ export const trackingIds: {
   gclid?: string,
   g_client_id?: string,
   g_session_id?: string,
-  fbclid?: string,
+  fbc?: string,
   fbp?: string,
   ttclid?: string,
   client_id?: string,
@@ -271,17 +271,24 @@ export const useAnalytics = ({
     }
   }
   const url = new URL(window.location.toString());
-  ['gclid', 'fbclid', 'ttclid'].forEach((key) => {
+  (['gclid', 'fbclid', 'ttclid'] as const).forEach((key) => {
     const id = trackingIds[key] || url.searchParams.get(key);
+    let value: string | undefined;
     if (id) {
-      trackingIds[key] = id;
+      value = id;
       sessionStorage.setItem(`analytics_${key}`, id);
     } else {
-      trackingIds[key] = sessionStorage.getItem(`analytics_${key}`) || undefined;
+      value = sessionStorage.getItem(`analytics_${key}`) || undefined;
     }
+    if (!value) return;
+    if (key === 'fbclid') {
+      trackingIds.fbc = `fb.1.${Date.now()}.${value}`;
+      return;
+    }
+    trackingIds[key] = value;
   });
   const cookieNames = ['_fbp'];
-  if (!trackingIds.fbclid) cookieNames.push('_fbc');
+  if (!trackingIds.fbc) cookieNames.push('_fbc');
   if (!trackingIds.g_client_id) cookieNames.push('_ga');
   cookieNames.forEach((cookieName) => {
     document.cookie.split(';').forEach((cookie) => {
@@ -289,7 +296,7 @@ export const useAnalytics = ({
       if (key.trim() === cookieName && value) {
         switch (cookieName) {
           case '_fbp': trackingIds.fbp = value; break;
-          case '_fbc': trackingIds.fbclid = value; break;
+          case '_fbc': trackingIds.fbc = value; break;
           case '_ga': trackingIds.g_client_id = value.substring(6); break;
           default:
         }
