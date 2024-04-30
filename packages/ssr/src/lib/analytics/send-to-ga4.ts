@@ -48,6 +48,7 @@ const sendToGa4 = async ({
       const { name, params, time } = events[i];
       const event = { name, params: { ...params } };
       event.params.session_id = sessionId;
+      event.params.engagement_time_msec = `${time ? time * 1000 : Date.now()}`;
       data.events.push(event);
       if (name === 'page_view') {
         data.events.push({
@@ -59,7 +60,7 @@ const sendToGa4 = async ({
             term: utm.term,
             content: utm.content,
             session_id: sessionId,
-            engagement_time_msec: `${time ? time * 1000 : Date.now()}`,
+            engagement_time_msec: event.params.engagement_time_msec,
           },
         });
       }
