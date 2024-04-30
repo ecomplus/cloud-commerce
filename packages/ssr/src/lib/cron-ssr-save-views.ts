@@ -123,8 +123,8 @@ const saveViews = async () => {
     const pageViewDocs: Array<{ ref: DocumentReference, url: string }> = [];
     for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
       const doc = pageViewsSnapshot.docs[i];
-      const data = doc.data() as { url: string, isCachePurged?: true };
-      if (data.isCachePurged) {
+      const data = doc.data() as { url: string, isCachePurged?: boolean };
+      if (typeof data.isCachePurged === 'boolean') {
         continue;
       }
       const url = data.url.replace(/[?#].*$/, '');
@@ -151,7 +151,6 @@ const saveViews = async () => {
         const purgeReqs: Promise<any>[] = [];
         for (let i = 0; i < pageViewDocs.length; i++) {
           const { ref, url } = pageViewDocs[i];
-          ref.update({ isCachePurged: true });
           if (url?.startsWith(`https://${domain}`) && !purgedUrls.includes(url)) {
             purgeReqs.push(bunnyAxios('/purge', {
               method: 'POST',
@@ -183,10 +182,16 @@ const saveViews = async () => {
                     url: `/${permaCachePath}`,
                     data: freshHtml,
                   });
+                  ref.update({ isCachePurged: true, permaCachePath });
                 }),
               );
+              continue;
             }
+            ref.update({ isCachePurged: true });
+            continue;
           }
+          ref.update({ isCachePurged: false });
+          continue;
         }
         await Promise.all(purgeReqs);
       } catch (err: any) {
