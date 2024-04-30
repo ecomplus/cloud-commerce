@@ -34,7 +34,7 @@ const sendError = (
 
 const fixAmount = (
   amount: Amount,
-  body: CheckoutBodyWithItems,
+  checkoutBody: CheckoutBodyWithItems,
   orderBody: OrderSet,
 ) => {
   Object.keys(amount).forEach((field) => {
@@ -42,15 +42,17 @@ const fixAmount = (
       amount[field] = Math.round(amount[field] * 100) / 100;
     }
   });
-
-  amount.total = Math.round(
-    ((amount.subtotal || 0) + (amount.freight || 0) - (amount.discount || 0)) * 100,
-  ) / 100;
+  const {
+    subtotal = 0,
+    freight = 0,
+    extra = 0,
+    discount = 0,
+  } = amount;
+  amount.total = Math.round((subtotal + freight + extra - discount) * 100) / 100;
   if (amount.total < 0) {
     amount.total = 0;
   }
-  // also save amount to checkout and order body objects
-  body.amount = amount;
+  checkoutBody.amount = amount;
   orderBody.amount = amount;
 };
 

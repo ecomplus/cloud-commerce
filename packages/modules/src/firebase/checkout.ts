@@ -124,12 +124,10 @@ export default async (req: Request, res: Response) => {
     }
   }
 
-  // count subtotal value
   let subtotal = 0;
   newItems.forEach(
     (item: Item) => {
-      subtotal += (item.final_price || item.price * item.quantity);
-      // pass each item to prevent object overwrite
+      subtotal += ((item.final_price || item.price) * item.quantity);
       if (orderBody.items) {
         orderBody.items.push({ ...item });
       }
