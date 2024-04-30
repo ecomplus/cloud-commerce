@@ -3,10 +3,7 @@
 import '@cloudcommerce/firebase/lib/init';
 import functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
-import {
-  createAppEventsFunction,
-  ApiEventHandler,
-} from '@cloudcommerce/firebase/lib/helpers/pubsub';
+import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from './event-to-tiny';
 import handleTinyWebhook from './tiny-webhook';
 
@@ -16,7 +13,8 @@ const { region } = httpsFunctionOptions;
 export const tinyerp = {
   onStoreEvent: createAppEventsFunction(
     'tinyErp',
-    handleApiEvent as ApiEventHandler,
+    handleApiEvent,
+    { memory: '512MB' },
   ),
 
   webhook: functions

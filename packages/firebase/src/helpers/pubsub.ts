@@ -5,23 +5,31 @@ import { GET_PUBSUB_TOPIC } from '../const';
 
 const { logger } = functions;
 
-/* eslint-disable no-unused-vars */
 type PubSubHandler<TMessage> = (
   json: TMessage,
   context: functions.EventContext,
   message: functions.pubsub.Message,
-) => void;
+) => Promise<any>;
 type ApiEventHandler = PubSubHandler<AppEventsPayload>;
-/* eslint-enable no-unused-vars */
+type ExecOptions = {
+  eventMaxAgeMs?: number,
+  memory?: '128MB' | '256MB' | '512MB' | '1GB',
+};
 
 const createPubSubFunction = (
   pubSubTopic: string,
   fn: PubSubHandler<any>,
-  eventMaxAgeMs = 60000,
+  {
+    eventMaxAgeMs = 60000,
+    memory = '256MB',
+  }: ExecOptions = {},
 ) => {
   const { httpsFunctionOptions: { region } } = config.get();
   return functions.region(region)
-    .runWith({ failurePolicy: true })
+    .runWith({
+      failurePolicy: eventMaxAgeMs > 0,
+      memory,
+    })
     .pubsub.topic(pubSubTopic).onPublish((message, context) => {
       const eventAgeMs = Date.now() - Date.parse(context.timestamp);
       if (eventAgeMs > eventMaxAgeMs) {
@@ -36,7 +44,7 @@ const createPubSubFunction = (
 const createAppEventsFunction = (
   appNameOrId: string | number,
   fn: ApiEventHandler,
-  eventMaxAgeMs = 60000,
+  options?: ExecOptions,
 ) => {
   let appId: number;
   if (typeof appNameOrId === 'string') {
@@ -44,7 +52,7 @@ const createAppEventsFunction = (
   } else {
     appId = appNameOrId;
   }
-  return createPubSubFunction(GET_PUBSUB_TOPIC(appId), fn, eventMaxAgeMs);
+  return createPubSubFunction(GET_PUBSUB_TOPIC(appId), fn, options);
 };
 
 export default createPubSubFunction;

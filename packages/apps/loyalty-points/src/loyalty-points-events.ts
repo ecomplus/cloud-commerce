@@ -39,10 +39,7 @@ const handleApiEvent: ApiEventHandler = async ({
 };
 
 export const loyaltypoints = {
-  onStoreEvent: createAppEventsFunction(
-    'loyaltyPoints',
-    handleApiEvent,
-  ),
+  onStoreEvent: createAppEventsFunction('loyaltyPoints', handleApiEvent),
 
   cronAddPoints: functions.region(region).pubsub
     .schedule(process.env.CRONTAB_LOYALTYPOINTS_ADD_POINTS || '28 * * * *')

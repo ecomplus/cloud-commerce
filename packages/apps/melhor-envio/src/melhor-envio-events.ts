@@ -2,10 +2,7 @@
 import '@cloudcommerce/firebase/lib/init';
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
-import {
-  createAppEventsFunction,
-  ApiEventHandler,
-} from '@cloudcommerce/firebase/lib/helpers/pubsub';
+import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from './functions-lib/events-to-melhor-envio';
 import handleTrackingCodes from './functions-lib/tracking-codes';
 
@@ -16,8 +13,5 @@ export const melhorenvio = {
       return handleTrackingCodes();
     }),
 
-  onStoreEvent: createAppEventsFunction(
-    'melhorEnvio',
-    handleApiEvent as ApiEventHandler,
-  ),
+  onStoreEvent: createAppEventsFunction('melhorEnvio', handleApiEvent),
 };

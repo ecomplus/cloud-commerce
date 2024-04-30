@@ -3,18 +3,12 @@
 import '@cloudcommerce/firebase/lib/init';
 import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
-import {
-  createAppEventsFunction,
-  ApiEventHandler,
-} from '@cloudcommerce/firebase/lib/helpers/pubsub';
+import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from './functions-lib/ecom/events-to-galaxpay';
 import handleGalaxpayWebhook from './functions-lib/galaxpay/webhook';
 
 export const galaxpay = {
-  onStoreEvent: createAppEventsFunction(
-    'galaxPay',
-    handleApiEvent as ApiEventHandler,
-  ),
+  onStoreEvent: createAppEventsFunction('galaxPay', handleApiEvent),
 
   webhook: functions
     .region(config.get().httpsFunctionOptions.region)
