@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.3](https://github.com/ecomplus/cloud-commerce/compare/v2.15.2...v2.15.3) (2024-04-30)
+
+
+### Bug Fixes
+
+* **api:** Extending error message with response error code and request URL ([216a31b](https://github.com/ecomplus/cloud-commerce/commit/216a31b09233b7c97e7b3dd456b6320ed6c2ee10))
+* **deps:** Update non-major dependencies ([#367](https://github.com/ecomplus/cloud-commerce/issues/367)) ([fa9aa95](https://github.com/ecomplus/cloud-commerce/commit/fa9aa95315f686805342506671db639952e48dea))
+* **ssr:** Use current timestamp for Meta/TikTok events when time not sent ([332df8e](https://github.com/ecomplus/cloud-commerce/commit/332df8ec9acce83b0d979e762782a1e344d0d2e7))
+* **storefront:** Properly parse `fbc` value from `?fbclid` query param for Meta server API ([aad325e](https://github.com/ecomplus/cloud-commerce/commit/aad325e7207a7a62f35907970abd0b205e842de6))
+
 ### [2.15.2](https://github.com/ecomplus/cloud-commerce/compare/v2.15.0...v2.15.2) (2024-04-27)
 
 
