@@ -1,6 +1,5 @@
 {
   "name": "cloudcommerce",
-  "private": true,
   "type": "module",
   "version": "2.15.3",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
@@ -11,6 +10,11 @@
     "node": ">=18",
     "pnpm": ">=7 <9"
   },
+  "files": [
+    "/action.yml",
+    "/CHANGELOG.md",
+    "/scripts/*"
+  ],
   "scripts": {
     "fix-install": "bash scripts/pre-install.sh && pnpm i",
     "postinstall": "husky && pnpm run -r prepare-monorepo",
