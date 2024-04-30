@@ -1,5 +1,3 @@
-import loadGtagSession from './load-gtag-session';
-
 export type TrackingIds = {
   gclid?: string,
   g_client_id?: string,
@@ -76,15 +74,6 @@ export const getTrackingIds = (trackingIds: TrackingIds, experimentId?: string) 
       }
     });
   });
-  if (
-    GA_TRACKING_ID
-    && typeof gtag !== 'function'
-    && (!trackingIds.g_client_id || !trackingIds.g_session_id)
-  ) {
-    loadGtagSession(GA_TRACKING_ID, (key, id) => {
-      trackingIds[key === 'gclid' ? key : `g_${key}`] = id;
-    });
-  }
   ['client_id', 'session_id'].forEach((key) => {
     const storage = key === 'client_id' ? localStorage : sessionStorage;
     const storedValue = storage.getItem(`analytics_${key}`);

@@ -22,6 +22,7 @@ type AnalyticsEvent = {
 type EventToServerSend = AnalyticsEvent & {
   id: string,
   time: number,
+  sent: boolean,
 };
 type AnalyticsVariantCtx = Partial<ReturnType<typeof useAnalytics>>;
 let eventsToSend: Array<EventToServerSend> = [];
@@ -43,7 +44,7 @@ if (
 ) {
   const variantCtx = useAnalytics();
   watchGtagEvents(async (evMessage) => {
-    const sendServerEvent = (analyticsEvent: AnalyticsEvent) => {
+    const sendServerEvent = (analyticsEvent: AnalyticsEvent & { sent: boolean }) => {
       if (looksLikeBot) return;
       eventsToSend.push({
         ...analyticsEvent,
@@ -53,7 +54,6 @@ if (
       _sendServerEvents(variantCtx);
     };
     const { name, params } = evMessage.event;
-    sendServerEvent({ type: 'gtag', name, params });
     const {
       gtag,
       dataLayer,
@@ -65,7 +65,8 @@ if (
       fbq?: (act: string, val: string, payload?: any, ctx?: any) => any,
       ttq?: { page: () => any, track: (val: string, payload?: any, ctx?: any) => any },
     };
-    if (typeof gtag === 'function') {
+    const hasGtag = typeof gtag === 'function';
+    if (hasGtag && name !== 'page_view') {
       gtag('event', name, params);
       if (window.GOOGLE_ADS_ID && name === 'purchase') {
         gtag('event', 'conversion', {
@@ -76,23 +77,31 @@ if (
         });
       }
     }
+    sendServerEvent({
+      type: 'gtag',
+      name,
+      params,
+      sent: hasGtag,
+    });
     // https://developers.google.com/analytics/devguides/migration/ecommerce/gtm-ga4-to-ua#4_enable_the_gtagjs_api
     if (dataLayer && typeof dataLayer.push === 'function') {
       dataLayer.push(['event', name, params]);
     }
+    const hasFbq = typeof fbq === 'function';
     const fbqEvents = await parseGtagToFbq(evMessage);
-    fbqEvents.forEach((fbqEvent) => {
+    fbqEvents.forEach((fbqEvent: { name: string | null, params?: any }) => {
       if (!fbqEvent.name) return;
-      sendServerEvent({ type: 'fbq', ...fbqEvent });
-      if (typeof fbq === 'function') {
+      sendServerEvent({ type: 'fbq', sent: hasFbq, ...(fbqEvent as any) });
+      if (hasFbq) {
         fbq('track', fbqEvent.name, fbqEvent.params, { eventID: evMessage.event_id });
       }
     });
+    const hasTtq = typeof ttq?.page === 'function';
     const ttqEvents = await parseGtagToTtq(evMessage);
-    ttqEvents.forEach((ttqEvent) => {
+    ttqEvents.forEach((ttqEvent: { name: string | null, params?: any }) => {
       if (!ttqEvent.name) return;
-      sendServerEvent({ type: 'ttk', ...ttqEvent });
-      if (typeof ttq?.page === 'function') {
+      sendServerEvent({ type: 'ttk', sent: hasTtq, ...(ttqEvent as any) });
+      if (hasTtq) {
         if (ttqEvent.name === 'PageView') {
           ttq.page();
         } else {

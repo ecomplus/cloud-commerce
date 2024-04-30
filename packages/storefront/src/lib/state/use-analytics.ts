@@ -238,7 +238,7 @@ export const useAnalytics = ({
 }: {
   experimentId?: string,
 } = {}) => {
-  const expSession = setTrackingIds(trackingIds, experimentId);
+  const variantCtx = setTrackingIds(trackingIds, experimentId);
   if (isLogged.value) {
     emitGtagEvent('login', {});
   } else {
@@ -267,7 +267,7 @@ export const useAnalytics = ({
       }
     }, 300);
   }
-  return expSession;
+  return variantCtx;
 };
 
 export default useAnalytics;
