@@ -18,11 +18,7 @@ export * from '@cloudcommerce/app-loyalty-points/events';
 
 export * from '@cloudcommerce/app-frenet/events';
 
-export * from '@cloudcommerce/app-fb-conversions';
-
 export * from '@cloudcommerce/app-datafrete/webhook';
-
-export * from '@cloudcommerce/app-google-analytics';
 
 export * from '@cloudcommerce/app-pagaleve/webhook';
 
