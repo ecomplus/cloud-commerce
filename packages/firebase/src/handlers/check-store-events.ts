@@ -85,7 +85,23 @@ const tryPubSubPublish = (
   messageObj: { messageId: string, json: any },
   retries = 0,
 ) => {
-  pubSubClient.topic(topicName).publishMessage(messageObj)
+  // https://cloud.google.com/pubsub/docs/samples/pubsub-publisher-retry-settings
+  pubSubClient.topic(topicName, {
+    gaxOpts: {
+      retry: {
+        retryCodes: [10, 1, 4, 13, 8, 14, 2],
+        backoffSettings: {
+          initialRetryDelayMillis: /* 100 */ 1200,
+          retryDelayMultiplier: /* 1.3 */ 2,
+          maxRetryDelayMillis: 60000,
+          initialRpcTimeoutMillis: 5000,
+          rpcTimeoutMultiplier: 1.0,
+          maxRpcTimeoutMillis: 600000,
+          totalTimeoutMillis: 600000,
+        },
+      },
+    },
+  }).publishMessage(messageObj)
     .catch((err) => {
       // eslint-disable-next-line no-param-reassign
       err.retries = retries;

@@ -36,6 +36,7 @@ const createPubSubFunction = (
         logger.warn(`Dropping event ${context.eventId} with age[ms]: ${eventAgeMs}`, {
           data: message.json,
         });
+        return Promise.resolve(null);
       }
       return fn(message.json, context, message);
     });
