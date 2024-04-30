@@ -6,6 +6,7 @@ import { readFile } from 'node:fs/promises';
 import { warn, error } from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import proxy from './reverse-proxy';
+import checkUserAgent from './check-user-agent';
 import { sendAnalyticsEvents } from './analytics-events';
 
 declare global {
@@ -157,8 +158,12 @@ export default async (req: Request, res: Response) => {
       res.send('Event(s) must be sent via the `{ events }` array in the request body');
       return;
     }
+    if (!req.get('accept') || !checkUserAgent(req.get('user-agent'))) {
+      res.sendStatus(202);
+      return;
+    }
     await sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
-    res.sendStatus(204);
+    res.sendStatus(201);
     return;
   }
 
