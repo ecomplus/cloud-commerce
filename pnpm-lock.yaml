@@ -100,7 +100,7 @@ importers:
         specifier: ^2.15.4
         version: link:../../../../packages/ssr
       '@headlessui/vue':
-        specifier: ^1.7.18
+        specifier: ^1.7.21
         version: 1.7.21(vue@3.4.25)
       micromark:
         specifier: ^4.0.0
@@ -174,7 +174,7 @@ importers:
         specifier: ^2.15.4
         version: link:../../../../packages/ssr
       '@headlessui/vue':
-        specifier: ^1.7.19
+        specifier: ^1.7.21
         version: 1.7.21(vue@3.4.25)
       micromark:
         specifier: ^4.0.0
