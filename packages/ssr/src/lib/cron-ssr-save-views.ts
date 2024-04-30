@@ -160,34 +160,32 @@ const saveViews = async () => {
               },
             }));
             purgedUrls.push(url);
-            if (permaCacheZoneFolder) {
-              let pathname = url.replace(`https://${domain}`, '');
-              if (pathname.endsWith('/')) {
-                const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
-                  + `?__isrV=${deployRand}&t=${Date.now()}`;
-                purgeReqs.push(
-                  // eslint-disable-next-line no-loop-func
-                  axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
-                    if (pathname.charAt(0) === '/') {
-                      pathname = pathname.slice(1);
-                    }
-                    const paths = pathname.split('/');
-                    const filename = paths.pop() || '';
-                    let folderpath = paths.join('/');
-                    if (folderpath) folderpath += '/';
-                    // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
-                    const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
-                      + `/${folderpath}___${filename}___/___file___`;
-                    bunnyStorageAxios({
-                      method: 'PUT',
-                      url: `/${permaCachePath}`,
-                      data: freshHtml,
-                    });
-                    ref.update({ isCachePurged: true, permaCachePath });
-                  }),
-                );
-                continue;
-              }
+            let pathname = url.replace(`https://${domain}`, '');
+            if (permaCacheZoneFolder && pathname.endsWith('/')) {
+              const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
+                + `?__isrV=${deployRand}&t=${Date.now()}`;
+              purgeReqs.push(
+                // eslint-disable-next-line no-loop-func
+                axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
+                  if (pathname.charAt(0) === '/') {
+                    pathname = pathname.slice(1);
+                  }
+                  const paths = pathname.split('/');
+                  const filename = paths.pop() || '';
+                  let folderpath = paths.join('/');
+                  if (folderpath) folderpath += '/';
+                  // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
+                  const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
+                    + `/${folderpath}___${filename}___/___file___`;
+                  bunnyStorageAxios({
+                    method: 'PUT',
+                    url: `/${permaCachePath}`,
+                    data: freshHtml,
+                  });
+                  ref.update({ isCachePurged: true, permaCachePath });
+                }),
+              );
+              continue;
             }
             ref.update({ isCachePurged: true });
             continue;
