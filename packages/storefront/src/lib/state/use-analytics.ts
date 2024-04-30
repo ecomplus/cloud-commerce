@@ -290,16 +290,22 @@ export const useAnalytics = ({
   const cookieNames = ['_fbp'];
   if (!trackingIds.fbc) cookieNames.push('_fbc');
   if (!trackingIds.g_client_id) cookieNames.push('_ga');
+  if (!trackingIds.g_session_id && tagId) cookieNames.push(`_ga_${tagId}`);
   cookieNames.forEach((cookieName) => {
     document.cookie.split(';').forEach((cookie) => {
       const [key, value] = cookie.split('=');
       if (key.trim() === cookieName && value) {
         switch (cookieName) {
-          case '_fbp': trackingIds.fbp = value; break;
-          case '_fbc': trackingIds.fbc = value; break;
-          case '_ga': trackingIds.g_client_id = value.substring(6); break;
+          case '_fbp': trackingIds.fbp = value; return;
+          case '_fbc': trackingIds.fbc = value; return;
           default:
         }
+        const gVal = value.substring(6);
+        if (cookieName === '_ga') {
+          trackingIds.g_client_id = gVal;
+          return;
+        }
+        trackingIds.g_session_id = gVal.split('.')[0];
       }
     });
   });
