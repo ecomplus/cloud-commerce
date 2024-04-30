@@ -88,7 +88,7 @@ const serveFeeds = async (req: Request, res: Response) => {
     return;
   }
   res.set('Content-Type', 'application/xml; charset=UTF-8');
-  res.set('Cache-Control', 'public, max-age=600, s-maxage=120');
+  res.set('Cache-Control', 'public, max-age=600, s-maxage=900');
   res.set('Content-Security-Policy', "default-src 'self'");
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-XSS-Protection', '1; mode=block');
