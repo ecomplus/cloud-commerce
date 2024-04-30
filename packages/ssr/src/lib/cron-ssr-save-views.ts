@@ -160,8 +160,8 @@ const saveViews = async () => {
               },
             }));
             purgedUrls.push(url);
-            let pathname = url.replace(`https://${domain}`, '');
-            if (permaCacheZoneFolder && pathname.endsWith('/')) {
+            if (permaCacheZoneFolder) {
+              let pathname = url.replace(`https://${domain}`, '');
               const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
                 + `?__isrV=${deployRand}&t=${Date.now()}`;
               purgeReqs.push(
