@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@astrojs/node": "8.2.5",
+    "@astrojs/partytown": "2.0.4",
     "@astrojs/vue": "4.0.10",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
