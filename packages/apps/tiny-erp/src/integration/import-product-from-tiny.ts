@@ -22,20 +22,22 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
   if (product) {
     const { variations } = product;
     hasVariations = Boolean(variations && variations.length);
-    const variation = variations?.find(({ sku }) => queueSku === sku);
-    if (variation) {
-      variationId = variation._id;
-    } else {
-      logger.info(`SKU not found ${queueSku}`);
-      if (!isHiddenQueue && !appData.update_product) {
-        const msg = queueSku
-          + ' corresponde a um produto com variações,'
-          + ' especifique o SKU da variação para importar.';
-        const err: any = new Error(msg);
-        err.isConfigError = true;
-        return err;
+    if (hasVariations) {
+      const variation = variations?.find(({ sku }) => queueSku === sku);
+      if (variation) {
+        variationId = variation._id;
+      } else {
+        logger.info(`SKU not found ${queueSku}`);
+        if (!isHiddenQueue && !appData.update_product) {
+          const msg = queueSku
+            + ' corresponde a um produto com variações,'
+            + ' especifique o SKU da variação para importar.';
+          const err: any = new Error(msg);
+          err.isConfigError = true;
+          return err;
+        }
+        return null;
       }
-      return null;
     }
   }
 
