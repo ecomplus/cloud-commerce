@@ -14,6 +14,7 @@ type ApiEventHandler = PubSubHandler<AppEventsPayload>;
 type ExecOptions = {
   eventMaxAgeMs?: number,
   memory?: '128MB' | '256MB' | '512MB' | '1GB',
+  maxInstances?: number,
 };
 
 const createPubSubFunction = (
@@ -22,6 +23,7 @@ const createPubSubFunction = (
   {
     eventMaxAgeMs = 60000,
     memory = '256MB',
+    maxInstances = 1,
   }: ExecOptions = {},
 ) => {
   const { httpsFunctionOptions: { region } } = config.get();
@@ -29,6 +31,7 @@ const createPubSubFunction = (
     .runWith({
       failurePolicy: eventMaxAgeMs > 0,
       memory,
+      maxInstances,
     })
     .pubsub.topic(pubSubTopic).onPublish((message, context) => {
       const eventAgeMs = Date.now() - Date.parse(context.timestamp);
