@@ -45,7 +45,7 @@ const callAppModule = async (
   // eslint-disable-next-line no-unused-vars
   let internalModuleFn: undefined | ((_data: AppModuleBody<any>) => Promise<any>);
   if (modName === 'apply_discount') {
-    if (appId === apps.discounts.appId) {
+    if (appId === apps.discounts.appId || appId === 103285) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-discounts')
           .then(({ applyDiscount }) => applyDiscount(_data));
