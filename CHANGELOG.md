@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.4](https://github.com/ecomplus/cloud-commerce/compare/v2.15.3...v2.15.4) (2024-04-30)
+
+
+### Bug Fixes
+
+* **cli:** Fix bunny.net CI to bypass perma-cache for TXT ([ac06c56](https://github.com/ecomplus/cloud-commerce/commit/ac06c563dc1678a743633a7ed2fdee583da70cc1))
+* **cli:** Fix bunny.net CI with new `Reset feeds/app CDN cache` edge rule ([09c18d6](https://github.com/ecomplus/cloud-commerce/commit/09c18d6e4db2266d3bca9b8148ad91935627d8d3))
+* **modules:** Fix buyer/payer masked data inside transaction object ([fc902d8](https://github.com/ecomplus/cloud-commerce/commit/fc902d8389981867eb4c968dfde91126cb4f54be))
+* **modules:** Fixing subtotal calculation on checkout step with multiple items ([1dcacd1](https://github.com/ecomplus/cloud-commerce/commit/1dcacd10ef0c1347b83950b5301456ceb95a9d9b))
+
 ### [2.15.3](https://github.com/ecomplus/cloud-commerce/compare/v2.15.2...v2.15.3) (2024-04-30)
 
 
