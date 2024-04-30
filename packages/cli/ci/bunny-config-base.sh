@@ -160,10 +160,13 @@ configure_edge_rule "Bypass CDN cache" '
     },
     {
       "Type": 8,
-      "PatternMatchingType": 2,
+      "PatternMatchingType": 0,
       "PatternMatches": [
-        "200",
-        "301"
+        "400",
+        "401",
+        "403",
+        "404",
+        "500"
       ]
     }
   ],
@@ -183,6 +186,7 @@ configure_edge_rule "Reset feeds/app CDN cache" '
       "PatternMatchingType": 0,
       "PatternMatches": [
         "*.xml",
+        "*.txt",
         "*/app/*"
       ]
     },
@@ -202,23 +206,27 @@ configure_edge_rule "Reset feeds/app CDN cache" '
 configure_edge_rule "Bypass perma-cache" '
 {
   "ActionType": 15,
-  "ActionParameter1": null,
-  "ActionParameter2": null,
+  "TriggerMatchingType": 0,
   "Triggers": [
     {
       "Type": 0,
+      "PatternMatchingType": 0,
       "PatternMatches": [
         "*/_api/*",
-        "*.xml",
         "*/app/*",
         "*/admin/*",
         "*/~*"
-      ],
+      ]
+    },
+    {
+      "Type": 0,
       "PatternMatchingType": 0,
-      "Parameter1": ""
+      "PatternMatches": [
+        "*.xml",
+        "*.txt"
+      ]
     }
   ],
-  "TriggerMatchingType": 1,
   "Description": "Bypass perma-cache",
   "Enabled": true
 }
