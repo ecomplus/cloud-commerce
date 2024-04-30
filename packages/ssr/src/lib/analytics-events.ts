@@ -9,8 +9,8 @@ import sendToTiktok from './analytics/send-to-tiktok';
 const analyticsEmitter = new EventEmitter();
 
 export type AnalyticsEvent = {
-  id: string,
-  time: number,
+  id?: string,
+  time?: number,
   name: string,
   params?: Record<string, any>,
   type?: string,

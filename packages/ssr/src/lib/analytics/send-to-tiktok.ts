@@ -27,7 +27,7 @@ const sendToTiktok = async ({
       const event = events[i];
       data.push({
         event: event.name,
-        event_time: event.time,
+        event_time: event.time || Math.floor(Date.now() / 1000),
         event_id: event.id,
         user,
         page: {

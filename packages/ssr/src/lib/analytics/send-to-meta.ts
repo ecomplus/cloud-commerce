@@ -29,7 +29,7 @@ const sendToMeta = async ({
       const event = events[i];
       data.push({
         event_name: event.name,
-        event_time: event.time,
+        event_time: event.time || Math.floor(Date.now() / 1000),
         event_id: event.id,
         event_source_url: pageLocation,
         action_source: 'website',
