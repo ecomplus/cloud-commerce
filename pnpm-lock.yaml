@@ -1141,6 +1141,9 @@ importers:
       '@astrojs/node':
         specifier: 8.2.5
         version: 8.2.5(astro@4.5.10)
+      '@astrojs/partytown':
+        specifier: 2.0.4
+        version: 2.0.4
       '@astrojs/vue':
         specifier: 4.0.10
         version: 4.0.10(astro@4.5.10)(vite@5.2.10)(vue@3.4.25)
@@ -1390,6 +1393,13 @@ packages:
       server-destroy: 1.0.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@astrojs/partytown@2.0.4:
+    resolution: {integrity: sha512-yC1smFLOBn7CWNAzaigXAr4bSJSgRJYF4g9jDuSR0NbShLd1SVUpRm9QOmOIrfSFGh2YtZEW8gnwvI5SZw+WmA==}
+    dependencies:
+      '@builder.io/partytown': 0.8.2
+      mrmime: 1.0.1
     dev: false
 
   /@astrojs/prism@3.1.0:
@@ -1801,6 +1811,12 @@ packages:
       call-me-maybe: 1.0.2
       js-yaml: 4.1.0
     dev: true
+
+  /@builder.io/partytown@0.8.2:
+    resolution: {integrity: sha512-WKGE+SO0qUGirW8J+xOWkHeCkfFEoPPvHnFkcdMl+MY3kDbAcTwjZCzjg27JCvoD0h8fH47FR7DSIss0/S5lyg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dev: false
 
   /@capsizecss/metrics@2.2.0:
     resolution: {integrity: sha512-DkFIser1KbGxWyG2hhQQeCit72TnOQDx5pr9bkA7+XlIy7qv+4lYtslH3bidVxm2qkY2guAgypSIPYuQQuk70A==}
@@ -8819,6 +8835,11 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /mrmime@1.0.1:
+    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
+    engines: {node: '>=10'}
+    dev: false
 
   /mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
