@@ -45,7 +45,7 @@ const sendToGa4 = async ({
       'User-Agent': originUserAgent,
     };
     for (let i = 0; i < events.length; i++) {
-      const { name, params } = events[i];
+      const { name, params, time } = events[i];
       const event = { name, params: { ...params } };
       event.params.session_id = sessionId;
       data.events.push(event);
@@ -59,6 +59,7 @@ const sendToGa4 = async ({
             term: utm.term,
             content: utm.content,
             session_id: sessionId,
+            engagement_time_msec: `${time ? time * 1000 : Date.now()}`,
           },
         });
       }
