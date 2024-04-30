@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.9](https://github.com/ecomplus/cloud-commerce/compare/v2.15.8...v2.15.9) (2024-04-30)
+
+
+### Bug Fixes
+
+* **ssr:** Skiping events to GA4 (excepting purchase) when already client-side sent (gtag) ([8ea0b8b](https://github.com/ecomplus/cloud-commerce/commit/8ea0b8bd924e14bcb70a9087e309ee982fc3b655))
+* **storefront:** Add `sent` bool status to each event object for client-side tagging support ([0d1f88a](https://github.com/ecomplus/cloud-commerce/commit/0d1f88a7750e807541119a555f5553871e44c32a))
+* **tiny-erp:** Fix wrogn early return (false not found) on SKU import without variations ([344661d](https://github.com/ecomplus/cloud-commerce/commit/344661d9a8ee0d137ebc9696fe4d9be700282c40))
+
 ### [2.15.8](https://github.com/ecomplus/cloud-commerce/compare/v2.15.7...v2.15.8) (2024-04-30)
 
 ### [2.15.7](https://github.com/ecomplus/cloud-commerce/compare/v2.15.5...v2.15.7) (2024-04-30)
