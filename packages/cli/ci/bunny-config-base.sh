@@ -154,8 +154,7 @@ configure_edge_rule "Bypass CDN cache" '
       "PatternMatchingType": 0,
       "PatternMatches": [
         "*/_api/*",
-        "*/admin/*",
-        "*/~*"
+        "*/admin/*"
       ]
     },
     {
@@ -187,7 +186,8 @@ configure_edge_rule "Reset feeds/app CDN cache" '
       "PatternMatches": [
         "*.xml",
         "*.txt",
-        "*/app/*"
+        "*/app/*",
+        "*/~*"
       ]
     },
     {
