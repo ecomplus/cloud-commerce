@@ -45,7 +45,7 @@ export const parseGtagToTtq = async ({ event }: GtagEventMessage) => {
     return [{ name: 'PageView' }];
   }
   const { items, currency = 'BRL' } = event.params;
-  if (event.name === 'view_item' && items) {
+  if (event.name.startsWith('view_item') && items) {
     const firstItem = items[0];
     if (firstItem) {
       if (firstItem.item_list_id === 'product-page') {

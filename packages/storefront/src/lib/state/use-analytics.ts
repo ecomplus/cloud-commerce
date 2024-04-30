@@ -135,7 +135,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
     }
   } else {
     if (pageViewState.waiting) await pageViewState.waiting;
-    if (name === 'view_item') {
+    if (name.startsWith('view_item')) {
       params.items?.forEach((item) => {
         if (item.index !== undefined) return;
         if (!item.item_list_id && !item.item_list_name) {

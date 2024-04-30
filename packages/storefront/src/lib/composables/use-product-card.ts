@@ -86,7 +86,8 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     if ((product as SearchItem).has_variations) return true;
     return Boolean(product.variations?.length);
   });
-  emitGtagEvent('view_item', {
+  const isProductPage = globalThis.$storefront.apiContext?.doc._id === product._id;
+  emitGtagEvent(isProductPage ? 'view_item' : 'view_item_list', {
     value: isActive.value ? product.price : 0,
     items: [{
       ...getGtagItem(product),
