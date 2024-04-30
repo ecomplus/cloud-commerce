@@ -11,6 +11,7 @@ const analyticsEmitter = new EventEmitter();
 export type AnalyticsEvent = {
   id?: string,
   time?: number,
+  sent?: boolean,
   name: string,
   params?: Record<string, any>,
   type?: string,
@@ -73,7 +74,10 @@ const sendAnalyticsEvents = async (
       userProperties.exp_variant_string = { value: payload.exp_variant_string };
     }
     sendingEvents.push(sendToGa4({
-      events: gaEvents,
+      events: gaEvents.filter(({ sent, name, params }) => {
+        // Cannot deduplicate GA4 events by ID exepting purchase
+        return !sent || (name === 'purchase' && !!params?.transaction_id);
+      }),
       clientId,
       sessionId,
       userProperties,
