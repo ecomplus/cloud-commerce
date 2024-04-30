@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.5](https://github.com/ecomplus/cloud-commerce/compare/v2.15.4...v2.15.5) (2024-04-30)
+
+
+### Bug Fixes
+
+* **api:** Properly handling retries on rate limit errors (429) ([fc40b2b](https://github.com/ecomplus/cloud-commerce/commit/fc40b2bb0c42249ad81a794f26ba5c9e276455d7))
+* **events:** Removing dropped packages ([0803120](https://github.com/ecomplus/cloud-commerce/commit/080312096d8fa3b5db7941109eab4f53b0f0b953))
+* **firebase:** Trying to increase `initialRetryDelayMillis` for store events Pub/Sub ([c5bc723](https://github.com/ecomplus/cloud-commerce/commit/c5bc723a7588ae8a1058460756a429af167a09da))
+* **modules:** Passing additional app ID (known) to default discount app ([0814114](https://github.com/ecomplus/cloud-commerce/commit/08141146f50a8de5d9ae3e78d691347b7da9dffa))
+* **ssr:** Check Accept header and bot user agents to early return without proceed analytics events ([961c837](https://github.com/ecomplus/cloud-commerce/commit/961c837dcdb116446fa8eddfaaeced323f6d837a))
+* **storefront:** Emit gtag `view_item_list` on product card out of product details page ([0c8fa13](https://github.com/ecomplus/cloud-commerce/commit/0c8fa13d3f7dab76a74cc7ea1bdd8698ab27c724))
+* **storefront:** Naive detect bot user agents and skip sending server analytcis events ([ac1737b](https://github.com/ecomplus/cloud-commerce/commit/ac1737be8f65aa5eb118480feedd50700bbfcd39))
+* **tiny-erp:** Run store event function on 512MB as needed ([e8b8cf8](https://github.com/ecomplus/cloud-commerce/commit/e8b8cf8b7779d192f00eada376cb8727821c67c9))
+
 ### [2.15.4](https://github.com/ecomplus/cloud-commerce/compare/v2.15.3...v2.15.4) (2024-04-30)
 
 
