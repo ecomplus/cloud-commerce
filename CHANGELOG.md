@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.7](https://github.com/ecomplus/cloud-commerce/compare/v2.15.5...v2.15.7) (2024-04-30)
+
+
+### Bug Fixes
+
+* **firebase:** Deploy app events functions with `maxInstances = 1` by default ([62e4bc0](https://github.com/ecomplus/cloud-commerce/commit/62e4bc066286c1b1eaf6981dd84688da1075326a))
+* **ssr:** Send `engagement_time_msec` to GA4 Measurement for Realtime reports ([6d5c03d](https://github.com/ecomplus/cloud-commerce/commit/6d5c03da295e7a11a20abe17ebab4c8713ebb471))
+* **storefront:** Load gtag to set Google `client_id` and `session_id` to server analytics ([b992c8c](https://github.com/ecomplus/cloud-commerce/commit/b992c8cba13558f6b90709f70ba02bfa5ee4dde5))
+* **storefront:** Stop parsing gtag `remove_from_cart` event to Meta (fqb) and TikTok (ttq) ([d45f734](https://github.com/ecomplus/cloud-commerce/commit/d45f7344de5ec4790b5028c71a697162886e492b))
+* **storefront:** Try getting GA session ID from `_ga_<tag-id>` cookie ([f2ad0d3](https://github.com/ecomplus/cloud-commerce/commit/f2ad0d33e6c0a9f48fce2789e12db55046813f32))
+
+### [2.15.6](https://github.com/ecomplus/cloud-commerce/compare/v2.15.5...v2.15.6) (2024-04-30)
+
+
+### Bug Fixes
+
+* **firebase:** Deploy app events functions with `maxInstances = 1` by default ([62e4bc0](https://github.com/ecomplus/cloud-commerce/commit/62e4bc066286c1b1eaf6981dd84688da1075326a))
+* **ssr:** Send `engagement_time_msec` to GA4 Measurement for Realtime reports ([6d5c03d](https://github.com/ecomplus/cloud-commerce/commit/6d5c03da295e7a11a20abe17ebab4c8713ebb471))
+* **storefront:** Load gtag to set Google `client_id` and `session_id` to server analytics ([b992c8c](https://github.com/ecomplus/cloud-commerce/commit/b992c8cba13558f6b90709f70ba02bfa5ee4dde5))
+* **storefront:** Stop parsing gtag `remove_from_cart` event to Meta (fqb) and TikTok (ttq) ([d45f734](https://github.com/ecomplus/cloud-commerce/commit/d45f7344de5ec4790b5028c71a697162886e492b))
+* **storefront:** Try getting GA session ID from `_ga_<tag-id>` cookie ([f2ad0d3](https://github.com/ecomplus/cloud-commerce/commit/f2ad0d33e6c0a9f48fce2789e12db55046813f32))
+
 ### [2.15.5](https://github.com/ecomplus/cloud-commerce/compare/v2.15.4...v2.15.5) (2024-04-30)
 
 
