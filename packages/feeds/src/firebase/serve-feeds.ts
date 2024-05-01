@@ -17,7 +17,6 @@ const fetchProducts = async (page = 1) => {
     offset,
     count: true,
     params: {
-      available: true,
       visible: true,
     },
     fields: [
@@ -25,6 +24,7 @@ const fetchProducts = async (page = 1) => {
       'name',
       'sku',
       'slug',
+      'available',
       'quantity',
       'min_quantity',
       'production_time',

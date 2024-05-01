@@ -62,7 +62,8 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
         if (discount > 0) entry.link += `&amp;discount=${discount}`;
       }
       if (
-        (p.quantity === undefined || p.quantity)
+        p.available !== false
+        && (p.quantity === undefined || p.quantity)
         && (!p.min_quantity || p.quantity! >= p.min_quantity)
       ) {
         entry.availability = 'in stock';
