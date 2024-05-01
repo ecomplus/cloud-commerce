@@ -194,7 +194,8 @@ configure_edge_rule "Reset feeds/app CDN cache" '
       "Type": 8,
       "PatternMatchingType": 0,
       "PatternMatches": [
-        "200"
+        "200",
+        "404"
       ]
     }
   ],
