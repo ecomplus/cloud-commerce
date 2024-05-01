@@ -125,8 +125,8 @@ printf "\n\n> Configured pull zone \"$pull_zone_id\"\n"
 
 configure_edge_rule() {
   printf "\n"
-  local description=$1
-  local rule_data=$2
+  local rule_data=$1
+  local description=$(echo $rule_data | jq -r '.Description')
   local found_rule=$(echo $edge_rules | jq --arg description "$description" '.[] | select(.Description == $description)')
   local guid=$(echo $found_rule | jq -r '.Guid // empty')
 
@@ -143,7 +143,7 @@ configure_edge_rule() {
   printf "\n\n> Configured edge rule \"$description\"\n"
 }
 
-configure_edge_rule "Bypass CDN cache" '
+configure_edge_rule '
 {
   "ActionType": 3,
   "TriggerMatchingType": 0,
@@ -161,11 +161,11 @@ configure_edge_rule "Bypass CDN cache" '
       "Type": 8,
       "PatternMatchingType": 0,
       "PatternMatches": [
-        "400",
+        "500",
+        "502",
+        "504",
         "401",
-        "403",
-        "404",
-        "500"
+        "403"
       ]
     }
   ],
@@ -174,7 +174,27 @@ configure_edge_rule "Bypass CDN cache" '
 }
 '
 
-configure_edge_rule "Reset feeds/app CDN cache" '
+configure_edge_rule '
+{
+  "ActionType": 3,
+  "TriggerMatchingType": 1,
+  "ActionParameter1": "600",
+  "Triggers": [
+    {
+      "Type": 8,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
+        "404",
+        "410"
+      ]
+    }
+  ],
+  "Description": "Fast cache not founds",
+  "Enabled": true
+}
+'
+
+configure_edge_rule '
 {
   "ActionType": 3,
   "TriggerMatchingType": 1,
@@ -204,7 +224,7 @@ configure_edge_rule "Reset feeds/app CDN cache" '
 }
 '
 
-configure_edge_rule "Bypass perma-cache" '
+configure_edge_rule '
 {
   "ActionType": 15,
   "TriggerMatchingType": 0,
@@ -233,7 +253,7 @@ configure_edge_rule "Bypass perma-cache" '
 }
 '
 
-configure_edge_rule "SSR browser cache" '
+configure_edge_rule '
 {
   "ActionType": 16,
   "ActionParameter1": "120",
@@ -266,7 +286,7 @@ configure_edge_rule "SSR browser cache" '
 }
 '
 
-configure_edge_rule "Force mime text/html" '
+configure_edge_rule '
 {
   "ActionType": 5,
   "ActionParameter1": "Content-Type",

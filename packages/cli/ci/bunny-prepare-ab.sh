@@ -64,9 +64,9 @@ edge_rules=$(echo $response | jq --arg id "$pull_zone_id" '.[] | select(.Id == (
 
 configure_edge_rule() {
   printf "\n"
-  local description=$1
-  local rule_data=$2
-  local is_additional_patterns=${3:-true}
+  local rule_data=$1
+  local description=$(echo $rule_data | jq -r '.Description')
+  local is_additional_patterns=${2:-true}
   local found_rule=$(echo $edge_rules | jq --arg description "$description" '.[] | select(.Description == $description)')
   local guid=$(echo $found_rule | jq -r '.Guid // empty')
 
@@ -155,9 +155,9 @@ ab_testing_perma_bypass_data="
   \"Enabled\": true
 }"
 
-configure_edge_rule "A/B testing [$GIT_BRANCH]" "$ab_testing_data"
-configure_edge_rule "A/B CDN short cache [$GIT_BRANCH]" "$ab_testing_ttl_data"
-configure_edge_rule "A/B perma-cache bypass [$GIT_BRANCH]" "$ab_testing_perma_bypass_data"
+configure_edge_rule "$ab_testing_data"
+configure_edge_rule "$ab_testing_ttl_data"
+configure_edge_rule "$ab_testing_perma_bypass_data"
 
 curl --silent --request POST \
   --url "https://api.bunny.net/purge?url=https://$domain/" \
