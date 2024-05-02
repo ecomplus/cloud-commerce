@@ -122,7 +122,7 @@ const saveViews = async () => {
       .where('at', '>', new Date(Date.now() - 1000 * 60 * 20))
       .where('at', '<', new Date(Date.now() - 1000 * sMaxAge))
       .get();
-    const pageViewDocs: Array<{ ref: DocumentReference, url: string }> = [];
+    const pageViewDocs: Array<{ ref: DocumentReference, pathname: string }> = [];
     for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
       const doc = pageViewsSnapshot.docs[i];
       const data = doc.data() as { url: string, isCachePurged?: boolean };
@@ -130,7 +130,19 @@ const saveViews = async () => {
         continue;
       }
       const url = data.url.replace(/[?#].*$/, '');
-      pageViewDocs.push({ ref: doc.ref, url });
+      if (!url.startsWith(`https://${domain}`)) {
+        continue;
+      }
+      const pathname = url.replace(`https://${domain}`, '');
+      if (
+        pathname.startsWith('/~')
+        || pathname.startsWith('/app/')
+        || pathname.startsWith('/admin/')
+      ) {
+        // Routes with short cache TTL, see cli/ci/bunny-config-base.sh
+        continue;
+      }
+      pageViewDocs.push({ ref: doc.ref, pathname });
     }
     if (pageViewDocs.length) {
       const bunnyAxios = axios.create({
@@ -149,50 +161,46 @@ const saveViews = async () => {
           bunnyAxios,
           bunnyStorageKeysRef,
         });
-        const purgedUrls: string[] = [];
+        const purgedPaths: string[] = [];
         const purgeReqs: Promise<any>[] = [];
         for (let i = 0; i < pageViewDocs.length; i++) {
-          const { ref, url } = pageViewDocs[i];
-          if (url?.startsWith(`https://${domain}`) && !purgedUrls.includes(url)) {
-            purgeReqs.push(bunnyAxios('/purge', {
-              method: 'POST',
-              params: {
-                async: 'false',
-                url,
-              },
-            }));
-            purgedUrls.push(url);
-            if (permaCacheZoneFolder) {
-              let pathname = url.replace(`https://${domain}`, '');
-              const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
-                + `?__isrV=${deployRand}&t=${Date.now()}`;
-              purgeReqs.push(
-                // eslint-disable-next-line no-loop-func
-                axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
-                  if (pathname.charAt(0) === '/') {
-                    pathname = pathname.slice(1);
-                  }
-                  const paths = pathname.split('/');
-                  const filename = paths.pop() || '';
-                  let folderpath = paths.join('/');
-                  if (folderpath) folderpath += '/';
-                  // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
-                  const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
-                    + `/${folderpath}___${filename}___/___file___`;
-                  bunnyStorageAxios({
-                    method: 'PUT',
-                    url: `/${permaCachePath}`,
-                    data: freshHtml,
-                  });
-                  ref.update({ isCachePurged: true, permaCachePath });
-                }),
-              );
-              continue;
-            }
-            ref.update({ isCachePurged: true });
+          const { ref, pathname } = pageViewDocs[i];
+          if (purgedPaths.includes(pathname)) {
+            ref.update({ isCachePurged: false });
             continue;
           }
-          ref.update({ isCachePurged: false });
+          purgeReqs.push(bunnyAxios('/purge', {
+            method: 'POST',
+            params: {
+              async: 'false',
+              url: `https://${domain}${pathname}`,
+            },
+          }));
+          purgedPaths.push(pathname);
+          if (permaCacheZoneFolder) {
+            const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
+              + `?__isrV=${deployRand}&t=${Date.now()}`;
+            purgeReqs.push(
+              // eslint-disable-next-line no-loop-func
+              axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
+                const paths = pathname.slice(1).split('/');
+                const filename = paths.pop() || '';
+                let folderpath = paths.join('/');
+                if (folderpath) folderpath += '/';
+                // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
+                const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
+                  + `/${folderpath}___${filename}___/___file___`;
+                bunnyStorageAxios({
+                  method: 'PUT',
+                  url: `/${permaCachePath}`,
+                  data: freshHtml,
+                });
+                ref.update({ isCachePurged: true, permaCachePath });
+              }),
+            );
+            continue;
+          }
+          ref.update({ isCachePurged: true });
           continue;
         }
         await Promise.all(purgeReqs);
