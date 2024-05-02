@@ -87,6 +87,7 @@ const mergeConfig = {
   httpsFunctionOptions: {
     region: DEPLOY_REGION || 'us-east4',
     memory: (DEPLOY_MEMORY as '128MB' | '256MB' | '512MB' | '1GB' | '2GB') || '256MB',
+    maxInstances: 100,
   },
   ssrFunctionOptions: {
     region: SSR_DEPLOY_REGION || DEPLOY_REGION || 'us-east4',
