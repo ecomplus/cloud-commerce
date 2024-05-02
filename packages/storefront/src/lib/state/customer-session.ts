@@ -106,8 +106,12 @@ const initializeFirebaseAuth = (canWaitIdle?: boolean) => {
     }) => {
       firebaseAuth = getAuth();
       firebaseAuth.languageCode = window.$storefront.settings.lang || 'pt_br';
+      let countStateChanges = 0;
       onAuthStateChanged(firebaseAuth, async (user) => {
+        countStateChanges += 1;
+        if (countStateChanges === 1 && !user) return;
         if (user) {
+          isAuthReady.value = false;
           if (user.displayName && !customerName.value) {
             session.customer.display_name = user.displayName;
           }
