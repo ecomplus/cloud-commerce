@@ -154,8 +154,7 @@ configure_edge_rule '
       "PatternMatchingType": 0,
       "PatternMatches": [
         "*/_api/*",
-        "*/admin/*",
-        "*/.*"
+        "*/admin/*"
       ]
     },
     {
@@ -208,7 +207,8 @@ configure_edge_rule '
         "*.xml",
         "*.txt",
         "*/app/*",
-        "*/~*"
+        "*/~*",
+        "*/.*"
       ]
     },
     {
