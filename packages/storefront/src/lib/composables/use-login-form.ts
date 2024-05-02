@@ -4,6 +4,8 @@ import {
   getAuth,
   sendSignInLinkToEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from 'firebase/auth';
 import {
   EMAIL_STORAGE_KEY,
@@ -35,16 +37,17 @@ const useLoginForm = (props?: Props) => {
   watch(isLinkSignIn, (_isLinkSignIn) => {
     params.password = _isLinkSignIn ? '0' : '1';
   });
+
   const password = ref('');
   const isSubmitting = ref(false);
   const isSubmitReady = computed(() => {
     return !isSubmitting.value && isAuthReady.value;
   });
   const submitLogin = useThrottleFn(async (linkActionUrl?: string | null) => {
+    if (!email.value) return;
     isSubmitting.value = true;
     const timestamp = Date.now();
     const firebaseAuth = getAuth();
-    if (!email.value) return;
     window.localStorage.setItem(EMAIL_STORAGE_KEY, email.value);
     try {
       if (isLinkSignIn.value) {
@@ -69,6 +72,21 @@ const useLoginForm = (props?: Props) => {
       isSubmitting.value = false;
     }, Math.min(2000 - (Date.now() - timestamp), 1));
   }, 2000);
+
+  const hasGoogleSignIn = computed(() => {
+    return window.OAUTH_PROVIDERS?.includes('google');
+  });
+  const signInWithGoogle = () => {
+    const firebaseAuth = getAuth();
+    try {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(firebaseAuth, provider);
+    } catch (error: any) {
+      console.warn(error.code);
+      console.error(error);
+    }
+  };
+
   return {
     isLinkSignIn,
     isSignUp,
@@ -77,6 +95,8 @@ const useLoginForm = (props?: Props) => {
     isSubmitting,
     isSubmitReady,
     submitLogin,
+    hasGoogleSignIn,
+    signInWithGoogle,
   };
 };
 

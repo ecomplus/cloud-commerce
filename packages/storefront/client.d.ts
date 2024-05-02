@@ -25,6 +25,7 @@ interface Window {
   ECOM_CURRENCY: string;
   ECOM_CURRENCY_SYMBOL: string;
   ECOM_COUNTRY_CODE: string;
+  OAUTH_PROVIDERS?: Array<'google'>;
   GIT_BRANCH: string;
   GIT_REPO?: string;
   AB_EXPERIMENT_ID?: string;
