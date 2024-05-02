@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.16.1](https://github.com/ecomplus/cloud-commerce/compare/v2.16.0...v2.16.1) (2024-05-02)
+
+
+### Bug Fixes
+
+* **deps:** Reverting `pagarme` to v4.34 ([9783d23](https://github.com/ecomplus/cloud-commerce/commit/9783d237889a951463e7ca5e4c877b879b8d197c))
+
 ## [2.16.0](https://github.com/ecomplus/cloud-commerce/compare/v2.15.9...v2.16.0) (2024-05-02)
 
 
