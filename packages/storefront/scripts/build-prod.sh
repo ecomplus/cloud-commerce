@@ -15,6 +15,12 @@ mv ./.cloudcommerce/sf-tmp-dist/app/ ./dist/client/
 mv ./.cloudcommerce/sf-tmp-dist/admin/ ./dist/client/
 rm -rf ./.cloudcommerce/sf-tmp-dist
 
+new_css_hash=$(ls ./dist/client/_astro/*.css | sed -n 's/.*\/_astro\/\(_slug_[^.]*\..*\.css\)/\1/p')
+if [[ -n "$new_css_hash" ]]; then
+  sed -i -E "s/_slug_[^.]*\..*\.css/$new_css_hash/g" ./dist/client/~index.html
+  sed -i -E "s/_slug_[^.]*\..*\.css/$new_css_hash/g" ./dist/client/~fallback.html
+fi
+
 identify -format "%f,%w,%h\n" \
   ./dist/client/_astro/*.{png,jpg,jpeg,webp,avif,svg} \
   > ./dist/server/images.dist.csv \
