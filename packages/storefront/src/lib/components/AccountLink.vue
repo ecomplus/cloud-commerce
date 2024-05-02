@@ -26,7 +26,7 @@ if (globalThis.location?.href) {
 const isMounted = ref(false);
 onMounted(() => { isMounted.value = true; });
 const href = computed(() => {
-  const returnUrl = props.returnUrl || locationUrl.value;
+  const returnUrl = props.returnUrl;
   const loggedTo = isMounted.value && isLogged.value
     ? (props.to || 'account')
     : null;
