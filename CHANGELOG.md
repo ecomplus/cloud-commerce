@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.16.0](https://github.com/ecomplus/cloud-commerce/compare/v2.15.9...v2.16.0) (2024-05-02)
+
+
+### Features
+
+* **storefront:** Add support to Google sign in on login form composable ([ca408a4](https://github.com/ecomplus/cloud-commerce/commit/ca408a42ee0add8849cdcc6ea2acff290c2d6c2b))
+* **storefront:** Update vbeta-app script and handle login inside checkout page ([2ffb97f](https://github.com/ecomplus/cloud-commerce/commit/2ffb97f1836370aa0b6833a771028737827c7a10))
+
+
+### Bug Fixes
+
+* **cli:** Update bunny.net (CI) edge rules to fast cache not found responses ([7ff11be](https://github.com/ecomplus/cloud-commerce/commit/7ff11be851686807fae8ae430cc562700c7b73e8))
+* **cli:** Update bunny.net edge rules to cache (CDN-only) Partytown scripts ([f3c9021](https://github.com/ecomplus/cloud-commerce/commit/f3c902110523bda1f28d839a4f5da8b1a17c005c))
+* **cli:** Update CI to cache 404 responses on feeds/app routes (CDN only) ([14f9a79](https://github.com/ecomplus/cloud-commerce/commit/14f9a795712af3107c9de1d4053b6ab1bc61d510))
+* **feeds:** Render unavailable(but visible) products to catalog as `out of stock` ([288f3ec](https://github.com/ecomplus/cloud-commerce/commit/288f3ec5963d69a516d90f2443fe40d265d5edd6))
+* **firebase:** Try deploying app events functions with `maxInstances = 2` ([6593847](https://github.com/ecomplus/cloud-commerce/commit/65938471a677c5bad7a06c936076f979d55864f5))
+* **ssr:** Skip purging short cache TTL (by edge rules) routes ([a51aa1a](https://github.com/ecomplus/cloud-commerce/commit/a51aa1a223a646c58a40e0f390c72cee09925441))
+* **storefront:** Update build prod script to fix CSS filename on copied ~fallback and ~index HTML ([820b7b1](https://github.com/ecomplus/cloud-commerce/commit/820b7b1b28d4b608409d6de41106c4960797d666))
+* **storefront:** Update customer session state to prevent early reset of `isAuthReady` ([bfae42e](https://github.com/ecomplus/cloud-commerce/commit/bfae42e5e840bdf0aa7830a4fc957d55e5f69e42))
+
 ### [2.15.9](https://github.com/ecomplus/cloud-commerce/compare/v2.15.8...v2.15.9) (2024-04-30)
 
 
