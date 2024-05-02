@@ -65,7 +65,7 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
       }
     }
   }
-  if (!isValidSavedKeys && permaCacheZoneFolder) {
+  if (!isValidSavedKeys && bunnyStorageName && bunnyStoragePass && permaCacheZoneFolder) {
     bunnyStorageKeysRef.set({
       bunnyStorageName,
       bunnyStoragePass,
