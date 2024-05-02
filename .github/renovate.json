@@ -26,7 +26,8 @@
       "excludePackageNames": [
         "astro",
         "vue",
-        "typescript"
+        "typescript",
+        "pagarme"
       ],
       "excludePackagePrefixes": [
         "@astrojs/"

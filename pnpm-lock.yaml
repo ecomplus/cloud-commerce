@@ -590,7 +590,7 @@ importers:
         specifier: ^4.9.0
         version: 4.9.0(firebase-admin@12.1.0)
       pagarme:
-        specifier: ^4.34.1
+        specifier: 4.34.x
         version: 4.34.1
       qs:
         specifier: ^6.12.1
