@@ -23,7 +23,7 @@ const createPubSubFunction = (
   {
     eventMaxAgeMs = 60000,
     memory = '256MB',
-    maxInstances = 1,
+    maxInstances = 2,
   }: ExecOptions = {},
 ) => {
   const { httpsFunctionOptions: { region } } = config.get();
