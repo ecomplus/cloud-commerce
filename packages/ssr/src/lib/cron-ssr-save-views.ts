@@ -16,6 +16,7 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
   let bunnyStoragePass = process.env.BUNNYNET_STORAGE_PASS;
   const bunnyZoneName = process.env.BUNNYNET_ZONE_NAME || projectId;
   let permaCacheZoneFolder = '';
+  let isValidSavedKeys = false;
   if (!bunnyStorageName || !bunnyStoragePass) {
     const savedKeysData = (await bunnyStorageKeysRef.get()).data();
     if (savedKeysData) {
@@ -25,6 +26,7 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
         bunnyStorageName = savedKeysData.bunnyStorageName;
         bunnyStoragePass = savedKeysData.bunnyStoragePass;
         permaCacheZoneFolder = savedKeysData.permaCacheZoneFolder;
+        isValidSavedKeys = true;
       }
     }
     if (!bunnyStorageName || !bunnyStoragePass) {
@@ -63,7 +65,7 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
       }
     }
   }
-  if (bunnyStorageName && bunnyStoragePass && permaCacheZoneFolder) {
+  if (!isValidSavedKeys && permaCacheZoneFolder) {
     bunnyStorageKeysRef.set({
       bunnyStorageName,
       bunnyStoragePass,
