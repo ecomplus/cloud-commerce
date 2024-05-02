@@ -1,12 +1,21 @@
 import type { Orders, Customers } from '@cloudcommerce/api/types';
 import { watch } from 'vue';
+import { useThrottleFn } from '@vueuse/core';
 import { phone as getPhone } from '@ecomplus/utils';
+import {
+  getAuth,
+  sendSignInLinkToEmail,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from 'firebase/auth';
 import {
   session,
   isAuthenticated,
   customer,
   customerName,
   logout,
+  initializeFirebaseAuth,
+  isAuthReady,
 } from '@@sf/state/customer-session';
 import { shoppingCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
@@ -252,7 +261,31 @@ if (!import.meta.env.SSR) {
 
   const appScript = document.createElement('script');
   appScript.src = (window as any)._appScriptSrc
-    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.200/dist/lib/js/app.js';
+    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.202/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
+
+  setTimeout(() => {
+    initializeFirebaseAuth();
+    const unwatch = watch(isAuthReady, (_isAuthReady) => {
+      if (!_isAuthReady) return;
+      unwatch();
+      const firebaseAuth = getAuth();
+      (window as any).signInWithEmailLink = useThrottleFn((email: string) => {
+        const url = new URL(`${window.location.origin}/app/account#/checkout`);
+        url.searchParams.append('email', email);
+        sendSignInLinkToEmail(firebaseAuth, email, {
+          url: url.toString(),
+          handleCodeInApp: true,
+        })
+          .catch(console.error);
+      }, 2000);
+      if (window.OAUTH_PROVIDERS?.includes('google')) {
+        const provider = new GoogleAuthProvider();
+        (window as any).signInWithGoogle = () => {
+          signInWithPopup(firebaseAuth, provider).catch(console.error);
+        };
+      }
+    });
+  }, 100);
 }
