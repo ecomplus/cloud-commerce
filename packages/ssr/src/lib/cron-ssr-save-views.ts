@@ -62,14 +62,14 @@ const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef
         permaCacheZoneFolder = ObjectName;
       }
     }
-    if (permaCacheZoneFolder) {
-      bunnyStorageKeysRef.set({
-        bunnyStorageName,
-        bunnyStoragePass,
-        permaCacheZoneFolder,
-        at: Timestamp.now(),
-      });
-    }
+  }
+  if (bunnyStorageName && bunnyStoragePass && permaCacheZoneFolder) {
+    bunnyStorageKeysRef.set({
+      bunnyStorageName,
+      bunnyStoragePass,
+      permaCacheZoneFolder,
+      at: Timestamp.now(),
+    });
   }
   const bunnyStorageAxios = axios.create({
     baseURL: `https://storage.bunnycdn.com/${bunnyStorageName}/`,
