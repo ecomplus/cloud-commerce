@@ -2,7 +2,7 @@ import type { AsyncLocalStorage } from 'node:async_hooks';
 import type { AstroGlobal } from 'astro';
 import type { BaseConfig } from '@cloudcommerce/config';
 import type { ApiError, ApiEndpoint } from '@cloudcommerce/api';
-import type { ResourceId, CategoriesList, BrandsList } from '@cloudcommerce/api/types';
+import type { CategoriesList, BrandsList } from '@cloudcommerce/api/types';
 import type { ContentGetter, SettingsContent, PageContent } from '@@sf/content';
 import type { StorefrontApiContext, Server$Storefront } from '@@sf/$storefront';
 import { EventEmitter } from 'node:events';
@@ -172,14 +172,7 @@ const loadRouteContext = async (
     }),
   ];
   let fetchingApiContext: typeof apiPrefetchings[number] = null;
-  const apiContext: {
-    resource?: 'products' | 'categories' | 'brands' | 'collections';
-    doc?: Record<string, any> & {
-      _id: ResourceId;
-      store_id: number;
-      created_at: string;
-      updated_at: string;
-    };
+  const apiContext: Partial<StorefrontApiContext> & {
     error: ApiError | null;
   } = {
     error: null,
@@ -204,8 +197,7 @@ const loadRouteContext = async (
         api.get(`slugs/${slug}`)
           .then((response) => {
             Object.assign(apiContext, response.data);
-            const apiResource = apiContext.resource as
-              Exclude<typeof apiContext.resource, undefined>;
+            const apiResource = apiContext.resource!;
             contentFilename = `pages/${apiResource}`;
             config.getContent(contentFilename)
               .then((_cmsContent) => {
@@ -215,11 +207,11 @@ const loadRouteContext = async (
                 }
               })
               .catch(console.warn);
-            const apiDoc = apiContext.doc as Record<string, any>;
+            const apiDoc = apiContext.doc!;
             apiState[`${apiResource}/${apiDoc._id}`] = apiDoc;
+            // @ts-expect-error: `apiDoc` not strictly satisfying `apiResource`
             sessions[sid].apiContext = {
               resource: apiResource,
-              // @ts-expect-error: `apiDoc` not strictly typed as resource interface
               doc: apiDoc,
               timestamp: Date.now(),
             };
