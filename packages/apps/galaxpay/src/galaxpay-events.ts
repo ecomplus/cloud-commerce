@@ -7,11 +7,14 @@ import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pub
 import handleApiEvent from './functions-lib/ecom/events-to-galaxpay';
 import handleGalaxpayWebhook from './functions-lib/galaxpay/webhook';
 
+const { httpsFunctionOptions } = config.get();
+
 export const galaxpay = {
   onStoreEvent: createAppEventsFunction('galaxPay', handleApiEvent),
 
   webhook: functions
-    .region(config.get().httpsFunctionOptions.region)
+    .region(httpsFunctionOptions.region)
+    .runWith(httpsFunctionOptions)
     .https.onRequest((req, res) => {
       if (req.method !== 'POST') {
         res.sendStatus(405);

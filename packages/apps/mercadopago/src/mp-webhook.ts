@@ -8,12 +8,12 @@ import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import { parsePaymentStatus } from './mp-create-transaction';
 
-const ECHO_SKIP = 'SKIP';
-let ECHO_SUCCESS = 'OK';
+const { httpsFunctionOptions } = config.get();
 
 export const mercadopago = {
   webhook: functions
-    .region(config.get().httpsFunctionOptions.region)
+    .region(httpsFunctionOptions.region)
+    .runWith(httpsFunctionOptions)
     .https.onRequest(async (req, res) => {
       const { method } = req;
       if (method === 'POST') {
@@ -35,7 +35,7 @@ export const mercadopago = {
           if (process.env.MERCADOPAGO_TOKEN) {
             const notification = req.body;
             if (notification.type !== 'payment' || !notification.data || !notification.data.id) {
-              res.status(404).send(ECHO_SKIP);
+              res.status(404).send('SKIP');
             }
 
             logger.log('> MP Notification for Payment #', notification.data.id);
@@ -99,13 +99,11 @@ export const mercadopago = {
                             `orders/${order._id}/transactions/${transaction._id}`,
                             { notes },
                           );
-                          ECHO_SUCCESS = 'SUCCESS';
                         } catch (e) {
                           logger.error(e);
                         }
                       }
-
-                      res.status(200).send(ECHO_SUCCESS);
+                      res.status(200).send('SUCCESS');
                     } else {
                       logger.log('> Transaction not found #', notification.data.id);
                       res.sendStatus(404);

@@ -116,12 +116,14 @@ const handleWebhook = async (req: Request, res: Response) => {
   return res.sendStatus(500);
 };
 
+const { httpsFunctionOptions } = config.get();
+
 export const datafrete = {
   webhook: functions
-    .region(config.get().httpsFunctionOptions.region)
+    .region(httpsFunctionOptions.region)
+    .runWith(httpsFunctionOptions)
     .https.onRequest(async (req, res) => {
       const { method } = req;
-
       if (method === 'POST') {
         handleWebhook(req, res);
       } else {
