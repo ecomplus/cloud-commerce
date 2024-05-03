@@ -25,7 +25,7 @@ const handleApiEvent: ApiEventHandler = async ({
   app,
 }) => {
   const resourceId = apiEvent.resource_id;
-  logger.info('>> ', resourceId, ' - Action: ', apiEvent.action);
+  logger.info(`>> ${resourceId} - Action: ${apiEvent.action}`);
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };
   if (
@@ -35,7 +35,6 @@ const handleApiEvent: ApiEventHandler = async ({
     logger.info('>> ', key, ' - Ignored event');
     return null;
   }
-  logger.info(`> Webhook ${resourceId} [${evName}]`);
 
   if (!process.env.TINYERP_TOKEN) {
     const tinyToken = appData.tiny_api_token;
