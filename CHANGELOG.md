@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.16.5](https://github.com/ecomplus/cloud-commerce/compare/v2.16.1...v2.16.5) (2024-05-04)
+
+
+### Bug Fixes
+
+* **apps:** Fixing many apps webhooks functions deployment with configured runtime options ([cc58b9e](https://github.com/ecomplus/cloud-commerce/commit/cc58b9ed06aea80e555a578799f30ff78e52aa0b))
+* **cli:** Update bunny.net (CI) edge rules for /.* routes with short cache TTL ([2c7c0c6](https://github.com/ecomplus/cloud-commerce/commit/2c7c0c6b841617d837c30a56a8718c5a2c9619e4))
+* **cli:** Update bunny.net (CI) edge rules to bypass /.* (hidden files) routes ([512c9e6](https://github.com/ecomplus/cloud-commerce/commit/512c9e6eb77b270271d834ac7b9cd999534d2265))
+* **emails:** Properly defining email template and respecting configured mail options ([e304894](https://github.com/ecomplus/cloud-commerce/commit/e304894bdc2ed1bc0b91383d9623883212e9a890))
+* **emails:** Update `@ecomplus/transactional-mails` to v2.0.4 ([d3412f7](https://github.com/ecomplus/cloud-commerce/commit/d3412f75df16e42526b828aa99b9a49a93eb37c3))
+* **firebase:** Add middleware to app events handler to debug each event execution ([fea986a](https://github.com/ecomplus/cloud-commerce/commit/fea986acbe1e8d0c47feb494c460a0974053556a))
+* **firebase:** Removing FB Conversions and Analytics apps declarations from base config ([9b7f034](https://github.com/ecomplus/cloud-commerce/commit/9b7f0340dd1635b41ad64111d89982b93adba22b))
+* **firebase:** Set default 100 max instances for HTTP functions ([07032d0](https://github.com/ecomplus/cloud-commerce/commit/07032d063418082b0c3096e02fb9fbe05fe18a51))
+* **ssr:** Add /.* (hidden files) routes to skipped patterns on page views handler ([a8cabe0](https://github.com/ecomplus/cloud-commerce/commit/a8cabe026983f0535f6613c36cbb6f1217b595f7))
+* **storefront:** Better typing SSR `routeContext.apiContext` resource + doc ([c687658](https://github.com/ecomplus/cloud-commerce/commit/c68765897e0e8aaacefe2a911be73bd937accb83))
+* **tiny-erp:** Always set address "numero" or order export, with 0 or S/N if undefined ([1d032c0](https://github.com/ecomplus/cloud-commerce/commit/1d032c08af259a50c46458a40a0f5d9cabfadc69))
+
 ### [2.16.4](https://github.com/ecomplus/cloud-commerce/compare/v2.16.1...v2.16.4) (2024-05-04)
 
 
