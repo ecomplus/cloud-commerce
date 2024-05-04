@@ -32,6 +32,8 @@ export default (order: Orders, appData) => {
       if (address[addressField]) {
         tinyObject[tinyField] = String(address[addressField])
           .substring(0, maxLength as number).replace('&', 'e');
+      } else if (tinyField === 'numero') {
+        tinyObject[tinyField] = appData.non_number ? '0' : 'S/N';
       }
     });
   };
