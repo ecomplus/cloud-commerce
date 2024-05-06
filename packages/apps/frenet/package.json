@@ -34,7 +34,7 @@
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.6.8",
     "firebase-admin": "^12.1.0",
-    "firebase-functions": "^4.9.0"
+    "firebase-functions": "^5.0.1"
   },
   "devDependencies": {
     "@cloudcommerce/test-base": "workspace:*",
