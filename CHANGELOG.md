@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.16.9](https://github.com/ecomplus/cloud-commerce/compare/v2.16.8...v2.16.9) (2024-05-06)
+
+
+### Bug Fixes
+
+* **emails:** Fix checking order events by `evName` to proceed ([524f3cb](https://github.com/ecomplus/cloud-commerce/commit/524f3cb46067cb6eeb31d9017dfd268d96765253))
+* **firebase:** Always setting `apiEvent.resource` on emitted store events payload ([2e4e6e3](https://github.com/ecomplus/cloud-commerce/commit/2e4e6e38b3f0a65554a9fa04966ade3d84b12ae9))
+
 ### [2.16.8](https://github.com/ecomplus/cloud-commerce/compare/v2.16.5...v2.16.8) (2024-05-06)
 
 
