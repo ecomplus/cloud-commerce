@@ -15,10 +15,12 @@ const handleApiEvent: ApiEventHandler = async ({
 }) => {
   const { action, resource } = apiEvent;
   if (resource !== 'orders' || action === 'delete') {
+    warn(`Skipping ${resource} ${action}`);
     return null;
   }
   const order = apiDoc as Orders;
   if (!order.buyers?.length) {
+    warn('Skipping order document without buyer', { order });
     return null;
   }
   const appData = { ...app.data, ...app.hidden_data };
@@ -26,6 +28,13 @@ const handleApiEvent: ApiEventHandler = async ({
   const modifiedFields = apiEvent.modified_fields.filter((field) => {
     return field === 'payments_history' || field === 'fulfillment';
   }) as Array<'payments_history' | 'fulfillment'>;
+  if (!modifiedFields.length) {
+    warn('Skipping event without `payments_history`/`fulfillments` changes', {
+      order,
+      modifiedFields: apiEvent.modified_fields,
+    });
+    return null;
+  }
   const lang = appData.lang === 'Inglês' ? 'en_us' : (store.lang || 'pt_br');
   const orderId = order._id;
   const customerId = order.buyers[0]._id;
@@ -61,6 +70,7 @@ const handleApiEvent: ApiEventHandler = async ({
           ? 'new_order' : status;
         const mailTempl = getMailTempl(templKey);
         if (!mailTempl) {
+          warn(`Skipped unmatched template for ${templKey}`);
           continue;
         }
         const subject = `${mailTempl.subject[lang]} #${order.number}`;
@@ -82,7 +92,7 @@ const handleApiEvent: ApiEventHandler = async ({
             current: status as FulfillmentsEntry['status'],
           };
         }
-        const render = getMailRender(templKey);
+        const render = getMailRender(mailTempl.templ);
         // eslint-disable-next-line no-await-in-loop
         const html = await render(
           store,
