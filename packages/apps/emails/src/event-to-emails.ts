@@ -14,13 +14,13 @@ const handleApiEvent: ApiEventHandler = async ({
   app,
 }) => {
   const { action, resource } = apiEvent;
-  if (resource !== 'orders' || action === 'delete') {
+  if (!evName.startsWith('orders-') || action === 'delete') {
     warn(`Skipping ${resource} ${action}`);
     return null;
   }
   const order = apiDoc as Orders;
   if (!order.buyers?.length) {
-    warn('Skipping order document without buyer', { order });
+    warn('Skipping order document without buyer');
     return null;
   }
   const appData = { ...app.data, ...app.hidden_data };
@@ -29,10 +29,6 @@ const handleApiEvent: ApiEventHandler = async ({
     return field === 'payments_history' || field === 'fulfillment';
   }) as Array<'payments_history' | 'fulfillment'>;
   if (!modifiedFields.length) {
-    warn('Skipping event without `payments_history`/`fulfillments` changes', {
-      order,
-      modifiedFields: apiEvent.modified_fields,
-    });
     return null;
   }
   const lang = appData.lang === 'Inglês' ? 'en_us' : (store.lang || 'pt_br');
