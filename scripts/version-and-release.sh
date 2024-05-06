@@ -3,7 +3,8 @@
 pnpm build --filter='@cloudcommerce/*' || exit 1
 pnpm test || exit 1
 pnpm run -r prerelease
-sleep 2
+sleep 5
+rm -f .git/index.lock
 npx standard-version || exit 1
 sleep 1
 (git add packages/**/package.json package.json pnpm-lock.yaml CHANGELOG.md \
