@@ -433,8 +433,8 @@ importers:
         specifier: ^4.9.0
         version: 4.9.0(firebase-admin@12.1.0)
       pagarme:
-        specifier: 4.34.x
-        version: 4.34.1
+        specifier: 4.35.1
+        version: 4.35.1
       qs:
         specifier: ^6.12.1
         version: 6.12.1
@@ -8851,8 +8851,8 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
-  /pagarme@4.34.1:
-    resolution: {integrity: sha512-3MQ4u6cWpqTEjOQ2Z6kg4WzWMO+LDG9SytyhmS9XYmWwP/PGu4UEK1PhAl8BgALSA1L7HNzWGpuqt2H1BxDFBg==}
+  /pagarme@4.35.1:
+    resolution: {integrity: sha512-PR0B1sWkH+MQDuDu3R4iF9N8k03th6nUyAzqFpwbW0mOaODXbYppynvT8KsCVEl/MRLgAMGA90cJRTN1i8eOaA==}
     dev: false
 
   /parent-module@1.0.1:
