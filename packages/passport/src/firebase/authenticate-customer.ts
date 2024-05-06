@@ -14,7 +14,13 @@ export const findCustomerByEmail = async (email: string, docNumber?: string) => 
   }
   const { data } = await api.get('customers', {
     params,
-    fields: ['_id', 'login', 'enabled'] as const,
+    fields: [
+      '_id',
+      'login',
+      'enabled',
+      'display_name',
+      'registry_type',
+    ] as const,
   });
   if (data.result.length) {
     return data.result[0];
