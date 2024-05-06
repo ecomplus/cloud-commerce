@@ -3,15 +3,12 @@ import type {
   CreateTransactionParams,
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import { info, warn, error } from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
-import addInstallments from './functions-lib/add-installments';
-import parseStatus from './functions-lib/parse-status-to-ecom';
+import { addInstallments, parsePagarmeStatus } from './pagarme-utils';
 
-type To = Exclude<CreateTransactionParams['to'], undefined>
-
-const parseAddress = (to: To) => ({
+const parseAddress = (to: Exclude<CreateTransactionParams['to'], undefined>) => ({
   street: to.street,
   neighborhood: to.borough,
   city: to.city,
@@ -22,14 +19,13 @@ const parseAddress = (to: To) => ({
   complementary: to.complement || undefined,
 });
 
-export default async (appData: AppModuleBody) => {
+export default async (modBody: AppModuleBody<'create_transaction'>) => {
   const locationId = config.get().httpsFunctionOptions.region;
   const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
 
-  const { application, storeId } = appData;
-  const params = appData.params as CreateTransactionParams;
-  // app configured options
-  const configApp = { ...application.data, ...application.hidden_data };
+  const { application, storeId } = modBody;
+  const params = modBody.params;
+  const appData = { ...application.data, ...application.hidden_data };
   const notificationUrl = `${baseUri}/pagarme-webhook`;
 
   const orderId = params.order_id;
@@ -40,45 +36,35 @@ export default async (appData: AppModuleBody) => {
     to,
     items,
   } = params;
-  logger.log('>(App:PagarMe) Transaction #', orderId);
+  info(`Transaction #${orderId}`);
+
+  if (!process.env.PAGARME_TOKEN) {
+    const pagarmeToken = appData.pagarme_api_key;
+    if (typeof pagarmeToken === 'string' && pagarmeToken) {
+      process.env.PAGARME_TOKEN = pagarmeToken;
+    } else {
+      warn('Missing Pagar.me API token');
+      return {
+        error: 'NO_PAGARME_KEYS',
+        message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
+      };
+    }
+  }
 
   // https://apx-mods.e-com.plus/api/v1/create_transaction/response_schema.json?store_id=100
   const transaction: CreateTransactionResponse['transaction'] = {
     amount: amount.total,
   };
-
-  const paymentMethod = params.payment_method.code;
-  const methodConfig = configApp[paymentMethod] || {};
-  const isPix = paymentMethod === 'account_deposit';
-  const isCreditCard = paymentMethod === 'credit_card';
-
-  let { label } = methodConfig;
-  if (!label) {
-    if (isCreditCard) {
-      label = 'Cartão de crédito';
-    } else {
-      label = !isPix ? 'Boleto bancário' : 'Pix';
-    }
-  }
-
   // https://docs.pagar.me/docs/realizando-uma-transacao-de-cartao-de-credito
   // https://docs.pagar.me/docs/realizando-uma-transacao-de-boleto-bancario
-  let pagarmeTransaction: { [key: string]: any };
+  let pagarmeTransaction: Record<string, any> = {};
 
-  if (isCreditCard) {
-    let installmentsNumber = params.installments_number;
+  if (params.payment_method.code === 'credit_card') {
+    let installmentsNumber = params.installments_number || 1;
     let finalAmount = amount.total;
-    if (installmentsNumber && installmentsNumber > 1) {
-      if (configApp.installments) {
-        // list all installment options
-        const { gateway } = addInstallments(
-          amount.total,
-          configApp.installments,
-          {
-            label,
-            payment_method: params.payment_method,
-          },
-        );
+    if (installmentsNumber > 1) {
+      if (appData.installments) {
+        const { gateway } = addInstallments(amount.total, appData.installments);
         const installmentOption = gateway.installment_options
           && gateway.installment_options.find(({ number }) => number === installmentsNumber);
         if (installmentOption) {
@@ -90,7 +76,6 @@ export default async (appData: AppModuleBody) => {
         }
       }
     }
-
     pagarmeTransaction = {
       payment_method: 'credit_card',
       amount: Math.floor(finalAmount * 100),
@@ -99,7 +84,7 @@ export default async (appData: AppModuleBody) => {
     };
   } else if (params.payment_method.code === 'account_deposit') {
     const finalAmount = amount.total;
-    const pixConfig = configApp.account_deposit;
+    const pixConfig = appData.account_deposit;
     const dueTime = pixConfig.due_time || 60;
     const date = new Date();
     date.setTime(date.getTime() + dueTime * 60000);
@@ -109,30 +94,29 @@ export default async (appData: AppModuleBody) => {
       pix_expiration_date: date.toISOString(),
     };
   } else {
-    // banking billet
+    // Banking billet
     transaction.banking_billet = {};
     pagarmeTransaction = {
       payment_method: 'boleto',
       async: false,
       amount: Math.floor(amount.total * 100),
     };
-
-    const boleto = configApp.banking_billet;
-    if (boleto) {
-      if (boleto.instructions) {
-        pagarmeTransaction.boleto_instructions = boleto.instructions
+    const boletoConfig = appData.banking_billet;
+    if (boletoConfig) {
+      if (boletoConfig.instructions) {
+        pagarmeTransaction.boleto_instructions = boletoConfig.instructions
           .replace(/\r\n/g, '\n')
           .replace(/\r/g, '\n')
           .substr(0, 255);
         transaction.banking_billet.text_lines = [pagarmeTransaction.boleto_instructions];
       }
-      if (boleto.days_due_date) {
+      if (boletoConfig.days_due_date) {
         const date = new Date();
-        date.setDate(date.getDate() + boleto.days_due_date);
-        const parseDatePagarme = (ms) => {
+        date.setDate(date.getDate() + boletoConfig.days_due_date);
+        const parseDatePagarme = (ms: Date) => {
           const timeMs = ms.getTime() - (180000 * 60);
           const newDate = new Date(timeMs);
-          const pad = (n) => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
+          const pad = (n: number) => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
           return date.getFullYear()
             + '-' + pad(newDate.getMonth() + 1)
             + '-' + pad(newDate.getDate());
@@ -143,19 +127,11 @@ export default async (appData: AppModuleBody) => {
     }
   }
 
-  if (!process.env.PAGARME_TOKEN) {
-    const pagarmeToken = configApp.pagarme_api_key;
-    if (typeof pagarmeToken === 'string' && pagarmeToken) {
-      process.env.PAGARME_TOKEN = pagarmeToken;
-    } else {
-      logger.warn('Missing PagarMe API token');
-    }
-  }
-
   pagarmeTransaction.api_key = process.env.PAGARME_TOKEN;
   pagarmeTransaction.postback_url = notificationUrl;
-  pagarmeTransaction.soft_descriptor = (configApp.soft_descriptor
-    || `${params.domain}_PagarMe`).substring(0, 13);
+  pagarmeTransaction.soft_descriptor = ((
+    appData.soft_descriptor || `${params.domain}_PagarMe`
+  ) as string).substring(0, 13);
   pagarmeTransaction.metadata = {
     order_number: params.order_number,
     store_id: storeId,
@@ -181,7 +157,8 @@ export default async (appData: AppModuleBody) => {
   const birthDate = buyer.birth_date;
   if (birthDate && birthDate.year && birthDate.day && birthDate.month) {
     pagarmeTransaction.customer.birthday = `${birthDate.year}-`
-      + `${birthDate.month.toString().padStart(2, '0')}-${birthDate.day.toString().padStart(2, '0')}`;
+      + `${birthDate.month.toString().padStart(2, '0')}-`
+      + birthDate.day.toString().padStart(2, '0');
   }
 
   if (to && to.street) {
@@ -215,6 +192,12 @@ export default async (appData: AppModuleBody) => {
       });
     }
   });
+  if (!pagarmeTransaction.items.length) {
+    return {
+      error: 'NO_CART_ITEMS',
+      message: 'Nenhum item válido para a transação',
+    };
+  }
 
   try {
     // https://docs.pagar.me/reference#criar-transacao
@@ -230,12 +213,12 @@ export default async (appData: AppModuleBody) => {
       } else if (data.amount) {
         transaction.amount = data.amount / 100;
       }
-      const paymentMethodPagarMe = data.payment_method === 'pix'
+      const pagarmePaymentMethod = data.payment_method === 'pix'
         ? 'account_deposit'
         : data.payment_method;
       transaction.intermediator = {
         payment_method: {
-          code: paymentMethodPagarMe || params.payment_method.code,
+          code: pagarmePaymentMethod || params.payment_method.code,
         },
       };
       [
@@ -250,18 +233,17 @@ export default async (appData: AppModuleBody) => {
       if (data.customer && data.customer.id) {
         transaction.intermediator.buyer_id = String(data.customer.id);
       }
-
       if (transaction.banking_billet) {
         if (data.boleto_barcode) {
           transaction.banking_billet.code = data.boleto_barcode;
         }
-        if (data.boleto_url && transaction.banking_billet.link) {
+        if (data.boleto_url) {
+          transaction.payment_link = data.boleto_url;
           transaction.banking_billet.link = data.boleto_url;
-          transaction.payment_link = transaction.banking_billet.link;
         }
         if (data.boleto_expiration_date) {
-          transaction.banking_billet.valid_thru = new Date(data.boleto_expiration_date)
-            .toISOString();
+          const date = new Date(data.boleto_expiration_date);
+          transaction.banking_billet.valid_thru = date.toISOString();
         }
       } else if (data.card) {
         transaction.credit_card = {
@@ -270,7 +252,7 @@ export default async (appData: AppModuleBody) => {
           company: data.card.brand,
           token: data.card.fingerprint,
         };
-      } else if (paymentMethodPagarMe === 'account_deposit') {
+      } else if (pagarmePaymentMethod === 'account_deposit') {
         const qrCode = data.pix_qr_code;
         transaction.intermediator.transaction_code = qrCode;
         const qrCodeSrc = `https://gerarqrcodepix.com.br/api/v1?brcode=${qrCode}&tamanho=256`;
@@ -281,10 +263,9 @@ export default async (appData: AppModuleBody) => {
           };
         }
       }
-
       transaction.status = {
         updated_at: data.date_created || data.date_updated || new Date().toISOString(),
-        current: parseStatus(data.status),
+        current: parsePagarmeStatus(data.status),
       };
 
       return {
@@ -293,24 +274,12 @@ export default async (appData: AppModuleBody) => {
         transaction,
       };
     }
-    return {
-      status: 409,
-      message: `PAGARME_TRANSACTION_ERR Order: #${orderId} => Pagar.Me not response`,
-    };
-  } catch (error: any) {
-    logger.error('(App:PagarMe) =>', error);
-    let { message } = error;
-    //
-    const err = {
-      message: `PAGARME_TRANSACTION_ERR Order: #${orderId} => ${message}`,
-      payment: '',
-      status: 0,
-      response: '',
-    };
+  } catch (_err: any) {
+    let { message } = _err;
+    const err: any = new Error(`${message} (${orderId})`);
     let errCode = 'PAGARME_TRANSACTION_ERR_';
-
-    if (error.response) {
-      const { status, data } = error.response;
+    if (_err.response) {
+      const { status, data } = _err.response;
       if (status !== 401 && status !== 403) {
         err.payment = JSON.stringify(pagarmeTransaction);
         errCode += status;
@@ -324,12 +293,15 @@ export default async (appData: AppModuleBody) => {
         message = data.errors[0].message;
       }
     }
-
-    // logger.error(err);
+    error(err);
     return {
-      status: 409,
       error: errCode,
       message,
     };
   }
+
+  return {
+    error: 'PAGARME_TRANSACTION_NOOP',
+    message: `No valid Pagar.me response for #${orderId}`,
+  };
 };

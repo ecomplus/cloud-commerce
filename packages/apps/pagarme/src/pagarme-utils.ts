@@ -1,15 +1,23 @@
 import type { ListPaymentsResponse } from '@cloudcommerce/types';
 
-type Gateway = ListPaymentsResponse['payment_gateways'][number]
+type Gateway = ListPaymentsResponse['payment_gateways'][number];
 
-const addInstallments = (
+export const addInstallments = (
   finalTotal: number | undefined,
   installments: { [key: string]: any },
-  gateway: Gateway,
+  gateway?: Gateway,
   response?: ListPaymentsResponse,
   initialTotal?: number,
   isDiscountInOneParcel = false,
 ) => {
+  if (!gateway) {
+    gateway = {
+      label: 'Cartão de crédito',
+      payment_method: {
+        code: 'credit_card',
+      },
+    };
+  }
   let total = finalTotal;
   if (isDiscountInOneParcel) {
     total = initialTotal;
@@ -21,7 +29,6 @@ const addInstallments = (
     ? Math.max(installments.max_number, maxInterestFree)
     : installments.max_number || maxInterestFree;
   if (maxInstallments > 1) {
-    // default installments option
     if (!installments.monthly_interest) {
       maxInterestFree = maxInstallments;
     }
@@ -33,22 +40,17 @@ const addInstallments = (
         monthly_interest: maxInterestFree ? 0 : installments.monthly_interest,
       };
     }
-
-    // list installment options
     gateway.installment_options = [];
     if (total) {
       for (let number = 2; number <= maxInstallments; number++) {
         const tax = !(maxInterestFree >= number);
-        let interest;
-
-        if (tax) {
-          interest = installments.monthly_interest / 100;
-        }
+        const interest = tax
+          ? installments.monthly_interest / 100
+          : undefined;
         const value = !tax
           ? (total / number)
           // https://pt.wikipedia.org/wiki/Tabela_Price
-          : total * (interest / (1 - (1 + interest) ** -number));
-
+          : total * (interest! / (1 - (1 + interest!) ** -number));
         if (value >= minInstallment) {
           gateway.installment_options.push({
             number,
@@ -62,4 +64,26 @@ const addInstallments = (
   return { response, gateway };
 };
 
-export default addInstallments;
+export const parsePagarmeStatus = (pagarmeStatus: string) => {
+  switch (pagarmeStatus) {
+    case 'processing':
+    case 'analyzing':
+      return 'under_analysis';
+    case 'authorized':
+    case 'paid':
+    case 'refunded':
+      return pagarmeStatus;
+    case 'waiting_payment':
+      return 'pending';
+    case 'pending_refund':
+      return 'in_dispute';
+    case 'refused':
+      return 'unauthorized';
+    case 'chargedback':
+      return 'refunded';
+    case 'pending_review':
+      return 'authorized';
+    default:
+      return 'unknown';
+  }
+};
