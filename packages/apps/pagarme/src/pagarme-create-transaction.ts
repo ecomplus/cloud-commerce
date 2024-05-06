@@ -57,7 +57,19 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
   };
   // https://docs.pagar.me/docs/realizando-uma-transacao-de-cartao-de-credito
   // https://docs.pagar.me/docs/realizando-uma-transacao-de-boleto-bancario
-  let pagarmeTransaction: Record<string, any> = {};
+  const pagarmeTransaction: Record<string, any> = {
+    api_key: process.env.PAGARME_TOKEN,
+    postback_url: notificationUrl,
+    service_referer_name: process.env.PAGARME_PARTNER_ID || '63e4f99a3d1a0f00192bd247',
+    soft_descriptor: ((appData.soft_descriptor as string) || `${params.domain}_PagarMe`)
+      .substring(0, 13),
+    metadata: {
+      order_number: params.order_number,
+      store_id: storeId,
+      order_id: orderId,
+      platform_integration: 'ecomplus',
+    },
+  };
 
   if (params.payment_method.code === 'credit_card') {
     let installmentsNumber = params.installments_number || 1;
@@ -76,31 +88,31 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         }
       }
     }
-    pagarmeTransaction = {
+    Object.assign(pagarmeTransaction, {
       payment_method: 'credit_card',
       amount: Math.floor(finalAmount * 100),
       installments: installmentsNumber,
       card_hash: params.credit_card && params.credit_card.hash,
-    };
+    });
   } else if (params.payment_method.code === 'account_deposit') {
     const finalAmount = amount.total;
     const pixConfig = appData.account_deposit;
     const dueTime = pixConfig.due_time || 60;
     const date = new Date();
     date.setTime(date.getTime() + dueTime * 60000);
-    pagarmeTransaction = {
+    Object.assign(pagarmeTransaction, {
       payment_method: 'pix',
       amount: Math.floor(finalAmount * 100),
       pix_expiration_date: date.toISOString(),
-    };
+    });
   } else {
     // Banking billet
     transaction.banking_billet = {};
-    pagarmeTransaction = {
+    Object.assign(pagarmeTransaction, {
       payment_method: 'boleto',
       async: false,
       amount: Math.floor(amount.total * 100),
-    };
+    });
     const boletoConfig = appData.banking_billet;
     if (boletoConfig) {
       if (boletoConfig.instructions) {
@@ -125,21 +137,6 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         pagarmeTransaction.boleto_expiration_date = stringDate;
       }
     }
-  }
-
-  pagarmeTransaction.api_key = process.env.PAGARME_TOKEN;
-  pagarmeTransaction.postback_url = notificationUrl;
-  pagarmeTransaction.soft_descriptor = ((
-    appData.soft_descriptor || `${params.domain}_PagarMe`
-  ) as string).substring(0, 13);
-  pagarmeTransaction.metadata = {
-    order_number: params.order_number,
-    store_id: storeId,
-    order_id: orderId,
-    platform_integration: 'ecomplus',
-  };
-  if (process.env.PAGARME_PARTNER_ID) {
-    pagarmeTransaction.service_referer_name = process.env.PAGARME_PARTNER_ID;
   }
 
   pagarmeTransaction.customer = {
