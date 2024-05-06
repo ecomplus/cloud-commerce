@@ -1,7 +1,6 @@
 import type { Products, ProductSet } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import axios from 'axios';
-import FormData from 'form-data';
 import ecomUtils from '@ecomplus/utils';
 import getEnv from '@cloudcommerce/firebase/lib/env';
 
@@ -26,13 +25,14 @@ const tryImageUpload = (
   } = getEnv();
   axios.get(originImgUrl, {
     responseType: 'arraybuffer',
-  }).then(({ data }) => {
-    const form = new FormData();
-    form.append('file', Buffer.from(data), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
+  }).then(({ data, headers }) => {
+    const formData = new FormData();
+    formData.append('file', new Blob(data), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
 
-    return axios.post(`https://apx-storage.e-com.plus/${storeId}/api/v1/upload.json`, form, {
+    return axios.post(`https://apx-storage.e-com.plus/${storeId}/api/v1/upload.json`, formData, {
       headers: {
-        ...form.getHeaders(),
+        'Content-Type': headers['Content-Type'],
+        'Content-Length': headers['Content-Length'],
         'X-Store-ID': storeId,
         'X-My-ID': authenticationId,
         'X-API-Key': apiKey,

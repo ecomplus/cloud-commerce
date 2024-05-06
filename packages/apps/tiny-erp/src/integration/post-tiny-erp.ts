@@ -7,17 +7,19 @@ export default (
   options: Partial<AxiosRequestConfig> = {},
 ) => {
   // https://www.tiny.com.br/ajuda/api/api2
-  let data = `token=${token}&formato=JSON`;
+  const formData = new FormData();
+  formData.append('token', token || '');
+  formData.append('formato', 'JSON');
   if (body) {
     Object.keys(body).forEach((field) => {
       if (body[field]) {
         switch (typeof body[field]) {
           case 'object':
-            data += `&${field}=${JSON.stringify(body[field])}`;
+            formData.append(field, JSON.stringify(body[field]));
             break;
           case 'string':
           case 'number':
-            data += `&${field}=${body[field]}`;
+            formData.append(field, `${body[field]}`);
             break;
           default:
         }
@@ -25,7 +27,7 @@ export default (
     });
   }
 
-  return axios.post(url, data, {
+  return axios.post(url, formData, {
     baseURL: 'https://api.tiny.com.br/api2/',
     timeout: 30000,
     ...options,
