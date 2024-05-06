@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.16.8](https://github.com/ecomplus/cloud-commerce/compare/v2.16.5...v2.16.8) (2024-05-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#374](https://github.com/ecomplus/cloud-commerce/issues/374)) ([98ff60d](https://github.com/ecomplus/cloud-commerce/commit/98ff60d6bf325c58171a800de7ab39b63723f558))
+* **emails:** Fix getting email render function from event/status ([20e6575](https://github.com/ecomplus/cloud-commerce/commit/20e6575b9adf2c26bb956632b7d95790dbd05551))
+* **storefront:** Update UnoCSS to ^0.59.4 ([#377](https://github.com/ecomplus/cloud-commerce/issues/377)) ([fd9aa9c](https://github.com/ecomplus/cloud-commerce/commit/fd9aa9c1cfe1c07d49bd8d22ff2d72854d79865f))
+
 ### [2.16.7](https://github.com/ecomplus/cloud-commerce/compare/v2.16.5...v2.16.7) (2024-05-06)
 
 
