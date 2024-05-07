@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/i18n",
   "type": "module",
-  "version": "2.17.0",
+  "version": "2.17.1",
   "description": "e-com.plus Cloud Commerce i18n",
   "main": "lib/all.js",
   "exports": {

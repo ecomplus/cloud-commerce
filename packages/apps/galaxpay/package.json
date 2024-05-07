@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-galaxpay",
   "type": "module",
-  "version": "2.17.0",
+  "version": "2.17.1",
   "description": "e-com.plus Cloud Commerce app to integrate Galax Pay for recurring payments",
   "main": "lib/galaxpay.js",
   "exports": {
