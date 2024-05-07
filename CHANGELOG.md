@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.17.2](https://github.com/ecomplus/cloud-commerce/compare/v2.17.1...v2.17.2) (2024-05-07)
+
+
+### Bug Fixes
+
+* **emails:** Fix checking positive status to send new order email on first notification ([83958a5](https://github.com/ecomplus/cloud-commerce/commit/83958a5f47b22bf1e5e07d3b8f6d31e2e08aff61))
+
 ### [2.17.1](https://github.com/ecomplus/cloud-commerce/compare/v2.17.0...v2.17.1) (2024-05-07)
 
 
