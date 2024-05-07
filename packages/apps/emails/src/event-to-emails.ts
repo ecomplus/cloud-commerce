@@ -62,8 +62,22 @@ const handleApiEvent: ApiEventHandler = async ({
         if (lastNotification?.status === status) {
           continue;
         }
-        const templKey = subresource === 'payments_history' && evName === 'orders-new'
-          ? 'new_order' : status;
+        let templKey: typeof status | 'new_order' = status;
+        if (subresource === 'payments_history') {
+          if (evName === 'orders-new') {
+            templKey = 'new_order';
+          } else if (!lastNotification && order.status !== 'cancelled') {
+            switch (status) {
+              case 'unauthorized':
+              case 'in_dispute':
+              case 'refunded':
+              case 'voided':
+                templKey = 'new_order';
+                break;
+              default:
+            }
+          }
+        }
         const mailTempl = getMailTempl(templKey);
         if (!mailTempl) {
           warn(`Skipped unmatched template for ${templKey}`);
