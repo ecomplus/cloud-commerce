@@ -44,7 +44,7 @@
     "firebase-admin": "^12.1.0",
     "firebase-functions": "^5.0.1",
     "mitt": "^3.0.1",
-    "vue": "^3.4.23",
+    "vue": "^3.4.27",
     "yaml": "^2.4.2"
   },
   "devDependencies": {
