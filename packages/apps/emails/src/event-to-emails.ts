@@ -72,9 +72,9 @@ const handleApiEvent: ApiEventHandler = async ({
               case 'in_dispute':
               case 'refunded':
               case 'voided':
-                templKey = 'new_order';
                 break;
               default:
+                templKey = 'new_order';
             }
           }
         }
