@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.17.0](https://github.com/ecomplus/cloud-commerce/compare/v2.16.9...v2.17.0) (2024-05-07)
+
+
+### Features
+
+* **storefront:** Add support to Facebook sign in on login form composable ([7acee01](https://github.com/ecomplus/cloud-commerce/commit/7acee01bb8f431f5cf7eeb39459d799ad45ec7cd))
+* **storefront:** Update vbeta-app script and support Facebook login on checkout ([22af14b](https://github.com/ecomplus/cloud-commerce/commit/22af14b71191053ecc1756e2c7a0742da8a1923f))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency firebase-functions to v5 ([#381](https://github.com/ecomplus/cloud-commerce/issues/381)) ([ec68093](https://github.com/ecomplus/cloud-commerce/commit/ec680937de8fbe06d00e82cc1bc7991f616adc3e))
+* **emails:** Better setting default sender address using `GCLOUD_PROJECT` if any ([32b5a66](https://github.com/ecomplus/cloud-commerce/commit/32b5a66803a319539d62b5974fb84f8660a7dcaa))
+* **pagarme:** Properly setting links on banking billet transactions ([23cdc68](https://github.com/ecomplus/cloud-commerce/commit/23cdc68988b81350a53fda5dba49564a5d73f999))
+* **passport:** Returning user registry type and display name on email identification ([2c87d3c](https://github.com/ecomplus/cloud-commerce/commit/2c87d3c7771fabf65c8d08a2f734ee9ebd2c09ee))
+* **storefront:** Update login form composable to always start with link sign in (even sign up) ([4822087](https://github.com/ecomplus/cloud-commerce/commit/4822087b72f32a3352047bc6b4834b2e5c2a1de2))
+* **tiny-erp:** Using `FormData` (Node.js 18) to safely escape body sent to Tiny API ([3c0c86d](https://github.com/ecomplus/cloud-commerce/commit/3c0c86dd20152e6e29a9181bd577c5f3a8ddcfb1))
+
 ### [2.16.9](https://github.com/ecomplus/cloud-commerce/compare/v2.16.8...v2.16.9) (2024-05-06)
 
 
