@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.17.3](https://github.com/ecomplus/cloud-commerce/compare/v2.17.2...v2.17.3) (2024-05-07)
+
+
+### Bug Fixes
+
+* **storefront:** Fix handling fixed search params on showcase and filters composables ([4539c17](https://github.com/ecomplus/cloud-commerce/commit/4539c172ae4b60ed643c0ad7746349c5b48470e7))
+* **storefront:** Programatically send all client-side page views by default ([0e1831e](https://github.com/ecomplus/cloud-commerce/commit/0e1831e097bc1dc4482fe60286a65f6ca9bafa13))
+* **storefront:** Update Vue to v3.4.27 ([#368](https://github.com/ecomplus/cloud-commerce/issues/368)) ([34781bd](https://github.com/ecomplus/cloud-commerce/commit/34781bd0aabcb71505dc903340091d5965fe7cbd))
+
 ### [2.17.2](https://github.com/ecomplus/cloud-commerce/compare/v2.17.1...v2.17.2) (2024-05-07)
 
 
