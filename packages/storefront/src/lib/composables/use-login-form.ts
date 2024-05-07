@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
 } from 'firebase/auth';
 import {
   EMAIL_STORAGE_KEY,
@@ -84,18 +85,28 @@ const useLoginForm = (props?: Props) => {
     isSubmitting.value = false;
   }, 2000);
 
-  const hasGoogleSignIn = computed(() => {
-    return window.OAUTH_PROVIDERS?.includes('google');
-  });
-  const signInWithGoogle = () => {
+  const openOauthPopup = async (provider: GoogleAuthProvider | FacebookAuthProvider) => {
     const firebaseAuth = getAuth();
     try {
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(firebaseAuth, provider);
+      await signInWithPopup(firebaseAuth, provider);
     } catch (error: any) {
       console.warn(error.code);
       console.error(error);
     }
+  };
+  const hasGoogleSignIn = computed(() => {
+    return window.OAUTH_PROVIDERS?.includes('google');
+  });
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    return openOauthPopup(provider);
+  };
+  const hasFacebookeSignIn = computed(() => {
+    return window.OAUTH_PROVIDERS?.includes('facebook');
+  });
+  const signInWithFacebook = () => {
+    const provider = new FacebookAuthProvider();
+    return openOauthPopup(provider);
   };
 
   return {
@@ -108,6 +119,8 @@ const useLoginForm = (props?: Props) => {
     submitLogin,
     hasGoogleSignIn,
     signInWithGoogle,
+    hasFacebookeSignIn,
+    signInWithFacebook,
   };
 };
 
