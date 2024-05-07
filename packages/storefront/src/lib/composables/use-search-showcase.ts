@@ -55,7 +55,17 @@ const useSearchShowcase = (props: Props) => {
   if (props.pageSize) {
     searchEngine.pageSize.value = props.pageSize;
   }
-  Object.assign(searchEngine.params, props.fixedParams);
+  const { fixedParams } = props;
+  if (fixedParams) {
+    Object.keys(fixedParams).forEach((field) => {
+      const value = fixedParams[field];
+      if (Array.isArray(value)) {
+        searchEngine.params[field] = [...value] as string[];
+        return;
+      }
+      searchEngine.params[field] = value;
+    });
+  }
   let hasChangedInitParams = false;
   if (urlParams) {
     Object.keys(urlParams).forEach((param) => {
@@ -63,7 +73,7 @@ const useSearchShowcase = (props: Props) => {
       if (param.startsWith('f\\')) {
         const field = param.substring(2);
         searchEngine.params[field] = urlParams[param];
-        if (props.fixedParams?.[field] !== urlParams[param]) {
+        if (fixedParams?.[field] !== urlParams[param]) {
           hasChangedInitParams = true;
         }
         return;
@@ -148,10 +158,10 @@ const useSearchShowcase = (props: Props) => {
     watch(searchEngine.wasFetched, startWatchingFetch, { once: true });
   }
 
-  const { activeFilters, filtersCount } = useSearchActiveFilters({
-    searchEngine,
-    fixedParams: props.fixedParams,
-  });
+  const {
+    activeFilters,
+    filtersCount,
+  } = useSearchActiveFilters({ searchEngine, fixedParams });
   if (urlParams) {
     watch(activeFilters, (params) => {
       if (urlParams) {
@@ -160,6 +170,7 @@ const useSearchShowcase = (props: Props) => {
         });
       }
       Object.keys(params).forEach((param) => {
+        if (fixedParams?.[param] !== undefined) return;
         const val = params[param];
         if (typeof val === 'string' || typeof val === 'number') {
           urlParams[`f\\${param}`] = `${val}`;

@@ -23,9 +23,12 @@ const useSearchActiveFilters = ({ searchEngine, fixedParams }: Props) => {
   const activeFilters = computed<SearchEngineInstance['params']>(() => {
     const filters = {};
     Object.keys(searchEngine.params).forEach((param) => {
-      if (fixedParams?.[param]) return;
+      const fixedParam = fixedParams?.[param];
+      if (typeof fixedParam === 'string') return;
+      if (Array.isArray(fixedParam) && fixedParam.length <= 1) return;
       const val = searchEngine.params[param];
       if (val === undefined) return;
+      if (Array.isArray(val) && !val.length) return;
       switch (param) {
         case 'sort':
         case 'term':
@@ -76,15 +79,12 @@ const useSearchFilters = (props: Props) => {
   let _lastParamChanged: null | string = null;
   const clearFilters = () => {
     Object.keys(searchEngine.params).forEach((param) => {
-      if (fixedParams?.[param]) return;
+      if (fixedParams?.[param] !== undefined) return;
       delete searchEngine.params[param];
     });
     _lastParamChanged = null;
   };
 
-  const getPriceRangeKey = ({ min, max }: Partial<PriceRange>) => {
-    return `${min || null}/${max || null}`;
-  };
   const currentPriceRange = computed(() => {
     const { params } = searchEngine;
     return {
@@ -92,6 +92,9 @@ const useSearchFilters = (props: Props) => {
       max: Number(params['price<']),
     };
   });
+  const getPriceRangeKey = (range: Partial<PriceRange> = currentPriceRange.value) => {
+    return `${range.min || null}/${range.max || null}`;
+  };
   const priceRanges = ref<Array<{ range: PriceRange, key: string }>>([]);
   const _updatePriceRanges = useDebounceFn(() => {
     priceRanges.value.splice(0);
@@ -115,13 +118,15 @@ const useSearchFilters = (props: Props) => {
             count: resultMeta.value.count || 0,
             avg: null,
           },
-          key: getPriceRangeKey(currentPriceRange.value),
+          key: getPriceRangeKey(),
         });
       }
     }
+    // eslint-disable-next-line no-use-before-define
+    priceRangeKey.value = getPriceRangeKey();
   }, 50);
   _updatePriceRanges();
-  const priceRangeKey = ref<string | null>(getPriceRangeKey(currentPriceRange.value));
+  const priceRangeKey = ref<string | null>(getPriceRangeKey());
   watch(priceRangeKey, () => {
     _lastParamChanged = 'price';
     const priceRange = priceRanges.value.find(({ range }) => {
@@ -165,7 +170,7 @@ const useSearchFilters = (props: Props) => {
   const _updateFilterOptions = useDebounceFn(() => {
     for (let i = 0; i < filterOptions.value.length; i++) {
       const { field } = filterOptions.value[i];
-      if (field !== _lastParamChanged) {
+      if (field !== _lastParamChanged && fixedParams?.[field] === undefined) {
         filterOptions.value.splice(i, 1);
         i -= 1;
       }
@@ -175,13 +180,25 @@ const useSearchFilters = (props: Props) => {
       [['brands', i19brands], ['categories', i19categories]]
         .forEach(([resource, title]) => {
           const field = `${resource}.name`;
-          if (buckets[field] && _lastParamChanged !== field) {
-            filterOptions.value.push({
-              title,
-              options: buckets[field],
-              field,
+          const fixedParam = fixedParams?.[field];
+          if (
+            !buckets[field]
+            || _lastParamChanged === field
+            || filterOptions.value.find((filter) => filter.field === field)
+            || typeof fixedParam === 'string'
+          ) {
+            return;
+          }
+          const options = { ...buckets[field] };
+          if (Array.isArray(fixedParam)) {
+            if (fixedParam.length <= 1) return;
+            Object.keys(options).forEach((name) => {
+              if (!(fixedParam as string[]).includes(name)) {
+                delete options[name];
+              }
             });
           }
+          filterOptions.value.push({ title, options, field });
         });
       if (buckets.specs) {
         const { grids } = globalThis.$storefront.data;
@@ -189,7 +206,13 @@ const useSearchFilters = (props: Props) => {
           const [spec, value] = specAndVal.split(':');
           if (value) {
             const field = `specs.${spec}`;
-            if (_lastParamChanged === field) return;
+            if (
+              _lastParamChanged === field
+              || filterOptions.value.find((filter) => filter.field === field)
+              || fixedParams?.[field] !== undefined
+            ) {
+              return;
+            }
             const title = getGridTitle(spec, grids || []);
             let filterOption = filterOptions.value.find((_filterOption) => {
               return _filterOption.field === field;
@@ -215,13 +238,11 @@ const useSearchFilters = (props: Props) => {
     }
     const fieldParams = activeFilters.value[field];
     if (fieldParams === value) return true;
-    // @ts-ignore
-    if (Array.isArray(fieldParams) && fieldParams.includes(value)) return true;
-    return false;
+    return Array.isArray(fieldParams)
+      && (fieldParams as string[]).includes(value as string);
   };
   const toggleFilterOption = (field: string, value: string | number) => {
     _lastParamChanged = field;
-    console.log({ _lastParamChanged });
     if (field.startsWith('specs.')) {
       [field, value] = parseSpecsField(field, value);
     }
@@ -232,8 +253,7 @@ const useSearchFilters = (props: Props) => {
       searchEngine.params[field] = fieldParams;
     }
     if (isToActivate) {
-      // @ts-ignore
-      fieldParams.push(value);
+      (fieldParams as string[]).push(value as string);
     } else {
       for (let i = 0; i < fieldParams.length; i++) {
         if (fieldParams[i] === value) {
@@ -244,9 +264,7 @@ const useSearchFilters = (props: Props) => {
     }
   };
   watch(resultBuckets, () => {
-    if (_lastParamChanged !== 'price') {
-      _updatePriceRanges();
-    }
+    if (_lastParamChanged !== 'price') _updatePriceRanges();
     _updateFilterOptions();
   });
 
