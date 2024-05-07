@@ -18,6 +18,12 @@ export interface Props {
   canUseUrlParams?: boolean;
 }
 
+const sleep = (ms: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+};
+
 const useLoginForm = (props?: Props) => {
   initializeFirebaseAuth();
   const canUseUrlParams = props?.canUseUrlParams !== false;
@@ -25,7 +31,7 @@ const useLoginForm = (props?: Props) => {
   const isInitSignUp = params.sign_up !== undefined && params.sign_up !== '0';
   const isInitPasswordSignIn = params.password !== undefined && params.password !== '0';
   const isSignUp = ref(isInitSignUp);
-  const isLinkSignIn = ref(!isInitSignUp && !isInitPasswordSignIn);
+  const isLinkSignIn = ref(!isInitPasswordSignIn);
   watch(isSignUp, (_isSignUp) => {
     if (_isSignUp) {
       isLinkSignIn.value = true;
@@ -43,16 +49,21 @@ const useLoginForm = (props?: Props) => {
   const isSubmitReady = computed(() => {
     return !isSubmitting.value && isAuthReady.value;
   });
+  const emailsSent: string[] = [];
   const submitLogin = useThrottleFn(async (linkActionUrl?: string | null) => {
     if (!email.value) return;
     isSubmitting.value = true;
-    const timestamp = Date.now();
+    if (emailsSent.includes(email.value)) {
+      await sleep(3000);
+    }
+    await sleep(1000 * emailsSent.length);
     const firebaseAuth = getAuth();
     window.localStorage.setItem(EMAIL_STORAGE_KEY, email.value);
     try {
       if (isLinkSignIn.value) {
         const url = new URL(linkActionUrl || window.location.toString());
         url.searchParams.append('email', email.value);
+        emailsSent.push(email.value);
         await sendSignInLinkToEmail(firebaseAuth, email.value, {
           url: url.toString(),
           handleCodeInApp: true,
@@ -68,9 +79,7 @@ const useLoginForm = (props?: Props) => {
       console.warn(error.code);
       console.error(error);
     }
-    setTimeout(() => {
-      isSubmitting.value = false;
-    }, Math.min(2000 - (Date.now() - timestamp), 1));
+    isSubmitting.value = false;
   }, 2000);
 
   const hasGoogleSignIn = computed(() => {
