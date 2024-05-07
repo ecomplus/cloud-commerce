@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.17.1](https://github.com/ecomplus/cloud-commerce/compare/v2.17.0...v2.17.1) (2024-05-07)
+
+
+### Bug Fixes
+
+* **emails:** Ensure first email using new order template ([738b33e](https://github.com/ecomplus/cloud-commerce/commit/738b33e3956916089c680122a7984304aa1f1627))
+* **firebase:** Removing `orders-new` event for emails app ([c489fad](https://github.com/ecomplus/cloud-commerce/commit/c489fadf08e75c0141c7d1e414051a3182c8f850))
+
 ## [2.17.0](https://github.com/ecomplus/cloud-commerce/compare/v2.16.9...v2.17.0) (2024-05-07)
 
 
