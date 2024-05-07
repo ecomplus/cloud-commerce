@@ -42,7 +42,7 @@ export const getPageViewParams = () => {
     pageLocation = urlParams.get('url') || '';
   }
   if (!pageLocation) {
-    pageLocation = window.location.toString();
+    pageLocation = window.location.href;
   }
   return {
     page_location: pageLocation,

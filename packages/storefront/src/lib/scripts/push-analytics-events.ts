@@ -56,17 +56,21 @@ if (
     const { name, params } = evMessage.event;
     const {
       gtag,
-      dataLayer,
+      GTAG_AUTO_PAGEVIEW,
       fbq,
+      FBQ_AUTO_PAGEVIEW,
       ttq,
+      TTQ_AUTO_PAGEVIEW,
     } = window as Window & {
       gtag?: Gtag.Gtag,
-      dataLayer?: Array<any>,
+      GTAG_AUTO_PAGEVIEW?: boolean,
       fbq?: (act: string, val: string, payload?: any, ctx?: any) => any,
+      FBQ_AUTO_PAGEVIEW?: boolean,
       ttq?: { page: () => any, track: (val: string, payload?: any, ctx?: any) => any },
+      TTQ_AUTO_PAGEVIEW?: boolean,
     };
     const hasGtag = typeof gtag === 'function';
-    if (hasGtag && name !== 'page_view') {
+    if (hasGtag && (!GTAG_AUTO_PAGEVIEW || name !== 'page_view')) {
       gtag('event', name, params);
       if (window.GOOGLE_ADS_ID && name === 'purchase') {
         gtag('event', 'conversion', {
@@ -83,16 +87,13 @@ if (
       params,
       sent: hasGtag,
     });
-    // https://developers.google.com/analytics/devguides/migration/ecommerce/gtm-ga4-to-ua#4_enable_the_gtagjs_api
-    if (dataLayer && typeof dataLayer.push === 'function') {
-      dataLayer.push(['event', name, params]);
-    }
     const hasFbq = typeof fbq === 'function';
     const fbqEvents = await parseGtagToFbq(evMessage);
     fbqEvents.forEach((fbqEvent: { name: string | null, params?: any }) => {
       if (!fbqEvent.name) return;
       sendServerEvent({ type: 'fbq', sent: hasFbq, ...(fbqEvent as any) });
       if (hasFbq) {
+        if (fbqEvent.name === 'PageView' && FBQ_AUTO_PAGEVIEW) return;
         fbq('track', fbqEvent.name, fbqEvent.params, { eventID: evMessage.event_id });
       }
     });
@@ -103,10 +104,11 @@ if (
       sendServerEvent({ type: 'ttk', sent: hasTtq, ...(ttqEvent as any) });
       if (hasTtq) {
         if (ttqEvent.name === 'PageView') {
+          if (TTQ_AUTO_PAGEVIEW) return;
           ttq.page();
-        } else {
-          ttq.track(ttqEvent.name, ttqEvent.params, { event_id: evMessage.event_id });
+          return;
         }
+        ttq.track(ttqEvent.name, ttqEvent.params, { event_id: evMessage.event_id });
       }
     });
   });
