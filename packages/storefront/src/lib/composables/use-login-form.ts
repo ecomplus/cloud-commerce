@@ -53,10 +53,12 @@ const useLoginForm = (props?: Props) => {
   const submitLogin = useThrottleFn(async (linkActionUrl?: string | null) => {
     if (!email.value) return;
     isSubmitting.value = true;
-    if (emailsSent.includes(email.value)) {
-      await sleep(3000);
+    if (emailsSent.length) {
+      if (emailsSent[emailsSent.length - 1] === email.value) {
+        await sleep(3000);
+      }
+      await sleep(1000 * emailsSent.length);
     }
-    await sleep(1000 * emailsSent.length);
     const firebaseAuth = getAuth();
     window.localStorage.setItem(EMAIL_STORAGE_KEY, email.value);
     try {
