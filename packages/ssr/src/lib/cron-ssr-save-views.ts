@@ -136,6 +136,7 @@ const saveViews = async () => {
       const pathname = url.replace(`https://${domain}`, '');
       if (
         pathname.startsWith('/~')
+        || pathname.startsWith('/.')
         || pathname.startsWith('/app/')
         || pathname.startsWith('/admin/')
       ) {

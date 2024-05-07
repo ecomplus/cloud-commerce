@@ -49,6 +49,7 @@ const createAppEventsFunction = (
   appNameOrId: string | number,
   fn: ApiEventHandler,
   options?: ExecOptions,
+  isSkipMiddleware = false,
 ) => {
   let appId: number;
   if (typeof appNameOrId === 'string') {
@@ -56,7 +57,16 @@ const createAppEventsFunction = (
   } else {
     appId = appNameOrId;
   }
-  return createPubSubFunction(GET_PUBSUB_TOPIC(appId), fn, options);
+  const midd: ApiEventHandler = (payload, context, message) => {
+    const {
+      evName,
+      apiEvent: { resource_id: resourceId },
+    } = payload;
+    logger.info(`ev/${evName} ${resourceId}`);
+    return fn(payload, context, message);
+  };
+  const _fn = isSkipMiddleware === true ? fn : midd;
+  return createPubSubFunction(GET_PUBSUB_TOPIC(appId), _fn, options);
 };
 
 export default createPubSubFunction;

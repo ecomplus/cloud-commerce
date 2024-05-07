@@ -5,13 +5,14 @@ import * as functions from 'firebase-functions/v1';
 import config from '@cloudcommerce/firebase/lib/config';
 import Pagarme from 'pagarme';
 import qs from 'qs';
-import parseStatus from './functions-lib/parse-status-to-ecom';
+import { parsePagarmeStatus } from './pagarme-utils';
 
-const ECHO_SUCCESS = 'OK';
+const { httpsFunctionOptions } = config.get();
 
 export const pagarme = {
   webhook: functions
-    .region(config.get().httpsFunctionOptions.region)
+    .region(httpsFunctionOptions.region)
+    .runWith(httpsFunctionOptions)
     .https.onRequest(async (req, res) => {
       const { method } = req;
       if (method !== 'POST') {
@@ -61,14 +62,13 @@ export const pagarme = {
                       return intermediator
                         && intermediator.transaction_id === String(pagarmeTransaction.id);
                     });
-
+                    const pagarmeStatus = req.body.current_status || pagarmeTransaction.status;
                     const bodyPaymentHistory = {
                       date_time: new Date().toISOString(),
-                      status: parseStatus(req.body.current_status || pagarmeTransaction.status),
+                      status: parsePagarmeStatus(pagarmeStatus),
                       notification_code: req.body.fingerprint,
                       flags: ['pagarme'],
                     } as any; // TODO: incompatible type=> amount and status
-
                     if (transaction) {
                       Object.assign(bodyPaymentHistory, { transaction_id: transaction._id });
                     }
@@ -77,7 +77,7 @@ export const pagarme = {
                     }
                     // return appSdk.apiRequest(storeId, resource, method, body);
                     await api.post(`orders/${orderId}/payments_history`, bodyPaymentHistory);
-                    res.status(200).send(ECHO_SUCCESS);
+                    res.status(200).send('OK');
                   } else {
                     //
                     res.status(404).send('>(App:PagarMe) Order not found');

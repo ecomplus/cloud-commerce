@@ -7,6 +7,7 @@ import type {
   // DataEmailSendGrid,
 } from '../types/index';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
+import type { SettingsContent } from '@cloudcommerce/types';
 import nodemailer from 'nodemailer';
 import _config from '@cloudcommerce/firebase/lib/config';
 import parseTemplateToHtml from './parse-template-to-html';
@@ -34,6 +35,7 @@ const {
   SMTP_USER,
   SMTP_PASS,
   SMTP_TLS,
+  GCLOUD_PROJECT,
   // SENDGRID_API_KEY,
 } = process.env;
 
@@ -56,10 +58,16 @@ class Email {
   transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo> | undefined;
   mailOptionsSmtp: SMTPTransport.MailOptions | undefined;
 
+  settingsContent: SettingsContent | undefined;
+
   // bodyEmail: DataEmailSendGrid;
 
   constructor() {
     const { settingsContent } = _config.get();
+
+    if (settingsContent) {
+      this.settingsContent = settingsContent;
+    }
 
     if (!MAIL_SENDER_NAME && !settingsContent.name) {
       throw new Error('Sender name not found');
@@ -67,7 +75,7 @@ class Email {
 
     this.from = {
       name: MAIL_SENDER_NAME || settingsContent.name,
-      email: MAIL_SENDER || 'lojas@e-com.plus',
+      email: MAIL_SENDER || `${(GCLOUD_PROJECT?.replace('ecom2', '') || 'lojas')}@e-com.plus`,
     };
 
     this.replyTo = {
@@ -78,7 +86,7 @@ class Email {
 
   setFrom(person: { email: string, name?: string }) {
     this.from = {
-      name: person.name || '',
+      name: person.name || MAIL_SENDER_NAME || this.settingsContent?.name || '',
       email: person.email,
     };
 

@@ -7,11 +7,14 @@ import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pub
 import handleApiEvent from '../lib-mjs/events-to-pagarme5.mjs';
 import handlePagarmeV5Webhook from '../lib-mjs/pagarme5-webhook.mjs';
 
+const { httpsFunctionOptions } = config.get();
+
 export const pagarmev5 = {
   onStoreEvent: createAppEventsFunction('pagarMeV5', handleApiEvent),
 
   webhook: functions
-    .region(config.get().httpsFunctionOptions.region)
+    .region(httpsFunctionOptions.region)
+    .runWith(httpsFunctionOptions)
     .https.onRequest((req, res) => {
       if (req.method !== 'POST') {
         res.sendStatus(405);

@@ -1,1 +1,1 @@
-export * from './firebase';
+export * from './transactional-emails';

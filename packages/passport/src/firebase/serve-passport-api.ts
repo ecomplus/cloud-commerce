@@ -66,8 +66,8 @@ export default async (req: Request, res: Response) => {
           const customerMatch = await findCustomerByEmail(email, docNumber);
           if (customerMatch) {
             const customerId = customerMatch._id;
-            const customer: Partial<Customers> = {
-              _id: customerId,
+            const customer = {
+              ...customerMatch,
               main_email: email,
               doc_number: docNumber,
             };

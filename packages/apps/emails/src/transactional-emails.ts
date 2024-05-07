@@ -3,8 +3,8 @@ import '@cloudcommerce/firebase/lib/init';
 import config from '@cloudcommerce/firebase/lib/config';
 import functions from 'firebase-functions';
 import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import handleApiEvent from './events-to-app-emails';
-import handleAbandonedCarts from './functios-lib/abandoned-carts';
+import handleApiEvent from './event-to-emails';
+// import handleAbandonedCarts from './functios-lib/abandoned-carts';
 
 const { httpsFunctionOptions: { region } } = config.get();
 
@@ -14,6 +14,7 @@ export const emails = {
   cronAbandonedCarts: functions.region(region).pubsub
     .schedule(process.env.CRONTAB_EMAILS_ABANDONED_CARTS || '25 */3 * * *')
     .onRun(() => {
-      return handleAbandonedCarts();
+      // TODO: Refactor abandoned carts handler
+      functions.logger.info('// TODO');
     }),
 };

@@ -197,6 +197,7 @@ export default async () => {
     info(`> '${listenedEventName}' ${result.length} events`);
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
+      apiEvent.resource = resource;
       const resourceId = apiEvent.resource_id;
       if (resourceIdsRead.includes(resourceId)) {
         return;

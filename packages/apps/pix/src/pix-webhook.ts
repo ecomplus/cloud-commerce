@@ -155,13 +155,15 @@ const handler = async (req: Request, res: Response, rand: string) => {
   }
 };
 
+const { httpsFunctionOptions } = config.get();
+
 export const pix = {
   webhook: functions
-    .region(config.get().httpsFunctionOptions.region)
+    .region(httpsFunctionOptions.region)
+    .runWith(httpsFunctionOptions)
     .https.onRequest(async (req, res) => {
       const { method } = req;
       const rand = req.url.split('/')[1];
-
       if (method === 'POST' || method === 'PUT') {
         handler(req, res, rand);
       } else {

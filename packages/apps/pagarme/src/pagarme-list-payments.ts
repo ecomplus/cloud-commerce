@@ -1,46 +1,41 @@
-import type {
-  AppModuleBody,
-  ListPaymentsParams,
-  ListPaymentsResponse,
-} from '@cloudcommerce/types';
+import type { AppModuleBody, ListPaymentsResponse } from '@cloudcommerce/types';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
 import logger from 'firebase-functions/logger';
-import addInstallments from './functions-lib/add-installments';
+import { addInstallments } from './pagarme-utils';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-export default (data: AppModuleBody) => {
-  const { application } = data;
-  const params = data.params as ListPaymentsParams;
+export default (modBody: AppModuleBody<'list_payments'>) => {
+  const { application } = modBody;
+  const params = modBody.params;
   // https://apx-mods.e-com.plus/api/v1/list_payments/schema.json?store_id=100
-  const amount = params.amount || { total: undefined };
+  const amount = params.amount || { total: 0 };
   const initialTotalAmount = amount.total;
-
-  const configApp = {
+  const appData = {
     ...application.data,
     ...application.hidden_data,
   };
 
   if (!process.env.PAGARME_ENCRYPT_KEY) {
-    const parameEncryptKey = configApp.pagarme_encryption_key;
+    const parameEncryptKey = appData.pagarme_encryption_key;
     if (typeof parameEncryptKey === 'string' && parameEncryptKey) {
       process.env.PAGARME_ENCRYPT_KEY = parameEncryptKey;
     } else {
-      logger.warn('Missing PagarMe Encryption key');
+      logger.warn('Missing Pagar.me Encryption key');
     }
   }
 
   if (!process.env.PAGARME_TOKEN) {
-    const pagarmeToken = configApp.pagarme_api_key;
+    const pagarmeToken = appData.pagarme_api_key;
     if (typeof pagarmeToken === 'string' && pagarmeToken) {
       process.env.PAGARME_TOKEN = pagarmeToken;
     } else {
-      logger.warn('Missing PagarMe API token');
+      logger.warn('Missing Pagar.me API token');
     }
   }
 
@@ -56,13 +51,13 @@ export default (data: AppModuleBody) => {
     payment_gateways: [],
   };
 
-  const { discount } = configApp;
+  const { discount } = appData;
   if (discount && discount.value > 0) {
     if (discount.apply_at !== 'freight') {
       // default discount option
       const { value } = discount;
       response.discount_option = {
-        label: configApp.discount_option_label,
+        label: appData.discount_option_label,
         value,
       };
       // specify the discount type and min amount is optional
@@ -112,7 +107,7 @@ export default (data: AppModuleBody) => {
   const listPaymentMethods = ['credit_card', 'banking_billet', 'account_deposit'];
 
   listPaymentMethods.forEach((paymentMethod) => {
-    const methodConfig = configApp[paymentMethod] || {};
+    const methodConfig = appData[paymentMethod] || {};
     const isPix = paymentMethod === 'account_deposit';
     if (!methodConfig.disable && (!isPix || methodConfig.enable)) {
       const isCreditCard = paymentMethod === 'credit_card';
@@ -168,7 +163,7 @@ export default (data: AppModuleBody) => {
             is_promise: true,
           },
         };
-        const { installments } = configApp;
+        const { installments } = appData;
         if (installments) {
           const installmentsTotal = gateway.discount ? amount.total : initialTotalAmount;
           // list all installment options and default one

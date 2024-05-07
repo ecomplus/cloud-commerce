@@ -15,7 +15,6 @@ let smtpConfig: SmtpConfig | undefined;
 const setApiKeySendGrid = (apiKey: string) => {
   process.env.SENDGRID_API_KEY = apiKey;
 };
-
 const sendEmail = (
   emailData: {
     to: EmailAdrress[],
@@ -39,6 +38,7 @@ const sendEmail = (
     SMTP_USER,
     SMTP_PASS,
     SMTP_TLS,
+    GCLOUD_PROJECT,
     SENDGRID_API_KEY,
   } = process.env;
   const { settingsContent } = config.get();
@@ -65,7 +65,8 @@ const sendEmail = (
     bcc,
     from: {
       name: MAIL_SENDER_NAME || settingsContent.name,
-      email: MAIL_SENDER || 'lojas@e-com.plus',
+      email: MAIL_SENDER
+        || `${(GCLOUD_PROJECT?.replace('ecom2', '') || 'lojas')}@e-com.plus`,
     },
     replyTo: {
       name: settingsContent.name,

@@ -14,53 +14,6 @@ if (
   dotenv.config({ path: joinPath(pwd, 'functions/.env') });
 }
 
-const tinyErpEvents: ApiEventName[] = [
-  'orders-anyStatusSet',
-  'products-new',
-  'products-priceSet',
-  'applications-dataSet',
-];
-const emailsEvents: ApiEventName[] = [
-  'orders-new',
-  'orders-anyStatusSet',
-];
-const galaxPayEvents: ApiEventName[] = [
-  'orders-cancelled',
-];
-const loyaltyPointsEvents: ApiEventName[] = [
-  'orders-new',
-  'orders-anyStatusSet',
-];
-const frenetEvents: ApiEventName[] = [
-  'orders-new',
-];
-const fbConversionsEvents: ApiEventName[] = [
-  'orders-new',
-  'carts-customerSet',
-];
-const googleAnalyticsEvents: ApiEventName[] = [
-  'orders-anyStatusSet',
-];
-const melhorEnvioEvents: ApiEventName[] = [
-  'orders-anyStatusSet',
-];
-const webhooksAppEvents: ApiEventName[] = [
-  'applications-dataSet',
-  'orders-anyStatusSet',
-  'carts-delayed',
-];
-
-const affiliateProgramEvents: ApiEventName[] = [
-  'orders-anyStatusSet',
-  'customers-new',
-];
-
-const pagarMeV5Events: ApiEventName[] = [
-  'orders-cancelled',
-  'products-priceSet',
-  'products-quantitySet',
-];
-
 const {
   SETTINGS_FILEPATH,
   DEPLOY_REGION,
@@ -87,6 +40,7 @@ const mergeConfig = {
   httpsFunctionOptions: {
     region: DEPLOY_REGION || 'us-east4',
     memory: (DEPLOY_MEMORY as '128MB' | '256MB' | '512MB' | '1GB' | '2GB') || '256MB',
+    maxInstances: 100,
   },
   ssrFunctionOptions: {
     region: SSR_DEPLOY_REGION || DEPLOY_REGION || 'us-east4',
@@ -113,20 +67,29 @@ const mergeConfig = {
     customShipping: {
       appId: 1253,
     },
+    emails: {
+      appId: 1243,
+      events: [
+        'orders-anyStatusSet',
+      ] as ApiEventName[],
+    },
     frenet: {
       appId: 1244,
-      events: frenetEvents,
+      events: [
+        'orders-new',
+      ] as ApiEventName[],
     },
     tinyErp: {
       appId: 105922,
-      events: tinyErpEvents,
+      events: [
+        'orders-anyStatusSet',
+        'products-new',
+        'products-priceSet',
+        'applications-dataSet',
+      ] as ApiEventName[],
     },
     mercadoPago: {
       appId: 111223,
-    },
-    emails: {
-      appId: 1243,
-      events: emailsEvents,
     },
     pagarMe: {
       appId: 117391,
@@ -139,25 +102,29 @@ const mergeConfig = {
     },
     galaxPay: {
       appId: 123188,
-      events: galaxPayEvents,
+      events: [
+        'orders-cancelled',
+      ] as ApiEventName[],
     },
     customPayment: {
       appId: 108091,
     },
     loyaltyPoints: {
       appId: 124890,
-      events: loyaltyPointsEvents,
+      events: [
+        'orders-new',
+        'orders-anyStatusSet',
+      ] as ApiEventName[],
     },
-    fbConversions: {
-      appId: 131670,
-      events: fbConversionsEvents,
+    affiliateProgram: {
+      appId: 119753,
+      events: [
+        'orders-anyStatusSet',
+        'customers-new',
+      ] as ApiEventName[],
     },
     datafrete: {
       appId: 123886,
-    },
-    googleAnalytics: {
-      appId: 122241,
-      events: googleAnalyticsEvents,
     },
     pagaleve: {
       appId: 113537,
@@ -167,15 +134,17 @@ const mergeConfig = {
     },
     melhorEnvio: {
       appId: 1236,
-      events: melhorEnvioEvents,
+      events: [
+        'orders-anyStatusSet',
+      ] as ApiEventName[],
     },
     webhooksApp: {
       appId: 123113,
-      events: webhooksAppEvents,
-    },
-    affiliateProgram: {
-      appId: 119753,
-      events: affiliateProgramEvents,
+      events: [
+        'applications-dataSet',
+        'orders-anyStatusSet',
+        'carts-delayed',
+      ] as ApiEventName[],
     },
     flashCourier: {
       appId: 104136,
@@ -185,7 +154,11 @@ const mergeConfig = {
     },
     pagarMeV5: {
       appId: 112381,
-      events: pagarMeV5Events,
+      events: [
+        'orders-cancelled',
+        'products-priceSet',
+        'products-quantitySet',
+      ] as ApiEventName[],
     },
   },
   settingsContent,

@@ -2,6 +2,142 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.17.2](https://github.com/ecomplus/cloud-commerce/compare/v2.17.1...v2.17.2) (2024-05-07)
+
+
+### Bug Fixes
+
+* **emails:** Fix checking positive status to send new order email on first notification ([83958a5](https://github.com/ecomplus/cloud-commerce/commit/83958a5f47b22bf1e5e07d3b8f6d31e2e08aff61))
+
+### [2.17.1](https://github.com/ecomplus/cloud-commerce/compare/v2.17.0...v2.17.1) (2024-05-07)
+
+
+### Bug Fixes
+
+* **emails:** Ensure first email using new order template ([738b33e](https://github.com/ecomplus/cloud-commerce/commit/738b33e3956916089c680122a7984304aa1f1627))
+* **firebase:** Removing `orders-new` event for emails app ([c489fad](https://github.com/ecomplus/cloud-commerce/commit/c489fadf08e75c0141c7d1e414051a3182c8f850))
+
+## [2.17.0](https://github.com/ecomplus/cloud-commerce/compare/v2.16.9...v2.17.0) (2024-05-07)
+
+
+### Features
+
+* **storefront:** Add support to Facebook sign in on login form composable ([7acee01](https://github.com/ecomplus/cloud-commerce/commit/7acee01bb8f431f5cf7eeb39459d799ad45ec7cd))
+* **storefront:** Update vbeta-app script and support Facebook login on checkout ([22af14b](https://github.com/ecomplus/cloud-commerce/commit/22af14b71191053ecc1756e2c7a0742da8a1923f))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency firebase-functions to v5 ([#381](https://github.com/ecomplus/cloud-commerce/issues/381)) ([ec68093](https://github.com/ecomplus/cloud-commerce/commit/ec680937de8fbe06d00e82cc1bc7991f616adc3e))
+* **emails:** Better setting default sender address using `GCLOUD_PROJECT` if any ([32b5a66](https://github.com/ecomplus/cloud-commerce/commit/32b5a66803a319539d62b5974fb84f8660a7dcaa))
+* **pagarme:** Properly setting links on banking billet transactions ([23cdc68](https://github.com/ecomplus/cloud-commerce/commit/23cdc68988b81350a53fda5dba49564a5d73f999))
+* **passport:** Returning user registry type and display name on email identification ([2c87d3c](https://github.com/ecomplus/cloud-commerce/commit/2c87d3c7771fabf65c8d08a2f734ee9ebd2c09ee))
+* **storefront:** Update login form composable to always start with link sign in (even sign up) ([4822087](https://github.com/ecomplus/cloud-commerce/commit/4822087b72f32a3352047bc6b4834b2e5c2a1de2))
+* **tiny-erp:** Using `FormData` (Node.js 18) to safely escape body sent to Tiny API ([3c0c86d](https://github.com/ecomplus/cloud-commerce/commit/3c0c86dd20152e6e29a9181bd577c5f3a8ddcfb1))
+
+### [2.16.9](https://github.com/ecomplus/cloud-commerce/compare/v2.16.8...v2.16.9) (2024-05-06)
+
+
+### Bug Fixes
+
+* **emails:** Fix checking order events by `evName` to proceed ([524f3cb](https://github.com/ecomplus/cloud-commerce/commit/524f3cb46067cb6eeb31d9017dfd268d96765253))
+* **firebase:** Always setting `apiEvent.resource` on emitted store events payload ([2e4e6e3](https://github.com/ecomplus/cloud-commerce/commit/2e4e6e38b3f0a65554a9fa04966ade3d84b12ae9))
+
+### [2.16.8](https://github.com/ecomplus/cloud-commerce/compare/v2.16.5...v2.16.8) (2024-05-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#374](https://github.com/ecomplus/cloud-commerce/issues/374)) ([98ff60d](https://github.com/ecomplus/cloud-commerce/commit/98ff60d6bf325c58171a800de7ab39b63723f558))
+* **emails:** Fix getting email render function from event/status ([20e6575](https://github.com/ecomplus/cloud-commerce/commit/20e6575b9adf2c26bb956632b7d95790dbd05551))
+* **storefront:** Update UnoCSS to ^0.59.4 ([#377](https://github.com/ecomplus/cloud-commerce/issues/377)) ([fd9aa9c](https://github.com/ecomplus/cloud-commerce/commit/fd9aa9c1cfe1c07d49bd8d22ff2d72854d79865f))
+
+### [2.16.7](https://github.com/ecomplus/cloud-commerce/compare/v2.16.5...v2.16.7) (2024-05-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#374](https://github.com/ecomplus/cloud-commerce/issues/374)) ([98ff60d](https://github.com/ecomplus/cloud-commerce/commit/98ff60d6bf325c58171a800de7ab39b63723f558))
+* **emails:** Fix getting email render function from event/status ([20e6575](https://github.com/ecomplus/cloud-commerce/commit/20e6575b9adf2c26bb956632b7d95790dbd05551))
+* **storefront:** Update UnoCSS to ^0.59.4 ([#377](https://github.com/ecomplus/cloud-commerce/issues/377)) ([fd9aa9c](https://github.com/ecomplus/cloud-commerce/commit/fd9aa9c1cfe1c07d49bd8d22ff2d72854d79865f))
+
+### [2.16.6](https://github.com/ecomplus/cloud-commerce/compare/v2.16.5...v2.16.6) (2024-05-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#374](https://github.com/ecomplus/cloud-commerce/issues/374)) ([98ff60d](https://github.com/ecomplus/cloud-commerce/commit/98ff60d6bf325c58171a800de7ab39b63723f558))
+* **emails:** Fix getting email render function from event/status ([20e6575](https://github.com/ecomplus/cloud-commerce/commit/20e6575b9adf2c26bb956632b7d95790dbd05551))
+* **storefront:** Update UnoCSS to ^0.59.4 ([#377](https://github.com/ecomplus/cloud-commerce/issues/377)) ([fd9aa9c](https://github.com/ecomplus/cloud-commerce/commit/fd9aa9c1cfe1c07d49bd8d22ff2d72854d79865f))
+
+### [2.16.5](https://github.com/ecomplus/cloud-commerce/compare/v2.16.1...v2.16.5) (2024-05-04)
+
+
+### Bug Fixes
+
+* **apps:** Fixing many apps webhooks functions deployment with configured runtime options ([cc58b9e](https://github.com/ecomplus/cloud-commerce/commit/cc58b9ed06aea80e555a578799f30ff78e52aa0b))
+* **cli:** Update bunny.net (CI) edge rules for /.* routes with short cache TTL ([2c7c0c6](https://github.com/ecomplus/cloud-commerce/commit/2c7c0c6b841617d837c30a56a8718c5a2c9619e4))
+* **cli:** Update bunny.net (CI) edge rules to bypass /.* (hidden files) routes ([512c9e6](https://github.com/ecomplus/cloud-commerce/commit/512c9e6eb77b270271d834ac7b9cd999534d2265))
+* **emails:** Properly defining email template and respecting configured mail options ([e304894](https://github.com/ecomplus/cloud-commerce/commit/e304894bdc2ed1bc0b91383d9623883212e9a890))
+* **emails:** Update `@ecomplus/transactional-mails` to v2.0.4 ([d3412f7](https://github.com/ecomplus/cloud-commerce/commit/d3412f75df16e42526b828aa99b9a49a93eb37c3))
+* **firebase:** Add middleware to app events handler to debug each event execution ([fea986a](https://github.com/ecomplus/cloud-commerce/commit/fea986acbe1e8d0c47feb494c460a0974053556a))
+* **firebase:** Removing FB Conversions and Analytics apps declarations from base config ([9b7f034](https://github.com/ecomplus/cloud-commerce/commit/9b7f0340dd1635b41ad64111d89982b93adba22b))
+* **firebase:** Set default 100 max instances for HTTP functions ([07032d0](https://github.com/ecomplus/cloud-commerce/commit/07032d063418082b0c3096e02fb9fbe05fe18a51))
+* **ssr:** Add /.* (hidden files) routes to skipped patterns on page views handler ([a8cabe0](https://github.com/ecomplus/cloud-commerce/commit/a8cabe026983f0535f6613c36cbb6f1217b595f7))
+* **storefront:** Better typing SSR `routeContext.apiContext` resource + doc ([c687658](https://github.com/ecomplus/cloud-commerce/commit/c68765897e0e8aaacefe2a911be73bd937accb83))
+* **tiny-erp:** Always set address "numero" or order export, with 0 or S/N if undefined ([1d032c0](https://github.com/ecomplus/cloud-commerce/commit/1d032c08af259a50c46458a40a0f5d9cabfadc69))
+
+### [2.16.4](https://github.com/ecomplus/cloud-commerce/compare/v2.16.1...v2.16.4) (2024-05-04)
+
+
+### Bug Fixes
+
+* **apps:** Fixing many apps webhooks functions deployment with configured runtime options ([cc58b9e](https://github.com/ecomplus/cloud-commerce/commit/cc58b9ed06aea80e555a578799f30ff78e52aa0b))
+* **cli:** Update bunny.net (CI) edge rules for /.* routes with short cache TTL ([2c7c0c6](https://github.com/ecomplus/cloud-commerce/commit/2c7c0c6b841617d837c30a56a8718c5a2c9619e4))
+* **cli:** Update bunny.net (CI) edge rules to bypass /.* (hidden files) routes ([512c9e6](https://github.com/ecomplus/cloud-commerce/commit/512c9e6eb77b270271d834ac7b9cd999534d2265))
+* **emails:** Properly defining email template and respecting configured mail options ([e304894](https://github.com/ecomplus/cloud-commerce/commit/e304894bdc2ed1bc0b91383d9623883212e9a890))
+* **emails:** Update `@ecomplus/transactional-mails` to v2.0.4 ([d3412f7](https://github.com/ecomplus/cloud-commerce/commit/d3412f75df16e42526b828aa99b9a49a93eb37c3))
+* **firebase:** Add middleware to app events handler to debug each event execution ([fea986a](https://github.com/ecomplus/cloud-commerce/commit/fea986acbe1e8d0c47feb494c460a0974053556a))
+* **firebase:** Removing FB Conversions and Analytics apps declarations from base config ([9b7f034](https://github.com/ecomplus/cloud-commerce/commit/9b7f0340dd1635b41ad64111d89982b93adba22b))
+* **firebase:** Set default 100 max instances for HTTP functions ([07032d0](https://github.com/ecomplus/cloud-commerce/commit/07032d063418082b0c3096e02fb9fbe05fe18a51))
+* **ssr:** Add /.* (hidden files) routes to skipped patterns on page views handler ([a8cabe0](https://github.com/ecomplus/cloud-commerce/commit/a8cabe026983f0535f6613c36cbb6f1217b595f7))
+* **storefront:** Better typing SSR `routeContext.apiContext` resource + doc ([c687658](https://github.com/ecomplus/cloud-commerce/commit/c68765897e0e8aaacefe2a911be73bd937accb83))
+* **tiny-erp:** Always set address "numero" or order export, with 0 or S/N if undefined ([1d032c0](https://github.com/ecomplus/cloud-commerce/commit/1d032c08af259a50c46458a40a0f5d9cabfadc69))
+
+### [2.16.3](https://github.com/ecomplus/cloud-commerce/compare/v2.16.1...v2.16.3) (2024-05-04)
+
+
+### Bug Fixes
+
+* **apps:** Fixing many apps webhooks functions deployment with configured runtime options ([cc58b9e](https://github.com/ecomplus/cloud-commerce/commit/cc58b9ed06aea80e555a578799f30ff78e52aa0b))
+* **cli:** Update bunny.net (CI) edge rules for /.* routes with short cache TTL ([2c7c0c6](https://github.com/ecomplus/cloud-commerce/commit/2c7c0c6b841617d837c30a56a8718c5a2c9619e4))
+* **cli:** Update bunny.net (CI) edge rules to bypass /.* (hidden files) routes ([512c9e6](https://github.com/ecomplus/cloud-commerce/commit/512c9e6eb77b270271d834ac7b9cd999534d2265))
+* **emails:** Properly defining email template and respecting configured mail options ([e304894](https://github.com/ecomplus/cloud-commerce/commit/e304894bdc2ed1bc0b91383d9623883212e9a890))
+* **emails:** Update `@ecomplus/transactional-mails` to v2.0.4 ([d3412f7](https://github.com/ecomplus/cloud-commerce/commit/d3412f75df16e42526b828aa99b9a49a93eb37c3))
+* **firebase:** Add middleware to app events handler to debug each event execution ([fea986a](https://github.com/ecomplus/cloud-commerce/commit/fea986acbe1e8d0c47feb494c460a0974053556a))
+* **firebase:** Removing FB Conversions and Analytics apps declarations from base config ([9b7f034](https://github.com/ecomplus/cloud-commerce/commit/9b7f0340dd1635b41ad64111d89982b93adba22b))
+* **firebase:** Set default 100 max instances for HTTP functions ([07032d0](https://github.com/ecomplus/cloud-commerce/commit/07032d063418082b0c3096e02fb9fbe05fe18a51))
+* **ssr:** Add /.* (hidden files) routes to skipped patterns on page views handler ([a8cabe0](https://github.com/ecomplus/cloud-commerce/commit/a8cabe026983f0535f6613c36cbb6f1217b595f7))
+* **storefront:** Better typing SSR `routeContext.apiContext` resource + doc ([c687658](https://github.com/ecomplus/cloud-commerce/commit/c68765897e0e8aaacefe2a911be73bd937accb83))
+* **tiny-erp:** Always set address "numero" or order export, with 0 or S/N if undefined ([1d032c0](https://github.com/ecomplus/cloud-commerce/commit/1d032c08af259a50c46458a40a0f5d9cabfadc69))
+
+### [2.16.2](https://github.com/ecomplus/cloud-commerce/compare/v2.16.1...v2.16.2) (2024-05-04)
+
+
+### Bug Fixes
+
+* **apps:** Fixing many apps webhooks functions deployment with configured runtime options ([cc58b9e](https://github.com/ecomplus/cloud-commerce/commit/cc58b9ed06aea80e555a578799f30ff78e52aa0b))
+* **cli:** Update bunny.net (CI) edge rules for /.* routes with short cache TTL ([2c7c0c6](https://github.com/ecomplus/cloud-commerce/commit/2c7c0c6b841617d837c30a56a8718c5a2c9619e4))
+* **cli:** Update bunny.net (CI) edge rules to bypass /.* (hidden files) routes ([512c9e6](https://github.com/ecomplus/cloud-commerce/commit/512c9e6eb77b270271d834ac7b9cd999534d2265))
+* **emails:** Properly defining email template and respecting configured mail options ([e304894](https://github.com/ecomplus/cloud-commerce/commit/e304894bdc2ed1bc0b91383d9623883212e9a890))
+* **emails:** Update `@ecomplus/transactional-mails` to v2.0.4 ([d3412f7](https://github.com/ecomplus/cloud-commerce/commit/d3412f75df16e42526b828aa99b9a49a93eb37c3))
+* **firebase:** Add middleware to app events handler to debug each event execution ([fea986a](https://github.com/ecomplus/cloud-commerce/commit/fea986acbe1e8d0c47feb494c460a0974053556a))
+* **firebase:** Removing FB Conversions and Analytics apps declarations from base config ([9b7f034](https://github.com/ecomplus/cloud-commerce/commit/9b7f0340dd1635b41ad64111d89982b93adba22b))
+* **firebase:** Set default 100 max instances for HTTP functions ([07032d0](https://github.com/ecomplus/cloud-commerce/commit/07032d063418082b0c3096e02fb9fbe05fe18a51))
+* **ssr:** Add /.* (hidden files) routes to skipped patterns on page views handler ([a8cabe0](https://github.com/ecomplus/cloud-commerce/commit/a8cabe026983f0535f6613c36cbb6f1217b595f7))
+* **storefront:** Better typing SSR `routeContext.apiContext` resource + doc ([c687658](https://github.com/ecomplus/cloud-commerce/commit/c68765897e0e8aaacefe2a911be73bd937accb83))
+* **tiny-erp:** Always set address "numero" or order export, with 0 or S/N if undefined ([1d032c0](https://github.com/ecomplus/cloud-commerce/commit/1d032c08af259a50c46458a40a0f5d9cabfadc69))
+
 ### [2.16.1](https://github.com/ecomplus/cloud-commerce/compare/v2.16.0...v2.16.1) (2024-05-02)
 
 
