@@ -70,7 +70,6 @@ const mergeConfig = {
     emails: {
       appId: 1243,
       events: [
-        'orders-new',
         'orders-anyStatusSet',
       ] as ApiEventName[],
     },
