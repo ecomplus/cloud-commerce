@@ -1,0 +1,68 @@
+{
+  "oauth_providers": [
+      {
+          "_id": "3c2a00000000000000000003",
+          "provider": "facebook",
+          "user_id": "1234567890"
+      }
+  ],
+  "main_email": "mail@sample.ex",
+  "emails": [
+      {
+          "address": "mail@sample.ex",
+          "type": "personal",
+          "verified": true
+      },
+      {
+          "address": "janedue@inc.sample",
+          "type": "work",
+          "verified": false
+      }
+  ],
+  "accepts_marketing": true,
+  "display_name": "Jane",
+  "name": {
+      "family_name": "Due",
+      "given_name": "Jane"
+  },
+  "gender": "f",
+  "phones": [
+      {
+          "country_code": 55,
+          "number": "31999889988",
+          "type": "personal"
+      },
+      {
+          "country_code": 55,
+          "number": "3133443344",
+          "type": "home"
+      }
+  ],
+  "registry_type": "p",
+  "doc_country": "BR",
+  "doc_number": "11111111111",
+  "addresses": [
+      {
+          "_id": "4d2b00000000000000000003",
+          "zip": "30111222",
+          "street": "Rua Augusta",
+          "number": 92200,
+          "complement": "Apto. 200",
+          "borough": "Jardins",
+          "near_to": "Supermercado Exemplifica",
+          "line_address": "Rua Augusta 922200 Apto. 200, Jardins, Belo Horizonte, MG",
+          "city": "Belo Horizonte",
+          "country": "Brasil",
+          "country_code": "BR",
+          "province": "Minas Gerais",
+          "province_code": "MG",
+          "name": "Fulano",
+          "last_name": "Beltrano",
+          "phone": {
+              "country_code": 55,
+              "number": "31999889988"
+          },
+          "default": true
+      }
+  ]
+}

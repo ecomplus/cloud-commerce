@@ -1,0 +1,21 @@
+{
+  "ecomAuthenticationId": "",
+  "ecomApiKey": "",
+  "ecomStoreId": "",
+  "smtp": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "pass": ""
+  },
+  "from": {
+    "email": "",
+    "name": ""
+  },
+  "to": [
+    {
+      "email": "",
+      "name": ""
+    }
+  ]
+}

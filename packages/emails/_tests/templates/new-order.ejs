@@ -1,0 +1,37 @@
+<html>
+
+<body>
+  <h1>Hello <%= customer.display_name %> ! We just recived your order <a href="<%=  order.status_link  %>">#<%=
+          order.number %></a>
+  </h1>
+  <p> Your package will be delivered in
+    <% order.shipping_lines.forEach(shipping_line=> { %>
+    <%= shipping_line.delivery_time.days %> working days
+    <% }) %>
+  </p>
+
+  <h3> Order details:</h3>
+  <ul>
+    <% order.items.forEach(item=> { %>
+    <li>
+      <%= item.name %> x <%= item.quantity %>
+      <br />
+
+      Price: <%= (item.final_price ||  item.price) %> Total: <%= (item.final_price ||  item.price)* item.quantity %>
+    </li>
+    <% }) %>
+
+  </ul>
+  <p>
+    Subtotal: <%= order.currency_symbol %>
+    <%= order.amount.subtotal %> <br>
+    Freight: <%= order.currency_symbol %>
+    <%= order.amount.freight %> <br>
+    Discount: <%= order.currency_symbol %>
+    <%= order.amount.discount %> <br>
+    Total: <%= order.currency_symbol %>
+    <%= order.amount.total %>
+  </p>
+</body>
+
+</html>

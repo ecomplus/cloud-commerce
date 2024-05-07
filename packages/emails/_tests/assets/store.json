@@ -1,0 +1,25 @@
+{
+  "_id": "5a674f224e0dcec2c3353d9d",
+  "created_at": "2017-11-19T13:10:00.612Z",
+  "store_id": 100,
+  "name": "Minha Loja Online",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "segment_id": 23,
+  "doc_type": "CNPJ",
+  "doc_number": "12345678901234",
+  "corporate_name": "Minha Loja Online LTDA",
+  "address": "Rua Exemplar 100, Bairro Examplar, São Paulo, SP",
+  "phone": "31988887777",
+  "representant_name": "Fulano Ciclano",
+  "representant_email": "fulano@sample.shop.eg",
+  "contact_email": "contato@sample.shop.eg",
+  "financial_email": "financeiro@sample.shop.eg",
+  "logo": {
+      "url": "https://sample.shop.eg/assets/logo.png",
+      "size": "120x80"
+  },
+  "brand_colors": {
+      "primary": "#03a9b3",
+      "secondary": "#ffffff"
+  }
+}

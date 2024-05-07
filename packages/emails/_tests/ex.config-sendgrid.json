@@ -1,0 +1,19 @@
+{
+  "ecomAuthenticationId": "",
+  "ecomApiKey": "",
+  "ecomStoreId": "",
+  "apiKey": "",
+  "from": {
+    "email": "",
+    "name": ""
+  },
+  "to": [
+    {
+      "email": "",
+      "name": ""
+    }
+  ],
+  "templateIdOrders": "",
+  "templateIdCarts": "",
+  "templateIdProducts": ""
+}

@@ -1,2 +1,3 @@
 tests/config*
 content/
+functions/ssr/content/settings.json
