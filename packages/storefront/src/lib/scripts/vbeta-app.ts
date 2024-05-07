@@ -7,6 +7,7 @@ import {
   sendSignInLinkToEmail,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
 } from 'firebase/auth';
 import {
   session,
@@ -261,7 +262,7 @@ if (!import.meta.env.SSR) {
 
   const appScript = document.createElement('script');
   appScript.src = (window as any)._appScriptSrc
-    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.202/dist/lib/js/app.js';
+    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.203/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 
@@ -283,6 +284,12 @@ if (!import.meta.env.SSR) {
       if (window.OAUTH_PROVIDERS?.includes('google')) {
         const provider = new GoogleAuthProvider();
         (window as any).signInWithGoogle = () => {
+          signInWithPopup(firebaseAuth, provider).catch(console.error);
+        };
+      }
+      if (window.OAUTH_PROVIDERS?.includes('facebook')) {
+        const provider = new FacebookAuthProvider();
+        (window as any).signInWithFacebook = () => {
           signInWithPopup(firebaseAuth, provider).catch(console.error);
         };
       }
