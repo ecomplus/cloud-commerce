@@ -25,6 +25,33 @@ const { customCode } = await getContent('layout');
       /* eslint-disable */
       import { prefetch } from 'astro:prefetch';
       window.$prefetch = prefetch;
+      const raceAndLoadScripts = () => Promise.race([
+        window.$firstInteraction,
+        new Promise((resolve) => { setTimeout(resolve, 3000); }),
+      ]).then(() => {
+        const loadDelayedScripts = () => {
+          window.$delayedAsyncScripts?.forEach((src) => {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = src;
+            document.body.appendChild(script);
+          });
+        };
+        setTimeout(() => {
+          if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(loadDelayedScripts);
+            return;
+          }
+          loadDelayedScripts();
+        }, 200);
+      });
+      if (document.readyState !== 'loading') {
+        raceAndLoadScripts();
+      } else {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(raceAndLoadScripts, 50);
+        });
+      }
     </script>
   </slot>
   <slot name="before-body-end" />
