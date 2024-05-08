@@ -42,7 +42,7 @@ interface Window {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
   $delayedAsyncScripts?: string[];
-  $firstInteraction?: Promise<void>;
+  $firstInteraction?: Promise<any>;
   $prefetch?: typeof import('astro:prefetch').prefetch;
   $isCmsPreview?: boolean;
 }

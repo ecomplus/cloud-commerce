@@ -81,17 +81,6 @@ if (!ogImage) {
 }
 
 let inlineClientJS = `
-window._emitApiContext = (id = null) => {
-  $storefront.url = new URL(window.location.toString());
-  $storefront.getSession = (/* sid */) => ({
-    url: $storefront.url,
-    apiContext: $storefront.apiContext,
-  });
-  console.debug('[ctx] emit ' + id);
-  window.dispatchEvent(new Event('storefront:apiContext'));
-  window._emitedContextId = id;
-  window.__sfIds = {};
-};
 window.ECOM_STORE_ID = ${storeId};
 window.ECOM_LANG = '${lang}';
 window.ECOM_CURRENCY = '${currency}';
@@ -207,6 +196,72 @@ const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
   {(!pwaInfo && !import.meta.env.DEV)
     && <link rel="manifest" href="/manifest.webmanifest" />}
 </>}
+
+<script is:inline>
+const firstInteraction = new Promise((resolve) => {
+  const controller = new AbortController();
+  [
+    'keydown',
+    'mousemove',
+    'pointerdown',
+    'touchstart',
+    'scroll',
+  ].forEach((evName) => {
+    document.addEventListener(
+      evName,
+      () => {
+        resolve();
+        controller.abort();
+        window.dispatchEvent(new Event('firstInteraction'));
+      },
+      { once: true, passive: true, signal: controller.signal },
+    );
+  });
+});
+window.$firstInteraction = firstInteraction;
+if (!window.$delayedAsyncScripts) {
+  window.$delayedAsyncScripts = [];
+  const raceAndLoadScripts = () => Promise.race([
+    firstInteraction,
+    new Promise((resolve) => { setTimeout(resolve, 3000); }),
+  ]).then(() => {
+    const loadDelayedScripts = () => {
+      window.$delayedAsyncScripts.forEach((src) => {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = src;
+        document.body.appendChild(script);
+      });
+    };
+    setTimeout(() => {
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(loadDelayedScripts);
+        return;
+      }
+      loadDelayedScripts();
+    }, 200);
+  });
+  if (document.readyState !== 'loading') {
+    raceAndLoadScripts();
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(raceAndLoadScripts, 50);
+    });
+  }
+}
+window._emitApiContext = (id = null) => {
+  const { $storefront } = window;
+  $storefront.url = new URL(window.location.toString());
+  $storefront.getSession = (/* sid */) => ({
+    url: $storefront.url,
+    apiContext: $storefront.apiContext,
+  });
+  console.debug('[ctx] emit ' + id);
+  window.dispatchEvent(new Event('storefront:apiContext'));
+  window._emitedContextId = id;
+  window.__sfIds = {};
+};
+</script>
 
 <script is:inline set:html={inlineClientJS} />
 <script is:inline type="application/ld+json" set:html={inlineJSONLd} />

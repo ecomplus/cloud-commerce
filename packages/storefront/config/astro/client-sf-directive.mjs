@@ -14,59 +14,6 @@ const waitIntersection = (el) => new Promise((resolve) => {
   }
 });
 
-const firstInteraction = new Promise((resolve) => {
-  const controller = new AbortController();
-  [
-    'keydown',
-    'mousemove',
-    'pointerdown',
-    'touchstart',
-    'scroll',
-  ].forEach((evName) => {
-    document.addEventListener(
-      evName,
-      () => {
-        resolve();
-        controller.abort();
-        window.dispatchEvent(new Event('firstInteraction'));
-      },
-      { once: true, passive: true, signal: controller.signal },
-    );
-  });
-});
-window.$firstInteraction = firstInteraction;
-
-if (!window.$delayedAsyncScripts) {
-  window.$delayedAsyncScripts = [];
-  const raceAndLoadScripts = () => Promise.race([
-    firstInteraction,
-    new Promise((resolve) => { setTimeout(resolve, 2000); }),
-  ]).then(() => {
-    const loadDelayedScripts = () => {
-      window.$delayedAsyncScripts.forEach((src) => {
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = src;
-        document.body.appendChild(script);
-      });
-    };
-    setTimeout(() => {
-      if (typeof window.requestIdleCallback === 'function') {
-        window.requestIdleCallback(loadDelayedScripts);
-        return;
-      }
-      loadDelayedScripts();
-    }, 200);
-  });
-  if (document.readyState !== 'loading') {
-    raceAndLoadScripts();
-  } else {
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(raceAndLoadScripts, 50);
-    });
-  }
-}
-
 /**
  * Hydrate on context script executed (`$storefront.apiContext` ready)
  * Check event emits at BaseHead.astro and use-shared-data.ts
@@ -85,7 +32,9 @@ export default (load, opts, el) => {
   const isLazy = !arrOpts.length || arrOpts.includes('lazy');
   const isEager = !isLazy && arrOpts.includes('eager');
   const hy = async () => {
-    if (arrOpts.includes('interaction')) await firstInteraction;
+    if (arrOpts.includes('interaction') && window.$firstInteraction) {
+      await window.$firstInteraction;
+    }
     const hydrate = await load();
     await hydrate();
   };
