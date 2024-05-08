@@ -113,8 +113,8 @@ setTimeout(() => {
 }
 let contextInlineClientJS: string | undefined;
 if (apiDoc) {
-  if (typeof apiDoc.price === 'number') {
-    apiDoc.price = getPrice(apiDoc);
+  if (typeof (apiDoc as Record<string, any>).price === 'number') {
+    (apiDoc as Record<string, any>).price = getPrice(apiDoc);
   }
   const slimDocRegex = globalThis.$storefrontSlimDocRegex
     || /body_|meta_|metafields|_records|i18n/;

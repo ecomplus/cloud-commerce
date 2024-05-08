@@ -36,6 +36,37 @@ const firstInteraction = new Promise((resolve) => {
 });
 window.$firstInteraction = firstInteraction;
 
+if (!window.$delayedAsyncScripts) {
+  window.$delayedAsyncScripts = [];
+  const raceAndLoadScripts = () => Promise.race([
+    firstInteraction,
+    new Promise((resolve) => { setTimeout(resolve, 2000); }),
+  ]).then(() => {
+    const loadDelayedScripts = () => {
+      window.$delayedAsyncScripts.forEach((src) => {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = src;
+        document.body.appendChild(script);
+      });
+    };
+    setTimeout(() => {
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(loadDelayedScripts);
+        return;
+      }
+      loadDelayedScripts();
+    }, 200);
+  });
+  if (document.readyState !== 'loading') {
+    raceAndLoadScripts();
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(raceAndLoadScripts, 50);
+    });
+  }
+}
+
 /**
  * Hydrate on context script executed (`$storefront.apiContext` ready)
  * Check event emits at BaseHead.astro and use-shared-data.ts
