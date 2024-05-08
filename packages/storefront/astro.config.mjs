@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 import { defineConfig, passthroughImageService } from 'astro/config';
 import node from '@astrojs/node';
 import vue from '@astrojs/vue';
-import partytown from '@astrojs/partytown';
 import UnoCSS from 'unocss/astro';
 import AutoImport from 'unplugin-auto-import/astro';
 import dictionaryDir from '@cloudcommerce/i18n/lib/dirname';
@@ -15,7 +14,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 dotenv.config();
 
 const isSSG = process.env.BUILD_OUTPUT === 'static';
-const isMinimalBuild = !!process.env.BUILD_MINIMAL;
+// const isMinimalBuild = !!process.env.BUILD_MINIMAL;
 const outDir = process.env.BUILD_OUT_DIR || (isSSG ? './dist/client' : './dist');
 const isToServerless = !isSSG && process.env.DEPLOY_RUNTIME === 'serverless';
 const deployRand = process.env.DEPLOY_RAND || '_';
@@ -168,7 +167,6 @@ const genAstroConfig = ({
   AstroPWA,
   isPWA = true,
   vitePWAOptions = _vitePWAOptions,
-  partytownForward,
 } = {}) => {
   const integrations = [
     vue({
@@ -220,14 +218,6 @@ const genAstroConfig = ({
       find: 'virtual:pwa-register',
       replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
     });
-  }
-  if (!isMinimalBuild && Array.isArray(partytownForward) && partytownForward.length) {
-    integrations.push(partytown({
-      config: {
-        debug: false,
-        forward: partytownForward,
-      },
-    }));
   }
   return {
     output: isSSG ? 'static' : 'server',
