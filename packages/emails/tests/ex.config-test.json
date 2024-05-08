@@ -1,0 +1,15 @@
+{
+  "ecomAuthenticationId": "",
+  "ecomApiKey": "",
+  "ecomStoreId": "",
+  "smtp_host": "",
+  "smtp_port": "",
+  "smtp_user": "",
+  "smtp_pass": "",
+  "from_email": "",
+  "from_name": "",
+  "to_email" : "",
+  "to_name" : "",
+  "sendgrid_api_key": "",
+  "templateId_orders" : ""
+}

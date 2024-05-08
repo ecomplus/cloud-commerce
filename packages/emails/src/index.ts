@@ -8,8 +8,9 @@ import type {
 } from '../types/index';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import type { SettingsContent } from '@cloudcommerce/types';
+import cloudCommerceConfig from '@cloudcommerce/firebase/lib/config';
 import nodemailer from 'nodemailer';
-import _config from '@cloudcommerce/firebase/lib/config';
+import axios, { AxiosInstance } from 'axios';
 import parseTemplateToHtml from './parse-template-to-html';
 // import {
 //   sendGridBodyWithTemplateId,
@@ -20,26 +21,17 @@ import parseTemplateToHtml from './parse-template-to-html';
 const parseEmailsToString = (emails: EmailAdrress | EmailAdrress[]) => {
   if (Array.isArray(emails)) {
     return emails.reduce((value: string, emailAdrress: EmailAdrress) => {
-      return `${value}, ${emailAdrress.email}`;
+      if (emailAdrress.email) {
+        return `${value}, ${emailAdrress.email}`;
+      }
+      return value;
     }, '');
   }
-  return `"${emails.name}" <${emails.email}>`;
+  if (emails.email) {
+    return `"${emails.name}" <${emails.email}>`;
+  }
+  return '';
 };
-
-const {
-  MAIL_SENDER,
-  MAIL_SENDER_NAME,
-  MAIL_REPLY_TO,
-  SMTP_HOST,
-  SMTP_PORT,
-  SMTP_USER,
-  SMTP_PASS,
-  SMTP_TLS,
-  GCLOUD_PROJECT,
-  // SENDGRID_API_KEY,
-} = process.env;
-
-console.log('>> SMTP_HOST ', process.env.SMTP_HOST);
 
 class Email {
   from: EmailAdrress;
@@ -60,33 +52,51 @@ class Email {
 
   settingsContent: SettingsContent | undefined;
 
-  // bodyEmail: DataEmailSendGrid;
+  // bodyEmail: DataEmailSendGrid | undefined;
+  templateId: string | undefined;
+  sendGridApi: AxiosInstance | undefined;
+
+  mailSander = process.env.MAIL_SENDER;
+  mailSanderName = process.env.MAIL_SENDER_NAME;
+  mailReplyTo = process.env.MAIL_REPLY_TO;
+  smtpHost = process.env.SMTP_HOST;
+  smtpPort = process.env.SMTP_PORT;
+  smtpUser = process.env.SMTP_USER;
+  smtpPass = process.env.SMTP_PASS;
+  smtpTls = process.env.SMTP_TLS;
+  gcloudProject = process.env.GCLOUD_PROJECT;
 
   constructor() {
-    const { settingsContent } = _config.get();
+    const { settingsContent } = cloudCommerceConfig.get();
 
     if (settingsContent) {
       this.settingsContent = settingsContent;
     }
 
-    if (!MAIL_SENDER_NAME && !settingsContent.name) {
+    if (!this.mailSanderName && !settingsContent.name) {
       throw new Error('Sender name not found');
     }
 
     this.from = {
-      name: MAIL_SENDER_NAME || settingsContent.name,
-      email: MAIL_SENDER || `${(GCLOUD_PROJECT?.replace('ecom2', '') || 'lojas')}@e-com.plus`,
+      name: this.mailSanderName || settingsContent.name,
+      email: this.mailSander
+        || `${(this.gcloudProject?.replace('ecom2', '') || 'lojas')}@e-com.plus`,
     };
 
     this.replyTo = {
       name: settingsContent.name,
-      email: MAIL_REPLY_TO || settingsContent.email,
+      email: this.mailReplyTo || settingsContent.email,
     };
   }
 
   setFrom(person: { email: string, name?: string }) {
+    if (!person.email) {
+      throw new Error('Sender (from) are not of type EmailAddress');
+    }
+
     this.from = {
-      name: person.name || MAIL_SENDER_NAME || this.settingsContent?.name || '',
+      name: person.name || this.mailSanderName
+        || this.settingsContent?.name || '',
       email: person.email,
     };
 
@@ -94,6 +104,10 @@ class Email {
   }
 
   setSender(person: { email: string, name?: string }) {
+    if (!person.email) {
+      throw new Error('Sender are not of type EmailAddress');
+    }
+
     this.sender = {
       name: person.name || '',
       email: person.email,
@@ -102,11 +116,18 @@ class Email {
     return this;
   }
 
-  setReplyTo(recipients: EmailAdrress | EmailAdrress[]) {
-    if (Array.isArray(recipients)) {
-      this.replyTo = recipients;
+  setReplyTo(senders: EmailAdrress | EmailAdrress[]) {
+    if (Array.isArray(senders)) {
+      senders.forEach((sender) => {
+        if (!sender.email) {
+          throw new Error('Senders (replyTo) are not of type EmailAddress');
+        }
+      });
+      this.replyTo = senders;
+    } else if (senders.email) {
+      this.replyTo = [senders];
     } else {
-      this.replyTo = [recipients];
+      throw new Error('Sender (replyTo) are not of type EmailAddress');
     }
 
     return this;
@@ -114,9 +135,16 @@ class Email {
 
   setTo(recipients: EmailAdrress | EmailAdrress[]) {
     if (Array.isArray(recipients)) {
+      recipients.forEach((recipient) => {
+        if (!recipient.email) {
+          throw new Error('Recipients are not of type EmailAddress');
+        }
+      });
       this.to = recipients;
-    } else {
+    } else if (recipients.email) {
       this.to = [recipients];
+    } else {
+      throw new Error('Recipient are not of type EmailAddress');
     }
 
     return this;
@@ -143,56 +171,36 @@ class Email {
     return this;
   }
 
-  setHtml(template?: Template, templateData?: TemplateData, html?:string) {
-    if (!template && !html) {
-      throw new Error('Template or html not found');
-    }
-    if (template && !templateData) {
-      throw new Error('Data for template not found');
-    }
-
-    if (html) {
-      this.html = html;
-    } else if (template && templateData) {
-      this.html = parseTemplateToHtml(templateData, template);
-    }
-
-    if (!this.html) {
-      throw new Error(`Email body for template: #${template}, not found`);
-    }
-
-    return this;
-  }
-
+  // Config to SMTP
   setConfigSmtp(config?: SmtpConfig) {
-    console.log('>> 1');
     let smtpConfig: SmtpConfig | undefined;
-    if (!config && SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS) {
-      const port = parseInt(SMTP_PORT, 10);
-      const secure = SMTP_TLS && SMTP_TLS.toUpperCase() === 'TRUE' ? true : port === 465;
+    if (
+      !config && this.smtpHost && this.smtpPort
+        && this.smtpUser && this.smtpPass
+    ) {
+      const port = parseInt(this.smtpPort, 10);
+      const secure = this.smtpTls && this.smtpTls.toUpperCase() === 'TRUE' ? true : port === 465;
       // secure = true for 465, false for other ports
       smtpConfig = {
-        host: SMTP_HOST,
+        host: this.smtpHost,
         port,
         secure,
-        auth: { user: SMTP_USER, pass: SMTP_PASS },
+        auth: { user: this.smtpUser, pass: this.smtpPass },
       };
     }
 
-    console.log('config ', config, ' ', smtpConfig, SMTP_HOST);
     if (!config && !smtpConfig) {
       throw new Error('Variables for SMTP configuration not found');
     }
 
     // create reusable transporter object using the default SMTP transport
-    this.transporter = nodemailer.createTransport(config);
+    this.transporter = nodemailer.createTransport(config || smtpConfig);
     return this;
   }
 
   setMailOptionsSmtp() {
-    console.log('>> 2');
     if (!this.to) {
-      throw new Error('Recipient not found');
+      return new Error('Recipient not found');
     }
     const mailOptions: SMTPTransport.MailOptions = {
       from: `"${this.from.name}" <${this.from.email}>`,
@@ -219,10 +227,77 @@ class Email {
     return this;
   }
 
+  async setHtml(
+    template?: Template,
+    templateData?: TemplateData,
+    html?:string,
+    templateId?: string,
+  ) {
+    const isSendGid = process.env.SENDGRID_API_KEY
+     && process.env.SENDGRID_API_KEY !== '';
+
+    if (isSendGid && !templateId && !templateData) {
+      throw new Error('Template or templateId not found');
+    } else if (!template && !html) {
+      throw new Error('Template or html not found');
+    } else if (template && !templateData) {
+      throw new Error('Data for template not found');
+    }
+
+    if (isSendGid && templateId && templateData) {
+      // sendGridBodyWithTemplateId(emailHeaders, templateData, templateId);
+    } else if (html) {
+      this.html = html;
+      // sendGridBodyWithHtml(emailHeaders, html);
+    } else if (template && templateData) {
+      this.html = !isSendGid
+        ? parseTemplateToHtml(templateData, template)
+        : '';
+      // await sendGridBodyWithTemplate(emailHeaders, templateData, template);
+    }
+
+    if (!this.html) {
+      throw new Error('Email body for template, not found');
+    }
+
+    return this;
+  }
+
+  // Config to SendGrid
+  setSendGridApi() {
+    if (!process.env.SENDGRID_API_KEY || process.env.SENDGRID_API_KEY === '') {
+      throw new Error('Variable SENDGRID_API_KEY not configured');
+    }
+
+    this.sendGridApi = axios.create({
+      baseURL: 'https://api.sendgrid.com/v3',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      },
+    });
+    return this;
+  }
+
+  async setTemplateId(templateId: string) {
+    if (!this.sendGridApi) {
+      this.setSendGridApi();
+    }
+    const data = await this.sendGridApi?.get(`/templates/${templateId}`);
+    if (data?.status === 200) {
+      this.templateId = templateId;
+    }
+
+    return this;
+  }
+
   async sendEmail() {
     if (this.to && (this.html || this.text)) {
       this.setConfigSmtp();
       this.setMailOptionsSmtp();
+    }
+    if (!this.to) {
+      return new Error('Recipient not configured');
     }
 
     if (this.transporter && this.mailOptionsSmtp) {
@@ -230,9 +305,12 @@ class Email {
       return { status: 202, message: `messageId: #${info.messageId}` };
     }
 
+    // TODO: SendGrid
+    // sendGridApi, body = parse html
+
     // TODO: other providers
 
-    throw new Error('No email provider not configured');
+    return new Error('No email provider not configured');
   }
 }
 
