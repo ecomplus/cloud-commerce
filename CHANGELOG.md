@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.17.5](https://github.com/ecomplus/cloud-commerce/compare/v2.17.4...v2.17.5) (2024-05-08)
+
+
+### Bug Fixes
+
+* **storefront:** Setup `$firstInteraction` and `$delayedAsyncScripts` on head scripts ([b48a741](https://github.com/ecomplus/cloud-commerce/commit/b48a741361cd58e275d9d2a4a15be7ff071d78b3))
+
 ### [2.17.4](https://github.com/ecomplus/cloud-commerce/compare/v2.17.3...v2.17.4) (2024-05-08)
 
 ### [2.17.3](https://github.com/ecomplus/cloud-commerce/compare/v2.17.2...v2.17.3) (2024-05-07)
