@@ -102,7 +102,7 @@ const useStickyHeader = (props: Props) => {
         watch([isSticky, isScrollUp], ([_isSticky, _isScrollUp]) => {
           let opacity: string = '';
           let transform: string = '';
-          if (_isSticky && (!_isScrollUp || isShownOnScrollDown)) {
+          if (_isSticky && !_isScrollUp && !isShownOnScrollDown) {
             opacity = '0';
             transform = 'translateY(-100%)';
           }
