@@ -1,5 +1,6 @@
 import type { Ref } from 'vue';
 import type { Categories } from '@cloudcommerce/api/types';
+import type { Props as UseStickyHeaderProps } from '@@sf/composables/use-sticky-header';
 import { ref, computed, watch } from 'vue';
 import { getSearchUrl } from '@@sf/sf-lib';
 import { totalItems } from '@@sf/state/shopping-cart';
@@ -14,6 +15,7 @@ export interface Props {
   menuCategorySlugs?: string[];
   menuRandomCategories?: number;
   isAlphabeticalSortSubmenu?: boolean;
+  sticky?: Partial<UseStickyHeaderProps>;
 }
 
 type MainCategory = PartCategory & {
@@ -91,7 +93,7 @@ const useShopHeader = (props: Props) => {
     isSticky,
     staticHeight,
     staticY,
-  } = useStickyHeader({ header });
+  } = useStickyHeader({ ...props.sticky, header });
   const positionY = computed(() => {
     return isSticky.value ? header.value?.offsetHeight : staticY.value;
   });
