@@ -27,7 +27,7 @@ const { customCode } = await getContent('layout');
       window.$prefetch = prefetch;
       const raceAndLoadScripts = () => Promise.race([
         window.$firstInteraction,
-        new Promise((resolve) => { setTimeout(resolve, 3000); }),
+        new Promise((resolve) => { setTimeout(resolve, 4000); }),
       ]).then(() => {
         const loadDelayedScripts = () => {
           window.$delayedAsyncScripts?.forEach((src) => {
@@ -43,7 +43,7 @@ const { customCode } = await getContent('layout');
             return;
           }
           loadDelayedScripts();
-        }, 200);
+        }, 500);
       });
       if (document.readyState !== 'loading') {
         raceAndLoadScripts();
