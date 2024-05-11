@@ -1,13 +1,13 @@
 import type { OutgoingHttpHeaders } from 'node:http';
 import type { Request, Response } from 'firebase-functions';
-import type { GroupedAnalyticsEvents } from './analytics-events';
+import type { GroupedAnalyticsEvents } from './analytics/send-analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
+import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import { warn, error } from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
-import proxy from './reverse-proxy';
-import checkUserAgent from './check-user-agent';
-import { sendAnalyticsEvents } from './analytics-events';
+import { pathToDocId, checkUserAgent } from './util/ssr-utils';
+import { sendAnalyticsEvents } from './analytics/send-analytics-events';
 
 declare global {
   // eslint-disable-next-line
@@ -51,12 +51,8 @@ readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
   .catch(warn);
 
 export default async (req: Request, res: Response) => {
-  if (req.path.startsWith('/~partytown')) {
+  if (req.path.startsWith('/~partytown') || req.path.startsWith('/~reverse-proxy')) {
     res.sendStatus(404);
-    return;
-  }
-  if (req.path.startsWith('/~reverse-proxy')) {
-    proxy(req, res);
     return;
   }
 
@@ -168,7 +164,7 @@ export default async (req: Request, res: Response) => {
   }
 
   res.set('X-XSS-Protection', '1; mode=block');
-  const url = req.path.replace(/\.html$/, '');
+  const pathname = req.path.replace(/\.html$/, '');
 
   const setStatusAndCache = (status: number, cacheControl: string) => {
     if (res.headersSent) return res;
@@ -178,11 +174,14 @@ export default async (req: Request, res: Response) => {
   };
 
   const fallback = (err: any, status = 500) => {
-    if (url !== '/~fallback' && (/\/[^/.]+$/.test(url) || /\.x?html$/.test(url))) {
+    if (
+      pathname !== '/~fallback'
+      && (/\/[^/.]+$/.test(pathname) || /\.x?html$/.test(pathname))
+    ) {
       setStatusAndCache(status, 'public, max-age=120')
         .send('<html><head>'
           + '<meta http-equiv="refresh" content="0; '
-            + `url=/~fallback?status=${status}&url=${encodeURIComponent(url)}"/>`
+            + `url=/~fallback?status=${status}&url=${encodeURIComponent(pathname)}"/>`
           + `</head><body>${err.toString()}</body></html>`);
     } else {
       setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
@@ -274,6 +273,15 @@ export default async (req: Request, res: Response) => {
     headers['X-Async-Ex'] = `${execId}_${Date.now() - startedAt}`;
     _writeHead.apply(res, [status, headers]);
     resolveHeadersSent?.(null);
+    if (status === 200) {
+      getFirestore().doc(`ssrReqs/${pathToDocId(pathname)}`)
+        .set({
+          pathname,
+          at: Timestamp.now(),
+          count: FieldValue.increment(1),
+        }, { merge: true })
+        .catch(warn);
+    }
   };
 
   /*
@@ -295,7 +303,7 @@ export default async (req: Request, res: Response) => {
       return;
     }
     const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
-    const local = new URL(`.${url}`, clientRoot);
+    const local = new URL(`.${pathname}`, clientRoot);
     try {
       const data = await readFile(local);
       setStatusAndCache(200, 'public, max-age=60, s-maxage=600')

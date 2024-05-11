@@ -1,4 +1,4 @@
-import type { AnalyticsEvent } from '../analytics-events';
+import type { AnalyticsEvent } from './send-analytics-events';
 import axios from 'axios';
 
 // https://business-api.tiktok.com/portal/docs?id=1741601162187777

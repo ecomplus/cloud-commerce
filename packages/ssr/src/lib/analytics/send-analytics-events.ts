@@ -2,9 +2,9 @@ import type { AxiosError } from 'axios';
 import { EventEmitter } from 'node:events';
 import { warn, error } from 'firebase-functions/logger';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
-import sendToGa4 from './analytics/send-to-ga4';
-import sendToMeta from './analytics/send-to-meta';
-import sendToTiktok from './analytics/send-to-tiktok';
+import sendToGa4 from './send-to-ga4';
+import sendToMeta from './send-to-meta';
+import sendToTiktok from './send-to-tiktok';
 
 const analyticsEmitter = new EventEmitter();
 

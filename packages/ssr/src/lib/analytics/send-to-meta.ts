@@ -1,4 +1,4 @@
-import type { AnalyticsEvent } from '../analytics-events';
+import type { AnalyticsEvent } from './send-analytics-events';
 import axios from 'axios';
 
 // https://developers.facebook.com/docs/meta-pixel/reference#standard-events
