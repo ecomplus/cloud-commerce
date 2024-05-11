@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.17.6](https://github.com/ecomplus/cloud-commerce/compare/v2.17.5...v2.17.6) (2024-05-11)
+
+
+### Bug Fixes
+
+* **ssr:** Save valid SSR reqs to Firestore to purge CDN cache ([2703837](https://github.com/ecomplus/cloud-commerce/commit/2703837a042e5b71af559ab970c681026983c8ed))
+* **storefront:** Add `sticky` optional prop to shop header composable ([94bf958](https://github.com/ecomplus/cloud-commerce/commit/94bf958ae24f1eb7837b7109d81f6c657e6ca35a))
+* **storefront:** Properly deal with sticky header shown on scroll down ([97a8c2d](https://github.com/ecomplus/cloud-commerce/commit/97a8c2d82f04dca84807101be26e6b958fa7f52b))
+
 ### [2.17.5](https://github.com/ecomplus/cloud-commerce/compare/v2.17.4...v2.17.5) (2024-05-08)
 
 
