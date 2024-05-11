@@ -4,7 +4,7 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { error } from 'firebase-functions/logger';
 import axios from 'axios';
 
-export type PageViewDocs = Array<{ ref?: DocumentReference, pathname: string }>;
+export type PageViewDocs = Array<{ ref: DocumentReference, pathname: string }>;
 
 export const loadBunnyStorageKeys = async ({ projectId, bunnyAxios, bunnyStorageKeysRef }: {
   projectId: string,
@@ -115,7 +115,7 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
     for (let i = 0; i < pageViewDocs.length; i++) {
       const { ref, pathname } = pageViewDocs[i];
       if (purgedPaths.includes(pathname)) {
-        ref?.update({ isCachePurged: false });
+        ref.update({ isCachePurged: false });
         continue;
       }
       purgeReqs.push(bunnyAxios('/purge', {
@@ -144,12 +144,12 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
               url: `/${permaCachePath}`,
               data: freshHtml,
             });
-            ref?.update({ isCachePurged: true, permaCachePath });
+            ref.update({ isCachePurged: true, permaCachePath });
           }),
         );
         continue;
       }
-      ref?.update({ isCachePurged: true });
+      ref.update({ isCachePurged: true });
       continue;
     }
     await Promise.all(purgeReqs);

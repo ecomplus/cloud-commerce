@@ -274,11 +274,21 @@ export default async (req: Request, res: Response) => {
     _writeHead.apply(res, [status, headers]);
     resolveHeadersSent?.(null);
     if (status === 200) {
+      if (
+        pathname.startsWith('/~')
+        || pathname.startsWith('/.')
+        || pathname.startsWith('/app/')
+        || pathname.startsWith('/admin/')
+      ) {
+        // Routes with short cache TTL, see cli/ci/bunny-config-base.sh
+        return;
+      }
       getFirestore().doc(`ssrReqs/${pathToDocId(pathname)}`)
         .set({
           pathname,
-          at: Timestamp.now(),
           count: FieldValue.increment(1),
+          isCachePurged: false,
+          at: Timestamp.now(),
         }, { merge: true })
         .catch(warn);
     }
