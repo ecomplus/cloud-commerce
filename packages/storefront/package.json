@@ -60,11 +60,11 @@
     "firebase": "^10.11.1",
     "image-size": "^1.1.1",
     "mitt": "^3.0.1",
-    "semver": "^7.6.0",
+    "semver": "^7.6.2",
     "sharp": "^0.32.6",
     "tailwindcss": "^3.4.3",
     "unocss": "^0.59.4",
-    "unplugin-auto-import": "^0.17.5",
+    "unplugin-auto-import": "^0.17.6",
     "vue": "^3.4.27",
     "wade": "0.3.3",
     "yaml": "^2.4.2"
@@ -72,6 +72,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.1"
+    "@types/react": "^18.3.2"
   }
 }
