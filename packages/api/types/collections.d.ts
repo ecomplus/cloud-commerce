@@ -14,13 +14,17 @@ export interface Collections {
    */
   _id: string & { length: 24 };
   /**
-   * When object was seted (POST/PUT), date and time in ISO 8601 standard representation [auto]
+   * When object was seted (POST), date and time in ISO 8601 standard representation [auto]
    */
   created_at: string;
   /**
    * When was it last changed, date and time in ISO 8601 standard representation [auto]
    */
   updated_at: string;
+  /**
+   * Last object redefinition (PUT) if any, date and time in ISO 8601 standard representation [auto]
+   */
+  upserted_at?: string;
   /**
    * ID of store [auto]
    */
