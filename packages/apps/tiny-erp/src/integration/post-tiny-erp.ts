@@ -35,7 +35,6 @@ export default (
     .then((response) => {
       const { retorno } = response.data;
       if (retorno.status === 'Erro') {
-        const err: any = new Error('Tiny error response');
         const tinyErrorCode = parseInt(retorno.codigo_erro, 10);
         if (tinyErrorCode <= 2) {
           response.status = 401;
@@ -44,6 +43,7 @@ export default (
         } else if (tinyErrorCode === 20) {
           response.status = 404;
         }
+        const err: any = new Error(`Tiny error ${tinyErrorCode} at ${response.config.url}`);
         err.response = response;
         err.config = response.config;
         err.request = response.request;
