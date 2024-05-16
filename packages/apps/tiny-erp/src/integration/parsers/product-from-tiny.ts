@@ -95,24 +95,31 @@ export default (
   const sku = tinyProduct.codigo || String(tinyProduct.id);
   const name = (tinyProduct.nome || sku).trim();
   const isProduct = tipo === 'produto';
-  const getCorrectPrice = (price) => {
+  const getCorrectPrice = (price: number) => {
     return Number(price) > 0 ? Number(price) : null;
   };
+  const price = !isProduct
+    ? Number(tinyProduct.preco_promocional || tinyProduct.preco)
+    : Number(getCorrectPrice(tinyProduct.precoPromocional) || tinyProduct.preco);
   const product: ProductSet = {
     available: tinyProduct.situacao === 'A',
     sku,
     name,
-    cost_price: !isProduct ? Number(tinyProduct.preco_custo) : Number(tinyProduct.precoCusto),
-    price: !isProduct ? Number(tinyProduct.preco_promocional || tinyProduct.preco)
-      : Number(getCorrectPrice(tinyProduct.precoPromocional) || tinyProduct.preco),
+    cost_price: !isProduct
+      ? Number(tinyProduct.preco_custo)
+      : Number(tinyProduct.precoCusto),
+    price,
     base_price: Number(tinyProduct.preco),
     body_html: tinyProduct.descricao_complementar || tinyProduct.descricaoComplementar,
   };
+  if (tinyProduct.estoqueAtual) {
+    product.quantity = tinyProduct.estoqueAtual;
+  }
 
   if (isNew) {
     if (tinyProduct.seo) {
       if (tinyProduct.seo.slug && tinyProduct.seo.slug.length) {
-        product.slug = tinyProduct.seo.slug;
+        product.slug = tinyProduct.seo.slug.trim();
       }
       if (tinyProduct.seo.title && tinyProduct.seo.title.length) {
         product.meta_title = tinyProduct.seo.title.slice(0, 254);
@@ -124,8 +131,7 @@ export default (
         product.keywords = tinyProduct.seo.keywords.split(',');
       }
     }
-
-    product.slug = removeAccents(name.toLowerCase())
+    product.slug = removeAccents(product.slug || name.toLowerCase())
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-_./]/g, '');
     if (!/[a-z0-9]/.test(product.slug.charAt(0))) {
@@ -152,9 +158,9 @@ export default (
     }
   }
 
-  const weight = !isProduct ? (tinyProduct.peso_bruto || tinyProduct.peso_liquido)
+  const weight = !isProduct
+    ? (tinyProduct.peso_bruto || tinyProduct.peso_liquido)
     : (tinyProduct.pesoBruto || tinyProduct.pesoLiquido);
-
   if (weight > 0) {
     product.weight = {
       unit: 'kg',
@@ -200,7 +206,6 @@ export default (
 
         const specifications = {};
         const specTexts: string[] = [];
-
         if (grade && typeof grade === 'object') {
           Object.keys(grade).forEach((tipoGrade) => {
             if (grade[tipoGrade]) {
@@ -238,25 +243,20 @@ export default (
             specifications[gridId] = [spec];
           });
         }
-        let pictureId;
-        if (Array.isArray(anexos) && anexos.length
-          && Array.isArray(tinyProduct.anexos) && tinyProduct.anexos.length) {
+        let pictureId = 0;
+        if (Array.isArray(anexos) && Array.isArray(tinyProduct.anexos)) {
           pictureId = tinyProduct.anexos.length;
-          anexos.forEach((anexo) => {
-            tinyProduct.anexos.push(anexo);
-          });
-        } else if (Array.isArray(tinyProduct.anexos) && tinyProduct.anexos.length) {
-          pictureId = 0;
+          anexos.forEach((anexo) => tinyProduct.anexos.push(anexo));
         }
-
         if (specTexts.length) {
           product.variations?.push({
             _id: ecomUtils.randomObjectId(),
             name: `${name} / ${specTexts.join(' / ')}`.substring(0, 100),
             sku: codigo,
             specifications,
-            price: parseFloat(preco || 0),
-            quantity: estoqueAtual || 0,
+            price: parseFloat(preco) !== price ? parseFloat(preco) : undefined,
+            quantity: estoqueAtual,
+            // @ts-expect-error: `picture_id` will be replaced
             picture_id: pictureId,
           });
         }
@@ -290,7 +290,6 @@ export default (
         } else if (anexo.url) {
           url = anexo.url;
         }
-
         if (typeof url === 'string' && url.startsWith('http')) {
           promises.push(tryImageUpload(anexo, product as Products));
         }
@@ -298,7 +297,7 @@ export default (
       Promise.all(promises).then((images) => {
         if (Array.isArray(product.variations) && product.variations.length) {
           product.variations.forEach((variation) => {
-            if (variation.picture_id) {
+            if (typeof variation.picture_id === 'number') {
               const variationImage = images[variation.picture_id];
               if (variationImage._id) {
                 variation.picture_id = variationImage._id;
