@@ -1,9 +1,16 @@
+import type { AppOrId } from '@cloudcommerce/firebase/lib/helpers/update-app-data';
 import logger from 'firebase-functions/logger';
 import updateAppData from '@cloudcommerce/firebase/lib/helpers/update-app-data';
 
-export default async (queueEntry, appData, application, payload) => {
+export default async (
+  queueEntry: Record<string, any>,
+  appData: Record<string, any>,
+  application: AppOrId,
+  payload: any,
+) => {
   const isError = payload instanceof Error;
   const isImportation = queueEntry.action.endsWith('importation');
+  const isQueued = !queueEntry.isNotQueued;
   const logs = appData.logs || [];
   const logEntry = {
     resource: /order/i.test(queueEntry.queue) ? 'orders' : 'products',
@@ -29,7 +36,7 @@ export default async (queueEntry, appData, application, payload) => {
       if (response) {
         const { data, status } = response;
         notes = `Error: Status ${status} \n${JSON.stringify(data)}`;
-        if (!status || status === 429 || status >= 500) {
+        if (isQueued && (!status || status === 429 || status >= 500)) {
           return setTimeout(() => {
             throw payload;
           }, 2000);
@@ -50,7 +57,7 @@ export default async (queueEntry, appData, application, payload) => {
     logEntry.notes = notes.substring(0, 5000);
   }
 
-  if (isError || !isImportation) {
+  if (isQueued && (isError || !isImportation)) {
     logs.unshift(logEntry);
     await updateAppData(application, {
       logs: logs.slice(0, 200),

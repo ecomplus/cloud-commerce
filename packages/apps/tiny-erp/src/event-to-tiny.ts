@@ -114,9 +114,9 @@ const handleApiEvent: ApiEventHandler = async ({
                   appData,
                   canCreateNew,
                   isHiddenQueue,
-                ).then((payload) => {
+                ).then((payload: any) => {
                   return afterQueue(queueEntry, appData, app, payload);
-                }).catch((err) => {
+                }).catch((err: any) => {
                   return afterQueue(queueEntry, appData, app, err);
                 });
               }
