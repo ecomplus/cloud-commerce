@@ -4,7 +4,9 @@ import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
-const updateAppData = async <A extends Applications | Applications['_id']>(
+export type AppOrId = Applications | AppEventsPayload['app'] | Applications['_id'];
+
+const updateAppData = async <A extends AppOrId>(
   application: A,
   data: Record<string, any>,
   options: {
