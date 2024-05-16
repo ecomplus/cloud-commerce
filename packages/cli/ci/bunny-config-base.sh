@@ -308,3 +308,29 @@ configure_edge_rule '
   "Enabled": true
 }
 '
+
+configure_edge_rule '
+{
+  "ActionType": 4,
+  "TriggerMatchingType": 1,
+  "Triggers": [
+    {
+      "Type": 9,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
+        "GET"
+      ]
+    },
+    {
+      "Type": 0,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
+        "*/_analytics",
+        "*/sw.js"
+      ]
+    }
+  ],
+  "Description": "Block common invalid requests",
+  "Enabled": true
+}
+'
