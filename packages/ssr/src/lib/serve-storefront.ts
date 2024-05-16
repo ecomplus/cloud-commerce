@@ -283,7 +283,8 @@ export default async (req: Request, res: Response) => {
         // Routes with short cache TTL, see cli/ci/bunny-config-base.sh
         return;
       }
-      getFirestore().doc(`ssrReqs/${pathToDocId(pathname)}`)
+      const reqDocId = pathname === '/' ? '_HOME_' : pathToDocId(pathname);
+      getFirestore().doc(`ssrReqs/${reqDocId}`)
         .set({
           pathname,
           count: FieldValue.increment(1),
