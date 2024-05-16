@@ -4,16 +4,23 @@ import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
-export default async (
-  application: Applications | Applications['_id'],
+const updateAppData = async <A extends Applications | Applications['_id']>(
+  application: A,
   data: Record<string, any>,
-  { isHiddenData = false, canSendPubSub = true } = {},
+  options: {
+    isHiddenData?: boolean,
+    canSendPubSub?: A extends Applications ? boolean : false,
+  } = {},
 ) => {
+  const {
+    isHiddenData = false,
+    canSendPubSub = true,
+  } = options;
   const applicationId = typeof application === 'string'
-    ? application : application._id;
+    ? application as Applications['_id']
+    : application._id;
   const subresource = isHiddenData ? 'hidden_data' : 'data';
-  if (application && typeof application === 'object' && canSendPubSub) {
-    // eslint-disable-next-line no-param-reassign
+  if (typeof application === 'object' && canSendPubSub) {
     application[subresource] = data;
     const json: AppEventsPayload = {
       evName: 'applications-dataSet',
@@ -47,3 +54,5 @@ export default async (
     },
   });
 };
+
+export default updateAppData;
