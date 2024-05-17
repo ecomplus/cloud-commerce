@@ -20,9 +20,9 @@ const parseAddress = (to: Exclude<CreateTransactionParams['to'], undefined>) => 
 });
 
 export default async (modBody: AppModuleBody<'create_transaction'>) => {
+  const date = new Date();
   const locationId = config.get().httpsFunctionOptions.region;
   const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
-
   const { application, storeId } = modBody;
   const params = modBody.params;
   const appData = { ...application.data, ...application.hidden_data };
@@ -98,7 +98,6 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     const finalAmount = amount.total;
     const pixConfig = appData.account_deposit;
     const dueTime = pixConfig.due_time || 60;
-    const date = new Date();
     date.setTime(date.getTime() + dueTime * 60000);
     Object.assign(pagarmeTransaction, {
       payment_method: 'pix',
@@ -123,7 +122,6 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         transaction.banking_billet.text_lines = [pagarmeTransaction.boleto_instructions];
       }
       if (boletoConfig.days_due_date) {
-        const date = new Date();
         date.setDate(date.getDate() + boletoConfig.days_due_date);
         const parseDatePagarme = (ms: Date) => {
           const timeMs = ms.getTime() - (180000 * 60);
@@ -153,9 +151,15 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
   };
   const birthDate = buyer.birth_date;
   if (birthDate && birthDate.year && birthDate.day && birthDate.month) {
-    pagarmeTransaction.customer.birthday = `${birthDate.year}-`
-      + `${birthDate.month.toString().padStart(2, '0')}-`
-      + birthDate.day.toString().padStart(2, '0');
+    const yearDiff = date.getFullYear() - birthDate.year;
+    if (
+      (yearDiff > 18 && yearDiff < 150)
+      || (yearDiff === 18 && birthDate.month < date.getMonth() + 1)
+    ) {
+      pagarmeTransaction.customer.birthday = `${birthDate.year}-`
+        + `${birthDate.month.toString().padStart(2, '0')}-`
+        + birthDate.day.toString().padStart(2, '0');
+    }
   }
 
   if (to && to.street) {
@@ -261,7 +265,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         }
       }
       transaction.status = {
-        updated_at: data.date_created || data.date_updated || new Date().toISOString(),
+        updated_at: data.date_created || data.date_updated || date.toISOString(),
         current: parsePagarmeStatus(data.status),
       };
 
