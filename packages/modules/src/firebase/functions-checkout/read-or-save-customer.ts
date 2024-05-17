@@ -1,4 +1,4 @@
-import type { Customers } from '@cloudcommerce/types';
+import type { ApiError, Customers } from '@cloudcommerce/api/types';
 import type { CheckoutCustomer } from '../../types/index';
 import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
@@ -11,9 +11,12 @@ const readOrSaveCustomer = async (customer: CheckoutCustomer) => {
   try {
     const { data: savedCustomer } = await api.get(customerEndpoint);
     return savedCustomer;
-  } catch (err: any) {
-    err.checkoutCode = `cantReadCustomer,${customerEndpoint}`;
-    logger.error(err);
+  } catch (_err: any) {
+    const err = _err as ApiError;
+    if (err.statusCode !== 404) {
+      (err as any).checkoutCode = `cantReadCustomer,${customerEndpoint}`;
+      logger.error(err);
+    }
   }
   const newCustomer = {
     display_name: customer.name.given_name || 'visitor',
