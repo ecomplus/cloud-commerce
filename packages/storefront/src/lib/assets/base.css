@@ -124,3 +124,15 @@ https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-b
 [data-drawer-backdrop] + [data-drawer-backdrop] {
   display: none;
 }
+
+/* Convenience for sizing <img> inside <picture> */
+picture:where(.size-full) {
+  display: inline-block;
+}
+picture:where(.size-full) > img {
+  width: 100%;
+  height: 100%;
+}
+picture:where(.object-cover) > img {
+  object-fit: cover;
+}

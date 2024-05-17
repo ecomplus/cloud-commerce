@@ -24,6 +24,7 @@ export interface Props {
   decoding?: 'async' | 'sync' | 'auto';
   alt?: string;
   preferredSize?: string;
+  isImgTagOnly?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -46,8 +47,18 @@ const attrs = computed<ImgHTMLAttributes>(() => ({
   loading: props.loading,
   decoding: props.decoding || (dimensions.value.height ? 'async' : undefined),
 }));
+const avifSrc = computed(() => {
+  if (!props.isImgTagOnly && attrs.value.src?.endsWith('.avif.webp')) {
+    return attrs.value.src.replace('.avif.webp', '.avif');
+  }
+  return null;
+});
 </script>
 
 <template>
-  <img v-bind="attrs" />
+  <picture v-if="avifSrc">
+    <source :srcset="avifSrc" type="image/avif" />
+    <img v-bind="attrs" />
+  </picture>
+  <img v-else v-bind="attrs" />
 </template>
