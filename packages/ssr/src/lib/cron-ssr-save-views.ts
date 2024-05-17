@@ -34,7 +34,7 @@ const saveViews = async () => {
     const now = Date.now();
     const sMaxAge = Number(process.env.SSR_CACHE_MAX_AGE) || 179;
     const pageViewsSnapshot = await db.collection('ssrPageViews')
-      .where('at', '>', new Date(now - 1000 * 60 * 20))
+      .where('at', '>', new Date(now - 1000 * Math.max(sMaxAge * 2, 60 * 9)))
       .where('at', '<', new Date(now - 1000 * sMaxAge))
       .get();
     const pageViewDocs: PageViewDocs = [];
@@ -61,7 +61,7 @@ const saveViews = async () => {
       pageViewDocs.push({ ref: doc.ref, pathname });
     }
     const ssrReqsSnapshot = await db.collection('ssrReqs')
-      .where('at', '>', new Date(now - 1000 * 60 * 150))
+      .where('at', '>', new Date(now - 1000 * 60 * 14))
       .where('at', '<', new Date(now - 1000 * 60 * 9))
       .get();
     for (let i = 0; i < ssrReqsSnapshot.docs.length; i++) {
