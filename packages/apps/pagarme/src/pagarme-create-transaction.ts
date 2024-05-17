@@ -243,8 +243,8 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
           transaction.banking_billet.link = data.boleto_url;
         }
         if (data.boleto_expiration_date) {
-          const date = new Date(data.boleto_expiration_date);
-          transaction.banking_billet.valid_thru = date.toISOString();
+          const expirationDate = new Date(data.boleto_expiration_date);
+          transaction.banking_billet.valid_thru = expirationDate.toISOString();
         }
       } else if (data.card) {
         transaction.credit_card = {
