@@ -1,7 +1,12 @@
 ---
 // @ts-ignore: tsconfig.json missing `"types": ["vite-plugin-pwa/info"]`
 import { pwaInfo } from 'virtual:pwa-info';
-import { img as getImg, price as getPrice } from '@ecomplus/utils';
+import {
+  name as getName,
+  img as getImg,
+  price as getPrice,
+  inStock as checkInStock,
+} from '@ecomplus/utils';
 import { i19searchProducts } from '@@i18n';
 
 // @ts-ignore
@@ -147,13 +152,64 @@ if (isPreview) {
 window.$isCmsPreview = true;`;
 }
 
-const inlineJSONLd = JSON.stringify({
+const inlineJSONLdOrg = JSON.stringify({
   '@context': 'http://schema.org',
   '@type': 'Organization',
   name: settings.name,
   url: `https://${domain}/`,
   logo: `https://${domain}${settings.logo}`,
 });
+const inlineJSONLdWebsite = JSON.stringify({
+  '@context': 'http://schema.org',
+  '@type': 'WebSite',
+  url: `https://${domain}/`,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `https://${domain}/s?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+});
+let inlineJSONLdOffer: string | undefined;
+if (apiContext.resource === 'products' && apiContext.doc) {
+  const product = apiContext.doc;
+  const productJSONLd: Record<string, any> = {
+    '@context': 'http://schema.org',
+    '@type': 'Product',
+    sku: product.sku,
+    description,
+    name: getName(product),
+    offers: {
+      '@type': 'Offer',
+      url: canonicalUrl,
+      availability: `${(checkInStock(product) ? 'In' : 'OutOf')}Stock`,
+      priceCurrency: settings.currency,
+      price: getPrice(product),
+      itemCondition: 'http://schema.org/'
+        + `${(product.condition !== 'new' ? 'Used' : 'New')}Condition`,
+      seller: {
+        '@type': 'Organization',
+        name: settings.name,
+      },
+    },
+  };
+  if (product.brands?.length) {
+    productJSONLd.brand = {
+      '@type': 'Brand',
+      name: product.brands[0].name,
+    };
+  }
+  if (product.pictures?.length) {
+    productJSONLd.image = getImg(product, undefined, 'zoom')?.url
+      .replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com');
+  }
+  if (product.mpn?.length) {
+    productJSONLd.mpn = product.mpn[0];
+  }
+  if (product.gtin?.length) {
+    productJSONLd.gtin = product.gtin[0];
+  }
+  inlineJSONLdOffer = JSON.stringify(productJSONLd);
+}
 const generator = `e-com.plus @cloudcommerce/storefront, ${Astro.generator}`;
 ---
 
@@ -236,6 +292,7 @@ window._emitApiContext = (id = null) => {
 </script>
 
 <script is:inline set:html={inlineClientJS} />
-<script is:inline type="application/ld+json" set:html={inlineJSONLd} />
-
 {contextInlineClientJS && <script is:inline set:html={contextInlineClientJS} />}
+<script is:inline type="application/ld+json" set:html={inlineJSONLdOrg} />
+<script is:inline type="application/ld+json" set:html={inlineJSONLdWebsite} />
+{inlineJSONLdOffer && <script is:inline type="application/ld+json" set:html={inlineJSONLdOffer} />}
