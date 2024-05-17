@@ -1,28 +1,25 @@
-import type { AppModuleBody, CalculateShippingResponse } from '@cloudcommerce/types';
+import type { AppModuleBody, CalculateShippingParams, CalculateShippingResponse } from '@cloudcommerce/types';
 import axios from 'axios';
-import logger from 'firebase-functions/logger';
+import { warn } from 'firebase-functions/logger';
 import ecomUtils from '@ecomplus/utils';
 
-const calcWeight = (item) => {
+type ShippingItem = Exclude<CalculateShippingParams['items'], undefined>[0];
+
+const calcWeight = (item: ShippingItem) => {
   if (!item || !item.weight || !item.weight.value) {
-    return 0.000000001; // min weight needed by mandae
+    return 0.000000001; // Min weight required by Mandae
   }
   const unit = item.weight.unit;
-  let result;
   switch (unit) {
     case 'kg':
-      result = item.weight.value;
-      break;
+      return item.weight.value;
     case 'g':
-      result = item.weight.value / 1000;
-      break;
+      return item.weight.value / 1000;
     case 'mg':
-      result = item.weight.value / 1000000;
-      break;
+      return item.weight.value / 1000000;
     default:
-      break;
+      return item.weight.value;
   }
-  return result;
 };
 
 const calcDimension = (item, dimensionType) => {
@@ -114,6 +111,19 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     ...application.data,
     ...application.hidden_data,
   };
+  if (!process.env.MANDAE_TOKEN) {
+    const mandaeToken = appData.mandae_token;
+    if (mandaeToken && typeof mandaeToken === 'string') {
+      process.env.MANDAE_TOKEN = mandaeToken;
+    } else {
+      warn('Missing Mandae token');
+      return {
+        error: 'NO_MANDAE_TOKEN',
+        message: 'The Mandaê token is not defined (merchant must configure the app)',
+      };
+    }
+  }
+
   const response: CalculateShippingResponse = {
     shipping_services: [],
   };
@@ -122,14 +132,6 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   }
   const destinationZip = params.to ? params.to.zip.replace(/\D/g, '') : '';
 
-  let originZip = '';
-  if (params.from) {
-    originZip = params.from.zip.replace(/\D/g, '');
-  } else if (appData.zip) {
-    originZip = appData.zip.replace(/\D/g, '');
-  }
-
-  // search for configured free shipping rule
   if (Array.isArray(appData.shipping_rules)) {
     for (let i = 0; i < appData.shipping_rules.length; i++) {
       const rule = appData.shipping_rules[i];
@@ -143,25 +145,33 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
       }
     }
   }
-
   if (!params.to) {
-    // just a free shipping preview with no shipping address received
-    // respond only with free shipping option
+    // Just a free shipping preview with no shipping address received
     return response;
   }
 
+  let originZip = '';
+  if (params.from) {
+    originZip = params.from.zip.replace(/\D/g, '');
+  } else if (appData.zip) {
+    originZip = appData.zip.replace(/\D/g, '');
+  }
   if (!originZip) {
-    // must have configured origin zip code to continue
     return {
       error: 'CALCULATE_ERR',
       message: 'Zip code is unset on app hidden data (merchant must configure the app)',
     };
   }
-
   if (!params.items) {
     return {
       error: 'CALCULATE_EMPTY_CART',
       message: 'Cannot calculate shipping without cart items',
+    };
+  }
+  if (destinationZip.length < 8) {
+    return {
+      error: 'CALCULATE_INVALID_ZIP',
+      message: `Zip code ${destinationZip} is invalid for shipping calculation`,
     };
   }
 
@@ -181,26 +191,9 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     }
   });
 
-  if (!process.env.MANDAE_TOKEN) {
-    const mandaeToken = appData.mandae_token;
-    if (mandaeToken && typeof mandaeToken === 'string') {
-      process.env.MANDAE_TOKEN = mandaeToken;
-    } else {
-      logger.warn('Missing Mandae token');
-      return {
-        error: 'NO_MANDAE_TOKEN',
-        message: 'The token is not defined in the application\'s environment variables and hidden data',
-      };
-    }
-  }
-
-  const mandaeUrl = 'https://api.mandae.com.br';
-
-  const resource = `/v3/postalcodes/${params.to.zip}/rates`;
-
   return axios(
     {
-      url: mandaeUrl + resource,
+      url: `https://api.mandae.com.br/v3/postalcodes/${destinationZip}/rates`,
       method: 'POST',
       data: {
         items,
@@ -211,7 +204,6 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     },
   ).then(({ data, status }) => {
     if (status === 200) {
-      // for (const shipping of data.data.shippingServices) {
       data.data?.shippingServices?.forEach((shipping) => {
         if (!isDisabledService(destinationZip, appData.disable_services, shipping)) {
           let totalPrice = applyShippingDiscount(
@@ -270,7 +262,6 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
           response.shipping_services.push(shippingService);
         }
       });
-
       return response;
     }
     const err: any = new Error('Invalid Mandae calculate response');
@@ -278,9 +269,15 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     throw err;
   }).catch((error) => {
     if (error && error.response) {
+      const mandaeErrorMsg = error.response.data?.error?.message;
+      const message = (typeof mandaeErrorMsg === 'string' && mandaeErrorMsg)
+        || (error.message as string)
+        || '';
       return {
-        error: 'CALCULATE_SHIPPING_ERROR',
-        message: error.response.data?.error?.message || error.message,
+        error: message.includes('Cep nulo ou não localizado')
+          ? 'CALCULATE_INVALID_ZIP'
+          : 'CALCULATE_SHIPPING_ERROR',
+        message,
       };
     }
     return {
