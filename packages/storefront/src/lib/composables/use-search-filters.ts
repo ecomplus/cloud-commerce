@@ -206,18 +206,16 @@ const useSearchFilters = (props: Props) => {
           const [spec, value] = specAndVal.split(':');
           if (value) {
             const field = `specs.${spec}`;
-            if (
-              _lastParamChanged === field
-              || filterOptions.value.find((filter) => filter.field === field)
-              || fixedParams?.[field] !== undefined
-            ) {
+            if (_lastParamChanged === field || fixedParams?.[field] !== undefined) {
               return;
             }
             const title = getGridTitle(spec, grids || []);
-            let filterOption = filterOptions.value.find((_filterOption) => {
-              return _filterOption.field === field;
+            let filterOption = filterOptions.value.find((filter) => {
+              return filter.field === field;
             });
-            if (!filterOption) {
+            if (filterOption) {
+              if (filterOption.options[value]) return;
+            } else {
               filterOption = { title, options: {}, field };
               filterOptions.value.push(filterOption);
             }
