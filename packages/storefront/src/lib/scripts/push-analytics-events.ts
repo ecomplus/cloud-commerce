@@ -36,7 +36,7 @@ const _sendServerEvents = useDebounceFn((variantCtx?: AnalyticsVariantCtx) => {
     },
   });
   eventsToSend = [];
-}, 1500);
+}, 600);
 
 if (
   !import.meta.env.SSR
