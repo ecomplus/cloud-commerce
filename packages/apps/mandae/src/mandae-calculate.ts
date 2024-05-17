@@ -1,3 +1,4 @@
+import type { AppModuleBody, CalculateShippingResponse } from '@cloudcommerce/types';
 import axios from 'axios';
 import logger from 'firebase-functions/logger';
 import ecomUtils from '@ecomplus/utils';
@@ -107,21 +108,18 @@ const isDisabledService = (destinationZip, disableServices, shipping) => {
   return false;
 };
 
-export default async ({ params, application }) => {
+export const calculateShipping = async (modBody: AppModuleBody<'calculate_shipping'>) => {
+  const { params, application } = modBody;
   const appData = {
     ...application.data,
     ...application.hidden_data,
   };
-
-  // setup basic required response object
-  const response = {
+  const response: CalculateShippingResponse = {
     shipping_services: [],
   };
-
   if (appData.free_shipping_from_value >= 0) {
     response.free_shipping_from_value = appData.free_shipping_from_value;
   }
-
   const destinationZip = params.to ? params.to.zip.replace(/\D/g, '') : '';
 
   let originZip = '';
@@ -139,7 +137,7 @@ export default async ({ params, application }) => {
         if (!rule.min_amount) {
           response.free_shipping_from_value = 0;
           break;
-        } else if (!(response.free_shipping_from_value <= rule.min_amount)) {
+        } else if (!(response.free_shipping_from_value! <= rule.min_amount)) {
           response.free_shipping_from_value = rule.min_amount;
         }
       }
@@ -167,22 +165,19 @@ export default async ({ params, application }) => {
     };
   }
 
-  const items = [];
+  const items: Record<string, any>[] = [];
   let totalItems = 0;
-
   params.items.forEach((item) => {
     if (item.quantity > 0) {
       totalItems += (ecomUtils.price(item) * item.quantity);
-      items.push(
-        {
-          declaredValue: ecomUtils.price(item),
-          weight: calcWeight(item),
-          height: calcDimension(item, 'height'),
-          width: calcDimension(item, 'width'),
-          length: calcDimension(item, 'length'),
-          quantity: item.quantity,
-        },
-      );
+      items.push({
+        declaredValue: ecomUtils.price(item),
+        weight: calcWeight(item),
+        height: calcDimension(item, 'height'),
+        width: calcDimension(item, 'width'),
+        length: calcDimension(item, 'length'),
+        quantity: item.quantity,
+      });
     }
   });
 
@@ -233,7 +228,7 @@ export default async ({ params, application }) => {
             totalPrice = 0;
           }
           const discount = shipping.price - totalPrice;
-          const shippingLine = {
+          const shippingService: CalculateShippingResponse['shipping_services'][0] = {
             label: shipping.name,
             carrier: shipping.name,
             service_name: 'Mandae',
@@ -255,10 +250,9 @@ export default async ({ params, application }) => {
               },
               to: {
                 ...params.to,
-                zip: (data.data && data.data.postalCode) || params.to.zip,
+                zip: (data.data && data.data.postalCode) || params.to?.zip,
               },
             },
-            flags: ['mandae-ws'],
           };
           if (Array.isArray(appData.carriers)) {
             const carrier = appData.carriers.find(({ service }) => {
@@ -266,20 +260,20 @@ export default async ({ params, application }) => {
             });
             if (carrier) {
               if (carrier.carrier) {
-                shippingLine.carrier = carrier.carrier;
+                shippingService.carrier = carrier.carrier;
               }
               if (carrier.carrier_doc_number) {
-                shippingLine.carrier_doc_number = carrier.carrier_doc_number.replace(/\D/g, '');
+                shippingService.carrier_doc_number = carrier.carrier_doc_number.replace(/\D/g, '');
               }
             }
           }
-          response.shipping_services.push(shippingLine);
+          response.shipping_services.push(shippingService);
         }
       });
 
       return response;
     }
-    const err = new Error('Invalid Mandae calculate response');
+    const err: any = new Error('Invalid Mandae calculate response');
     err.response = { data, status };
     throw err;
   }).catch((error) => {
@@ -295,3 +289,5 @@ export default async ({ params, application }) => {
     };
   });
 };
+
+export default calculateShipping;
