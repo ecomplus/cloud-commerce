@@ -4,7 +4,8 @@ import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';
 
-const readOrSaveCustomer = async (customer: CheckoutCustomer) => {
+type CustomerToSave = CheckoutCustomer & { addresses: Customers['addresses'] };
+const readOrSaveCustomer = async (customer: CustomerToSave) => {
   const customerEndpoint = customer._id?.length === 24
     ? `customers/${customer._id}` as `customers/${Customers['_id']}`
     : `customers/main_email:${customer.main_email}` as `customers/${string}:${string}`;

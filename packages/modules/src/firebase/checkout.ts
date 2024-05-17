@@ -59,7 +59,12 @@ export default async (req: Request, res: Response) => {
 
   const countCheckoutItems = body.items.length;
   const { customer } = body;
-  const savedCustomer = await readOrSaveCustomer(customer);
+  const savedCustomer = await readOrSaveCustomer({
+    ...customer,
+    addresses: !body.shipping.to.line_address?.includes('***')
+      ? [body.shipping.to]
+      : undefined,
+  });
   const customerId = savedCustomer._id;
   if (customerId === customer._id) {
     Object.keys(savedCustomer).forEach((field) => {
