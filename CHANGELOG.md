@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.0](https://github.com/ecomplus/cloud-commerce/compare/v2.17.6...v2.18.0) (2024-05-17)
+
+
+### Features
+
+* **storefront:** Updating base head with extended json+ld for search action and offer on PDP ([5b246ea](https://github.com/ecomplus/cloud-commerce/commit/5b246eaa90a70341785036145c2c88999c63fb4c))
+
+
+### Bug Fixes
+
+* **api:** Updating all resource interfaces with new `upserted_at` field ([d6155f1](https://github.com/ecomplus/cloud-commerce/commit/d6155f1dc8224f6a42a4c994f8ffbcf19f55fed3))
+* **deps:** Update non-major dependencies ([#383](https://github.com/ecomplus/cloud-commerce/issues/383)) ([689c0b3](https://github.com/ecomplus/cloud-commerce/commit/689c0b39033fcd580aef84614d51e1975185c53d))
+* **ssr:** Prevent error counting SSR reqs to home path ([d65261f](https://github.com/ecomplus/cloud-commerce/commit/d65261f55ed0918aafa9010ec64cc91d9a6200c2))
+* **storefront:** Fix search filters composable returning all specs options ([34edcfd](https://github.com/ecomplus/cloud-commerce/commit/34edcfd088bc926c3f3996193d7b265c63dc1c38))
+* **storefront:** Update build prod script to fix all CSS filenames on all copied static HTML ([b7c0823](https://github.com/ecomplus/cloud-commerce/commit/b7c08232c8e1b668b99bc90318fd17ecda815988))
+* **storefront:** Update UnoCSS to ^0.60.2 ([#382](https://github.com/ecomplus/cloud-commerce/issues/382)) ([bdc292a](https://github.com/ecomplus/cloud-commerce/commit/bdc292a346eb7f38ec2c14c5dff36dcfc2caeb66))
+* **tiny-erp:** Early respond webhooks with OK and property queue to retry on failure ([f2f09e3](https://github.com/ecomplus/cloud-commerce/commit/f2f09e3edfe7d9cdfb94a1bc404f9fe3a4ca0c18))
+* **tiny-erp:** Fix setting product quantity and variations price/quantity on import ([ad0a885](https://github.com/ecomplus/cloud-commerce/commit/ad0a8850fd04f8610e65a99a155c1ad19aa42659))
+
 ### [2.17.6](https://github.com/ecomplus/cloud-commerce/compare/v2.17.5...v2.17.6) (2024-05-11)
 
 
