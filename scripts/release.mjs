@@ -9,7 +9,6 @@ const listFolders = async (parentPath) => {
     .map((dirent) => dirent.name);
 };
 
-// await $`npx standard-version`;
 const pwd = (await quiet($`pwd`)).stdout.trim();
 const { version } = JSON.parse(fs.readFileSync('package.json'));
 const packages = await globby([

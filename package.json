@@ -30,9 +30,9 @@
     "deploy": "pnpm store:run deploy",
     "setup": "pnpm store:run setup:quiet"
   },
-  "standard-version": {
+  "commit-and-tag-version": {
     "scripts": {
-      "precommit": "bash scripts/on-version.sh"
+      "precommit": "sleep 1 && git add packages/**/package.json"
     }
   },
   "lint-staged": {
@@ -45,11 +45,11 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/rules": "^19.0.3",
     "@types/node": "^18.19.33",
+    "commit-and-tag-version": "^12.4.1",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
-    "standard-version": "^9.5.0",
     "ts-node": "^10.9.2",
     "turbo": "^1.13.3",
     "typescript": "~5.4.5",
