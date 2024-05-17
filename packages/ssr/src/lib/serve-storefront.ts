@@ -55,6 +55,13 @@ export default async (req: Request, res: Response) => {
     res.sendStatus(404);
     return;
   }
+  const redirect = (status: 301 | 302, pathname: string) => {
+    const projectId = process.env.GCLOUD_PROJECT as string;
+    if (status === 302 && projectId) {
+      return res.redirect(status, `https://${projectId}.web.app${pathname}`);
+    }
+    return res.redirect(status, pathname);
+  };
 
   const ext = req.path.split('.').pop();
   if (ext === 'js' || ext === 'css' || ext === 'avif' || ext === 'webp') {
@@ -64,12 +71,14 @@ export default async (req: Request, res: Response) => {
         return _filepath.startsWith(baseFilepath) && _filepath.endsWith(`.${ext}`);
       });
       if (filepath) {
-        res.set('Cache-Control', 'max-age=21600').redirect(302, filepath);
+        res.set('Cache-Control', 'max-age=21600, s-maxage=300');
+        redirect(302, filepath);
         return;
       }
     }
     if (ext === 'css' && cssFilepath) {
-      res.set('Cache-Control', 'max-age=3600').redirect(302, cssFilepath);
+      res.set('Cache-Control', 'max-age=3600, s-maxage=300');
+      redirect(302, cssFilepath);
       return;
     }
   }
@@ -78,7 +87,7 @@ export default async (req: Request, res: Response) => {
     const field = req.path.slice(2) as 'logo' | 'icon';
     res.set('Cache-Control', 'max-age=300');
     if (settingsContent[field]) {
-      res.redirect(302, settingsContent[field]);
+      redirect(302, settingsContent[field]);
     } else {
       res.sendStatus(404);
     }
@@ -115,11 +124,10 @@ export default async (req: Request, res: Response) => {
               && filename === _builtImage.filename.replace(filenameRegExp, '');
           });
           if (builtImage) {
-            return res
-              .set('Cache-Control', 'max-age=60')
-              .redirect(301, `/_astro/${builtImage.filename}`);
+            res.set('Cache-Control', 'max-age=60');
+            return redirect(301, `/_astro/${builtImage.filename}`);
           }
-          return res.redirect(302, href);
+          return redirect(302, href);
         })();
         return;
       }
@@ -273,7 +281,7 @@ export default async (req: Request, res: Response) => {
     headers['X-Async-Ex'] = `${execId}_${Date.now() - startedAt}`;
     _writeHead.apply(res, [status, headers]);
     resolveHeadersSent?.(null);
-    if (status === 200) {
+    if (req.method === 'GET' && status === 200) {
       if (
         pathname.startsWith('/~')
         || pathname.startsWith('/.')
