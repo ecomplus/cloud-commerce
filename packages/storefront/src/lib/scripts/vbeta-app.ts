@@ -266,33 +266,39 @@ if (!import.meta.env.SSR) {
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 
-  setTimeout(() => {
+  const initializingAuth = new Promise<ReturnType<typeof getAuth>>((resolve) => {
     initializeFirebaseAuth();
     const unwatch = watch(isAuthReady, (_isAuthReady) => {
       if (!_isAuthReady) return;
       unwatch();
-      const firebaseAuth = getAuth();
-      (window as any).signInWithEmailLink = useThrottleFn((email: string) => {
-        const url = new URL(`${window.location.origin}/app/account#/checkout`);
-        url.searchParams.append('email', email);
-        sendSignInLinkToEmail(firebaseAuth, email, {
-          url: url.toString(),
-          handleCodeInApp: true,
-        })
-          .catch(console.error);
-      }, 2000);
-      if (window.OAUTH_PROVIDERS?.includes('google')) {
-        const provider = new GoogleAuthProvider();
-        (window as any).signInWithGoogle = () => {
-          signInWithPopup(firebaseAuth, provider).catch(console.error);
-        };
-      }
-      if (window.OAUTH_PROVIDERS?.includes('facebook')) {
-        const provider = new FacebookAuthProvider();
-        (window as any).signInWithFacebook = () => {
-          signInWithPopup(firebaseAuth, provider).catch(console.error);
-        };
-      }
+      resolve(getAuth());
     });
-  }, 100);
+  });
+  if (window.OAUTH_PROVIDERS?.includes('google')) {
+    (window as any).signInWithGoogle = () => {
+      initializingAuth.then((firebaseAuth) => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(firebaseAuth, provider).catch(console.error);
+      });
+    };
+  }
+  if (window.OAUTH_PROVIDERS?.includes('facebook')) {
+    (window as any).signInWithFacebook = () => {
+      initializingAuth.then((firebaseAuth) => {
+        const provider = new FacebookAuthProvider();
+        signInWithPopup(firebaseAuth, provider).catch(console.error);
+      });
+    };
+  }
+  (window as any).signInWithEmailLink = useThrottleFn((email: string) => {
+    initializingAuth.then((firebaseAuth) => {
+      const url = new URL(`${window.location.origin}/app/account#/checkout`);
+      url.searchParams.append('email', email);
+      sendSignInLinkToEmail(firebaseAuth, email, {
+        url: url.toString(),
+        handleCodeInApp: true,
+      })
+        .catch(console.error);
+    });
+  }, 2000);
 }
