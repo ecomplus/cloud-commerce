@@ -1,6 +1,18 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [2.18.1](https://github.com/ecomplus/cloud-commerce/compare/v2.18.0...v2.18.1) (2024-05-17)
+
+
+### Bug Fixes
+
+* **mandae:** Simple zip code validation to prevent unecessary Mandae API calculations ([db82a84](https://github.com/ecomplus/cloud-commerce/commit/db82a84b13bfeb6937a2b74068ecdbae04169619))
+* **modules:** Saving shipping address to new customers right on checkout ([24281d2](https://github.com/ecomplus/cloud-commerce/commit/24281d26b63894c47248e648f002bcb9927dbec6))
+* **pagarme:** Basic check for (optional) buyer birth date on create transaction ([1693b38](https://github.com/ecomplus/cloud-commerce/commit/1693b38e70e0b43ce3cb57ca82fabfb2b07cb6c8))
+* **passport:** Find customer by email case insensitive ([23ad6a8](https://github.com/ecomplus/cloud-commerce/commit/23ad6a824408a519befb63f5270b7c8194415a4f))
+* **ssr:** Prevent infinite redirects with aditional CDN on static filepaths rewrites ([eefb03e](https://github.com/ecomplus/cloud-commerce/commit/eefb03ea328192ad149cdf0770c0a8bd0c26b2fc))
+* **storefront:** Preset OAuth global sign functions while auth initializing on vbeta app ([85f9895](https://github.com/ecomplus/cloud-commerce/commit/85f9895b42fba6f4f3e786684797211fbf589190))
 
 ## [2.18.0](https://github.com/ecomplus/cloud-commerce/compare/v2.17.6...v2.18.0) (2024-05-17)
 
