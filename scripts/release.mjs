@@ -85,10 +85,10 @@ if (argv.publish) {
     return cd(pwd);
   });
   await $`pnpm fix-install`;
-  await $`git add pnpm-lock.yaml`;
+  await $`git add packages/**/package.json pnpm-lock.yaml`;
   for (let i = 0; i < storesDirs.length; i++) {
     await $`git add ${storesDirs[i].replace(`${pwd}/`, '')}`;
   }
-  await $`git commit -m 'chore: Update store submodule post-release'`;
+  await $`git commit -m 'chore: Fix package versions and submodules post-release'`;
   await $`git push --follow-tags origin main`;
 }

@@ -30,11 +30,6 @@
     "deploy": "pnpm store:run deploy",
     "setup": "pnpm store:run setup:quiet"
   },
-  "commit-and-tag-version": {
-    "scripts": {
-      "precommit": "sleep 1 && git add packages/**/package.json"
-    }
-  },
   "lint-staged": {
     "packages/storefront/**/*.{ts,vue,astro}": "eslint -c ./packages/eslint/storefront.staged.eslintrc.cjs --fix",
     "packages/!(storefront)/**/*.ts": "eslint --fix"
