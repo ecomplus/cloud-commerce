@@ -68,7 +68,6 @@ export default async (req: Request, res: Response) => {
             const customerId = customerMatch._id;
             const customer = {
               ...customerMatch,
-              main_email: email,
               doc_number: docNumber,
             };
             const level = docNumber ? 1 : 0;

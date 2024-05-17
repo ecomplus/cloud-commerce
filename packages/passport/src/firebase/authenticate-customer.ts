@@ -6,8 +6,8 @@ import api from '@cloudcommerce/api';
 import getEnv from '@cloudcommerce/firebase/lib/env';
 
 export const findCustomerByEmail = async (email: string, docNumber?: string) => {
-  const params: Partial<Record<keyof Customers, string>> = {
-    main_email: email,
+  const params: Partial<Record<keyof Customers | `${keyof Customers}~`, string>> = {
+    'main_email~': email,
   };
   if (docNumber) {
     params.doc_number = docNumber;
@@ -16,6 +16,7 @@ export const findCustomerByEmail = async (email: string, docNumber?: string) => 
     params,
     fields: [
       '_id',
+      'main_email',
       'login',
       'enabled',
       'display_name',
