@@ -173,47 +173,52 @@ export default async (req: Request, res: Response) => {
 
   res.set('X-XSS-Protection', '1; mode=block');
   const pathname = req.path.replace(/\.html$/, '');
-
-  const setStatusAndCache = (status: number, cacheControl: string) => {
-    if (res.headersSent) return res;
-    return res.status(status)
-      .set('X-SSR-ID', `v1/${Date.now()}`)
-      .set('Cache-Control', cacheControl);
-  };
-
-  const fallback = (err: any, status = 500) => {
-    if (
-      pathname !== '/~fallback'
-      && (/\/[^/.]+$/.test(pathname) || /\.x?html$/.test(pathname))
-    ) {
-      setStatusAndCache(status, 'public, max-age=120')
-        .send('<html><head>'
-          + '<meta http-equiv="refresh" content="0; '
-            + `url=/~fallback?status=${status}&url=${encodeURIComponent(pathname)}"/>`
-          + `</head><body>${err.toString()}</body></html>`);
-    } else {
-      setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
-        .send(err.toString());
-    }
-  };
-
   const { SSR_SET_LINK_HEADER, DEPLOY_RAND, BUNNYNET_API_KEY } = process.env;
   const canSetLinkHeader = SSR_SET_LINK_HEADER
     ? String(SSR_SET_LINK_HEADER).toLowerCase() !== 'false'
     : true;
+
   /*
   Check Response methods used by Astro Node.js integration:
   https://github.com/withastro/astro/blob/main/packages/astro/src/core/app/node.ts
   */
-  const _writeHead = res.writeHead;
   /* eslint-disable prefer-rest-params */
+  const startedAt = Date.now();
+  let resolveHeadersSent: ((v: any) => any) | undefined;
+  const waitingHeadersSent = new Promise((resolve) => {
+    resolveHeadersSent = resolve;
+  });
+  const writes: Promise<any>[] = [];
+  const _write = res.write;
+  // @ts-ignore
+  res.write = function write(...args: any) {
+    writes.push(new Promise((resolve) => {
+      waitingHeadersSent.finally(() => {
+        if (!res.writableEnded) _write.apply(res, args);
+        resolve(null);
+      });
+    }));
+  };
+  let sid: string | undefined;
+  const _end = res.end;
+  // @ts-ignore
+  res.end = async function end(...args: any) {
+    await waitingHeadersSent;
+    setTimeout(async () => {
+      await Promise.all(writes);
+      if (!res.writableEnded) _end.apply(res, args);
+      // Try to early clear session objects, see storefront/src/lib/ssr-context.ts
+      const sessions = global.__sfSessions;
+      if (!sid || !sessions[sid]) return;
+      if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
+      sessions[sid] = null;
+      delete sessions[sid];
+    }, 1);
+  };
+
+  const _writeHead = res.writeHead;
   // @ts-ignore
   res.writeHead = async function writeHead(status: number, headers?: OutgoingHttpHeaders) {
-    const startedAt = Date.now();
-    let resolveHeadersSent: ((v: any) => any) | undefined;
-    const waitingHeadersSent = new Promise((resolve) => {
-      resolveHeadersSent = resolve;
-    });
     if (!headers) {
       headers = {};
     }
@@ -229,17 +234,18 @@ export default async (req: Request, res: Response) => {
         headers.link.push(cssLink);
       }
     }
-    // Try to early clear session objects, see storefront/src/lib/ssr-context.ts
-    const sessions = global.__sfSessions;
-    const sid = headers['x-sid'];
-    if (sessions && typeof sid === 'string' && sessions[sid]) {
+    const sessions: Record<string, any> | undefined = global.__sfSessions;
+    if (typeof headers['x-sid'] === 'string') {
+      sid = headers['x-sid'];
+    }
+    if (sid && sessions?.[sid]) {
       headers['x-sid'] += '_';
       /* Wait to reset status for async context error handling */
       const { fetchingApiContext } = sessions[sid];
       const waitingStatus: Promise<boolean> = fetchingApiContext
         ? new Promise((resolve) => {
           fetchingApiContext.finally(() => {
-            const apiContextStatus = sessions[sid].apiContextError?.statusCode;
+            const apiContextStatus = sessions[sid!].apiContextError?.statusCode;
             if (apiContextStatus >= 400 && status === 200) {
               status = apiContextStatus;
             }
@@ -247,29 +253,6 @@ export default async (req: Request, res: Response) => {
           });
         })
         : Promise.resolve(false);
-      const _write = res.write;
-      const writes: Promise<any>[] = [];
-      // @ts-ignore
-      res.write = function write(...args: any) {
-        writes.push(new Promise((resolve) => {
-          waitingHeadersSent.finally(() => {
-            _write.apply(res, args);
-            resolve(null);
-          });
-        }));
-      };
-      const _end = res.end;
-      // @ts-ignore
-      res.end = async function end(...args: any) {
-        await waitingHeadersSent;
-        setTimeout(async () => {
-          await Promise.all(writes);
-          if (sessions[sid]._timer) clearTimeout(sessions[sid]._timer);
-          sessions[sid] = null;
-          delete sessions[sid];
-          _end.apply(res, args);
-        }, 1);
-      };
       await waitingStatus;
     }
     if (BUNNYNET_API_KEY && DEPLOY_RAND) {
@@ -303,22 +286,61 @@ export default async (req: Request, res: Response) => {
     }
   };
 
+  const setStatusAndCache = (status: number, cacheControl: string) => {
+    if (res.headersSent) return res;
+    return res.status(status)
+      .set('X-SSR-ID', `v1/${Date.now()}`)
+      .set('Cache-Control', cacheControl);
+  };
+  const fallback = (err: any, status = 500) => {
+    if (
+      pathname !== '/~fallback'
+      && (/\/[^/.]+$/.test(pathname) || /\.x?html$/.test(pathname))
+    ) {
+      setStatusAndCache(status, 'public, max-age=10')
+        .send('<html><head>'
+          + '<meta http-equiv="refresh" content="0; '
+            + `url=/~fallback?status=${status}&url=${encodeURIComponent(pathname)}"/>`
+          + `</head><body>${err.toString()}</body></html>`);
+    } else {
+      setStatusAndCache(status, 'public, max-age=120, s-maxage=600')
+        .send(err.toString());
+    }
+    resolveHeadersSent?.(null);
+  };
+
+  const handleException = (err: Error) => {
+    if (res.headersSent) {
+      error(err, { onExceptionHandler: 1 });
+      res.end();
+      return;
+    }
+    warn(err);
+    res.set('X-SSR-Error', err.message);
+    res.set('X-SSR-Error-Stack', err.stack);
+    fallback(err);
+  };
+  process.on('unhandledRejection', (reason) => {
+    if (reason instanceof Error) {
+      handleException(reason);
+      return;
+    }
+    let message = 'UnhandledRejection';
+    if (typeof reason === 'string') message += `: ${reason}`;
+    const err: any = new Error(message);
+    err.reason = reason;
+    handleException(err);
+  });
+  process.on('uncaughtException', handleException);
+
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
   import { handler as renderStorefront } from '../dist/server/entry.mjs';
   global.$renderStorefront = renderStorefront;
   */
-  global.$renderStorefront(req, res, async (err: any) => {
+  global.$renderStorefront(req, res, async (err?: Error) => {
     if (err) {
-      if (res.headersSent) {
-        error(err);
-        res.end();
-        return;
-      }
-      warn(err);
-      res.set('X-SSR-Error', err.message);
-      res.set('X-SSR-Error-Stack', err.stack);
-      fallback(err);
+      handleException(err);
       return;
     }
     const clientRoot = new URL(joinPath(baseDir, 'dist/client/'), import.meta.url);
