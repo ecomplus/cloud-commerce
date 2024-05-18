@@ -28,24 +28,24 @@ type BuiltImage = { filename: string, width: number, height: number };
 const builtImages: BuiltImage[] = [];
 
 const staticFilepaths: string[] = [];
-let cssFilepath: string | undefined;
+let mainCssFilepath: string | undefined;
+const cssFilepaths: string[] = [];
 readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
   .then((staticBuildsManifest) => {
-    const cssFiles: string[] = [];
     staticBuildsManifest.split(/\n/).forEach((line) => {
       const [filepath] = line.split(',');
       staticFilepaths.push(filepath);
-      if (filepath.endsWith('.css')) cssFiles.push(filepath);
-    });
-    if (cssFiles.length === 1) {
-      cssFilepath = cssFiles[0]?.replace('./dist/client/', '/');
-      if (
-        cssFilepath
-        && cssFilepath.charAt(0) !== '/'
-        && !cssFilepath.startsWith('https://')
-      ) {
-        cssFilepath = `/${cssFilepath}`;
+      if (filepath.endsWith('.css')) {
+        const cssFilepath = filepath.replace('./dist/client/', '/');
+        if (cssFilepath.charAt(0) === '/') {
+          cssFilepaths.push(cssFilepath);
+        }
       }
+    });
+    if (cssFilepaths.length === 1) {
+      mainCssFilepath = cssFilepaths[0];
+    } else if (cssFilepaths.length) {
+      mainCssFilepath = cssFilepaths.find((path) => path.includes('/_slug_.'));
     }
   })
   .catch(warn);
@@ -76,10 +76,18 @@ export default async (req: Request, res: Response) => {
         return;
       }
     }
-    if (ext === 'css' && cssFilepath) {
-      res.set('Cache-Control', 'max-age=3600, s-maxage=300');
-      redirect(302, cssFilepath);
-      return;
+    if (ext === 'css' && cssFilepaths.length) {
+      const baseFilename = req.path.split('/').pop()?.split('.')[0];
+      if (baseFilename) {
+        const cssFilepath = cssFilepaths.find((path) => {
+          return baseFilename === path.split('/').pop()?.split('.')[0];
+        });
+        if (cssFilepath) {
+          res.set('Cache-Control', 'max-age=3600, s-maxage=300');
+          redirect(302, cssFilepath);
+          return;
+        }
+      }
     }
   }
 
@@ -222,9 +230,9 @@ export default async (req: Request, res: Response) => {
     if (!headers) {
       headers = {};
     }
-    if (canSetLinkHeader && status === 200 && cssFilepath) {
+    if (canSetLinkHeader && status === 200 && mainCssFilepath) {
       // https://community.cloudflare.com/t/early-hints-need-more-data-before-switching-over/342888/21
-      const cssLink = `<${(assetsPrefix || '')}${cssFilepath}>; rel=preload; as=style`;
+      const cssLink = `<${(assetsPrefix || '')}${mainCssFilepath}>; rel=preload; as=style`;
       if (!headers.link) {
         headers.Link = cssLink;
       } else {
