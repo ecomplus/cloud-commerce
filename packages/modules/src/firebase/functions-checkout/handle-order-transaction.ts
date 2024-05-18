@@ -8,7 +8,7 @@ import type {
 } from '../../types/index';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import { sendError } from './utils';
+import { sendError } from './checkout-utils';
 
 const checkoutRespond = async (
   res: Response,

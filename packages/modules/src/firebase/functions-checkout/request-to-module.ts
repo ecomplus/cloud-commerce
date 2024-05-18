@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/logger';
+import { error } from 'firebase-functions/logger';
 import axios from 'axios';
 
 // handle other modules endpoints directly
@@ -53,7 +53,7 @@ export default async (
           const result = resp.result[i];
           if (!result.validated || result.error) {
             countAppErro += 1;
-            logger.error(result.response);
+            error(result.response);
             msgErr.moreInfo += ` ${result.response}`;
           }
         }
@@ -64,7 +64,7 @@ export default async (
       }
       return resp.result;
     } catch (err: any) {
-      logger.error(err);
+      error(err);
       msgErr.moreInfo = 'Unexpected error ';
       if (axios.isAxiosError(err)) {
         msgErr.moreInfo = err.message;

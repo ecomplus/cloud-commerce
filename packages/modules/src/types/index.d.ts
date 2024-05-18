@@ -37,10 +37,6 @@ type Payment = Omit<CheckoutBodyItems, 'transaction'> & {
 }
 
 type CheckoutShippingService = CalculateShippingResponse['shipping_services'][number]
-type ShippingLine = CheckoutShippingSerive['shipping_line']
-type ShippingSerive = Omit<CheckoutShippingService, 'shipping_line'> & {
-  shipping_line?: ShippingLine
-}
 
 type PaymentGateways = ListPaymentsResponse['payment_gateways']
 type PaymentMethod = Pick<PaymentGateways[number]['payment_method'], 'code' | 'name'>
@@ -53,8 +49,6 @@ export {
   CheckoutCustomer,
   PaymentMethod,
   Amount,
-  ShippingSerive,
-  ShippingLine,
   PaymentGateways,
   CheckoutTransaction,
   TransactionOrder,

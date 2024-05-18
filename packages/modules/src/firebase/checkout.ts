@@ -5,6 +5,7 @@ import type {
   Amount,
   Payment,
 } from '../types/index';
+import { info } from 'firebase-functions/logger';
 import { fullName as getFullname } from '@ecomplus/utils';
 import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
@@ -18,7 +19,7 @@ import {
   handleShippingServices,
   handleApplyDiscount,
   handleListPayments,
-} from './functions-checkout/utils';
+} from './functions-checkout/checkout-utils';
 import createOrder from './functions-checkout/new-order';
 
 type Item = Exclude<OrderSet['items'], undefined>[number]
@@ -56,6 +57,7 @@ export default async (req: Request, res: Response) => {
   if (!newItems.length) {
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
   }
+  info(`Checkout by ${body.customer.main_email}`, { body });
 
   const countCheckoutItems = body.items.length;
   const { customer } = body;
@@ -163,11 +165,11 @@ export default async (req: Request, res: Response) => {
     });
   });
 
-  let listShipping = await requestModule(body, modulesBaseURL, 'shipping');
-  let { msgErr } = listShipping;
-  if (listShipping && !msgErr) {
-    listShipping = getValidResults(listShipping, 'shipping_services');
-    handleShippingServices(body, listShipping, amount, orderBody);
+  let shippingOptions = await requestModule(body, modulesBaseURL, 'shipping');
+  let { msgErr } = shippingOptions;
+  if (shippingOptions && !msgErr) {
+    shippingOptions = getValidResults(shippingOptions, 'shipping_services');
+    handleShippingServices(body, shippingOptions, amount, orderBody);
   } else {
     // problem with shipping response object
     return sendError(

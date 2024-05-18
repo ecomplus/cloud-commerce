@@ -1,5 +1,9 @@
 import type { Response } from 'firebase-functions';
-import type { OrderSet } from '@cloudcommerce/types';
+import type {
+  Applications,
+  OrderSet,
+  CalculateShippingResponse,
+} from '@cloudcommerce/types';
 import type {
   CheckoutBodyWithItems,
   Payment,
@@ -7,12 +11,20 @@ import type {
   PaymentMethod,
   Amount,
   Item,
-  ShippingSerive,
-  ShippingLine,
 } from '../../types/index';
-import logger from 'firebase-functions/logger';
+import { warn, error } from 'firebase-functions/logger';
 
-type BodyResouce = { [key: string]: any }
+type ModuleResult<R> = Array<{
+  _id: Applications['_id'],
+  app_id: Applications['app_id'],
+  version: Applications['version'],
+  took: number,
+  validated: boolean,
+  response_errors: null | Record<string, any>,
+  error: boolean,
+  error_message: null | string,
+  response: R,
+}>;
 
 const sendError = (
   res: Response,
@@ -75,11 +87,9 @@ const getValidResults = (
             continue;
           }
         }
-        // use it
         validResults.push(result);
       } else {
-        // help identify likely app response errors
-        logger.error(result.response_errors);
+        error(result.response_errors);
       }
     }
   }
@@ -158,26 +168,24 @@ const handleListPayments = (
   }
 };
 
-// simulate requets to calculate shipping endpoint
 const handleShippingServices = (
   body: CheckoutBodyWithItems,
-  listShipping: BodyResouce,
+  shippingOptions: ModuleResult<CalculateShippingResponse>,
   amount: Amount,
   orderBody: OrderSet,
 ) => {
-  for (let i = 0; i < listShipping.length; i++) {
-    const result = listShipping[i];
-    // treat calculate shipping response
+  const serviceCode = body.shipping.service_code;
+  for (let i = 0; i < shippingOptions.length; i++) {
+    const result = shippingOptions[i];
     const { response } = result;
     if (response && response.shipping_services) {
-      // check chosen shipping code
-      const shippingCode = body.shipping.service_code;
-
       for (let index = 0; index < response.shipping_services.length; index++) {
-        const shippingService: ShippingSerive = response.shipping_services[index];
-        const shippingLine: ShippingLine = shippingService.shipping_line;
-        if (shippingLine && (!shippingCode || shippingCode === shippingService.service_code)) {
-          // update amount freight and total
+        const shippingService = response.shipping_services[index];
+        const {
+          shipping_line: shippingLine,
+          ...shippingApp
+        } = shippingService;
+        if (shippingLine && (!serviceCode || serviceCode === shippingService.service_code)) {
           const priceFreight = (typeof shippingLine.price === 'number'
             ? shippingLine.price
             : 0);
@@ -189,15 +197,6 @@ const handleShippingServices = (
           }
           amount.freight = freight;
           fixAmount(amount, body, orderBody);
-
-          // app info
-          const shippingApp = {
-            app: { _id: result._id, ...shippingService },
-          };
-          // remove shipping line property
-          delete shippingApp.app.shipping_line;
-
-          // sum production time to posting deadline
           let maxProductionDays = 0;
           if (orderBody.items) {
             orderBody.items.forEach(
@@ -228,24 +227,25 @@ const handleShippingServices = (
             }
             shippingLine.posting_deadline.days += maxProductionDays;
           }
-
-          // add to order body
-          orderBody.shipping_lines = [
-            // generate new object id and compose shipping line object
-            { ...shippingApp, ...shippingLine },
-          ];
+          orderBody.shipping_lines = [{
+            ...shippingLine,
+            app: {
+              _id: result._id,
+              ...shippingApp,
+            },
+          }];
           orderBody.shipping_method_label = shippingService.label || '';
-
-          // continue to discount step
+          return;
         }
       }
     }
   }
+  warn('Checkout shipping service not found', { serviceCode, shippingOptions });
 };
 
 const handleApplyDiscount = (
   body: CheckoutBodyWithItems,
-  listDiscount: BodyResouce,
+  listDiscount: Record<string, any>,
   amount: Amount,
   orderBody: OrderSet,
 ) => {

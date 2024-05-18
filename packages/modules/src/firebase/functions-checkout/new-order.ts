@@ -7,7 +7,7 @@ import type {
   PaymentHistory,
 } from '../../types/index';
 import logger from 'firebase-functions/logger';
-import { sendError, getValidResults } from './utils';
+import { sendError, getValidResults } from './checkout-utils';
 import {
   newOrder,
   cancelOrder,
