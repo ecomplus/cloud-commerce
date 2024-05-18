@@ -1,4 +1,8 @@
-import type { AppModuleBody, CalculateShippingParams, CalculateShippingResponse } from '@cloudcommerce/types';
+import type {
+  AppModuleBody,
+  CalculateShippingParams,
+  CalculateShippingResponse,
+} from '@cloudcommerce/types';
 import axios from 'axios';
 import { warn } from 'firebase-functions/logger';
 import ecomUtils from '@ecomplus/utils';
@@ -168,7 +172,7 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
       message: 'Cannot calculate shipping without cart items',
     };
   }
-  if (destinationZip.length < 8) {
+  if (destinationZip.length !== 8) {
     return {
       error: 'CALCULATE_INVALID_ZIP',
       message: `Zip code ${destinationZip} is invalid for shipping calculation`,
