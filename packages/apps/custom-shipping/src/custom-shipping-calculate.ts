@@ -11,7 +11,7 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     shipping_services: [],
   };
   const shippingRules = appData.shipping_rules;
-  if (!Array.isArray(shippingRules) || shippingRules.length) {
+  if (!Array.isArray(shippingRules) || !shippingRules.length) {
     // Anything to do without shipping rules
     return response;
   }
