@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.18.4](https://github.com/ecomplus/cloud-commerce/compare/v2.18.3...v2.18.4) (2024-05-18)
+
+
+### Bug Fixes
+
+* **cli:** Update bunny.net (CI) edge rules with new /search -> /s/ dynamic redirect ([d5f0029](https://github.com/ecomplus/cloud-commerce/commit/d5f0029478b9158011b47a94de0ebaee5fbe7121))
+* **ssr:** Check fresh HTML length before bumping perma cache file ([4040cce](https://github.com/ecomplus/cloud-commerce/commit/4040ccebb32f1f1add99c83ae210f382af517fc5))
+* **ssr:** Deal with redirects (hardfix) for multiple buit CSS filepaths ([6bc97a0](https://github.com/ecomplus/cloud-commerce/commit/6bc97a0bd358adf4f15bf2bb2ef980db30cbc000))
+* **ssr:** Intercept uncaught exception to return error status and fallback HTML ([9a19316](https://github.com/ecomplus/cloud-commerce/commit/9a193165e7b71dfc99a38a625cbfbd5dde56a9ee))
+
 ## [2.18.3](https://github.com/ecomplus/cloud-commerce/compare/v2.18.1...v2.18.3) (2024-05-18)
 
 
