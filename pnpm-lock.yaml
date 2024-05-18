@@ -291,6 +291,9 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:^
+        version: link:../../firebase
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
