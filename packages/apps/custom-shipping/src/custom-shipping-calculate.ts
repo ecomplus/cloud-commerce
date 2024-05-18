@@ -1,32 +1,37 @@
-export default async ({ params, application }) => {
-  const config = {
+import type { AppModuleBody, CalculateShippingResponse } from '@cloudcommerce/types';
+import config from '@cloudcommerce/firebase/lib/config';
+
+export const calculateShipping = async (modBody: AppModuleBody<'calculate_shipping'>) => {
+  const { params, application } = modBody;
+  const appData = {
     ...application.data,
     ...application.hidden_data,
   };
-  // https://apx-mods.e-com.plus/api/v1/calculate_shipping/response_schema.json?store_id=100
-  const response = {
+  const response: CalculateShippingResponse = {
     shipping_services: [],
   };
-  let shippingRules;
-  if (Array.isArray(config.shipping_rules) && config.shipping_rules.length) {
-    shippingRules = config.shipping_rules;
-  } else {
-    // anything to do without shipping rules
+  const shippingRules = appData.shipping_rules;
+  if (!Array.isArray(shippingRules) || shippingRules.length) {
+    // Anything to do without shipping rules
     return response;
   }
 
   const destinationZip = params.to?.zip.replace(/\D/g, '') || '';
-  let originZip = params.from?.zip || config.zip || '';
+  if (config.get().countryCode === 'BR' && destinationZip.length !== 8) {
+    return {
+      error: 'CALCULATE_INVALID_ZIP',
+      message: `Zip code ${destinationZip} is invalid for BR country`,
+    };
+  }
+
+  let originZip = params.from?.zip || appData.zip || '';
   const checkZipCode = (rule) => {
-    // validate rule zip range
     if (destinationZip && rule.zip_range) {
       const { min, max } = rule.zip_range;
       return Boolean((!min || destinationZip >= min) && (!max || destinationZip <= max));
     }
     return true;
   };
-
-  // search for configured free shipping rule and origin zip by rule
   for (let i = 0; i < shippingRules.length; i++) {
     const rule = shippingRules[i];
     if (
@@ -44,21 +49,17 @@ export default async ({ params, application }) => {
         if (originZip) {
           break;
         }
-      } else if (!(response.free_shipping_from_value <= rule.min_amount)) {
+      } else if (!(response.free_shipping_from_value! <= rule.min_amount)) {
         response.free_shipping_from_value = rule.min_amount;
       }
     }
   }
-
-  // params object follows calculate shipping request schema:
-  // https://apx-mods.e-com.plus/api/v1/calculate_shipping/schema.json?store_id=100
   if (!params.to) {
-    // respond only with free shipping option
+    // Just a free shipping preview with no shipping address received
     return response;
   }
 
   if (!originZip) {
-    // must have configured origin zip code to continue
     const rule = shippingRules.find((_rule) => {
       return Boolean(checkZipCode(_rule) && _rule.from && _rule.from.zip);
     });
@@ -202,8 +203,8 @@ export default async ({ params, application }) => {
 
           // also try to find corresponding service object from config
           let service;
-          if (Array.isArray(config.services)) {
-            service = config.services.find((_service) => {
+          if (Array.isArray(appData.services)) {
+            service = appData.services.find((_service) => {
               return _service && _service.service_code === serviceCode;
             });
             if (service && !label) {
@@ -237,7 +238,7 @@ export default async ({ params, application }) => {
               },
               posting_deadline: {
                 days: 0,
-                ...config.posting_deadline,
+                ...appData.posting_deadline,
                 ...rule.posting_deadline,
               },
             },
@@ -249,3 +250,5 @@ export default async ({ params, application }) => {
   // expecting to have response with shipping services here
   return response;
 };
+
+export default calculateShipping;
