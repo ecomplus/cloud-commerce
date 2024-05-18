@@ -181,26 +181,6 @@ configure_edge_rule '
   "ActionParameter1": "600",
   "Triggers": [
     {
-      "Type": 8,
-      "PatternMatchingType": 0,
-      "PatternMatches": [
-        "404",
-        "410"
-      ]
-    }
-  ],
-  "Description": "Fast cache not founds",
-  "Enabled": true
-}
-'
-
-configure_edge_rule '
-{
-  "ActionType": 3,
-  "TriggerMatchingType": 1,
-  "ActionParameter1": "600",
-  "Triggers": [
-    {
       "Type": 0,
       "PatternMatchingType": 0,
       "PatternMatches": [
@@ -290,21 +270,21 @@ configure_edge_rule '
 
 configure_edge_rule '
 {
-  "ActionType": 5,
-  "ActionParameter1": "Content-Type",
-  "ActionParameter2": "text/html",
+  "ActionType": 3,
+  "TriggerMatchingType": 1,
+  "ActionParameter1": "600",
   "Triggers": [
     {
-      "Type": 2,
+      "Type": 8,
       "PatternMatchingType": 0,
       "PatternMatches": [
-        "application/octet-stream"
-      ],
-      "Parameter1": "Content-Type"
+        "404",
+        "410",
+        "405"
+      ]
     }
   ],
-  "TriggerMatchingType": 1,
-  "Description": "Force mime text/html",
+  "Description": "Fast cache not founds",
   "Enabled": true
 }
 '
@@ -331,6 +311,46 @@ configure_edge_rule '
     }
   ],
   "Description": "Block common invalid requests",
+  "Enabled": true
+}
+'
+
+configure_edge_rule '
+{
+  "ActionType": 1,
+  "ActionParameter1": "https://'$domain'/s/%{Query.term}",
+  "TriggerMatchingType": 0,
+  "Triggers": [
+    {
+      "Type": 0,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
+        "https://'$domain'/search"
+      ]
+    }
+  ],
+  "Description": "Redirect /search -> /s/",
+  "Enabled": true
+}
+'
+
+configure_edge_rule '
+{
+  "ActionType": 5,
+  "ActionParameter1": "Content-Type",
+  "ActionParameter2": "text/html",
+  "Triggers": [
+    {
+      "Type": 2,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
+        "application/octet-stream"
+      ],
+      "Parameter1": "Content-Type"
+    }
+  ],
+  "TriggerMatchingType": 1,
+  "Description": "Force mime text/html",
   "Enabled": true
 }
 '
