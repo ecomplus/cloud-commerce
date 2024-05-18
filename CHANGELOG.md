@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.18.3](https://github.com/ecomplus/cloud-commerce/compare/v2.18.1...v2.18.3) (2024-05-18)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Properly proceeding on checked shipping rules array ([370aeb7](https://github.com/ecomplus/cloud-commerce/commit/370aeb791de44a398c29f4e531b6b39ecba75516))
+* **custom-shipping:** Simple zip code validation with BR country code ([e7cbae7](https://github.com/ecomplus/cloud-commerce/commit/e7cbae7ee46fbdb8a57097377620c92620b57dce))
+* **modules:** Minor fixes handling shipping services and failure debug ([df48085](https://github.com/ecomplus/cloud-commerce/commit/df48085e515c27894946b16ff2909e2f38d69d05))
+
+## [2.18.2](https://github.com/ecomplus/cloud-commerce/compare/v2.18.1...v2.18.2) (2024-05-18)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Simple zip code validation with BR country code ([e7cbae7](https://github.com/ecomplus/cloud-commerce/commit/e7cbae7ee46fbdb8a57097377620c92620b57dce))
+* **modules:** Minor fixes handling shipping services and failure debug ([df48085](https://github.com/ecomplus/cloud-commerce/commit/df48085e515c27894946b16ff2909e2f38d69d05))
+
 ## [2.18.1](https://github.com/ecomplus/cloud-commerce/compare/v2.18.0...v2.18.1) (2024-05-17)
 
 
