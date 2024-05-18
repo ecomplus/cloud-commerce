@@ -85,7 +85,7 @@ if (argv.publish) {
     return cd(pwd);
   });
   await $`pnpm fix-install`;
-  await $`git add packages/**/package.json pnpm-lock.yaml`;
+  await $`git add packages/*/package.json packages/*/*/package.json pnpm-lock.yaml`;
   for (let i = 0; i < storesDirs.length; i++) {
     await $`git add ${storesDirs[i].replace(`${pwd}/`, '')}`;
   }

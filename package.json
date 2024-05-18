@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "2.18.1",
+  "version": "2.18.2",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -33,6 +33,11 @@
   "lint-staged": {
     "packages/storefront/**/*.{ts,vue,astro}": "eslint -c ./packages/eslint/storefront.staged.eslintrc.cjs --fix",
     "packages/!(storefront)/**/*.ts": "eslint --fix"
+  },
+  "commit-and-tag-version": {
+    "scripts": {
+      "precommit": "sleep 1 && git add packages/**/package.json"
+    }
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
