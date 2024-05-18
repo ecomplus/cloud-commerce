@@ -320,7 +320,7 @@ export default async (req: Request, res: Response) => {
   const handleException = (err: Error) => {
     if (res.headersSent) {
       error(err, { onExceptionHandler: 1 });
-      res.end();
+      if (!res.writableEnded) res.end();
       return;
     }
     warn(err);
@@ -328,7 +328,7 @@ export default async (req: Request, res: Response) => {
     res.set('X-SSR-Error-Stack', err.stack);
     fallback(err);
   };
-  process.on('unhandledRejection', (reason) => {
+  const handleRejection = (reason: unknown) => {
     if (reason instanceof Error) {
       handleException(reason);
       return;
@@ -338,8 +338,13 @@ export default async (req: Request, res: Response) => {
     const err: any = new Error(message);
     err.reason = reason;
     handleException(err);
+  };
+  process.once('unhandledRejection', handleRejection);
+  process.once('uncaughtException', handleException);
+  waitingHeadersSent.finally(() => {
+    process.off('unhandledRejection', handleRejection);
+    process.off('uncaughtException', handleException);
   });
-  process.on('uncaughtException', handleException);
 
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
