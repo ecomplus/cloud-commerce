@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.18.5](https://github.com/ecomplus/cloud-commerce/compare/v2.18.4...v2.18.5) (2024-05-18)
+
+
+### Bug Fixes
+
+* **ssr:** Ensure exceptions listeners once only and removed on response headers sent ([f23a6e1](https://github.com/ecomplus/cloud-commerce/commit/f23a6e16d77267b04d2d63362b4146523af4eaea))
+
 ## [2.18.4](https://github.com/ecomplus/cloud-commerce/compare/v2.18.3...v2.18.4) (2024-05-18)
 
 
