@@ -83,7 +83,7 @@ export default async (req: Request, res: Response) => {
           return baseFilename === path.split('/').pop()?.split('.')[0];
         });
         if (cssFilepath) {
-          res.set('Cache-Control', 'max-age=3600, s-maxage=300');
+          res.set('Cache-Control', 'max-age=300');
           redirect(302, cssFilepath);
           return;
         }
