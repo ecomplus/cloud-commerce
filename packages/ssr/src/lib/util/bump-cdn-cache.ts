@@ -132,6 +132,7 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
         purgeReqs.push(
           // eslint-disable-next-line no-loop-func
           axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
+            if (freshHtml.length < 100) return;
             const paths = pathname.slice(1).split('/');
             const filename = paths.pop() || '';
             let folderpath = paths.join('/');
