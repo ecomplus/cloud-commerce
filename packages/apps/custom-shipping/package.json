@@ -26,7 +26,8 @@
     "test": "node --test tests/"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*"
   },
   "devDependencies": {
     "@cloudcommerce/test-base": "workspace:*",
