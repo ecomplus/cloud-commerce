@@ -174,7 +174,10 @@ export default async (req: Request, res: Response) => {
       res.sendStatus(202);
       return;
     }
-    await sendAnalyticsEvents({ url, events }, { ...req.body, ip: req.ip });
+    // https://stackoverflow.com/questions/48032909/how-to-get-client-ip-address-in-a-firebase-cloud-function
+    const ipsHeader = req.get('fastly-client-ip') || req.get('x-forwarded-for');
+    const ip = ipsHeader?.split(',')[0] || req.ip;
+    await sendAnalyticsEvents({ url, events }, { ...req.body, ip });
     res.sendStatus(201);
     return;
   }
