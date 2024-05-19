@@ -60,9 +60,9 @@ const createAppEventsFunction = (
   const midd: ApiEventHandler = (payload, context, message) => {
     const {
       evName,
-      apiEvent: { resource_id: resourceId },
+      apiEvent: { resource_id: resourceId, timestamp },
     } = payload;
-    logger.info(`ev/${evName} ${resourceId}`);
+    logger.info(`ev/${evName} ${resourceId} at ${timestamp}`);
     return fn(payload, context, message);
   };
   const _fn = isSkipMiddleware === true ? fn : midd;
