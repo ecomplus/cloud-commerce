@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.18.6](https://github.com/ecomplus/cloud-commerce/compare/v2.18.5...v2.18.6) (2024-05-19)
+
+
+### Bug Fixes
+
+* **pagarme:** Preventign webhook function to respond headers twice ([489deac](https://github.com/ecomplus/cloud-commerce/commit/489deac37cd4d1b501e98f5f557443e1682e3312))
+* **ssr:** Try fixing user IP for server sent analytics events ([281a59c](https://github.com/ecomplus/cloud-commerce/commit/281a59c1fa834a8b5aca1da41b5cabbb2b340a0f))
+
 ## [2.18.5](https://github.com/ecomplus/cloud-commerce/compare/v2.18.4...v2.18.5) (2024-05-18)
 
 
