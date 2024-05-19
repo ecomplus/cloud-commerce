@@ -52,7 +52,7 @@ export const pagarme = {
               !Pagarme.postback
                 .verifySignature(process.env.PAGARME_TOKEN, verifyBody, signature)
             ) {
-              res.sendStatus(403);
+              res.sendStatus(401);
               return;
             }
             try {
@@ -92,6 +92,6 @@ export const pagarme = {
           }
         }
       }
-      res.sendStatus(400);
+      res.sendStatus(403);
     }),
 };
