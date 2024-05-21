@@ -41,6 +41,7 @@ export default async (req: Request, res: Response) => {
     return sendRequestError(res, '@checkout', validate.errors);
   }
   const { items, ...newBody } = checkoutBody;
+  info(`Checkout by ${checkoutBody.customer.main_email}`, { checkoutBody });
   const newItems = await fixItems(items) as Exclude<OrderSet['items'], undefined>;
   const amount: Amount = {
     subtotal: 0,
@@ -57,7 +58,6 @@ export default async (req: Request, res: Response) => {
   if (!newItems.length) {
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
   }
-  info(`Checkout by ${body.customer.main_email}`, { body });
 
   const countCheckoutItems = body.items.length;
   const { customer } = body;
