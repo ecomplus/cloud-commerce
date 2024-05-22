@@ -1,4 +1,5 @@
 import type { Orders } from '@cloudcommerce/api/types';
+import { existsSync } from 'node:fs';
 import { join as joinPath } from 'node:path';
 import { info, warn } from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
@@ -30,13 +31,21 @@ let customTransactionalMails: Record<string, TemplateRender> | undefined;
 export const getMailRender = async (templateName: string) => {
   if (!customTransactionalMails) {
     const { TRANSACTIONAL_MAILS_MODULE } = process.env;
+    let customMailsModulePath: string | undefined;
     if (TRANSACTIONAL_MAILS_MODULE) {
       const moduleFirstChar = TRANSACTIONAL_MAILS_MODULE.charAt(0);
-      const modulePath = moduleFirstChar === '.' || moduleFirstChar === '/'
+      customMailsModulePath = moduleFirstChar === '.' || moduleFirstChar === '/'
         ? joinPath(process.cwd(), TRANSACTIONAL_MAILS_MODULE)
         : TRANSACTIONAL_MAILS_MODULE;
+    } else {
+      const moduleInjectPath = joinPath(process.cwd(), '@inject/transactional-mails.js');
+      if (existsSync(moduleInjectPath)) {
+        customMailsModulePath = moduleInjectPath;
+      }
+    }
+    if (customMailsModulePath) {
       try {
-        customTransactionalMails = (await import(modulePath)).default;
+        customTransactionalMails = (await import(customMailsModulePath)).default;
       } catch (err) {
         warn(err);
       }
