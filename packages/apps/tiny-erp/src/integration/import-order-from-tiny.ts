@@ -1,5 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import { info, error } from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
 import parseOrder from './parsers/order-from-tiny';
@@ -27,7 +27,7 @@ export default async (apiDoc, queueEntry) => {
       ? pedido.situacao.toLowerCase()
       : null;
     const orderNumber = pedido.numero_ecommerce;
-    logger.info(`Import order n${orderNumber} ${tinyOrderId} => ${situacao}`);
+    info(`Import order n${orderNumber} ${tinyOrderId} => ${situacao}`);
 
     const documentRef = getFirestore().doc(`tinyErpOrders/${tinyOrderId}`);
     const documentSnapshot = await documentRef.get();
@@ -35,7 +35,7 @@ export default async (apiDoc, queueEntry) => {
       documentSnapshot.exists
       && documentSnapshot.get('situacao') === situacao
     ) {
-      logger.info(`>> Ignoring Tiny order n${orderNumber} ${tinyOrderId} with same status`);
+      info(`>> Ignoring Tiny order n${orderNumber} ${tinyOrderId} with same status`);
       return null;
     }
 
@@ -44,7 +44,7 @@ export default async (apiDoc, queueEntry) => {
       limit: 1,
       params: {
         number: orderNumber || undefined,
-        'hidden_metafields.value': `${tinyOrderId}_tiny`,
+        'hidden_metafields.value': orderNumber ? undefined : `${tinyOrderId}_tiny`,
       },
     });
     if (!result.length) {
@@ -72,13 +72,13 @@ export default async (apiDoc, queueEntry) => {
       ) {
         data.status = newStatus;
         promises.push(api.post(`orders/${order._id}/${subresource}`, data as any));
-        logger.info(`${order._id} updated to ${newStatus} from Tiny ${tinyOrderId}`);
+        info(`${order._id} updated to ${newStatus} from Tiny ${tinyOrderId}`);
       }
     });
 
     return Promise.all(promises)
       .then(([firstResult]) => {
-        documentRef.set({ situacao }).catch(logger.error);
+        documentRef.set({ situacao }).catch(error);
         return (firstResult && firstResult.response) || firstResult;
       });
   };
