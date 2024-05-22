@@ -1,7 +1,7 @@
 import type { DocumentReference } from 'firebase-admin/firestore';
-import type { AxiosInstance } from 'axios';
+import type { AxiosInstance, AxiosError } from 'axios';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import { error } from 'firebase-functions/logger';
+import { warn, error } from 'firebase-functions/logger';
 import axios from 'axios';
 
 export type PageViewDocs = Array<{ ref: DocumentReference, pathname: string }>;
@@ -127,26 +127,36 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
       }));
       purgedPaths.push(pathname);
       if (permaCacheZoneFolder) {
+        const paths = pathname.slice(1).split('/');
+        const filename = paths.pop() || '';
+        let folderpath = paths.join('/');
+        if (folderpath) folderpath += '/';
+        // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
+        const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
+          + `/${folderpath}___${filename}___/___file___`;
         const freshHtmlUrl = `https://${projectId}.web.app${pathname}`
           + `?__isrV=${deployRand}&t=${Date.now()}`;
         purgeReqs.push(
           // eslint-disable-next-line no-loop-func
-          axios.get(freshHtmlUrl).then(({ data: freshHtml }: { data: string }) => {
-            if (freshHtml.length < 100) return;
-            const paths = pathname.slice(1).split('/');
-            const filename = paths.pop() || '';
-            let folderpath = paths.join('/');
-            if (folderpath) folderpath += '/';
-            // https://support.bunny.net/hc/en-us/articles/360017048720-Perma-Cache-Folder-Structure-Explained
-            const permaCachePath = `__bcdn_perma_cache__/${permaCacheZoneFolder}`
-              + `/${folderpath}___${filename}___/___file___`;
-            bunnyStorageAxios({
-              method: 'PUT',
-              url: `/${permaCachePath}`,
-              data: freshHtml,
-            });
-            ref.update({ isCachePurged: true, permaCachePath });
-          }),
+          axios.get(freshHtmlUrl)
+            .then(({ data: freshHtml }: { data: string }) => {
+              if (freshHtml.length < 100) {
+                return null;
+              }
+              ref.update({ isCachePurged: true, permaCachePath });
+              return bunnyStorageAxios({
+                method: 'PUT',
+                url: `/${permaCachePath}`,
+                data: freshHtml,
+              });
+            })
+            .catch((_err: AxiosError) => {
+              if (_err.response?.status === 404) {
+                ref.update({ isCachePurged: true, permaCachePath });
+                return bunnyStorageAxios.delete(`/${permaCachePath}`);
+              }
+              throw _err;
+            }),
         );
         continue;
       }
@@ -154,16 +164,21 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
       continue;
     }
     await Promise.all(purgeReqs);
-  } catch (err: any) {
-    bunnyStorageKeysRef.delete();
-    if (err.response) {
-      const _err: any = new Error('Cant purge bunny.net cache');
-      _err.config = err.config;
-      _err.statusCode = err.response.status;
-      _err.data = err.response.data;
-      error(_err);
-    } else {
+  } catch (___err: any) {
+    const _err = ___err as AxiosError;
+    if (_err.response) {
+      if (_err.response.status === 429) {
+        warn(`Purge failed with status 429 at ${_err.config?.url}`);
+        return;
+      }
+      const err: any = new Error('Cant purge bunny.net cache');
+      err.config = _err.config;
+      err.statusCode = _err.response.status;
+      err.data = _err.response.data;
       error(err);
+    } else {
+      error(___err);
     }
+    bunnyStorageKeysRef.delete();
   }
 };
