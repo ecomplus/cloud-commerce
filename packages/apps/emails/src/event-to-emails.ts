@@ -102,7 +102,8 @@ const handleApiEvent: ApiEventHandler = async ({
             current: status as FulfillmentsEntry['status'],
           };
         }
-        const render = getMailRender(mailTempl.templ);
+        // eslint-disable-next-line no-await-in-loop
+        const render = await getMailRender(mailTempl.templ);
         // eslint-disable-next-line no-await-in-loop
         const html = await render(
           store,
