@@ -9,6 +9,29 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
   } = config.get();
   const title = `Products feed - ${name}`;
   const isSkipVariations = !!req.query.skip_variations;
+  let listedCategoryIds: string[] | undefined;
+  let skippedCategoryIds: string[] | undefined;
+  if (typeof req.query.categories === 'string') {
+    listedCategoryIds = [req.query.categories];
+  } else if (Array.isArray(req.query.categories)) {
+    listedCategoryIds = req.query.categories
+      .filter((c) => typeof c === 'string') as string[];
+  }
+  if (!listedCategoryIds) {
+    if (typeof req.query.skip_categories === 'string') {
+      skippedCategoryIds = [req.query.skip_categories];
+    } else if (Array.isArray(req.query.skip_categories)) {
+      skippedCategoryIds = req.query.skip_categories
+        .filter((c) => typeof c === 'string') as string[];
+    }
+  }
+  let skippedSkus: string[] | undefined;
+  if (typeof req.query.skip_skus === 'string') {
+    skippedSkus = [req.query.skip_skus];
+  } else if (Array.isArray(req.query.skip_skus)) {
+    skippedSkus = req.query.skip_skus
+      .filter((s) => typeof s === 'string') as string[];
+  }
   const discount = Number(req.query.discount) || 0;
   let querystring = req.query.qs ? String(req.query.qs) : '?_=feed';
   if (querystring.charAt(0) !== '?') {
@@ -40,6 +63,9 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
 
   const convertProduct = (p: (typeof products)[0], groupId?: string) => {
     if (p.name) {
+      if (skippedSkus?.includes(p.sku)) {
+        return;
+      }
       const entry: Record<string, any> = {
         id: p.sku || p._id,
         title: p.name,
@@ -108,6 +134,15 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
       if (p.category_tree) {
         entry.product_type = p.category_tree;
       } else if (p.categories?.length) {
+        if (listedCategoryIds?.length) {
+          if (!p.categories.find(({ _id }) => _id && listedCategoryIds.includes(_id))) {
+            return;
+          }
+        } else if (skippedCategoryIds?.length) {
+          if (p.categories.find(({ _id }) => _id && skippedCategoryIds.includes(_id))) {
+            return;
+          }
+        }
         entry.product_type = p.categories[0].name;
       }
       let isIdentifierExists = false;
