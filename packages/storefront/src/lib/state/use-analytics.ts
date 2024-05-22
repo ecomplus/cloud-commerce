@@ -180,12 +180,24 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
   }
 };
 
-export const watchGtagEvents = (cb: (payload: GtagEventMessage) => any) => {
+type GtagEventCallback = (payload: GtagEventMessage) => any;
+const gtagEventCallbacks: Array<{
+  names?: Gtag.EventNames[],
+  cb: GtagEventCallback,
+}> = [];
+if (!import.meta.env.SSR) {
   window.addEventListener('message', ({ data }: { data: GtagEventMessage }) => {
     if (data.type === GTAG_EVENT_TYPE) {
-      cb(data);
+      gtagEventCallbacks.forEach(({ names, cb }) => {
+        if (names?.length && !names.includes(data.event.name)) return;
+        cb(data);
+      });
     }
   });
+}
+
+export const watchGtagEvents = (cb: GtagEventCallback, names?: Gtag.EventNames[]) => {
+  gtagEventCallbacks.push({ names, cb });
 };
 
 type CartItem = Carts['items'][0];
