@@ -55,6 +55,10 @@ export default async (req: Request, res: Response) => {
     res.sendStatus(404);
     return;
   }
+  if (req.path.endsWith('.html') && !process.env.KEEP_HTML_EXT) {
+    res.redirect(301, req.path.replace(/\.html$/, ''));
+    return;
+  }
   const redirect = (status: 301 | 302, pathname: string) => {
     const projectId = process.env.GCLOUD_PROJECT as string;
     if (status === 302 && projectId) {
