@@ -986,6 +986,7 @@ export const i19youEarn = 'You earn'
 export const i19yourInstalledApps = 'Your installed apps'
 export const i19zipCode = 'Zip code'
 export const i19zipCodeRange = 'Zip code range'
+export const i19zipCodeRefusedMsg = 'This zip code appears to be invalid for some shipping methods, please check if it has been filled in correctly.'
 
 export const i19CancelReason = {
   customer: 'Cancelled by customer',

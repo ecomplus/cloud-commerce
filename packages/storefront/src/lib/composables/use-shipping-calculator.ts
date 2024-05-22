@@ -186,6 +186,11 @@ export const useShippingCalculator = (props: Props) => {
   const shippingServices = shallowReactive<(ShippingService & { app_id: number })[]>([]);
   const freeFromValue = ref<number | null>(null);
   const hasPaidOption = ref<boolean | undefined>();
+  const responseErrorCodes = shallowReactive<string[]>([]);
+  const isZipCodeRefused = computed(() => {
+    return responseErrorCodes.includes('CALCULATE_INVALID_ZIP');
+  });
+
   const parseShippingResult = (
     shippingResult: ModuleApiResult<'calculate_shipping'>['result'] = [],
     isRetry = false,
@@ -193,11 +198,11 @@ export const useShippingCalculator = (props: Props) => {
     freeFromValue.value = null;
     shippingServices.splice(0);
     if (shippingResult.length) {
-      let hasSomeFailedApp = false;
+      responseErrorCodes.splice(0);
       shippingResult.forEach((appResult) => {
         const { validated, error, response } = appResult;
         if (!validated || error) {
-          hasSomeFailedApp = true;
+          responseErrorCodes.push(`${(response as any).error}`);
           return;
         }
         if (props.skippedAppIds?.includes(appResult.app_id)) {
@@ -218,7 +223,7 @@ export const useShippingCalculator = (props: Props) => {
         }
       });
       if (!shippingServices.length) {
-        if (hasSomeFailedApp) {
+        if (responseErrorCodes.length && !isZipCodeRefused.value) {
           if (!isRetry) {
             fetchShippingServices(true);
           } else {
@@ -325,6 +330,7 @@ export const useShippingCalculator = (props: Props) => {
     isFetching,
     freeFromValue,
     shippingServices,
+    isZipCodeRefused,
     parseShippingResult,
     productionDeadline,
     getShippingDeadline,

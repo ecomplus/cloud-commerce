@@ -986,6 +986,7 @@ export const i19youEarn = 'Você ganha'
 export const i19yourInstalledApps = 'Seus apps instalados'
 export const i19zipCode = 'CEP'
 export const i19zipCodeRange = 'Faixa de CEP'
+export const i19zipCodeRefusedMsg = 'Este CEP parace ser inválido para algumas formas de envio, por favor verifique se foi preenchido corretamente.'
 
 export const i19CancelReason = {
   customer: 'Cancelado pelo cliente',
