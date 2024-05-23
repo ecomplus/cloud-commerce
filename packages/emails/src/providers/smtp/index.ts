@@ -15,7 +15,8 @@ const parseEmailAddrs = (emails: EmailAdrress | EmailAdrress[]) => {
       return `${value}, ${emailAdrress.email}`;
     }, '');
   }
-  return `${emails.name.replace(/[<>]/g, '')} <${emails.email}>`;
+  if (!emails.name) return emails.email;
+  return `"${emails.name.replace(/[<>"]/g, '')}" <${emails.email}>`;
 };
 
 let smtpConfig: SmtpConfig | undefined;
