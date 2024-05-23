@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.19.0](https://github.com/ecomplus/cloud-commerce/compare/v2.18.6...v2.19.0) (2024-05-23)
+
+
+### Features
+
+* **emails:** Test if `@inject/transactional-mails.js` exists for custom emails templates ([9c000a6](https://github.com/ecomplus/cloud-commerce/commit/9c000a673e00a801b583b79fec1fbdcd595baf7b))
+* **feeds:** Handle optional queries `categories`, `skip_categories` and `skip_skus` on catalog ([1dba7f1](https://github.com/ecomplus/cloud-commerce/commit/1dba7f1e1bb937c4967d0805d7ecb4664cd660d8))
+* **storefront:** New `isZipCodeRefused` returned on shipping calculator composable ([b9bc396](https://github.com/ecomplus/cloud-commerce/commit/b9bc39699ff7954eaaaeb27f87e1735786ef2a7d))
+* **storefront:** New optional `names` filter param to `watchGtagEvents` from analytics state ([5c58718](https://github.com/ecomplus/cloud-commerce/commit/5c58718e1e966b7ef7b0ff9231702f0ca8da3c2a))
+
+
+### Bug Fixes
+
+* **emails:** Handle custom renders with injection from `TRANSACTIONAL_MAILS_MODULE` ([917e732](https://github.com/ecomplus/cloud-commerce/commit/917e73202b5a5b6da08d94c7f51cab6eddf7d2c8))
+* **emails:** Removing unecessary quotes on email sender ([fbe5e76](https://github.com/ecomplus/cloud-commerce/commit/fbe5e76189cefb5649feecf73cfdc48dd1553134))
+* **ssr:** Redirect all .html URLs by default (clean URLs) ([bd1410f](https://github.com/ecomplus/cloud-commerce/commit/bd1410f9c430c7d07ecb8942d9915b50070a4ddf))
+* **storefront:** Update beta checkout script to ensure cart is cleared after purchase ([775de39](https://github.com/ecomplus/cloud-commerce/commit/775de39b2544c99769cd044fd463afe68617b095))
+* **tiny-erp:** Fix matching order by number OR metafield on import from Tiny ERP updates ([2c1c0f8](https://github.com/ecomplus/cloud-commerce/commit/2c1c0f8e4ebdd8d25ca77dbb70b3878356b6bb78))
+
 ## [2.18.6](https://github.com/ecomplus/cloud-commerce/compare/v2.18.5...v2.18.6) (2024-05-19)
 
 
