@@ -151,6 +151,7 @@ const watchAppRoutes = () => {
         }
         isPurchaseSent = true;
       }
+      shoppingCart.items.splice(0);
     };
 
     let emitPurchaseTimer: NodeJS.Timeout | undefined;
