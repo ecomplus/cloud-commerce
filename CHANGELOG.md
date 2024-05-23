@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.19.1](https://github.com/ecomplus/cloud-commerce/compare/v2.19.0...v2.19.1) (2024-05-23)
+
+
+### Bug Fixes
+
+* **emails:** Revert email SMTP sender string with quotes for name ([dc9650b](https://github.com/ecomplus/cloud-commerce/commit/dc9650b96257d8ca14f04b3c385e76161fc6bbce))
+* **feeds:** Routing by request pathname (not full URL) ([fda35ce](https://github.com/ecomplus/cloud-commerce/commit/fda35ce3294184ce61e9680eac70f5d0a83ea157))
+
 ## [2.19.0](https://github.com/ecomplus/cloud-commerce/compare/v2.18.6...v2.19.0) (2024-05-23)
 
 
