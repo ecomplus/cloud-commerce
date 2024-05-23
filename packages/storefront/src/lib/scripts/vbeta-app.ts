@@ -1,4 +1,8 @@
-import type { Orders, Customers } from '@cloudcommerce/api/types';
+import type { Orders } from '@cloudcommerce/api/types';
+import type {
+  PurchaseExtraParams,
+  PurchaseParamsToHash,
+} from '@@sf/state/use-analytics';
 import { watch } from 'vue';
 import { useThrottleFn } from '@vueuse/core';
 import { phone as getPhone } from '@ecomplus/utils';
@@ -72,7 +76,7 @@ const watchAppRoutes = () => {
           const { amount } = (order || (window as any).storefrontApp) as {
             amount?: Orders['amount'],
           };
-          const params: Gtag.EventParams = {
+          const params: Gtag.EventParams & PurchaseExtraParams = {
             transaction_id: orderId,
             value: fixMoneyValue(amount?.total || shoppingCart.subtotal || 0),
             items: shoppingCart.items.map(getGtagItem),
@@ -88,65 +92,32 @@ const watchAppRoutes = () => {
               params.tax = fixMoneyValue(amount.tax);
             }
           }
-          let purchaseTimeout = 1;
-          const { dataLayer, __sendGTMExtraPurchaseData } = (window as any);
-          if (dataLayer && __sendGTMExtraPurchaseData) {
-            const extraPurchaseData: Record<string, any> = {};
-            let shippingAddr: Exclude<Customers['addresses'], undefined>[0] | undefined;
-            if (customer) {
-              extraPurchaseData.customerDisplayName = customerName.value;
-              let customerFullName = customer.value.name;
-              if (!customerFullName?.given_name) {
-                try {
-                  const storedCustomer = sessionStorage.getItem('ecomCustomerAccount');
-                  if (storedCustomer) {
-                    const sessionCustomer = JSON.parse(storedCustomer);
-                    if (typeof sessionCustomer === 'object' && sessionCustomer) {
-                      customerFullName = sessionCustomer.name;
-                    }
-                  }
-                } catch {
-                  //
-                }
-              }
-              if (customerFullName) {
-                extraPurchaseData.customerGivenName = customerFullName.given_name;
-                extraPurchaseData.customerFamilyName = customerFullName.family_name;
-              }
-              extraPurchaseData.customerEmail = customer.value.main_email;
-              extraPurchaseData.customerPhone = getPhone(customer.value);
-              shippingAddr = customer.value.addresses?.[0];
-            }
-            try {
-              const storedAddr = sessionStorage.getItem('ecomCustomerAddress');
-              if (storedAddr) {
-                const sessionShippingAddr = JSON.parse(storedAddr);
-                if (typeof shippingAddr === 'object' && shippingAddr) {
-                  Object.assign(shippingAddr, sessionShippingAddr);
-                } else {
-                  shippingAddr = sessionShippingAddr;
-                }
-              }
-            } catch {
-              //
-            }
-            if (shippingAddr && shippingAddr.zip) {
-              extraPurchaseData.shippingAddrZip = shippingAddr.zip;
-              extraPurchaseData.shippingAddrStreet = shippingAddr.street;
-              extraPurchaseData.shippingAddrNumber = shippingAddr.number;
-              if (shippingAddr.street && shippingAddr.number) {
-                extraPurchaseData.shippingAddrStreet += `, ${shippingAddr.number}`;
-              }
-              extraPurchaseData.shippingAddrCity = shippingAddr.city;
-              extraPurchaseData.shippingAddrProvinceCode = shippingAddr.province_code;
-            }
-            dataLayer.push({
-              event: 'purchaseExtraData',
-              ...extraPurchaseData,
-            });
-            purchaseTimeout = 100;
+          const paramsToHash: PurchaseParamsToHash = {};
+          const buyer = order?.buyers?.[0] || customer.value;
+          if (buyer) {
+            paramsToHash.customer_display_name = buyer.display_name || customerName.value;
+            paramsToHash.customer_given_name = buyer.name?.given_name;
+            paramsToHash.customer_family_name = buyer.name?.family_name;
+            paramsToHash.customer_email = buyer.main_email;
+            paramsToHash.customer_phone = getPhone(buyer);
           }
-          setTimeout(() => emitGtagEvent('purchase', params), purchaseTimeout);
+          const shippingLine = order?.shipping_lines?.[0];
+          const shippingAddr = shippingLine?.to;
+          if (shippingAddr) {
+            paramsToHash.shipping_addr_zip = shippingAddr.zip;
+            paramsToHash.shipping_addr_street = shippingAddr.street;
+            paramsToHash.shipping_addr_number = shippingAddr.number;
+            paramsToHash.shipping_addr_city = shippingAddr.city;
+            params.shipping_addr_province_code = shippingAddr.province_code;
+            params.shipping_addr_country_code = shippingAddr.country_code;
+          }
+          if (shippingLine && shippingLine.delivery_time) {
+            let { days } = shippingLine.delivery_time;
+            if (shippingLine.posting_deadline) days += shippingLine.delivery_time.days;
+            if (shippingLine.delivery_time.working_days) days *= 1.25;
+            params.shipping_delivery_days = days;
+          }
+          emitGtagEvent('purchase', params, paramsToHash);
           localStorage.setItem('gtag.orderIdSent', orderId);
         }
         isPurchaseSent = true;

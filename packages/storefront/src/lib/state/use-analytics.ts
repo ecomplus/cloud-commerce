@@ -63,6 +63,26 @@ export const getAnalyticsContext = () => {
 
 export const GTAG_EVENT_TYPE = 'GtagEvent';
 
+export type PurchaseExtraParams = {
+  shipping_addr_province_code?: string;
+  shipping_addr_country_code?: string;
+  shipping_delivery_days?: number;
+};
+
+export type PurchaseParamsToHash = {
+  customer_display_name?: string;
+  customer_given_name?: string;
+  customer_family_name?: string;
+  customer_email?: string;
+  customer_phone?: string;
+  shipping_addr_zip?: string;
+  shipping_addr_street?: string;
+  shipping_addr_number?: number;
+  shipping_addr_city?: string;
+};
+
+type ParamsToHash = Record<string, string | number | undefined> & PurchaseParamsToHash;
+
 export type GtagEventMessage = typeof trackingIds &
   PageViewParams &
   {
@@ -73,7 +93,8 @@ export type GtagEventMessage = typeof trackingIds &
       params: PageViewParams,
     } | {
       name: Exclude<Gtag.EventNames, 'page_view'>,
-      params: Gtag.EventParams,
+      params: Record<string, any> & Gtag.EventParams & PurchaseExtraParams,
+      _unshashed_data?: ParamsToHash,
     },
     utm: typeof utm,
     event_id: string,
@@ -88,15 +109,24 @@ export const addGtagEventMiddleware = (midd: GtagEventMiddleware) => {
   gtagEventMiddlewares.push(midd);
 };
 
+const digestMessage = async (message: string) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hash = await window.crypto.subtle.digest('SHA-256', data);
+  return hash;
+};
 let countItemsPerList: Record<string, number> = {};
 let defaultItemsList = '';
 
 export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
   name: N,
-  _params: N extends 'page_view' ? PageViewParams : Gtag.EventParams,
+  _params: N extends 'page_view'
+    ? PageViewParams
+    : Record<string, any> & Gtag.EventParams,
+  paramsToHash?: ParamsToHash,
 ) => {
   if (import.meta.env.SSR) return;
-  const params = _params as Gtag.EventParams;
+  const params = _params as Record<string, any> & Gtag.EventParams;
   if (name === 'page_view') {
     countItemsPerList = {};
     const { apiContext } = window.$storefront;
@@ -160,6 +190,18 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
     }
   }
   const timestamp = Date.now();
+  if (paramsToHash) {
+    const hashings = Object.keys(paramsToHash).map((key) => async () => {
+      const value = paramsToHash[key];
+      if (value === undefined) return;
+      try {
+        params[key] = await digestMessage(`${value}`);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+    await (Promise.all(hashings));
+  }
   try {
     let data: GtagEventMessage = {
       type: GTAG_EVENT_TYPE,
@@ -167,6 +209,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
       event: {
         name: name as 'view_item',
         params,
+        _unshashed_data: paramsToHash,
       },
       event_id: `${name}.${timestamp}`,
       timestamp,
