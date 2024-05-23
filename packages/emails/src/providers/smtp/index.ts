@@ -9,13 +9,13 @@ import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import nodemailer from 'nodemailer';
 import parseTemplateToHtml from '../../parse-template-to-html';
 
-const parseEmailsToString = (emails: EmailAdrress | EmailAdrress[]) => {
+const parseEmailAddrs = (emails: EmailAdrress | EmailAdrress[]) => {
   if (Array.isArray(emails)) {
     return emails.reduce((value: string, emailAdrress: EmailAdrress) => {
       return `${value}, ${emailAdrress.email}`;
     }, '');
   }
-  return `"${emails.name}" <${emails.email}>`;
+  return `${emails.name.replace(/[<>]/g, '')} <${emails.email}>`;
 };
 
 let smtpConfig: SmtpConfig | undefined;
@@ -57,23 +57,23 @@ const sendEmail = async (
     throw new Error(`Email body for template: #${template}, not found`);
   }
   const mailOptions: SMTPTransport.MailOptions = {
-    from: `"${from.name}" <${from.email}>`,
-    to: parseEmailsToString(to),
+    from: parseEmailAddrs(from),
+    to: parseEmailAddrs(to),
     subject: emailHeaders.subject,
     html,
     text,
   };
   if (emailHeaders.sender) {
-    mailOptions.sender = `"${emailHeaders.sender.name}" <${emailHeaders.sender.email}>`;
+    mailOptions.sender = parseEmailAddrs(emailHeaders.sender);
   }
   if (emailHeaders.cc) {
-    mailOptions.cc = parseEmailsToString(emailHeaders.cc);
+    mailOptions.cc = parseEmailAddrs(emailHeaders.cc);
   }
   if (emailHeaders.bcc) {
-    mailOptions.bcc = parseEmailsToString(emailHeaders.bcc);
+    mailOptions.bcc = parseEmailAddrs(emailHeaders.bcc);
   }
   if (emailHeaders.replyTo) {
-    mailOptions.replyTo = parseEmailsToString(emailHeaders.replyTo);
+    mailOptions.replyTo = parseEmailAddrs(emailHeaders.replyTo);
   }
   if (!transporter && smtpConfig) {
     setConfigSmtp(smtpConfig);
