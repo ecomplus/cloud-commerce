@@ -75,7 +75,7 @@ const fetching = new Promise((resolve, reject) => {
 });
 
 const serveFeeds = async (req: Request, res: Response) => {
-  const { method, url } = req;
+  const { method } = req;
   if (method !== 'GET') {
     res.sendStatus(405);
     return;
@@ -93,7 +93,7 @@ const serveFeeds = async (req: Request, res: Response) => {
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-XSS-Protection', '1; mode=block');
   res.set('X-Frame-Options', 'DENY');
-  switch (url) {
+  switch (req.path) {
     case '/_feeds/catalog.xml':
     case '/catalog.xml':
       await renderCatalog(req, res, products);
