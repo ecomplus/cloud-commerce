@@ -94,7 +94,7 @@ export type GtagEventMessage = typeof trackingIds &
     } | {
       name: Exclude<Gtag.EventNames, 'page_view'>,
       params: Record<string, any> & Gtag.EventParams & PurchaseExtraParams,
-      _unshashed_data?: ParamsToHash,
+      _unhashed_data?: ParamsToHash,
     },
     utm: typeof utm,
     event_id: string,
@@ -209,7 +209,7 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
       event: {
         name: name as 'view_item',
         params,
-        _unshashed_data: paramsToHash,
+        _unhashed_data: paramsToHash,
       },
       event_id: `${name}.${timestamp}`,
       timestamp,
