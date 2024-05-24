@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.0](https://github.com/ecomplus/cloud-commerce/compare/v2.19.1...v2.20.0) (2024-05-24)
+
+
+### Features
+
+* **ssr:** Sending additional user data to Meta Conversions API on purchase events ([9dcc900](https://github.com/ecomplus/cloud-commerce/commit/9dcc9002237166ff02560fa7128dc665d67b6a19))
+* **storefront:** Type and handle hashing for additional purchase params on analytics state ([361cf88](https://github.com/ecomplus/cloud-commerce/commit/361cf883c8cdda56f7054b9ec9d48c3522c1be4c))
+
+
+### Bug Fixes
+
+* **feeds:** Fetching products with all categories, inclusing IDs, for catalog filter params ([d964ec5](https://github.com/ecomplus/cloud-commerce/commit/d964ec5a86e87ba02ff203b61e85cf1b62c42d9b))
+* **storefront:** Properly setting hashed data to gtag params with `_hash` suffix ([a637d7e](https://github.com/ecomplus/cloud-commerce/commit/a637d7e7d03d73f46262e4d0c2fb63bd5bacddf6))
+
 ## [2.19.1](https://github.com/ecomplus/cloud-commerce/compare/v2.19.0...v2.19.1) (2024-05-23)
 
 
