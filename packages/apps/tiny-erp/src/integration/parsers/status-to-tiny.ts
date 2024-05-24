@@ -1,6 +1,6 @@
 import type { Orders } from '@cloudcommerce/types';
 
-export default (order: Orders) => {
+const parseStatusToTiny = (order: Orders) => {
   const financialStatus = order.financial_status && order.financial_status.current;
   switch (financialStatus) {
     case 'pending':
@@ -16,7 +16,6 @@ export default (order: Orders) => {
       return 'cancelado';
     default:
   }
-
   switch (order.fulfillment_status && order.fulfillment_status.current) {
     case 'in_production':
     case 'in_separation':
@@ -34,9 +33,12 @@ export default (order: Orders) => {
       return 'cancelado';
     default:
   }
-
   if (financialStatus === 'paid') {
     return 'aprovado';
   }
   return 'aberto';
 };
+
+export default parseStatusToTiny;
+
+export type NormalizedTinyStatus = ReturnType<typeof parseStatusToTiny>;

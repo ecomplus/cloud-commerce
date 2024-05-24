@@ -2,7 +2,8 @@ import type { Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
-import parseStatus from './parsers/status-to-tiny';
+import parseStatusToTiny from './parsers/status-to-tiny';
+import parseTinyStatus from './parsers/status-from-tiny';
 import parseOrder from './parsers/order-to-tiny';
 
 export default async (apiDoc, queueEntry, appData, canCreateNew) => {
@@ -45,7 +46,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
   }
 
   const { pedidos } = tinyData;
-  const tinyStatus = parseStatus(order);
+  const tinyStatus = parseStatusToTiny(order);
   let originalTinyOrder;
   if (Array.isArray(pedidos)) {
     originalTinyOrder = pedidos.find(({ pedido }) => {
@@ -102,11 +103,14 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
   if (originalTinyOrder) {
     const { id, situacao } = originalTinyOrder;
     logger.info(`${orderId} found with tiny status ${situacao} => ${tinyStatus}`);
-    if (tinyStatus && tinyStatus !== situacao) {
-      return postTiny('/pedido.alterar.situacao', {
-        id,
-        situacao: tinyStatus,
-      });
+    if (typeof situacao === 'string') {
+      const { normalizedTinyStatus } = parseTinyStatus(tinyStatus);
+      if (normalizedTinyStatus !== parseTinyStatus(situacao).normalizedTinyStatus) {
+        return postTiny('/pedido.alterar.situacao', {
+          id,
+          situacao: tinyStatus,
+        });
+      }
     }
   }
   return null;
