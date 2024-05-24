@@ -95,21 +95,20 @@ const watchAppRoutes = () => {
           const paramsToHash: PurchaseParamsToHash = {};
           const buyer = order?.buyers?.[0] || customer.value;
           if (buyer) {
-            paramsToHash.customer_display_name = buyer.display_name || customerName.value;
-            paramsToHash.customer_given_name = buyer.name?.given_name;
-            paramsToHash.customer_family_name = buyer.name?.family_name;
-            paramsToHash.customer_email = buyer.main_email;
-            paramsToHash.customer_phone = getPhone(buyer);
+            params.buyer_id = buyer._id;
+            paramsToHash.buyer_display_name = buyer.display_name || customerName.value;
+            paramsToHash.buyer_given_name = buyer.name?.given_name;
+            paramsToHash.buyer_family_name = buyer.name?.family_name;
+            paramsToHash.buyer_email = buyer.main_email;
+            paramsToHash.buyer_phone = getPhone(buyer);
           }
           const shippingLine = order?.shipping_lines?.[0];
           const shippingAddr = shippingLine?.to;
           if (shippingAddr) {
-            paramsToHash.shipping_addr_zip = shippingAddr.zip;
-            paramsToHash.shipping_addr_street = shippingAddr.street;
-            paramsToHash.shipping_addr_number = shippingAddr.number;
-            paramsToHash.shipping_addr_city = shippingAddr.city;
             params.shipping_addr_province_code = shippingAddr.province_code;
             params.shipping_addr_country_code = shippingAddr.country_code;
+            paramsToHash.shipping_addr_zip = shippingAddr.zip;
+            paramsToHash.shipping_addr_city = shippingAddr.city;
           }
           if (shippingLine && shippingLine.delivery_time) {
             let { days } = shippingLine.delivery_time;

@@ -1,4 +1,7 @@
+import type { GtagEventMessage } from '@@sf/state/use-analytics';
 import { useDebounceFn } from '@vueuse/core';
+import config from '@cloudcommerce/config';
+import { looksLikeBot, getDigestHex } from '@@sf/sf-lib';
 import {
   useAnalytics,
   trackingIds,
@@ -7,7 +10,6 @@ import {
   emitGtagEvent,
   watchGtagEvents,
 } from '@@sf/state/use-analytics';
-import { looksLikeBot } from '@@sf/sf-lib';
 import afetch from '../../helpers/afetch';
 import parseGtagToFbq from '../../analytics/event-to-fbq';
 import parseGtagToTtq from '../../analytics/event-to-ttq';
@@ -26,12 +28,37 @@ type EventToServerSend = AnalyticsEvent & {
 };
 type AnalyticsVariantCtx = Partial<ReturnType<typeof useAnalytics>>;
 let eventsToSend: Array<EventToServerSend> = [];
-const _sendServerEvents = useDebounceFn((variantCtx?: AnalyticsVariantCtx) => {
+const _sendServerEvents = useDebounceFn(async (variantCtx?: AnalyticsVariantCtx) => {
+  const fbUserData: Record<string, any> = {};
+  const purchaseEvent = eventsToSend.find((event) => {
+    return event.type === 'gtag' && event.name === 'purchase';
+  }) as (GtagEventMessage['event'] & { name: 'purchase' }) | undefined;
+  if (purchaseEvent) {
+    const { params } = purchaseEvent;
+    fbUserData.external_id = params.buyer_id;
+    fbUserData.em = params.buyer_email_hash;
+    fbUserData.ph = params.buyer_phone_hash;
+    fbUserData.fn = params.buyer_given_name_hash;
+    fbUserData.ln = params.buyer_family_name_hash;
+    fbUserData.ct = params.shipping_addr_city_hash;
+    fbUserData.zp = params.shipping_addr_zip_hash;
+    try {
+      const provinceCode = params.shipping_addr_province_code;
+      if (provinceCode?.length === 2) {
+        fbUserData.st = await getDigestHex(provinceCode.toLowerCase());
+      }
+      const countryCode = params.shipping_addr_country_code || config.get().countryCode;
+      if (countryCode.length === 2) {
+        fbUserData.country = await getDigestHex(countryCode.toLowerCase());
+      }
+    } catch { /**/ }
+  }
   afetch(`/_analytics`, {
     method: 'POST',
     body: {
       exp_variant_string: variantCtx?.expVariantString,
       ...getAnalyticsContext(),
+      fb_user_data: fbUserData,
       events: eventsToSend,
     },
   });

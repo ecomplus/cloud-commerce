@@ -2,6 +2,7 @@ import type { Products, Carts, SearchItem } from '@cloudcommerce/types';
 import type { TrackingIds } from '../../analytics/set-tracking-ids';
 import { watch } from 'vue';
 import { price as getPrice, name as getName } from '@ecomplus/utils';
+import { getDigestHex } from '@@sf/sf-lib';
 import { customer, isLogged } from '@@sf/state/customer-session';
 import { cartEvents } from '@@sf/state/shopping-cart';
 import { searchHistory } from '@@sf/state/search-engine';
@@ -64,24 +65,23 @@ export const getAnalyticsContext = () => {
 export const GTAG_EVENT_TYPE = 'GtagEvent';
 
 export type PurchaseExtraParams = {
+  buyer_id?: string;
   shipping_addr_province_code?: string;
   shipping_addr_country_code?: string;
   shipping_delivery_days?: number;
 };
 
 export type PurchaseParamsToHash = {
-  customer_display_name?: string;
-  customer_given_name?: string;
-  customer_family_name?: string;
-  customer_email?: string;
-  customer_phone?: string;
+  buyer_display_name?: string;
+  buyer_given_name?: string;
+  buyer_family_name?: string;
+  buyer_email?: string;
+  buyer_phone?: string;
   shipping_addr_zip?: string;
-  shipping_addr_street?: string;
-  shipping_addr_number?: number;
   shipping_addr_city?: string;
 };
 
-type ParamsToHash = Record<string, string | number | undefined> & PurchaseParamsToHash;
+type ParamsToHash = Record<string, string | undefined> & PurchaseParamsToHash;
 
 export type GtagEventMessage = typeof trackingIds &
   PageViewParams &
@@ -93,7 +93,8 @@ export type GtagEventMessage = typeof trackingIds &
       params: PageViewParams,
     } | {
       name: Exclude<Gtag.EventNames, 'page_view'>,
-      params: Record<string, any> & Gtag.EventParams & PurchaseExtraParams,
+      params: Record<string, any> & Gtag.EventParams & PurchaseExtraParams
+        & Partial<Record<`${keyof PurchaseParamsToHash}_hash`, string>>,
       _unhashed_data?: ParamsToHash,
     },
     utm: typeof utm,
@@ -109,12 +110,6 @@ export const addGtagEventMiddleware = (midd: GtagEventMiddleware) => {
   gtagEventMiddlewares.push(midd);
 };
 
-const digestMessage = async (message: string) => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hash = await window.crypto.subtle.digest('SHA-256', data);
-  return hash;
-};
 let countItemsPerList: Record<string, number> = {};
 let defaultItemsList = '';
 
@@ -191,16 +186,16 @@ export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
   }
   const timestamp = Date.now();
   if (paramsToHash) {
-    const hashings = Object.keys(paramsToHash).map((key) => async () => {
+    const hashings = Object.keys(paramsToHash).map(async (key) => {
       const value = paramsToHash[key];
       if (value === undefined) return;
       try {
-        params[key] = await digestMessage(`${value}`);
+        params[`${key}_hash`] = await getDigestHex(value);
       } catch (err) {
         console.error(err);
       }
     });
-    await (Promise.all(hashings));
+    await Promise.all(hashings);
   }
   try {
     let data: GtagEventMessage = {
