@@ -91,6 +91,7 @@ const sendAnalyticsEvents = async (
       events: metaEvents,
       pageLocation: url,
       userData: {
+        ...payload.fb_user_data,
         client_ip_address: payload.ip,
         client_user_agent: payload.user_agent,
         fbc: payload.fbc,
@@ -104,6 +105,7 @@ const sendAnalyticsEvents = async (
       events: tiktokEvents,
       pageLocation: url,
       user: {
+        ...payload.tt_user,
         ip: payload.ip,
         user_agent: payload.user_agent,
         ttclid: payload.ttclid,
