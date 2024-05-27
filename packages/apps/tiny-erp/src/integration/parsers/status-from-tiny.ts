@@ -14,11 +14,11 @@ const parseTinyStatus = (situacao: string) => {
       financialStatus = 'paid';
       normalizedTinyStatus = 'aprovado';
       break;
-    case 'preparando_envio':
     case 'preparando envio':
+    case 'preparando_envio':
     case 'em separação':
       fulfillmentStatus = 'in_separation';
-      normalizedTinyStatus = 'preparando_envio';
+      normalizedTinyStatus = 'preparando envio';
       break;
     case 'em produção':
       fulfillmentStatus = 'in_production';
@@ -30,10 +30,10 @@ const parseTinyStatus = (situacao: string) => {
       fulfillmentStatus = 'invoice_issued';
       normalizedTinyStatus = 'faturado';
       break;
-    case 'pronto_envio':
     case 'pronto para envio':
+    case 'pronto_envio':
       fulfillmentStatus = 'ready_for_shipping';
-      normalizedTinyStatus = 'pronto_envio';
+      normalizedTinyStatus = 'pronto para envio';
       break;
     case 'enviado':
       fulfillmentStatus = 'shipped';

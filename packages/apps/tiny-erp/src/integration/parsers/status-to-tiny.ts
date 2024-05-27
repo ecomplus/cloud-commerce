@@ -19,11 +19,11 @@ const parseStatusToTiny = (order: Orders) => {
   switch (order.fulfillment_status && order.fulfillment_status.current) {
     case 'in_production':
     case 'in_separation':
-      return 'preparando_envio';
+      return 'preparando envio';
     case 'invoice_issued':
       return 'faturado';
     case 'ready_for_shipping':
-      return 'pronto_envio';
+      return 'pronto para envio';
     case 'shipped':
     case 'partially_shipped':
       return 'enviado';

@@ -59,7 +59,7 @@ export default async (apiDoc, queueEntry) => {
     const { fulfillmentStatus, financialStatus } = parseStatus(situacao);
     const data: Record<string, any> = {
       date_time: new Date().toISOString(),
-      flags: ['from-tiny'],
+      flags: ['from-tiny', `tiny:${situacao}`.substring(0, 50)],
     };
     [
       [financialStatus, 'payments_history'],
