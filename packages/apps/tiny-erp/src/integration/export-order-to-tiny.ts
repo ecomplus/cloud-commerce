@@ -73,7 +73,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
         case 'aberto':
         case 'cancelado':
         case 'aprovado':
-        case 'preparando_envio':
+        case 'preparando envio':
         case 'faturado':
           if (!order.fulfillment_status || order.fulfillment_status.current !== 'ready_for_shipping') {
             logger.info(`${orderId} skipped with status "${tinyStatus}"`);
