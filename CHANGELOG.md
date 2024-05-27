@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.1](https://github.com/ecomplus/cloud-commerce/compare/v2.20.0...v2.20.1) (2024-05-27)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#386](https://github.com/ecomplus/cloud-commerce/issues/386)) ([16414cd](https://github.com/ecomplus/cloud-commerce/commit/16414cde31067058a20ea457204f8796b6288cdf))
+* **storefront:** Bump VueUse to latest v10.10 ([43df8a4](https://github.com/ecomplus/cloud-commerce/commit/43df8a49cd62ab756b380f95e3780a63e1e32c6b))
+* **tiny-erp:** Fix checking Tiny status on order export when "only ready or shipping" is set ([0e3910b](https://github.com/ecomplus/cloud-commerce/commit/0e3910b8d739387c2399e133700d84d5c3440777))
+* **tiny-erp:** Normalize parsed Tiny order status before exporting updates ([ffe2b73](https://github.com/ecomplus/cloud-commerce/commit/ffe2b7382e82b160d2ea2af2657a2a6a9b1af349))
+* **tiny-erp:** Updating default normalized Tiny status ([abd214b](https://github.com/ecomplus/cloud-commerce/commit/abd214b74571227949b3f91a7849b7d1c3c0ceea))
+
 ## [2.20.0](https://github.com/ecomplus/cloud-commerce/compare/v2.19.1...v2.20.0) (2024-05-24)
 
 
