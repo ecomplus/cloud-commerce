@@ -39,12 +39,12 @@
     "@cloudcommerce/config": "workspace:*",
     "@google-cloud/pubsub": "^4.4.0",
     "dotenv": "^16.4.5",
-    "firebase-admin": "^12.1.0",
+    "firebase-admin": "^12.1.1",
     "firebase-functions": "^5.0.1",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.9.1"
+    "@firebase/app-types": "^0.9.2"
   }
 }
