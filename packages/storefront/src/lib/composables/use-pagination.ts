@@ -56,31 +56,39 @@ const usePagination = (props: Props) => {
   });
 
   const baseUrl = ref('');
+  const baseUrlArgs = ref('');
   watch(toRef(props, 'isUrlPath'), () => {
-    const { url } = globalThis.$storefront;
+    const url = new URL(globalThis.$storefront.url);
     if (props.isUrlPath && !url.pathname.endsWith('/')) {
       url.pathname += '/';
     } else {
       url.searchParams.delete('p');
     }
-    baseUrl.value = `${url.pathname}${url.search}`;
+    baseUrl.value = url.pathname;
+    baseUrlArgs.value = url.search.slice(1);
   }, {
     immediate: true,
   });
   const getPageLink = (pageN: number) => {
-    if (props.isUrlPath) return `../${pageN}`;
-    return `?p=${pageN}`;
+    if (props.isUrlPath) {
+      const pageLink = `${baseUrl.value}../${pageN}`;
+      if (!baseUrlArgs.value) return pageLink;
+      return `${pageLink}?${baseUrlArgs.value}`;
+    }
+    const pageLink = `${baseUrl.value}?p=${pageN}`;
+    if (!baseUrlArgs.value) return pageLink;
+    return `${pageLink}&${baseUrlArgs.value}`;
   };
   const pageLinks = computed(() => {
-    return pages.value.map((pageN) => baseUrl.value + getPageLink(pageN));
+    return pages.value.map((pageN) => getPageLink(pageN));
   });
   const prevPageLink = computed(() => {
     if (pageNumber.value <= 1) return null;
-    return baseUrl.value + getPageLink(pageNumber.value - 1);
+    return getPageLink(pageNumber.value - 1);
   });
   const nextPageLink = computed(() => {
     if (pageNumber.value >= totalPages.value) return null;
-    return baseUrl.value + getPageLink(pageNumber.value + 1);
+    return getPageLink(pageNumber.value + 1);
   });
 
   return {
