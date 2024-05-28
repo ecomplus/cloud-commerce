@@ -118,15 +118,18 @@ const loadRouteContext = async (
   } = {},
 ) => {
   const sid = asyncLocalStorage.getStore()?.sid || `${Date.now()}`;
-  sessions[sid] = { url: Astro.url };
+  const url = new URL(Astro.url);
+  url.searchParams.delete('__isrV');
+  url.searchParams.delete('t');
+  sessions[sid] = { url };
   global.__sfSession = sessions[sid];
   const startedAt = Date.now();
-  let urlPath = Astro.url.pathname;
+  let urlPath = url.pathname;
   const isPreview = urlPath.startsWith('/~preview');
   if (isPreview) {
     urlPath = urlPath.replace(/^\/~[^/]+\/?/, '/');
     const getQueryContent = (filename: string) => {
-      const contentJson = Astro.url.searchParams.get(`content:${filename}`);
+      const contentJson = url.searchParams.get(`content:${filename}`);
       if (typeof contentJson === 'string') {
         try {
           const content = JSON.parse(contentJson);
@@ -304,7 +307,7 @@ const loadRouteContext = async (
     setResponseCache(Astro, 120, 180);
   }
   if (
-    Astro.url.searchParams.get('webcontainer') !== null
+    url.searchParams.get('webcontainer') !== null
     || urlPath.startsWith('/admin/ide')
   ) {
     // https://webcontainers.io/guides/quickstart#cross-origin-isolation
