@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.2](https://github.com/ecomplus/cloud-commerce/compare/v2.20.1...v2.20.2) (2024-05-29)
+
+
+### Bug Fixes
+
+* **storefront:** Cleaning ISR params at session URL object ([60d2d54](https://github.com/ecomplus/cloud-commerce/commit/60d2d545616c1c0a8b929b9b891b67f0ca6c565b))
+* **storefront:** Fix pagination composable generated page links ([bc7fc07](https://github.com/ecomplus/cloud-commerce/commit/bc7fc078614d556be794b51b22298d712eefdc9a))
+* **tiny-erp:** Fixed updating stock to zero from Tiny webhook ([bc30dad](https://github.com/ecomplus/cloud-commerce/commit/bc30dada1cf18602a614e6073c17de7ed8a3426d))
+
 ## [2.20.1](https://github.com/ecomplus/cloud-commerce/compare/v2.20.0...v2.20.1) (2024-05-27)
 
 
