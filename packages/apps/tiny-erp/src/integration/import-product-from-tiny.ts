@@ -41,8 +41,11 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
     }
   }
 
-  const handleTinyStock = ({ produto: produtoSaldo, tipo }, tinyProduct?) => {
-    let quantity = Number(produtoSaldo.saldo) || Number(produtoSaldo.estoqueAtual);
+  const handleTinyStock = ({ produto: produtoSaldo, tipo }, tinyProduct?: any) => {
+    let quantity = Number(produtoSaldo.saldo);
+    if (Number.isNaN(quantity)) {
+      quantity = Number(produtoSaldo.estoqueAtual);
+    }
     if (produtoSaldo.saldoReservado) {
       quantity -= Number(produtoSaldo.saldoReservado);
     }
@@ -140,13 +143,13 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
       });
   };
 
+  const { tinyStockUpdate } = queueEntry;
   logger.info(JSON.stringify({
     queueSku,
     queueProductId,
     hasVariations,
     variationId,
-  }));
-  const { tinyStockUpdate } = queueEntry;
+  }), { tinyStockUpdate });
   if (tinyStockUpdate && isHiddenQueue && (queueProductId || (product && product._id))) {
     return handleTinyStock(tinyStockUpdate as any, tinyStockUpdate.produto);
   }
