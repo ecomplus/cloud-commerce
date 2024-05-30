@@ -233,7 +233,7 @@ if (!import.meta.env.SSR) {
 
   const appScript = document.createElement('script');
   appScript.src = (window as any)._appScriptSrc
-    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.203/dist/lib/js/app.js';
+    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.204/dist/lib/js/app.js';
   appScript.onload = onLoad;
   document.body.appendChild(appScript);
 
