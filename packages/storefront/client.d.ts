@@ -41,8 +41,9 @@ interface Window {
   $storefront?: import('@@sf/$storefront').$Storefront & {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
   };
-  $delayedAsyncScripts?: string[];
   $firstInteraction?: Promise<any>;
+  $interactionOrAwaken?: Promise<any>;
+  $delayedAsyncScripts?: string[];
   $prefetch?: typeof import('astro:prefetch').prefetch;
   $isCmsPreview?: boolean;
 }

@@ -58,18 +58,22 @@ if (prefetchHref.value) {
         if (!prefetchHref.value) return;
         window.$prefetch!(prefetchHref.value);
       };
-      if (!window.$firstInteraction) {
+      if (!window.$interactionOrAwaken) {
         window.addEventListener('firstInteraction', next, { once: true });
       } else {
-        window.$firstInteraction.then(next);
+        window.$interactionOrAwaken.then(next);
       }
     });
   };
   onMounted(() => {
     const { prefetch } = props;
-    const isOnHover = prefetch === 'hover';
-    if (isMobile && isOnHover) return;
-    const isOnVisible = prefetch === 'visible';
+    let isOnVisible = prefetch === 'visible';
+    let delayMs = isOnVisible ? 100 : 1;
+    if (isMobile && prefetch === 'hover') {
+      isOnVisible = true;
+      delayMs = 300;
+    }
+    const isOnHover = !isOnVisible && prefetch === 'hover';
     const useElementEv = isOnVisible
       ? useElementVisibility
       : isOnHover && useElementHover;
@@ -81,7 +85,7 @@ if (prefetchHref.value) {
       setTimeout(() => {
         if (isOnVisible && !isActive.value) return;
         prefetchOnNext();
-      }, isOnVisible ? 100 : 1);
+      }, delayMs);
     }, {
       immediate: true,
     });
