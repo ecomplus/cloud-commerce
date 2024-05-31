@@ -35,7 +35,7 @@
     "axios": "^1.7.2",
     "firebase-admin": "^12.1.1",
     "firebase-functions": "^5.0.1",
-    "pagarme": "4.34.x",
+    "pagarme": "4.35.2",
     "qs": "^6.12.1"
   },
   "devDependencies": {
