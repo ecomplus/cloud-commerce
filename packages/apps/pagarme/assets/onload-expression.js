@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 (function pagarmeOnload() {
   window._pagarmeHash = function pagarmeHash(card) {
     return new Promise((resolve, reject) => {
@@ -10,23 +11,31 @@
           card_cvv: card.cvc,
         },
       };
-      const validateObject = window.pagarme.validate(usedCard);
-      const objectCardValidated = validateObject && validateObject.card;
-      // eslint-disable-next-line
-      for (const key in objectCardValidated) {
-        if (Object.hasOwnProperty.call(objectCardValidated, key)) {
-          if (!objectCardValidated[key]) {
-            reject(new Error(`Invalid card: ${key}`));
-            return;
+      let userMsg = '';
+      try {
+        const validateObject = window.pagarme.validate(usedCard);
+        const objectCardValidated = validateObject && validateObject.card;
+        // eslint-disable-next-line
+        for (const key in objectCardValidated) {
+          if (Object.hasOwnProperty.call(objectCardValidated, key)) {
+            if (!objectCardValidated[key]) {
+              userMsg = `Campo "${key}" não pôde ser validado.`;
+              break;
+            }
           }
         }
+      } catch (err) {
+        console.error(err);
       }
       window.pagarme.client.connect({ encryption_key: window._pagarmeKey })
         .then((client) => {
           return client.security.encrypt(usedCard.card);
         })
         .then(resolve)
-        .catch(reject);
+        .catch((err) => {
+          err.userMsg = userMsg;
+          reject(err);
+        });
     });
   };
 }());

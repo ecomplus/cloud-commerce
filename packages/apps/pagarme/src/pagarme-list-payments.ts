@@ -155,7 +155,7 @@ export default (modBody: AppModuleBody<'list_payments'>) => {
         }
         // https://github.com/pagarme/pagarme-js
         gateway.js_client = {
-          script_uri: 'https://assets.pagar.me/pagarme-js/4.8/pagarme.min.js',
+          script_uri: 'https://assets.pagar.me/pagarme-js/4.11/pagarme.min.js',
           onload_expression: `window._pagarmeKey="${process.env.PAGARME_ENCRYPT_KEY}";
           ${fs.readFileSync(path.join(__dirname, '../assets/onload-expression.min.js'), 'utf8')}`,
           cc_hash: {
