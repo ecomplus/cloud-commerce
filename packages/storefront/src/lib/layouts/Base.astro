@@ -21,14 +21,17 @@ const { customCode } = await getContent('layout');
   <slot name="base-body-scripts">
     <script src="../scripts/session-utm"></script>
     <script src="../scripts/push-analytics-events"></script>
+
     <script>
-      /* eslint-disable */
       import { prefetch } from 'astro:prefetch';
+      import { isMobile, looksLikeBot } from '@@sf/sf-lib';
+
       window.$prefetch = prefetch;
       const raceAndLoadScripts = () => Promise.race([
         window.$firstInteraction,
         new Promise((resolve) => {
-          setTimeout(resolve, window.$delayedScriptsMaxWait || 4000);
+          const maxWait = window.$delayedScriptsMaxWait || (isMobile ? 4000 : 2500);
+          setTimeout(resolve, maxWait);
         }),
       ]).then(() => {
         const loadDelayedScripts = () => {
@@ -56,12 +59,14 @@ const { customCode } = await getContent('layout');
           loadDelayedScripts();
         }, 500);
       });
-      if (document.readyState !== 'loading') {
-        raceAndLoadScripts();
-      } else {
-        document.addEventListener('DOMContentLoaded', () => {
-          setTimeout(raceAndLoadScripts, 50);
-        });
+      if (!looksLikeBot) {
+        if (document.readyState !== 'loading') {
+          raceAndLoadScripts();
+        } else {
+          document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(raceAndLoadScripts, 50);
+          });
+        }
       }
     </script>
   </slot>
