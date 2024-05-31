@@ -43,7 +43,8 @@ interface Window {
   };
   $firstInteraction?: Promise<any>;
   $interactionOrAwaken?: Promise<any>;
-  $delayedAsyncScripts?: string[];
+  $delayedAsyncScripts?: Array<string | { src: string, delay?: number }>;
+  $delayedScriptsMaxWait?: number;
   $prefetch?: typeof import('astro:prefetch').prefetch;
   $isCmsPreview?: boolean;
 }

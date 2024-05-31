@@ -27,14 +27,25 @@ const { customCode } = await getContent('layout');
       window.$prefetch = prefetch;
       const raceAndLoadScripts = () => Promise.race([
         window.$firstInteraction,
-        new Promise((resolve) => { setTimeout(resolve, 4000); }),
+        new Promise((resolve) => {
+          setTimeout(resolve, window.$delayedScriptsMaxWait || 4000);
+        }),
       ]).then(() => {
         const loadDelayedScripts = () => {
           window.$delayedAsyncScripts?.forEach((src) => {
+            let delayMs: number | undefined;
+            if (typeof src !== 'string') {
+              delayMs = src.delay;
+              src = src.src;
+            }
             const script = document.createElement('script');
             script.async = true;
             script.src = src;
-            document.body.appendChild(script);
+            if (!delayMs) {
+              document.body.appendChild(script);
+              return;
+            }
+            setTimeout(() => document.body.appendChild(script), delayMs);
           });
         };
         setTimeout(() => {
