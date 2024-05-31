@@ -118,13 +118,14 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
         ref.update({ isCachePurged: false });
         continue;
       }
-      purgeReqs.push(bunnyAxios('/purge', {
+      const purging = bunnyAxios('/purge', {
         method: 'POST',
         params: {
           async: 'false',
           url: `https://${domain}${pathname}`,
         },
-      }));
+      });
+      purgeReqs.push(purging);
       purgedPaths.push(pathname);
       if (permaCacheZoneFolder) {
         const paths = pathname.slice(1).split('/');
@@ -144,10 +145,12 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
                 return null;
               }
               ref.update({ isCachePurged: true, permaCachePath });
-              return bunnyStorageAxios({
-                method: 'PUT',
-                url: `/${permaCachePath}`,
-                data: freshHtml,
+              return purging.then(() => {
+                return bunnyStorageAxios({
+                  method: 'PUT',
+                  url: `/${permaCachePath}`,
+                  data: freshHtml,
+                });
               });
             })
             .catch((_err: AxiosError) => {
