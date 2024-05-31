@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.4](https://github.com/ecomplus/cloud-commerce/compare/v2.20.3...v2.20.4) (2024-05-31)
+
+
+### Bug Fixes
+
+* **passport:** Fix finding customer by full email address case insensitive ([a5ce8d8](https://github.com/ecomplus/cloud-commerce/commit/a5ce8d8fab26297b4f77dfce076d94049c8b329a))
+* **ssr:** Await sync CDN cache purge to update perma-cache storage (ISR) ([3ddcc7f](https://github.com/ecomplus/cloud-commerce/commit/3ddcc7fa5653783e3742df52be64e68553fa4e0c))
+
 ## [2.20.3](https://github.com/ecomplus/cloud-commerce/compare/v2.20.2...v2.20.3) (2024-05-30)
 
 
