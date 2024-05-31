@@ -276,7 +276,7 @@ window.$firstInteraction = new Promise((resolve) => {
 });
 window.$interactionOrAwaken = Promise.race([
   window.$firstInteraction,
-  new Promise((resolve) => { setTimeout(resolve, 4000); }),
+  new Promise((resolve) => { setTimeout(resolve, 5000); }),
 ]);
 if (!window.$delayedAsyncScripts) {
   window.$delayedAsyncScripts = [];

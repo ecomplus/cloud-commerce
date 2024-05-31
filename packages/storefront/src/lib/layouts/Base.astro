@@ -25,7 +25,10 @@ const { customCode } = await getContent('layout');
       /* eslint-disable */
       import { prefetch } from 'astro:prefetch';
       window.$prefetch = prefetch;
-      const raceAndLoadScripts = () => window.$interactionOrAwaken?.then(() => {
+      const raceAndLoadScripts = () => Promise.race([
+        window.$firstInteraction,
+        new Promise((resolve) => { setTimeout(resolve, 4000); }),
+      ]).then(() => {
         const loadDelayedScripts = () => {
           window.$delayedAsyncScripts?.forEach((src) => {
             const script = document.createElement('script');
