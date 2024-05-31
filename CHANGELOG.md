@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.5](https://github.com/ecomplus/cloud-commerce/compare/v2.20.4...v2.20.5) (2024-05-31)
+
+
+### Bug Fixes
+
+* **pagarme:** Try bumping `pagarme` SDK to v4.35.2 ([0e37307](https://github.com/ecomplus/cloud-commerce/commit/0e37307690ce9e44f962dbbc830717ee4a8b0925))
+* **pagarme:** Updating `pagarme-js` version and prevent failing with instable validate method ([63da080](https://github.com/ecomplus/cloud-commerce/commit/63da080b930c678096f93af48d94df9a0c7f5b6a))
+* **storefront:** Reducing delayed scripts wait on desktop and disable loading for bots ([83cf262](https://github.com/ecomplus/cloud-commerce/commit/83cf262a94063904bf96047c66224aecbd42a982))
+* **storefront:** Update beta checkout script supporting custom credit card error messages ([71d7fbe](https://github.com/ecomplus/cloud-commerce/commit/71d7fbe094a4766f86978889b52b477549ff077f))
+
 ## [2.20.4](https://github.com/ecomplus/cloud-commerce/compare/v2.20.3...v2.20.4) (2024-05-31)
 
 
