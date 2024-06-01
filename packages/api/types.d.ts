@@ -99,17 +99,28 @@ type DocField<T extends string> = T extends `${infer U}.${string}` ? U : T;
 type ListResultDocs<
   Document extends Record<string, any>,
   Fields extends string[] | '*' = '*',
-> = Array<Omit<(
+  DefaultFields extends string[] = [],
+  BaseFields extends string[] = ['_id', 'created_at', 'updated_at'],
+> = Array<(
   Fields extends '*' ? Partial<Document> :
-  Pick<Document, Extract<keyof Document, DocField<Fields[number]>>>
-), '_id'> & { _id: ResourceId }>;
+  Pick<
+    Document,
+    Extract<keyof Document,
+      DocField<
+        Fields extends null ? BaseFields[number] | DefaultFields[number]
+          : Fields[0] extends '__' ? BaseFields[number] | DefaultFields[number] | Fields[number]
+          : '_id' | Fields[number]
+      >
+    >
+  >
+)>;
 
 type DefaultProductsFields = [
   'sku',
   'slug',
 ];
 type ProductsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Products, Fields extends null ? DefaultProductsFields : Fields>;
+  ListResultDocs<Products, Fields, DefaultProductsFields, ['_id']>;
 
 type DefaultCategoriesFields = [
   'name',
@@ -119,7 +130,7 @@ type DefaultCategoriesFields = [
   'pictures.0',
 ];
 type CategoriesList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Categories, Fields extends null ? DefaultCategoriesFields : Fields>;
+  ListResultDocs<Categories, Fields, DefaultCategoriesFields>;
 
 type DefaultBrandsFields = [
   'name',
@@ -128,7 +139,7 @@ type DefaultBrandsFields = [
   'pictures.0',
 ];
 type BrandsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Brands, Fields extends null ? DefaultBrandsFields : Fields>;
+  ListResultDocs<Brands, Fields, DefaultBrandsFields>;
 
 type DefaultCollectionsFields = [
   'name',
@@ -137,7 +148,7 @@ type DefaultCollectionsFields = [
   'pictures.0',
 ];
 type CollectionsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Collections, Fields extends null ? DefaultCollectionsFields : Fields>;
+  ListResultDocs<Collections, Fields, DefaultCollectionsFields>;
 
 type DefaultGridsFields = [
   'title',
@@ -146,7 +157,7 @@ type DefaultGridsFields = [
   'options.colors',
 ];
 type GridsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Grids, Fields extends null ? DefaultGridsFields : Fields>;
+  ListResultDocs<Grids, Fields, DefaultGridsFields>;
 
 type DefaultCartsFields = [
   'available',
@@ -163,7 +174,7 @@ type DefaultCartsFields = [
   'subtotal',
 ];
 type CartsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Carts, Fields extends null ? DefaultCartsFields : Fields>;
+  ListResultDocs<Carts, Fields, DefaultCartsFields>;
 
 type DefaultOrdersFields = [
   'channel_id',
@@ -186,7 +197,7 @@ type DefaultOrdersFields = [
   'items.quantity',
 ];
 type OrdersList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Orders, Fields extends null ? DefaultOrdersFields : Fields>;
+  ListResultDocs<Orders, Fields, DefaultOrdersFields>;
 
 type DefaultCustomersFields = [
   'state',
@@ -200,7 +211,7 @@ type DefaultCustomersFields = [
   'orders_total_value',
 ];
 type CustomersList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Customers, Fields extends null ? DefaultCustomersFields : Fields>;
+  ListResultDocs<Customers, Fields, DefaultCustomersFields>;
 
 type DefaultStoresFields = [
   'store_id',
@@ -208,7 +219,7 @@ type DefaultStoresFields = [
   'domain',
 ];
 type StoresList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Stores, Fields extends null ? DefaultStoresFields : Fields>;
+  ListResultDocs<Stores, Fields, DefaultStoresFields>;
 
 type DefaultApplicationsFields = [
   'app_id',
@@ -218,7 +229,7 @@ type DefaultApplicationsFields = [
   'type',
 ];
 type ApplicationsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Applications, Fields extends null ? DefaultApplicationsFields : Fields>;
+  ListResultDocs<Applications, Fields, DefaultApplicationsFields>;
 
 type DefaultAuthenticationsFields = [
   'username',
@@ -226,7 +237,7 @@ type DefaultAuthenticationsFields = [
   'app',
 ];
 type AuthenticationsList<Fields extends null | string[] | '*' = '*'> =
-  ListResultDocs<Authentications, Fields extends null ? DefaultAuthenticationsFields : Fields>;
+  ListResultDocs<Authentications, Fields, DefaultAuthenticationsFields>;
 
 type ListEndpoint<TResource extends Resource> = TResource | `${TResource}?${string}`;
 type ResourceListResult<
@@ -271,24 +282,24 @@ type DefaultSearchFields = [
   'quantity',
   'min_quantity',
   'inventory',
-  'measurement',
-  'condition',
-  'warranty',
   'pictures.normal',
   'has_variations',
+  '_score',
 ];
 
-type SearchItem<Fields extends null | string[] | '*' = '*'> = Omit<(
+type SearchItem<Fields extends null | string[] | '*' = '*'> = (
   Fields extends '*' ? Partial<SearchProducts> :
   Pick<
     SearchProducts,
     Extract<keyof SearchProducts,
-      DocField<Fields extends null ? DefaultSearchFields[number] : Fields[number]>>
+      DocField<
+        Fields extends null ? '_id' | DefaultSearchFields[number]
+          : Fields[0] extends '__' ? '_id' | DefaultSearchFields[number] | Fields[number]
+          : '_id' | Fields[number]
+      >
+    >
   >
-), '_id' | '_score'> & {
-  _id: ResourceId,
-  _score: number,
-};
+);
 
 type SearchResult<
   TEndpoint extends SearchOpQuery | 'v1' | 'els',
