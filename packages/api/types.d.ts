@@ -102,7 +102,7 @@ type ListResultDocs<
   DefaultFields extends string[] = [],
   BaseFields extends string[] = ['_id', 'created_at', 'updated_at'],
 > = Array<(
-  Fields extends '*' ? Partial<Document> :
+  Fields extends '*' ? Partial<Document> & { _id: ResourceId } :
   Pick<
     Document,
     Extract<keyof Document,
@@ -288,7 +288,7 @@ type DefaultSearchFields = [
 ];
 
 type SearchItem<Fields extends null | string[] | '*' = '*'> = (
-  Fields extends '*' ? Partial<SearchProducts> :
+  Fields extends '*' ? Partial<SearchProducts> & { _id: ResourceId } :
   Pick<
     SearchProducts,
     Extract<keyof SearchProducts,
