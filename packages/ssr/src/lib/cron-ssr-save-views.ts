@@ -34,16 +34,13 @@ const saveViews = async () => {
     const now = Date.now();
     const sMaxAge = Number(process.env.SSR_CACHE_MAX_AGE) || 179;
     const pageViewsSnapshot = await db.collection('ssrPageViews')
-      .where('at', '>', new Date(now - 1000 * Math.max(sMaxAge * 2, 60 * 9)))
+      .where('at', '>', new Date(now - 1000 * Math.max(sMaxAge * 2, 60 * 8)))
       .where('at', '<', new Date(now - 1000 * sMaxAge))
       .get();
-    const pageViewDocs: PageViewDocs = [];
+    let pageViewDocs: PageViewDocs = [];
     for (let i = 0; i < pageViewsSnapshot.docs.length; i++) {
       const doc = pageViewsSnapshot.docs[i];
-      const data = doc.data() as { url: string, isCachePurged?: boolean };
-      if (typeof data.isCachePurged === 'boolean') {
-        continue;
-      }
+      const data = doc.data() as { url: string, isCachePurged?: boolean, at: Timestamp };
       const url = data.url.replace(/[?#].*$/, '');
       if (!url.startsWith(`https://${domain}`)) {
         continue;
@@ -58,7 +55,18 @@ const saveViews = async () => {
         // Routes with short cache TTL, see cli/ci/bunny-config-base.sh
         continue;
       }
-      pageViewDocs.push({ ref: doc.ref, pathname });
+      const timestamp = data.at.toMillis();
+      if (typeof data.isCachePurged === 'boolean') {
+        pageViewDocs = pageViewDocs.filter((pageViewDoc) => {
+          if (pageViewDoc.pathname === pathname && pageViewDoc.timestamp) {
+            // Filter page views already purged/skipped past execution
+            return pageViewDoc.timestamp > timestamp;
+          }
+          return true;
+        });
+        continue;
+      }
+      pageViewDocs.push({ ref: doc.ref, timestamp, pathname });
     }
     const ssrReqsSnapshot = await db.collection('ssrReqs')
       .where('at', '>', new Date(now - 1000 * 60 * 14))
