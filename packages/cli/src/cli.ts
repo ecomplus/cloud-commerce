@@ -97,6 +97,7 @@ export default async () => {
     }
   });
   const $firebase = (cmd: string) => {
+    $.verbose = true;
     if (cmd === 'deploy' && !options.length) {
       return $`firebase --project=${projectId} ${cmd} --force`;
     }
