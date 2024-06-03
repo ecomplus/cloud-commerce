@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.7](https://github.com/ecomplus/cloud-commerce/compare/v2.20.6...v2.20.7) (2024-06-03)
+
+
+### Bug Fixes
+
+* **cli:** Set `$.verbose = true` for Firebase CLI executions ([7424074](https://github.com/ecomplus/cloud-commerce/commit/7424074f94e7304fe446e09ca0b0817b8740e2bc))
+
 ## [2.20.6](https://github.com/ecomplus/cloud-commerce/compare/v2.20.5...v2.20.6) (2024-06-03)
 
 
