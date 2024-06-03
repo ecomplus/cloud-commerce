@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.6](https://github.com/ecomplus/cloud-commerce/compare/v2.20.5...v2.20.6) (2024-06-03)
+
+
+### Bug Fixes
+
+* **api:** Fixing generics and updating default enumered fields for resource lists ([0aab37b](https://github.com/ecomplus/cloud-commerce/commit/0aab37b92b41ec440bd6d2306866b58a821456e1))
+* **deps:** Update non-major dependencies ([#396](https://github.com/ecomplus/cloud-commerce/issues/396)) ([047b44e](https://github.com/ecomplus/cloud-commerce/commit/047b44ea3e51c7fc88d102212bb0a7397cde48d5))
+
 ## [2.20.5](https://github.com/ecomplus/cloud-commerce/compare/v2.20.4...v2.20.5) (2024-05-31)
 
 
