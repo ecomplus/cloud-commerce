@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/cli",
   "type": "module",
-  "version": "2.20.7",
+  "version": "2.20.8",
   "description": "e-com.plus Cloud Commerce CLI tools",
   "bin": {
     "cloudcommerce": "./bin/run.mjs"
