@@ -2,6 +2,7 @@ import { fetch, $ } from 'zx';
 import libsodium from 'libsodium-wrappers';
 
 const getRemoteRepo = async () => {
+  $.verbose = true;
   try {
     return (await $`git config --get remote.origin.url`).stdout
       .replace(/.*github.com[/:]/, '')

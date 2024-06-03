@@ -1,7 +1,19 @@
 #!/usr/bin/env zx
-/* eslint-disable no-console, no-await-in-loop, import/no-unresolved */
-/* global $, quiet, fs, cd, globby, YAML, argv */
-import { retry, spinner } from 'zx/experimental';
+/* eslint-disable no-console, no-await-in-loop, import/no-extraneous-dependencies */
+import {
+  $,
+  fs,
+  cd,
+  globby,
+  YAML,
+  argv,
+  retry,
+  spinner,
+  syncProcessCwd,
+} from 'zx';
+
+$.verbose = true;
+syncProcessCwd();
 
 const listFolders = async (parentPath) => {
   return (await fs.readdir(parentPath, { withFileTypes: true }))
@@ -9,7 +21,9 @@ const listFolders = async (parentPath) => {
     .map((dirent) => dirent.name);
 };
 
-const pwd = (await quiet($`pwd`)).stdout.trim();
+$.quiet = true;
+const pwd = (await $`pwd`).stdout.trim();
+$.quiet = false;
 const { version } = JSON.parse(fs.readFileSync('package.json'));
 const packages = await globby([
   'packages/*/package.json',

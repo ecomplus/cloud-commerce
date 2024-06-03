@@ -55,6 +55,7 @@ const getGcpAccessToken = async () => {
 };
 
 const checkServiceAccountExists = async (projectId: string) => {
+  $.verbose = true;
   let hasServiceAccount: boolean;
   try {
     if (!gcpAccessToken) {
@@ -74,6 +75,7 @@ const checkServiceAccountExists = async (projectId: string) => {
 };
 
 const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
+  $.verbose = true;
   let hasGcloud: boolean;
   try {
     hasGcloud = Boolean(await $`command -v gcloud`);
@@ -199,6 +201,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
 };
 
 const createServiceAccountKey = async (projectId: string, pwd: string) => {
+  $.verbose = true;
   try {
     const pathFileKey = path.join(pwd, '.cloudcommerce', 'serviceAccountKey.json');
     if (!gcpAccessToken) {
