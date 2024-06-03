@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.20.8](https://github.com/ecomplus/cloud-commerce/compare/v2.20.7...v2.20.8) (2024-06-03)
+
+
+### Bug Fixes
+
+* **ssr:** Prevent error with many concurrent Firestore writes cron save views ([9ef259a](https://github.com/ecomplus/cloud-commerce/commit/9ef259a9362bea95859804e729023358d3a0c4eb))
+
 ## [2.20.7](https://github.com/ecomplus/cloud-commerce/compare/v2.20.6...v2.20.7) (2024-06-03)
 
 
