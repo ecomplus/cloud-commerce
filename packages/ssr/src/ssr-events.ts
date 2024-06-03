@@ -8,10 +8,10 @@ const { httpsFunctionOptions: { region } } = config.get();
 
 export const ssr = {
   cronSaveViews: functions.region(region).runWith({
-    timeoutSeconds: 119,
-    memory: '256MB',
+    timeoutSeconds: 179,
+    memory: '128MB',
   }).pubsub
     .schedule(process.env.CRONTAB_SSR_SAVE_VIEWS
-      || (process.env.BUNNYNET_API_KEY ? '*/2 * * * *' : '49 * * * *'))
+      || (process.env.BUNNYNET_API_KEY ? '*/3 * * * *' : '49 * * * *'))
     .onRun(saveViews),
 };
