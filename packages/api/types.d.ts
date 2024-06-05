@@ -284,6 +284,7 @@ type DefaultSearchFields = [
   'inventory',
   'pictures.normal',
   'has_variations',
+  'kit_composition',
   '_score',
 ];
 

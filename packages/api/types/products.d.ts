@@ -1201,27 +1201,6 @@ export interface Products {
      */
     quantity?: number;
     /**
-     * Label shown to customer, if you want to use a title other than the product name
-     */
-    label?: string;
-    /**
-     * Text translations for internationalization
-     */
-    i18n?: {
-      /**
-       * Language specific text fields
-       *
-       * This interface was referenced by `undefined`'s JSON-Schema definition
-       * via the `patternProperty` "^[a-z]{2}(_[a-z]{2})?$".
-       */
-      [k: string]: {
-        /**
-         * Label shown to customer, if you want to use a title other than the product name
-         */
-        label?: string;
-      };
-    };
-    /**
      * If this product has variations
      */
     has_variations?: boolean;
@@ -1230,10 +1209,6 @@ export interface Products {
      */
     variation_id?: string & { length: 24 };
   }[];
-  /**
-   * Parent product ID, if this product is contained or represented by another
-   */
-  parent_item_id?: string & { length: 24 };
   /**
    * Lists of related products
    *
