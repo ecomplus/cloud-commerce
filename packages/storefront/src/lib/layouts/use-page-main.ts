@@ -121,6 +121,9 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           if (!title && title !== null && name) title = name;
           if (!titleLink) titleLink = path;
         }
+        if (rest.searchQuery) {
+          searchQuery = (searchQuery || '') + rest.searchQuery;
+        }
         const props = {
           ...rest,
           collectionId,
