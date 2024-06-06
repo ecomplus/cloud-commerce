@@ -6,14 +6,12 @@ import {
   beforeAll,
   dotenv,
   ecomUtils,
-  settingsForTests,
   getContextToCreatePubSub,
   getMessageToCreatePubSub,
 } from '@cloudcommerce/test-base';
 import api from '@cloudcommerce/api';
 import handleApiEvent from '../src/event-to-emails';
 
-settingsForTests();
 const app = {
   _id: ecomUtils.randomObjectId() as string & { length: 24 },
   app_id: 1243,
