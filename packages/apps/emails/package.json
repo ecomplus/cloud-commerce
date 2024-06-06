@@ -22,12 +22,14 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/emails#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test": "tsc -p ./tsconfig.test.json && vitest run"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/emails": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
+    "@cloudcommerce/test-base": "workspace:^",
     "@ecomplus/transactional-mails": "^2.0.4",
     "firebase-admin": "^12.1.1",
     "firebase-functions": "^5.0.1"

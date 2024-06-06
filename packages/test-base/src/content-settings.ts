@@ -1,0 +1,68 @@
+export default {
+  domain: 'demo.ecomplus.app',
+  name: 'e-com.plus demoStore',
+  description: 'e-com.plus é a plataforma de e-commerce API-first desenhada para modelos de negócio e experiências de compra únicas. Flexibilidade do código aberto com facilidade de SaaS para que você comece rápido, venda do seu jeito e escale sem limitações.',
+  logo: '/img/uploads/logo.png',
+  icon: '/img/uploads/ecom-icon.png',
+  primaryColor: '#37003c',
+  email: '',
+  phone: '',
+  address: '',
+  corporateName: '',
+  docNumber: '',
+  lang: 'pt_br',
+  currency: 'BRL',
+  currencySymbol: 'R$',
+  countryCode: 'BR',
+  whatsapp: '(31) 9 8888-9999',
+  instagram: 'https://www.instagram.com/ecomclub/',
+  facebook: 'https://www.facebook.com/ecom.clubpage/',
+  twitter: '',
+  youtube: 'https://www.youtube.com/channel/UCBlIxK5JAub0E1EX_qHdzmA',
+  tiktok: '',
+  pinterest: '',
+  threads: '',
+  serviceLinks: [
+    {
+      title: 'Fale conosco',
+      href: '/p/contato',
+    },
+    {
+      title: 'Privacidade e termos',
+      href: '/p/terms',
+    },
+  ],
+  paymentMethods: [
+    'pix',
+    'visa',
+    'mastercard',
+    'elo',
+    'amex',
+    'hipercard',
+    'boleto',
+  ],
+  modules: {
+    list_payments: {
+      installments_option: {
+        max_number: null,
+        monthly_interest: null,
+        min_installment: null,
+      },
+      discount_option: {
+        label: null,
+        apply_at: null,
+        type: null,
+        value: null,
+      },
+      loyalty_points_program: {
+        id: null,
+        name: null,
+        ratio: null,
+        earn_percentage: null,
+      },
+    },
+    calculate_shipping: {
+      free_shipping_from_value: 200,
+    },
+  },
+};
