@@ -52,7 +52,7 @@
     "@cloudcommerce/app-pix": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "ajv": "^8.14.0",
+    "ajv": "^8.16.0",
     "ajv-formats": "^2.1.1",
     "axios": "^1.7.2",
     "firebase-admin": "^12.1.1",
