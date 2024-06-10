@@ -45,7 +45,7 @@
     "firebase-functions": "^5.0.1",
     "mitt": "^3.0.1",
     "vue": "^3.4.27",
-    "yaml": "^2.4.3"
+    "yaml": "^2.4.5"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
