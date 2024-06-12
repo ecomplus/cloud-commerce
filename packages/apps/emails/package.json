@@ -23,7 +23,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/emails#readme",
   "scripts": {
     "build": "bash ../../../scripts/build-lib.sh",
-    "test": "tsc -p ./tsconfig.test.json && bash scripts/test.sh"
+    "test": "bash scripts/test.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

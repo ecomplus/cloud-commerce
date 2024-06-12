@@ -1,22 +1,12 @@
 import {
   describe,
   test,
+  before,
 } from 'node:test';
 import assert from 'node:assert';
-import firebaseFunctionsTest from 'firebase-functions-test';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import ecomUtils from '@ecomplus/utils';
-import {
-  bodyCreateTransaction as order,
-} from '@cloudcommerce/test-base';
-import { emails } from '../lib/index.js';
-
-const projectId = process.env.FIREBASE_PROJECT_ID
-  || process.env.PROJECT_ID || 'ecom2-demo';
-
-const { wrap, pubsub } = firebaseFunctionsTest({
-  projectId,
-});
+import api from '@cloudcommerce/api';
+import handleEmails from '../lib/event-to-emails.js';
 
 const app = {
   _id: ecomUtils.randomObjectId(),
@@ -26,6 +16,20 @@ const app = {
 };
 
 describe('Events Order Simulate', async () => {
+  let order;
+  before(async () => {
+    order = await api.get('orders?status=open&financial_status.current=paid')
+      .then(({ data }) => {
+        const { result } = data;
+        return api.get(`orders/${result[0]._id}`);
+      })
+      .then(({ data }) => data);
+  });
+
+  test('Check order paid', () => {
+    assert.equal(order.financial_status?.current, 'paid');
+  });
+
   test('Simulate Event Update Payment History', async () => {
     const myId = (process.env.ECOM_AUTHENTICATION_ID
       || ecomUtils.randomObjectId());
@@ -44,8 +48,6 @@ describe('Events Order Simulate', async () => {
       app,
     };
 
-    const message = pubsub.makeMessage(body);
-    const sendEvent = wrap(emails.onStoreEvent);
-    assert.equal(await sendEvent(message), null);
+    assert.equal(await handleEmails(body), null);
   });
 });
