@@ -4,6 +4,7 @@
   --background-color: var(--c-tooltip-background, rgb(44 44 44 / 0.85));
   --color: var(--c-tooltip-foreground, var(--c-on-dark));
   --border-color: transparent transparent var(--background-color) transparent;
+  --max-width: 200px;
 }
 [data-tooltip]::before {
   content: attr(data-tooltip);
@@ -12,12 +13,14 @@
   transition: opacity var(--transition);
   position: absolute;
   z-index: 1;
-  left: 0;
+  left: 50%;
+  transform: translate(-50%);
   top: 102%;
   margin-top: 5px;
   font-size: clamp(0.75rem, 90%, 1rem);
   font-weight: 400;
   width: max-content;
+  max-width: var(--max-width);
   background-color: var(--background-color);
   color: var(--color);
   text-align: center;
