@@ -20,6 +20,7 @@ module.exports = {
     'prefer-rest-params': 'off',
     'import/no-dynamic-require': 'off',
     'import/prefer-default-export': 'warn',
+    'import/no-named-default': 'off',
     'import/extensions': 'off',
     'vue/multi-word-component-names': ['error', {
       ignores: [
