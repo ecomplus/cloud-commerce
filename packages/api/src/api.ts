@@ -127,19 +127,18 @@ const def = {
           }
         });
       if (Object.keys(paramsObj).length) {
-        const searchParams = new URLSearchParams();
+        let querystring = '';
         Object.keys(paramsObj).forEach((key) => {
           const values = paramsObj[key];
           if (Array.isArray(values)) {
             values.forEach((value: string | number) => {
-              // https://github.com/microsoft/TypeScript/issues/32951
-              searchParams.append(key, value as string);
+              querystring += `&${key}=${encodeURIComponent(value)}`;
             });
           } else if (values !== undefined) {
-            searchParams.append(key, values as string);
+            querystring += `&${key}=${encodeURIComponent(values)}`;
           }
         });
-        url += `?${searchParams.toString()}`;
+        url += `?${querystring.substring(1)}`;
       }
     }
     return { url, headers };
