@@ -32,7 +32,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "@google-cloud/pubsub": "^4.4.1",
+    "@google-cloud/pubsub": "^4.5.0",
     "axios": "^1.7.2",
     "firebase-admin": "^12.1.1",
     "firebase-functions": "^5.0.1"
