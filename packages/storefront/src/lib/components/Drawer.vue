@@ -4,6 +4,7 @@ import {
   computed,
   watch,
   nextTick,
+  onMounted,
 } from 'vue';
 
 export interface Props {
@@ -16,7 +17,10 @@ export interface Props {
   backdropTarget?: string | null;
   canLockScroll?: boolean;
   maxWidth?: string;
+  id?: string;
+  popover?: 'auto' | 'manual' | null;
   class?: string | string[] | Record<string, string | null> | null;
+  style?: Record<string, string | null> | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,6 +33,12 @@ const props = withDefaults(defineProps<Props>(), {
   canLockScroll: true,
 });
 const model = defineModel<boolean>({ default: false });
+if (!import.meta.env.SSR && props.popover && props.id) {
+  const staticPopover = document.querySelector(`#${props.id}`);
+  if (staticPopover?.matches(':popover-open')) {
+    model.value = true;
+  }
+}
 const close = () => { model.value = false; };
 const drawer = ref<HTMLElement | null>(null);
 const outsideClickListener = (ev: MouseEvent) => {
@@ -99,14 +109,19 @@ const isFixed = computed(() => {
 const isPlacementX = computed(() => {
   return props.placement === 'start' || props.placement === 'end';
 });
+const isMounted = ref(false);
+onMounted(() => { isMounted.value = true; });
 </script>
 
 <template>
   <Fade :slide="slideTo" speed="slow" is-floating>
     <dialog
-      v-if="model"
+      v-if="model || popover"
       v-show="!isHidden"
       ref="drawer"
+      :id
+      :popover
+      :open="model"
       class="z-40 w-screen p-0"
       :class="[
         position,
@@ -119,12 +134,12 @@ const isPlacementX = computed(() => {
         ...customClassList,
       ]"
       :style="{
+        ...props.style,
         maxWidth: maxWidth
           ? `min(${maxWidth}, calc(100vw - ${scrollbarWidth}px))`
           : !isPlacementX
             ? `calc(100vw - ${scrollbarWidth}px)` : undefined,
       }"
-      :open="model"
       :data-drawer="placement"
     >
       <div class="relative h-full">
@@ -143,7 +158,7 @@ const isPlacementX = computed(() => {
         </button>
         <slot />
       </div>
-      <Teleport v-if="backdropTarget" :to="backdropTarget">
+      <Teleport v-if="isMounted && backdropTarget" :to="backdropTarget">
         <Fade>
           <div
             v-if="model && !isHidden"
