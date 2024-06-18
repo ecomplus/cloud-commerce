@@ -28,6 +28,30 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
     logger.info(`${orderId} skipped with no financial status`);
     return null;
   }
+  let lastFulfillment: undefined | Exclude<(typeof order)['fulfillments'], undefined>[0];
+  order.fulfillments?.forEach((entry) => {
+    if (!lastFulfillment) {
+      lastFulfillment = entry;
+      return;
+    }
+    if (!entry.date_time) {
+      if (!lastFulfillment.date_time) {
+        lastFulfillment = entry;
+      }
+      return;
+    }
+    if (!lastFulfillment.date_time || entry.date_time > lastFulfillment.date_time) {
+      lastFulfillment = entry;
+    }
+  });
+  const tinyStatus = parseStatusToTiny(order);
+  if (
+    (tinyStatus !== 'aberto' && tinyStatus !== 'cancelado')
+    && lastFulfillment?.flags?.includes('from-tiny')
+  ) {
+    logger.info(`${orderId} skipped with last fulfillment status from Tiny`);
+    return null;
+  }
   logger.info(`${orderId} searching order ${order.number}`);
 
   let tinyData: { pedidos?: any };
@@ -44,9 +68,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       throw err;
     }
   }
-
   const { pedidos } = tinyData;
-  const tinyStatus = parseStatusToTiny(order);
   let originalTinyOrder;
   if (Array.isArray(pedidos)) {
     originalTinyOrder = pedidos.find(({ pedido }) => {
@@ -67,7 +89,6 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       logger.info(`${orderId} skipped with status "${tinyStatus}"`);
       return null;
     }
-
     if (appData.ready_for_shipping_only) {
       switch (tinyStatus) {
         case 'aberto':
@@ -84,7 +105,6 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
           break;
       }
     }
-
     const tinyOrder = parseOrder(order, appData);
     logger.info(`${orderId} ${JSON.stringify(tinyOrder)}`);
     return postTiny('/pedido.incluir.php', {
