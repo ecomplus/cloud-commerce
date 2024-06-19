@@ -71,7 +71,7 @@ if (prefetchHref.value) {
     let delayMs = isOnVisible ? 100 : 1;
     if (isMobile && prefetch === 'hover') {
       isOnVisible = true;
-      delayMs = 300;
+      delayMs = 800;
     }
     const isOnHover = !isOnVisible && prefetch === 'hover';
     const useElementEv = isOnVisible
