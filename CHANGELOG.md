@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.1](https://github.com/ecomplus/cloud-commerce/compare/v2.21.0...v2.21.1) (2024-06-19)
+
+
+### Bug Fixes
+
+* **feeds:** Skip search terms smaller than 3chars or incomplete (autocomplete) terms on sitemap ([a74fb53](https://github.com/ecomplus/cloud-commerce/commit/a74fb532189aaac1dd76c2ba57f2b9c2e7e06718))
+* **storefront:** Prevent env `isScreenXs` set true on SSR ([4105c0c](https://github.com/ecomplus/cloud-commerce/commit/4105c0c59ac715bcb54f34a8f312769914c97921))
+* **storefront:** Supporting `<Drawer>` persistent on DOM (with backdrop) with `model-to="v-show"` ([fa20e4d](https://github.com/ecomplus/cloud-commerce/commit/fa20e4d88719be5b972dc9933a255635a123a531))
+
 ## [2.21.0](https://github.com/ecomplus/cloud-commerce/compare/v2.20.8...v2.21.0) (2024-06-19)
 
 
