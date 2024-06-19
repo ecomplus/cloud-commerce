@@ -8,6 +8,7 @@ import {
 } from 'vue';
 
 export interface Props {
+  modelTo?: 'v-if' | 'v-show';
   isHidden?: boolean;
   placement?: 'start' | 'end' | 'top' | 'bottom';
   position?: 'fixed' | 'absolute';
@@ -24,6 +25,7 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  modelTo: 'v-if',
   isHidden: false,
   placement: 'start',
   position: 'fixed',
@@ -116,8 +118,8 @@ onMounted(() => { isMounted.value = true; });
 <template>
   <Fade :slide="slideTo" speed="slow" is-floating>
     <dialog
-      v-if="model || popover"
-      v-show="!isHidden"
+      v-if="modelTo !== 'v-if' || model || popover"
+      v-show="!isHidden && (modelTo !== 'v-show' || model || popover)"
       ref="drawer"
       :id
       :popover
