@@ -25,9 +25,10 @@ const renderSitemap = async (req: Request, res: Response, products: FeedProducts
   (await fetchingSearchHistory).data.result.forEach((searchEntry) => {
     if (searchEntry.hits_count && searchEntry.hits_count > 2) {
       const slug = encodeURIComponent(searchEntry.terms.join(' ').toLowerCase());
-      if (!searchTermSlugs.includes(slug)) {
-        searchTermSlugs.push(slug);
-      }
+      if (slug.length < 3) return;
+      const regex = new RegExp(`^${slug}(?!%20)`);
+      if (searchTermSlugs.find((_slug) => regex.test(_slug))) return;
+      searchTermSlugs.push(slug);
     }
   });
   searchTermSlugs.forEach((slug) => {
