@@ -24,7 +24,7 @@ const renderSitemap = async (req: Request, res: Response, products: FeedProducts
   const searchTermSlugs: string[] = [];
   (await fetchingSearchHistory).data.result.forEach((searchEntry) => {
     if (searchEntry.hits_count && searchEntry.hits_count > 2) {
-      const slug = encodeURIComponent(searchEntry.terms.join(' ').toLowerCase());
+      const slug = encodeURIComponent(searchEntry.terms.join(' ').trim().toLowerCase());
       if (slug.length < 3) return;
       const regex = new RegExp(`^${slug}(?!%20)`);
       if (searchTermSlugs.find((_slug) => regex.test(_slug))) return;
