@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.0](https://github.com/ecomplus/cloud-commerce/compare/v2.20.8...v2.21.0) (2024-06-19)
+
+
+### Features
+
+* **feeds:** Adding most frequent search terms URLs to sitemap ([5810edb](https://github.com/ecomplus/cloud-commerce/commit/5810edb5bdb34df345895c9aab33fab8762707c0))
+
+
+### Bug Fixes
+
+* **api:** Prevent encoding expression chars on `params` object keys ([b424750](https://github.com/ecomplus/cloud-commerce/commit/b424750dfbe4ac5ea166f78f3b98b527e6de5cdb))
+* **api:** Updating types for Products interface and default search v2 listed fields ([bbac369](https://github.com/ecomplus/cloud-commerce/commit/bbac369958b2a32c45f895e7dd29ab3619055195))
+* **deps:** Update non-major dependencies ([#399](https://github.com/ecomplus/cloud-commerce/issues/399)) ([d9fb67c](https://github.com/ecomplus/cloud-commerce/commit/d9fb67c7c0b9c45333422de4db426c3fb5bdf600))
+* **deps:** Update non-major dependencies ([#403](https://github.com/ecomplus/cloud-commerce/issues/403)) ([562981d](https://github.com/ecomplus/cloud-commerce/commit/562981d6c4e0c5e0e05c5004b8899bf266eadd71))
+* **storefront:** Fix page main composable to preserve `searchQuery` from content on shelf sections ([9f812d6](https://github.com/ecomplus/cloud-commerce/commit/9f812d647ea89a0b6cbf82c04bc935b5d6f583f4))
+* **storefront:** Limiting tooltip size to 200px by default ([b485366](https://github.com/ecomplus/cloud-commerce/commit/b4853669ba0204ebfec6aef192c716c08aad4ce6))
+* **storefront:** Updating `<Drawer>` to support id and native HTML popover to interact with no-JS ([a3029a2](https://github.com/ecomplus/cloud-commerce/commit/a3029a20068168dd5ac0eafb02d6f05e41eb777f))
+* **tiny-erp:** Skip unecessary order export with fulfillment status entry from tiny ([83f57b8](https://github.com/ecomplus/cloud-commerce/commit/83f57b89d4a1b22b48981e7c1f12bfa8b2555455))
+
 ## [2.20.8](https://github.com/ecomplus/cloud-commerce/compare/v2.20.7...v2.20.8) (2024-06-03)
 
 
