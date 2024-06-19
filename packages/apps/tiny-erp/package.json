@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-tiny-erp",
   "type": "module",
-  "version": "2.20.8",
+  "version": "2.21.0",
   "description": "e-com.plus Cloud Commerce app for Tiny ERP",
   "main": "lib/tiny-erp.js",
   "files": [
