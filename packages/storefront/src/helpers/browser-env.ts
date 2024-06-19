@@ -10,7 +10,7 @@ if (!import.meta.env.SSR) {
 
 export const isMobile = /Android|iPhone|iPad|iPod|webOS/i.test(userAgent);
 
-export const isScreenXs = screenWidth < 640;
+export const isScreenXs = screenWidth > 0 && screenWidth < 640;
 
 export const isScreenLg = screenWidth >= 1024;
 
