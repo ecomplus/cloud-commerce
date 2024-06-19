@@ -15,11 +15,31 @@ const renderSitemap = async (req: Request, res: Response, products: FeedProducts
     limit: 3000,
     fields: ['slug'] as const,
   });
-  const { data: { result: categories } } = await fetchingCategories;
-  const { data: { result: brands } } = await fetchingBrands;
+  const fetchingSearchHistory = api.get('search/v1/history', {
+    limit: 1000,
+  });
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+  const searchTermSlugs: string[] = [];
+  (await fetchingSearchHistory).data.result.forEach((searchEntry) => {
+    if (searchEntry.hits_count && searchEntry.hits_count > 2) {
+      const slug = encodeURIComponent(searchEntry.terms.join(' ').toLowerCase());
+      if (!searchTermSlugs.includes(slug)) {
+        searchTermSlugs.push(slug);
+      }
+    }
+  });
+  searchTermSlugs.forEach((slug) => {
+    xml += `
+    <url>
+      <loc>https://${domain}/s/${slug}</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+    </url>`;
+  });
+  const { data: { result: categories } } = await fetchingCategories;
+  const { data: { result: brands } } = await fetchingBrands;
   [...categories, ...brands].forEach(({ slug }) => {
     if (!slug) return;
     xml += `
