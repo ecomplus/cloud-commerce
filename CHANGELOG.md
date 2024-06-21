@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.2](https://github.com/ecomplus/cloud-commerce/compare/v2.21.1...v2.21.2) (2024-06-21)
+
+
+### Bug Fixes
+
+* **modules:** Better debugging all checkout interruptions (AJV and other 4xx errors) ([46ec1e4](https://github.com/ecomplus/cloud-commerce/commit/46ec1e43324c5f3a621905088dda7ce423d7eeb5))
+* **storefront:** Adding `blog-grid` and `about-us` to predefined sections (common) ([82cabc9](https://github.com/ecomplus/cloud-commerce/commit/82cabc91ef443412c17a4304e52c0a539e09f958))
+
 ## [2.21.1](https://github.com/ecomplus/cloud-commerce/compare/v2.21.0...v2.21.1) (2024-06-19)
 
 
