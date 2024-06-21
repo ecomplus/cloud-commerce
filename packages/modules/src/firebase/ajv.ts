@@ -1,4 +1,5 @@
 import type { Response } from 'firebase-functions';
+import { warn } from 'firebase-functions/logger';
 import Ajv, { Options, ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
 
@@ -18,13 +19,13 @@ const parseAjvErrors = (errors?: ErrorObject[] | null, ajvInstance = ajv) => {
 };
 
 const sendRequestError = (res: Response, modName: string, errors?: ErrorObject[] | null) => {
+  const errorsText = ajv.errorsText(errors, { separator: '\n' });
+  warn('Checkout body invalidated', { errorsText });
   res.status(400).send({
     status: 400,
     error_code: 'MOD901',
     message: 'Bad-formatted JSON body (POST) or URL params (GET), details in `user_message`',
-    user_message: {
-      en_us: ajv.errorsText(errors, { separator: '\n' }),
-    },
+    user_message: { en_us: errorsText },
     more_info: `/${modName}/schema`,
   });
 };
