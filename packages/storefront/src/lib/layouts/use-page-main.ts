@@ -47,6 +47,18 @@ export const usePageHero = async ({ routeContext }: Props) => {
 
 type CustomSection = { type: `${string}:${string}`, props: any };
 type ProductDetailsProps = { hasDescription?: boolean, hasSpecifications?: boolean };
+interface BlogGridProps {
+  title?: string;
+  limit?: number;
+  posts?: string[];
+}
+interface AboutUsProps {
+  title?: string;
+  subtitle?: string;
+  text?: string;
+  buttonLink?: string;
+  buttonText?: string;
+}
 
 export const usePageSections = async <T extends CustomSection = CustomSection>
 ({ routeContext, handleCustomSection, searchEngine }: Props) => {
@@ -72,6 +84,8 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     | { type: 'search-showcase' | 'context-showcase', props: UseSearchShowcaseProps }
     | { type: 'page-title', props: {} }
     | { type: 'content-entry', props: { title: string, markdown: string } }
+    | { type: 'blog-grid', props: BlogGridProps }
+    | { type: 'about-us', props: AboutUsProps }
     | { type: 'custom-html', props: { html: string } }
   > = [];
 
@@ -227,6 +241,8 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
         case 'doc-banners':
         case 'product-specifications':
         case 'page-title':
+        case 'blog-grid':
+        case 'about-us':
           // Bypassed sections
           sections[index] = {
             type,
