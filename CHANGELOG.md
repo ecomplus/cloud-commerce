@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.3](https://github.com/ecomplus/cloud-commerce/compare/v2.21.2...v2.21.3) (2024-06-24)
+
+
+### Bug Fixes
+
+* **api:** Properly parsing/passing body input 0 or null for nested PUT/PATCH/POST ([b919a2d](https://github.com/ecomplus/cloud-commerce/commit/b919a2db2cbcb27578ff5638e66039ae289944f4))
+* **deps:** Update non-major dependencies ([#404](https://github.com/ecomplus/cloud-commerce/issues/404)) ([39f8571](https://github.com/ecomplus/cloud-commerce/commit/39f857130798789780f8b3739689fcf40c1922ac))
+
 ## [2.21.2](https://github.com/ecomplus/cloud-commerce/compare/v2.21.1...v2.21.2) (2024-06-21)
 
 
