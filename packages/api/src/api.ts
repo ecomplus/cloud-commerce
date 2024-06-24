@@ -175,10 +175,10 @@ const api = async <T extends Config & { body?: any, data?: any }>(
       return { ...cached.res, config };
     }
   }
-  const bodyObject = config.body || config.data;
+  const bodyInput = config.body || config.data;
   let body: string | undefined;
-  if (bodyObject) {
-    body = JSON.stringify(bodyObject);
+  if (bodyInput !== undefined) {
+    body = JSON.stringify(bodyInput);
     headers['Content-Type'] = 'application/json';
   }
 
