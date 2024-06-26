@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.4](https://github.com/ecomplus/cloud-commerce/compare/v2.21.3...v2.21.4) (2024-06-26)
+
+
+### Bug Fixes
+
+* **modules:** Update checkout schema to stop requiring minumim CVV 99 ([d87d3a1](https://github.com/ecomplus/cloud-commerce/commit/d87d3a17326bcfabb7657bc1f72e6f4587ad3c97))
+* **storefront:** Bump Vue to latest v3.4.30 ([684722d](https://github.com/ecomplus/cloud-commerce/commit/684722d4177366213f75be293eaf5f7cc12be890))
+
 ## [2.21.3](https://github.com/ecomplus/cloud-commerce/compare/v2.21.2...v2.21.3) (2024-06-24)
 
 
