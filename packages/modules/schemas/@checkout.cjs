@@ -431,7 +431,7 @@ exports.params = {
             },
             'cvv': {
               'type': 'integer',
-              'minimum': 99,
+              'minimum': 1,
               'maximum': 99999,
               'description': 'Credit card CVV number (Card Verification Value)'
             },
