@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.5](https://github.com/ecomplus/cloud-commerce/compare/v2.21.4...v2.21.5) (2024-06-27)
+
+
+### Bug Fixes
+
+* **modules:** Additional checkout body data refinements before schema validation ([f7a1ebf](https://github.com/ecomplus/cloud-commerce/commit/f7a1ebf3cf1482c64b53564dedc77b45466f48a2))
+* **modules:** Minor fixes debugging checkout validation errors ([f2e3fc0](https://github.com/ecomplus/cloud-commerce/commit/f2e3fc0897d2c898c049b42e66147f3595a158ce))
+* **modules:** Update reate transaction schema to stop requiring minumim CVV 99 ([274c38c](https://github.com/ecomplus/cloud-commerce/commit/274c38cb99849006314083198daca58b8feabe49))
+* **storefront:** Replacing `mime` imports to `mrmime`, on direct pkg deps ([cbd4219](https://github.com/ecomplus/cloud-commerce/commit/cbd4219e604a1d4a6e56ac38b7c7ac8abeee5a85)), closes [#375](https://github.com/ecomplus/cloud-commerce/issues/375)
+
 ## [2.21.4](https://github.com/ecomplus/cloud-commerce/compare/v2.21.3...v2.21.4) (2024-06-26)
 
 
