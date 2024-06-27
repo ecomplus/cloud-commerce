@@ -1,7 +1,6 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { OutputFormat, TransformOptions, GetBuiltImage } from './get-built-image';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import mime from 'mime/lite'; // peer astro dep
+import { lookup } from 'mrmime';
 
 export interface GetPictureParams {
   src: string /* | ImageMetadata | Promise<{ default: ImageMetadata }> */;
@@ -122,7 +121,7 @@ export const createPictureGetter = (getImage: GetBuiltImage):
         }),
       );
       return {
-        type: mime.getType(format) || format,
+        type: lookup(format) || format,
         srcset: imgs.join(','),
       };
     }
