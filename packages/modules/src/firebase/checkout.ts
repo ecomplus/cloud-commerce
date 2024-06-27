@@ -31,12 +31,15 @@ export default async (req: Request, res: Response) => {
   const modulesBaseURL = `${host}${req.url.replace(/\/@?checkout[^/]*$/i, '')}`;
 
   const validate = ajv.compile(checkoutSchema.params);
-  const checkoutBody = req.body as CheckoutBody;
   req.body.client_ip = req.ip;
   const userAgent = req.get('user-agent');
   req.body.client_user_agent = userAgent === 'string'
     ? userAgent.substring(0, 255)
     : '';
+  const checkoutBody = req.body as CheckoutBody;
+  if (checkoutBody.shipping.to.number! < 1) {
+    delete checkoutBody.shipping.to.number;
+  }
   if (!validate(checkoutBody)) {
     return sendRequestError(res, '@checkout', validate.errors);
   }
