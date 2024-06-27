@@ -34,7 +34,7 @@ const sendError = (
   userMessage?: { [key: string]: string },
   moreInfo?: string,
 ) => {
-  warn(`Checkout interrupted with code ${errorCode}`, { message });
+  warn(`Checkout interrupted with code ${errorCode}`, { resMsg: message });
   return res.status(status)
     .send({
       status,

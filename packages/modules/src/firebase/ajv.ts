@@ -20,7 +20,9 @@ const parseAjvErrors = (errors?: ErrorObject[] | null, ajvInstance = ajv) => {
 
 const sendRequestError = (res: Response, modName: string, errors?: ErrorObject[] | null) => {
   const errorsText = ajv.errorsText(errors, { separator: '\n' });
-  warn('Checkout body invalidated', { errorsText });
+  if (modName === '@checkout') {
+    warn('Checkout body invalidated', { errorsText });
+  }
   res.status(400).send({
     status: 400,
     error_code: 'MOD901',
