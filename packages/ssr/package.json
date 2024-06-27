@@ -44,6 +44,7 @@
     "firebase-admin": "^12.2.0",
     "firebase-functions": "^5.0.1",
     "mitt": "^3.0.1",
+    "mrmime": "^2.0.0",
     "vue": "^3.4.30",
     "yaml": "^2.4.5"
   },

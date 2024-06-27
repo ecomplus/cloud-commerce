@@ -1119,6 +1119,9 @@ importers:
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
+      mrmime:
+        specifier: ^2.0.0
+        version: 2.0.0
       vue:
         specifier: ^3.4.30
         version: 3.4.30(typescript@5.5.2)
@@ -1192,9 +1195,15 @@ importers:
       image-size:
         specifier: ^1.1.1
         version: 1.1.1
+      mime:
+        specifier: ^3.0.0
+        version: 3.0.0
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
+      mrmime:
+        specifier: ^2.0.0
+        version: 2.0.0
       semver:
         specifier: ^7.6.2
         version: 7.6.2
