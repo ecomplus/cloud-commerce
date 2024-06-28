@@ -13,6 +13,7 @@ import login from './login';
 import build, { prepareCodebases } from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
 import createGhSecrets from './setup-gh';
+import { checkDirTest, createServe } from './prepare-test-store';
 
 if (!process.env.FIREBASE_PROJECT_ID && !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
   const pwd = process.cwd();
@@ -224,6 +225,15 @@ Finish by saving the following secrets to your GitHub repository:
     const host = typeof argv.host === 'string' ? argv.host : '';
     const port = typeof argv.port === 'string' || typeof argv.port === 'number' ? argv.port : '';
     return $`npm --prefix "${prefix}" run dev -- --host ${host} --port ${port}`;
+  }
+  if (argv._.includes('test:store')) {
+    await checkDirTest();
+    const emulatorServe = await createServe(projectId || 'ecom2-demo');
+
+    await $({ verbose: true })`npx vitest run`;
+    emulatorServe.kill();
+
+    return null;
   }
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
