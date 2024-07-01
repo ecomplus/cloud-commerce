@@ -586,8 +586,8 @@ importers:
         specifier: workspace:*
         version: link:../api
       '@fastify/deepmerge':
-        specifier: ^1.3.0
-        version: 1.3.0
+        specifier: ^2.0.0
+        version: 2.0.0
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -610,8 +610,8 @@ importers:
         specifier: workspace:*
         version: link:../api
       '@fastify/deepmerge':
-        specifier: ^1.3.0
-        version: 1.3.0
+        specifier: ^2.0.0
+        version: 2.0.0
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -1003,8 +1003,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       '@fastify/deepmerge':
-        specifier: ^1.3.0
-        version: 1.3.0
+        specifier: ^2.0.0
+        version: 2.0.0
       '@iconify-json/fa6-brands':
         specifier: ^1.1.19
         version: 1.1.19
@@ -2951,8 +2951,8 @@ packages:
     engines: {node: '>=14'}
     dev: false
 
-  /@fastify/deepmerge@1.3.0:
-    resolution: {integrity: sha512-J8TOSBq3SoZbDhM9+R/u77hP93gz/rajSA+K2kGyijPpORPWUXHUpTaleoj+92As0S9uPRP7Oi8IqMf0u+ro6A==}
+  /@fastify/deepmerge@2.0.0:
+    resolution: {integrity: sha512-fsaybTGDyQ5KpPsplQqb9yKdCf2x/pbNpMNk8Tvp3rRz7lVcupKysH4b2ELMN2P4Hak1+UqTYdTj/u4FNV2p0g==}
     dev: false
 
   /@firebase/analytics-compat@0.2.10(@firebase/app-compat@0.2.35)(@firebase/app@0.10.5):
