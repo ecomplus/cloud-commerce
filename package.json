@@ -44,7 +44,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/rules": "^19.0.3",
-    "@types/node": "^18.19.39",
+    "@types/node": "^20.14.9",
     "commit-and-tag-version": "^12.4.1",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
