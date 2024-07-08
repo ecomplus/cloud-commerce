@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.21.6](https://github.com/ecomplus/cloud-commerce/compare/v2.21.5...v2.21.6) (2024-07-08)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#415](https://github.com/ecomplus/cloud-commerce/issues/415)) ([7c05c2b](https://github.com/ecomplus/cloud-commerce/commit/7c05c2b7cc1f6c6f444792a3e97d5a75bbc4b7ab))
+* **storefront:** Bump Vue to ^3.4.31 ([#401](https://github.com/ecomplus/cloud-commerce/issues/401)) ([f35ae3b](https://github.com/ecomplus/cloud-commerce/commit/f35ae3b89bafb3fad366bb161be9b85b1a609e82))
+* **tiny-erp:** Double try finding product to import by current SKU on Tiny ([aad6fd8](https://github.com/ecomplus/cloud-commerce/commit/aad6fd838b9a8ee3983b1fc4c967d4567fe705f3))
+* **tiny-erp:** Prevent error on after queue handler without `action` (Tiny webhooks) ([bd39156](https://github.com/ecomplus/cloud-commerce/commit/bd39156a1ef333e36b3b938521a3bcfe5474a4c6))
+
 ## [2.21.5](https://github.com/ecomplus/cloud-commerce/compare/v2.21.4...v2.21.5) (2024-06-27)
 
 
