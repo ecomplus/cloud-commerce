@@ -5,7 +5,13 @@ import updateAppData from '@cloudcommerce/firebase/lib/helpers/update-app-data';
 import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-from-tiny';
 
-export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) => {
+const importProduct = async (
+  apiDoc,
+  queueEntry,
+  appData,
+  canCreateNew = false,
+  isHiddenQueue = false,
+) => {
   const [queueSku, queueProductId] = String(queueEntry.nextId)
     .split(';:') as [Products['sku'], Products['_id'] | undefined];
   let product: Products | null = null;
@@ -67,15 +73,15 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
     }
 
     if (!product && tinyProduct && tipo === 'produto') {
+      if (!canCreateNew) {
+        return null;
+      }
       return parseProduct(tinyProduct, tipo, true)
         .then((bodyProduct) => {
           return api.post('products', bodyProduct);
         });
     }
-
-    if (!tinyProduct) {
-      return null;
-    }
+    if (!tinyProduct) return null;
 
     return postTiny('/produto.obter.php', { id: (tinyProduct.id || produtoSaldo.id) })
       .then(({ produto }) => {
@@ -85,7 +91,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
         if (productId) {
           method = 'PATCH';
           endpoint = `products/${productId}`;
-        } else if (tipo === 'produto' || appData.import_all_products) {
+        } else if (canCreateNew) {
           method = 'POST';
           endpoint = 'products';
         } else {
@@ -179,3 +185,5 @@ export default async (apiDoc, queueEntry, appData, canCreateNew, isHiddenQueue) 
       throw new Error(err);
     });
 };
+
+export default importProduct;

@@ -77,7 +77,7 @@ export default async (req: Request, res: Response) => {
       isNotQueued: true,
       app: application,
     };
-    importProduct({}, queueEntry, appData, false, true).catch((err: any) => {
+    importProduct({}, queueEntry, appData, tipo === 'produto', true).catch((err: any) => {
       return afterQueue(queueEntry, appData, application, err);
     });
   }
