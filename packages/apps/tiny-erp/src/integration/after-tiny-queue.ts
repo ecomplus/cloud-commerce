@@ -9,7 +9,7 @@ export default async (
   payload: any,
 ) => {
   const isError = payload instanceof Error;
-  const isImportation = queueEntry.action.endsWith('importation');
+  const isImportation = !!queueEntry.action?.endsWith('importation');
   const isQueued = !queueEntry.isNotQueued;
   const logs = appData.logs || [];
   const logEntry = {
@@ -67,6 +67,9 @@ export default async (
     });
   }
   const { action, queue, nextId } = queueEntry;
+  if (!action) {
+    return null;
+  }
   let queueList = appData[action][queue];
   if (Array.isArray(queueList)) {
     const idIndex = queueList.indexOf(nextId);
