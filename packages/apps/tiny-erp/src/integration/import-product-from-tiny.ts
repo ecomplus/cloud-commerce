@@ -15,12 +15,23 @@ const importProduct = async (
   const [queueSku, queueProductId] = String(queueEntry.nextId)
     .split(';:') as [Products['sku'], Products['_id'] | undefined];
   let product: Products | null = null;
+  const { tinyStockUpdate } = queueEntry;
   try {
-    const resourceFind = (queueProductId || (`sku:${queueSku}` as `${string}:${string}`));
+    const resourceFind = (queueProductId || `sku:${queueSku}` as const);
     product = (await api.get(`products/${resourceFind}`)).data;
   } catch (err: any) {
     if (err.statusCode !== 404) {
       throw err;
+    }
+    if (!queueProductId) {
+      const currentSku = tinyStockUpdate?.produto?.codigo;
+      if (currentSku) {
+        try {
+          product = (await api.get(`products/sku:${currentSku}`)).data;
+        } catch {
+          //
+        }
+      }
     }
   }
   let hasVariations: boolean = false;
@@ -149,17 +160,16 @@ const importProduct = async (
       });
   };
 
-  const { tinyStockUpdate } = queueEntry;
   logger.info(JSON.stringify({
     queueSku,
     queueProductId,
     hasVariations,
     variationId,
   }), { tinyStockUpdate });
-  if (tinyStockUpdate && isHiddenQueue && (queueProductId || (product && product._id))) {
+  if (tinyStockUpdate && isHiddenQueue && (queueProductId || product?._id)) {
     return handleTinyStock(tinyStockUpdate as any, tinyStockUpdate.produto);
   }
-  if (tinyStockUpdate.tipo === 'produto' && !queueProductId) {
+  if (tinyStockUpdate?.tipo === 'produto' && !queueProductId) {
     return handleTinyStock({ produto: {}, tipo: 'produto' }, tinyStockUpdate.produto);
   }
 
