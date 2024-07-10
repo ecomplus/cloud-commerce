@@ -1216,6 +1216,9 @@ importers:
       unplugin-auto-import:
         specifier: ^0.17.6
         version: 0.17.6(@vueuse/core@10.11.0)
+      valibot:
+        specifier: ^0.36.0
+        version: 0.36.0
       vue:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.5.3)
@@ -1446,7 +1449,7 @@ packages:
     dependencies:
       '@vitejs/plugin-vue': 5.0.4(vite@5.3.3)(vue@3.4.31)
       '@vitejs/plugin-vue-jsx': 3.1.0(vite@5.3.3)(vue@3.4.31)
-      '@vue/babel-plugin-jsx': 1.2.2(@babel/core@7.24.5)
+      '@vue/babel-plugin-jsx': 1.2.2
       '@vue/compiler-sfc': 3.4.31
       astro: 4.5.10(@types/node@18.19.39)(typescript@5.5.3)
       vue: 3.4.31(typescript@5.5.3)
@@ -4728,6 +4731,29 @@ packages:
 
   /@vue/babel-helper-vue-transform-on@1.2.2:
     resolution: {integrity: sha512-nOttamHUR3YzdEqdM/XXDyCSdxMA9VizUKoroLX6yTyRtggzQMHXcmwh8a7ZErcJttIBIc9s68a1B8GZ+Dmvsw==}
+    dev: false
+
+  /@vue/babel-plugin-jsx@1.2.2:
+    resolution: {integrity: sha512-nYTkZUVTu4nhP199UoORePsql0l+wj7v/oyQjtThUVhJl1U+6qHuoVhIvR3bf7eVKjbCK+Cs2AWd7mi9Mpz9rA==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+    dependencies:
+      '@babel/helper-module-imports': 7.22.15
+      '@babel/helper-plugin-utils': 7.24.0
+      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.4)
+      '@babel/template': 7.24.0
+      '@babel/traverse': 7.24.5
+      '@babel/types': 7.24.5
+      '@vue/babel-helper-vue-transform-on': 1.2.2
+      '@vue/babel-plugin-resolve-type': 1.2.2(@babel/core@7.24.5)
+      camelcase: 6.3.0
+      html-tags: 3.3.1
+      svg-tags: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@vue/babel-plugin-jsx@1.2.2(@babel/core@7.24.5):
@@ -12017,6 +12043,10 @@ packages:
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
+
+  /valibot@0.36.0:
+    resolution: {integrity: sha512-CjF1XN4sUce8sBK9TixrDqFM7RwNkuXdJu174/AwmQUB62QbCQADg5lLe8ldBalFgtj1uKj+pKwDJiNo4Mn+eQ==}
+    dev: false
 
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
