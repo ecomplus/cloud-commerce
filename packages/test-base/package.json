@@ -23,10 +23,12 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/test-base#readme",
   "scripts": {
-    "build": "bash ../../scripts/build-lib.sh"
+    "build": "bash ../../scripts/build-lib.sh",
+    "test": "tsc -p ../../tsconfig.test.json && vitest run"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*"
+    "@cloudcommerce/api": "workspace:*",
+    "firebase-functions": "^5.0.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"
