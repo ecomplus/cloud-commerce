@@ -8,7 +8,7 @@ import {
   availableExtraDiscount,
 } from '@@sf/state/modules-info';
 
-export interface Props {
+export type Props = {
   product?: Partial<Products> & { final_price?: number } &
     ({ price: number } | { final_price: number });
   price?: number;

@@ -21,7 +21,7 @@ export const quantitySelectorKey = Symbol('quantitySelector') as
 </script>
 
 <script setup lang="ts">
-export interface Props {
+export type Props = {
   min?: number;
   max?: number;
   step?: number;

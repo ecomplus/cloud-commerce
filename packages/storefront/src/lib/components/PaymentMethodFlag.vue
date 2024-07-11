@@ -2,7 +2,7 @@
 import type { SettingsContent } from '@@sf/content';
 import { computed } from 'vue';
 
-export interface Props {
+export type Props = {
   as?: string;
   flag: Exclude<SettingsContent['paymentMethods'], undefined>[number];
 }

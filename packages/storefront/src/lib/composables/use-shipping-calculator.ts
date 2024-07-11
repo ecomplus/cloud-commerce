@@ -38,7 +38,7 @@ type CartOrProductItem = Carts['items'][0]
     & ({ product_id: string & { length: 24 } } | { _id: string & { length: 24 } })
   );
 
-export interface Props {
+export type Props = {
   zipCode?: Ref<string>;
   canAutoSubmit?: boolean;
   // canSelectService?: boolean;

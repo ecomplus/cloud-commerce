@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { parseShippingPhrase } from '@@sf/state/modules-info';
 import { useCmsPreview } from '@@sf/state/use-cms-preview';
 
-export interface Props {
+export type Props = {
   slides: LayoutContent['header']['pitchBar'];
 }
 

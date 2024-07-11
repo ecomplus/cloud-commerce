@@ -1,7 +1,7 @@
 import type { CategoryTree } from '@@sf/composables/use-shop-header';
 import { computed } from 'vue';
 
-export interface Props {
+export type Props = {
   categoryTree: CategoryTree;
   megaMenuMaxCols?: number;
 }

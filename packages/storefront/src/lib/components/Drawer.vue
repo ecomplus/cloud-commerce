@@ -7,7 +7,7 @@ import {
   onMounted,
 } from 'vue';
 
-export interface Props {
+export type Props = {
   modelTo?: 'v-if' | 'v-show';
   isHidden?: boolean;
   placement?: 'start' | 'end' | 'top' | 'bottom';

@@ -6,7 +6,7 @@ import { inStock as checkInStock } from '@ecomplus/utils';
 import { i19relatedProducts } from '@@i18n';
 import { useSectionPreview } from '@@sf/state/use-cms-preview';
 
-export interface Props extends Partial<SectionPreviewProps> {
+export type Props = Partial<SectionPreviewProps> & {
   collectionId?: ResourceId | null;
   searchQuery?: `&${string}` | '';
   sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string;

@@ -7,7 +7,7 @@ import {
 } from 'vue';
 import { isLogged } from '@@sf/state/customer-session';
 
-export interface Props {
+export type Props = {
   to?: 'orders' | 'favorites' | 'account';
   loginUrl?: string;
   returnUrl?: string | null;

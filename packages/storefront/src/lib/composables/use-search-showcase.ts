@@ -22,7 +22,7 @@ import {
 import { SearchEngine } from '@@sf/state/search-engine';
 import { useSearchActiveFilters } from '@@sf/composables/use-search-filters';
 
-export interface Props extends Partial<SectionPreviewProps> {
+export type Props = Partial<SectionPreviewProps> & {
   term?: string | null;
   pageSize?: number;
   fixedParams?: SearchEngineInstance['params'];

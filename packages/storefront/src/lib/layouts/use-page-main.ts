@@ -8,7 +8,7 @@ import { useSharedData } from '@@sf/composables/use-shared-data';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
 import { useSearchShowcase } from '@@sf/composables/use-search-showcase';
 
-export interface Props {
+export type Props = {
   routeContext: RouteContext;
   handleCustomSection?: (type: `${string}:${string}`, content: Record<string, any>) =>
     Promise<{ props: Record<string, any> }>;

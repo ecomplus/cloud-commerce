@@ -5,7 +5,7 @@ import {
   quantitySelectorKey,
 } from '@@sf/components/QuantitySelector.vue';
 
-export interface Props {
+export type Props = {
   isMinus?: boolean;
 }
 

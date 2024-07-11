@@ -6,7 +6,7 @@ import { parseLayoutContent } from '@@sf/composables/use-pitch-bar';
 
 type ShopHeaderProps = Omit<UseShopHeaderProps, 'header' | 'categories'>;
 
-export interface Props {
+export type Props = {
   routeContext: RouteContext;
   listedCategoryFields?: readonly string[] | null;
 }

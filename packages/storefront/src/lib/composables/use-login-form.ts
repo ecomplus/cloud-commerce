@@ -15,7 +15,7 @@ import {
   isAuthReady,
 } from '@@sf/state/customer-session';
 
-export interface Props {
+export type Props = {
   canUseUrlParams?: boolean;
 }
 

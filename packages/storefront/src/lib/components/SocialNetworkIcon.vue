@@ -2,7 +2,7 @@
 import type { NetworkName } from '@@sf/sf-lib';
 import { computed } from 'vue';
 
-export interface Props {
+export type Props = {
   as?: string;
   network: NetworkName;
 }

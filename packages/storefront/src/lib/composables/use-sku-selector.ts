@@ -14,7 +14,7 @@ import {
   gridTitle as _getGridTitle,
 } from '@ecomplus/utils';
 
-export interface Props {
+export type Props = {
   variations: Exclude<Products['variations'], undefined>;
   variationId?: ResourceId | null;
   grids?: Array<Partial<Grids>>;

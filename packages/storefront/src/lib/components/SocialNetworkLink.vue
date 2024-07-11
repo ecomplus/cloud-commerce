@@ -3,7 +3,7 @@ import { type NetworkName, isMobile, socialNetworks } from '@@sf/sf-lib';
 import { computed } from 'vue';
 import SocialNetworkIcon from '@@sf/components/SocialNetworkIcon.vue';
 
-export interface Props {
+export type Props = {
   network: NetworkName;
   href?: string;
   message?: string;

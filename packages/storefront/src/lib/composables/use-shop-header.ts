@@ -8,7 +8,7 @@ import useStickyHeader from '@@sf/composables/use-sticky-header';
 
 type PartCategory = Partial<Categories>;
 
-export interface Props {
+export type Props = {
   header: Ref<HTMLElement | null>;
   searchInput?: Ref<HTMLInputElement | null>;
   categories?: PartCategory[];

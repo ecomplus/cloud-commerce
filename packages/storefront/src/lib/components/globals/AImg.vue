@@ -5,13 +5,13 @@ import {
   imgSizes as getImgSizes,
 } from '@ecomplus/utils';
 
-export interface PictureSize {
+export type PictureSize = {
   url: string;
   alt?: string;
   size?: string;
 }
 
-export interface Props {
+export type Props = {
   picture: PictureSize | {
     normal?: PictureSize;
     big?: PictureSize;

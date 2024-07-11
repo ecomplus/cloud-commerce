@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export interface Props {
+export type Props = {
   html: string;
 }
 

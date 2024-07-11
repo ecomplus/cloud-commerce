@@ -31,7 +31,7 @@ export const carouselKey = Symbol('carousel') as InjectionKey<CarouselInject>;
 
 <script setup lang="ts">
 /* REFERENCE: https://github.com/bartdominiak/vue-snap */
-export interface Props {
+export type Props = {
   as?: string;
   index?: number;
   autoplay?: number; // milliseconds

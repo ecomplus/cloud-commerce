@@ -2,7 +2,7 @@
 import type { CartItem } from '@@sf/composables/use-cart-item';
 import { computed } from 'vue';
 
-export interface Props {
+export type Props = {
   to?: 'cart' | 'checkout';
   cartUrl?: string;
   checkoutUrl?: string;

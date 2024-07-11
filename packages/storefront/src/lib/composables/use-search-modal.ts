@@ -5,7 +5,7 @@ import Wade from 'wade';
 import { clearAccents } from '@@sf/sf-lib';
 import { SearchEngine, searchHistory } from '@@sf/state/search-engine';
 
-export interface Props {
+export type Props = {
   term: string;
   fetchDebounce?: number;
   productsLimit?: number;

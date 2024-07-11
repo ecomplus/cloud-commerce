@@ -58,7 +58,7 @@ export function useCmsPreview<
 
 export default useCmsPreview;
 
-export interface SectionPreviewProps {
+export type SectionPreviewProps = {
   cmsPreview?: {
     contentFilename: `${string}/${string}`;
     sectionIndex: number;

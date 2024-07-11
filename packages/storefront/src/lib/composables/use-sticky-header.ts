@@ -14,7 +14,7 @@ import {
 } from '@vueuse/core';
 import { isMobile, isScreenXs } from '@@sf/sf-lib';
 
-export interface Props {
+export type Props = {
   header: Ref<HTMLElement | null>;
   canSetStyles?: boolean;
   canCreateHeightDiv?: boolean;

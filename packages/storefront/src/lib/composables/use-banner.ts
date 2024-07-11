@@ -10,7 +10,7 @@ export type Props = {
   subtitle?: string;
   buttonLink?: string;
   buttonText?: string;
-};
+}
 
 const useBanner = (props: Props) => {
   const parsedTitle = computed(() => {

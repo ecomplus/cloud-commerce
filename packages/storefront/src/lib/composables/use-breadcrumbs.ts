@@ -11,7 +11,7 @@ import {
 } from '@ecomplus/utils';
 import useSharedData from '@@sf/composables/use-shared-data';
 
-export interface Props extends Partial<SectionPreviewProps> {
+export type Props = Partial<SectionPreviewProps> & {
   apiDoc?: Partial<Products | Categories | Brands | Collections>;
   categories?: Partial<Categories>[];
   domain?: string;

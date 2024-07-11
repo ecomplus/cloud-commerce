@@ -6,7 +6,7 @@ import {
   toRef,
 } from 'vue';
 
-export interface Props {
+export type Props = {
   totalItems?: number,
   totalPages?: number,
   page?: number,

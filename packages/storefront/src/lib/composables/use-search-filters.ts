@@ -9,7 +9,7 @@ import {
   i19upTo,
 } from '@@i18n';
 
-export interface Props {
+export type Props = {
   searchEngine: SearchEngineInstance;
   fixedParams?: SearchEngineInstance['params'];
 }

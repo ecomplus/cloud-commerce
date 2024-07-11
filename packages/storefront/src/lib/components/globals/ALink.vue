@@ -8,7 +8,7 @@ import {
 import { useElementVisibility, useElementHover } from '@vueuse/core';
 import { isMobile, requestIdleCallback } from '@@sf/sf-lib';
 
-export interface Props {
+export type Props = {
   href?: string | null;
   target?: string;
   prefetch?: 'hover' | 'visible' | 'never';

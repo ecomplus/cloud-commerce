@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-export interface Props {
+export type Props = {
   speed?: 'default' | 'slow' | 'slower',
   slide?: 'down' | 'left' | 'right' | 'up' | null,
   isFloating?: boolean,

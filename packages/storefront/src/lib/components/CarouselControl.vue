@@ -2,7 +2,7 @@
 import { inject } from 'vue';
 import { type CarouselInject, carouselKey } from '@@sf/components/Carousel.vue';
 
-export interface Props {
+export type Props = {
   isPrev?: boolean;
 }
 
