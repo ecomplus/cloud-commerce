@@ -41,6 +41,12 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['*.vue', '*.astro'],
+      rules: {
+        'padding-line-between-statements': 'off',
+      },
+    },
+    {
       files: ['*.astro'],
       parser: 'astro-eslint-parser',
       parserOptions: {
