@@ -27,8 +27,7 @@
     "test": "tsc -p ../../tsconfig.test.json && vitest run"
   },
   "dependencies": {
-    "@cloudcommerce/api": "workspace:*",
-    "firebase-functions": "^5.0.1"
+    "@cloudcommerce/api": "workspace:*"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"
