@@ -74,3 +74,5 @@ export type ContentData<T extends ContentFilename> =
 export type ContentGetter = <T extends ContentFilename>(filename: T) =>
   T extends 'settings' ? ContentData<T> :
   Promise<ContentData<T>>;
+
+export * from '../decap-cms/cms-fields.d';
