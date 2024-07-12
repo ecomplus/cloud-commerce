@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/test-base#readme",
   "scripts": {
-    "build": "bash ../../scripts/build-lib.sh",
-    "test": "tsc -p ../../tsconfig.test.json && vitest run"
+    "build": "bash ../../scripts/build-lib.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*"
