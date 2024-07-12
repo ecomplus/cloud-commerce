@@ -1,11 +1,5 @@
-import {
-  describe,
-  test,
-  expect,
-} from 'vitest';
-import {
-  modulesUrl,
-} from '@cloudcommerce/test-base';
+import { describe, test, expect } from 'vitest';
+import { modulesUrl } from '@cloudcommerce/test-base';
 
 describe('Test GET Schemas', async () => {
   test('@checkout', async () => {
