@@ -28,7 +28,7 @@
   "scripts": {
     "build": "bash ../../scripts/build-lib.sh",
     "build:types": "bash scripts/build-types.sh",
-    "test": "node --test tests/modules.test.mjs"
+    "test": "tsc -p ../../tsconfig.test.json && vitest run"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
