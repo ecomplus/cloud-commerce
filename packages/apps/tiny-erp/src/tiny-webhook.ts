@@ -70,7 +70,7 @@ export default async (req: Request, res: Response) => {
         ...dados,
       },
     };
-    info(`> Tiny webhook: ${nextId} => ${tinyStockUpdate.produto.saldo}`);
+    info(`> ${nextId} => ${tinyStockUpdate.produto.saldo}`);
     const queueEntry = {
       nextId,
       tinyStockUpdate,
