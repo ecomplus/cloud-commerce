@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.22.0](https://github.com/ecomplus/cloud-commerce/compare/v2.21.6...v2.22.0) (2024-07-16)
+
+
+### Features
+
+* **storefront:** New `InferCmsOutput` generic and `CmsFields` type on `@@sf/content` ([54f9f2f](https://github.com/ecomplus/cloud-commerce/commit/54f9f2fd12719402462fdedafd6ab78e8edb5f43))
+
+
+### Bug Fixes
+
+* **api:** Ensure negative not undefined body is properly passed to request ([cec5fae](https://github.com/ecomplus/cloud-commerce/commit/cec5fae13be1e06f7e42c4032702e899e92512be))
+* **deps:** Update non-major dependencies ([#418](https://github.com/ecomplus/cloud-commerce/issues/418)) ([af37e17](https://github.com/ecomplus/cloud-commerce/commit/af37e174bfcff92aa81fe7750a662c1a329d871c))
+
 ## [2.21.6](https://github.com/ecomplus/cloud-commerce/compare/v2.21.5...v2.21.6) (2024-07-08)
 
 
