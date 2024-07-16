@@ -175,7 +175,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
       return { ...cached.res, config };
     }
   }
-  const bodyInput = config.body || config.data;
+  const bodyInput = config.body !== undefined ? config.body : config.data;
   let body: string | undefined;
   if (bodyInput !== undefined) {
     body = JSON.stringify(bodyInput);
