@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.22.1](https://github.com/ecomplus/cloud-commerce/compare/v2.22.0...v2.22.1) (2024-07-20)
+
+
+### Bug Fixes
+
+* **pagarme:** Ensure expected `zipcode` format with 8 digits string ([23f4a91](https://github.com/ecomplus/cloud-commerce/commit/23f4a9162c216bbdc7be159c2e77542b22137de6))
+* **storefront:** Extending `CmsField` type with `select:<string>` for select with ecom state options ([cbda75e](https://github.com/ecomplus/cloud-commerce/commit/cbda75e7759da88afef3ff6c75a5102687ab11e9))
+* **storefront:** Replacing some `interface` to `type` on sections props ([be89f27](https://github.com/ecomplus/cloud-commerce/commit/be89f27c2626af77b6a405c3fed1964324c5f797))
+
 ## [2.22.0](https://github.com/ecomplus/cloud-commerce/compare/v2.21.6...v2.22.0) (2024-07-16)
 
 
