@@ -11,6 +11,7 @@ export type CmsField = {
     | 'boolean'
     | 'number'
     | 'select'
+    | `select:${string}`
     | 'object'
     | 'list'
     | 'hidden'
@@ -21,6 +22,7 @@ export type CmsField = {
   value_type?: string,
   fields?: Record<string, CmsField>,
   types?: Record<string, CmsField>,
+  label?: string | Record<string, string>,
 } & Record<string, any>;
 
 export type CmsFields = Record<string, CmsField>;
@@ -40,15 +42,21 @@ export type InferCmsOutput<F extends CmsFields> = {
       | 'datetime'
       | 'code'
       | 'map'
-      ? CheckRequired<F[I], string> :
+      ? CheckRequired<F[I], string>
+      :
     F[I]['widget'] extends 'boolean'
-      ? CheckRequired<F[I], boolean> :
+      ? CheckRequired<F[I], boolean>
+      :
     F[I]['widget'] extends 'number'
-      ? CheckRequired<F[I]['value_type'] extends 'int' | 'float' ? number : string> :
+      ? CheckRequired<F[I]['value_type'] extends 'int' | 'float' ? number : string>
+      :
     F[I]['widget'] extends 'select'
-      ? CheckRequired<F[I], F[I]['multiple'] extends true ? string[] : string> :
+      | `select:${string}`
+      ? CheckRequired<F[I], F[I]['multiple'] extends true ? string[] : string>
+      :
     F[I]['widget'] extends 'object'
-      ? CheckRequired<F[I], InferCmsOutput<F[I]['fields']>> :
+      ? CheckRequired<F[I], InferCmsOutput<F[I]['fields']>>
+      :
     F[I]['widget'] extends 'list'
       ? F[I]['fields'] extends undefined
         ? CheckRequired<F[I], string[]>
