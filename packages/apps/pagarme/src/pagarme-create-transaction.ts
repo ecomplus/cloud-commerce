@@ -14,7 +14,7 @@ const parseAddress = (to: Exclude<CreateTransactionParams['to'], undefined>) => 
   city: to.city,
   state: to.province || to.province_code,
   country: to.country_code ? to.country_code.toLowerCase() : 'br',
-  zipcode: to.zip,
+  zipcode: to.zip?.replace(/\D/g, '').padStart(8, '0'),
   street_number: String(to.number) || 's/n',
   complementary: to.complement || undefined,
 });
