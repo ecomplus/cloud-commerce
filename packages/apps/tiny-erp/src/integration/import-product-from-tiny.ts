@@ -78,7 +78,10 @@ const importProduct = async (
         endpoint += '/quantity';
         logger.info(endpoint, { quantity });
         // @ts-ignore
-        return api.put(endpoint, quantity);
+        return api.put(endpoint, quantity).then((response) => {
+          logger.info(`${endpoint} -> ${quantity} [${response.status}]`);
+          return response;
+        });
       }
       return null;
     }

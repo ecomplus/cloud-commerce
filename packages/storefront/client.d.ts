@@ -37,6 +37,10 @@ interface Window {
   CMS_REPO_BASE_DIR?: string;
   CMS_LANG?: string;
   CMS_MAX_FILE_SIZE?: number;
+  CMS_SECTIONS?: Array<{
+    type: string,
+    fields: import('@@sf/content').CmsFields,
+  }>;
   CMS?: Record<string, any>;
   $storefront?: import('@@sf/$storefront').$Storefront & {
     modulesInfoPreset?: Partial<typeof import('./src/lib/state/modules-info').default>,
