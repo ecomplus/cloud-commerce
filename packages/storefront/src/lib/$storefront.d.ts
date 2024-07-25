@@ -6,6 +6,7 @@ import type {
   Grids,
 } from '@cloudcommerce/api/types';
 import type { SettingsContent } from '@@sf/content';
+import type { CustomSharedData } from '@@sf/custom-shared-data';
 
 export type StorefrontApiContext = {
   resource: 'products',
@@ -33,12 +34,14 @@ export type $Storefront = {
     url: URL,
     apiContext?: StorefrontApiContext,
   },
-  data: Record<string, any> & {
-    categories?: Array<Partial<Categories>>,
-    brands?: Array<Partial<Brands>>,
-    collections?: Array<Partial<Collections>>,
-    grids?: Array<Partial<Grids>>,
-  },
+  data: Record<string, any>
+    & {
+      categories?: Array<Partial<Categories>>,
+      brands?: Array<Partial<Brands>>,
+      collections?: Array<Partial<Collections>>,
+      grids?: Array<Partial<Grids>>,
+    }
+    & CustomSharedData,
 };
 
 export type Server$Storefront = $Storefront & {
