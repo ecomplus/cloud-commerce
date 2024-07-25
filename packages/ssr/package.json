@@ -8,7 +8,7 @@
     ".": "./lib/index.js",
     "./firebase": "./lib/firebase.js",
     "./events": "./lib/ssr-events.js",
-    "./lib/analytics-events": "./lib/lib/analytics-events.js"
+    "./utils": "./lib/lib/util/ssr-utils.js"
   },
   "files": [
     "/lib",
