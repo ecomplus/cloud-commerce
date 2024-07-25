@@ -6,7 +6,7 @@ import { readFile } from 'node:fs/promises';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import { warn, error } from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
-import { pathToDocId, checkUserAgent } from './util/ssr-utils';
+import { pathToDocId, checkUserAgent, fetchAndCache } from './util/ssr-utils';
 import { sendAnalyticsEvents } from './analytics/send-analytics-events';
 
 declare global {
@@ -353,6 +353,7 @@ export default async (req: Request, res: Response) => {
     process.off('uncaughtException', handleException);
   });
 
+  global.$ssrFetchAndCache = fetchAndCache;
   /*
   https://github.com/withastro/astro/blob/main/examples/ssr/server/server.mjs
   import { handler as renderStorefront } from '../dist/server/entry.mjs';

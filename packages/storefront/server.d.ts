@@ -4,6 +4,14 @@
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Server$Storefront } from '@@sf/$storefront';
 
+// See `ssr/utils`
+type CachedRequestInit = RequestInit & {
+  cacheKey?: string,
+  maxAge?: number,
+  timeout?: number,
+};
+type FetchAndCache = (url: URL | string, init?: CachedRequestInit) => Promise<any>;
+
 declare global {
   namespace App {
     interface Locals {
@@ -12,6 +20,7 @@ declare global {
     }
   }
 
+  var $ssrFetchAndCache: undefined | FetchAndCache;
   var $storefront: Server$Storefront;
   var $storefrontSlimDocRegex: undefined | RegExp;
   // @TODO

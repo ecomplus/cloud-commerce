@@ -41,6 +41,7 @@ type CachedRequestInit = RequestInit & {
 const runtimeCache: Record<string, CacheValue | undefined> = {};
 const runtimeFetchings: Record<string, Promise<Response> | undefined> = {};
 
+// Also declared at `storefront/server.d.ts`
 export const fetchAndCache = async (
   url: URL | string,
   {
