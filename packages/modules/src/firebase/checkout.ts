@@ -5,8 +5,8 @@ import type {
   Amount,
   Payment,
 } from '../types/index';
-import { info } from 'firebase-functions/logger';
 import { fullName as getFullname } from '@ecomplus/utils';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
@@ -44,7 +44,7 @@ export default async (req: Request, res: Response) => {
     return sendRequestError(res, '@checkout', validate.errors);
   }
   const { items, ...newBody } = checkoutBody;
-  info(`Checkout by ${checkoutBody.customer.main_email}`, { checkoutBody });
+  logger.info(`Checkout by ${checkoutBody.customer.main_email}`, { checkoutBody });
   const newItems = await fixItems(items) as Exclude<OrderSet['items'], undefined>;
   const amount: Amount = {
     subtotal: 0,

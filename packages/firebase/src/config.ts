@@ -1,8 +1,10 @@
 import type { ApiEventName, SettingsContent } from '@cloudcommerce/types';
 import { join as joinPath } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
+import { AsyncLocalStorage } from 'node:async_hooks';
 import * as dotenv from 'dotenv';
-import config, { BaseConfig } from '@cloudcommerce/config';
+import _config, { BaseConfig } from '@cloudcommerce/config';
+import _logger from 'firebase-functions/logger';
 
 if (
   !process.env.DEPLOY_REGION
@@ -164,10 +166,39 @@ const mergeConfig = {
   settingsContent,
   metafields: {},
 };
-config.set(mergeConfig);
+_config.set(mergeConfig);
 
-export default config as {
+export const config = _config as {
   get(): BaseConfig & typeof mergeConfig & { metafields: Record<string, any> };
   // eslint-disable-next-line
   set(config: any): void;
+};
+
+export default config;
+
+export const asyncLocalStorage = new AsyncLocalStorage<{ execId: string }>();
+
+export const createExecContext = (next: (...args: any[]) => any) => {
+  return asyncLocalStorage.run({ execId: `${Date.now() + Math.random()}` }, next);
+};
+
+const log = (level: 'info' | 'warn' | 'error', msg: any, d?: Record<string, any>) => {
+  const execId = asyncLocalStorage.getStore()?.execId;
+  if (execId) {
+    if (d) d.execId = execId;
+    else d = { execId };
+  }
+  return _logger[level](msg, d);
+};
+
+export const logger = {
+  info(msg: any, d?: Record<string, any>) {
+    return log('info', msg, d);
+  },
+  warn(msg: any, d?: Record<string, any>) {
+    return log('warn', msg, d);
+  },
+  error(msg: any, d?: Record<string, any>) {
+    return log('error', msg, d);
+  },
 };

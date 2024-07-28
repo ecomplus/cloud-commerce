@@ -2,7 +2,7 @@ import type { ApiError, Customers } from '@cloudcommerce/api/types';
 import type { CheckoutCustomer } from '../../types/index';
 import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 type CustomerToSave = CheckoutCustomer & { addresses: Customers['addresses'] };
 const readOrSaveCustomer = async (customer: CustomerToSave) => {

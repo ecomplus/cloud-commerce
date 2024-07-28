@@ -1,4 +1,4 @@
-import { error } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 // handle other modules endpoints directly
@@ -53,7 +53,7 @@ export default async (
           const result = resp.result[i];
           if (!result.validated || result.error) {
             countAppErro += 1;
-            error(result.response);
+            logger.error(result.response);
             msgErr.moreInfo += ` ${result.response}`;
           }
         }
@@ -64,7 +64,7 @@ export default async (
       }
       return resp.result;
     } catch (err: any) {
-      error(err);
+      logger.error(err);
       msgErr.moreInfo = 'Unexpected error ';
       if (axios.isAxiosError(err)) {
         msgErr.moreInfo = err.message;

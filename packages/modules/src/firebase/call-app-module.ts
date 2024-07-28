@@ -1,6 +1,5 @@
 import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 
 // Blacklist urls to prevent consecultive errors
 const blacklist = {};
@@ -27,7 +26,7 @@ const callAppModule = async (
   isBigTimeout: boolean,
 ) => {
   if (blacklist[url] > 2) {
-    logger.log(`> Skipping blacklisted ${url}`);
+    logger.info(`> Skipping blacklisted ${url}`);
     const err = new Error('Blacklited endpoint URL');
     return Promise.reject(err);
   }
@@ -37,7 +36,7 @@ const callAppModule = async (
     if (typeof resData === 'object' && resData !== null) {
       const { error, message } = resData;
       if (typeof error === 'string' && error.length && typeof message === 'string') {
-        logger.warn(logHead, JSON.stringify({ error, message }));
+        logger.warn(logHead, { error, message });
       }
     }
   };

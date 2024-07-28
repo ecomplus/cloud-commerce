@@ -6,7 +6,7 @@ import type {
   OrderPaymentHistory,
   TransactionOrder,
 } from '../../types/index';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import { sendError } from './checkout-utils';
 

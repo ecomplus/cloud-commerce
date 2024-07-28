@@ -12,7 +12,7 @@ import type {
   Amount,
   Item,
 } from '../../types/index';
-import { warn, error } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 type ModuleResult<R> = Array<{
   _id: Applications['_id'],
@@ -34,7 +34,7 @@ const sendError = (
   userMessage?: { [key: string]: string },
   moreInfo?: string,
 ) => {
-  warn(`Checkout interrupted with code ${errorCode}`, { resMsg: message });
+  logger.warn(`Checkout interrupted with code ${errorCode}`, { resMsg: message });
   return res.status(status)
     .send({
       status,
@@ -90,7 +90,7 @@ const getValidResults = (
         }
         validResults.push(result);
       } else {
-        error(result.response_errors);
+        logger.error(result.response_errors);
       }
     }
   }
@@ -241,7 +241,7 @@ const handleShippingServices = (
       }
     }
   }
-  warn('Checkout shipping service not found', { serviceCode, shippingOptions });
+  logger.warn('Checkout shipping service not found', { serviceCode, shippingOptions });
 };
 
 const handleApplyDiscount = (

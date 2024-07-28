@@ -1,5 +1,5 @@
 import type { Response } from 'firebase-functions';
-import { warn } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import Ajv, { Options, ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
 
@@ -21,7 +21,7 @@ const parseAjvErrors = (errors?: ErrorObject[] | null, ajvInstance = ajv) => {
 const sendRequestError = (res: Response, modName: string, errors?: ErrorObject[] | null) => {
   const errorsText = ajv.errorsText(errors, { separator: '\n' });
   if (modName === '@checkout') {
-    warn('Checkout body invalidated', { errorsText });
+    logger.warn('Checkout body invalidated', { errorsText });
   }
   res.status(400).send({
     status: 400,

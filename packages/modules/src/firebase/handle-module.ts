@@ -1,11 +1,10 @@
 import type { Request, Response } from 'firebase-functions';
 import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import type { ApiError, ApiConfig } from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
 import Ajv, { ValidateFunction } from 'ajv';
 import addFormats from 'ajv-formats';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import {
   ajv,
   ajvOptions,
