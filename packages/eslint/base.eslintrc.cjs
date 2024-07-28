@@ -57,6 +57,7 @@ module.exports = {
         ],
       },
     ],
+    'import/no-named-as-default': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     'no-nested-ternary': 'warn',
