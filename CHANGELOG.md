@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.23.0](https://github.com/ecomplus/cloud-commerce/compare/v2.22.1...v2.23.0) (2024-07-29)
+
+
+### Features
+
+* **firebase:** Start creating new Function `execId` with Node async local storage ([12bc496](https://github.com/ecomplus/cloud-commerce/commit/12bc496b92a3c311f7e592f1f291bf86ecfcf8f1))
+* **ssr:** Exporting `/utils` with new `fetchAndCache` and additional path/agent parser methods ([2ab9194](https://github.com/ecomplus/cloud-commerce/commit/2ab919415b8cc9e2ae120ab90daf7468c3e19057))
+* **ssr:** Setting `global.$ssrFetchAndCache` before storfefront render ([d7c69d5](https://github.com/ecomplus/cloud-commerce/commit/d7c69d5e2a8386bdc3f2ef4284bf96e467434daf))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#421](https://github.com/ecomplus/cloud-commerce/issues/421)) ([7ee592a](https://github.com/ecomplus/cloud-commerce/commit/7ee592a3757cd5a8abdb7d8a1a7319859df25436))
+* **deps:** Update non-major dependencies ([#424](https://github.com/ecomplus/cloud-commerce/issues/424)) ([79d17c3](https://github.com/ecomplus/cloud-commerce/commit/79d17c3134eefc689924b80f0f007be1f2481a7e))
+* **storefront:** Handle custom `storefront.data` types with new `@@sf/custom-data` module ([fec39ce](https://github.com/ecomplus/cloud-commerce/commit/fec39cea0568ba84a24ebae6ced1be3d909ccc97))
+* **storefront:** Update Vue to ^3.4.33 ([#420](https://github.com/ecomplus/cloud-commerce/issues/420)) ([a39153e](https://github.com/ecomplus/cloud-commerce/commit/a39153eb0f69d1c13b6e8761238f8d1e9e087f93))
+* **storefront:** Update Vue to ^3.4.34 ([#423](https://github.com/ecomplus/cloud-commerce/issues/423)) ([df70247](https://github.com/ecomplus/cloud-commerce/commit/df702477840d68f63f97981f140469f67d089550))
+
 ## [2.22.1](https://github.com/ecomplus/cloud-commerce/compare/v2.22.0...v2.22.1) (2024-07-20)
 
 
