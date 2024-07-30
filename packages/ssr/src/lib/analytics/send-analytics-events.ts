@@ -1,12 +1,9 @@
 import type { AxiosError } from 'axios';
-import { EventEmitter } from 'node:events';
 import { warn, error } from 'firebase-functions/logger';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import sendToGa4 from './send-to-ga4';
 import sendToMeta from './send-to-meta';
 import sendToTiktok from './send-to-tiktok';
-
-const analyticsEmitter = new EventEmitter();
 
 export type AnalyticsEvent = {
   id?: string,
@@ -21,11 +18,10 @@ export type GroupedAnalyticsEvents = Array<AnalyticsEvent & {
   type: 'gtag' | 'fbq' | 'ttq',
 }>;
 
-const sendAnalyticsEvents = async (
+export const sendAnalyticsEvents = async (
   { url, events }: { url: string, events: GroupedAnalyticsEvents },
   payload: Record<string, any> = {},
 ) => {
-  analyticsEmitter.emit('send', { url, events });
   const eventsByType: Record<string, AnalyticsEvent[] | undefined> = {};
   events.forEach((ev) => {
     if (!eventsByType[ev.type]) {
@@ -146,5 +142,3 @@ const sendAnalyticsEvents = async (
 };
 
 export default sendAnalyticsEvents;
-
-export { sendAnalyticsEvents, analyticsEmitter };
