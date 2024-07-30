@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { resolve as resolvePath } from 'node:path';
 import Deepmerge from '@fastify/deepmerge';
-import colors from 'tailwindcss/colors';
 import chroma from 'chroma-js';
+import colors from './tailwindcss/color-palette.mjs';
 import './storefront.cms.js';
 
 const deepmerge = Deepmerge();
