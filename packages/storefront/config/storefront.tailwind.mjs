@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import { resolve as resolvePath } from 'node:path';
 import Deepmerge from '@fastify/deepmerge';
 import chroma from 'chroma-js';
-import iFa6Brands from '@iconify-json/fa6-brands';
-import iLogos from '@iconify-json/logos';
-import iHeroicons from '@iconify-json/heroicons';
+import { icons as iFa6Brands } from '@iconify-json/fa6-brands';
+import { icons as iLogos } from '@iconify-json/logos';
+import { icons as iHeroicons } from '@iconify-json/heroicons';
 import colors from './tailwindcss/color-palette.mjs';
 import './storefront.cms.js';
 
