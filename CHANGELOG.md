@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.23.1](https://github.com/ecomplus/cloud-commerce/compare/v2.23.0...v2.23.1) (2024-07-30)
+
+
+### Bug Fixes
+
+* **cli:** Set `$.verbose = true` CLI dev and build commands ([c90e62d](https://github.com/ecomplus/cloud-commerce/commit/c90e62d0f51a9ed83c32aedb7c2b25037a5979ef))
+* **storefront:** Stop importing `tailwindcss/colors` (CJS) ([9cabadd](https://github.com/ecomplus/cloud-commerce/commit/9cabadd291a7a84112d6139f40207c4b089f284c))
+
 ## [2.23.0](https://github.com/ecomplus/cloud-commerce/compare/v2.22.1...v2.23.0) (2024-07-29)
 
 
