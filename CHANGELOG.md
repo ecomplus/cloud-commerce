@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.23.3](https://github.com/ecomplus/cloud-commerce/compare/v2.23.2...v2.23.3) (2024-07-30)
+
+
+### Bug Fixes
+
+* **storefront:** Fixing default theme Iconify iconset imports ([577e8e7](https://github.com/ecomplus/cloud-commerce/commit/577e8e7ea098be50fa158482182ae7d9aa8d3e81))
+
 ## [2.23.2](https://github.com/ecomplus/cloud-commerce/compare/v2.23.1...v2.23.2) (2024-07-30)
 
 
