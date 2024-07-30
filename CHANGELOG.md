@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.23.2](https://github.com/ecomplus/cloud-commerce/compare/v2.23.1...v2.23.2) (2024-07-30)
+
+
+### Bug Fixes
+
+* **storefront:** Accept iconify ESM modules on theme config in place of string only ([12db8b8](https://github.com/ecomplus/cloud-commerce/commit/12db8b8aafcd150c73ffad1319475025dd2c12d2))
+
 ## [2.23.1](https://github.com/ecomplus/cloud-commerce/compare/v2.23.0...v2.23.1) (2024-07-30)
 
 
