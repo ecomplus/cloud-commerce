@@ -2,6 +2,9 @@ import fs from 'node:fs';
 import { resolve as resolvePath } from 'node:path';
 import Deepmerge from '@fastify/deepmerge';
 import chroma from 'chroma-js';
+import iFa6Brands from '@iconify-json/fa6-brands';
+import iLogos from '@iconify-json/logos';
+import iHeroicons from '@iconify-json/heroicons';
 import colors from './tailwindcss/color-palette.mjs';
 import './storefront.cms.js';
 
@@ -12,7 +15,9 @@ const _defaultThemeOptions = {
   warningColor: 'amber',
   dangerColor: 'rose',
   // IntelliSense for UnoCSS icons
-  brandIconSets: ['fa6-brands'],
+  brandIconSets: [
+    iFa6Brands,
+  ],
   brandIconShortcuts: [
     'facebook',
     'twitter',
@@ -28,7 +33,9 @@ const _defaultThemeOptions = {
     'messenger',
     'pix',
   ],
-  logoIconSets: ['logos'],
+  logoIconSets: [
+    iLogos,
+  ],
   logoIconShortcuts: [
     'visa',
     'mastercard',
@@ -41,7 +48,9 @@ const _defaultThemeOptions = {
     'dinersclub',
     'discover',
   ],
-  generalIconSets: ['heroicons'],
+  generalIconSets: [
+    iHeroicons,
+  ],
   iconAliases: {
     close: 'x-mark',
     'chevron-right': 'chevron-right',
@@ -174,7 +183,8 @@ export const genTailwindConfig = (themeOptions = {}) => {
             /* Reverse because custom icon sets are pushed to arrays after
             default theme ones on `deepmerge`, we want custom icon sets first */
             ...generalIconSets.reverse().map((iconset) => {
-              return typeof iconset === 'string' ? { iconset } : iconset;
+              if (iconset.iconset) return iconset;
+              return { iconset };
             }),
             ...brandIconSets.reverse().map((iconset) => ({
               iconset,
@@ -186,9 +196,16 @@ export const genTailwindConfig = (themeOptions = {}) => {
             })),
           ].reduce((utilities, { iconset, shortcuts }) => {
             if (iconset) {
-              const { icons } = require(`@iconify-json/${iconset}`);
+              let icons;
+              if (iconset.icons) {
+                icons = iconset.icons.icons || iconset.icons;
+                iconset = iconset.icons.prefix || iconset.prefix;
+              }
+              if (!icons) {
+                icons = require(`@iconify-json/${iconset}`).icons.icons;
+              }
               if (!shortcuts) {
-                shortcuts = Object.keys(icons.icons);
+                shortcuts = Object.keys(icons);
                 Object.keys(iconAliases).forEach((alias) => {
                   if (alias !== iconAliases[alias]) {
                     shortcuts.push([alias, iconAliases[alias]]);
@@ -215,7 +232,7 @@ export const genTailwindConfig = (themeOptions = {}) => {
                   '--view': `"https://icones.js.org/collection/${iconset}?s=${icon}"`,
                 };
               });
-              Object.keys(icons.icons).forEach((icon) => {
+              Object.keys(icons).forEach((icon) => {
                 const selector = `.i-${iconset}-${icon}`;
                 if (utilities[selector]) return;
                 utilities[selector] = {
