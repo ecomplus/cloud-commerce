@@ -58,7 +58,7 @@ if (projectId) {
   }
 }
 
-export default async () => {
+const run = async () => {
   const baseConfigDir = joinPath(__dirname, '..', 'config');
   await fs.copy(baseConfigDir, pwd);
   const userConfigDir = joinPath(pwd, 'conf');
@@ -127,6 +127,7 @@ ${chalk.bold('npx kill-port 4000 9099 5001 8080 5000 8085 9199 4400 4500')}
     return $firebase('functions:log');
   }
   if (argv._.includes('build')) {
+    $.verbose = true;
     return build(argv.codebase);
   }
   if (argv._.includes('deploy')) {
@@ -219,6 +220,7 @@ Finish by saving the following secrets to your GitHub repository:
 
   if (argv._.includes('dev') || argv._.includes('start') || !argv._.length) {
     await prepareCodebases(true);
+    $.verbose = true;
     const prefix = joinPath(pwd, 'functions/ssr');
     // https://docs.astro.build/en/reference/cli-reference/#astro-dev
     const host = typeof argv.host === 'string' ? argv.host : '';
@@ -227,3 +229,5 @@ Finish by saving the following secrets to your GitHub repository:
   }
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
+
+export default run;
