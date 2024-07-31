@@ -10,6 +10,7 @@ export type Props<T extends string = string> = {
 }
 
 const emitter = new EventEmitter();
+emitter.setMaxListeners(120);
 
 const useSharedData = async <T extends string = string>(props: Props<T>) => {
   const { field, timeout = 1000 } = props;
