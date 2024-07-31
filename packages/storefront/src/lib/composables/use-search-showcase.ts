@@ -9,6 +9,7 @@ import {
   shallowReactive,
 } from 'vue';
 import { useUrlSearchParams } from '@vueuse/core';
+import api from '@cloudcommerce/api';
 import { isScreenLg, scrollToEl } from '@@sf/sf-lib';
 import {
   i19discount,
@@ -32,6 +33,7 @@ export type Props = Partial<SectionPreviewProps> & {
   canUseUrlParams?: boolean;
   showcase?: Ref<HTMLElement | null>;
   searchEngine?: SearchEngineInstance;
+  canFetchTermsOnEmpty?: boolean;
 }
 
 const useSearchShowcase = (props: Props) => {
@@ -105,12 +107,30 @@ const useSearchShowcase = (props: Props) => {
       }
     });
   }
+
+  const popularTerms = ref<null | string[]>(null);
+  const fetchPopularTerms = async () => {
+    if (import.meta.env.SSR || props.canFetchTermsOnEmpty === false) {
+      return;
+    }
+    try {
+      const { data } = await api.get('search/v1/history?limit=40');
+      popularTerms.value = data.result.map(({ terms }) => {
+        return terms.join(' ');
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   if (!searchEngine.wasFetched.value) {
     if ((props.products || props.resultMeta) && !hasChangedInitParams) {
       searchEngine.setResult({
         result: props.products,
         meta: props.resultMeta,
       });
+      if (!props.products?.length) {
+        fetchPopularTerms();
+      }
     }
     if (!props.products || hasChangedInitParams) {
       searchEngine.fetch().catch(console.error);
@@ -129,6 +149,9 @@ const useSearchShowcase = (props: Props) => {
       count: 0,
       ...searchEngine.meta,
     };
+    if (!products.length) {
+      fetchPopularTerms();
+    }
   });
 
   const totalPages = computed(() => {
@@ -232,6 +255,7 @@ const useSearchShowcase = (props: Props) => {
     filtersCount,
     sortOptions,
     sortOption,
+    popularTerms,
   };
 };
 
