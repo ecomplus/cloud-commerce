@@ -42,6 +42,7 @@ export const pagarme = {
         if (typeof orderId === 'string' && /^[a-f0-9]{24}$/.test(orderId)) {
           logger.info(`Order ${orderId}`);
           if (`${process.env.PAGARME_WEBHOOK_SKIP_SIG}`.toLowerCase() !== 'true') {
+            logger.info(`Validating ${orderId} webhook signature`);
             const urlSig = req.query.sig;
             if (urlSig && typeof urlSig === 'string') {
               const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
