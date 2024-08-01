@@ -178,15 +178,14 @@ export default config;
 
 export const asyncLocalStorage = new AsyncLocalStorage<{ execId: string }>();
 
-export const createExecContext = (next: (...args: any[]) => any) => {
-  return asyncLocalStorage.run({ execId: `${Date.now() + Math.random()}` }, next);
-};
-
 const log = (level: 'info' | 'warn' | 'error', msg: any, d?: Record<string, any>) => {
   const execId = asyncLocalStorage.getStore()?.execId;
   if (execId) {
-    if (d) d.execId = execId;
-    else d = { execId };
+    if (d) {
+      if (typeof d === 'object') d.execId = execId;
+    } else {
+      d = { execId };
+    }
   }
   return _logger[level](msg, d);
 };
@@ -201,4 +200,18 @@ export const logger = {
   error(msg: any, d?: Record<string, any>) {
     return log('error', msg, d);
   },
+};
+
+// @ts-expect-error: Fallback only, `logger.log` not intended to be typed.
+logger.log = logger.info;
+
+export const createExecContext = (next: (...args: any[]) => any) => {
+  try {
+    return asyncLocalStorage.run({ execId: `${Date.now() + Math.random()}` }, next);
+  } catch (err) {
+    logger.error(err, {
+      __onExecContextRunExp: 1,
+    });
+    throw err;
+  }
 };

@@ -1,6 +1,6 @@
 import type { AppEventsPayload } from '@cloudcommerce/types';
 import functions from 'firebase-functions';
-import config from '../config';
+import config, { createExecContext } from '../config';
 import { GET_PUBSUB_TOPIC } from '../const';
 
 const { logger } = functions;
@@ -41,7 +41,7 @@ const createPubSubFunction = (
         });
         return Promise.resolve(null);
       }
-      return fn(message.json, context, message);
+      return createExecContext(() => fn(message.json, context, message));
     });
 };
 
