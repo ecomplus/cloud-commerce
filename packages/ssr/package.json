@@ -32,7 +32,7 @@
     "build:workers": "npx tsc -p src/cloudflare --outDir cloudflare && npx eslint --ext .js cloudflare --fix"
   },
   "dependencies": {
-    "@astrojs/node": "8.2.5",
+    "@astrojs/node": "8.3.2",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
