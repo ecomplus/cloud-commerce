@@ -115,17 +115,16 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     ...application.data,
     ...application.hidden_data,
   };
+  const mandaeToken = appData.mandae_token;
+  if (mandaeToken && typeof mandaeToken === 'string') {
+    process.env.MANDAE_TOKEN = mandaeToken;
+  }
   if (!process.env.MANDAE_TOKEN) {
-    const mandaeToken = appData.mandae_token;
-    if (mandaeToken && typeof mandaeToken === 'string') {
-      process.env.MANDAE_TOKEN = mandaeToken;
-    } else {
-      logger.warn('Missing Mandae token');
-      return {
-        error: 'NO_MANDAE_TOKEN',
-        message: 'The Mandaê token is not defined (merchant must configure the app)',
-      };
-    }
+    logger.warn('Missing Mandae token');
+    return {
+      error: 'NO_MANDAE_TOKEN',
+      message: 'The Mandaê token is not defined (merchant must configure the app)',
+    };
   }
 
   const response: CalculateShippingResponse = {

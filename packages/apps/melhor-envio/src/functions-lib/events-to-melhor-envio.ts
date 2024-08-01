@@ -34,14 +34,13 @@ const handleApiEvent: ApiEventHandler = async ({
   try {
     const trackingCode = await db.searchLabel(resourceId);
     if (!trackingCode) {
+      const melhorEnvioToken = appData.access_token;
+      if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
+        process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
+      }
       if (!process.env.MELHORENVIO_TOKEN) {
-        const melhorEnvioToken = appData.access_token;
-        if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
-          process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
-        } else {
-          logger.warn('Missing Melhor Envio token');
-          return null;
-        }
+        logger.warn('Missing Melhor Envio token');
+        return null;
       }
 
       const { sandbox } = appData;

@@ -21,22 +21,19 @@ export default (modBody: AppModuleBody<'list_payments'>) => {
     ...application.hidden_data,
   };
 
-  if (!process.env.PAGARME_ENCRYPT_KEY) {
-    const parameEncryptKey = appData.pagarme_encryption_key;
-    if (typeof parameEncryptKey === 'string' && parameEncryptKey) {
-      process.env.PAGARME_ENCRYPT_KEY = parameEncryptKey;
-    } else {
-      logger.warn('Missing Pagar.me Encryption key');
-    }
+  const parameEncryptKey = appData.pagarme_encryption_key;
+  if (typeof parameEncryptKey === 'string' && parameEncryptKey) {
+    process.env.PAGARME_ENCRYPT_KEY = parameEncryptKey;
   }
-
+  if (!process.env.PAGARME_ENCRYPT_KEY) {
+    logger.warn('Missing Pagar.me Encryption key');
+  }
+  const pagarmeToken = appData.pagarme_api_key;
+  if (typeof pagarmeToken === 'string' && pagarmeToken) {
+    process.env.PAGARME_TOKEN = pagarmeToken;
+  }
   if (!process.env.PAGARME_TOKEN) {
-    const pagarmeToken = appData.pagarme_api_key;
-    if (typeof pagarmeToken === 'string' && pagarmeToken) {
-      process.env.PAGARME_TOKEN = pagarmeToken;
-    } else {
-      logger.warn('Missing Pagar.me API token');
-    }
+    logger.warn('Missing Pagar.me API token');
   }
 
   if (!process.env.PAGARME_ENCRYPT_KEY || !process.env.PAGARME_TOKEN) {

@@ -51,31 +51,27 @@ const getDocId = ({
 };
 
 const setCredentials = (appData) => {
+  const correiosContract = appData.correios_contract || {};
+  const correiosPostCard = correiosContract.post_card_number;
+  if (correiosPostCard && typeof correiosPostCard === 'string') {
+    process.env.CORREIOS_POSTCARD = correiosPostCard;
+  }
   if (!process.env.CORREIOS_POSTCARD) {
-    const correiosPostCard = appData.correios_contract?.post_card_number;
-    if (correiosPostCard && typeof correiosPostCard === 'string') {
-      process.env.CORREIOS_POSTCARD = correiosPostCard;
-    } else {
-      logger.warn('Missing Correios Postcard number');
-    }
+    logger.warn('Missing Correios Postcard number');
   }
-
+  const correiosUser = correiosContract.username;
+  if (correiosUser && typeof correiosUser === 'string') {
+    process.env.CORREIOS_USER = correiosUser;
+  }
   if (!process.env.CORREIOS_USER) {
-    const correiosUser = appData.correios_contract?.username;
-    if (correiosUser && typeof correiosUser === 'string') {
-      process.env.CORREIOS_USER = correiosUser;
-    } else {
-      logger.warn('Missing Correios Username');
-    }
+    logger.warn('Missing Correios Username');
   }
-
+  const correiosAccessCode = correiosContract.access_code;
+  if (correiosAccessCode && typeof correiosAccessCode === 'string') {
+    process.env.CORREIOS_ACCESS_CODE = correiosAccessCode;
+  }
   if (!process.env.CORREIOS_ACCESS_CODE) {
-    const correiosAccessCode = appData.correios_contract?.access_code;
-    if (correiosAccessCode && typeof correiosAccessCode === 'string') {
-      process.env.CORREIOS_ACCESS_CODE = correiosAccessCode;
-    } else {
-      logger.warn('Missing Correios Access code');
-    }
+    logger.warn('Missing Correios Access code');
   }
 };
 

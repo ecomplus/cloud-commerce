@@ -25,13 +25,12 @@ export default (data: AppModuleBody) => {
     ...application.hidden_data,
   };
 
+  const mpAccessToken = config.mp_access_token;
+  if (typeof mpAccessToken === 'string' && mpAccessToken) {
+    process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+  }
   if (!process.env.MERCADOPAGO_TOKEN) {
-    const mpAccessToken = config.mp_access_token;
-    if (typeof mpAccessToken === 'string' && mpAccessToken) {
-      process.env.MERCADOPAGO_TOKEN = mpAccessToken;
-    } else {
-      logger.warn('Missing Mercadopago access token');
-    }
+    logger.warn('Missing Mercadopago access token');
   }
 
   if (!config.mp_public_key || !process.env.MERCADOPAGO_TOKEN) {

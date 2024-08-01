@@ -56,18 +56,16 @@ export default async ({ params, application }) => {
     return response;
   }
 
+  const jadlogContractToken = appData.jadlog_contract?.token;
+  if (typeof jadlogContractToken === 'string' && jadlogContractToken) {
+    process.env.JADLOG_CONTRACT_TOKEN = jadlogContractToken;
+  }
   if (!process.env.JADLOG_CONTRACT_TOKEN) {
-    const jadlogContractToken = appData.jadlog_contract?.token;
-    if (typeof jadlogContractToken === 'string' && jadlogContractToken) {
-      process.env.JADLOG_CONTRACT_TOKEN = jadlogContractToken;
-    } else {
-      logger.warn('Missing Jadlog contract token');
-
-      return {
-        error: 'JADLOG_ERR',
-        message: 'Jadlog contract token not defined',
-      };
-    }
+    logger.warn('Missing Jadlog contract token');
+    return {
+      error: 'JADLOG_ERR',
+      message: 'Jadlog contract token not defined',
+    };
   }
   const jadlogContract = appData.jadlog_contract || {};
   if (!cepori || !jadlogContract.account || !process.env.JADLOG_CONTRACT_TOKEN) {

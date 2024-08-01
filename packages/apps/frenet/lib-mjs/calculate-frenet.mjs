@@ -24,17 +24,16 @@ export default async ({ params, application }) => {
     ...application.hidden_data,
   };
 
+  const frenetToken = config.frenet_access_token;
+  if (typeof frenetToken === 'string' && frenetToken) {
+    process.env.FRENET_TOKEN = frenetToken;
+  }
   if (!process.env.FRENET_TOKEN) {
-    const frenetToken = config.frenet_access_token;
-    if (typeof frenetToken === 'string' && frenetToken) {
-      process.env.FRENET_TOKEN = frenetToken;
-    } else {
-      logger.warn('Missing Frenet token');
-      return {
-        error: 'FRENET_ERR',
-        message: 'Frenet token is unset on app hidden data (calculate unavailable) for this store',
-      };
-    }
+    logger.warn('Missing Frenet token');
+    return {
+      error: 'FRENET_ERR',
+      message: 'Frenet token is unset on app hidden data (calculate unavailable) for this store',
+    };
   }
 
   // https://apx-mods.e-com.plus/api/v1/calculate_shipping/response_schema.json?store_id=100

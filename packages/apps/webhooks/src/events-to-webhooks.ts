@@ -47,13 +47,9 @@ const sendWebhook = async (
 
     logger.info(`> Sending ${isCart ? 'cart' : 'order'} notification`);
     let headers: { Authorization: string; } | undefined;
-    if (!process.env.WEBHOOKS_TOKEN) {
-      const webhookAppToken = options.webhook_token;
-      if (typeof webhookAppToken === 'string' && webhookAppToken) {
-        process.env.WEBHOOKS_TOKEN = webhookAppToken;
-      } else {
-        logger.warn('Missing webhooks token');
-      }
+    const webhookAppToken = options.webhook_token;
+    if (typeof webhookAppToken === 'string' && webhookAppToken) {
+      process.env.WEBHOOKS_TOKEN = webhookAppToken;
     }
 
     if (process.env.WEBHOOKS_TOKEN) {

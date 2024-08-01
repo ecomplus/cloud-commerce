@@ -10,18 +10,17 @@ export default async ({ params, application }) => {
     ...application.hidden_data,
   };
 
+  const melhorEnvioToken = appData.access_token;
+  if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
+    process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
+  }
   if (!process.env.MELHORENVIO_TOKEN) {
-    const melhorEnvioToken = appData.access_token;
-    if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
-      process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
-    } else {
-      logger.warn('Missing Melhor Envio token');
-      return {
-        status: 409,
-        error: 'CALCULATE_SHIPPING_DISABLED',
-        message: 'Melhor Envio Token is unset',
-      };
-    }
+    logger.warn('Missing Melhor Envio token');
+    return {
+      status: 409,
+      error: 'CALCULATE_SHIPPING_DISABLED',
+      message: 'Melhor Envio Token is unset',
+    };
   }
 
   if (
