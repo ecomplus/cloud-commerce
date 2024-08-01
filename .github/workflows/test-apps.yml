@@ -138,4 +138,4 @@ jobs:
           GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
         run: |
           sleep 10
-          pnpm test:apps
+          ECOM_STORE_ID=$ECOM_STORE_ID ECOM_API_KEY=$ECOM_API_KEY ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID pnpm test:apps
