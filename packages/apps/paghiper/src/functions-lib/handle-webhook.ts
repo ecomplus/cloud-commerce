@@ -1,9 +1,8 @@
 import type { Orders } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions';
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
 import { Endpoint } from '@cloudcommerce/api/types';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import Axios from './create-axios';
 
 const { apps } = config.get();
@@ -39,7 +38,7 @@ export default async (req: Request, res: Response) => {
     return res.sendStatus(400);
   }
 
-  logger.log(`> Paghiper notification for ${transactionCode}`);
+  logger.info(`> Paghiper notification for ${transactionCode}`);
   // const docRef = (await collectionSubscription.doc(transactionCode).get()).data();
   const Apps = (await api.get(
     `applications?app_id=${apps.pagHiper.appId}&fields=hidden_data`,
@@ -65,7 +64,7 @@ export default async (req: Request, res: Response) => {
 
       const handleNotification = async (isRetry?: boolean) => {
         let { status } = paghiperResponse.status_request;
-        logger.log(`PagHiper ${transactionCode} -> '${status}'`);
+        logger.info(`PagHiper ${transactionCode} -> '${status}'`);
         switch (status) {
           case 'pending':
           case 'paid':

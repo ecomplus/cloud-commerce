@@ -1,5 +1,5 @@
 import axios from 'axios';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 const getDimension = (side, item) => {
   if (item.dimensions && item.dimensions[side]) {

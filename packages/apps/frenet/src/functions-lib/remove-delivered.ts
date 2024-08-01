@@ -1,5 +1,5 @@
 import type { TrackingDoc } from './database';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import db from './database';
 
 const removeDeliveredToFirestore = async () => {
@@ -11,9 +11,9 @@ const removeDeliveredToFirestore = async () => {
         codes.forEach(async (code) => {
           try {
             await db.remove(code.trackingCode, code.serviceCode);
-            logger.log('> (App Frenet) Code removed, delivered status', code);
+            logger.info('> (App Frenet) Code removed, delivered status', code);
           } catch (err) {
-            logger.error('> (App Frenet) => TrackingCodesRemoveErr =>', err);
+            logger.error(err);
           }
         });
         resolve(null);

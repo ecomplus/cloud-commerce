@@ -5,7 +5,7 @@ import type {
   Orders,
   ResourceId,
 } from '@cloudcommerce/api/types';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import axios from 'axios';
 
@@ -36,7 +36,7 @@ const sendWebhook = async (
   const url = options && options.webhook_uri;
   if (url && !urls.includes(url) && (!isCart || options.send_carts)) {
     urls.push(url);
-    logger.log(`Event ${isCart ? 'cart' : 'order'} => ${url}`);
+    logger.info(`Event ${isCart ? 'cart' : 'order'} => ${url}`);
 
     if (
       options.skip_pending === true
@@ -45,10 +45,8 @@ const sendWebhook = async (
       return null;
     }
 
-    logger.log(`> Sending ${isCart ? 'cart' : 'order'} notification`);
-
+    logger.info(`> Sending ${isCart ? 'cart' : 'order'} notification`);
     let headers: { Authorization: string; } | undefined;
-
     if (!process.env.WEBHOOKS_TOKEN) {
       const webhookAppToken = options.webhook_token;
       if (typeof webhookAppToken === 'string' && webhookAppToken) {
@@ -107,7 +105,7 @@ const handleApiEvent: ApiEventHandler = async ({
     Array.isArray(appData.ignore_events)
     && appData.ignore_events.includes(evName)
   ) {
-    logger.info('>> ', key, ' - Ignored event');
+    logger.info(`>> ${key} - Ignored event`);
     return null;
   }
 

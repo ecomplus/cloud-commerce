@@ -4,7 +4,7 @@ import type {
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
 import type { PagHiperApp } from '../types/config-app';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 const responseError = (status: number | null, error: string, message: string) => {
   return {

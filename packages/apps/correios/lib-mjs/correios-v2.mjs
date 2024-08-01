@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { newCorreios } from './utils/correios-axios.mjs';
 
 const calculate = async ({

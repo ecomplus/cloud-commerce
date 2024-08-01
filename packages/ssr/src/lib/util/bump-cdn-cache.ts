@@ -1,7 +1,7 @@
 import type { DocumentReference } from 'firebase-admin/firestore';
 import type { AxiosInstance, AxiosError } from 'axios';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import { warn, error } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 export type PageViewDocs = Array<{
@@ -177,16 +177,16 @@ export const bumpBunnyCache = async (pageViewDocs: PageViewDocs, domain: string)
     const _err = ___err as AxiosError;
     if (_err.response) {
       if (_err.response.status === 429) {
-        warn(`Purge failed with status 429 at ${_err.config?.url}`);
+        logger.warn(`Purge failed with status 429 at ${_err.config?.url}`);
         return;
       }
       const err: any = new Error('Cant purge bunny.net cache');
       err.config = _err.config;
       err.statusCode = _err.response.status;
       err.data = _err.response.data;
-      error(err);
+      logger.error(err);
     } else {
-      error(___err);
+      logger.error(___err);
     }
     bunnyStorageKeysRef.delete();
   }

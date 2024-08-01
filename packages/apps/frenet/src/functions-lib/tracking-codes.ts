@@ -1,7 +1,6 @@
 import type { TrackingDoc } from './database';
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import db from './database';
 import updateOrderfulfilllment from './update-fulfillments';
 import fetchTrackingEvents from './fetch-tracking-code';
@@ -15,7 +14,7 @@ const getConfig = async () => {
 
     return app[0].hidden_data;
   } catch (err) {
-    logger.error('(App Frenet) Error =>', err);
+    logger.error(err);
     return null;
   }
 };
@@ -34,7 +33,7 @@ const handleTrackingCodes = async () => {
 
   // eslint-disable-next-line no-async-promise-executor
   const checkTrackingCodes = new Promise(async (resolve, reject) => {
-    logger.log('> (App Frenet) Automatic tracking code update started.');
+    logger.info('> (App Frenet) Automatic tracking code update started.');
 
     let codes: TrackingDoc[] | undefined;
 
@@ -66,7 +65,7 @@ const handleTrackingCodes = async () => {
             appConfig.frenet_access_token,
           );
         } catch (err) {
-          logger.error('> (App Frenet) Error => ', err);
+          logger.error(err);
         }
 
         if (trackingData) {
@@ -84,9 +83,9 @@ const handleTrackingCodes = async () => {
                 // remove pra evitar flod com errors
                 try {
                   await db.remove(code.trackingCode, code.serviceCode);
-                  logger.log('> (App Frenet) Code removed, error detected in \'trackingData\'', code);
+                  logger.info('> (App Frenet) Code removed, error detected in \'trackingData\'', code);
                 } catch (err) {
-                  logger.error('> (App Frenet) => TrackingCodesRemoveErr =>', err);
+                  logger.error(err);
                 }
               }
             } else {
@@ -127,7 +126,7 @@ const handleTrackingCodes = async () => {
 
                 await db.update(trackingEvent.status, code.trackingCode);
 
-                logger.log(`> (App Frenet) Novo Evento => orderId #${code.orderId}, 
+                logger.info(`> (App Frenet) Novo Evento => orderId #${code.orderId}, 
                 code: ${code.trackingCode}  lastStatus: ${code.trackingStatus}  
                 newStatus: ${trackingEvent.status} description: ${trackingEvent.description}`);
               } catch (err: any) {
@@ -139,7 +138,7 @@ const handleTrackingCodes = async () => {
                   };
                   logger.error('> (App Frenet) Error => ', payload);
                 } else {
-                  logger.error('> (App Frenet) Error => ', err);
+                  logger.error(err);
                 }
               }
             }

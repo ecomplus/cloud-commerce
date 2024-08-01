@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as ecomUtils from '@ecomplus/utils';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 export default async ({ params, application }) => {
   const appConfig = {

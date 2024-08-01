@@ -1,8 +1,7 @@
 import type { Orders } from '@cloudcommerce/api/types';
 import { existsSync } from 'node:fs';
 import { join as joinPath } from 'node:path';
-import { info, warn } from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import transactionalMails from '@ecomplus/transactional-mails';
 
 export type PaymentHistoryEntry = Exclude<Orders['payments_history'], undefined>[0];
@@ -47,13 +46,13 @@ export const getMailRender = async (templateName: string) => {
       try {
         customTransactionalMails = (await import(customMailsModulePath)).default;
       } catch (err) {
-        warn(err);
+        logger.warn(err);
       }
     }
   }
   const customRender = customTransactionalMails?.[templateName];
   if (typeof customRender === 'function') {
-    info(`Custom render function for ${templateName}`);
+    logger.info(`Custom render function for ${templateName}`);
     return customRender;
   }
   return transactionalMails[templateName] as TemplateRender;

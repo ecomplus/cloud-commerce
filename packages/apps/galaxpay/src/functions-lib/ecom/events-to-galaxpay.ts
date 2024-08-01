@@ -1,8 +1,7 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import type { Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
 import { getFirestore } from 'firebase-admin/firestore';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import GalaxpayAxios from '../galaxpay/auth/create-access';
 
 const collectionSubscription = getFirestore().collection('galaxpaySubscriptions');
@@ -14,14 +13,14 @@ const handleApiEvent: ApiEventHandler = async ({
   app,
 }) => {
   const resourceId = apiEvent.resource_id;
-  logger.info('>> ', resourceId, ' - Action: ', apiEvent.action);
+  logger.info(`>> ${resourceId} - Action: `, { action: apiEvent.action });
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };
   if (
     Array.isArray(appData.ignore_events)
     && appData.ignore_events.includes(evName)
   ) {
-    logger.info('>> ', key, ' - Ignored event');
+    logger.info(`>> ${key} - Ignored event`);
     return null;
   }
   logger.info(`> Webhook ${resourceId} [${evName}] => ${apiDoc}`);

@@ -1,5 +1,5 @@
 import type { Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
 import parseStatusToTiny from './parsers/status-to-tiny';

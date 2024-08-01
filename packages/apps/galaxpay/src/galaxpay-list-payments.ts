@@ -4,7 +4,7 @@ import type {
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
 import type { GalaxpayApp } from '../types/config-app';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { readFile, responseError, isSandbox } from './functions-lib/utils';
 import { handleGateway, discountPlan } from './functions-lib/galaxpay/handle-plans';
 import { parsePeriodicityToEcom } from './functions-lib/all-parses';
@@ -76,7 +76,7 @@ export default async (data: AppModuleBody) => {
         const methodConfig = configApp[paymentMethod] || {};
         const methodMinAmount = methodConfig.min_amount || 0;
         if (!methodConfig.disable && (amount.total && methodMinAmount <= amount.total)) {
-          logger.log('> Plan ', plan.periodicity);
+          logger.info('> Plan ', { per: plan.periodicity });
 
           const isCreditCard = paymentMethod === 'credit_card';
           const isPix = paymentMethod === 'pix';

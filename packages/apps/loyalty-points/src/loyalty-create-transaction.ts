@@ -7,7 +7,7 @@ import type {
 } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import getProgramId from './functions-lib/get-program-id';
 
 type UsedPointsEntries = Exclude<Customers['loyalty_points_entries'], undefined>[number]
@@ -49,7 +49,7 @@ const handleUpdatedPoints = (
   setTimeout(async () => {
     await api.patch(endpoint, body);
     // appSdk.apiRequest(storeId, endpoint, 'PATCH', data).then(() => {
-    logger.log(`#(App Loyalty Points): ${orderId} ${endpoint} => ${JSON.stringify(body)}`);
+    logger.info(`${orderId} ${endpoint} => `, { body });
     if (isLastRequest) {
       updateTransactionStatus(orderId);
       collectionRef.doc(orderId).set({ usedPointsEntries });

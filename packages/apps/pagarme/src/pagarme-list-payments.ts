@@ -2,7 +2,7 @@ import type { AppModuleBody, ListPaymentsResponse } from '@cloudcommerce/types';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { addInstallments } from './pagarme-utils';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]

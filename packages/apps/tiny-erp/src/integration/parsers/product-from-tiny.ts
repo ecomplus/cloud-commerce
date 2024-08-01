@@ -1,5 +1,5 @@
 import type { Products, ProductSet } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import ecomUtils from '@ecomplus/utils';
 import getEnv from '@cloudcommerce/firebase/lib/env';

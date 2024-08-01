@@ -3,8 +3,7 @@ import type {
   CreateTransactionParams,
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
-import { info, warn, error } from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import { addInstallments, parsePagarmeStatus } from './pagarme-utils';
 
@@ -36,14 +35,14 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     to,
     items,
   } = params;
-  info(`Transaction #${orderId}`);
+  logger.info(`Transaction #${orderId}`);
 
   if (!process.env.PAGARME_TOKEN) {
     const pagarmeToken = appData.pagarme_api_key;
     if (typeof pagarmeToken === 'string' && pagarmeToken) {
       process.env.PAGARME_TOKEN = pagarmeToken;
     } else {
-      warn('Missing Pagar.me API token');
+      logger.warn('Missing Pagar.me API token');
       return {
         error: 'NO_PAGARME_KEYS',
         message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
@@ -294,7 +293,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         message = data.errors[0].message;
       }
     }
-    error(err);
+    logger.error(err);
     return {
       error: errCode,
       message,

@@ -5,10 +5,9 @@ import type {
   EventsResult,
 } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
-import { error, info } from 'firebase-functions/logger';
 import { PubSub } from '@google-cloud/pubsub';
 import api, { ApiConfig } from '@cloudcommerce/api';
-import config from '../config';
+import config, { logger } from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
 declare global {
@@ -105,7 +104,7 @@ const tryPubSubPublish = (
     .catch((err) => {
       // eslint-disable-next-line no-param-reassign
       err.retries = retries;
-      error(err);
+      logger.error(err);
       if (retries <= 3) {
         setTimeout(() => {
           tryPubSubPublish(topicName, messageObj, retries + 1);
@@ -194,7 +193,7 @@ export default async () => {
       result = await $transformApiEvents(resource, result);
     }
     if (!result.length) return;
-    info(`> '${listenedEventName}' ${result.length} events`);
+    logger.info(`> '${listenedEventName}' ${result.length} events`);
     const resourceIdsRead: string[] = [];
     result.forEach(async (apiEvent) => {
       apiEvent.resource = resource;
@@ -224,7 +223,7 @@ export default async () => {
         }
       });
     });
-    info(`> '${listenedEventName}' events: `, {
+    logger.info(`> '${listenedEventName}' events: `, {
       result: result.map((apiEvent) => ({
         timestamp: apiEvent.timestamp,
         resource_id: apiEvent.resource_id,

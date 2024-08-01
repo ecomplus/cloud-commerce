@@ -1,5 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import { info, error } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
 import parseOrder from './parsers/order-from-tiny';
@@ -27,7 +27,7 @@ export default async (apiDoc, queueEntry) => {
       ? pedido.situacao.toLowerCase()
       : null;
     const orderNumber = pedido.numero_ecommerce;
-    info(`Import order n${orderNumber} ${tinyOrderId} => ${situacao}`);
+    logger.info(`Import order n${orderNumber} ${tinyOrderId} => ${situacao}`);
 
     const documentRef = getFirestore().doc(`tinyErpOrders/${tinyOrderId}`);
     const documentSnapshot = await documentRef.get();
@@ -35,7 +35,7 @@ export default async (apiDoc, queueEntry) => {
       documentSnapshot.exists
       && documentSnapshot.get('situacao') === situacao
     ) {
-      info(`>> Ignoring Tiny order n${orderNumber} ${tinyOrderId} with same status`);
+      logger.info(`>> Ignoring Tiny order n${orderNumber} ${tinyOrderId} with same status`);
       return null;
     }
 
@@ -72,13 +72,13 @@ export default async (apiDoc, queueEntry) => {
       ) {
         data.status = newStatus;
         promises.push(api.post(`orders/${order._id}/${subresource}`, data as any));
-        info(`${order._id} updated to ${newStatus} from Tiny ${tinyOrderId}`);
+        logger.info(`${order._id} updated to ${newStatus} from Tiny ${tinyOrderId}`);
       }
     });
 
     return Promise.all(promises)
       .then(([firstResult]) => {
-        documentRef.set({ situacao }).catch(error);
+        documentRef.set({ situacao }).catch(logger.error);
         return (firstResult && firstResult.response) || firstResult;
       });
   };

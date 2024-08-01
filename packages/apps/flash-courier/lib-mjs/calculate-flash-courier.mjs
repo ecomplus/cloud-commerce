@@ -1,5 +1,5 @@
 import axios from 'axios';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 export default async ({ params, application }) => {
   const appData = {

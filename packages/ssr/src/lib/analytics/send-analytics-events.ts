@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios';
-import { warn, error } from 'firebase-functions/logger';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import sendToGa4 from './send-to-ga4';
 import sendToMeta from './send-to-meta';
 import sendToTiktok from './send-to-tiktok';
@@ -130,14 +130,14 @@ export const sendAnalyticsEvents = async (
               data: reason.response.data,
             };
           }
-          warn(err, {
+          logger.warn(err, {
             request: err.config,
             response: err.response,
           });
         }
       }
     }),
-    Promise.all(storingEvents).catch(error),
+    Promise.all(storingEvents).catch(logger.error),
   ]);
 };
 

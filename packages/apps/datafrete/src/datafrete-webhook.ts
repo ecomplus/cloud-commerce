@@ -2,10 +2,9 @@
 import type { Request, Response } from 'firebase-functions';
 import type { Orders } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import getEnv from '@cloudcommerce/firebase/lib/env';
 import functions from 'firebase-functions/v1';
-import logger from 'firebase-functions/logger';
 
 const handleWebhook = async (req: Request, res: Response) => {
   const operatorToken = process.env.DATAFRETE_OPERATOR_TOKEN || getEnv().apiAuth.apiKey;
@@ -26,7 +25,7 @@ const handleWebhook = async (req: Request, res: Response) => {
   if (!number || !fulfillment || !fulfillment.status) {
     return res.sendStatus(400);
   }
-  logger.log('> Webhook #', number);
+  logger.info('> Webhook #', number);
 
   const order = (await api.get(
     `orders?number=${number}&fields=_id,fulfillment_status,shipping_lines&limit=1`,
@@ -59,7 +58,10 @@ const handleWebhook = async (req: Request, res: Response) => {
 
   if (order.fulfillment_status && order.fulfillment_status.current === fulfillment.status) {
     if (!isShippingLineUpdate) {
-      logger.log('>>(App datafrete) Nothing to change on shipping line:', shippingLineId, order._id);
+      logger.info('>>(App datafrete) Nothing to change on shipping line:', {
+        shippingLineId,
+        orderId: order._id,
+      });
       return res.sendStatus(304);
     }
   } else {
@@ -69,7 +71,7 @@ const handleWebhook = async (req: Request, res: Response) => {
         `orders/${order._id}/fulfillments`,
         fulfillment,
       );
-      logger.log('>(App datafrete) Fulfillment inserted:', fulfillment.status);
+      logger.info('>(App datafrete) Fulfillment inserted:', fulfillment.status);
       if (!isShippingLineUpdate) {
         return res.sendStatus(200);
       }
@@ -83,13 +85,16 @@ const handleWebhook = async (req: Request, res: Response) => {
   }
 
   if (isShippingLineUpdate) {
-    logger.log('>(App datafrete) Updating shipping line:', shippingLineId, order._id);
+    logger.info('>(App datafrete) Updating shipping line:', {
+      shippingLineId,
+      orderId: order._id,
+    });
     try {
       await api.patch(
         `orders/${order._id}/shipping_lines/${(shippingLineId || '0')}`,
         { invoices, tracking_codes: trackingCodes },
       );
-      logger.log('>(App datafrete) Shipping line invoices/tracking updated');
+      logger.info('>(App datafrete) Shipping line invoices/tracking updated');
       res.sendStatus(200);
     } catch (error: any) {
       if (error.response) {

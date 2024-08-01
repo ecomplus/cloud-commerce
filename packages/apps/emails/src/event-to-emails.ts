@@ -1,7 +1,7 @@
 import type { ApiError, Orders, Customers } from '@cloudcommerce/api/types';
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import type { PaymentHistoryEntry, FulfillmentsEntry } from './util/emails-utils';
-import { warn } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import { sendEmail } from '@cloudcommerce/emails';
 import { getStore, getMailRender } from './util/emails-utils';
@@ -15,12 +15,12 @@ const handleApiEvent: ApiEventHandler = async ({
 }) => {
   const { action, resource } = apiEvent;
   if (!evName.startsWith('orders-') || action === 'delete') {
-    warn(`Skipping ${resource} ${action}`);
+    logger.warn(`Skipping ${resource} ${action}`);
     return null;
   }
   const order = apiDoc as Orders;
   if (!order.buyers?.length) {
-    warn('Skipping order document without buyer');
+    logger.warn('Skipping order document without buyer');
     return null;
   }
   const appData = { ...app.data, ...app.hidden_data };
@@ -40,7 +40,7 @@ const handleApiEvent: ApiEventHandler = async ({
   } catch (err: any) {
     const error: ApiError = err;
     if (error.statusCode === 404) {
-      warn(`Customer not found by id ${customerId}`, { orderId });
+      logger.warn(`Customer not found by id ${customerId}`, { orderId });
       return null;
     }
   }
@@ -80,7 +80,7 @@ const handleApiEvent: ApiEventHandler = async ({
         }
         const mailTempl = getMailTempl(templKey);
         if (!mailTempl) {
-          warn(`Skipped unmatched template for ${templKey}`);
+          logger.warn(`Skipped unmatched template for ${templKey}`);
           continue;
         }
         const subject = `${mailTempl.subject[lang]} #${order.number}`;
@@ -144,7 +144,7 @@ const handleApiEvent: ApiEventHandler = async ({
           );
           api.patch(`orders/${orderId}/${subresource}/${lastStatusRecord._id}`, {
             customer_notified: true,
-          }).catch(warn);
+          }).catch(logger.warn);
         }
       }
     }

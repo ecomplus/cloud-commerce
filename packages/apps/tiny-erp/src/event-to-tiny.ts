@@ -1,5 +1,5 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import exportProduct from './integration/export-product-to-tiny';
 import exportOrder from './integration/export-order-to-tiny';
 import importProduct from './integration/import-product-from-tiny';
@@ -32,7 +32,7 @@ const handleApiEvent: ApiEventHandler = async ({
     Array.isArray(appData.ignore_events)
     && appData.ignore_events.includes(evName)
   ) {
-    logger.info('>> ', key, ' - Ignored event');
+    logger.info(`>> ${key} - Ignored event`);
     return null;
   }
 

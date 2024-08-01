@@ -4,10 +4,10 @@ import type {
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
 import type { GalaxpayApp, GalaxPaySubscriptions } from '../types/config-app';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { getFirestore } from 'firebase-admin/firestore';
 import Galaxpay from './functions-lib/galaxpay/auth/create-access';
-import { responseError, isSandbox } from './functions-lib/utils';
+import { responseError } from './functions-lib/utils';
 import { findPlanToCreateTransction } from './functions-lib/galaxpay/handle-plans';
 import { parseStatus, parsePeriodicityToGalaxPay } from './functions-lib/all-parses';
 
@@ -45,7 +45,7 @@ export default async (appData: AppModuleBody) => {
     type,
   } = params;
 
-  logger.log('>(App:GalaxPay) Transaction #order:', orderId, ` ${isSandbox ? ' Sandbox' : ''} <`);
+  logger.info('>(App:GalaxPay) Transaction #order:', { orderId });
 
   const transaction: CreateTransactionResponse['transaction'] = {
     //   type,
@@ -176,7 +176,7 @@ export default async (appData: AppModuleBody) => {
     galaxpaySubscriptions.PaymentMethodPix = PaymentMethodPix;
   }
 
-  logger.log('>>(App:GalaxPay): subscriptions ', JSON.stringify(galaxpaySubscriptions), ' <<');
+  logger.info('>>(App:GalaxPay): subscriptions ', galaxpaySubscriptions);
 
   try {
     await galaxpayAxios.preparing;
@@ -191,7 +191,7 @@ export default async (appData: AppModuleBody) => {
       if (type === 'recurrence') {
         const { data: { Subscription } } = await axios.post('/subscriptions', galaxpaySubscriptions);
 
-        logger.log('>(App: GalaxPay) New Subscription ', Subscription, ' <');
+        logger.info('>(App: GalaxPay) New Subscription ', Subscription);
         transaction.payment_link = Subscription.paymentLink;
         const transactionGalaxPay = Subscription.Transactions[0];
 

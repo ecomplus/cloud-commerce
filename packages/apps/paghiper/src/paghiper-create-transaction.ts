@@ -4,8 +4,7 @@ import type {
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
 import type { PagHiperApp } from '../types/config-app';
-import logger from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from './functions-lib/create-axios';
 
 type ItemsPagHiper = {
@@ -82,7 +81,7 @@ export default async (appData: AppModuleBody) => {
 
   const billingAddress = params.billing_address;
 
-  logger.log(`> (App PagHiper): Create transaction for #${orderId}`);
+  logger.info(`Create transaction for #${orderId}`);
   let transaction: CreateTransactionResponse['transaction'] = {
     amount: amount.total,
   };
@@ -236,7 +235,7 @@ export default async (appData: AppModuleBody) => {
       } else {
         debugMsg += message;
       }
-      logger.error('> (App PagHiper) =>', debugMsg);
+      logger.error(debugMsg);
       statusCode = 409;
     }
 

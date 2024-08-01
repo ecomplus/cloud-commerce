@@ -1,7 +1,7 @@
 import type { Applications, AppEventsPayload } from '@cloudcommerce/types';
 import { PubSub } from '@google-cloud/pubsub';
-import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
+import { logger } from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
 export type AppOrId = Applications | AppEventsPayload['app'] | Applications['_id'];

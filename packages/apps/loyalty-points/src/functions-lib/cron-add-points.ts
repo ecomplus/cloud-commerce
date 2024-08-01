@@ -1,5 +1,5 @@
 import type { CustomerSet, Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { getFirestore } from 'firebase-admin/firestore';
 import api from '@cloudcommerce/api';
 import { Endpoint } from '@cloudcommerce/api/types';

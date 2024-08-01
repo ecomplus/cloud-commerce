@@ -1,6 +1,5 @@
-import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 export default () => {

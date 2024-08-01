@@ -1,8 +1,7 @@
 import type { Request, Response } from 'firebase-functions';
 import type { Applications } from '@cloudcommerce/types';
-import { info } from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import importProduct from './integration/import-product-from-tiny';
 import importOrder from './integration/import-order-from-tiny';
 import afterQueue from './integration/after-tiny-queue';
@@ -70,7 +69,7 @@ export default async (req: Request, res: Response) => {
         ...dados,
       },
     };
-    info(`> ${nextId} => ${tinyStockUpdate.produto.saldo}`);
+    logger.info(`> ${nextId} => ${tinyStockUpdate.produto.saldo}`);
     const queueEntry = {
       nextId,
       tinyStockUpdate,

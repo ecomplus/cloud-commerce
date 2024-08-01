@@ -1,8 +1,7 @@
 import type { PageViewDocs } from './util/bump-cdn-cache';
 import { Timestamp, getFirestore } from 'firebase-admin/firestore';
-import { error } from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { deleteQueryBatch } from '@cloudcommerce/firebase/lib/helpers/firestore';
 import { bumpBunnyCache } from './util/bump-cdn-cache';
 
@@ -24,7 +23,7 @@ const saveViews = async () => {
         });
         doc.ref.delete();
       } catch (err) {
-        error(err);
+        logger.error(err);
         break;
       }
     }

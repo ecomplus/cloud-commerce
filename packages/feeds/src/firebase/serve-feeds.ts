@@ -1,5 +1,5 @@
 import type { Request, Response } from 'firebase-functions';
-import { error } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import renderCatalog from './render-catalog';
 import renderSitemap from './render-sitemap';
@@ -84,7 +84,7 @@ const serveFeeds = async (req: Request, res: Response) => {
   try {
     await fetching;
   } catch (err) {
-    error(err);
+    logger.error(err);
     res.sendStatus(500);
     return;
   }

@@ -1,7 +1,7 @@
 import type { Orders, Customers, ResourceId } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import ecomUtils from '@ecomplus/utils';
 import getProgramId from './get-program-id';
 
@@ -12,7 +12,7 @@ type UsedPointsEntries = Exclude<Customers['loyalty_points_entries'], undefined>
   & { original_active_points: number }
 
 const responsePubSub = (response: string) => {
-  logger.log('(App: Loyalty Points): ', response);
+  logger.info(response);
   return null;
 };
 
@@ -241,7 +241,7 @@ const handleLoyaltyPointsEvent = async (
     // not paid nor cancelled
     return responsePubSub(ECHO_SKIP);
   } catch (err) {
-    logger.error('(App Loyalty Points) Error =>', err);
+    logger.error(err);
     throw err;
   }
 };

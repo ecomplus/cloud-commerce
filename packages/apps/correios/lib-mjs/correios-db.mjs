@@ -1,8 +1,7 @@
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { PubSub } from '@google-cloud/pubsub';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
 import calculateV2 from './correios-v2.mjs';
 import { newCorreios } from './utils/correios-axios.mjs';
 import {

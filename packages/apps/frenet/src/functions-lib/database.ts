@@ -1,6 +1,6 @@
 import type { ResourceId } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 const firestoreColl = 'frenetTrackingCodes';
 

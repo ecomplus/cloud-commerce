@@ -1,5 +1,5 @@
 import type { AppOrId } from '@cloudcommerce/firebase/lib/helpers/update-app-data';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import updateAppData from '@cloudcommerce/firebase/lib/helpers/update-app-data';
 
 export default async (

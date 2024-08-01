@@ -1,6 +1,6 @@
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import type { Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import db from './database';
 
 const pattern = /rastreador|lang|version|(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-/]))?/;
@@ -13,7 +13,7 @@ const handleApiEvent: ApiEventHandler = async ({
   app,
 }) => {
   const resourceId = apiEvent.resource_id;
-  logger.info('>> ', resourceId, ' - Action: ', apiEvent.action);
+  logger.info(`>> ${resourceId} - Action: `, { action: apiEvent.action });
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };
 
@@ -24,7 +24,7 @@ const handleApiEvent: ApiEventHandler = async ({
       && appData.ignore_events.includes(evName))
     || !order.shipping_lines
   ) {
-    logger.info('>> ', key, ' - Ignored event');
+    logger.info(`>> ${key} - Ignored event`);
     return null;
   }
   logger.info(`> Webhook ${resourceId} [${evName}]`);

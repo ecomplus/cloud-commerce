@@ -4,7 +4,7 @@ import type {
   CalculateShippingResponse,
 } from '@cloudcommerce/types';
 import axios from 'axios';
-import { warn } from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import ecomUtils from '@ecomplus/utils';
 
 type ShippingItem = Exclude<CalculateShippingParams['items'], undefined>[0];
@@ -120,7 +120,7 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     if (mandaeToken && typeof mandaeToken === 'string') {
       process.env.MANDAE_TOKEN = mandaeToken;
     } else {
-      warn('Missing Mandae token');
+      logger.warn('Missing Mandae token');
       return {
         error: 'NO_MANDAE_TOKEN',
         message: 'The Mandaê token is not defined (merchant must configure the app)',

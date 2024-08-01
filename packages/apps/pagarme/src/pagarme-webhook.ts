@@ -1,8 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import { info, warn, error } from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import * as functions from 'firebase-functions/v1';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import Pagarme from 'pagarme';
 import qs from 'qs';
 import { parsePagarmeStatus } from './pagarme-utils';
@@ -28,7 +27,7 @@ export const pagarme = {
         if (typeof pagarmeToken === 'string' && pagarmeToken) {
           process.env.PAGARME_TOKEN = pagarmeToken;
         } else {
-          warn('Missing PagarMe API token');
+          logger.warn('Missing PagarMe API token');
           res.sendStatus(409);
           return;
         }
@@ -40,7 +39,7 @@ export const pagarme = {
         // const storeId = parseInt(pagarmeTransaction.metadata.store_id, 10);
         const orderId = pagarmeTransaction.metadata.order_id;
         if (/^[a-f0-9]{24}$/.test(orderId)) {
-          info(`Order ${orderId}`);
+          logger.info(`Order ${orderId}`);
           // validate Pagar.me postback
           // https://github.com/pagarme/pagarme-js/issues/170#issuecomment-503729557
           const verifyBody = qs.stringify(req.body);
@@ -85,7 +84,7 @@ export const pagarme = {
               return;
             } catch (err: any) {
               err.metadata = pagarmeTransaction.metadata;
-              error(err);
+              logger.error(err);
               res.sendStatus(500);
               return;
             }

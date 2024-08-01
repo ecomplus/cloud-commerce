@@ -4,8 +4,7 @@ import type { GroupedAnalyticsEvents } from './analytics/send-analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
-import { warn, error } from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { pathToDocId, checkUserAgent, fetchAndCache } from './util/ssr-utils';
 import { sendAnalyticsEvents } from './analytics/send-analytics-events';
 
@@ -48,7 +47,7 @@ readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
       mainCssFilepath = cssFilepaths.find((path) => path.includes('/_slug_.'));
     }
   })
-  .catch(warn);
+  .catch(logger.warn);
 
 export default async (req: Request, res: Response) => {
   if (req.path.startsWith('/~partytown') || req.path.startsWith('/~reverse-proxy')) {
@@ -297,7 +296,7 @@ export default async (req: Request, res: Response) => {
           isCachePurged: false,
           at: Timestamp.now(),
         }, { merge: true })
-        .catch(warn);
+        .catch(logger.warn);
     }
   };
 
@@ -326,11 +325,11 @@ export default async (req: Request, res: Response) => {
 
   const handleException = (err: Error) => {
     if (res.headersSent) {
-      error(err, { onExceptionHandler: 1 });
+      logger.error(err, { onExceptionHandler: 1 });
       if (!res.writableEnded) res.end();
       return;
     }
-    warn(err);
+    logger.warn(err);
     res.set('X-SSR-Error', err.message);
     res.set('X-SSR-Error-Stack', err.stack);
     fallback(err);
