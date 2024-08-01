@@ -2,7 +2,7 @@
 
 import '@cloudcommerce/firebase/lib/init';
 import functions from 'firebase-functions/v1';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { createExecContext } from '@cloudcommerce/firebase/lib/config';
 import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from './event-to-tiny';
 import handleTinyWebhook from './tiny-webhook';
@@ -20,5 +20,7 @@ export const tinyerp = {
   webhook: functions
     .region(region)
     .runWith(httpsFunctionOptions)
-    .https.onRequest(handleTinyWebhook),
+    .https.onRequest((req, res) => {
+      return createExecContext(() => handleTinyWebhook(req, res));
+    }),
 };
