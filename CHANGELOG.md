@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.24.0](https://github.com/ecomplus/cloud-commerce/compare/v2.23.3...v2.24.0) (2024-08-01)
+
+
+### Features
+
+* **i18n:** New messages for empty search results feedback ([caa32d0](https://github.com/ecomplus/cloud-commerce/commit/caa32d04d9179c9872079c44f91026c6b8b6d160))
+* **storefront:** Start fetching popular search terms on search showcase composable ([adcb4d5](https://github.com/ecomplus/cloud-commerce/commit/adcb4d58dddc6ecefb07d27d756e7e40fb1bc967))
+
+
+### Bug Fixes
+
+* **apps,modules,firebase:** Fixing many logs using `@cloudcommerce/firebase` logger ([5d239b9](https://github.com/ecomplus/cloud-commerce/commit/5d239b97f083cf7ebb44fe58a171f6ee68c92b0c))
+* **firebase:** Prevent error with `logger` bad usage (legacy) ([efc4bd5](https://github.com/ecomplus/cloud-commerce/commit/efc4bd51ce02d397f4d0c9cd0fa430ac053c7470))
+* **tiny-erp:** Ensure context set up on Tiny webhook Function executions ([c5898ef](https://github.com/ecomplus/cloud-commerce/commit/c5898efc85656938760a1f168c21ed65a53ea940))
+
 ## [2.23.3](https://github.com/ecomplus/cloud-commerce/compare/v2.23.2...v2.23.3) (2024-07-30)
 
 
