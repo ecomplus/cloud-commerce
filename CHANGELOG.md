@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.24.2](https://github.com/ecomplus/cloud-commerce/compare/v2.24.1...v2.24.2) (2024-08-01)
+
+
+### Bug Fixes
+
+* **apps:** Prefering keys from app data (when available) over env vars ([7ad53c1](https://github.com/ecomplus/cloud-commerce/commit/7ad53c10620720b595a0986b2c12ef1aa18cabd0))
+* **pagarme:** Sending new `?sig` on notification URL for internal verification ([494b644](https://github.com/ecomplus/cloud-commerce/commit/494b644d938ecaddfa076a48f5afdc7085980d33))
+* **pagarme:** Stop requiring signature header on URL if ?sig arg is properly set ([f4dd3f5](https://github.com/ecomplus/cloud-commerce/commit/f4dd3f583e2ea903e22407c402fbc10f80351e5c))
+
 ## [2.24.1](https://github.com/ecomplus/cloud-commerce/compare/v2.24.0...v2.24.1) (2024-08-01)
 
 
