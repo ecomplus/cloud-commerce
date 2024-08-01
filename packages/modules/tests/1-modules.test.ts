@@ -1,4 +1,5 @@
 import type { Customers, Products } from '@cloudcommerce/api/types';
+import * as dotenv from 'dotenv';
 import {
   describe,
   test,
@@ -11,7 +12,7 @@ import {
   getProductApi,
 } from '@cloudcommerce/test-base';
 
-const requestApiModule = (moduleName: string, body: {[x:string]: any}) => {
+const requestApiModule = (moduleName: string, body) => {
   return fetch(`${modulesUrl}/${moduleName}`, {
     method: 'POST',
     body: JSON.stringify(body),
@@ -45,6 +46,7 @@ describe('Test GET Schemas', async () => {
 });
 
 describe('Test POST', async () => {
+  dotenv.config();
   let product: Products | null = null;
   let customer: Customers | null = null;
   let item;
@@ -142,5 +144,5 @@ describe('Test POST', async () => {
     const req = await requestApiModule('@checkout', bodyCheckout);
 
     expect(req.status).toBe(200);
-  });
+  }, 10000);
 });

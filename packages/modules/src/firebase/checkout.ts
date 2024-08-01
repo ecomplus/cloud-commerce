@@ -27,7 +27,7 @@ type Item = Exclude<OrderSet['items'], undefined>[number]
 export default async (req: Request, res: Response) => {
   const host = req.hostname !== 'localhost' && req.hostname !== '127.0.0.1'
     ? `https://${req.hostname}`
-    : 'http://127.0.0.1:5000';
+    : 'http://127.0.0.1:5000/_api/modules';
   const modulesBaseURL = `${host}${req.url.replace(/\/@?checkout[^/]*$/i, '')}`;
 
   const validate = ajv.compile(checkoutSchema.params);
