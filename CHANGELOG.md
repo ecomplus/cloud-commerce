@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.24.1](https://github.com/ecomplus/cloud-commerce/compare/v2.24.0...v2.24.1) (2024-08-01)
+
+
+### Bug Fixes
+
+* **apps:** Prefering keys from app data (when available) over env vars ([613c095](https://github.com/ecomplus/cloud-commerce/commit/613c09594fa11a72170dcdd6c302b6f9b8ff7aed))
+
 ## [2.24.0](https://github.com/ecomplus/cloud-commerce/compare/v2.23.3...v2.24.0) (2024-08-01)
 
 
