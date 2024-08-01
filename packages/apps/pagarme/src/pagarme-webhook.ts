@@ -41,65 +41,66 @@ export const pagarme = {
         const orderId = pagarmeTransaction.metadata.order_id as ResourceId | undefined;
         if (typeof orderId === 'string' && /^[a-f0-9]{24}$/.test(orderId)) {
           logger.info(`Order ${orderId}`);
-          // validate Pagar.me postback
-          // https://github.com/pagarme/pagarme-js/issues/170#issuecomment-503729557
-          const verifyBody = qs.stringify(req.body);
-          const headerSignature = req.headers['x-hub-signature'];
-
-          if (headerSignature && !Array.isArray(headerSignature)) {
-            const sigArg = req.query.sig;
-            if (sigArg && typeof sigArg === 'string') {
-              const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
-                .update(orderId).digest('hex');
-              if (notificationSig !== sigArg) {
-                logger.warn('?sig argument is received with invalid hash');
-                res.sendStatus(401);
-                return;
-              }
-            } else {
-              const sigHeader = headerSignature.replace('sha1=', '');
-              if (
-                !Pagarme.postback
-                  .verifySignature(process.env.PAGARME_TOKEN, verifyBody, sigHeader)
-              ) {
-                res.sendStatus(401);
-                return;
-              }
-            }
-            try {
-              const order = (await api.get(`orders/${orderId}`)).data;
-              if (order && order.transactions) {
-                // add new transaction status to payment history
-                const transaction = order.transactions?.find(({ intermediator }) => {
-                  return intermediator
-                      && intermediator.transaction_id === String(pagarmeTransaction.id);
-                });
-                const pagarmeStatus = req.body.current_status || pagarmeTransaction.status;
-                const bodyPaymentHistory = {
-                  date_time: new Date().toISOString(),
-                  status: parsePagarmeStatus(pagarmeStatus),
-                  notification_code: req.body.fingerprint,
-                  flags: ['pagarme'],
-                } as any;
-                if (transaction) {
-                  Object.assign(bodyPaymentHistory, { transaction_id: transaction._id });
-                }
-                if (req.body.old_status) {
-                  bodyPaymentHistory.flags.push(`old:${req.body.old_status}`.substring(0, 20));
-                }
-                // return appSdk.apiRequest(storeId, resource, method, body);
-                await api.post(`orders/${orderId}/payments_history`, bodyPaymentHistory);
-                res.status(200).send('OK');
-                return;
-              }
-              res.status(404).send('Pagar.me order not found');
-              return;
-            } catch (err: any) {
-              err.metadata = pagarmeTransaction.metadata;
-              logger.error(err);
-              res.sendStatus(500);
+          const urlSig = req.query.sig;
+          if (urlSig && typeof urlSig === 'string') {
+            const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
+              .update(orderId).digest('hex');
+            if (notificationSig !== urlSig) {
+              logger.warn('?sig argument is received with invalid hash');
+              res.sendStatus(401);
               return;
             }
+          } else {
+            // validate Pagar.me postback
+            // https://github.com/pagarme/pagarme-js/issues/170#issuecomment-503729557
+            const headerSig = req.headers['x-hub-signature'];
+            if (!headerSig || typeof headerSig !== 'string') {
+              res.sendStatus(403);
+              return;
+            }
+            const verifyBody = qs.stringify(req.body);
+            const sigHeader = headerSig.replace('sha1=', '');
+            if (
+              !Pagarme.postback
+                .verifySignature(process.env.PAGARME_TOKEN, verifyBody, sigHeader)
+            ) {
+              res.sendStatus(401);
+              return;
+            }
+          }
+          try {
+            const order = (await api.get(`orders/${orderId}`)).data;
+            if (order && order.transactions) {
+              // add new transaction status to payment history
+              const transaction = order.transactions?.find(({ intermediator }) => {
+                return intermediator
+                    && intermediator.transaction_id === String(pagarmeTransaction.id);
+              });
+              const pagarmeStatus = req.body.current_status || pagarmeTransaction.status;
+              const bodyPaymentHistory = {
+                date_time: new Date().toISOString(),
+                status: parsePagarmeStatus(pagarmeStatus),
+                notification_code: req.body.fingerprint,
+                flags: ['pagarme'],
+              } as any;
+              if (transaction) {
+                Object.assign(bodyPaymentHistory, { transaction_id: transaction._id });
+              }
+              if (req.body.old_status) {
+                bodyPaymentHistory.flags.push(`old:${req.body.old_status}`.substring(0, 20));
+              }
+              // return appSdk.apiRequest(storeId, resource, method, body);
+              await api.post(`orders/${orderId}/payments_history`, bodyPaymentHistory);
+              res.status(200).send('OK');
+              return;
+            }
+            res.status(404).send('Pagar.me order not found');
+            return;
+          } catch (err: any) {
+            err.metadata = pagarmeTransaction.metadata;
+            logger.error(err);
+            res.sendStatus(500);
+            return;
           }
         }
       }
