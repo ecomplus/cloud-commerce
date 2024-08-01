@@ -193,10 +193,10 @@ importers:
         specifier: ^2.24.0
         version: link:../../../../packages/types
       '@fontsource-variable/inter':
-        specifier: ^5.0.17
-        version: 5.0.19
+        specifier: 5.0.20
+        version: 5.0.20
       '@fontsource/dm-serif-display':
-        specifier: ^5.0.19
+        specifier: 5.0.20
         version: 5.0.20
       '@iconify-json/lucide':
         specifier: ^1.1.182
@@ -3296,8 +3296,8 @@ packages:
     resolution: {integrity: sha512-jmEnr/pk0yVkA7mIlHNnxCi+wWzOFUg0WyIotgkKAb2u1J7fAeDBcVNSTjTihbAYNusCLQdW5s9IJ5qwnEufcQ==}
     dev: false
 
-  /@fontsource-variable/inter@5.0.19:
-    resolution: {integrity: sha512-V5KPpF5o0sI1uNWAdFArC87NDOb/ZJDPXLomEiKmDCYMlDUCTn2flkuAZkyME2rtGOKO7vzCuDJAND0m/5PhDA==}
+  /@fontsource-variable/inter@5.0.20:
+    resolution: {integrity: sha512-dhzG4Zls/tIrf8h0FhTNi8jT/uFwNhdTY2vKe6DYqoXDYOfEcTVZDyh1hKml1rlLT44Y7OoKoGz8w7czDW7twQ==}
     dev: true
 
   /@fontsource/dm-serif-display@5.0.20:
