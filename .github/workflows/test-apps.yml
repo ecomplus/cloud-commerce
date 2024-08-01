@@ -137,5 +137,6 @@ jobs:
           GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
           GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
         run: |
+          echo $ECOM_STORE_ID
           sleep 10
           pnpm test:apps
