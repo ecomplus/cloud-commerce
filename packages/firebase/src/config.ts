@@ -187,7 +187,7 @@ const log = (level: 'info' | 'warn' | 'error', msg: any, d?: Record<string, any>
       d = { execId };
     }
   }
-  return _logger[level](msg, d);
+  return d ? _logger[level](msg, d) : _logger[level](msg);
 };
 
 export const logger = {
