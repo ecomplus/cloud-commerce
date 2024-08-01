@@ -37,17 +37,16 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
   } = params;
   logger.info(`Transaction #${orderId}`);
 
+  const pagarmeToken = appData.pagarme_api_key;
+  if (typeof pagarmeToken === 'string' && pagarmeToken) {
+    process.env.PAGARME_TOKEN = pagarmeToken;
+  }
   if (!process.env.PAGARME_TOKEN) {
-    const pagarmeToken = appData.pagarme_api_key;
-    if (typeof pagarmeToken === 'string' && pagarmeToken) {
-      process.env.PAGARME_TOKEN = pagarmeToken;
-    } else {
-      logger.warn('Missing Pagar.me API token');
-      return {
-        error: 'NO_PAGARME_KEYS',
-        message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
-      };
-    }
+    logger.warn('Missing Pagar.me API token');
+    return {
+      error: 'NO_PAGARME_KEYS',
+      message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
+    };
   }
 
   // https://apx-mods.e-com.plus/api/v1/create_transaction/response_schema.json?store_id=100

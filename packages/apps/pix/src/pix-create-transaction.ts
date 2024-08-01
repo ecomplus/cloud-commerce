@@ -103,11 +103,14 @@ export default async (appData: AppModuleBody) => {
   // const clientId = pixApi.client_id;
   // const clientSecret = pixApi.client_secret;
 
-  let clientId: string;
-  let clientSecret: string;
-  let tokenData: string;
-
-  if (process.env.PIX_CREDENTIALS) {
+  let clientId: string | undefined;
+  let clientSecret: string | undefined;
+  let tokenData: string | undefined;
+  if (pixApi.client_id && pixApi.client_secret && pixApi.authentication) {
+    clientId = pixApi.client_id;
+    clientSecret = pixApi.client_secret;
+    tokenData = pixApi.authentication;
+  } else if (process.env.PIX_CREDENTIALS) {
     try {
       const pixCredentials = JSON.parse(process.env.PIX_CREDENTIALS);
       clientId = pixCredentials.client_id;
@@ -115,15 +118,13 @@ export default async (appData: AppModuleBody) => {
       tokenData = pixCredentials.authentication;
     } catch (e) {
       logger.error(e);
-
-      clientId = pixApi.client_id;
-      clientSecret = pixApi.client_secret;
-      tokenData = pixApi.authentication;
     }
-  } else {
-    clientId = pixApi.client_id;
-    clientSecret = pixApi.client_secret;
-    tokenData = pixApi.authentication;
+  }
+  if ((!clientId || !clientSecret) && !tokenData) {
+    return {
+      error: 'NO_PIX_CREDENTIALS',
+      message: 'Client ID e/ou Secret não configurados (lojista deve configurar o aplicativo)',
+    };
   }
 
   const pix = new Pix({
@@ -236,9 +237,9 @@ export default async (appData: AppModuleBody) => {
           };
           transaction.payment_link = qrCodeUrl;
           transaction.notes = `<img src="${qrCodeSrc}" style="display:block;margin:0 auto">`;
-
-          await saveToDb(clientId, clientSecret, pixApi, pix.axios, configApp, baseUri);
-
+          if (clientId && clientSecret) {
+            await saveToDb(clientId, clientSecret, pixApi, pix.axios, configApp, baseUri);
+          }
           return {
             status: 200,
             redirect_to_payment: false,

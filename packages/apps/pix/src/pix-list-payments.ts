@@ -35,36 +35,30 @@ export default (data: AppModuleBody) => {
     return responseError(409, 'NO_PIX_CERTIFICATE', 'Certificado .PEM ou .P12 não configurado');
   }
 
-  let clientId: string;
-  let clientSecret: string;
-  let authorization: string;
-
-  if (process.env.PIX_CREDENTIALS) {
+  let clientId: string | undefined;
+  let clientSecret: string | undefined;
+  let tokenData: string | undefined;
+  if (pixApi.client_id && pixApi.client_secret && pixApi.authentication) {
+    clientId = pixApi.client_id;
+    clientSecret = pixApi.client_secret;
+    tokenData = pixApi.authentication;
+  } else if (process.env.PIX_CREDENTIALS) {
     try {
       const pixCredentials = JSON.parse(process.env.PIX_CREDENTIALS);
       clientId = pixCredentials.client_id;
       clientSecret = pixCredentials.client_secret;
-      authorization = pixCredentials.authentication;
+      tokenData = pixCredentials.authentication;
     } catch (e) {
       logger.error(e);
-
-      clientId = pixApi.client_id;
-      clientSecret = pixApi.client_secret;
-      authorization = pixApi.authentication;
     }
-  } else {
-    clientId = pixApi.client_id;
-    clientSecret = pixApi.client_secret;
-    authorization = pixApi.authentication;
   }
-
-  if ((!clientId || !clientSecret) && !authorization) {
+  if ((!clientId || !clientSecret) && !tokenData) {
     return responseError(409, 'NO_PIX_CREDENTIALS', 'Client ID e/ou Secret não configurados');
   }
+
   const response: ListPaymentsResponse = {
     payment_gateways: [],
   };
-
   // setup payment gateway object
   const gateway: Gateway = {
     label: 'Pagar com Pix',

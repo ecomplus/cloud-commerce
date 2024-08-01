@@ -4,8 +4,7 @@ import type {
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 const parsePaymentStatus = (status: string) => {
@@ -60,7 +59,7 @@ export default async (appData: AppModuleBody) => {
 
   const { buyer } = params;
   const orderId = params.order_id;
-  logger.log('> MP Transaction #', storeId, orderId);
+  logger.info('> MP Transaction #', { storeId, orderId });
 
   // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post/
   const payerPhone = {
@@ -145,20 +144,19 @@ export default async (appData: AppModuleBody) => {
       ecom_order_id: orderId,
     },
   };
-  logger.log('>data: ', JSON.stringify(payment));
+  logger.info('>data: ', payment);
 
+  const mpAccessToken = configApp.mp_access_token;
+  if (typeof mpAccessToken === 'string' && mpAccessToken) {
+    process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+  }
   if (!process.env.MERCADOPAGO_TOKEN) {
-    const mpAccessToken = configApp.mp_access_token;
-    if (typeof mpAccessToken === 'string' && mpAccessToken) {
-      process.env.MERCADOPAGO_TOKEN = mpAccessToken;
-    } else {
-      logger.warn('Missing Mercadopago access token');
-      return {
-        status: 409,
-        error: 'CREATE_TRANSACTION_ERR',
-        message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
-      };
-    }
+    logger.warn('Missing Mercadopago access token');
+    return {
+      status: 409,
+      error: 'CREATE_TRANSACTION_ERR',
+      message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
+    };
   }
 
   try {
@@ -179,7 +177,7 @@ export default async (appData: AppModuleBody) => {
       data: payment,
     });
     if (data) {
-      logger.log('> MP Checkout #', storeId, orderId);
+      logger.info('> MP Checkout #', { storeId, orderId });
 
       const statusPayment = parsePaymentStatus(data.status);
       let isSaveRetry = false;
@@ -198,7 +196,7 @@ export default async (appData: AppModuleBody) => {
               merge: true,
             })
             .then(() => {
-              logger.log('> Payment #', String(data.id));
+              logger.info('> Payment #', { paymentId: String(data.id) });
               resolve(true);
             })
             .catch((err) => {

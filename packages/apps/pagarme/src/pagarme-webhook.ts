@@ -22,15 +22,14 @@ export const pagarme = {
         `applications?app_id=${config.get().apps.pagarMe.appId}&fields=hidden_data`,
       )).data.result;
 
+      const pagarmeToken = app[0]?.hidden_data?.pagarme_api_key;
+      if (typeof pagarmeToken === 'string' && pagarmeToken) {
+        process.env.PAGARME_TOKEN = pagarmeToken;
+      }
       if (!process.env.PAGARME_TOKEN) {
-        const pagarmeToken = app[0].hidden_data?.pagarme_api_key;
-        if (typeof pagarmeToken === 'string' && pagarmeToken) {
-          process.env.PAGARME_TOKEN = pagarmeToken;
-        } else {
-          logger.warn('Missing PagarMe API token');
-          res.sendStatus(409);
-          return;
-        }
+        logger.warn('Missing PagarMe API token');
+        res.sendStatus(409);
+        return;
       }
 
       // https://docs.pagar.me/docs/gerenciando-postbacks
