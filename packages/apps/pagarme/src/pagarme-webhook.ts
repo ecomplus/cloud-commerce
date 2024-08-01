@@ -1,4 +1,5 @@
-/* eslint-disable import/prefer-default-export */
+import type { ResourceId } from '@cloudcommerce/api/types';
+import { createHmac } from 'node:crypto';
 import api from '@cloudcommerce/api';
 import * as functions from 'firebase-functions/v1';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
@@ -8,6 +9,7 @@ import { parsePagarmeStatus } from './pagarme-utils';
 
 const { httpsFunctionOptions } = config.get();
 
+/* eslint-disable import/prefer-default-export */
 export const pagarme = {
   webhook: functions
     .region(httpsFunctionOptions.region)
@@ -36,8 +38,8 @@ export const pagarme = {
       const pagarmeTransaction = req.body && req.body.transaction;
       if (pagarmeTransaction && pagarmeTransaction.metadata) {
         // const storeId = parseInt(pagarmeTransaction.metadata.store_id, 10);
-        const orderId = pagarmeTransaction.metadata.order_id;
-        if (/^[a-f0-9]{24}$/.test(orderId)) {
+        const orderId = pagarmeTransaction.metadata.order_id as ResourceId | undefined;
+        if (typeof orderId === 'string' && /^[a-f0-9]{24}$/.test(orderId)) {
           logger.info(`Order ${orderId}`);
           // validate Pagar.me postback
           // https://github.com/pagarme/pagarme-js/issues/170#issuecomment-503729557
@@ -45,13 +47,24 @@ export const pagarme = {
           const headerSignature = req.headers['x-hub-signature'];
 
           if (headerSignature && !Array.isArray(headerSignature)) {
-            const signature = headerSignature.replace('sha1=', '');
-            if (
-              !Pagarme.postback
-                .verifySignature(process.env.PAGARME_TOKEN, verifyBody, signature)
-            ) {
-              res.sendStatus(401);
-              return;
+            const sigArg = req.query.sig;
+            if (sigArg && typeof sigArg === 'string') {
+              const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
+                .update(orderId).digest('hex');
+              if (notificationSig !== sigArg) {
+                logger.warn('?sig argument is received with invalid hash');
+                res.sendStatus(401);
+                return;
+              }
+            } else {
+              const sigHeader = headerSignature.replace('sha1=', '');
+              if (
+                !Pagarme.postback
+                  .verifySignature(process.env.PAGARME_TOKEN, verifyBody, sigHeader)
+              ) {
+                res.sendStatus(401);
+                return;
+              }
             }
             try {
               const order = (await api.get(`orders/${orderId}`)).data;

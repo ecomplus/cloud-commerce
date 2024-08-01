@@ -3,6 +3,7 @@ import type {
   CreateTransactionParams,
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
+import { createHmac } from 'node:crypto';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import { addInstallments, parsePagarmeStatus } from './pagarme-utils';
@@ -25,7 +26,6 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
   const { application, storeId } = modBody;
   const params = modBody.params;
   const appData = { ...application.data, ...application.hidden_data };
-  const notificationUrl = `${baseUri}/pagarme-webhook`;
 
   const orderId = params.order_id;
   const {
@@ -48,6 +48,9 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
     };
   }
+  const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
+    .update(orderId || '').digest('hex');
+  const notificationUrl = `${baseUri}/pagarme-webhook?sig=${notificationSig}`;
 
   // https://apx-mods.e-com.plus/api/v1/create_transaction/response_schema.json?store_id=100
   const transaction: CreateTransactionResponse['transaction'] = {
