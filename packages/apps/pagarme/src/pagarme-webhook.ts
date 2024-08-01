@@ -41,31 +41,33 @@ export const pagarme = {
         const orderId = pagarmeTransaction.metadata.order_id as ResourceId | undefined;
         if (typeof orderId === 'string' && /^[a-f0-9]{24}$/.test(orderId)) {
           logger.info(`Order ${orderId}`);
-          const urlSig = req.query.sig;
-          if (urlSig && typeof urlSig === 'string') {
-            const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
-              .update(orderId).digest('hex');
-            if (notificationSig !== urlSig) {
-              logger.warn('?sig argument is received with invalid hash');
-              res.sendStatus(401);
-              return;
-            }
-          } else {
-            // validate Pagar.me postback
-            // https://github.com/pagarme/pagarme-js/issues/170#issuecomment-503729557
-            const headerSig = req.headers['x-hub-signature'];
-            if (!headerSig || typeof headerSig !== 'string') {
-              res.sendStatus(403);
-              return;
-            }
-            const verifyBody = qs.stringify(req.body);
-            const sigHeader = headerSig.replace('sha1=', '');
-            if (
-              !Pagarme.postback
-                .verifySignature(process.env.PAGARME_TOKEN, verifyBody, sigHeader)
-            ) {
-              res.sendStatus(401);
-              return;
+          if (`${process.env.PAGARME_WEBHOOK_SKIP_SIG}`.toLowerCase() !== 'true') {
+            const urlSig = req.query.sig;
+            if (urlSig && typeof urlSig === 'string') {
+              const notificationSig = createHmac('sha256', process.env.PAGARME_TOKEN)
+                .update(orderId).digest('hex');
+              if (notificationSig !== urlSig) {
+                logger.warn('?sig argument is received with invalid hash');
+                res.sendStatus(401);
+                return;
+              }
+            } else {
+              // validate Pagar.me postback
+              // https://github.com/pagarme/pagarme-js/issues/170#issuecomment-503729557
+              const headerSig = req.headers['x-hub-signature'];
+              if (!headerSig || typeof headerSig !== 'string') {
+                res.sendStatus(403);
+                return;
+              }
+              const verifyBody = qs.stringify(req.body);
+              const sigHeader = headerSig.replace('sha1=', '');
+              if (
+                !Pagarme.postback
+                  .verifySignature(process.env.PAGARME_TOKEN, verifyBody, sigHeader)
+              ) {
+                res.sendStatus(401);
+                return;
+              }
             }
           }
           try {
