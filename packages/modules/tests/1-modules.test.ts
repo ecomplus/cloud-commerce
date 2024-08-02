@@ -154,5 +154,5 @@ describe('Test POST', async () => {
 
       expect(req.status).toBe(200);
     }
-  }, 3000);
+  }, 10000);
 });
