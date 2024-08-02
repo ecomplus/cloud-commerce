@@ -144,6 +144,7 @@ jobs:
           sleep 10
           pnpm test:apps
       - name: check debug
+        if: always()
         shell: bash
         working-directory: store
         run: |
