@@ -151,6 +151,7 @@ describe('Test POST', async () => {
         transaction,
       };
       const req = await requestApiModule('@checkout', bodyCheckout);
+      console.log('debug ', await req.json());
 
       expect(req.status).toBe(200);
     }
