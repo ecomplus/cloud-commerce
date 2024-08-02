@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.24.3](https://github.com/ecomplus/cloud-commerce/compare/v2.24.2...v2.24.3) (2024-08-02)
+
+
+### Bug Fixes
+
+* **pagarme:** Handle optional `env.PAGARME_WEBHOOK_SKIP_SIG` for temp signature skip ([bac8889](https://github.com/ecomplus/cloud-commerce/commit/bac8889e72bb920081d980dcc3a047e062511f79))
+* **pagarme:** Read transaction on pagar.me API when webhook signature not verified ([69246a3](https://github.com/ecomplus/cloud-commerce/commit/69246a338f210e4333aca92a0e163e0f669b737d))
+
 ## [2.24.2](https://github.com/ecomplus/cloud-commerce/compare/v2.24.1...v2.24.2) (2024-08-01)
 
 
