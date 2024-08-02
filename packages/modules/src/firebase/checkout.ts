@@ -28,6 +28,7 @@ export default async (req: Request, res: Response) => {
   const host = req.hostname !== 'localhost' && req.hostname !== '127.0.0.1'
     ? `https://${req.hostname}`
     : 'http://127.0.0.1:5000/_api/modules';
+  console.log('>> debug ', host);
   const modulesBaseURL = `${host}${req.url.replace(/\/@?checkout[^/]*$/i, '')}`;
 
   const validate = ajv.compile(checkoutSchema.params);
