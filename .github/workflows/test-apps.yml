@@ -143,3 +143,8 @@ jobs:
           " > .env
           sleep 10
           pnpm test:apps
+      - name: check debug
+        shell: bash
+        working-directory: store
+        run: |
+          cat firebase-debug.log
