@@ -124,7 +124,7 @@ jobs:
           ECOM_STORE_ID=$ECOM_STORE_ID
           " > functions/.env
           npx cloudcommerce prepare
-          firebase --project=ecom2-demo emulators:start --only functions &
+          firebase --project=ecom2-demo emulators:start --only functions,hosting &
 
       - name: Run tests
         shell: bash
@@ -137,5 +137,15 @@ jobs:
           GALAXPAY_ID: ${{ secrets.GALAXPAY_ID }}
           GALAXPAY_HASH: ${{ secrets.GALAXPAY_HASH }}
         run: |
+          printf "ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
+          ECOM_API_KEY=$ECOM_API_KEY
+          ECOM_STORE_ID=$ECOM_STORE_ID
+          " > .env
           sleep 10
           pnpm test:apps
+      - name: check debug
+        if: always()
+        shell: bash
+        working-directory: store
+        run: |
+          cat firebase-debug.log
