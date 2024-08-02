@@ -46,7 +46,8 @@ describe('Test GET Schemas', async () => {
 });
 
 describe('Test POST', async () => {
-  dotenv.config();
+  dotenv.config({ path: '../../.env' });
+
   let product: Products | null = null;
   let customer: Customers | null = null;
   let item;
