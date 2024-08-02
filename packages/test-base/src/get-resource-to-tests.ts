@@ -2,6 +2,7 @@ import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 
 const getProductApi = async (productName?: string) => {
+  console.log('>> env', process.env);
   const product = await api.get(`products?limit=1${productName ? `&name=${productName}` : ''}`).then(async ({ data }) => {
     if (data.result.length) {
       const projectId = data.result[0]._id;
