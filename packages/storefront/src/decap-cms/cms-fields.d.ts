@@ -27,40 +27,43 @@ export type CmsField = {
 
 export type CmsFields = Record<string, CmsField>;
 
-type CheckRequired<F extends CmsField, T> = F['required'] extends true
-  ? Exclude<T, undefined>
-  : T | undefined;
+/* eslint-disable no-use-before-define */
+export type InferCmsFieldOutput<F extends CmsField> =
+  F['widget'] extends 'string'
+    | 'text'
+    | 'markdown'
+    | 'image'
+    | 'file'
+    | 'color'
+    | 'datetime'
+    | 'code'
+    | 'map'
+    ? string
+    :
+  F['widget'] extends 'boolean'
+    ? boolean
+    :
+  F['widget'] extends 'number'
+    ? F['value_type'] extends 'int' | 'float' ? number : string
+    :
+  F['widget'] extends 'select'
+    | `select:${string}`
+    ? F['multiple'] extends true ? string[] : string
+    :
+  F['widget'] extends 'object'
+    ? InferCmsOutput<F['fields']>
+    :
+  F['widget'] extends 'list'
+    ? F['fields'] extends undefined
+      ? string[]
+      : InferCmsOutput<F['fields']>[]
+    :
+  unknow;
 
-export type InferCmsOutput<F extends CmsFields> = {
-  [I in keyof F]:
-    F[I]['widget'] extends 'string'
-      | 'text'
-      | 'markdown'
-      | 'image'
-      | 'file'
-      | 'color'
-      | 'datetime'
-      | 'code'
-      | 'map'
-      ? CheckRequired<F[I], string>
-      :
-    F[I]['widget'] extends 'boolean'
-      ? CheckRequired<F[I], boolean>
-      :
-    F[I]['widget'] extends 'number'
-      ? CheckRequired<F[I]['value_type'] extends 'int' | 'float' ? number : string>
-      :
-    F[I]['widget'] extends 'select'
-      | `select:${string}`
-      ? CheckRequired<F[I], F[I]['multiple'] extends true ? string[] : string>
-      :
-    F[I]['widget'] extends 'object'
-      ? CheckRequired<F[I], InferCmsOutput<F[I]['fields']>>
-      :
-    F[I]['widget'] extends 'list'
-      ? F[I]['fields'] extends undefined
-        ? CheckRequired<F[I], string[]>
-        : CheckRequired<F[I], InferCmsOutput<F[I]['fields']>[]>
-      :
-    unknow;
+export type InferCmsOutput<FS extends CmsFields> = {
+  [I in keyof FS as FS[I]['required'] extends true ? I : never]:
+    InferCmsFieldOutput<FS[I]>;
+} & {
+  [I in keyof FS as FS[I]['required'] extends true ? never : I]?:
+    InferCmsFieldOutput<FS[I]>;
 };
