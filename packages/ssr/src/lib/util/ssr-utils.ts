@@ -1,4 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 export const pathToDocId = (pathname: string) => {
   return pathname.slice(1).trim()
@@ -36,6 +37,7 @@ type CacheValue = { timestamp: number, data: any };
 type CachedRequestInit = RequestInit & {
   cacheKey?: string,
   maxAge?: number,
+  canUseStale?: boolean,
   timeout?: number,
 };
 const runtimeCache: Record<string, CacheValue | undefined> = {};
@@ -46,6 +48,7 @@ export const fetchAndCache = async (
   url: URL | string,
   {
     maxAge = 1800,
+    canUseStale = true,
     cacheKey,
     timeout = 4000,
     ...reqInit
@@ -58,6 +61,34 @@ export const fetchAndCache = async (
     return runtimeCache[key].data;
   }
   const docRef = getFirestore().doc(`ssrFetchCache/${key}`);
+  const runFetch = async () => {
+    let abortController: AbortController | undefined;
+    let timer: NodeJS.Timeout | undefined;
+    if (timeout) {
+      abortController = new AbortController();
+      timer = setTimeout(() => {
+        abortController!.abort();
+      }, timeout);
+      reqInit.signal = abortController.signal;
+    }
+    const fetching = runtimeFetchings[key] || fetch(url, reqInit);
+    runtimeFetchings[key] = fetching;
+    const response = await fetching;
+    delete runtimeFetchings[key];
+    if (timer) {
+      clearTimeout(timer);
+    }
+    if (response.status > 199 && response.status < 300) {
+      const data = await response.json();
+      const cacheVal = { timestamp: now, data };
+      runtimeCache[key] = cacheVal;
+      docRef.set(cacheVal);
+      return data;
+    }
+    const error: any = new Error(`Failed fetching ${url}`);
+    error.response = response;
+    throw error;
+  };
   const docSnap = await docRef.get();
   if (docSnap.exists) {
     const cacheVal = docSnap.data() as CacheValue;
@@ -65,31 +96,10 @@ export const fetchAndCache = async (
       runtimeCache[key] = cacheVal;
       return cacheVal.data;
     }
+    if (canUseStale) {
+      runFetch().catch(logger.error);
+      return cacheVal.data;
+    }
   }
-  let abortController: AbortController | undefined;
-  let timer: NodeJS.Timeout | undefined;
-  if (timeout) {
-    abortController = new AbortController();
-    timer = setTimeout(() => {
-      abortController!.abort();
-    }, timeout);
-    reqInit.signal = abortController.signal;
-  }
-  const fetching = runtimeFetchings[key] || fetch(url, reqInit);
-  runtimeFetchings[key] = fetching;
-  const response = await fetching;
-  delete runtimeFetchings[key];
-  if (timer) {
-    clearTimeout(timer);
-  }
-  if (response.status > 199 && response.status < 300) {
-    const data = await response.json();
-    const cacheVal = { timestamp: now, data };
-    runtimeCache[key] = cacheVal;
-    docRef.set(cacheVal);
-    return data;
-  }
-  const error: any = new Error(`Failed fetching ${url}`);
-  error.response = response;
-  throw error;
+  return runFetch();
 };
