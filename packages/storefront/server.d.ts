@@ -8,6 +8,7 @@ import type { Server$Storefront } from '@@sf/$storefront';
 type CachedRequestInit = RequestInit & {
   cacheKey?: string,
   maxAge?: number,
+  canUseStale?: boolean,
   timeout?: number,
 };
 type FetchAndCache = (url: URL | string, init?: CachedRequestInit) => Promise<any>;
