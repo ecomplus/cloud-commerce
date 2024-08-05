@@ -98,8 +98,8 @@ export const mercadopago = {
                           `orders/${order._id}/transactions/${transaction._id}`,
                           { notes },
                         );
-                      } catch (e) {
-                        logger.error(e);
+                      } catch (err) {
+                        logger.error(err);
                       }
                     }
                     res.status(200).send('SUCCESS');
@@ -120,8 +120,8 @@ export const mercadopago = {
               logger.error(err);
               res.sendStatus(503);
             });
-        } catch (e) {
-          logger.error(e);
+        } catch (err) {
+          logger.error(err);
           res.sendStatus(500);
         }
       } else {

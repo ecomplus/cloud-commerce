@@ -174,7 +174,7 @@ export default async ({ params, application }) => {
       if (typeof data === 'string') {
         try {
           result = JSON.parse(data);
-        } catch (e) {
+        } catch {
           // console.log('> Datafrete invalid JSON response');
           return {
             error: 'CALCULATE_INVALID_RES',
@@ -245,7 +245,7 @@ export default async ({ params, application }) => {
         if (typeof data === 'string') {
           try {
             result = JSON.parse(data);
-          } catch (e) {
+          } catch {
             //
           }
         } else {

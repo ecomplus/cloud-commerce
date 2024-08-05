@@ -16,7 +16,7 @@ const useStorage = <T extends {}>(
     if (sessionJson) {
       try {
         return JSON.parse(sessionJson) as T;
-      } catch (e) {
+      } catch {
         storage.removeItem(key);
         return null;
       }

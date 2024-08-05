@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'class-methods-use-this': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
     'max-len': 'warn',
     'semi': 'warn',
     'arrow-parens': 'warn',

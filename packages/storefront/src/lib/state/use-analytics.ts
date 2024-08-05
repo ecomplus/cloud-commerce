@@ -213,8 +213,8 @@ export const emitGtagEvent = async <N extends Gtag.EventNames | `c_${string}` = 
       data = midd(data);
     });
     window.postMessage(data, window.origin);
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
   }
 };
 

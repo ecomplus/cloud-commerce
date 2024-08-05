@@ -359,7 +359,7 @@ const handleWehook = async (req: Request, res: Response) => {
               let originalOrder: Orders | undefined;
               try {
                 originalOrder = await findOrderById(originalOrderId);
-              } catch (err) {
+              } catch {
                 logger.warn(`Original Order not found (${originalOrderId}) `);
                 res.status(404).send({ message: 'Original Order not found' });
               }

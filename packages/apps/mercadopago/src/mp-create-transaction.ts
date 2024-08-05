@@ -42,7 +42,7 @@ export default async (appData: AppModuleBody) => {
       const parsed = JSON.parse(hashParts[1]);
       paymentMethodId = parsed.payment_method_id;
       deviceId = parsed.deviceId;
-    } catch (e) {
+    } catch {
       paymentMethodId = params.credit_card.company || 'visa';
     }
   } else if (params.payment_method.code === 'banking_billet') {

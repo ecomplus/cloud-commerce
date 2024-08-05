@@ -23,7 +23,7 @@ function getBotRegex() {
   }
   try {
     botRegex = new RegExp(fullBotPattern, 'i');
-  } catch (error) {
+  } catch {
     botRegex = /bot|spider|crawl|http|lighthouse|inspect/i;
   }
   return botRegex;

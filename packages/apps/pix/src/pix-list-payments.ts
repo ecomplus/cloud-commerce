@@ -48,8 +48,8 @@ export default (data: AppModuleBody) => {
       clientId = pixCredentials.client_id;
       clientSecret = pixCredentials.client_secret;
       tokenData = pixCredentials.authentication;
-    } catch (e) {
-      logger.error(e);
+    } catch (err) {
+      logger.error(err);
     }
   }
   if ((!clientId || !clientSecret) && !tokenData) {

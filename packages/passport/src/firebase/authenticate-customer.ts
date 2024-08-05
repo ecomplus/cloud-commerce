@@ -65,7 +65,7 @@ const checkFirebaseAuth = async (authToken: string) => {
   try {
     const firebaseAuthUser = await firebaseAuth.verifyIdToken(authToken);
     return firebaseAuthUser;
-  } catch (err) {
+  } catch {
     return null;
   }
 };

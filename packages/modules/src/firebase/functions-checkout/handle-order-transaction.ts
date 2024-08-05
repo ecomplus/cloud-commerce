@@ -94,8 +94,8 @@ const cancelOrder = async (
             if (response.status === 204) {
               isOrderCancelled = true;
             }
-          } catch (e) {
-            logger.error(e);
+          } catch (err) {
+            logger.error(err);
           }
           resolve(`${body.staff_notes}`);
         }, 400);

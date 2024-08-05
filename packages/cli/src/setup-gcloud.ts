@@ -218,7 +218,7 @@ const createServiceAccountKey = async (projectId: string, pwd: string) => {
       await $`echo '${privateKeyData}' | base64 --decode > ${pathFileKey}`;
     }
     return JSON.stringify(fs.readJSONSync(pathFileKey));
-  } catch (e) {
+  } catch {
     return null;
   }
 };

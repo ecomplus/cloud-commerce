@@ -21,7 +21,7 @@ if (!projectId) {
       ),
     );
     projectId = firebaserc.projects.default;
-  } catch (e) {
+  } catch {
     projectId = 'ecom2-demo';
   }
 }

@@ -369,8 +369,8 @@ export default async (req: Request, res: Response) => {
       const data = await readFile(local);
       setStatusAndCache(200, 'public, max-age=60, s-maxage=600')
         .send(data);
-    } catch (e) {
-      fallback(e, 404);
+    } catch (_err) {
+      fallback(_err, 404);
     }
   });
 };

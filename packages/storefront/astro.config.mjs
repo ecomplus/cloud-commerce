@@ -250,8 +250,8 @@ const genAstroConfig = ({
               try {
                 const text = readFileSync(joinPath(dictionaryDir, lang, `i19${p1}.txt`));
                 return `'${text}'`;
-              } catch (e) {
-                console.error(e);
+              } catch (err) {
+                console.error(err);
                 return match;
               }
             });

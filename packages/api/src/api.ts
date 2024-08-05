@@ -237,7 +237,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   }
   try {
     response.data = await response?.json() as ErrorBody;
-  } catch (e) {
+  } catch {
     //
   }
   throw new ApiError({

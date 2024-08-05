@@ -73,7 +73,7 @@ if (!import.meta.env.SSR) {
       } else {
         sessionStorage.removeItem(storageKey);
       }
-    } catch (e) {
+    } catch {
       sessionStorage.removeItem(storageKey);
     }
   }

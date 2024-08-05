@@ -36,7 +36,7 @@ const tryImageSize = (src: string) => {
   if (typeof src === 'string' && src.startsWith('/')) {
     try {
       dimensions = imageSize(getImageFilepath(src));
-    } catch (e) {
+    } catch {
       dimensions = {};
     }
   }

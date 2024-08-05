@@ -105,8 +105,8 @@ export default async ({ params, application }) => {
     let schema;
     try {
       schema = newShipment(appData, params);
-    } catch (e) {
-      logger.error('>>(App Melhor Envio): NEW_SHIPMENT_PARSE_ERR', e);
+    } catch (err) {
+      logger.error('>>(App Melhor Envio): NEW_SHIPMENT_PARSE_ERR', err);
       return {
         status: 400,
         error: 'CALCULATE_ERR',

@@ -27,8 +27,8 @@ export default () => {
       if (process.env.FLASHCOURIER_CONTRACT) {
         try {
           contract = JSON.parse(process.env.FLASHCOURIER_CONTRACT);
-        } catch (e) {
-          logger.error(e);
+        } catch (err) {
+          logger.error(err);
           contract = appData.flashcourier_contract;
         }
       } else {

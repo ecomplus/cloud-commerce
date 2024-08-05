@@ -8,7 +8,7 @@ const getRemoteRepo = async () => {
       .replace(/.*github.com[/:]/, '')
       .replace('.git', '')
       .replace('\n', '');
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -75,7 +75,7 @@ const createGhSecrets = async (
       await createGhSecret('FIREBASE_SERVICE_ACCOUNT', firebaseServiceAccount);
       return true;
     }
-  } catch (e) {
+  } catch {
     //
   }
   return false;

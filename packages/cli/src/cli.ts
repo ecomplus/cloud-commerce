@@ -44,7 +44,7 @@ if (projectId) {
     try {
       const gac = fs.readJSONSync(joinPath(pwd, GOOGLE_APPLICATION_CREDENTIALS));
       projectId = gac.project_id;
-    } catch (e) {
+    } catch {
       //
     }
   }
@@ -52,7 +52,7 @@ if (projectId) {
     try {
       const firebaserc = fs.readJSONSync(joinPath(pwd, '.firebaserc'));
       projectId = firebaserc.projects.default;
-    } catch (e) {
+    } catch {
       projectId = 'ecom2-demo';
     }
   }
@@ -162,7 +162,7 @@ ECOM_STORE_ID=${storeId}
         await $`git add .firebaserc functions/config.json`;
         await $`git commit -m "Setup store [skip ci]"`;
         await $`git push`;
-      } catch (e) {
+      } catch {
         //
       }
     }
@@ -171,7 +171,7 @@ ECOM_STORE_ID=${storeId}
       try {
         await siginGcloudAndSetIAM(projectId as string, pwd);
         serviceAccountJSON = await createServiceAccountKey(projectId as string, pwd);
-      } catch (e) {
+      } catch {
         //
       }
     }
@@ -184,7 +184,7 @@ ECOM_STORE_ID=${storeId}
           serviceAccountJSON,
           GITHUB_TOKEN,
         );
-      } catch (e) {
+      } catch {
         //
       }
     }

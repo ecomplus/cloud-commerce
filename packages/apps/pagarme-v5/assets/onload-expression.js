@@ -1,7 +1,7 @@
 (function pagarmeOnload() {
   const apiKey = window._pagarmeKey;
   window._pagarmeHash = function pagarmeHash(cardClient) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const card = {
         number: cardClient.number,
         holder_name: cardClient.name,
@@ -9,7 +9,7 @@
         exp_year: cardClient.year,
         cvv: cardClient.cvc,
       };
-      const resp = await fetch(
+      fetch(
         `https://api.pagar.me/core/v5/tokens?appId=${apiKey}`,
         {
           headers: {
@@ -21,18 +21,20 @@
             card,
           }),
         },
-      );
-
-      try {
-        const data = await resp.json();
-        if (data.id) {
-          resolve(data.id);
-        }
-        throw new Error(`Error Token ${await resp.text()}`);
-      } catch (err) {
-        // console.error(err);
-        reject(err);
-      }
+      )
+        .then(async (response) => {
+          try {
+            const data = await response.json();
+            if (data.id) {
+              resolve(data.id);
+            }
+            throw new Error(`Error Token ${await response.text()}`);
+          } catch (err) {
+            // console.error(err);
+            reject(err);
+          }
+        })
+        .catch(reject);
     });
   };
 }());

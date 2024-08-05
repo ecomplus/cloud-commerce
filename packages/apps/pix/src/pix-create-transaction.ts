@@ -90,8 +90,8 @@ export default async (appData: AppModuleBody) => {
   let pfx;
   try {
     pfx = await getPfx(pixApi.certificate);
-  } catch (e) {
-    logger.error(e);
+  } catch (err) {
+    logger.error(err);
     return responseError(409, 'INVALID_PIX_CERTIFICATE', 'Arquivo de certificado não encontrado ou inválido');
   }
 
@@ -116,8 +116,8 @@ export default async (appData: AppModuleBody) => {
       clientId = pixCredentials.client_id;
       clientSecret = pixCredentials.client_secret;
       tokenData = pixCredentials.authentication;
-    } catch (e) {
-      logger.error(e);
+    } catch (err) {
+      logger.error(err);
     }
   }
   if ((!clientId || !clientSecret) && !tokenData) {
@@ -225,7 +225,7 @@ export default async (appData: AppModuleBody) => {
           } else {
             throw new Error('Retry');
           }
-        } catch (err: any) {
+        } catch {
           data = (await axios.get(brCodeUrl)).data;
         }
 

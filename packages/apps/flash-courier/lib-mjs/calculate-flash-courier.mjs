@@ -28,8 +28,8 @@ export default async ({ params, application }) => {
     try {
       const contract = JSON.parse(process.env.FLASHCOURIER_CONTRACT);
       flashcourierKey = contract.key;
-    } catch (e) {
-      logger.error(e);
+    } catch (err) {
+      logger.error(err);
       flashcourierKey = appData.flashcourier_contract && appData.flashcourier_contract.key;
     }
   } else {

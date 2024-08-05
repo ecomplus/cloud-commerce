@@ -167,11 +167,11 @@ const createOrder = async (
                   loyaltyPointsBalance,
                   amount,
                 );
-              } catch (e) {
-                logger.error(e);
+              } catch (_err) {
+                logger.error(_err);
               }
-            } catch (e) {
-              logger.error(e);
+            } catch (_err) {
+              logger.error(_err);
             }
             index += 1;
             if (index < transactions.length) {
