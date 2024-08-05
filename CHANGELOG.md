@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.0](https://github.com/ecomplus/cloud-commerce/compare/v2.24.3...v2.25.0) (2024-08-05)
+
+
+### Features
+
+* **storefront:** Emitting custom `c_search_empty` gtag (to GA) event on showcase with no results ([4daf370](https://github.com/ecomplus/cloud-commerce/commit/4daf370a6cae095909794ecd85fd62fc6cb3e382))
+* **storefront:** New methods `loadToCart` and `loadKitItems` returned on product card composabe ([abad411](https://github.com/ecomplus/cloud-commerce/commit/abad4115318d67d693274e90554cdadbda9eedd5))
+
+
+### Bug Fixes
+
+* **storefront:** Properly setting optional props from non-required fields on `InferCmsOutput` ([ac84602](https://github.com/ecomplus/cloud-commerce/commit/ac8460283d74c02d0f979b11c8c00fc39d619f98))
+
 ## [2.24.3](https://github.com/ecomplus/cloud-commerce/compare/v2.24.2...v2.24.3) (2024-08-02)
 
 
