@@ -21,6 +21,7 @@ import {
   i19sales,
 } from '@@i18n';
 import { SearchEngine } from '@@sf/state/search-engine';
+import { emitGtagEvent } from '@@sf/state/use-analytics';
 import { useSearchActiveFilters } from '@@sf/composables/use-search-filters';
 
 export type Props = Partial<SectionPreviewProps> & {
@@ -109,17 +110,20 @@ const useSearchShowcase = (props: Props) => {
   }
 
   const popularTerms = ref<null | string[]>(null);
-  const fetchPopularTerms = async () => {
-    if (import.meta.env.SSR || props.canFetchTermsOnEmpty === false) {
-      return;
+  const handleEmptyResult = async () => {
+    if (import.meta.env.SSR) return;
+    if (props.canFetchTermsOnEmpty !== false) {
+      try {
+        const { data } = await api.get('search/v1/history?limit=40');
+        popularTerms.value = data.result.map(({ terms }) => {
+          return terms.join(' ');
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
-    try {
-      const { data } = await api.get('search/v1/history?limit=40');
-      popularTerms.value = data.result.map(({ terms }) => {
-        return terms.join(' ');
-      });
-    } catch (err) {
-      console.error(err);
+    if (term) {
+      emitGtagEvent('c_search_empty', { search_term: term });
     }
   };
   if (!searchEngine.wasFetched.value) {
@@ -129,7 +133,7 @@ const useSearchShowcase = (props: Props) => {
         meta: props.resultMeta,
       });
       if (!props.products?.length) {
-        fetchPopularTerms();
+        handleEmptyResult();
       }
     }
     if (!props.products || hasChangedInitParams) {
@@ -150,7 +154,7 @@ const useSearchShowcase = (props: Props) => {
       ...searchEngine.meta,
     };
     if (!products.length) {
-      fetchPopularTerms();
+      handleEmptyResult();
     }
   });
 

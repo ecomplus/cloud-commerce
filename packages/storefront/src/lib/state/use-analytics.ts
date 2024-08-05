@@ -113,7 +113,7 @@ export const addGtagEventMiddleware = (midd: GtagEventMiddleware) => {
 let countItemsPerList: Record<string, number> = {};
 let defaultItemsList = '';
 
-export const emitGtagEvent = async <N extends Gtag.EventNames = 'view_item'>(
+export const emitGtagEvent = async <N extends Gtag.EventNames | `c_${string}` = 'view_item'>(
   name: N,
   _params: N extends 'page_view'
     ? PageViewParams
