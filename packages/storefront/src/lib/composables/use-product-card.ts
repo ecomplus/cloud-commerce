@@ -1,4 +1,9 @@
-import type { Products, SearchItem } from '@cloudcommerce/types';
+import type {
+  ResourceId,
+  Products,
+  ProductsList,
+  SearchItem,
+} from '@cloudcommerce/api/types';
 import { ref, computed, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import {
@@ -9,18 +14,30 @@ import {
   onPromotion as checkOnPromotion,
 } from '@ecomplus/utils';
 import { slugify } from '@@sf/sf-lib';
+import { addProductToCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
 
 type PictureSize = { url: string; alt?: string; size?: string };
 
 export type ProductItem = Products | SearchItem;
 
+export const kitItemFields = [
+  'sku' as const,
+  'name' as const,
+  'slug' as const,
+  'available' as const,
+  'price' as const,
+  'quantity' as const,
+];
+
+export type KitItems = ProductsList<typeof kitItemFields>;
+
 export type Props = {
   product?: ProductItem;
-  productId?: Products['_id'];
+  productId?: ResourceId;
   listName?: string;
   listId?: string;
-} & ({ product: ProductItem } | { productId: Products['_id'] });
+} & ({ product: ProductItem } | { productId: ResourceId });
 
 const useProductCard = <T extends ProductItem | undefined = undefined>(props: Props) => {
   const isFetching = ref(false);
@@ -30,7 +47,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
   const product = shallowReactive<(T extends undefined ? Partial<SearchItem> : T)
     & { _id: Products['_id'], price: number }>({
       ...(props.product as Exclude<T, undefined>),
-      _id: (props.product?._id || productId) as Products['_id'],
+      _id: (props.product?._id || productId) as ResourceId,
       price: getPrice(props.product || {}),
     });
   if (!props.product && productId) {
@@ -96,6 +113,89 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     }],
   });
 
+  const kitItems = ref<KitItems | null>(null);
+  const loadKitItems = async () => {
+    const kitComposition = product.kit_composition;
+    if (kitComposition?.length) {
+      const { data } = await api.get('products', {
+        _id: kitComposition.map(({ _id }) => _id),
+        fields: kitItemFields,
+      });
+      kitItems.value = data.result;
+      let maxKitQnt = product.quantity || 1;
+      for (let i = 0; i < kitItems.value.length; i++) {
+        const kitItem = kitItems.value[i];
+        if (!kitItem.quantity) {
+          maxKitQnt = 0;
+          break;
+        }
+        const compositionQnt = kitComposition
+          .find(({ _id }) => _id === kitItem._id)?.quantity || 1;
+        const maxKitQntByItem = Math.floor(kitItem.quantity / compositionQnt);
+        if (maxKitQntByItem > maxKitQnt) {
+          maxKitQnt = maxKitQntByItem;
+        }
+      }
+      product.quantity = maxKitQnt;
+    }
+  };
+  const loadToCart = async (
+    quantityToAdd = 1,
+    { variationId }: {
+      variationId?: ResourceId,
+    } = {},
+  ) => {
+    await fetching;
+    if (hasVariations.value && !variationId) return null;
+    const kitComposition = product.kit_composition;
+    if (kitComposition?.length) {
+      if (variationId) return null;
+      if (!kitItems.value) await loadKitItems();
+      if (kitItems.value?.length !== kitComposition.length) {
+        return null;
+      }
+      for (let i = 0; i < kitComposition.length; i++) {
+        const { _id, quantity } = kitComposition[i];
+        const kitItem = kitItems.value.find((item) => item._id === _id);
+        if (
+          !kitItem?.available
+          || !checkInStock(kitItem)
+          || (quantity && kitItem.quantity! < quantity)
+        ) {
+          return null;
+        }
+      }
+      let packQuantity = 0;
+      const cartKitComposition: Array<{ _id: ResourceId, quantity: number }> = [];
+      kitComposition.forEach(({ _id, quantity }) => {
+        const kitItemQuantity = (quantity || 1) * quantityToAdd;
+        packQuantity += kitItemQuantity;
+        cartKitComposition.push(({
+          _id,
+          quantity: kitItemQuantity,
+        }));
+      });
+      return kitItems.value.map((kitItem) => {
+        const { quantity } = cartKitComposition.find(({ _id }) => {
+          return _id === kitItem._id;
+        }) || {};
+        if (!quantity) return null;
+        const cartItem = addProductToCart(kitItem, undefined, quantity);
+        if (cartItem) {
+          cartItem.kit_product = {
+            _id: product._id,
+            name: product.name,
+            price: product.price,
+            pack_quantity: packQuantity,
+            composition: cartKitComposition,
+          };
+        }
+        return cartItem;
+      });
+    }
+    return [addProductToCart(product, variationId, quantityToAdd)];
+  };
+
   return {
     isFetching,
     fetching,
@@ -108,6 +208,9 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     isActive,
     discountPercentage,
     hasVariations,
+    kitItems,
+    loadKitItems,
+    loadToCart,
   };
 };
 

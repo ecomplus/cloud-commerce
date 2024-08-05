@@ -20,7 +20,7 @@ const totalItems = computed(() => {
 });
 
 const addCartItem = (newItem: CartItem) => {
-  addItem(shoppingCart, newItem);
+  return addItem(shoppingCart, newItem);
 };
 const removeCartItem = (itemId: string) => {
   for (let i = 0; i < shoppingCart.items.length; i++) {
