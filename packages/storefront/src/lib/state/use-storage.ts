@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import { watchDebounced } from '@vueuse/core';
+import { useDebounceFn, watchDebounced } from '@vueuse/core';
 
 const useStorage = <T extends {}>(
   key: string,
@@ -25,17 +25,23 @@ const useStorage = <T extends {}>(
   const persistedValue = getStorageItem();
   const state = reactive<T>(persistedValue || initialValue);
   let bc: BroadcastChannel | undefined;
+  let isFromBc = false;
   if (isWithBroadcast && !import.meta.env.SSR && globalThis.BroadcastChannel) {
+    const syncState = useDebounceFn(() => {
+      Object.assign(state, getStorageItem());
+      isFromBc = true;
+    }, 100);
     bc = new BroadcastChannel(key);
     bc.onmessage = (event) => {
-      if (event.data === 'set') {
-        Object.assign(state, getStorageItem());
-      }
+      if (event.data === 'set') syncState();
     };
   }
   watchDebounced(state, () => {
     storage.setItem(key, JSON.stringify(state));
-    if (bc) bc.postMessage('set');
+    if (bc) {
+      if (isFromBc) isFromBc = false;
+      else bc.postMessage('set');
+    }
   }, {
     debounce: 50,
   });
