@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.1](https://github.com/ecomplus/cloud-commerce/compare/v2.25.0...v2.25.1) (2024-08-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#433](https://github.com/ecomplus/cloud-commerce/issues/433)) ([7be7be6](https://github.com/ecomplus/cloud-commerce/commit/7be7be60c1869a4c644599bbe174cf7df7893f9f))
+* **ssr:** Better debugging `fetchAndCache` external responses on fail ([02b771e](https://github.com/ecomplus/cloud-commerce/commit/02b771e92f93afa850dd35a14ff8e6777208e813))
+* **ssr:** Better debugging `fetchAndCache` external responses received with invaldi JSON ([0fe9c7f](https://github.com/ecomplus/cloud-commerce/commit/0fe9c7f5267b938c6ea626b3498a13ec744f21c3))
+* **ssr:** Only warn and continue cron SSR save views on product giving 404 (deleted) ([9457b51](https://github.com/ecomplus/cloud-commerce/commit/9457b515922307b8b90124ad83e1c656a22af904))
+* **storefront:** Fix merging state keeping deep reactivity on broadcast with `useStorage` ([5425420](https://github.com/ecomplus/cloud-commerce/commit/5425420761cfa34eebd8bf4f37c285f92d2f8b5d))
+* **storefront:** New `updateCartState` method from shopping cart state handler ([97b4f29](https://github.com/ecomplus/cloud-commerce/commit/97b4f2900124f6178897d102a966e74a1f5afa18))
+* **storefront:** Prevent looping broadcast sync on state storage composable (many tabs) ([730d862](https://github.com/ecomplus/cloud-commerce/commit/730d8622559f7fb9d4b3d88a0fb3c298dc3c150c))
+* **storefront:** Properly filtering products list on kit items fetch within product card composable ([493d0b5](https://github.com/ecomplus/cloud-commerce/commit/493d0b5e2c1385fd9ba6939d13fce66f1abc7f78))
+* **storefront:** Update Vue to ^3.4.35 ([#432](https://github.com/ecomplus/cloud-commerce/issues/432)) ([3a99634](https://github.com/ecomplus/cloud-commerce/commit/3a99634b56b813762f9752783335d3e27124c57e))
+
 ## [2.25.0](https://github.com/ecomplus/cloud-commerce/compare/v2.24.3...v2.25.0) (2024-08-05)
 
 
