@@ -83,7 +83,7 @@ export const fetchAndCache = async (
       if (response) {
         err.statusCode = response.status;
         try {
-          err.text = (await response.text()) || false;
+          err.text = (await response.text()) || '';
         } catch {
           err.text = null;
         }
