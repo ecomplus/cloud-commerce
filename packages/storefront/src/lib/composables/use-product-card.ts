@@ -118,7 +118,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     const kitComposition = product.kit_composition;
     if (kitComposition?.length) {
       const { data } = await api.get('products', {
-        _id: kitComposition.map(({ _id }) => _id),
+        params: { _id: kitComposition.map(({ _id }) => _id) },
         fields: kitItemFields,
       });
       kitItems.value = data.result;
