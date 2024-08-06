@@ -32,6 +32,7 @@ class ApiError extends Error {
   url?: string;
   response?: Response & { data?: ErrorBody };
   statusCode?: number;
+  headers?: Record<string, string>;
   data?: ErrorBody;
   retries?: number;
   isTimeout: boolean;
@@ -53,12 +54,19 @@ class ApiError extends Error {
     if (response) {
       let errorMsg = response.statusText;
       const { data } = response;
-      if (data?.error_code) errorMsg += ` (${data?.error_code})`;
+      const errorCode = data?.error_code;
+      if (errorCode) errorMsg += ` (${errorCode})`;
       if (retries) errorMsg += ` ${retries}a`;
       if (url) errorMsg += ` at ${url}`;
       super(errorMsg);
       this.data = data;
       this.statusCode = response.status;
+      if (!errorCode) {
+        this.headers = {};
+        response.headers.forEach((value, name) => {
+          this.headers![name] = value;
+        });
+      }
     } else {
       super(msg || 'Request error');
     }
