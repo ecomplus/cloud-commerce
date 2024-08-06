@@ -78,27 +78,28 @@ export const fetchAndCache = async (
     if (timer) {
       clearTimeout(timer);
     }
-    const error = async (err: any) => {
+    const error = (err: any) => {
       err.url = url;
       if (response) {
         err.statusCode = response.status;
-        err.headers = response.headers;
-        try {
-          err.text = (await response.text()) || '';
-        } catch {
-          err.text = null;
-        }
+        err.headers = {};
+        response.headers.forEach((value, name) => {
+          err.headers[name] = value;
+        });
       }
       throw err;
     };
     if (response.status > 199 && response.status < 300) {
+      let rawData: string | undefined;
       try {
-        const data = await response.json();
+        rawData = await response.text();
+        const data = JSON.parse(rawData);
         const cacheVal = { timestamp: now, data };
         runtimeCache[key] = cacheVal;
         docRef.set(cacheVal);
         return data;
-      } catch (err) {
+      } catch (err: any) {
+        err.rawData = rawData;
         return error(err);
       }
     }
