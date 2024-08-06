@@ -167,7 +167,7 @@ export const cartEvents = {
   off: cartEmitter.off,
 };
 
-if (!import.meta.env.SSR) {
+if (!import.meta.env.SSR && !window.location.pathname.startsWith('/app/')) {
   requestIdleCallback(updateCartState);
   (window as any).__shoppingCart = shoppingCart;
 }
