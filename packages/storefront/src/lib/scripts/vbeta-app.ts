@@ -96,7 +96,10 @@ const watchAppRoutes = () => {
           let buyer = order?.buyers?.[0] || customer.value;
           if (!buyer?.main_email) {
             try {
-              const _customer = (window as any).ecomPassport?.getCustomer();
+              let _customer = (window as any).ecomPassport?.getCustomer();
+              if (!_customer?.main_email) {
+                _customer = (window as any).storefrontApp?.customer;
+              }
               if (_customer?.main_email) {
                 if (!buyer) buyer = {};
                 Object.assign(buyer, _customer);
