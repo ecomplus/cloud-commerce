@@ -1,7 +1,9 @@
 import type { Products, CartSet, SearchItem } from '@cloudcommerce/api/types';
-import { computed, watch } from 'vue';
-import { useDebounceFn } from '@vueuse/core';
+import { computed } from 'vue';
+import api from '@cloudcommerce/api';
+import { useDebounceFn, watchDebounced } from '@vueuse/core';
 import mitt from 'mitt';
+import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
 import addItem from '@@sf/state/shopping-cart/add-cart-item';
 import parseProduct from '@@sf/state/shopping-cart/parse-product';
@@ -41,7 +43,43 @@ const addProductToCart = (
   product: (Partial<Products> | Partial<SearchItem>) & { _id: Products['_id'] },
   variationId?: Products['_id'],
   quantity?: number,
-) => addCartItem(parseProduct(product, variationId, quantity));
+) => {
+  return addCartItem(parseProduct(product, variationId, quantity));
+};
+
+const updateCartState = async () => {
+  if (!shoppingCart.items.length) {
+    if (shoppingCart.subtotal) shoppingCart.subtotal = 0;
+    return;
+  }
+  const productIds = shoppingCart.items.map((item) => item.product_id)
+    .filter((_id) => typeof _id === 'string' && _id.length === 24);
+  if (!productIds.length) {
+    resetCartItems();
+    return;
+  }
+  try {
+    const { data } = await api.get('search/v1', {
+      params: { _id: productIds },
+    });
+    const storedItems = [...shoppingCart.items];
+    resetCartItems();
+    data.result.forEach((searchItem) => {
+      const storedItem = storedItems.find((item) => item.product_id === searchItem._id);
+      if (!storedItem) return;
+      const { variation_id: variationId, quantity } = storedItem;
+      const cartItem = addProductToCart(searchItem, variationId, quantity);
+      if (!cartItem) return;
+      if (storedItem._id) {
+        cartItem._id = storedItem._id;
+      }
+      cartItem.customizations = storedItem.customizations;
+      cartItem.flags = storedItem.flags;
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 export default shoppingCart;
 
@@ -53,6 +91,7 @@ export {
   resetCartItems,
   parseProduct,
   addProductToCart,
+  updateCartState,
 };
 
 type CartEvent = {
@@ -82,7 +121,7 @@ const emitCartEvents = useDebounceFn((items: CartItem[]) => {
   oldItems = cloneItems();
 }, 200);
 
-watch(shoppingCart.items, (items) => {
+watchDebounced(shoppingCart.items, (items) => {
   items.forEach((item) => {
     let finalPrice = item.kit_product?.price && item.kit_product.pack_quantity
       ? item.kit_product.price / item.kit_product.pack_quantity
@@ -115,12 +154,21 @@ watch(shoppingCart.items, (items) => {
     }
   });
   shoppingCart.subtotal = items.reduce((acc, item) => {
+    const { quantity } = item;
+    const price = (item.final_price || item.price);
+    if (!(quantity > 0) || !(price > 0)) return acc;
     return acc + (item.quantity * (item.final_price || item.price));
   }, 0);
   emitCartEvents(items);
+}, {
+  debounce: 50,
 });
 
 export const cartEvents = {
   on: cartEmitter.on,
   off: cartEmitter.off,
 };
+
+if (!import.meta.env.SSR) {
+  requestIdleCallback(updateCartState);
+}
