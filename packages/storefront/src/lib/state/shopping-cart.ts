@@ -34,9 +34,7 @@ const removeCartItem = (itemId: string) => {
   }
 };
 const resetCartItems = (items?: CartItem[]) => {
-  while (shoppingCart.items.length) {
-    shoppingCart.items.pop();
-  }
+  shoppingCart.items.splice(0, shoppingCart.items.length);
   items?.forEach(addCartItem);
 };
 const addProductToCart = (
@@ -171,4 +169,5 @@ export const cartEvents = {
 
 if (!import.meta.env.SSR) {
   requestIdleCallback(updateCartState);
+  (window as any).__shoppingCart = shoppingCart;
 }
