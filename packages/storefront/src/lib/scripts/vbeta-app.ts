@@ -93,7 +93,18 @@ const watchAppRoutes = () => {
             }
           }
           const paramsToHash: PurchaseParamsToHash = {};
-          const buyer = order?.buyers?.[0] || customer.value;
+          let buyer = order?.buyers?.[0] || customer.value;
+          if (!buyer?.main_email) {
+            try {
+              const _customer = (window as any).ecomPassport?.getCustomer();
+              if (_customer?.main_email) {
+                if (!buyer) buyer = {};
+                Object.assign(buyer, _customer);
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          }
           if (buyer) {
             params.buyer_id = buyer._id;
             paramsToHash.buyer_display_name = buyer.display_name || customerName.value;
