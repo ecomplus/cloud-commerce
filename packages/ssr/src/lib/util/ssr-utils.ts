@@ -78,6 +78,14 @@ export const fetchAndCache = async (
     if (timer) {
       clearTimeout(timer);
     }
+    const error = async (err: any) => {
+      err.url = url;
+      if (response) {
+        err.statusCode = response.status;
+        err.text = (await response.text()) || null;
+      }
+      throw err;
+    };
     if (response.status > 199 && response.status < 300) {
       try {
         const data = await response.json();
@@ -85,15 +93,11 @@ export const fetchAndCache = async (
         runtimeCache[key] = cacheVal;
         docRef.set(cacheVal);
         return data;
-      } catch (err: any) {
-        err.url = url;
-        err.statusCode = response.status;
-        throw err;
+      } catch (err) {
+        return error(err);
       }
     }
-    const error: any = new Error(`Failed fetching ${url}`);
-    error.response = response;
-    throw error;
+    return error(new Error(`Failed fetching ${url}`));
   };
   const docSnap = await docRef.get();
   if (docSnap.exists) {
