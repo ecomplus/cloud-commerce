@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.2](https://github.com/ecomplus/cloud-commerce/compare/v2.25.1...v2.25.2) (2024-08-06)
+
+
+### Bug Fixes
+
+* **ssr:** Do not fail inside custom error function with invalid response on `fetchAndCache` ([2934e2f](https://github.com/ecomplus/cloud-commerce/commit/2934e2fbe50618755c6fb73ace8b192c6df4b039))
+* **storefront:** Fallback to `window.ecomPassport` (legacy) on checkout with vbeta app ([9fe2d49](https://github.com/ecomplus/cloud-commerce/commit/9fe2d498e3ea2ec669c5cf0ec1c5fffc3468939a))
+
 ## [2.25.1](https://github.com/ecomplus/cloud-commerce/compare/v2.25.0...v2.25.1) (2024-08-06)
 
 
