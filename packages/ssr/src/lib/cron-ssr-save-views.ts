@@ -1,3 +1,4 @@
+import type { ApiError } from '@cloudcommerce/api';
 import type { PageViewDocs } from './util/bump-cdn-cache';
 import { Timestamp, getFirestore } from 'firebase-admin/firestore';
 import api from '@cloudcommerce/api';
@@ -22,9 +23,15 @@ const saveViews = async () => {
           views: countUnsaved + (views || 0),
         });
         doc.ref.delete();
-      } catch (err) {
-        logger.error(err);
-        break;
+      } catch (_err: any) {
+        const err = _err as ApiError;
+        if (err.statusCode === 404) {
+          doc.ref.delete();
+          logger.warn(err);
+        } else {
+          logger.error(err);
+          break;
+        }
       }
     }
   }
