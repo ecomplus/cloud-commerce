@@ -79,11 +79,17 @@ export const fetchAndCache = async (
       clearTimeout(timer);
     }
     if (response.status > 199 && response.status < 300) {
-      const data = await response.json();
-      const cacheVal = { timestamp: now, data };
-      runtimeCache[key] = cacheVal;
-      docRef.set(cacheVal);
-      return data;
+      try {
+        const data = await response.json();
+        const cacheVal = { timestamp: now, data };
+        runtimeCache[key] = cacheVal;
+        docRef.set(cacheVal);
+        return data;
+      } catch (err: any) {
+        err.url = url;
+        err.statusCode = response.status;
+        throw err;
+      }
     }
     const error: any = new Error(`Failed fetching ${url}`);
     error.response = response;
