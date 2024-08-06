@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.4](https://github.com/ecomplus/cloud-commerce/compare/v2.25.3...v2.25.4) (2024-08-06)
+
+
+### Bug Fixes
+
+* **storefront:** Setting unlogged customer data for purchase event on vbeta app ([dd85653](https://github.com/ecomplus/cloud-commerce/commit/dd85653f9e8deb792fa60c00a3803e9c448aa48f))
+
 ## [2.25.3](https://github.com/ecomplus/cloud-commerce/compare/v2.25.2...v2.25.3) (2024-08-06)
 
 
