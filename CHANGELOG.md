@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.5](https://github.com/ecomplus/cloud-commerce/compare/v2.25.4...v2.25.5) (2024-08-07)
+
+
+### Bug Fixes
+
+* **storefront:** Minor fix `totalPages` on search showcase composable ([035630e](https://github.com/ecomplus/cloud-commerce/commit/035630e34db7eb7fda102665e5ef6bc75dfc75b2))
+
 ## [2.25.4](https://github.com/ecomplus/cloud-commerce/compare/v2.25.3...v2.25.4) (2024-08-06)
 
 
