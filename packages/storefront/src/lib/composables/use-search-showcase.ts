@@ -160,7 +160,12 @@ const useSearchShowcase = (props: Props) => {
 
   const totalPages = computed(() => {
     const { count } = searchEngine.meta;
-    if (!count || products.length < 2) return 1;
+    if (!count) {
+      return Math.max(
+        Math.ceil(products.length / searchEngine.pageSize.value),
+        searchEngine.pageNumber.value,
+      );
+    }
     return Math.ceil(count / searchEngine.pageSize.value);
   });
   watch(searchEngine.pageNumber, (pageNumber) => {
