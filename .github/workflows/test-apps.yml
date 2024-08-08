@@ -124,7 +124,7 @@ jobs:
           ECOM_STORE_ID=$ECOM_STORE_ID
           " > functions/.env
           npx cloudcommerce prepare
-          firebase --project=ecom2-demo emulators:start --only functions &
+          firebase --project=ecom2-demo emulators:start --only functions,hosting &
 
       - name: Run tests
         shell: bash
