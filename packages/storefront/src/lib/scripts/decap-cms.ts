@@ -140,12 +140,14 @@ const authAndInitCms = async () => {
 
 if (!import.meta.env.SSR) {
   (window as any).CMS_MANUAL_INIT = true;
-  if (window.CMS) {
-    authAndInitCms();
-  } else {
-    const cmsScript = document.createElement('script');
-    cmsScript.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-    cmsScript.onload = authAndInitCms;
-    document.body.appendChild(cmsScript);
+  if (window.location.pathname.startsWith('/admin/')) {
+    if (window.CMS) {
+      authAndInitCms();
+    } else {
+      const cmsScript = document.createElement('script');
+      cmsScript.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+      cmsScript.onload = authAndInitCms;
+      document.body.appendChild(cmsScript);
+    }
   }
 }
