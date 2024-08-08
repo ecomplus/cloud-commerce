@@ -206,7 +206,10 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
             fetching,
           } = useSearchShowcase({ ...props, searchEngine });
           await fetching;
-          props.products = resultSearchEngine.products;
+          props.products = resultSearchEngine.products.map((item) => ({
+            ...item,
+            __ssr: true,
+          }));
           props.resultMeta = resultSearchEngine.meta;
           props.ssrError = resultSearchEngine.fetchError.value?.message;
         }

@@ -15,7 +15,7 @@ export type Props = Partial<SectionPreviewProps> & {
   isShuffle?: boolean;
   limit?: number;
   page?: number;
-  products?: SearchItem[];
+  products?: Array<SearchItem & { __ssr?: boolean }>;
   orderedProductIds?: ResourceId[];
   isRelatedProducts?: boolean;
 }
@@ -101,7 +101,10 @@ const useProductShelf = (props: Props) => {
             return 0;
           });
         }
-        data.result.forEach((item) => products.push(item));
+        data.result.forEach((item: SearchItem & { __ssr?: boolean }) => {
+          if (import.meta.env.SSR) item.__ssr = true;
+          products.push(item);
+        });
       } catch (err: any) {
         console.error(err);
         fetchError.value = err;

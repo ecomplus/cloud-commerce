@@ -6,6 +6,7 @@ import type {
 } from '@cloudcommerce/api/types';
 import { ref, computed, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
+import { useDebounceFn } from '@vueuse/core';
 import {
   price as getPrice,
   name as getName,
@@ -16,6 +17,15 @@ import {
 import { slugify } from '@@sf/sf-lib';
 import { addProductToCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
+
+const idsToStockRefetch: string[] = [];
+const refetchStock = useDebounceFn(async () => {
+  if (!idsToStockRefetch.length) return null;
+  return api.get('products', {
+    params: { _id: idsToStockRefetch },
+    fields: ['price', 'base_price', 'quantity', 'min_quantity'] as const,
+  });
+}, 1200);
 
 type PictureSize = { url: string; alt?: string; size?: string };
 
@@ -33,10 +43,11 @@ export const kitItemFields = [
 export type KitItems = ProductsList<typeof kitItemFields>;
 
 export type Props = {
-  product?: ProductItem;
+  product?: ProductItem & { __ssr?: boolean };
   productId?: ResourceId;
   listName?: string;
   listId?: string;
+  isSkipStockRefetch?: boolean;
 } & ({ product: ProductItem } | { productId: ResourceId });
 
 const useProductCard = <T extends ProductItem | undefined = undefined>(props: Props) => {
@@ -44,6 +55,13 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
   let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
   const { productId } = props;
+  const isProductPage = props.product
+    && (props.product._id === globalThis.$storefront.apiContext?.doc._id);
+  const shouldRefetchStock = !import.meta.env.SSR && !props.isSkipStockRefetch
+    && (props.product?.__ssr || isProductPage);
+  if (!import.meta.env.SSR && props.product?.__ssr !== undefined) {
+    delete props.product.__ssr;
+  }
   const product = shallowReactive<(T extends undefined ? Partial<SearchItem> : T)
     & { _id: Products['_id'], price: number }>({
       ...(props.product as Exclude<T, undefined>),
@@ -62,6 +80,18 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       }
       isFetching.value = false;
     })();
+  }
+  if (shouldRefetchStock) {
+    idsToStockRefetch.push(product._id);
+    refetchStock()
+      .then(async (payload) => {
+        if (!payload) return;
+        const { data: { result } } = payload;
+        const productStock = result.find(({ _id }) => _id === product._id);
+        if (!productStock) return;
+        Object.assign(product, productStock);
+      })
+      .catch(console.error);
   }
 
   const title = computed(() => {
@@ -103,7 +133,6 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     if ((product as SearchItem).has_variations) return true;
     return Boolean(product.variations?.length);
   });
-  const isProductPage = globalThis.$storefront.apiContext?.doc._id === product._id;
   emitGtagEvent(isProductPage ? 'view_item' : 'view_item_list', {
     value: isActive.value ? product.price : 0,
     items: [{

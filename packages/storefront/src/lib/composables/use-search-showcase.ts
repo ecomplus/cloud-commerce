@@ -28,7 +28,7 @@ export type Props = Partial<SectionPreviewProps> & {
   term?: string | null;
   pageSize?: number;
   fixedParams?: SearchEngineInstance['params'];
-  products?: SearchItem<null>[];
+  products?: Array<SearchItem<null> & { __ssr?: boolean }>;
   resultMeta?: SearchEngineInstance['meta'];
   ssrError?: string | null;
   canUseUrlParams?: boolean;
@@ -148,7 +148,10 @@ const useSearchShowcase = (props: Props) => {
   });
   watch(searchEngine.products, () => {
     products.splice(0);
-    searchEngine.products.forEach((item) => products.push(item));
+    searchEngine.products.forEach((item: SearchItem & { __ssr?: boolean }) => {
+      if (import.meta.env.SSR) item.__ssr = true;
+      products.push(item);
+    });
     resultMeta.value = {
       count: 0,
       ...searchEngine.meta,
