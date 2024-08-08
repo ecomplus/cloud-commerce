@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.6](https://github.com/ecomplus/cloud-commerce/compare/v2.25.5...v2.25.6) (2024-08-08)
+
+
+### Bug Fixes
+
+* **cli:** Add CORS headers for /_astro/** built files on default firebase.json Hosting config ([15e10ea](https://github.com/ecomplus/cloud-commerce/commit/15e10ea67875e24f7f0175811ba5d0329d39f100))
+* **storefront:** Add debounced reftech for stocks of SSRed products ([8180695](https://github.com/ecomplus/cloud-commerce/commit/8180695231503c93ba4f7852c784791ec0fb813c))
+
 ## [2.25.5](https://github.com/ecomplus/cloud-commerce/compare/v2.25.4...v2.25.5) (2024-08-07)
 
 
