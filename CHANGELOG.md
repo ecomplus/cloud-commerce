@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.7](https://github.com/ecomplus/cloud-commerce/compare/v2.25.6...v2.25.7) (2024-08-08)
+
+
+### Bug Fixes
+
+* **storefront:** Ensure CMS auto init on /admin/ route only ([f12e0f1](https://github.com/ecomplus/cloud-commerce/commit/f12e0f1fbe73321160facc5b95c5269aa5041ec5))
+* **storefront:** Set global `window.initCMS` function for out of /admin/ CMS manual init ([f074288](https://github.com/ecomplus/cloud-commerce/commit/f074288a438b188b52da07f3c38b6c16a9777240))
+
 ## [2.25.6](https://github.com/ecomplus/cloud-commerce/compare/v2.25.5...v2.25.6) (2024-08-08)
 
 
