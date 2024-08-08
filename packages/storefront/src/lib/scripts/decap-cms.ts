@@ -149,5 +149,7 @@ if (!import.meta.env.SSR) {
       cmsScript.onload = authAndInitCms;
       document.body.appendChild(cmsScript);
     }
+  } else {
+    (window as any).initCMS = authAndInitCms;
   }
 }
