@@ -13,6 +13,7 @@ import {
   watch,
   toRef,
 } from 'vue';
+import api from '@cloudcommerce/api';
 import { useDebounceFn } from '@vueuse/core';
 import { price as getPrice, formatMoney } from '@ecomplus/utils';
 import config from '@cloudcommerce/config';
@@ -28,11 +29,14 @@ import {
 } from '@@i18n';
 import { fetchModule } from '@@sf/state/modules-info';
 
-export type ShippedItem = Exclude<CalculateShippingParams['items'], undefined>[0];
+export type ShippedItem = Exclude<CalculateShippingParams['items'], undefined>[0] & {
+  production_time?: Products['production_time'],
+};
 
 export type ShippingService = CalculateShippingResponse['shipping_services'][0];
 
-type CartOrProductItem = Carts['items'][0]
+type CartItem = Carts['items'][0];
+type CartOrProductItem = CartItem
   | (Partial<Products>
     & { price: number, quantity: number }
     & ({ product_id: string & { length: 24 } } | { _id: string & { length: 24 } })
@@ -89,6 +93,7 @@ const reduceItemBody = (itemOrProduct: Record<string, any>) => {
     'final_price',
     'dimensions',
     'weight',
+    'production_time',
   ];
   fields.forEach((field) => {
     if (itemOrProduct[field] !== undefined) {
@@ -107,18 +112,79 @@ export const useShippingCalculator = (props: Props) => {
     }
   }
   const countryCode = props.countryCode || config.get().countryCode;
-  const _shippedItems = toRef(props, 'shippedItems');
-  const shippedItems = computed(() => {
-    return _shippedItems.value?.map(reduceItemBody) || [];
-  });
+  const shippedItems = ref<ShippedItem[]>([]);
   const amountSubtotal = computed(() => {
     return shippedItems.value.reduce((subtotal, item) => {
       return subtotal + getPrice(item) * item.quantity;
     }, 0);
   });
+  const shippingServices = shallowReactive<(ShippingService & { app_id: number })[]>([]);
+  const freeFromValue = ref<number | null>(null);
+  const hasPaidOption = ref<boolean | undefined>();
+  const responseErrorCodes = shallowReactive<string[]>([]);
+  const isZipCodeRefused = computed(() => {
+    return responseErrorCodes.includes('CALCULATE_INVALID_ZIP');
+  });
+  const resetShippingResult = () => {
+    shippingServices.splice(0);
+    freeFromValue.value = null;
+    hasPaidOption.value = undefined;
+    responseErrorCodes.splice(0);
+  };
+
+  let fetchingItemWeights: Promise<any> | null = null;
+  watch(toRef(props, 'shippedItems'), (items) => {
+    resetShippingResult();
+    fetchingItemWeights = null;
+    if (!items?.length) return;
+    const productIds: Array<Products['_id']> = [];
+    items.forEach((item) => {
+      const id = (item as CartItem).product_id || (item as Partial<Products>)._id;
+      if (id) {
+        productIds.push(id);
+      }
+    });
+    if (!productIds.length) return;
+    const productFields = [
+      'dimensions' as const,
+      'weight' as const,
+      'production_time' as const,
+    ];
+    fetchingItemWeights = api.get('products', {
+      params: { _id: productIds },
+      fields: [
+        ...productFields,
+        'variations._id',
+        ...productFields.map((field) => `variations.${field}`),
+      ] as Array<typeof productFields[number] | 'variations'>,
+    })
+      .then(({ data }) => {
+        shippedItems.value = items.map(({ ...item }) => {
+          const id = (item as CartItem).product_id || (item as Partial<Products>)._id;
+          const fetchedItem = data.result.find(({ _id }) => _id === id);
+          if (fetchedItem) {
+            const variationId = (item as CartItem).variation_id;
+            if (variationId) {
+              const fetchedVariation = fetchedItem.variations?.find(({ _id }) => {
+                return _id === variationId;
+              }) || {};
+              Object.assign(item, fetchedItem, fetchedVariation);
+            } else {
+              Object.assign(item, fetchedItem);
+            }
+          }
+          return reduceItemBody(item);
+        });
+      })
+      .catch(console.error);
+  }, {
+    immediate: true,
+    deep: true,
+  });
 
   const isFetching = ref(false);
-  const fetchShippingServices = useDebounceFn((isRetry?: boolean) => {
+  const fetchShippingServices = useDebounceFn(async (isRetry?: boolean) => {
+    await fetchingItemWeights;
     if (isFetching.value) {
       const unwatch = watch((isFetching), (_isFetching) => {
         if (!_isFetching) {
@@ -128,6 +194,7 @@ export const useShippingCalculator = (props: Props) => {
       });
       return;
     }
+    isFetching.value = true;
     const body: CalculateShippingParams = {
       ...props.baseParams,
       to: {
@@ -139,7 +206,6 @@ export const useShippingCalculator = (props: Props) => {
       body.items = shippedItems.value;
       body.subtotal = amountSubtotal.value;
     }
-    isFetching.value = true;
     if (import.meta.env.DEV) {
       // eslint-disable-next-line
       return import('../../__fixtures__/calculate_shipping.json')
@@ -183,71 +249,60 @@ export const useShippingCalculator = (props: Props) => {
     }, timeout);
   };
 
-  const shippingServices = shallowReactive<(ShippingService & { app_id: number })[]>([]);
-  const freeFromValue = ref<number | null>(null);
-  const hasPaidOption = ref<boolean | undefined>();
-  const responseErrorCodes = shallowReactive<string[]>([]);
-  const isZipCodeRefused = computed(() => {
-    return responseErrorCodes.includes('CALCULATE_INVALID_ZIP');
-  });
-
   const parseShippingResult = (
     shippingResult: ModuleApiResult<'calculate_shipping'>['result'] = [],
     isRetry = false,
   ) => {
-    freeFromValue.value = null;
-    shippingServices.splice(0);
-    if (shippingResult.length) {
-      responseErrorCodes.splice(0);
-      shippingResult.forEach((appResult) => {
-        const { validated, error, response } = appResult;
-        if (!validated || error) {
-          responseErrorCodes.push(`${(response as any).error}`);
-          return;
-        }
-        if (props.skippedAppIds?.includes(appResult.app_id)) {
-          return;
-        }
-        response.shipping_services.forEach((service) => {
-          shippingServices.push({
-            app_id: appResult.app_id,
-            ...service,
-          });
-        });
-        const freeShippingFromValue = response.free_shipping_from_value;
-        if (
-          freeShippingFromValue
-          && (!freeFromValue.value || freeFromValue.value > freeShippingFromValue)
-        ) {
-          freeFromValue.value = freeShippingFromValue;
-        }
-      });
-      if (!shippingServices.length) {
-        if (responseErrorCodes.length && !isZipCodeRefused.value) {
-          if (!isRetry) {
-            fetchShippingServices(true);
-          } else {
-            scheduleRetry();
-          }
-        }
+    resetShippingResult();
+    if (!shippingResult.length) return;
+    shippingResult.forEach((appResult) => {
+      const { validated, error, response } = appResult;
+      if (!validated || error) {
+        responseErrorCodes.push(`${(response as any).error}`);
         return;
       }
-      shippingServices.sort((a, b) => {
-        const lineA = a.shipping_line;
-        const lineB = b.shipping_line;
-        const priceDiff = lineA.total_price! - lineB.total_price!;
-        if (priceDiff < 0) return -1;
-        if (priceDiff > 0) return 1;
-        return lineA.delivery_time?.days! < lineB.delivery_time?.days!
-          ? -1 : 1;
-      });
-      hasPaidOption.value = Boolean(shippingServices.find((service) => {
-        return service.shipping_line.total_price || service.shipping_line.price;
-      }));
-      const appIdsOrder = props.appIdsOrder || globalThis.ecomShippingApps || [];
-      if (Array.isArray(appIdsOrder) && appIdsOrder.length) {
-        sortApps(shippingServices, appIdsOrder);
+      if (props.skippedAppIds?.includes(appResult.app_id)) {
+        return;
       }
+      response.shipping_services.forEach((service) => {
+        shippingServices.push({
+          app_id: appResult.app_id,
+          ...service,
+        });
+      });
+      const freeShippingFromValue = response.free_shipping_from_value;
+      if (
+        freeShippingFromValue
+        && (!freeFromValue.value || freeFromValue.value > freeShippingFromValue)
+      ) {
+        freeFromValue.value = freeShippingFromValue;
+      }
+    });
+    if (!shippingServices.length) {
+      if (responseErrorCodes.length && !isZipCodeRefused.value) {
+        if (!isRetry) {
+          fetchShippingServices(true);
+        } else {
+          scheduleRetry();
+        }
+      }
+      return;
+    }
+    shippingServices.sort((a, b) => {
+      const lineA = a.shipping_line;
+      const lineB = b.shipping_line;
+      const priceDiff = lineA.total_price! - lineB.total_price!;
+      if (priceDiff < 0) return -1;
+      if (priceDiff > 0) return 1;
+      return lineA.delivery_time?.days! < lineB.delivery_time?.days!
+        ? -1 : 1;
+    });
+    hasPaidOption.value = Boolean(shippingServices.find((service) => {
+      return service.shipping_line.total_price || service.shipping_line.price;
+    }));
+    const appIdsOrder = props.appIdsOrder || globalThis.ecomShippingApps || [];
+    if (Array.isArray(appIdsOrder) && appIdsOrder.length) {
+      sortApps(shippingServices, appIdsOrder);
     }
   };
 
@@ -287,7 +342,7 @@ export const useShippingCalculator = (props: Props) => {
 
   const productionDeadline = computed(() => {
     let maxDeadline = 0;
-    _shippedItems.value?.forEach((item: Partial<Products>) => {
+    shippedItems.value.forEach((item) => {
       if (item.quantity && item.production_time) {
         const { days, cumulative } = item.production_time;
         const itemDeadline = cumulative ? days * item.quantity : days;
