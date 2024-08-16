@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.25.8](https://github.com/ecomplus/cloud-commerce/compare/v2.25.7...v2.25.8) (2024-08-16)
+
+
+### Bug Fixes
+
+* **deps:** Bump axios to v1.7.4 [security] ([a725c2a](https://github.com/ecomplus/cloud-commerce/commit/a725c2a5b27fab0beb2987a53e5b2388376352ad))
+* **deps:** Update non-major dependencies ([#437](https://github.com/ecomplus/cloud-commerce/issues/437)) ([a7aaf2b](https://github.com/ecomplus/cloud-commerce/commit/a7aaf2b661a46e7f5329bf7566185bc7c8bc7f53))
+* **storefront:** Update shipping calculator composable to (re)fetch item weights and dimensions ([e8f0d46](https://github.com/ecomplus/cloud-commerce/commit/e8f0d4618a9f3d316bff4a0662f2c7dff10152d9))
+* **storefront:** Update Vue to ^3.4.37 ([#436](https://github.com/ecomplus/cloud-commerce/issues/436)) ([070e89d](https://github.com/ecomplus/cloud-commerce/commit/070e89d913e3262c2285d99052307587a543954e))
+
 ## [2.25.7](https://github.com/ecomplus/cloud-commerce/compare/v2.25.6...v2.25.7) (2024-08-08)
 
 
