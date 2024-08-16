@@ -132,10 +132,9 @@ export const useShippingCalculator = (props: Props) => {
     responseErrorCodes.splice(0);
   };
 
-  let fetchingItemWeights: Promise<any> | null = null;
-  watch(toRef(props, 'shippedItems'), (items) => {
-    resetShippingResult();
-    fetchingItemWeights = null;
+  let hasFetchedItemWeights = false;
+  const fetchItemWeights = async () => {
+    const items = props.shippedItems;
     if (!items?.length) return;
     const productIds: Array<Products['_id']> = [];
     items.forEach((item) => {
@@ -150,41 +149,45 @@ export const useShippingCalculator = (props: Props) => {
       'weight' as const,
       'production_time' as const,
     ];
-    fetchingItemWeights = api.get('products', {
-      params: { _id: productIds },
-      fields: [
-        ...productFields,
-        'variations._id',
-        ...productFields.map((field) => `variations.${field}`),
-      ] as Array<typeof productFields[number] | 'variations'>,
-    })
-      .then(({ data }) => {
-        shippedItems.value = items.map(({ ...item }) => {
-          const id = (item as CartItem).product_id || (item as Partial<Products>)._id;
-          const fetchedItem = data.result.find(({ _id }) => _id === id);
-          if (fetchedItem) {
-            const variationId = (item as CartItem).variation_id;
-            if (variationId) {
-              const fetchedVariation = fetchedItem.variations?.find(({ _id }) => {
-                return _id === variationId;
-              }) || {};
-              Object.assign(item, fetchedItem, fetchedVariation);
-            } else {
-              Object.assign(item, fetchedItem);
-            }
+    try {
+      const { data } = await api.get('products', {
+        params: { _id: productIds },
+        fields: [
+          ...productFields,
+          'variations._id',
+          ...productFields.map((field) => `variations.${field}`),
+        ] as Array<typeof productFields[number] | 'variations'>,
+      });
+      shippedItems.value = items.map(({ ...item }) => {
+        const id = (item as CartItem).product_id || (item as Partial<Products>)._id;
+        const fetchedItem = data.result.find(({ _id }) => _id === id);
+        if (fetchedItem) {
+          const variationId = (item as CartItem).variation_id;
+          if (variationId) {
+            const fetchedVariation = fetchedItem.variations?.find(({ _id }) => {
+              return _id === variationId;
+            }) || {};
+            Object.assign(item, fetchedItem, fetchedVariation);
+          } else {
+            Object.assign(item, fetchedItem);
           }
-          return reduceItemBody(item);
-        });
-      })
-      .catch(console.error);
+        }
+        return reduceItemBody(item);
+      });
+      hasFetchedItemWeights = true;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  watch(toRef(props, 'shippedItems'), () => {
+    hasFetchedItemWeights = false;
+    resetShippingResult();
   }, {
-    immediate: true,
     deep: true,
   });
 
   const isFetching = ref(false);
   const fetchShippingServices = useDebounceFn(async (isRetry?: boolean) => {
-    await fetchingItemWeights;
     if (isFetching.value) {
       const unwatch = watch((isFetching), (_isFetching) => {
         if (!_isFetching) {
@@ -195,6 +198,9 @@ export const useShippingCalculator = (props: Props) => {
       return;
     }
     isFetching.value = true;
+    if (!hasFetchedItemWeights) {
+      await fetchItemWeights();
+    }
     const body: CalculateShippingParams = {
       ...props.baseParams,
       to: {
