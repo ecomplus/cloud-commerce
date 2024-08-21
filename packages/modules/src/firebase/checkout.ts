@@ -188,32 +188,40 @@ export default async (req: Request, res: Response) => {
     );
   }
 
+  let listPaymentGateways: any;
+  const listPayments = async () => {
+    const { transaction, ...bodyPayment } = body;
+    let paymentsBody: Payment;
+    if (Array.isArray(transaction)) {
+      paymentsBody = {
+        ...bodyPayment,
+        transaction: transaction[0],
+      };
+    } else {
+      paymentsBody = {
+        ...bodyPayment,
+        transaction,
+      };
+    }
+    listPaymentGateways = await requestModule(paymentsBody, modulesBaseURL, 'payment');
+    msgErr = listPaymentGateways.msgErr;
+    if (listPaymentGateways && !msgErr) {
+      listPaymentGateways = getValidResults(listPaymentGateways, 'payment_gateways');
+      handleListPayments(body, listPaymentGateways, paymentsBody, amount, orderBody);
+      return true;
+    }
+    listPaymentGateways = null;
+    return false;
+  };
+
+  await listPayments();
   let discounts = await requestModule(body, modulesBaseURL, 'discount');
   if (discounts) {
     discounts = getValidResults(discounts);
     handleApplyDiscount(body, discounts, amount, orderBody);
   }
 
-  const { transaction, ...bodyPayment } = body;
-  let paymentsBody: Payment;
-  if (Array.isArray(transaction)) {
-    paymentsBody = {
-      ...bodyPayment,
-      transaction: transaction[0],
-    };
-  } else {
-    paymentsBody = {
-      ...bodyPayment,
-      transaction,
-    };
-  }
-
-  let listPaymentGateways = await requestModule(paymentsBody, modulesBaseURL, 'payment');
-  msgErr = listPaymentGateways.msgErr;
-  if (listPaymentGateways && !msgErr) {
-    listPaymentGateways = getValidResults(listPaymentGateways, 'payment_gateways');
-    handleListPayments(body, listPaymentGateways, paymentsBody, amount, orderBody);
-  } else {
+  if (!(await listPayments()) && !listPaymentGateways) {
     return sendError(
       res,
       msgErr?.status || 409,

@@ -141,7 +141,6 @@ const handleListPayments = (
 
       if (paymentGateway) {
         const { discount } = paymentGateway;
-
         // handle discount by payment method
         const applyDiscountIn = discount && discount.apply_at;
         if (applyDiscountIn && discount.value && amount[applyDiscountIn]) {
@@ -156,14 +155,12 @@ const handleListPayments = (
               discountValue = maxDiscount;
             }
           }
-          amount.discount = amount.discount ? amount.discount : 0;
+          amount.discount = amount.discount || 0;
           amount.discount += discountValue;
           fixAmount(amount, body, orderBody);
         }
         // add to order body
         orderBody.payment_method_label = paymentGateway.label || '';
-
-        // finally start creating new order
       }
     }
   }
@@ -250,7 +247,9 @@ const handleApplyDiscount = (
   amount: Amount,
   orderBody: OrderSet,
 ) => {
-  // simulate request to apply discount endpoint to get extra discount value
+  // reset payment preview discount if any
+  amount.discount = 0;
+  fixAmount(amount, body, orderBody);
   for (let i = 0; i < listDiscount.length; i++) {
     const result = listDiscount[i];
     // treat apply discount response
@@ -303,7 +302,6 @@ const handleApplyDiscount = (
       }
     }
   }
-  // proceed to list payments
 };
 
 export {
