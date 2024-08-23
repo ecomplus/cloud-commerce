@@ -3,8 +3,14 @@ import type {
   Products,
   ProductsList,
   SearchItem,
+  ResourceListResult,
 } from '@cloudcommerce/api/types';
-import { ref, computed, shallowReactive } from 'vue';
+import {
+  ref,
+  computed,
+  shallowReactive,
+  watch,
+} from 'vue';
 import api from '@cloudcommerce/api';
 import { useDebounceFn } from '@vueuse/core';
 import {
@@ -19,12 +25,26 @@ import { addProductToCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
 
 const idsToStockRefetch: string[] = [];
+const productStockFields = [
+  'price' as const,
+  'base_price' as const,
+  'quantity' as const,
+  'min_quantity' as const,
+];
+const freshStocks = ref<
+  ResourceListResult<'products', typeof productStockFields>['result']
+>([]);
 const refetchStock = useDebounceFn(async () => {
-  if (!idsToStockRefetch.length) return null;
-  return api.get('products', {
-    params: { _id: idsToStockRefetch },
-    fields: ['price', 'base_price', 'quantity', 'min_quantity'] as const,
-  });
+  if (!idsToStockRefetch.length) return;
+  try {
+    const { data } = await api.get('products', {
+      params: { _id: idsToStockRefetch },
+      fields: productStockFields,
+    });
+    freshStocks.value = data.result;
+  } catch (err) {
+    console.error(err);
+  }
 }, 1200);
 
 type PictureSize = { url: string; alt?: string; size?: string };
@@ -83,15 +103,13 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
   }
   if (shouldRefetchStock) {
     idsToStockRefetch.push(product._id);
-    refetchStock()
-      .then(async (payload) => {
-        if (!payload) return;
-        const { data: { result } } = payload;
-        const productStock = result.find(({ _id }) => _id === product._id);
-        if (!productStock) return;
-        Object.assign(product, productStock);
-      })
-      .catch(console.error);
+    refetchStock();
+    const unwatchStocks = watch(freshStocks, (result) => {
+      const productStock = result.find(({ _id }) => _id === product._id);
+      if (!productStock) return;
+      Object.assign(product, productStock);
+      unwatchStocks();
+    });
   }
 
   const title = computed(() => {
