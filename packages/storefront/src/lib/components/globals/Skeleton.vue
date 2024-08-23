@@ -21,27 +21,15 @@ const nextRowsClassName = computed(() => {
 
 <template>
   <div role="status" class="animate-pulse" :class="isLarge ? 'max-w-4xl' : 'max-w-sm'">
-    <div :class="[firstRowClassName, isLarge ? 'w-96' : 'w-48']"></div>
-    <div
-      v-if="numRows > 1"
-      :class="[nextRowsClassName, isLarge ? 'max-w-[680px]' : 'max-w-[340px]']"
-    ></div>
-    <div
-      v-if="numRows > 2"
-      :class="nextRowsClassName"
-    ></div>
-    <div
-      v-if="numRows > 3"
-      :class="[nextRowsClassName, isLarge ? 'max-w-[660px]' : 'max-w-[330px]']"
-    ></div>
-    <div
-      v-if="numRows > 4"
-      :class="[nextRowsClassName, isLarge ? 'max-w-[600px]' : 'max-w-[300px]']"
-    ></div>
+    <div :class="[firstRowClassName, isLarge ? 'w-1/2' : 'w-1/3']"></div>
+    <div v-if="numRows > 1" :class="`${nextRowsClassName} w-10/12`"></div>
+    <div v-if="numRows > 2" :class="nextRowsClassName"></div>
+    <div v-if="numRows > 3" :class="`${nextRowsClassName} w-9/12`"></div>
+    <div v-if="numRows > 4" :class="`${nextRowsClassName} w-9/12`"></div>
     <template v-if="numRows > 5">
       <div
         v-for="n in (numRows - 5)" :key="n"
-        :class="[nextRowsClassName, isLarge ? 'max-w-[720px]' : 'max-w-[360px]']"
+        :class="`${nextRowsClassName} w-11/12`"
       ></div>
     </template>
     <span class="sr-only">Loading...</span>
