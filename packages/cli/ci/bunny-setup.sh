@@ -11,6 +11,7 @@ fi
 
 project_id=$1
 domain=$2
+origin_url="${3:-https://$project_id.web.app}"
 
 storage_list=$(curl --silent --request GET \
   --url https://api.bunny.net/storagezone \
@@ -50,8 +51,6 @@ if [ -z "$storage_id" ]; then
   echo "Could not create bunny.net storage zone"
   exit 1
 fi
-
-origin_url="https://$project_id.web.app"
 
 get_pull_zone_id() {
   pull_zone_list=$(curl --silent --request GET \

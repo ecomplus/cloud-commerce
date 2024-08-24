@@ -169,38 +169,7 @@ configure_edge_rule '
       ]
     }
   ],
-  "Description": "Bypass CDN cache",
-  "Enabled": true
-}
-'
-
-configure_edge_rule '
-{
-  "ActionType": 3,
-  "TriggerMatchingType": 1,
-  "ActionParameter1": "600",
-  "Triggers": [
-    {
-      "Type": 0,
-      "PatternMatchingType": 0,
-      "PatternMatches": [
-        "*.xml",
-        "*.txt",
-        "*/app/*",
-        "*/~*",
-        "*/.*"
-      ]
-    },
-    {
-      "Type": 8,
-      "PatternMatchingType": 0,
-      "PatternMatches": [
-        "200",
-        "404"
-      ]
-    }
-  ],
-  "Description": "Reset feeds/app CDN cache",
+  "Description": "Privates bypass CDN cache",
   "Enabled": true
 }
 '
@@ -208,38 +177,7 @@ configure_edge_rule '
 configure_edge_rule '
 {
   "ActionType": 15,
-  "TriggerMatchingType": 0,
-  "Triggers": [
-    {
-      "Type": 0,
-      "PatternMatchingType": 0,
-      "PatternMatches": [
-        "*/_api/*",
-        "*/app/*",
-        "*/admin/*",
-        "*/~*",
-        "*/.*"
-      ]
-    },
-    {
-      "Type": 0,
-      "PatternMatchingType": 0,
-      "PatternMatches": [
-        "*.xml",
-        "*.txt"
-      ]
-    }
-  ],
-  "Description": "Bypass perma-cache",
-  "Enabled": true
-}
-'
-
-configure_edge_rule '
-{
-  "ActionType": 16,
-  "ActionParameter1": "120",
-  "ActionParameter2": null,
+  "TriggerMatchingType": 1,
   "Triggers": [
     {
       "Type": 0,
@@ -262,8 +200,72 @@ configure_edge_rule '
       "Parameter1": ""
     }
   ],
+  "Description": "SSR bypass perma-cache",
+  "Enabled": true
+}
+'
+
+configure_edge_rule '
+{
+  "ActionType": 3,
+  "ActionParameter1": "300",
   "TriggerMatchingType": 1,
-  "Description": "SSR browser cache",
+  "Triggers": [
+    {
+      "Type": 0,
+      "PatternMatches": [
+        "*/_astro/*"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    },
+    {
+      "Type": 3,
+      "PatternMatches": [
+        "webp",
+        "png",
+        "jpg",
+        "woff2",
+        "mp4"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    }
+  ],
+  "Description": "Reset SSR CDN cache",
+  "Enabled": true
+}
+'
+
+configure_edge_rule '
+{
+  "ActionType": 16,
+  "ActionParameter1": "120",
+  "ActionParameter2": null,
+  "TriggerMatchingType": 1,
+  "Triggers": [
+    {
+      "Type": 0,
+      "PatternMatches": [
+        "*/_astro/*"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    },
+    {
+      "Type": 3,
+      "PatternMatches": [
+        "webp",
+        "png",
+        "jpg",
+        "woff2",
+        "mp4"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    }
+  ],
+  "Description": "Reset SSR browser cache",
   "Enabled": true
 }
 '
@@ -330,27 +332,6 @@ configure_edge_rule '
     }
   ],
   "Description": "Redirect /search -> /s/",
-  "Enabled": true
-}
-'
-
-configure_edge_rule '
-{
-  "ActionType": 5,
-  "ActionParameter1": "Content-Type",
-  "ActionParameter2": "text/html",
-  "Triggers": [
-    {
-      "Type": 2,
-      "PatternMatchingType": 0,
-      "PatternMatches": [
-        "application/octet-stream"
-      ],
-      "Parameter1": "Content-Type"
-    }
-  ],
-  "TriggerMatchingType": 1,
-  "Description": "Force mime text/html",
   "Enabled": true
 }
 '
