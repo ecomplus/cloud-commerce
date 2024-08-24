@@ -105,10 +105,17 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
     return bypassEarly();
   }
   if (
-    pathname === '/_image'
-    || pathname.startsWith('/~')
+    pathname.startsWith('/_astro/')
+    || pathname.startsWith('/img/')
+    || pathname.startsWith('/assets/')
+    || pathname.startsWith('/admin/')
     || pathname.startsWith('/_api/')
-    || pathname.startsWith('/_feeds/')
+    || pathname.startsWith('/_image')
+    || pathname.startsWith('/_analytics')
+    || pathname.startsWith('/~')
+    || pathname.startsWith('/.')
+    || pathname.endsWith('.js')
+    || pathname.endsWith('.css')
   ) {
     return bypassEarly();
   }

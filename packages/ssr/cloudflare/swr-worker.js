@@ -83,10 +83,17 @@ const swr = async (_rewritedReq, env, ctx) => {
   if (_request.method !== 'GET') {
     return bypassEarly();
   }
-  if (pathname === '/_image'
-        || pathname.startsWith('/~')
+  if (pathname.startsWith('/_astro/')
+        || pathname.startsWith('/img/')
+        || pathname.startsWith('/assets/')
+        || pathname.startsWith('/admin/')
         || pathname.startsWith('/_api/')
-        || pathname.startsWith('/_feeds/')) {
+        || pathname.startsWith('/_image')
+        || pathname.startsWith('/_analytics')
+        || pathname.startsWith('/~')
+        || pathname.startsWith('/.')
+        || pathname.endsWith('.js')
+        || pathname.endsWith('.css')) {
     return bypassEarly();
   }
   const [uri] = url.href.split('?', 2);
