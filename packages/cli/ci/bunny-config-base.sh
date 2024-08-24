@@ -15,6 +15,7 @@ fi
 
 project_id=$1
 domain=$2
+swr_origin_url=$3
 
 response=$(curl --silent --request GET \
   --url https://api.bunny.net/pullzone \
@@ -174,6 +175,63 @@ configure_edge_rule '
 }
 '
 
+if [ -n "$swr_origin_url" ]; then
+  configure_edge_rule '
+{
+  "ActionType": 2,
+  "ActionParameter1": "'$swr_origin_url'",
+  "ActionParameter2": "",
+  "TriggerMatchingType": 1,
+  "Triggers": [
+    {
+      "Type": 0,
+      "PatternMatches": [
+        "*/_astro/*",
+        "*/img/*",
+        "*/assets/*",
+        "*/_api/*",
+        "*/admin/*"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    },
+    {
+      "Type": 0,
+      "PatternMatches": [
+        "*/_image",
+        "*/_analytics"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    },
+    {
+      "Type": 3,
+      "PatternMatches": [
+        "webp",
+        "png",
+        "jpg",
+        "woff2",
+        "mp4"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    },
+    {
+      "Type": 3,
+      "PatternMatches": [
+        "js",
+        "css"
+      ],
+      "PatternMatchingType": 2,
+      "Parameter1": ""
+    }
+  ],
+  "Description": "Persistent SWR proxy",
+  "Enabled": true
+}
+'
+fi
+
 configure_edge_rule '
 {
   "ActionType": 15,
@@ -208,7 +266,7 @@ configure_edge_rule '
 configure_edge_rule '
 {
   "ActionType": 3,
-  "ActionParameter1": "300",
+  "ActionParameter1": "240",
   "TriggerMatchingType": 1,
   "Triggers": [
     {

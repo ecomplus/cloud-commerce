@@ -11,7 +11,7 @@ fi
 
 project_id=$1
 domain=$2
-origin_url="${3:-https://$project_id.web.app}"
+swr_origin_url=$3
 
 storage_list=$(curl --silent --request GET \
   --url https://api.bunny.net/storagezone \
@@ -51,6 +51,8 @@ if [ -z "$storage_id" ]; then
   echo "Could not create bunny.net storage zone"
   exit 1
 fi
+
+origin_url="https://$project_id.web.app"
 
 get_pull_zone_id() {
   pull_zone_list=$(curl --silent --request GET \
@@ -98,5 +100,5 @@ if [ -n "$domain" ]; then
   printf "\n\n> Added hostname \"$domain\" to pull zone"
 
   script_dir=$(dirname $0)
-  bash $script_dir/bunny-config-base.sh $project_id $domain
+  bash $script_dir/bunny-config-base.sh $project_id $domain $swr_origin_url
 fi
