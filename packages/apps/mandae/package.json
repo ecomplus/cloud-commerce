@@ -28,8 +28,8 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "axios": "^1.7.4",
-    "firebase-functions": "^5.0.1"
+    "axios": "^1.7.5",
+    "firebase-functions": "^5.1.0"
   },
   "devDependencies": {
     "@cloudcommerce/test-base": "workspace:*",
