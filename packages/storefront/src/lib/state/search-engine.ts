@@ -149,15 +149,16 @@ export class SearchEngine {
         this.#middlewares[i](searchOptions);
       }
       response = await this.#search(searchOptions);
+      this.#isFetching.value = false;
     } catch (err: any) {
       if (this.#fulfillFetching) {
         this.#fetchError.value = err;
         this.#fulfillFetching();
       }
+      this.#isFetching.value = false;
       throw err;
     }
     if (response) {
-      this.#isFetching.value = false;
       const { data } = response;
       if (data.meta) {
         this.setResult(data);
@@ -173,6 +174,7 @@ export class SearchEngine {
       Object.assign(this.meta, data.meta);
     }
     if (data.result) {
+      this.products.push(null as any);
       this.products.splice(0);
       data.result.forEach((item) => this.products.push(item));
     }
@@ -180,7 +182,7 @@ export class SearchEngine {
       if (!this.#fulfillFetching) {
         this.#wasFetched.value = true;
       } else {
-        setTimeout(() => {
+        /* nextTick */ setTimeout(() => {
           this.#wasFetched.value = true;
           if (this.#fulfillFetching) {
             this.#fulfillFetching();
