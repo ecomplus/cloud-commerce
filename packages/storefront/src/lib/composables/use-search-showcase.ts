@@ -146,7 +146,7 @@ const useSearchShowcase = (props: Props) => {
     count: 0,
     ...(props.resultMeta || searchEngine.meta),
   });
-  watch(searchEngine.products, () => {
+  const hybridOnProductsChange = () => {
     products.splice(0);
     searchEngine.products.forEach((item: SearchItem & { __ssr?: boolean }) => {
       if (import.meta.env.SSR) item.__ssr = true;
@@ -159,7 +159,12 @@ const useSearchShowcase = (props: Props) => {
     if (!products.length) {
       handleEmptyResult();
     }
-  });
+  };
+  if (import.meta.env.SSR) {
+    searchEngine.fetching.value?.then(hybridOnProductsChange);
+  } else {
+    watch(searchEngine.products, hybridOnProductsChange);
+  }
 
   const totalPages = computed(() => {
     const { count } = searchEngine.meta;
