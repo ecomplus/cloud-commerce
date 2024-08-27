@@ -3,9 +3,8 @@ import type { Request, Response } from 'firebase-functions';
 import type { GroupedAnalyticsEvents } from './analytics/send-analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
-import { pathToDocId, checkUserAgent, fetchAndCache } from './util/ssr-utils';
+import { checkUserAgent, fetchAndCache } from './util/ssr-utils';
 import { sendAnalyticsEvents } from './analytics/send-analytics-events';
 
 declare global {
@@ -278,26 +277,6 @@ export default async (req: Request, res: Response) => {
     headers['X-Async-Ex'] = `${execId}_${Date.now() - startedAt}`;
     _writeHead.apply(res, [status, headers]);
     resolveHeadersSent?.(null);
-    if (req.method === 'GET' && status === 200) {
-      if (
-        pathname.startsWith('/~')
-        || pathname.startsWith('/.')
-        || pathname.startsWith('/app/')
-        || pathname.startsWith('/admin/')
-      ) {
-        // Routes with short cache TTL, see cli/ci/bunny-config-base.sh
-        return;
-      }
-      const reqDocId = pathname === '/' ? '_HOME_' : pathToDocId(pathname);
-      getFirestore().doc(`ssrReqs/${reqDocId}`)
-        .set({
-          pathname,
-          count: FieldValue.increment(1),
-          isCachePurged: false,
-          at: Timestamp.now(),
-        }, { merge: true })
-        .catch(logger.warn);
-    }
   };
 
   const setStatusAndCache = (status: number, cacheControl: string) => {
