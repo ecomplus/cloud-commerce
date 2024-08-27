@@ -110,7 +110,9 @@ const useSearchShowcase = (props: Props) => {
   }
 
   const popularTerms = ref<null | string[]>(null);
+  const isEmptyResult = ref(false);
   const handleEmptyResult = async () => {
+    isEmptyResult.value = true;
     if (import.meta.env.SSR) return;
     if (props.canFetchTermsOnEmpty !== false) {
       try {
@@ -272,6 +274,7 @@ const useSearchShowcase = (props: Props) => {
     filtersCount,
     sortOptions,
     sortOption,
+    isEmptyResult,
     popularTerms,
   };
 };
