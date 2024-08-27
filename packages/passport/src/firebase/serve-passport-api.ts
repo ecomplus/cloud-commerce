@@ -2,7 +2,11 @@ import type { Request, Response } from 'firebase-functions';
 import type { Customers, ApiError } from '@cloudcommerce/api/types';
 import { logger } from 'firebase-functions';
 import api from '@cloudcommerce/api';
-import { findCustomerByEmail, authenticateCustomer } from './authenticate-customer';
+import {
+  findCustomerByEmail,
+  getCustomerToken,
+  authenticateWithFirebase,
+} from './authenticate-customer';
 
 const maskCustomerFields = (customer: Customers) => {
   const safeCustomer: Customers = {
@@ -63,26 +67,31 @@ export default async (req: Request, res: Response) => {
       if (typeof email === 'string' && /^[^@]+@[^@]+\.[^@]+$/.test(email)) {
         const docNumber = body.doc_number ? `${body.doc_number}` : undefined;
         try {
-          const customerMatch = await findCustomerByEmail(email, docNumber);
-          if (customerMatch) {
-            const customerId = customerMatch._id;
+          const foundCustomer = await findCustomerByEmail(email, docNumber);
+          if (foundCustomer) {
+            const customerId = foundCustomer._id;
             const customer = {
-              ...customerMatch,
+              ...foundCustomer,
               doc_number: docNumber,
             };
-            const level = docNumber ? 1 : 0;
+            let level = docNumber ? 1 : 0;
+            let token: null | Record<string, string> = null;
             if (level) {
-              Object.assign(
-                customer,
-                maskCustomerFields((await api.get(`customers/${customerId}`)).data),
-              );
+              const fullCustomer = (await api.get(`customers/${customerId}`)).data;
+              if (process.env.PASSPORT_UNVERIFIED_AUTH?.toLowerCase() === 'true') {
+                Object.assign(customer, fullCustomer);
+                level = 2;
+                token = await getCustomerToken(customer);
+              } else {
+                Object.assign(customer, maskCustomerFields(fullCustomer));
+              }
             }
             res.send({
               customer,
               auth: {
                 id: customer._id,
                 level,
-                token: null,
+                token,
               },
             });
             return;
@@ -111,9 +120,9 @@ export default async (req: Request, res: Response) => {
     return;
   }
   try {
-    const authCustomerApi = await authenticateCustomer(firebaseAuthToken);
-    if (authCustomerApi !== null) {
-      res.send(authCustomerApi);
+    const customerToken = await authenticateWithFirebase(firebaseAuthToken);
+    if (customerToken !== null) {
+      res.send(customerToken);
       return;
     }
     res.status(401).json({

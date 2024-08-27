@@ -70,34 +70,37 @@ const checkFirebaseAuth = async (authToken: string) => {
   }
 };
 
-export const authenticateCustomer = async (firebaseAuthToken: string) => {
+export const getCustomerToken = async (customer: Partial<Customers>) => {
+  const customerId = customer._id;
+  if (!customerId) return null;
+  if (customer.login === false) return null;
+  const docRef = getFirestore().doc(`customerTokens/${customerId}`);
+  const storedToken = (await docRef.get()).data() as undefined | {
+    customer_id: string,
+    access_token: string,
+    expires: string,
+  };
+  const expires = storedToken?.expires;
+  if (expires && new Date(expires).getTime() - Date.now() >= 2 * 60 * 1000) {
+    return storedToken;
+  }
+  const permissions: ApiPermissions = { '*': ['all'] };
+  if (customer.enabled === false) {
+    permissions.orders = ['GET', 'PATCH'];
+  }
+  const customerToken = await generateAccessToken(customerId, permissions);
+  docRef.set(customerToken).catch(logger.error);
+  return customerToken;
+};
+
+export const authenticateWithFirebase = async (firebaseAuthToken: string) => {
   const firebaseAuthUser = await checkFirebaseAuth(firebaseAuthToken);
   if (firebaseAuthUser) {
     const { name, email, email_verified: isEmailVerified } = firebaseAuthUser;
     if (email && isEmailVerified) {
-      const customerMatch = await findCustomerByEmail(email);
-      const customerId = customerMatch?._id;
-      if (customerId) {
-        if (customerMatch.login === false) {
-          return null;
-        }
-        const docRef = getFirestore().doc(`customerTokens/${customerId}`);
-        const storedToken = (await docRef.get()).data() as undefined | {
-          customer_id: string,
-          access_token: string,
-          expires: string,
-        };
-        const expires = storedToken?.expires;
-        if (expires && new Date(expires).getTime() - Date.now() >= 2 * 60 * 1000) {
-          return storedToken;
-        }
-        const permissions: ApiPermissions = { '*': ['all'] };
-        if (customerMatch.enabled === false) {
-          permissions.orders = ['GET', 'PATCH'];
-        }
-        const customerToken = await generateAccessToken(customerId, permissions);
-        docRef.set(customerToken).catch(logger.error);
-        return customerToken;
+      const foundCustomer = await findCustomerByEmail(email);
+      if (foundCustomer) {
+        return getCustomerToken(foundCustomer);
       }
       const { data: newCustomer } = await api.post('customers', {
         display_name: name || '',
