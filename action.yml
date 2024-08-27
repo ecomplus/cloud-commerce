@@ -32,6 +32,8 @@ inputs:
     description: 'Emails: SMTP username'
   smtp-pass:
     description: 'Emails: SMTP password'
+  passport-unverified-auth:
+    description: 'Set `true` to pass simpler customer login without email verification'
   bunnynet-api-key:
     description: 'bunny.net API key (additional CDN layer)'
   sendgrid-api-key:
@@ -262,6 +264,7 @@ runs:
         SMTP_PORT: ${{ inputs.smtp-port }}
         SMTP_USER: ${{ inputs.smtp-user }}
         SMTP_PASS: ${{ inputs.smtp-pass }}
+        PASSPORT_UNVERIFIED_AUTH: ${{ inputs.passport-unverified-auth }}
         BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
         TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
@@ -310,6 +313,7 @@ runs:
         SMTP_PORT=$SMTP_PORT
         SMTP_USER=$SMTP_USER
         SMTP_PASS=$SMTP_PASS
+        PASSPORT_UNVERIFIED_AUTH=$PASSPORT_UNVERIFIED_AUTH
         BUNNYNET_API_KEY=$BUNNYNET_API_KEY
         SENDGRID_API_KEY=$SENDGRID_API_KEY
         TINYERP_TOKEN=$TINYERP_TOKEN
