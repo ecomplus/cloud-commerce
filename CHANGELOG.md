@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.26.0](https://github.com/ecomplus/cloud-commerce/compare/v2.25.8...v2.26.0) (2024-08-27)
+
+
+### Features
+
+* **passport:** Support `env.PASSPORT_UNVERIFIED_AUTH` to pass email+doc only full login (v1-like) ([2be13cb](https://github.com/ecomplus/cloud-commerce/commit/2be13cb0917a069b784196248253cdb2084caa19))
+* **storefront:** Return new `isEmptyResult` state on search showcase composable ([a754bc1](https://github.com/ecomplus/cloud-commerce/commit/a754bc1efdf1c38e2e023e72f320e27c671b8e32))
+
+
+### Bug Fixes
+
+* **cli:** Update bunny.net (CI) edge rules for SWR ("SSR") on Cloudflare instead of direct "ISR" ([20f02f8](https://github.com/ecomplus/cloud-commerce/commit/20f02f832f3f680785cdbb77891ae684d60dc070))
+* **cli:** Update bunny.net CI reverting origin to Firebase directly, and change for SWR on edge rule ([733423e](https://github.com/ecomplus/cloud-commerce/commit/733423e3659e845c4f4170b9772d9600588ff413))
+* **deps:** Update dependency unocss to ^0.62.3 ([#442](https://github.com/ecomplus/cloud-commerce/issues/442)) ([c8683e3](https://github.com/ecomplus/cloud-commerce/commit/c8683e320d48b19fcf0ba835909a6cf4f88ddef5))
+* **deps:** Update non-major dependencies ([#443](https://github.com/ecomplus/cloud-commerce/issues/443)) ([dbf5c00](https://github.com/ecomplus/cloud-commerce/commit/dbf5c005bf8fc1687ffc77b5ba8736a9f83ed531))
+* **modules:** Run list payments (preview) twice, once before apply discount ([513bc10](https://github.com/ecomplus/cloud-commerce/commit/513bc10846e07be705a7440a02e74291a3546583))
+* **ssr:** Updating CF SWR worker with same paths to bypass from current BunnyCDN edge rules ([1f74ebe](https://github.com/ecomplus/cloud-commerce/commit/1f74ebeb3d2a9594367d0dc79d6565b4ec632e68))
+* **storefront:** Better handling search engine promise and `wasFetched` state ([9069263](https://github.com/ecomplus/cloud-commerce/commit/906926393557903dca5fe1cfc66fc4d106f1c2cd))
+* **storefront:** Bump Vue to ^3.4.38 ([#440](https://github.com/ecomplus/cloud-commerce/issues/440)) ([db8046f](https://github.com/ecomplus/cloud-commerce/commit/db8046fd3d37fb45c110eddf7eaee1459d35f0da))
+* **storefront:** Ensure searchj engine products reactivity even on repeated(empty) results ([5b798ed](https://github.com/ecomplus/cloud-commerce/commit/5b798ed635ca3d4b3c16489b3fb9e1604bc5dfb2))
+* **storefront:** Fix handling stock refresh with multiple items ([4662bde](https://github.com/ecomplus/cloud-commerce/commit/4662bdeafb372a63b61c84fa606505ac7c567521))
+* **storefront:** Improving global `<Skeleton>` responsiveness ([835b9dc](https://github.com/ecomplus/cloud-commerce/commit/835b9dc60ac6a0d6f55bff82562f8e950297c7ed))
+* **storefront:** Update search showcase composable to properly await search fetch (if any) on SSR ([f287e41](https://github.com/ecomplus/cloud-commerce/commit/f287e41ef1ae0b0de7a1f3596fee1cc95022217e))
+* **storefront:** Update vbeta-app script with `@ecomplus/storefront-app@2.0.0-beta.207` ([6ff504f](https://github.com/ecomplus/cloud-commerce/commit/6ff504fac7e8f4bbc65ccd57a17afa3f6ae864c3))
+
 ## [2.25.8](https://github.com/ecomplus/cloud-commerce/compare/v2.25.7...v2.25.8) (2024-08-16)
 
 
