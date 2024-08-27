@@ -158,13 +158,9 @@ export class SearchEngine {
     }
     if (response) {
       this.#isFetching.value = false;
-      this.#wasFetched.value = true;
       const { data } = response;
       if (data.meta) {
         this.setResult(data);
-      }
-      if (this.#fulfillFetching) {
-        this.#fulfillFetching();
       }
     }
   }
@@ -181,9 +177,16 @@ export class SearchEngine {
       data.result.forEach((item) => this.products.push(item));
     }
     if (data.meta && data.result) {
-      /* nextTick */ setTimeout(() => {
+      if (!this.#fulfillFetching) {
         this.#wasFetched.value = true;
-      }, 9);
+      } else {
+        setTimeout(() => {
+          this.#wasFetched.value = true;
+          if (this.#fulfillFetching) {
+            this.#fulfillFetching();
+          }
+        }, import.meta.env.SSR ? 1 : 9);
+      }
     }
   }
 }
