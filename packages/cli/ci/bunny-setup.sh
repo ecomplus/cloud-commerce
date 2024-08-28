@@ -82,7 +82,8 @@ if [ -z "$pull_zone_id" ]; then
   \"Name\": \"$project_id\",
   \"PermaCacheStorageZoneId\": $storage_id,
   \"CacheControlMaxAgeOverride\": 31919000,
-  \"EnableOriginShield\": false
+  \"EnableOriginShield\": false,
+  \"EnableRequestCoalescing\": true
 }
 ")
 
