@@ -1,9 +1,14 @@
 // Compiled version at https://github.com/ecomplus/cloud-commerce/blob/main/packages/ssr/cloudflare/swr-worker.js
 // Inspired by https://gist.github.com/wilsonpage/a4568d776ee6de188999afe6e2d2ee69
+// Coalescing adapted from https://developers.cloudflare.com/durable-objects/examples/build-a-rate-limiter/
+/* eslint-disable import/no-unresolved */
+// @ts-ignore
+import { DurableObject } from 'cloudflare:workers';
 
 const HEADER_CACHE_CONTROL = 'Cache-Control';
 const HEADER_SSR_TOOK = 'X-Load-Took';
 const HEADER_STALE_AT = 'X-Edge-Stale-At';
+const v = 38;
 
 interface ParsedCacheControl {
   'max-age'?: number;
@@ -53,13 +58,18 @@ const addHeaders = (response: Response, headers: Record<string, string | null>) 
   return res;
 };
 
-const toCacheRes = (response: Response, cacheControl?: string | null, staleAt?: number) => {
+const toCacheRes = (response: Response, { cacheControl, staleAt, customHeaders }: {
+  cacheControl?: string | null,
+  staleAt?: number,
+  customHeaders?: Record<string, string>,
+} = {}) => {
   if (cacheControl === undefined) {
     const parsedCacheControl = resolveCacheControl(response);
     cacheControl = parsedCacheControl.cacheControl;
     staleAt = parsedCacheControl.staleAt;
   }
   return addHeaders(response, {
+    ...customHeaders,
     [HEADER_CACHE_CONTROL]: cacheControl,
     [HEADER_STALE_AT]: `${(staleAt || 0)}`,
     'set-cookie': null,
@@ -86,7 +96,22 @@ const putKvCache = async (kv: KVNamespace, kvKey: string, newCacheRes: Response)
 
 export type Env = Record<`OVERRIDE_${string}`, string | undefined> & {
   PERMA_CACHE: KVNamespace | undefined;
+  COALESCING_STATE: DurableObjectNamespace | undefined;
 };
+
+export class CoalescingState extends DurableObject {
+  updatingAt: number;
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
+    this.updatingAt = 0;
+  }
+  async setUpdatingAt(at: number) {
+    this.updatingAt = at;
+  }
+  async checkUpdating() {
+    return this.updatingAt + 15000 > Date.now();
+  }
+}
 
 const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
   const _request = new Request(_rewritedReq.url.replace('/__swr/', '/'), _rewritedReq);
@@ -121,7 +146,6 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
   }
   const [uri] = url.href.split('?', 2);
   const request = new Request(`${uri}?t=${Date.now()}`, _request);
-  const v = 38;
   const cacheKey = new Request(`${uri}?v=${(v + 1)}`, {
     method: _request.method,
   });
@@ -131,15 +155,12 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
   let edgeSource = '';
   try {
     const gettingCache = caches.default.match(cacheKey);
-    let kvStoredRes: typeof cachedRes;
     const gettingKv = kv
       ? kv.get(kvKey, { type: 'json' }).then((value: any) => {
         if (value) {
           const { body, headers } = value as { body: string, headers: Record<string, string> };
-          kvStoredRes = new Response(body, { headers, status: 200 });
-          return kvStoredRes;
+          return new Response(body, { headers, status: 200 });
         }
-        kvStoredRes = null;
         return undefined;
       })
       : Promise.resolve(undefined);
@@ -149,11 +170,11 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
           if (fromCache) {
             edgeSource = 'cache';
             resolve(fromCache);
-          } else if (kvStoredRes !== undefined) {
-            resolve(kvStoredRes);
-          } else {
-            gettingKv.finally(() => resolve(kvStoredRes));
+            return;
           }
+          gettingKv.finally(() => {
+            setTimeout(() => resolve(null), 2);
+          });
         });
       }) as Promise<typeof cachedRes>,
       new Promise((resolve) => {
@@ -161,9 +182,11 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
           if (fromKv) {
             edgeSource = 'kv';
             resolve(fromKv);
-          } else {
-            gettingCache.then((fromCache) => resolve(fromCache));
+            return;
           }
+          gettingCache.finally(() => {
+            setTimeout(() => resolve(null), 2);
+          });
         });
       }) as Promise<typeof cachedRes>,
     ]);
@@ -178,11 +201,29 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
     } else if (Date.now() > cachedStaleAt) {
       edgeState = 'stale';
       ctx.waitUntil((async () => {
-        const newCacheRes = toCacheRes(await fetch(request));
+        const coalescingId = env.COALESCING_STATE?.idFromName(kvKey);
+        let coalescingStub: CoalescingState | undefined;
+        if (coalescingId) {
+          try {
+            coalescingStub = env.COALESCING_STATE!.get(coalescingId) as any as CoalescingState;
+            if (await coalescingStub.checkUpdating()) {
+              return;
+            }
+          } catch {
+            //
+          }
+        }
+        const updatingAt = Date.now();
+        if (coalescingStub) {
+          await coalescingStub.setUpdatingAt(updatingAt);
+        }
+        const newCacheRes = toCacheRes(await fetch(request), {
+          customHeaders: { 'x-edge-coalescing': coalescingStub ? `${updatingAt}` : '0' },
+        });
+        ctx.waitUntil(caches.default.put(cacheKey, newCacheRes.clone()));
         if (kv && checkToKvCache(newCacheRes)) {
           ctx.waitUntil(putKvCache(kv, kvKey, newCacheRes));
         }
-        return caches.default.put(cacheKey, newCacheRes);
       })());
     } else {
       edgeState = 'fresh';
@@ -190,17 +231,22 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
   }
   const response = cachedRes || await fetch(request);
   const { cacheControl, staleAt } = resolveCacheControl(response);
+  let firstCache = '00';
   if (!cachedRes && response.ok) {
-    const newCacheRes = toCacheRes(response, cacheControl, staleAt);
-    ctx.waitUntil(caches.default.put(cacheKey, newCacheRes));
+    const newCacheRes = toCacheRes(response, { cacheControl, staleAt });
+    ctx.waitUntil(caches.default.put(cacheKey, newCacheRes.clone()));
+    firstCache = '01';
     if (kv && checkToKvCache(newCacheRes)) {
       ctx.waitUntil(putKvCache(kv, kvKey, newCacheRes));
+      firstCache = '11';
     }
   }
   return addHeaders(response, {
     [HEADER_CACHE_CONTROL]: cacheControl,
     'x-edge-state': edgeState,
-    'x-edge-src': edgeSource,
+    'x-edge-src': !cachedRes
+      ? `__NONE__; ${firstCache}; v${v}`
+      : `${edgeSource}; v${v}`,
   });
 };
 
