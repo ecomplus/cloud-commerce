@@ -51,6 +51,12 @@ const addHeaders = (response, headers) => {
       res.headers.append(key, value);
     }
   });
+  const redirectLocation = res.headers.get('location');
+  if (redirectLocation) {
+    const fixedRedirectLocation = redirectLocation
+      .replace(/\?[tv]=\w*&?/, '?').replace(/\?$/, '');
+    res.headers.set('location', fixedRedirectLocation);
+  }
   return res;
 };
 const toCacheRes = (response, cacheControlOpts = {}) => {
@@ -93,7 +99,10 @@ export class CoalescingState extends DurableObject {
 }
 
 const swr = async (_rewritedReq, env, ctx) => {
-  const _request = new Request(_rewritedReq.url.replace('/__swr/', '/'), _rewritedReq);
+  const _request = new Request(_rewritedReq.url.replace('/__swr/', '/'), {
+    ..._rewritedReq,
+    redirect: 'manual',
+  });
   const url = new URL(_request.url);
   const { hostname, pathname } = url;
   const hostOverride = env[`OVERRIDE_${hostname}`];
@@ -194,8 +203,10 @@ const swr = async (_rewritedReq, env, ctx) => {
           await coalescingStub.setUpdatingAt(Date.now());
         }
         const response = await fetch(request);
-        const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
-        ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
+        if (response.status > 199 && response.status < 500) {
+          const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+          ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
+        }
         const newKvCache = toCacheRes(response);
         if (kv && checkToKvCache(newKvCache)) {
           ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
@@ -217,22 +228,25 @@ const swr = async (_rewritedReq, env, ctx) => {
   }
   const response = cachedRes || await fetch(request);
   const { cacheControl } = resolveCacheControl(response);
-  let firstCache = '00';
-  if (!cachedRes && response.ok) {
-    const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
-    ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
-    firstCache = '01';
+  let iCdnCache = 0;
+  let iKvCache = 0;
+  if (!cachedRes) {
+    if (response.status > 199 && response.status < 500) {
+      const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+      ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
+      iCdnCache = 1;
+    }
     const newKvCache = toCacheRes(response);
     if (kv && checkToKvCache(newKvCache)) {
       ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
-      firstCache = '11';
+      iKvCache = 1;
     }
   }
   return addHeaders(response, {
     [HEADER_CACHE_CONTROL]: cacheControl,
     'x-edge-state': edgeState,
     'x-edge-src': !cachedRes
-      ? `__NONE__; ${firstCache}; v${v}`
+      ? `__NONE__; ${iCdnCache}${iKvCache}; v${v}`
       : `${edgeSource}; v${v}`,
   });
 };
