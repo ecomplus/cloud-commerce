@@ -16,13 +16,16 @@ interface ParsedCacheControl {
   'stale-while-revalidate'?: number;
 }
 
-const resolveCacheControl = (response: Response) => {
+const resolveCacheControl = (response: Response, { isPreventSoftStale, ageHardLimit }: {
+  isPreventSoftStale?: boolean,
+  ageHardLimit?: number,
+} = {}) => {
   const cacheControl = response.headers.get(HEADER_CACHE_CONTROL);
   if (!cacheControl || !response.headers.get(HEADER_SSR_TOOK)) {
     return { cacheControl };
   }
   const parts = cacheControl.replace(/ +/g, '').split(',');
-  const {
+  let {
     'max-age': maxAge,
     's-maxage': sMaxAge,
     'stale-while-revalidate': staleMaxAge,
@@ -31,14 +34,22 @@ const resolveCacheControl = (response: Response) => {
     result[key as 'max-age'] = Number(value) || 0;
     return result;
   }, {} as ParsedCacheControl);
+  if (ageHardLimit) {
+    if (maxAge && maxAge > ageHardLimit) maxAge = ageHardLimit;
+    if (sMaxAge && sMaxAge > ageHardLimit) sMaxAge = ageHardLimit;
+    if (staleMaxAge && staleMaxAge > ageHardLimit) staleMaxAge = ageHardLimit;
+  }
   const cdnMaxAge = typeof sMaxAge === 'number' ? sMaxAge : maxAge;
-  if (!cdnMaxAge || cdnMaxAge <= 1 || !staleMaxAge || staleMaxAge <= cdnMaxAge) {
+  if (!cdnMaxAge || cdnMaxAge <= 1) {
     return { cacheControl };
   }
   const staleAt = Date.now() + (cdnMaxAge * 1000);
+  if (!staleMaxAge || staleMaxAge <= cdnMaxAge) {
+    return { cacheControl, staleAt };
+  }
   return {
     cacheControl: `public, max-age=${maxAge}, must-revalidate`
-      + `, s-maxage=${staleMaxAge}`,
+      + `, s-maxage=${(isPreventSoftStale ? cdnMaxAge : staleMaxAge)}`,
     staleAt,
   };
 };
@@ -58,18 +69,12 @@ const addHeaders = (response: Response, headers: Record<string, string | null>) 
   return res;
 };
 
-const toCacheRes = (response: Response, { cacheControl, staleAt, customHeaders }: {
-  cacheControl?: string | null,
-  staleAt?: number,
-  customHeaders?: Record<string, string>,
+const toCacheRes = (response: Response, cacheControlOpts: {
+  isPreventSoftStale?: boolean,
+  ageHardLimit?: number,
 } = {}) => {
-  if (cacheControl === undefined) {
-    const parsedCacheControl = resolveCacheControl(response);
-    cacheControl = parsedCacheControl.cacheControl;
-    staleAt = parsedCacheControl.staleAt;
-  }
+  const { cacheControl, staleAt } = resolveCacheControl(response, cacheControlOpts);
   return addHeaders(response, {
-    ...customHeaders,
     [HEADER_CACHE_CONTROL]: cacheControl,
     [HEADER_STALE_AT]: `${(staleAt || 0)}`,
     'set-cookie': null,
@@ -213,31 +218,41 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
             //
           }
         }
-        const updatingAt = Date.now();
         if (coalescingStub) {
-          await coalescingStub.setUpdatingAt(updatingAt);
+          await coalescingStub.setUpdatingAt(Date.now());
         }
-        const newCacheRes = toCacheRes(await fetch(request), {
-          customHeaders: { 'x-edge-coalescing': coalescingStub ? `${updatingAt}` : '0' },
-        });
-        ctx.waitUntil(caches.default.put(cacheKey, newCacheRes.clone()));
-        if (kv && checkToKvCache(newCacheRes)) {
-          ctx.waitUntil(putKvCache(kv, kvKey, newCacheRes));
+        const response = await fetch(request);
+        const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+        ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
+        const newKvCache = toCacheRes(response);
+        if (kv && checkToKvCache(newKvCache)) {
+          ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
         }
       })());
     } else {
       edgeState = 'fresh';
+      if (edgeSource === 'kv') {
+        const ageHardLimit = Math.ceil((cachedStaleAt - Date.now()) / 1000);
+        if (ageHardLimit > 5) {
+          const newCdnCache = toCacheRes(cachedRes, {
+            isPreventSoftStale: true,
+            ageHardLimit,
+          });
+          ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
+        }
+      }
     }
   }
   const response = cachedRes || await fetch(request);
-  const { cacheControl, staleAt } = resolveCacheControl(response);
+  const { cacheControl } = resolveCacheControl(response);
   let firstCache = '00';
   if (!cachedRes && response.ok) {
-    const newCacheRes = toCacheRes(response, { cacheControl, staleAt });
-    ctx.waitUntil(caches.default.put(cacheKey, newCacheRes.clone()));
+    const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+    ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
     firstCache = '01';
-    if (kv && checkToKvCache(newCacheRes)) {
-      ctx.waitUntil(putKvCache(kv, kvKey, newCacheRes));
+    const newKvCache = toCacheRes(response);
+    if (kv && checkToKvCache(newKvCache)) {
+      ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
       firstCache = '11';
     }
   }
