@@ -47,7 +47,7 @@ const runtimeFetchings: Record<string, Promise<Response> | undefined> = {};
 export const fetchAndCache = async (
   url: URL | string,
   {
-    maxAge = 1800,
+    maxAge = 60 * 60,
     canUseStale = true,
     cacheKey,
     timeout = 4000,
