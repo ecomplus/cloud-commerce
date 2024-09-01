@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 export type Props = {
-  speed?: 'default' | 'slow' | 'slower',
+  speed?: 'default' | 'fast' | 'slow' | 'slower',
   slide?: 'down' | 'left' | 'right' | 'up' | null,
   isFloating?: boolean,
   isLeaveTo?: boolean,

@@ -6,6 +6,7 @@ import {
   nextTick,
   onMounted,
 } from 'vue';
+import { isMobile } from '@@sf/sf-lib';
 
 export type Props = {
   modelTo?: 'v-if' | 'v-show';
@@ -116,7 +117,12 @@ onMounted(() => { isMounted.value = true; });
 </script>
 
 <template>
-  <Fade :slide="slideTo" speed="slow" is-floating>
+  <Fade
+    :slide="slideTo"
+    :speed="isMobile ? 'fast' : 'slow'"
+    :is-leave-to="!isMobile"
+    is-floating
+  >
     <dialog
       v-if="modelTo !== 'v-if' || model || popover"
       v-show="!isHidden && (modelTo !== 'v-show' || model || popover)"
