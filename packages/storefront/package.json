@@ -41,7 +41,7 @@
     "lint:fix": "eslint -c ../eslint/storefront.staged.eslintrc.cjs src/lib/**/*.{ts,vue,astro} --fix"
   },
   "dependencies": {
-    "@astrojs/node": "8.2.5",
+    "@astrojs/node": "8.3.3",
     "@astrojs/vue": "4.0.10",
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
