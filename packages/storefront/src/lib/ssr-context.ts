@@ -302,9 +302,9 @@ const loadRouteContext = async (
   } else if (urlPath === '/~fallback') {
     setResponseCache(Astro, 3600, 86400);
   } else if (isHomepage) {
-    setResponseCache(Astro, 180);
+    setResponseCache(Astro, 180, 300);
   } else {
-    setResponseCache(Astro, 120, 180);
+    setResponseCache(Astro, 120, 240);
   }
   if (
     url.searchParams.get('webcontainer') !== null
