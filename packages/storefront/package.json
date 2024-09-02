@@ -52,7 +52,7 @@
     "@iconify-json/heroicons": "^1.2.0",
     "@iconify-json/logos": "^1.2.0",
     "@types/gtag.js": "^0.0.20",
-    "@vueuse/core": "10.11.1",
+    "@vueuse/core": "11.0.3",
     "astro": "4.5.10",
     "astro-capo": "^0.0.1",
     "chroma-js": "^2.6.0",
