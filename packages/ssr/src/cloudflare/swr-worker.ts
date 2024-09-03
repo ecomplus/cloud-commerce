@@ -159,7 +159,8 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
     return bypassEarly();
   }
   const [uri] = url.href.split('?', 2);
-  const request = new Request(`${uri}?t=${Date.now()}`, _request);
+  const unloopUri = hostOverride ? uri : `${uri}?t=${Date.now()}`;
+  const request = new Request(unloopUri, _request);
   const cacheKey = new Request(`${uri}?v=${(v + 1)}`, {
     method: _request.method,
   });
