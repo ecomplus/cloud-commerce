@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.26.3](https://github.com/ecomplus/cloud-commerce/compare/v2.26.2...v2.26.3) (2024-09-04)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#449](https://github.com/ecomplus/cloud-commerce/issues/449)) ([77c90cb](https://github.com/ecomplus/cloud-commerce/commit/77c90cbd04a05cbaaef79d0f46b22f41e82289d9))
+* **storefront:** Fix handling built pictures with filenames containing non-alphabetical chars ([27c2a03](https://github.com/ecomplus/cloud-commerce/commit/27c2a039a63fc685eb1df6878b0b7d3bf9466ff9))
+* **storefront:** Fix prod build script to properly escape values to saved CSVs ([c198a64](https://github.com/ecomplus/cloud-commerce/commit/c198a64af97a570f73c90127ba31d93ec2f16ecc))
+* **storefront:** Update VueUse to v11 ([#450](https://github.com/ecomplus/cloud-commerce/issues/450)) ([e108efd](https://github.com/ecomplus/cloud-commerce/commit/e108efd968007edd90f85494cdfd02ebe39fdcb4))
+
 ## [2.26.2](https://github.com/ecomplus/cloud-commerce/compare/v2.26.1...v2.26.2) (2024-09-02)
 
 
