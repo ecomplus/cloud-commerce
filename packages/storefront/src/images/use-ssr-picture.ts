@@ -30,7 +30,8 @@ export type TryImageSize = (src: string) => ImageSize;
 const getAspectRatio = (src: string | ImageSize, tryImageSize: TryImageSize) => {
   if (typeof src === 'string') {
     src = tryImageSize(src);
-  } else if (src.width) {
+  }
+  if (src.width) {
     return src.height ? src.width / src.height : 1;
   }
   return 0;

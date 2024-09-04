@@ -60,20 +60,6 @@ async function resolveAspectRatio({ src, aspectRatio }: GetPictureParams) {
   */
 }
 
-async function resolveFormats({ src, formats }: GetPictureParams) {
-  const unique = new Set(formats);
-  if (typeof src === 'string') {
-    unique.add(extname(src).replace('.', '') as OutputFormat);
-  } else {
-    throw new Error('Custom `Picture.ssr.astro` works only with string src');
-    /*
-    const metadata = 'then' in src ? (await src).default : src;
-    unique.add(extname(metadata.src).replace('.', '') as OutputFormat);
-    */
-  }
-  return Array.from(unique).filter(Boolean);
-}
-
 export const createPictureGetter = (getImage: GetBuiltImage):
 ((params: GetPictureParams) => Promise<GetPictureResult>) => {
   return async (params) => {
@@ -95,11 +81,19 @@ export const createPictureGetter = (getImage: GetBuiltImage):
     if (!aspectRatio) {
       throw new Error('`aspectRatio` must be provided for remote images');
     }
-    // Always include the original image format
-    const allFormats = await resolveFormats(params);
-    const lastFormat = allFormats[allFormats.length - 1];
+    const originalFormat = extname(src).replace('.', '') as OutputFormat;
     const maxWidth = Math.max(...widths);
-    let image: HTMLAttributes<'img'>;
+    const image = await getImage({
+      src,
+      alt,
+      format: originalFormat,
+      width: maxWidth,
+      height: maxWidth / aspectRatio,
+      fit,
+      position,
+      background,
+      aspectRatio,
+    });
     async function getSource(format: OutputFormat) {
       const imgs = await Promise.all(
         widths.map(async (width) => {
@@ -114,8 +108,8 @@ export const createPictureGetter = (getImage: GetBuiltImage):
             background,
             aspectRatio,
           });
-          if (format === lastFormat && width === maxWidth) {
-            image = img;
+          if (!img.src.startsWith('/_image')) {
+            return `${encodeURI(img.src)} ${width}w`;
           }
           return `${img.src} ${width}w`;
         }),
@@ -125,7 +119,8 @@ export const createPictureGetter = (getImage: GetBuiltImage):
         srcset: imgs.join(','),
       };
     }
-    const sources = await Promise.all(allFormats.map((format) => getSource(format)));
+    const uniqueFormats = Array.from(new Set(params.formats)).filter(Boolean);
+    const sources = await Promise.all(uniqueFormats.map((format) => getSource(format)));
     return {
       sources,
       // @ts-ignore

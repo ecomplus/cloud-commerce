@@ -29,11 +29,14 @@ const builtImages: BuiltImage[] = [];
 const manifestFilepath = joinPath(baseDir, 'dist/server/images.dist.csv');
 try {
   readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
-    const [filename, width, height] = line.split(',');
+    const cols = line.split(',');
+    const height = Number(cols.pop());
+    const width = Number(cols.pop());
+    const filename = cols.join(',').replace(/"/g, '');
     builtImages.push({
       filename,
-      width: Number(width),
-      height: Number(height),
+      width,
+      height,
     });
   });
 } catch (err) {

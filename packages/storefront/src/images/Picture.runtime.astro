@@ -12,11 +12,14 @@ type OriginalImage = { filepath: string, width: number, height: number };
 const originalImages: OriginalImage[] = [];
 const manifestFilepath = joinPath(baseDir, 'dist/server/images.src.csv');
 readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
-  const [filepath, width, height] = line.split(',');
+  const cols = line.split(',');
+  const height = Number(cols.pop());
+  const width = Number(cols.pop());
+  const filepath = cols.join(',').replace(/"/g, '');
   originalImages.push({
     filepath,
-    width: Number(width),
-    height: Number(height),
+    width,
+    height,
   });
 });
 
@@ -29,6 +32,15 @@ const tryImageSize = (src: string) => {
     if (originalImage) {
       const { width, height } = originalImage;
       dimensions = { width, height };
+    }
+  }
+  if (Number.isNaN(dimensions.height)) {
+    if (dimensions.width) {
+      dimensions.height = dimensions.width;
+    }
+  } else if (Number.isNaN(dimensions.width)) {
+    if (dimensions.height) {
+      dimensions.width = dimensions.height;
     }
   }
   return dimensions;
