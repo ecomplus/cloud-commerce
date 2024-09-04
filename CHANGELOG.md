@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.26.5](https://github.com/ecomplus/cloud-commerce/compare/v2.26.4...v2.26.5) (2024-09-04)
+
+
+### Bug Fixes
+
+* **cli:** Update bunny.net CI bypassing CDN cache and SWR on /_feeds/ URLs ([7c2ff07](https://github.com/ecomplus/cloud-commerce/commit/7c2ff0792d07bfbf2121d8589c16ba29d8e0d7c9))
+* **storefront:** Updating Window TS declaration without `$prefetch` ([e9178b4](https://github.com/ecomplus/cloud-commerce/commit/e9178b4c74f2a55e1e326f837021cc5823fa8f98))
+
 ## [2.26.4](https://github.com/ecomplus/cloud-commerce/compare/v2.26.3...v2.26.4) (2024-09-04)
 
 
