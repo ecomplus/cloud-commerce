@@ -27,28 +27,36 @@ for css_file in "${css_files[@]}"; do
   done
 done
 
-identify -format "%f,%w,%h\n" \
-  ./dist/client/_astro/*.{png,jpg,jpeg,webp,avif,svg} \
-  > ./dist/server/images.dist.csv \
-  2>/dev/null
+process_images() {
+  local dir="$1"
+  local prefix="$2"
+  local output_file="$3"
+  local append_flag="$4"
 
-identify -format "assets/%f,%w,%h\n" \
-  ./public/assets/*.{png,jpg,jpeg,webp,avif,svg} \
-  > ./dist/server/images.src.csv \
-  2>/dev/null
-identify -format "img/%f,%w,%h\n" \
-  ./public/img/*.{png,jpg,jpeg,webp,avif,svg} \
-  >> ./dist/server/images.src.csv \
-  2>/dev/null
-identify -format "img/uploads/%f,%w,%h\n" \
-  ./public/img/uploads/*.{png,jpg,jpeg,webp,avif,svg} \
-  >> ./dist/server/images.src.csv \
-  2>/dev/null
+  find "$dir" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" -o -iname "*.avif" -o -iname "*.svg" \) -print0 | 
+  while IFS= read -r -d '' file; do
+    filename=$(basename "$file")
+    dimensions=$(identify -format "%wx%h" "$file" 2>/dev/null)
+    if [ -n "$dimensions" ]; then
+      width=$(echo $dimensions | cut -d'x' -f1)
+      height=$(echo $dimensions | cut -d'x' -f2)
+      printf '"%s%s",%s,%s\n' "$prefix" "${filename//\"/\"\"}" "$width" "$height" >> "$output_file"
+    fi
+  done
+}
 
-ls ./dist/client/_astro/* \
-  > ./dist/server/static-builds.csv \
-  2>/dev/null
-sed -i -e 's/.\/dist\/client//g' ./dist/server/static-builds.csv
+process_images "./dist/client/_astro" "" "./dist/server/images.dist.csv" ""
+process_images "./public/assets" "assets/" "./dist/server/images.src.csv" ""
+process_images "./public/img" "img/" "./dist/server/images.src.csv" ">>"
+process_images "./public/img/uploads" "img/uploads/" "./dist/server/images.src.csv" ">>"
+
+static_builds_file="./dist/server/static-builds.csv"
+> "$static_builds_file"
+find ./dist/client/_astro -type f -print0 | while IFS= read -r -d '' file; do
+  relative_path="${file#./dist/client}"
+  escaped_path="${relative_path//\"/\"\"}"
+  printf '"%s"\n' "$escaped_path" >> "$static_builds_file"
+done
 
 if [[ -n $STOREFRONT_BASE_DIR ]]; then
   base_dir=$(realpath "$STOREFRONT_BASE_DIR")

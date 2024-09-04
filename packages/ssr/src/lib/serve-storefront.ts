@@ -31,7 +31,7 @@ const cssFilepaths: string[] = [];
 readFile(joinPath(baseDir, 'dist/server/static-builds.csv'), 'utf-8')
   .then((staticBuildsManifest) => {
     staticBuildsManifest.split(/\n/).forEach((line) => {
-      const [filepath] = line.split(',');
+      const filepath = line.split(',')[0]?.replace(/"/g, '');
       staticFilepaths.push(filepath);
       if (filepath.endsWith('.css')) {
         const cssFilepath = filepath.replace('./dist/client/', '/');
