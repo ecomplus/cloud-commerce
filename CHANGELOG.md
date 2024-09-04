@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.26.4](https://github.com/ecomplus/cloud-commerce/compare/v2.26.3...v2.26.4) (2024-09-04)
+
+
+### Bug Fixes
+
+* **feeds:** Properly handle filters by categories (or skip) on products feed query string ([53e446a](https://github.com/ecomplus/cloud-commerce/commit/53e446ae3c647e65780cc3e8e9a42b24064b24e9))
+
 ## [2.26.3](https://github.com/ecomplus/cloud-commerce/compare/v2.26.2...v2.26.3) (2024-09-04)
 
 
