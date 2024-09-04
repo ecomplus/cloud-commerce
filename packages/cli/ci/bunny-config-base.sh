@@ -155,6 +155,7 @@ configure_edge_rule '
       "PatternMatchingType": 0,
       "PatternMatches": [
         "*/_api/*",
+        "*/_feeds/*",
         "*/admin/*"
       ]
     },
@@ -188,9 +189,7 @@ if [ -n "$swr_origin_url" ]; then
       "PatternMatches": [
         "*/_astro/*",
         "*/img/*",
-        "*/assets/*",
-        "*/_api/*",
-        "*/admin/*"
+        "*/assets/*"
       ],
       "PatternMatchingType": 2,
       "Parameter1": ""
@@ -198,6 +197,9 @@ if [ -n "$swr_origin_url" ]; then
     {
       "Type": 0,
       "PatternMatches": [
+        "*/_api/*",
+        "*/_feeds/*",
+        "*/admin/*",
         "*/_image",
         "*/_analytics"
       ],
@@ -240,7 +242,8 @@ configure_edge_rule '
     {
       "Type": 0,
       "PatternMatches": [
-        "*/_astro/*"
+        "*/_astro/*",
+        "*/img/uploads/*"
       ],
       "PatternMatchingType": 2,
       "Parameter1": ""
@@ -272,7 +275,8 @@ configure_edge_rule '
     {
       "Type": 0,
       "PatternMatches": [
-        "*/_astro/*"
+        "*/_astro/*",
+        "*/img/uploads/*"
       ],
       "PatternMatchingType": 2,
       "Parameter1": ""
@@ -305,7 +309,8 @@ configure_edge_rule '
     {
       "Type": 0,
       "PatternMatches": [
-        "*/_astro/*"
+        "*/_astro/*",
+        "*/img/uploads/*"
       ],
       "PatternMatchingType": 2,
       "Parameter1": ""
