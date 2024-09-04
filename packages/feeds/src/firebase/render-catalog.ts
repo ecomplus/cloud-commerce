@@ -131,9 +131,7 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
           entry.price = (p.price * (1 - discount)).toFixed(2) + ` ${p.currency_id}`;
         }
       }
-      if (p.category_tree) {
-        entry.product_type = p.category_tree;
-      } else if (p.categories?.length) {
+      if (p.categories) {
         if (listedCategoryIds?.length) {
           if (!p.categories.find(({ _id }) => _id && listedCategoryIds.includes(_id))) {
             return;
@@ -143,6 +141,10 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
             return;
           }
         }
+      }
+      if (p.category_tree) {
+        entry.product_type = p.category_tree;
+      } else if (p.categories?.length) {
         entry.product_type = p.categories[0].name;
       }
       let isIdentifierExists = false;
