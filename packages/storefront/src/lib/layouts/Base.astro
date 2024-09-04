@@ -23,10 +23,8 @@ const { customCode } = await getContent('layout');
     <script src="../scripts/push-analytics-events"></script>
 
     <script>
-      import { prefetch } from 'astro:prefetch';
       import { isMobile, looksLikeBot } from '@@sf/sf-lib';
 
-      window.$prefetch = prefetch;
       const raceAndLoadScripts = () => Promise.race([
         window.$firstInteraction,
         new Promise((resolve) => {
