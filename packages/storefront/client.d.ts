@@ -49,7 +49,6 @@ interface Window {
   $interactionOrAwaken?: Promise<any>;
   $delayedAsyncScripts?: Array<string | { src: string, delay?: number }>;
   $delayedScriptsMaxWait?: number;
-  $prefetch?: typeof import('astro:prefetch').prefetch;
   $isCmsPreview?: boolean;
 }
 
