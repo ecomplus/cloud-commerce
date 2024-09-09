@@ -21,8 +21,8 @@ const setSocialNetworks = () => {
     }
   });
 };
-if (import.meta.env.SSR && global.$storefront) {
-  global.$storefront.onLoad?.(() => setSocialNetworks());
+if (import.meta.env.SSR && global.$storefront?.onLoad) {
+  global.$storefront.onLoad(() => setSocialNetworks());
 } else {
   setSocialNetworks();
 }
