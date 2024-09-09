@@ -44,7 +44,7 @@
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
     "@commitlint/rules": "^19.4.1",
-    "@types/node": "^18.19.48",
+    "@types/node": "^18.19.50",
     "commit-and-tag-version": "^12.4.2",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
@@ -55,7 +55,7 @@
     "turbo": "^2.1.1",
     "typescript": "~5.5.4",
     "uglify-js": "^3.19.3",
-    "vite": "^5.4.2",
+    "vite": "^5.4.3",
     "vitest": "^2.0.5",
     "zx": "^8.1.5"
   },

@@ -46,7 +46,7 @@
     "mitt": "^3.0.1",
     "mrmime": "^2.0.0",
     "vue": "^3.5.3",
-    "yaml": "^2.5.0"
+    "yaml": "^2.5.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
