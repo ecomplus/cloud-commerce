@@ -119,6 +119,12 @@ const emitCartEvents = useDebounceFn((items: CartItem[]) => {
   oldItems = cloneItems();
 }, 200);
 
+const cartItemMiddlewares: Array<(item: CartItem) => void> = [];
+
+export const addCartItemMiddleware = (cb: (item: CartItem) => void) => {
+  cartItemMiddlewares.push(cb);
+};
+
 watchDebounced(shoppingCart.items, (items) => {
   items.forEach((item) => {
     let finalPrice = item.kit_product?.price && item.kit_product.pack_quantity
@@ -150,6 +156,7 @@ watchDebounced(shoppingCart.items, (items) => {
         item.quantity = max;
       }, 9);
     }
+    cartItemMiddlewares.forEach((midd) => midd(item));
   });
   shoppingCart.subtotal = items.reduce((acc, item) => {
     const { quantity } = item;
