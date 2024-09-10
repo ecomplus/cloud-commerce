@@ -37,7 +37,7 @@ export const usePageHero = async ({ routeContext }: Props) => {
     & { slides: UseBannerProps[] } = { slides: [] };
   const heroContent = cmsContent?.hero;
   if (heroContent) {
-    heroSlider.autoplay = heroContent.autoplay;
+    Object.assign(heroSlider, heroContent);
     if (heroContent.slides) {
       heroSlider.slides = parseBanners(heroContent.slides);
     }
