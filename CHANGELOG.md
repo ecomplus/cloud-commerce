@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.27.0](https://github.com/ecomplus/cloud-commerce/compare/v2.26.5...v2.27.0) (2024-09-11)
+
+
+### Features
+
+* **storefront:** Export new `addCartItemMiddleware` from shopping cart ([176d162](https://github.com/ecomplus/cloud-commerce/commit/176d1624e6107c53d0003f695656078c3f8762be))
+
+
+### Bug Fixes
+
+* **cli:** Updating default firebase.json with new `emulators.singleProjectMode` ([4b984dd](https://github.com/ecomplus/cloud-commerce/commit/4b984ddd5e1a664fa9894f5fa3671432bcba4d3a))
+* **deps:** Update non-major dependencies ([#452](https://github.com/ecomplus/cloud-commerce/issues/452)) ([fcff743](https://github.com/ecomplus/cloud-commerce/commit/fcff74313ec8ba18f4aeae90ba503bd6dbeaf56a))
+* **storefront:** Prevent error with undefined `$storefront.onLoad` on simpler static site usage ([06afd2e](https://github.com/ecomplus/cloud-commerce/commit/06afd2ed7417a732fea82d27e7a9d3491dbf2d87))
+* **storefront:** Prevent error with undefined `$storefront.onLoad` on simpler static site usage ([527b063](https://github.com/ecomplus/cloud-commerce/commit/527b0637d429de5664fe977721cf1cec3f719869))
+* **storefront:** Setting gtag `user_data` for enhanced conversion if `window.GTAG_USER_DATA` is set ([205b8ea](https://github.com/ecomplus/cloud-commerce/commit/205b8ea517b814e6ffd5ec4c32936a62cc10a0dd))
+* **storefront:** Update `usePageHero` to pass custom hero slider fields on content ([ffb2391](https://github.com/ecomplus/cloud-commerce/commit/ffb239175e5b7e6315d528a04b81164f8f69eb9f))
+* **storefront:** Update Vue to ^3.5.3 ([#453](https://github.com/ecomplus/cloud-commerce/issues/453)) ([1b26ced](https://github.com/ecomplus/cloud-commerce/commit/1b26ced9500a1de4a08f172ba61cfb23b4eb5977))
+
 ## [2.26.5](https://github.com/ecomplus/cloud-commerce/compare/v2.26.4...v2.26.5) (2024-09-04)
 
 
