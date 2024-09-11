@@ -112,31 +112,31 @@ if (
           });
         }
         if (GTAG_USER_DATA) {
-          const gtagUserData: any = {};
+          const gtagUser: any = {};
           if (params.buyer_email_hash) {
-            gtagUserData.sha256_email_address = params.buyer_email_hash;
+            gtagUser.sha256_email_address = params.buyer_email_hash;
           }
           if (params.buyer_phone_hash) {
-            gtagUserData.sha256_phone_number = params.buyer_phone_hash;
+            gtagUser.sha256_phone_number = params.buyer_phone_hash;
           }
           const firstNameHash = params.buyer_given_name_hash
             || params.buyer_display_name_hash;
           if (firstNameHash) {
-            gtagUserData.address = {
+            gtagUser.address = {
               'address.sha256_first_name': firstNameHash,
             };
             if (params.buyer_family_name_hash) {
-              gtagUserData.address['address.sha256_last_name'] = params.buyer_family_name_hash;
+              gtagUser.address['address.sha256_last_name'] = params.buyer_family_name_hash;
             }
             if (params.shipping_addr_country_code) {
-              gtagUserData.address['address.country'] = params.shipping_addr_country_code;
+              gtagUser.address['address.country'] = params.shipping_addr_country_code;
             }
             if (params.shipping_addr_province_code) {
-              gtagUserData.address['address.region'] = params.shipping_addr_province_code;
+              gtagUser.address['address.region'] = params.shipping_addr_province_code;
             }
           }
-          if (Object.keys(gtagUserData).length) {
-            gtag('set', 'user_data', gtagUserData);
+          if (Object.keys(gtagUser).length) {
+            gtag('set', 'user_data', gtagUser);
           }
         }
       }

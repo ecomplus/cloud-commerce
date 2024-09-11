@@ -115,7 +115,10 @@ const watchAppRoutes = () => {
             paramsToHash.buyer_family_name = buyer.name?.family_name;
             paramsToHash.buyer_email = buyer.main_email;
             paramsToHash.buyer_phone = getPhone(buyer);
-            if (paramsToHash.buyer_phone?.charAt(0) !== '+') {
+            if (
+              paramsToHash.buyer_phone
+              && paramsToHash.buyer_phone.charAt(0) !== '+'
+            ) {
               paramsToHash.buyer_phone = `+55${paramsToHash.buyer_phone}`;
             }
           }
