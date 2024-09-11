@@ -84,6 +84,8 @@ if (
     const {
       gtag,
       GTAG_AUTO_PAGEVIEW,
+      GTAG_USER_DATA,
+      GOOGLE_ADS_ID,
       fbq,
       FBQ_AUTO_PAGEVIEW,
       ttq,
@@ -91,6 +93,7 @@ if (
     } = window as Window & {
       gtag?: Gtag.Gtag,
       GTAG_AUTO_PAGEVIEW?: boolean,
+      GTAG_USER_DATA?: boolean,
       fbq?: (act: string, val: string, payload?: any, ctx?: any) => any,
       FBQ_AUTO_PAGEVIEW?: boolean,
       ttq?: { page: () => any, track: (val: string, payload?: any, ctx?: any) => any },
@@ -99,13 +102,43 @@ if (
     const hasGtag = typeof gtag === 'function';
     if (hasGtag && (!GTAG_AUTO_PAGEVIEW || name !== 'page_view')) {
       gtag('event', name, params);
-      if (window.GOOGLE_ADS_ID && name === 'purchase') {
-        gtag('event', 'conversion', {
-          send_to: window.GOOGLE_ADS_ID,
-          value: Number(params.value),
-          currency: params.currency,
-          transaction_id: params.transaction_id,
-        });
+      if (name === 'purchase') {
+        if (GOOGLE_ADS_ID) {
+          gtag('event', 'conversion', {
+            send_to: GOOGLE_ADS_ID,
+            value: Number(params.value),
+            currency: params.currency,
+            transaction_id: params.transaction_id,
+          });
+        }
+        if (GTAG_USER_DATA) {
+          const gtagUserData: any = {};
+          if (params.buyer_email_hash) {
+            gtagUserData.sha256_email_address = params.buyer_email_hash;
+          }
+          if (params.buyer_phone_hash) {
+            gtagUserData.sha256_phone_number = params.buyer_phone_hash;
+          }
+          const firstNameHash = params.buyer_given_name_hash
+            || params.buyer_display_name_hash;
+          if (firstNameHash) {
+            gtagUserData.address = {
+              'address.sha256_first_name': firstNameHash,
+            };
+            if (params.buyer_family_name_hash) {
+              gtagUserData.address['address.sha256_last_name'] = params.buyer_family_name_hash;
+            }
+            if (params.shipping_addr_country_code) {
+              gtagUserData.address['address.country'] = params.shipping_addr_country_code;
+            }
+            if (params.shipping_addr_province_code) {
+              gtagUserData.address['address.region'] = params.shipping_addr_province_code;
+            }
+          }
+          if (Object.keys(gtagUserData).length) {
+            gtag('set', 'user_data', gtagUserData);
+          }
+        }
       }
     }
     sendServerEvent({
