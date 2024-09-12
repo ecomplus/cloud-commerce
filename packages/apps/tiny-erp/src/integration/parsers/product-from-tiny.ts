@@ -95,23 +95,23 @@ export default (
   const sku = tinyProduct.codigo || String(tinyProduct.id);
   const name = (tinyProduct.nome || sku).trim();
   const isProduct = tipo === 'produto';
-  const getCorrectPrice = (price: number) => {
-    return Number(price) > 0 ? Number(price) : null;
+  const fixToNumber = (shouldBeNumber: any) => {
+    return Number(shouldBeNumber) > 0 ? Number(shouldBeNumber) : 0;
   };
-  const price = !isProduct
-    ? Number(tinyProduct.preco_promocional || tinyProduct.preco)
-    : Number(getCorrectPrice(tinyProduct.precoPromocional) || tinyProduct.preco);
+  const price = fixToNumber(tinyProduct.preco_promocional || tinyProduct.precoPromocional)
+    || fixToNumber(tinyProduct.preco);
   const product: ProductSet = {
     available: tinyProduct.situacao === 'A',
     sku,
     name,
-    cost_price: !isProduct
-      ? Number(tinyProduct.preco_custo)
-      : Number(tinyProduct.precoCusto),
     price,
-    base_price: Number(tinyProduct.preco),
+    base_price: fixToNumber(tinyProduct.preco),
     body_html: tinyProduct.descricao_complementar || tinyProduct.descricaoComplementar,
   };
+  const costPrice = fixToNumber(tinyProduct.preco_custo || tinyProduct.precoCusto);
+  if (costPrice) {
+    product.cost_price = costPrice;
+  }
   if (tinyProduct.estoqueAtual) {
     product.quantity = tinyProduct.estoqueAtual;
   }
@@ -142,8 +142,10 @@ export default (
     product.warranty = tinyProduct.garantia;
   }
   if (tinyProduct.unidade_por_caixa || tinyProduct.unidadePorCaixa) {
-    product.min_quantity = !isProduct ? Number(tinyProduct.unidade_por_caixa)
-      : Number(tinyProduct.unidadePorCaixa);
+    const minQnt = fixToNumber(tinyProduct.unidade_por_caixa || tinyProduct.unidadePorCaixa);
+    if (minQnt > 0) {
+      product.min_quantity = minQnt;
+    }
   }
   if (tinyProduct.ncm) {
     product.mpn = [tinyProduct.ncm];
