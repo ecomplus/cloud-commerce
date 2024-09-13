@@ -262,7 +262,7 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
     }
   }
   const response = cachedRes || await fetch(request);
-  const { cacheControl } = resolveCacheControl(response);
+  const { staleAt, cacheControl } = resolveCacheControl(response);
   let iCdnCache = 0;
   let iKvCache = 0;
   if (!cachedRes) {
@@ -272,7 +272,7 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
       iCdnCache = 1;
     }
     const newKvCache = toCacheRes(response);
-    if (kv && checkToKvCache(newKvCache)) {
+    if (staleAt && kv && checkToKvCache(newKvCache)) {
       ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
       iKvCache = 1;
     }
