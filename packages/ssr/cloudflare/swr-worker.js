@@ -189,7 +189,7 @@ const swr = async (_rewritedReq, env, ctx) => {
   let edgeState = 'miss';
   if (cachedRes) {
     const cachedStaleAt = Number(cachedRes.headers.get(HEADER_STALE_AT));
-    if (!(cachedStaleAt > 0)) {
+    if (!(cachedStaleAt > 0) && edgeSource !== 'kv') {
       edgeState = 'bypass';
     } else if (Date.now() > cachedStaleAt) {
       edgeState = 'stale';
