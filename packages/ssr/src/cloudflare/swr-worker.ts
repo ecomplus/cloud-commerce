@@ -21,7 +21,7 @@ const resolveCacheControl = (response: Response, { isPreventSoftStale, ageHardLi
   ageHardLimit?: number,
 } = {}) => {
   const cacheControl = response.headers.get(HEADER_CACHE_CONTROL);
-  if (!cacheControl || !response.headers.get(HEADER_SSR_TOOK)) {
+  if (!cacheControl) {
     return { cacheControl };
   }
   const parts = cacheControl.replace(/ +/g, '').split(',');
@@ -34,6 +34,12 @@ const resolveCacheControl = (response: Response, { isPreventSoftStale, ageHardLi
     result[key as 'max-age'] = Number(value) || 0;
     return result;
   }, {} as ParsedCacheControl);
+  if (!response.headers.get(HEADER_SSR_TOOK)) {
+    const contentType = response.headers.get('content-type');
+    if (!contentType?.includes('text/html') || !staleMaxAge) {
+      return { cacheControl };
+    }
+  }
   if (ageHardLimit) {
     if (maxAge && maxAge > ageHardLimit) maxAge = ageHardLimit;
     if (sMaxAge && sMaxAge > ageHardLimit) sMaxAge = ageHardLimit;

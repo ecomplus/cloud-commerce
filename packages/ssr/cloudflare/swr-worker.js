@@ -11,7 +11,7 @@ const HEADER_STALE_AT = 'X-Edge-Stale-At';
 const v = 38;
 const resolveCacheControl = (response, { isPreventSoftStale, ageHardLimit } = {}) => {
   const cacheControl = response.headers.get(HEADER_CACHE_CONTROL);
-  if (!cacheControl || !response.headers.get(HEADER_SSR_TOOK)) {
+  if (!cacheControl) {
     return { cacheControl };
   }
   const parts = cacheControl.replace(/ +/g, '').split(',');
@@ -20,6 +20,12 @@ const resolveCacheControl = (response, { isPreventSoftStale, ageHardLimit } = {}
     result[key] = Number(value) || 0;
     return result;
   }, {});
+  if (!response.headers.get(HEADER_SSR_TOOK)) {
+    const contentType = response.headers.get('content-type');
+    if (!contentType?.includes('text/html') || !staleMaxAge) {
+      return { cacheControl };
+    }
+  }
   if (ageHardLimit) {
     if (maxAge && maxAge > ageHardLimit) maxAge = ageHardLimit;
     if (sMaxAge && sMaxAge > ageHardLimit) sMaxAge = ageHardLimit;
