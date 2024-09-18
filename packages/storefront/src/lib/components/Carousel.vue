@@ -36,7 +36,7 @@ export type Props = {
   index?: number;
   autoplay?: number; // milliseconds
   axis?: 'x' | 'y';
-  hasControls?: boolean;
+  controls?: 'on-multiple' | 'none' | 'show';
   wrapperKey?: string | number | null;
 }
 
@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   as: 'ul',
   index: 0,
   axis: 'x',
+  controls: 'on-multiple',
 });
 const emit = defineEmits<{
   'update:index': [value: number]
@@ -217,6 +218,11 @@ onBeforeUnmount(() => {
   }
   clearTimeout(autoplayTimer);
 });
+const hasControls = computed(() => {
+  if (props.controls === 'show') return true;
+  if (props.controls === 'none') return false;
+  return slideSizes.value.length > 1;
+});
 provide(carouselKey, {
   autoplay: toRef(props, 'autoplay'),
   axis: props.axis,
@@ -256,12 +262,13 @@ provide(carouselKey, {
         isBoundStart,
         isBoundEnd,
         activeIndex,
+        hasControls,
       }"
     >
-      <CarouselControl v-if="slideSizes.length > 1 || hasControls" is-prev>
+      <CarouselControl v-if="hasControls" is-prev>
         <slot name="previous" />
       </CarouselControl>
-      <CarouselControl v-if="slideSizes.length > 1 || hasControls">
+      <CarouselControl v-if="hasControls">
         <slot name="next" />
       </CarouselControl>
     </slot>
