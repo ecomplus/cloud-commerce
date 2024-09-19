@@ -222,6 +222,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
           sections[index] = {
             type,
             props: {
+              ...sectionContent,
               banners: parseBanners(sectionContent.banners || []),
             },
           };
