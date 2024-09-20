@@ -20,7 +20,7 @@ export type CmsField = {
   required?: boolean,
   multiple?: boolean,
   value_type?: string,
-  fields?: Record<string, CmsField>,
+  fields?: Record<string, CmsField> | null,
   types?: Record<string, CmsField>,
   label?: string | Record<string, string>,
 } & Record<string, any>;
@@ -54,7 +54,7 @@ export type InferCmsFieldOutput<F extends CmsField> =
     ? InferCmsOutput<F['fields']>
     :
   F['widget'] extends 'list'
-    ? F['fields'] extends undefined
+    ? F['fields'] extends undefined | null
       ? string[]
       : InferCmsOutput<F['fields']>[]
     :
