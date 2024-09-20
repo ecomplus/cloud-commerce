@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.27.1](https://github.com/ecomplus/cloud-commerce/compare/v2.27.0...v2.27.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* **ssr:** Also handle SWR on HTML responses without SSR took header ([6f03bf0](https://github.com/ecomplus/cloud-commerce/commit/6f03bf09b390ff95198fb32dcc631a2add5892a2))
+* **ssr:** Prevent new permanent cache (no stale at) on SWR worker KV ([7126430](https://github.com/ecomplus/cloud-commerce/commit/71264304e23ee4723ffb4ecb8de9de73f6edf5b9))
+* **ssr:** Prevent returning permanent (inifnite) cache from KV on SWR worker ([de07bf0](https://github.com/ecomplus/cloud-commerce/commit/de07bf0d05b41e0779018ae44242a6c7ca54bc55))
+* **storefront:** Fixing `<Carousel>` controls state with enumered prop `:controls` ([d2fc905](https://github.com/ecomplus/cloud-commerce/commit/d2fc905a15dcdb003d8be7e22447cf3111cac288))
+* **storefront:** Passing additional props to `banners-grid` section for customizations ([3badde8](https://github.com/ecomplus/cloud-commerce/commit/3badde8c12bf3e757db90ffbd612ef513effa759))
+* **storefront:** Update Vue to ^3.5.6 ([#454](https://github.com/ecomplus/cloud-commerce/issues/454)) ([df4ad83](https://github.com/ecomplus/cloud-commerce/commit/df4ad83cda4674b4179d5507ecf34fd782c9a1ad))
+* **tiny-erp:** Ensure parsing price/quantity from tiny to number on product import ([337d400](https://github.com/ecomplus/cloud-commerce/commit/337d400f630ac0c96fe30ba3fbf8838709d2ce98))
+
 ## [2.27.0](https://github.com/ecomplus/cloud-commerce/compare/v2.26.5...v2.27.0) (2024-09-11)
 
 
