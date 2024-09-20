@@ -8,14 +8,14 @@ export type Props = {
   href?: string;
   message?: string;
 }
-
 const props = defineProps<Props>();
 const fixedHref = computed<string>(() => {
   let href = props.href || socialNetworks[props.network] || '';
   if (props.network === 'whatsapp') {
     const tel = href.replace(/[^+\d]/g, '');
+    const wppService = isMobile || import.meta.env.SSR ? 'api' : 'web';
     // eslint-disable-next-line prefer-template
-    href = `https://${(isMobile ? 'api' : 'web')}.whatsapp.com/send?phone=`
+    href = `https://${wppService}.whatsapp.com/send?phone=`
       + encodeURIComponent(tel.charAt(0) === '+' ? tel : `+55${tel}`);
     if (props.message) {
       href += `&text=${encodeURIComponent(props.message)}`;
