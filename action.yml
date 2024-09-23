@@ -140,11 +140,11 @@ runs:
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.15.4
+        key: ${{ runner.os }}-npm-g-firebase-tools-13.19.0
 
     - if: github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true'
       shell: bash
-      run: npm i --location=global firebase-tools@13.15.4
+      run: npm i --location=global firebase-tools@13.19.0
 
     - if: github.event_name == 'push'
       uses: dorny/paths-filter@v3.0.2
