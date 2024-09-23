@@ -41,23 +41,23 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@commitlint/cli": "^19.4.1",
-    "@commitlint/config-conventional": "^19.4.1",
-    "@commitlint/rules": "^19.4.1",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/rules": "^19.5.0",
     "@types/node": "^18.19.50",
-    "commit-and-tag-version": "^12.4.2",
+    "commit-and-tag-version": "^12.4.4",
     "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
-    "husky": "^9.1.5",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^3.4.13",
     "ts-node": "^10.9.2",
-    "turbo": "^2.1.1",
+    "turbo": "^2.1.2",
     "typescript": "~5.6.2",
     "uglify-js": "^3.19.3",
     "vite": "^5.4.3",
-    "vitest": "^2.0.5",
-    "zx": "^8.1.5"
+    "vitest": "^2.1.1",
+    "zx": "^8.1.8"
   },
   "pnpm": {
     "peerDependencyRules": {
