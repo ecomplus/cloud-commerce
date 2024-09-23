@@ -52,19 +52,19 @@
     "@iconify-json/heroicons": "^1.2.0",
     "@iconify-json/logos": "^1.2.0",
     "@types/gtag.js": "^0.0.20",
-    "@vueuse/core": "11.0.3",
+    "@vueuse/core": "11.1.0",
     "astro": "4.5.10",
     "astro-capo": "^0.0.1",
     "chroma-js": "^3.1.1",
     "dotenv": "^16.4.5",
-    "firebase": "^10.13.1",
+    "firebase": "^10.13.2",
     "image-size": "^1.1.1",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.0",
     "semver": "^7.6.3",
     "sharp": "^0.32.6",
-    "unocss": "^0.62.3",
-    "unplugin-auto-import": "^0.18.2",
+    "unocss": "^0.62.4",
+    "unplugin-auto-import": "^0.18.3",
     "vue": "^3.5.6",
     "wade": "0.3.3",
     "yaml": "^2.5.1"
@@ -72,6 +72,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.5"
+    "@types/react": "^18.3.8"
   }
 }
