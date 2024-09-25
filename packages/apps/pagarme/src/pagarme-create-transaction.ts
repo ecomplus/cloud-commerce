@@ -291,6 +291,11 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         } else {
           err.response = data;
         }
+        logger.warn('Failed creating Pagar.me transaction', {
+          pagarmeTransaction,
+          status,
+          response: data,
+        });
       } else if (data && Array.isArray(data.errors) && data.errors[0] && data.errors[0].message) {
         message = data.errors[0].message;
       }
