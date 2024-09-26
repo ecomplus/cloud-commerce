@@ -167,7 +167,7 @@ const useShopHeader = (props: Props) => {
         const { length } = searchTerm.value;
         searchInput.value.setSelectionRange(length, length);
         searchInput.value.focus();
-      }, 50);
+      }, 10);
     }
   };
   const isCartOpen = ref(false);
