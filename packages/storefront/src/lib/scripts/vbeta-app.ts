@@ -213,7 +213,7 @@ if (!import.meta.env.SSR) {
   (window as any).ECOMCLIENT_API_SEARCH = `${apiBaseUri}search/_els/`;
   (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
-  const onLoad = () => {
+  const onAppLoad = () => {
     const { ecomPassport } = window as Record<string, any>;
     watch(isAuthenticated, async () => {
       if (isAuthenticated.value) {
@@ -250,12 +250,13 @@ if (!import.meta.env.SSR) {
       });
     }, 400);
   };
-
-  const appScript = document.createElement('script');
-  appScript.src = (window as any)._appScriptSrc
-    || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.207/dist/lib/js/app.js';
-  appScript.onload = onLoad;
-  document.body.appendChild(appScript);
+  const loadAppScript = () => {
+    const appScript = document.createElement('script');
+    appScript.src = (window as any)._appScriptSrc
+      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.207/dist/lib/js/app.js';
+    appScript.onload = onAppLoad;
+    document.body.appendChild(appScript);
+  };
 
   const initializingAuth = new Promise<ReturnType<typeof getAuth>>((resolve) => {
     initializeFirebaseAuth();
@@ -265,6 +266,11 @@ if (!import.meta.env.SSR) {
       resolve(getAuth());
     });
   });
+  if (window.location.hash.includes('account')) {
+    initializingAuth.finally(loadAppScript);
+  } else {
+    loadAppScript();
+  }
   if (window.OAUTH_PROVIDERS?.includes('google')) {
     (window as any).signInWithGoogle = () => {
       initializingAuth.then((firebaseAuth) => {
