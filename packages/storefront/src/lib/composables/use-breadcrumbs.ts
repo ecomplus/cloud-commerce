@@ -44,6 +44,19 @@ const useBreadcrumbs = async (props: Props = {}) => {
           });
         }
       });
+    } else {
+      const pageCategory = (apiDoc as Categories);
+      if (pageCategory.parent) {
+        const parentCategory = categories?.find((category) => {
+          return category.name === pageCategory.parent!.name;
+        });
+        if (parentCategory?.slug) {
+          breadcrumbs.push({
+            name: getName(parentCategory),
+            link: `/${parentCategory.slug}`,
+          });
+        }
+      }
     }
     breadcrumbs.push({
       name: getName(apiDoc),
