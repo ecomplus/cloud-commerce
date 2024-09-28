@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.27.2](https://github.com/ecomplus/cloud-commerce/compare/v2.27.1...v2.27.2) (2024-09-28)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#458](https://github.com/ecomplus/cloud-commerce/issues/458)) ([93217df](https://github.com/ecomplus/cloud-commerce/commit/93217df9a7af01252caf116172f74ab43cd3315a))
+* **storefront:** Adding breadcrumb for parent category on category pages ([cb6f954](https://github.com/ecomplus/cloud-commerce/commit/cb6f95450c87178d53c295a8e1fccd0c44fa97df))
+* **storefront:** Ensure await auth ready on SPA with account route ([9082cc9](https://github.com/ecomplus/cloud-commerce/commit/9082cc9475fc1843d7b98ebe0b0a026e4b5d13e8))
+* **storefront:** Prevent hydration mismatch errors with `<SocialNetworkLink>` for whatsapp ([ab34c3f](https://github.com/ecomplus/cloud-commerce/commit/ab34c3fbffb8deb2020af290779de4f80503e2f0))
+* **storefront:** Update `<SocialNetworkLink>` using api.whatsapp on SSR ([a829057](https://github.com/ecomplus/cloud-commerce/commit/a82905794eb652bfa837de110ded82e7c0f47280))
+* **storefront:** Update dependency Vue to ^3.5.8 ([#457](https://github.com/ecomplus/cloud-commerce/issues/457)) ([46c9828](https://github.com/ecomplus/cloud-commerce/commit/46c9828bc931fa7164ff3e947ed5ae683e04e5c3))
+
 ## [2.27.1](https://github.com/ecomplus/cloud-commerce/compare/v2.27.0...v2.27.1) (2024-09-20)
 
 
