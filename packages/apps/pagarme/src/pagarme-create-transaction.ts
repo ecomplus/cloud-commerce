@@ -144,13 +144,18 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     external_id: buyer.customer_id,
     type: buyer.registry_type === 'j' ? 'corporation' : 'individual',
     country: (buyer.doc_country || 'BR').toLowerCase(),
-    phone_numbers: [`+${(buyer.phone.country_code || '55')}${buyer.phone.number}`],
     documents: [{
       type: buyer.registry_type === 'j' ? 'cnpj' : 'cpf',
       number: buyer.doc_number,
     }],
   };
-  const birthDate = buyer.birth_date;
+  const { phone, birth_date: birthDate } = buyer;
+  if (phone?.number) {
+    pagarmeTransaction.customer.phone_numbers = [
+      `+${(phone.country_code || '55')}`
+      + `${phone.number.substring(phone.number.length - 11)}`,
+    ];
+  }
   if (birthDate && birthDate.year && birthDate.day && birthDate.month) {
     const yearDiff = date.getFullYear() - birthDate.year;
     if (

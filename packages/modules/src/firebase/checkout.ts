@@ -84,6 +84,13 @@ export default async (req: Request, res: Response) => {
       customer.phones = savedCustomer.phones;
     }
   }
+  customer.phones?.forEach((phone) => {
+    if (phone.country_code === 55 || !phone.country_code) {
+      // BR
+      if (phone.number.length <= 11) return;
+      phone.number = `${phone.number.substring(phone.number.length - 11)}`;
+    }
+  });
   customer._id = customerId;
   const fixMaskedAddr = (bodyAddr: typeof body.shipping.to) => {
     if (bodyAddr.line_address?.includes('***') || bodyAddr.name?.includes('***')) {
