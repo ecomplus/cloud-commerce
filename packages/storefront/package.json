@@ -63,7 +63,7 @@
     "mrmime": "^2.0.0",
     "semver": "^7.6.3",
     "sharp": "^0.32.6",
-    "unocss": "^0.62.4",
+    "unocss": "^0.63.1",
     "unplugin-auto-import": "^0.18.3",
     "vue": "^3.5.10",
     "wade": "0.3.3",
