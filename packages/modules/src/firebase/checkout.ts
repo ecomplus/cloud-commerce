@@ -87,8 +87,11 @@ export default async (req: Request, res: Response) => {
   customer.phones?.forEach((phone) => {
     if (phone.country_code === 55 || !phone.country_code) {
       // BR
-      if (phone.number.length <= 11) return;
-      phone.number = `${phone.number.substring(phone.number.length - 11)}`;
+      if (phone.number.length > 11) {
+        phone.number = `${phone.number.substring(phone.number.length - 11)}`;
+      } else if (phone.number.length < 10) {
+        phone.number = `${phone.number.padStart(10, '1')}`;
+      }
     }
   });
   customer._id = customerId;
