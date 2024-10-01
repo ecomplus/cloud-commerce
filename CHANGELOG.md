@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.27.3](https://github.com/ecomplus/cloud-commerce/compare/v2.27.2...v2.27.3) (2024-10-01)
+
+
+### Bug Fixes
+
+* **modules:** Ensure BR phone numbers formatted up to 11 digits on checkout ([6ee6f4d](https://github.com/ecomplus/cloud-commerce/commit/6ee6f4d08b69069f89dccc0aaba6bdbae15c6bf4))
+* **storefront:** Update Vue to ^3.5.10 ([#461](https://github.com/ecomplus/cloud-commerce/issues/461)) ([a7685f0](https://github.com/ecomplus/cloud-commerce/commit/a7685f0a3aa5ecd620b52506ab0c71292e3c6430))
+
 ## [2.27.2](https://github.com/ecomplus/cloud-commerce/compare/v2.27.1...v2.27.2) (2024-09-28)
 
 
