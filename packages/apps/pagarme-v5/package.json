@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-pagarme-v5",
   "type": "module",
-  "version": "2.27.2",
+  "version": "2.27.3",
   "description": "e-com.plus Cloud Commerce app to integrate Pagar.me API v5 with recurring payments",
   "main": "lib/index.js",
   "exports": {
