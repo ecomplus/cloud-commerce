@@ -72,6 +72,52 @@ const schema = {
             'minimum': 0,
             'maximum': 999999999,
             'description': 'Final item price including additions due to customizations and gift wrap'
+          },
+          'categories': {
+            'type': 'array',
+            'maxItems': 50,
+            'items': {
+              'type': 'object',
+              'additionalProperties': false,
+              'required': [ '_id' ],
+              'properties': {
+                '_id': {
+                  'type': 'string',
+                  'pattern': '^[a-f0-9]{24}$',
+                  'description': 'Category ID'
+                },
+                'name': {
+                  'type': 'string',
+                  'maxLength': 255,
+                  'description': 'Category name'
+                }
+              },
+              'description': 'Partial category object'
+            },
+            'description': 'List of product categories'
+          },
+          'brands': {
+            'type': 'array',
+            'maxItems': 50,
+            'items': {
+              'type': 'object',
+              'additionalProperties': false,
+              'required': [ '_id' ],
+              'properties': {
+                '_id': {
+                  'type': 'string',
+                  'pattern': '^[a-f0-9]{24}$',
+                  'description': 'Brand ID'
+                },
+                'name': {
+                  'type': 'string',
+                  'maxLength': 255,
+                  'description': 'Brand name'
+                }
+              },
+              'description': 'Product brand (manufacturer) partial object'
+            },
+            'description': 'List of product brands'
           }
         },
         'description': 'One of the cart items'

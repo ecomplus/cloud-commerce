@@ -149,6 +149,8 @@ export default async (
             'dimensions',
             'weight',
             'production_time',
+            'categories',
+            'brands',
           ].forEach((prop) => {
             if (body && body[prop] !== undefined) {
               item[prop] = body[prop];

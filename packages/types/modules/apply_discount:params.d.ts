@@ -55,6 +55,36 @@ export interface ApplyDiscountParams {
      * Final item price including additions due to customizations and gift wrap
      */
     final_price?: number;
+    /**
+     * List of product categories
+     *
+     * @maxItems 50
+     */
+    categories?: {
+      /**
+       * Category ID
+       */
+      _id: string;
+      /**
+       * Category name
+       */
+      name?: string;
+    }[];
+    /**
+     * List of product brands
+     *
+     * @maxItems 50
+     */
+    brands?: {
+      /**
+       * Brand ID
+       */
+      _id: string;
+      /**
+       * Brand name
+       */
+      name?: string;
+    }[];
   }[];
   /**
    * Designator of currency according to ISO 4217 (3 uppercase letters)

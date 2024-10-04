@@ -151,7 +151,10 @@ export default async (req: Request, res: Response) => {
     (item: Item) => {
       subtotal += ((item.final_price || item.price) * item.quantity);
       if (orderBody.items) {
-        orderBody.items.push({ ...item });
+        const orderItem = { ...item };
+        delete (orderItem as any).categories;
+        delete (orderItem as any).brands;
+        orderBody.items.push(orderItem);
       }
     },
   );
