@@ -5,6 +5,8 @@ inputs:
   github-token:
     description: 'The `GITHUB_TOKEN` secret'
     required: true
+  github-persistent-token:
+    description: 'Long life token for GitHub API'
   firebase-service-account:
     description: 'Firebase service account JSON'
     required: true
@@ -253,7 +255,7 @@ runs:
         ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GIT_BRANCH: ${{ env.git_branch }}
         DEPLOY_CODEBASE: ${{ env.deploy_codebase }}
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        GITHUB_TOKEN: ${{ inputs.github-persistent-token || inputs.github-token }}
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
