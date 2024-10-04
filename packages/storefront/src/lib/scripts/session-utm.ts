@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-mutable-exports
+/* eslint-disable import/no-mutable-exports */
 let utm: {
   source?: string,
   medium?: string,
@@ -6,6 +6,8 @@ let utm: {
   term?: string,
   content?: string,
 } = {};
+let sessionReferral: string | null = null;
+let sessionCoupon: string | null = null;
 
 if (!import.meta.env.SSR) {
   const storageKey = 'ecomUtm';
@@ -19,7 +21,6 @@ if (!import.meta.env.SSR) {
   } catch {
     utm = {};
   }
-
   let isCurrentUrl = false;
   const urlParams = new URLSearchParams(window.location.search);
   ['source', 'medium', 'campaign', 'term', 'content'].forEach((utmParam) => {
@@ -32,6 +33,18 @@ if (!import.meta.env.SSR) {
   if (isCurrentUrl) {
     localStorage.setItem(storageKey, JSON.stringify({ at, utm }));
   }
+  sessionReferral = urlParams.get('referral')
+    || sessionStorage.getItem('ecomReferral');
+  if (sessionReferral && !sessionStorage.getItem('ecomReferral')) {
+    sessionStorage.setItem('ecomReferral', sessionReferral);
+  }
+  sessionCoupon = urlParams.get('coupon')
+    || sessionStorage.getItem('st_discount_coupon');
+  if (sessionCoupon && !sessionStorage.getItem('st_discount_coupon')) {
+    sessionStorage.setItem('st_discount_coupon', sessionCoupon);
+  }
 }
 
 export default utm;
+
+export { utm, sessionReferral, sessionCoupon };
