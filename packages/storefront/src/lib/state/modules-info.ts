@@ -1,15 +1,16 @@
 import type {
   ListPaymentsResponse,
   CalculateShippingResponse,
+  ApplyDiscountParams,
   ApplyDiscountResponse,
   ModuleApiEndpoint,
   ModuleApiParams,
   ModuleApiResult,
 } from '@cloudcommerce/types';
 import { reactive, computed } from 'vue';
-import { formatMoney } from '@ecomplus/utils';
+import { formatMoney, price as getPrice } from '@ecomplus/utils';
 import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
-import utm from '@@sf/scripts/session-utm';
+import { utm, sessionCoupon } from '@@sf/scripts/session-utm';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import afetch from '../../helpers/afetch';
 
@@ -85,12 +86,31 @@ if (!import.meta.env.SSR) {
         modulesToFetch.push({ modName });
       }
     });
-    if (Object.keys(utm).length) {
+    if (Object.keys(utm).length || sessionCoupon) {
+      const { apiContext } = globalThis.$storefront;
+      const applyDiscountData: ApplyDiscountParams = { utm };
+      if (apiContext?.doc) {
+        if (apiContext.resource === 'products') {
+          const itemCategories: Array<{ _id: string, name?: string }> = [];
+          apiContext.doc.categories?.forEach(({ _id, name }) => {
+            if (_id && itemCategories.length < 50) itemCategories.push({ _id, name });
+          });
+          applyDiscountData.items = [{
+            product_id: apiContext.doc._id,
+            categories: itemCategories,
+            quantity: 1,
+            price: getPrice(apiContext.doc),
+          }];
+        }
+      }
+      if (sessionCoupon) {
+        applyDiscountData.discount_coupon = sessionCoupon;
+      }
       modulesToFetch.push({
         modName: 'apply_discount',
         reqOptions: {
           method: 'POST',
-          body: { utm },
+          data: applyDiscountData,
         },
       });
     }
