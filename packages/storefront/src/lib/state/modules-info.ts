@@ -118,9 +118,11 @@ if (!import.meta.env.SSR) {
     modulesToFetch.forEach(({ modName, reqOptions }) => {
       fetchModule(modName, reqOptions)
         .then(async (response) => {
-          if (response.ok) {
+          if (response.ok || modName === 'apply_discount') {
+            Object.keys(modulesInfo[modName]).forEach((key) => {
+              delete modulesInfo[modName][key];
+            });
             const modInfo = {};
-            modulesInfo[modName] = modInfo;
             const { result } = await response.json();
             if (Array.isArray(result)) {
               result.forEach(({ error, response: data }) => {
@@ -181,6 +183,7 @@ if (!import.meta.env.SSR) {
                 }
               });
             }
+            Object.assign(modulesInfo[modName], modInfo);
             sessionStorage.setItem(storageKey, JSON.stringify({
               ...modulesInfo,
               __timestamp: Date.now(),
