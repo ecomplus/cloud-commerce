@@ -118,7 +118,7 @@ if (!import.meta.env.SSR) {
     modulesToFetch.forEach(({ modName, reqOptions }) => {
       fetchModule(modName, reqOptions)
         .then(async (response) => {
-          if (response.ok || modName === 'apply_discount') {
+          if (response.ok) {
             Object.keys(modulesInfo[modName]).forEach((key) => {
               delete modulesInfo[modName][key];
             });
