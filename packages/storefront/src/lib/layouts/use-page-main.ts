@@ -46,7 +46,7 @@ export const usePageHero = async ({ routeContext }: Props) => {
 };
 
 type CustomSection = { type: `${string}:${string}`, props: any };
-type ProductDetailsProps = {
+type ProductDetailsProps = Record<string, any> & {
   hasDescription?: boolean,
   hasSpecifications?: boolean,
 };
