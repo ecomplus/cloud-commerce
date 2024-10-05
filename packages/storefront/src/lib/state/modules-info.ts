@@ -110,7 +110,7 @@ if (!import.meta.env.SSR) {
         modName: 'apply_discount',
         reqOptions: {
           method: 'POST',
-          data: applyDiscountData,
+          body: applyDiscountData,
         },
       });
     }
