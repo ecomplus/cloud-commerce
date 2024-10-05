@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.0](https://github.com/ecomplus/cloud-commerce/compare/v2.27.3...v2.28.0) (2024-10-05)
+
+
+### Features
+
+* **modules:** Add optional fields brands/categories to items param on apply discount ([e8950fb](https://github.com/ecomplus/cloud-commerce/commit/e8950fba09f143c37dc94aab3f396b866d8f6900))
+* **storefront:** Also handle items, categories and coupon on apply discount within modules info ([253e8e1](https://github.com/ecomplus/cloud-commerce/commit/253e8e1a2a533846e65685f2d1d7cf840aa2b084))
+
+
+### Bug Fixes
+
+* **storefront:** Also persisting session `?referral` and `?coupon` from URL params ([c47558b](https://github.com/ecomplus/cloud-commerce/commit/c47558b9d34ac46f801b7de5b89666f2cdc73d4a))
+* **storefront:** Prevent loosing `modulesInfo` object reactivity ([c7f129e](https://github.com/ecomplus/cloud-commerce/commit/c7f129e8df776f523950866f97e73d3644fba672))
+
 ## [2.27.3](https://github.com/ecomplus/cloud-commerce/compare/v2.27.2...v2.27.3) (2024-10-01)
 
 
