@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.1](https://github.com/ecomplus/cloud-commerce/compare/v2.28.0...v2.28.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* **storefront:** Fixing regression on modules info with apply discount request body ([99448fd](https://github.com/ecomplus/cloud-commerce/commit/99448fdf367000ec37588802bd815456e1772b8d))
+
 ## [2.28.0](https://github.com/ecomplus/cloud-commerce/compare/v2.27.3...v2.28.0) (2024-10-05)
 
 
