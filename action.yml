@@ -206,7 +206,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: functions/ssr/.cache
-        key: ${{ runner.os }}-${{ env.year }}-storefront
+        key: ${{ runner.os }}-${{ env.year }}-storefront-${{ hashFiles('functions/ssr/public/**/*') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
       uses: actions/cache@v4
