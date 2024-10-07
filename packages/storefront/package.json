@@ -50,20 +50,20 @@
     "@fastify/deepmerge": "^2.0.0",
     "@iconify-json/fa6-brands": "^1.2.0",
     "@iconify-json/heroicons": "^1.2.0",
-    "@iconify-json/logos": "^1.2.0",
+    "@iconify-json/logos": "^1.2.2",
     "@types/gtag.js": "^0.0.20",
     "@vueuse/core": "11.1.0",
     "astro": "4.5.10",
     "astro-capo": "^0.0.1",
     "chroma-js": "^3.1.1",
     "dotenv": "^16.4.5",
-    "firebase": "^10.13.2",
+    "firebase": "^10.14.0",
     "image-size": "^1.1.1",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.0",
     "semver": "^7.6.3",
     "sharp": "^0.32.6",
-    "unocss": "^0.63.1",
+    "unocss": "^0.63.3",
     "unplugin-auto-import": "^0.18.3",
     "vue": "^3.5.10",
     "wade": "0.3.3",
@@ -72,6 +72,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.10"
+    "@types/react": "^18.3.11"
   }
 }
