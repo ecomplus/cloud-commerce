@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.2](https://github.com/ecomplus/cloud-commerce/compare/v2.28.1...v2.28.2) (2024-10-08)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#469](https://github.com/ecomplus/cloud-commerce/issues/469)) ([3a16abf](https://github.com/ecomplus/cloud-commerce/commit/3a16abf48f547eef52e134421167a0257929903a))
+* **storefront:** Add new `isHalfSize` optional prop to `BannerPictures.astro` ([d7fc29d](https://github.com/ecomplus/cloud-commerce/commit/d7fc29dc755645693f66ae55908d9fa659fb91dd))
+* **storefront:** Bump Vue to ^3.5.11 ([#470](https://github.com/ecomplus/cloud-commerce/issues/470)) ([7cacd11](https://github.com/ecomplus/cloud-commerce/commit/7cacd11065873639a3950476ac9e8909f202b1e4))
+
 ## [2.28.1](https://github.com/ecomplus/cloud-commerce/compare/v2.28.0...v2.28.1) (2024-10-05)
 
 
