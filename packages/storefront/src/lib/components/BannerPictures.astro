@@ -8,6 +8,7 @@ export type Props = UseBannerProps & {
   class?: string;
   mobileWidths?: number[];
   mobileClass?: string;
+  isHalfSize?: boolean;
 };
 
 const {
@@ -18,19 +19,24 @@ const {
   subtitle,
   buttonText,
   index,
-  class: className = 'max-w-screen-sm sm:max-w-[828px] md:max-w-screen-2xl',
-  mobileClass = 'max-w-screen-sm sm:max-w-screen-lg',
+  mobileClass,
 } = Astro.props as Props;
-const hasHeader = title || subtitle || buttonText;
+const hasHeader = Boolean(title || subtitle || buttonText);
+const isHalfSize = Astro.props.isHalfSize || hasHeader;
 let { widths, mobileWidths } = Astro.props;
+let className = Astro.props.class;
+if (!className) {
+  if (isHalfSize) {
+    className = 'max-w-screen-sm sm:max-w-[828px] lg:max-w-screen-xl';
+  } else {
+    className = 'max-w-screen-sm sm:max-w-[828px] md:max-w-screen-2xl 2xl:max-w-[1920px]';
+  }
+}
 if (!widths?.length) {
   if (mobileImg) {
-    widths = [1536, 2048];
+    widths = isHalfSize ? [828, 1280] : [1536, 2048];
   } else {
-    widths = [640, 828, 1536, 2048];
-    if (hasHeader) {
-      widths = widths.map((w) => (w / 2));
-    }
+    widths = isHalfSize ? [640, 828, 1280] : [640, 828, 1536, 2048];
   }
 }
 if (!mobileWidths?.length) {
@@ -56,6 +62,7 @@ if (!mobileWidths?.length) {
     widths={mobileWidths}
     fetchpriority={index === 0 ? 'high' : 'low'}
     loading={index === 0 ? 'eager' : 'lazy'}
-    class={`mx-auto text-sm text-opacity-70 md:hidden ${mobileClass}`}
+    class={`mx-auto text-sm text-opacity-70 md:hidden
+    ${(mobileClass || 'max-w-screen-sm sm:max-w-screen-lg')}`}
   />
 }
