@@ -252,7 +252,13 @@ provide(carouselKey, {
         -ms-overflow-style: none;"
       data-carousel-wrapper
     >
-      <slot />
+      <slot v-bind="{
+        changeSlide,
+        isBoundStart,
+        isBoundEnd,
+        activeIndex,
+        hasControls,
+      }" />
     </component>
     <!-- @slot Slot for Arrows -->
     <slot
