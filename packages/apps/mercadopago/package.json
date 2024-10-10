@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-mercadopago",
   "type": "module",
-  "version": "2.28.2",
+  "version": "2.28.3",
   "description": "e-com.plus Cloud Commerce app to integrate Mercado Pago",
   "main": "lib/mercadopago.js",
   "exports": {
