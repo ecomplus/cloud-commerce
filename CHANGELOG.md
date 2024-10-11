@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.4](https://github.com/ecomplus/cloud-commerce/compare/v2.28.3...v2.28.4) (2024-10-11)
+
+
+### Bug Fixes
+
+* **storefront:** Additional named exports for common Firestore usage on `@@sf/scripts/firestore` ([05a10d9](https://github.com/ecomplus/cloud-commerce/commit/05a10d9d9ea1c21db19332375337f265218b1ecb))
+* **storefront:** Fix importing `@firebase/firestore/lite` on `scripts/firestore` ([04dde1b](https://github.com/ecomplus/cloud-commerce/commit/04dde1bda274425ef4a317b3f6b74badeb345562))
+
 ## [2.28.3](https://github.com/ecomplus/cloud-commerce/compare/v2.28.2...v2.28.3) (2024-10-10)
 
 
