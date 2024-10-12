@@ -179,6 +179,7 @@ export type SettingsContent = {
   description: string,
   logo: string,
   icon: string,
+  favicon?: string,
   primaryColor: string,
   secondaryColor?: string,
   bgColor?: string,
