@@ -32,11 +32,6 @@ const {
 if (fetchingApiContext) {
   await fetchingApiContext;
 }
-const deployRand = import.meta.env.DEPLOY_RAND || '_';
-const getIconUrl = (size: number) => {
-  return `/_image?f=png&w=${size}&h=${size}`
-    + `&href=${encodeURIComponent(settings.icon)}&V=${deployRand}`;
-};
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
@@ -66,8 +61,8 @@ if (isSearchPage) {
     title = `${i19searchProducts} | ${settings.name}`;
   }
 }
-const favicon = settings.icon ? getIconUrl(32) : '/favicon.ico';
-const shortcutIcon = settings.icon ? getIconUrl(192) : null;
+const favicon = settings.favicon || settings.icon || '/favicon.ico';
+const shortcutIcon = settings.icon || null;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
 const { metatags: metatagsContent } = await getContent('layout');
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
