@@ -356,10 +356,10 @@ runs:
           npm run deploy
         else
           if [ $DEPLOY_CODEBASE == "ssr" ]; then
-            ls -l functions/ssr/dist/server
             BUNNYNET_API_KEY=$BUNNYNET_API_KEY \
             GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME \
             npm run deploy -- --only functions:$DEPLOY_CODEBASE,hosting
+            ls -l functions/ssr/dist/server
           else
             GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME \
             npm run deploy -- --only functions:$DEPLOY_CODEBASE
