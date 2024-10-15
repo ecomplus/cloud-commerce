@@ -206,7 +206,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: functions/ssr/.cache
-        key: ${{ runner.os }}-${{ env.year }}-storefront-${{ hashFiles('functions/ssr/public/**/*') }}
+        key: ${{ runner.os }}-${{ env.year }}-sf-${{ hashFiles('functions/ssr/public/**/*') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
       uses: actions/cache@v4
@@ -359,7 +359,6 @@ runs:
             BUNNYNET_API_KEY=$BUNNYNET_API_KEY \
             GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME \
             npm run deploy -- --only functions:$DEPLOY_CODEBASE,hosting
-            ls -l functions/ssr/dist/server
           else
             GOOGLE_APPLICATION_CREDENTIALS=$GAC_FILENAME \
             npm run deploy -- --only functions:$DEPLOY_CODEBASE
