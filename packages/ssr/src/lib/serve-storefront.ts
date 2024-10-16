@@ -60,7 +60,8 @@ export default async (req: Request, res: Response) => {
   const redirect = (status: 301 | 302, pathname: string) => {
     const projectId = process.env.GCLOUD_PROJECT as string;
     if (status === 302 && projectId) {
-      return res.redirect(status, `https://${projectId}.web.app${pathname}`);
+      const domain = settingsContent.domain || `${projectId}.web.app`;
+      return res.redirect(status, `https://${domain}${pathname}`);
     }
     return res.redirect(status, pathname);
   };
