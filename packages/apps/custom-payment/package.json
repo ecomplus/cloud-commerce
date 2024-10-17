@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-custom-payment",
   "type": "module",
-  "version": "2.28.4",
+  "version": "2.28.5",
   "description": "e-com.plus Cloud Commerce app for simple custom payment methods",
   "main": "lib/index.js",
   "files": [
