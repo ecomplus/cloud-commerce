@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.5](https://github.com/ecomplus/cloud-commerce/compare/v2.28.4...v2.28.5) (2024-10-17)
+
+
+### Bug Fixes
+
+* **pagarme:** New `recurrence_model` field on credit card transactions ([2a9b6c4](https://github.com/ecomplus/cloud-commerce/commit/2a9b6c422da1b4d23c7dec1995226253fef87f8d))
+* **storefront:** Handle available extra discount on shipping calculator composable ([8cb5ae4](https://github.com/ecomplus/cloud-commerce/commit/8cb5ae4d4d227a3666cd1ac0dc0a4c5d83892b40))
+* **storefront:** Update Vue to ^3.5.12 ([#472](https://github.com/ecomplus/cloud-commerce/issues/472)) ([e1476f6](https://github.com/ecomplus/cloud-commerce/commit/e1476f6f5d2fbb595a47867bc5453826645135da))
+
 ## [2.28.4](https://github.com/ecomplus/cloud-commerce/compare/v2.28.3...v2.28.4) (2024-10-11)
 
 
