@@ -94,6 +94,8 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       amount: Math.floor(finalAmount * 100),
       installments: installmentsNumber,
       card_hash: params.credit_card && params.credit_card.hash,
+      recurrence_model: 'installment',
+      // initiated_type: 'PartialShipment',
     });
   } else if (params.payment_method.code === 'account_deposit') {
     const finalAmount = amount.total;
