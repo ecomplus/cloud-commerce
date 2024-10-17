@@ -27,7 +27,11 @@ import {
   i19upTo,
   i19workingDays,
 } from '@@i18n';
-import { fetchModule } from '@@sf/state/modules-info';
+import {
+  fetchModule,
+  availableExtraDiscount,
+} from '@@sf/state/modules-info';
+import { getPriceWithDiscount } from '@@sf/composables/use-prices';
 
 export type ShippedItem = Exclude<CalculateShippingParams['items'], undefined>[0] & {
   production_time?: Products['production_time'],
@@ -113,10 +117,17 @@ export const useShippingCalculator = (props: Props) => {
   }
   const countryCode = props.countryCode || config.get().countryCode;
   const shippedItems = ref<ShippedItem[]>([]);
-  const amountSubtotal = computed(() => {
+  const baseAmountSubtotal = computed(() => {
     return shippedItems.value.reduce((subtotal, item) => {
       return subtotal + getPrice(item) * item.quantity;
     }, 0);
+  });
+  const amountSubtotal = computed(() => {
+    const discount = availableExtraDiscount.value;
+    if (discount) {
+      return getPriceWithDiscount(baseAmountSubtotal.value, discount);
+    }
+    return baseAmountSubtotal.value;
   });
   const shippingServices = shallowReactive<(ShippingService & { app_id: number })[]>([]);
   const freeFromValue = ref<number | null>(null);

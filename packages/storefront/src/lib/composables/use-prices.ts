@@ -19,7 +19,7 @@ export type Props = {
   loyaltyPointsProgram?: Exclude<ListPaymentsResponse['loyalty_points_programs'], undefined>['k'];
 }
 
-const getPriceWithDiscount = (
+export const getPriceWithDiscount = (
   price: number,
   discount: Exclude<Props['discountOption'], undefined>,
 ) => {
