@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.6](https://github.com/ecomplus/cloud-commerce/compare/v2.28.5...v2.28.6) (2024-10-18)
+
+
+### Bug Fixes
+
+* **storefront:** Try fixing strange hydration mismatches with Vue 3.4 regression ([f3455a6](https://github.com/ecomplus/cloud-commerce/commit/f3455a6adf1fb86a168c88537d69a2379a2e42bc))
+
 ## [2.28.5](https://github.com/ecomplus/cloud-commerce/compare/v2.28.4...v2.28.5) (2024-10-17)
 
 
