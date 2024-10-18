@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.28.7](https://github.com/ecomplus/cloud-commerce/compare/v2.28.6...v2.28.7) (2024-10-18)
+
+
+### Bug Fixes
+
+* **storefront:** Bump Vue to latest v3.5.12 (revert) ([7c152c8](https://github.com/ecomplus/cloud-commerce/commit/7c152c8013d72ebe0043c0c5b6e49be98046d7c0))
+
 ## [2.28.6](https://github.com/ecomplus/cloud-commerce/compare/v2.28.5...v2.28.6) (2024-10-18)
 
 
