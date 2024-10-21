@@ -120,6 +120,12 @@ const pagaleveCreateTransaction = async (body: AppModuleBody<'create_transaction
           valid_thru: data.timestamp,
         };
       }
+      if (data.id) {
+        transaction.intermediator = {
+          transaction_id: data.id,
+          transaction_code: data.id,
+        };
+      }
       return {
         redirect_to_payment: true,
         transaction,

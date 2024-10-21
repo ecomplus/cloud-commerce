@@ -22,10 +22,12 @@ const parseStatusToEcom = (pagaleveTransactionStatus: string) => {
       return 'pending';
     case 'authorized':
     case 'completed':
+    case 'paid':
       return 'paid';
     case 'expired':
-    case 'DECLINED':
-    case 'ABANDONED':
+    case 'declined':
+    case 'abandoned':
+    case 'cancelled':
     case 'canceled':
       return 'voided';
     default:
@@ -122,6 +124,9 @@ export const pagaleve = {
             };
             await _pagaleve.axios.post('/v1/payments', pagalevePayment, {
               maxRedirects: 0,
+              validateStatus(status: number) {
+                return status >= 200 && status <= 301;
+              },
             });
           }
         }
