@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.1](https://github.com/ecomplus/cloud-commerce/compare/v2.29.0...v2.29.1) (2024-10-22)
+
+
+### Bug Fixes
+
+* **braspag:** Fixed URL for Pix QR Code images ([9e87e49](https://github.com/ecomplus/cloud-commerce/commit/9e87e49ed3333cf30ab78b513cf869f615c0781b))
+* **modules:** Properly handling transaciton status and payments history on checkout new order ([07073b1](https://github.com/ecomplus/cloud-commerce/commit/07073b14f2042e919d200a2b4be5f52c401f9e06))
+
 ## [2.29.0](https://github.com/ecomplus/cloud-commerce/compare/v2.28.7...v2.29.0) (2024-10-22)
 
 
