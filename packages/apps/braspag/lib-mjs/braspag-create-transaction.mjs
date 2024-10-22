@@ -132,7 +132,7 @@ const createTransaction = async ({ params, application }) => {
         await db.doc(`braspagQrCode/${orderId}`).set({ qrCode: qrCodeBase64 })
           .catch(logger.error);
 
-        const qrCodeSrc = `${baseUri}/braspag-qr-code?orderId=${orderId}`;
+        const qrCodeSrc = `${baseUri}/braspag-qrCode?orderId=${orderId}`;
         transaction.notes = '<div style="display:block;margin:0 auto"> '
           + `<img src="${qrCodeSrc}" style="display:block;margin:0 auto; width:150px;"> `
           + `<input readonly type="text" id="pix-copy" value="${qrCode}" />`
