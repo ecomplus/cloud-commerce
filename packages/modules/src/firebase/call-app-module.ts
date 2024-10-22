@@ -105,6 +105,12 @@ const callAppModule = async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.braspag.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-braspag')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
     if (appId === apps.pix.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-pix')
@@ -157,6 +163,12 @@ const callAppModule = async (
     if (appId === apps.pagarMe.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-pagarme')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.braspag.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-braspag')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

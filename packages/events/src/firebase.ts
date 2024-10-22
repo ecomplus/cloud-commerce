@@ -10,6 +10,8 @@ export * from '@cloudcommerce/app-emails';
 
 export * from '@cloudcommerce/app-pagarme/webhook';
 
+export * from '@cloudcommerce/app-braspag/functions';
+
 export * from '@cloudcommerce/app-pix/webhook';
 
 export * from '@cloudcommerce/app-galaxpay/events';

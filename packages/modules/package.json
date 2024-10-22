@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-custom-payment": "workspace:*",
     "@cloudcommerce/app-custom-shipping": "workspace:*",

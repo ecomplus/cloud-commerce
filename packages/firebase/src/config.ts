@@ -96,6 +96,9 @@ const mergeConfig = {
     pagarMe: {
       appId: 117391,
     },
+    braspag: {
+      appId: 112906,
+    },
     pix: {
       appId: 101827,
     },

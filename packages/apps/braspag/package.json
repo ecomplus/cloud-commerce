@@ -1,12 +1,12 @@
 {
-  "name": "@cloudcommerce/app-pagarme",
+  "name": "@cloudcommerce/app-braspag",
   "type": "module",
-  "version": "2.28.7",
-  "description": "e-com.plus Cloud Commerce app to integrate Pagar.me",
-  "main": "lib/pagarme.js",
+  "version": "0.0.0",
+  "description": "e-com.plus Cloud Commerce app to integrate Braspag",
+  "main": "lib/braspag.js",
   "exports": {
-    ".": "./lib/pagarme.js",
-    "./webhook": "./lib/pagarme-webhook.js"
+    ".": "./lib/braspag.js",
+    "./functions": "./lib/braspag-functions.js"
   },
   "files": [
     "/lib",
@@ -18,24 +18,23 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ecomplus/cloud-commerce.git",
-    "directory": "packages/apps/pagarme"
+    "directory": "packages/apps/braspag"
   },
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ecomplus/cloud-commerce/issues"
   },
-  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/pagarme#readme",
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/braspag#readme",
   "scripts": {
     "build": "bash scripts/build.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/firebase": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:^",
     "axios": "^1.7.7",
-    "firebase-admin": "^12.6.0",
-    "firebase-functions": "^5.1.1",
-    "pagarme": "4.35.2",
+    "firebase-admin": "12",
+    "firebase-functions": "5",
     "qs": "^6.13.0"
   },
   "devDependencies": {

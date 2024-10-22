@@ -257,6 +257,34 @@ importers:
         specifier: workspace:*
         version: link:../../types
 
+  packages/apps/braspag:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:^
+        version: link:../../firebase
+      axios:
+        specifier: ^1.7.7
+        version: 1.7.7
+      firebase-admin:
+        specifier: '12'
+        version: 12.6.0
+      firebase-functions:
+        specifier: '5'
+        version: 5.1.1(firebase-admin@12.6.0)
+      qs:
+        specifier: ^6.13.0
+        version: 6.13.0
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+      '@firebase/app-types':
+        specifier: ^0.9.2
+        version: 0.9.2
+
   packages/apps/correios:
     dependencies:
       '@cloudcommerce/api':
@@ -849,6 +877,9 @@ importers:
       '@cloudcommerce/app-affiliate-program':
         specifier: workspace:*
         version: link:../apps/affiliate-program
+      '@cloudcommerce/app-braspag':
+        specifier: workspace:*
+        version: link:../apps/braspag
       '@cloudcommerce/app-datafrete':
         specifier: workspace:*
         version: link:../apps/datafrete
@@ -979,6 +1010,9 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
+      '@cloudcommerce/app-braspag':
+        specifier: workspace:*
+        version: link:../apps/braspag
       '@cloudcommerce/app-correios':
         specifier: workspace:*
         version: link:../apps/correios
