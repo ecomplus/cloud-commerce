@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.0](https://github.com/ecomplus/cloud-commerce/compare/v2.28.7...v2.29.0) (2024-10-22)
+
+
+### Features
+
+* **braspag:** Setup new Braspag payment app ([72c673a](https://github.com/ecomplus/cloud-commerce/commit/72c673a16412a0dafc01df6d97031d1a7c2766cc)), closes [#diff-19a65166713732dd773aa136913876a42ddbc4ac63c839c9e034c06a28e513e6R11](https://github.com/ecomplus/cloud-commerce/issues/diff-19a65166713732dd773aa136913876a42ddbc4ac63c839c9e034c06a28e513e6R11)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#474](https://github.com/ecomplus/cloud-commerce/issues/474)) ([174945c](https://github.com/ecomplus/cloud-commerce/commit/174945c757176be2cc3ba3e04ca62f99b66525c7))
+* **pagaleve:** Updating app handlers with https://github.com/ecomplus/app-pagaleve ([1b5f79c](https://github.com/ecomplus/cloud-commerce/commit/1b5f79ce770ced888e8ec011dac7e4e33ae6ab52))
+
 ## [2.28.7](https://github.com/ecomplus/cloud-commerce/compare/v2.28.6...v2.28.7) (2024-10-18)
 
 
