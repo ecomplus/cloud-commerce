@@ -1,4 +1,5 @@
 import type { Response } from 'firebase-functions';
+import type { ApiError } from '@cloudcommerce/api/types';
 import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
   Amount,
@@ -7,13 +8,12 @@ import type {
   PaymentHistory,
 } from '../../types/index';
 import { logger } from '@cloudcommerce/firebase/lib/config';
+import api from '@cloudcommerce/api';
 import { sendError, getValidResults } from './checkout-utils';
 import {
   newOrder,
   cancelOrder,
-  saveTransaction,
   addPaymentHistory,
-  checkoutRespond,
 } from './handle-order-transaction';
 import requestModule from './request-to-module';
 
@@ -33,8 +33,6 @@ const createOrder = async (
   transactions: CheckoutTransaction[],
   dateTime: string,
 ) => {
-  // start creating new order to API
-
   const { order, err } = await newOrder(orderBody);
   if (order) {
     const orderId = order._id;
@@ -81,7 +79,6 @@ const createOrder = async (
       let listTransactions = await requestModule(transactionBody, modulesBaseURL, 'transaction');
       if (listTransactions) {
         listTransactions = getValidResults(listTransactions);
-        // simulateRequest(transactionBody, checkoutRespond, 'transaction', storeId, (results) => {
         const isFirstTransaction = index === 0;
         let isDone: boolean = false;
         for (let i = 0; i < listTransactions.length; i++) {
@@ -137,47 +134,47 @@ const createOrder = async (
 
             if (isFirstTransaction) {
               // merge transaction body with order info and respond
-              return checkoutRespond(res, orderId, orderNumber, usrMsg, transaction);
-            }
-
-            // save transaction info on order data
-            // saveTransaction(transaction, orderId, storeId, (err, transactionId) => {
-            try {
-              // eslint-disable-next-line no-await-in-loop
-              const transactionId = await saveTransaction(
-                orderId,
+              res.send({
+                status: 200,
+                order: {
+                  _id: orderId,
+                  number: orderNumber,
+                },
                 transaction,
-              ) as string;
-              // add entry to payments history
-              const paymentEntry: PaymentHistory = {
-                transaction_id: transactionId,
-                status: transaction.status.current,
-                date_time: dateTime,
-                flags: ['checkout'],
-              };
-              paymentsHistory.push(paymentEntry);
-              try {
-                // eslint-disable-next-line no-await-in-loop
-                await addPaymentHistory(
+              });
+            }
+            const currLoyaltyPointsBalance = loyaltyPointsBalance;
+            api.post(`orders/${orderId}/transactions`, transaction)
+              .then(({ data }) => {
+                const transactionId = data._id;
+                const paymentEntry: PaymentHistory = {
+                  transaction_id: transactionId,
+                  status: transaction.status?.current || 'unknown',
+                  date_time: dateTime,
+                  flags: ['checkout'],
+                };
+                paymentsHistory.push(paymentEntry);
+                return addPaymentHistory(
                   orderId,
                   paymentsHistory,
                   isFirstTransaction,
                   paymentEntry,
                   dateTime,
-                  loyaltyPointsBalance,
+                  currLoyaltyPointsBalance,
                   amount,
                 );
-              } catch (_err) {
-                logger.error(_err);
-              }
-            } catch (_err) {
-              logger.error(_err);
-            }
+              })
+              .catch((_err: any) => {
+                const error = _err as ApiError;
+                logger.error(error, {
+                  response: error.data,
+                  transaction,
+                });
+              });
             index += 1;
             if (index < transactions.length) {
-              return nextTransaction(index);
+              nextTransaction(index);
             }
-            // });
             isDone = true;
             paymentsAmount += transaction.amount;
             break;
@@ -197,8 +194,7 @@ const createOrder = async (
               );
             }
           }
-          // return
-          return checkoutRespond(res, orderId, orderNumber, usrMsg);
+          return true;
         }
 
         // unexpected response object from create transaction module
@@ -238,7 +234,6 @@ const createOrder = async (
           errorMessage,
         );
       }
-      // send error no exist transaction
       return sendError(
         res,
         409,
@@ -250,8 +245,7 @@ const createOrder = async (
 
     return nextTransaction();
   }
-  // send error
-  // Ref: class ApiError in api.d.ts
+
   return sendError(
     res,
     (err?.data?.status || err?.statusCode) || 409,

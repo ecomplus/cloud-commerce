@@ -4,48 +4,10 @@ import type {
   Amount,
   PaymentHistory,
   OrderPaymentHistory,
-  TransactionOrder,
 } from '../../types/index';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import { sendError } from './checkout-utils';
-
-const checkoutRespond = async (
-  res: Response,
-  orderId: Orders['_id'],
-  orderNumber: number | undefined,
-  usrMsg: { en_us: string, pt_br: string },
-  transaction?: TransactionOrder,
-) => {
-  if (transaction) {
-    try {
-      const transactionId = (await api.post(
-        `orders/${orderId}/transactions`,
-        transaction as any,
-      )).data._id;
-      transaction._id = transactionId;
-    } catch (err: any) {
-      logger.error(err);
-      // Ref: class ApiError in api.d.ts
-      return sendError(
-        res,
-        (err?.data?.status || err?.statusCode) || 409,
-        err?.data?.error_code || 'CKT704',
-        err?.message || 'Create transaction Error',
-        err?.data?.user_message || usrMsg,
-        err?.data?.more_info,
-      );
-    }
-  }
-  return res.send({
-    status: 200,
-    order: {
-      _id: orderId,
-      number: orderNumber,
-    },
-    transaction,
-  });
-};
 
 const newOrder = async (orderBody: OrderSet) => {
   try {
@@ -112,24 +74,6 @@ const cancelOrder = async (
   );
 };
 
-const saveTransaction = (
-  orderId: Orders['_id'],
-  transactionBody: any, // TODO: error type 'status' incompatible
-) => {
-  return new Promise((resolve, reject) => {
-    api.post(
-      `orders/${orderId}/transactions`,
-      transactionBody,
-    )
-      .then(({ data }) => {
-        resolve(data._id);
-      })
-      .catch((e) => {
-        reject(e);
-      });
-  });
-};
-
 const addPaymentHistory = async (
   orderId: Orders['_id'],
   listPaymentsHistory: PaymentHistory[],
@@ -145,7 +89,6 @@ const addPaymentHistory = async (
         amount,
       };
       body.payments_history = listPaymentsHistory;
-
       if (isFirstTransaction) {
         body.financial_status = {
           current: paymentEntry.status,
@@ -160,26 +103,18 @@ const addPaymentHistory = async (
           total: amount.total - balance,
         };
       }
-
       try {
-        const response = await api.patch(`orders/${orderId}`, body);
-        if (response.status === 204) {
-          resolve(true);
-        } else {
-          reject(new Error('Error adding payment history'));
-        }
+        await api.patch(`orders/${orderId}`, body);
+        resolve(true);
       } catch (err) {
-        logger.error(err);
         reject(err);
       }
-    }, isFirstTransaction ? 200 : 400);
+    }, isFirstTransaction ? 100 : 400);
   });
 };
 
 export {
   newOrder,
   cancelOrder,
-  saveTransaction,
   addPaymentHistory,
-  checkoutRespond,
 };
