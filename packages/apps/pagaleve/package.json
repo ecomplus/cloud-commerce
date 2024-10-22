@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-pagaleve",
   "type": "module",
-  "version": "2.28.7",
+  "version": "2.29.0",
   "description": "e-com.plus Cloud Commerce app to integrate Pagaleve",
   "main": "lib/pagaleve.js",
   "exports": {
