@@ -3,6 +3,7 @@ import type { Request, Response } from 'firebase-functions';
 import type { GroupedAnalyticsEvents } from './analytics/send-analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { checkUserAgent, fetchAndCache } from './util/ssr-utils';
 import { sendAnalyticsEvents } from './analytics/send-analytics-events';
@@ -198,14 +199,26 @@ export default async (req: Request, res: Response) => {
   */
   /* eslint-disable prefer-rest-params */
   const startedAt = Date.now();
+  let resolveHeaders: ((v: [number, OutgoingHttpHeaders]) => any) | undefined;
+  const waitingHeaders = new Promise<[number, OutgoingHttpHeaders]>((resolve) => {
+    resolveHeaders = resolve;
+  });
   let resolveHeadersSent: ((v: any) => any) | undefined;
   const waitingHeadersSent = new Promise((resolve) => {
     resolveHeadersSent = resolve;
   });
   const writes: Promise<any>[] = [];
+  let outputHtml: string = '';
   const _write = res.write;
   // @ts-ignore
-  res.write = function write(...args: any) {
+  res.write = function write(...args: [string | Buffer | Uint8Array, any]) {
+    const [chunk] = args;
+    try {
+      const html = chunk.toString();
+      if (html) outputHtml += html;
+    } catch {
+      //
+    }
     writes.push(new Promise((resolve) => {
       waitingHeadersSent.finally(() => {
         if (!res.writableEnded) _write.apply(res, args);
@@ -214,10 +227,18 @@ export default async (req: Request, res: Response) => {
     }));
   };
   let sid: string | undefined;
+  const _writeHead = res.writeHead;
   const _end = res.end;
   // @ts-ignore
   res.end = async function end(...args: any) {
-    await waitingHeadersSent;
+    if (!res.headersSent) {
+      const [status, headers] = await waitingHeaders;
+      if (status === 200 && outputHtml) {
+        headers.etag = createHash('sha256').update(outputHtml).digest('base64');
+      }
+      _writeHead.apply(res, [status, headers]);
+    }
+    resolveHeadersSent?.(null);
     setTimeout(async () => {
       await Promise.all(writes);
       if (!res.writableEnded) _end.apply(res, args);
@@ -230,7 +251,6 @@ export default async (req: Request, res: Response) => {
     }, 1);
   };
 
-  const _writeHead = res.writeHead;
   // @ts-ignore
   res.writeHead = async function writeHead(status: number, headers?: OutgoingHttpHeaders) {
     if (!headers) {
@@ -276,8 +296,7 @@ export default async (req: Request, res: Response) => {
       delete headers['CDN-Tag'];
     }
     headers['X-Async-Ex'] = `${execId}_${Date.now() - startedAt}`;
-    _writeHead.apply(res, [status, headers]);
-    resolveHeadersSent?.(null);
+    resolveHeaders?.([status, headers]);
   };
 
   const setStatusAndCache = (status: number, cacheControl: string) => {
@@ -301,6 +320,7 @@ export default async (req: Request, res: Response) => {
         .send(err.toString());
     }
     resolveHeadersSent?.(null);
+    resolveHeaders?.([status, res.getHeaders()]);
   };
 
   const handleException = (err: Error) => {
