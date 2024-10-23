@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.3](https://github.com/ecomplus/cloud-commerce/compare/v2.29.2...v2.29.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* **ssr:** Use `res.set` to ensure proper Cache-Control header ([af4c645](https://github.com/ecomplus/cloud-commerce/commit/af4c645949988096f777425d20dff52894515137))
+
 ## [2.29.2](https://github.com/ecomplus/cloud-commerce/compare/v2.29.1...v2.29.2) (2024-10-23)
 
 
