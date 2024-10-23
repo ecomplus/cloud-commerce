@@ -4,6 +4,7 @@ import type { GroupedAnalyticsEvents } from './analytics/send-analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { minify as minifyHtml } from 'html-minifier';
 import { checkUserAgent, fetchAndCache } from './util/ssr-utils';
@@ -238,8 +239,25 @@ export default async (req: Request, res: Response) => {
   let sid: string | undefined;
   // @ts-ignore
   res.end = async function end(...args: any) {
+    let htmlMin: string | Buffer | undefined;
     if (!res.headersSent) {
       const [status, headers] = await waitingHeaders;
+      if (outputHtml !== null) {
+        try {
+          if (req.acceptsEncodings('gzip')) {
+            htmlMin = gzipSync(outputHtml);
+            headers['content-encoding'] = 'gzip';
+          } else {
+            htmlMin = minifyHtml(outputHtml, {
+              collapseWhitespace: true,
+              removeComments: true,
+              removeAttributeQuotes: false,
+            });
+          }
+        } catch {
+          //
+        }
+      }
       if (status === 200 && outputHtml) {
         headers.etag = createHash('sha256').update(outputHtml).digest('base64');
       }
@@ -247,16 +265,6 @@ export default async (req: Request, res: Response) => {
     }
     resolveHeadersSent?.(null);
     if (outputHtml !== null) {
-      let htmlMin: string | undefined;
-      try {
-        htmlMin = minifyHtml(outputHtml, {
-          collapseWhitespace: true,
-          removeComments: true,
-          removeAttributeQuotes: false,
-        });
-      } catch {
-        //
-      }
       _write.apply(res, [htmlMin || outputHtml, 'utf8']);
     }
     setTimeout(async () => {
