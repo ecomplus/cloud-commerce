@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.2](https://github.com/ecomplus/cloud-commerce/compare/v2.29.1...v2.29.2) (2024-10-23)
+
+
+### Bug Fixes
+
+* **storefront:** Dropping `apiContext.timestamp` to support etag caching on output HTML ([6231f2d](https://github.com/ecomplus/cloud-commerce/commit/6231f2d10db0a7e8edf0b517fe676b929f2e84f7))
+* **storefront:** Properly hydrate product stocks on SSRed section shelfs ([27861d3](https://github.com/ecomplus/cloud-commerce/commit/27861d3281646dae3b6959d94d5b4d5e152452cf))
+
 ## [2.29.1](https://github.com/ecomplus/cloud-commerce/compare/v2.29.0...v2.29.1) (2024-10-22)
 
 
