@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.5](https://github.com/ecomplus/cloud-commerce/compare/v2.29.4...v2.29.5) (2024-10-23)
+
+
+### Bug Fixes
+
+* **ssr:** Properly decoding unit8array streamed writes for HTML minification ([b5472fc](https://github.com/ecomplus/cloud-commerce/commit/b5472fc15cb5a4e660eab932f8d49fd56ec4d9f1))
+
 ## [2.29.4](https://github.com/ecomplus/cloud-commerce/compare/v2.29.3...v2.29.4) (2024-10-23)
 
 
