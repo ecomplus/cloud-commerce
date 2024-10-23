@@ -34,6 +34,7 @@ const usePageHeader = async ({ routeContext, listedCategoryFields }: Props) => {
           'pictures.0.url',
           'pictures.0.size',
         ] as const),
+        sort: ['name'],
       })).data.result;
     } catch (err) {
       categories = [];
