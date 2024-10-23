@@ -218,7 +218,9 @@ export default async (req: Request, res: Response) => {
     const [chunk] = args;
     if (outputHtml !== null) {
       try {
-        const html = chunk.toString();
+        const html = typeof chunk === 'string' || Buffer.isBuffer(chunk)
+          ? chunk.toString()
+          : new TextDecoder().decode(chunk);
         if (html) outputHtml += html;
       } catch {
         outputHtml = null;
