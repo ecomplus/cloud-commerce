@@ -5,6 +5,7 @@ import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
+import { minify as minifyHtml } from 'html-minifier';
 import { checkUserAgent, fetchAndCache } from './util/ssr-utils';
 import { sendAnalyticsEvents } from './analytics/send-analytics-events';
 
@@ -208,27 +209,31 @@ export default async (req: Request, res: Response) => {
     resolveHeadersSent = resolve;
   });
   const writes: Promise<any>[] = [];
-  let outputHtml: string = '';
+  let outputHtml: string | null = '';
   const _write = res.write;
+  const _writeHead = res.writeHead;
+  const _end = res.end;
   // @ts-ignore
   res.write = function write(...args: [string | Buffer | Uint8Array, any]) {
     const [chunk] = args;
-    try {
-      const html = chunk.toString();
-      if (html) outputHtml += html;
-    } catch {
-      //
+    if (outputHtml !== null) {
+      try {
+        const html = chunk.toString();
+        if (html) outputHtml += html;
+      } catch {
+        outputHtml = null;
+      }
     }
     writes.push(new Promise((resolve) => {
       waitingHeadersSent.finally(() => {
-        if (!res.writableEnded) _write.apply(res, args);
+        if (!res.writableEnded && outputHtml === null) {
+          _write.apply(res, args);
+        }
         resolve(null);
       });
     }));
   };
   let sid: string | undefined;
-  const _writeHead = res.writeHead;
-  const _end = res.end;
   // @ts-ignore
   res.end = async function end(...args: any) {
     if (!res.headersSent) {
@@ -239,6 +244,19 @@ export default async (req: Request, res: Response) => {
       _writeHead.apply(res, [status, headers]);
     }
     resolveHeadersSent?.(null);
+    if (outputHtml !== null) {
+      let htmlMin: string | undefined;
+      try {
+        htmlMin = minifyHtml(outputHtml, {
+          collapseWhitespace: true,
+          removeComments: true,
+          removeAttributeQuotes: false,
+        });
+      } catch {
+        //
+      }
+      _write.apply(res, [htmlMin || outputHtml, 'utf8']);
+    }
     setTimeout(async () => {
       await Promise.all(writes);
       if (!res.writableEnded) _end.apply(res, args);
@@ -250,7 +268,6 @@ export default async (req: Request, res: Response) => {
       delete sessions[sid];
     }, 1);
   };
-
   // @ts-ignore
   res.writeHead = async function writeHead(status: number, headers?: OutgoingHttpHeaders) {
     if (!headers) {

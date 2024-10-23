@@ -43,6 +43,7 @@
     "axios": "^1.7.7",
     "firebase-admin": "^12.6.0",
     "firebase-functions": "^5.1.1",
+    "html-minifier": "^4.0.0",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.0",
     "vue": "^3.5.12",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.2",
+    "@types/html-minifier": "^4.0.5",
     "typescript": "~5.6.3"
   }
 }
