@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.4](https://github.com/ecomplus/cloud-commerce/compare/v2.29.3...v2.29.4) (2024-10-23)
+
+
+### Bug Fixes
+
+* **storefront:** Dropping unecessary `set-cookie` to keep public cache control ([f834f86](https://github.com/ecomplus/cloud-commerce/commit/f834f86a0488358ba796be7a5971515a3a80e9cc))
+
 ## [2.29.3](https://github.com/ecomplus/cloud-commerce/compare/v2.29.2...v2.29.3) (2024-10-23)
 
 
