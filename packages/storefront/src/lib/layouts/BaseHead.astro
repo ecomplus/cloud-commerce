@@ -129,7 +129,7 @@ window._firstLoadContextId = '${apiDoc._id}';`;
 $storefront.apiContext = ${JSON.stringify({
     resource: apiContext.resource,
     doc: minifyApiDoc({ ...apiDoc }),
-    timestamp: Date.now(),
+    // timestamp: Date.now(),
   })};
 $storefront.context /* DEPRECATED */ = $storefront.apiContext;
 _emitApiContext('${apiDoc._id}');`;

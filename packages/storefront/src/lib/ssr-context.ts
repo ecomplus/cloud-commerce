@@ -216,7 +216,6 @@ const loadRouteContext = async (
             sessions[sid].apiContext = {
               resource: apiResource,
               doc: apiDoc,
-              timestamp: Date.now(),
             };
             sessions[sid]._timer = setTimeout(() => {
               // @ts-expect-error: mem clearing

@@ -11,19 +11,15 @@ import type { CustomSharedData } from '@@sf/custom-shared-data';
 export type StorefrontApiContext = {
   resource: 'products',
   doc: Products,
-  timestamp: number,
 } | {
   resource: 'categories',
   doc: Categories,
-  timestamp: number,
 } | {
   resource: 'brands',
   doc: Brands,
-  timestamp: number,
 } | {
   resource: 'collections',
   doc: Collections,
-  timestamp: number,
 };
 
 export type $Storefront = {
