@@ -233,15 +233,6 @@ export default async (req: Request, res: Response) => {
   res.end = async function end(...args: any) {
     if (!res.headersSent) {
       const [status, headers] = await waitingHeaders;
-      let cacheControl = headers['cache-control'];
-      if (cacheControl) {
-        cacheControl = cacheControl.replace('private', 'public');
-        if (!cacheControl.includes('public')) {
-          cacheControl = `public, ${cacheControl}`;
-        }
-        headers['cache-control'] = cacheControl;
-        res.set('Cache-Control', cacheControl);
-      }
       if (status === 200 && outputHtml) {
         headers.etag = createHash('sha256').update(outputHtml).digest('base64');
       }

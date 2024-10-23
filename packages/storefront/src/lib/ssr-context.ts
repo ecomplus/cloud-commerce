@@ -328,7 +328,7 @@ const loadRouteContext = async (
     // Astro,
   };
   Astro.locals.routeContext = routeContext;
-  Astro.cookies.set('sid', sid);
+  // Astro.cookies.set('sid', sid);
   Astro.response.headers.set('X-SId', sid);
   emitter.emit('load', { ...config, apiState });
   globalThis.__sfIds = {}; // see helpers/sf-utils.ts
