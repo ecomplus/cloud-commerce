@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.7](https://github.com/ecomplus/cloud-commerce/compare/v2.29.6...v2.29.7) (2024-10-24)
+
+
+### Bug Fixes
+
+* **storefront:** Regression on product shelf composable products reactivity ([4f3b511](https://github.com/ecomplus/cloud-commerce/commit/4f3b511ff6ac1a65c0074ed79a8f9b4893bb83d3)), closes [#diff-93d52a788b26c2964967e78770171f134fb99ac27f30aa7c90cbfa0856a5aafeL29](https://github.com/ecomplus/cloud-commerce/issues/diff-93d52a788b26c2964967e78770171f134fb99ac27f30aa7c90cbfa0856a5aafeL29)
+
 ## [2.29.6](https://github.com/ecomplus/cloud-commerce/compare/v2.29.5...v2.29.6) (2024-10-23)
 
 ## [2.29.5](https://github.com/ecomplus/cloud-commerce/compare/v2.29.4...v2.29.5) (2024-10-23)
