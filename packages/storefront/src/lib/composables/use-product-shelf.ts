@@ -26,11 +26,12 @@ const useProductShelf = (props: Props) => {
   const isFetching = ref(false);
   let fetching: Promise<void> | null = null;
   const fetchError = ref<Error | null>(null);
-  const products = shallowReactive((props.products || [])
-    .map((item) => {
-      if (import.meta.env.SSR) item.__ssr = true;
-      return item;
-    }));
+  const products = shallowReactive(props.products || []);
+  if (import.meta.env.SSR) {
+    products.forEach((item) => {
+      item.__ssr = true;
+    });
+  }
   useSectionPreview(props, { title, titleLink, products });
 
   if (!props.products) {
