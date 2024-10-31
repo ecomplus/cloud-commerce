@@ -30,6 +30,10 @@ const parseFraudAnalysis = (appData, params, Address, fingerPrintId) => {
       }),
     },
   };
+  if (!isAnalyseFirst) {
+    fraudAnalysis.CaptureOnLowRisk = true;
+    fraudAnalysis.VoidOnHighRisk = true;
+  }
   return fraudAnalysis;
 };
 
@@ -97,6 +101,7 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
 
     Object.assign(body.Customer, { DeliveryAddress: Address });
 
+    const fraudAnalysis = parseFraudAnalysis(appData, params, Address, hashCard.fingerPrintId);
     Object.assign(
       body.Payment,
       {
@@ -104,8 +109,8 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
         CreditCard: {
           PaymentToken: hashCard.token,
         },
-        Capture: true,
-        FraudAnalysis: parseFraudAnalysis(appData, params, Address, hashCard.fingerPrintId),
+        Capture: !fraudAnalysis.CaptureOnLowRisk,
+        FraudAnalysis: fraudAnalysis,
       },
     );
   } else if (methodPayment === 'account_deposit') {
