@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.8](https://github.com/ecomplus/cloud-commerce/compare/v2.29.7...v2.29.8) (2024-11-01)
+
+
+### Bug Fixes
+
+* **braspag:** Unset auto capture in favor of `CaptureOnLowRisk` on fraud sequence `AuthorizeFirst` ([6e5d387](https://github.com/ecomplus/cloud-commerce/commit/6e5d3873e715dbf757415fb1aef5155bb5c2733a))
+* **cli:** Reducing bunny.net CDN cache for SSR with additional SWR layer ([b2d798f](https://github.com/ecomplus/cloud-commerce/commit/b2d798f1e667d2d6c619fa155b8bbee64239b0c8))
+* **deps:** Update non-major dependencies ([#475](https://github.com/ecomplus/cloud-commerce/issues/475)) ([fbfeb5a](https://github.com/ecomplus/cloud-commerce/commit/fbfeb5a2ba7d1525c5b5aa412a2a733b4996db8f))
+* **ssr:** Delete kv perma cache on SWR worker on 404, 301, 302 responses ([7d60305](https://github.com/ecomplus/cloud-commerce/commit/7d603051ad6bb732affe62044e5033658b2a9b7b))
+* **storefront:** Reducing default server cache max age on successful responses ([1fc62f6](https://github.com/ecomplus/cloud-commerce/commit/1fc62f68611c00e417b2c3e8527dd6a1de4a06a7))
+* **storefront:** Update firebase to v11 ([#476](https://github.com/ecomplus/cloud-commerce/issues/476)) ([56d3e19](https://github.com/ecomplus/cloud-commerce/commit/56d3e19da7838e9c4282756dde9ea20f0b367519))
+
 ## [2.29.7](https://github.com/ecomplus/cloud-commerce/compare/v2.29.6...v2.29.7) (2024-10-24)
 
 
