@@ -269,41 +269,15 @@ configure_edge_rule '
 configure_edge_rule '
 {
   "ActionType": 3,
-  "ActionParameter1": "240",
-  "TriggerMatchingType": 1,
-  "Triggers": [
-    {
-      "Type": 0,
-      "PatternMatches": [
-        "*/_astro/*",
-        "*/img/uploads/*"
-      ],
-      "PatternMatchingType": 2,
-      "Parameter1": ""
-    },
-    {
-      "Type": 3,
-      "PatternMatches": [
-        "webp",
-        "png",
-        "jpg",
-        "woff2",
-        "mp4"
-      ],
-      "PatternMatchingType": 2,
-      "Parameter1": ""
-    }
-  ],
-  "Description": "Reset SSR CDN cache",
-  "Enabled": true
-}
-'
-
-configure_edge_rule '
-{
-  "ActionType": 16,
   "ActionParameter1": "120",
-  "ActionParameter2": null,
+  "ActionParameter2": "",
+  "ExtraActions": [
+    {
+      "ActionType": 16,
+      "ActionParameter1": "120",
+      "ActionParameter2": ""
+    }
+  ],
   "TriggerMatchingType": 1,
   "Triggers": [
     {
@@ -328,7 +302,7 @@ configure_edge_rule '
       "Parameter1": ""
     }
   ],
-  "Description": "Reset SSR browser cache",
+  "Description": "Reset SSR cache",
   "Enabled": true
 }
 '
