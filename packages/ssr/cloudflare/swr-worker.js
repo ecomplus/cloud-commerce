@@ -210,13 +210,20 @@ const swr = async (_rewritedReq, env, ctx) => {
           await coalescingStub.setUpdatingAt(Date.now());
         }
         const response = await fetch(request);
-        if (response.status > 199 && response.status < 500) {
+        const statusCode = response.status;
+        if (statusCode > 199 && statusCode < 500) {
           const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
           ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
         }
-        const newKvCache = toCacheRes(response);
-        if (kv && checkToKvCache(newKvCache)) {
-          ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
+        if (kv) {
+          if (statusCode === 404 || statusCode === 301 || statusCode === 302) {
+            ctx.waitUntil(kv.delete(kvKey));
+          } else {
+            const newKvCache = toCacheRes(response);
+            if (checkToKvCache(newKvCache)) {
+              ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
+            }
+          }
         }
       })());
     } else {
@@ -238,15 +245,23 @@ const swr = async (_rewritedReq, env, ctx) => {
   let iCdnCache = 0;
   let iKvCache = 0;
   if (!cachedRes) {
-    if (response.status > 199 && response.status < 500) {
+    const statusCode = response.status;
+    if (statusCode > 199 && statusCode < 500) {
       const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
       ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
       iCdnCache = 1;
     }
-    const newKvCache = toCacheRes(response);
-    if (staleAt && kv && checkToKvCache(newKvCache)) {
-      ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
-      iKvCache = 1;
+    if (kv) {
+      if (statusCode === 404 || statusCode === 301 || statusCode === 302) {
+        ctx.waitUntil(kv.delete(kvKey));
+        iKvCache = 1;
+      } else {
+        const newKvCache = toCacheRes(response);
+        if (staleAt && checkToKvCache(newKvCache)) {
+          ctx.waitUntil(putKvCache(kv, kvKey, newKvCache));
+          iKvCache = 1;
+        }
+      }
     }
   }
   return addHeaders(response, {
