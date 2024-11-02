@@ -16,6 +16,7 @@ node_modules
 
 .env
 .env.test
+.custom.env
 
 .DS_Store
 .idea
