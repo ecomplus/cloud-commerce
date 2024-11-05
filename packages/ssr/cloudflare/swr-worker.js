@@ -9,7 +9,7 @@ const HEADER_CACHE_CONTROL = 'Cache-Control';
 const HEADER_SSR_TOOK = 'X-Load-Took';
 const HEADER_STALE_AT = 'X-Edge-Stale-At';
 const v = 38;
-const resolveCacheControl = (response, { isPreventSoftStale, ageHardLimit } = {}) => {
+const resolveCacheControl = (response, { ageHardLimit } = {}) => {
   const cacheControl = response.headers.get(HEADER_CACHE_CONTROL);
   if (!cacheControl) {
     return { cacheControl };
@@ -40,8 +40,8 @@ const resolveCacheControl = (response, { isPreventSoftStale, ageHardLimit } = {}
     return { cacheControl, staleAt };
   }
   return {
-    cacheControl: `public, max-age=${maxAge}, must-revalidate`
-            + `, s-maxage=${(isPreventSoftStale ? cdnMaxAge : staleMaxAge)}`,
+    cacheControl: `public, max-age=${maxAge}, must-revalidate, s-maxage=${cdnMaxAge}`,
+    cdnMaxAge,
     staleAt,
   };
 };
@@ -161,9 +161,12 @@ const swr = async (_rewritedReq, env, ctx) => {
       new Promise((resolve) => {
         gettingCache.then((fromCache) => {
           if (fromCache) {
-            edgeSource = 'cache';
-            resolve(fromCache);
-            return;
+            const { cdnMaxAge } = resolveCacheControl(fromCache);
+            if (!cdnMaxAge || cdnMaxAge <= 86400) {
+              edgeSource = 'cache';
+              resolve(fromCache);
+              return;
+            }
           }
           gettingKv.finally(() => {
             setTimeout(() => resolve(null), 2);
@@ -212,7 +215,7 @@ const swr = async (_rewritedReq, env, ctx) => {
         const response = await fetch(request);
         const statusCode = response.status;
         if (statusCode > 199 && statusCode < 500) {
-          const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+          const newCdnCache = toCacheRes(response);
           ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
         }
         if (kv) {
@@ -231,10 +234,7 @@ const swr = async (_rewritedReq, env, ctx) => {
       if (edgeSource === 'kv') {
         const ageHardLimit = Math.ceil((cachedStaleAt - Date.now()) / 1000);
         if (ageHardLimit > 5) {
-          const newCdnCache = toCacheRes(cachedRes, {
-            isPreventSoftStale: true,
-            ageHardLimit,
-          });
+          const newCdnCache = toCacheRes(cachedRes, { ageHardLimit });
           ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
         }
       }
@@ -247,7 +247,7 @@ const swr = async (_rewritedReq, env, ctx) => {
   if (!cachedRes) {
     const statusCode = response.status;
     if (statusCode > 199 && statusCode < 500) {
-      const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+      const newCdnCache = toCacheRes(response);
       ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
       iCdnCache = 1;
     }

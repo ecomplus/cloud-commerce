@@ -16,10 +16,10 @@ interface ParsedCacheControl {
   'stale-while-revalidate'?: number;
 }
 
-const resolveCacheControl = (response: Response, { isPreventSoftStale, ageHardLimit }: {
-  isPreventSoftStale?: boolean,
-  ageHardLimit?: number,
-} = {}) => {
+const resolveCacheControl = (
+  response: Response,
+  { ageHardLimit }: { ageHardLimit?: number } = {},
+) => {
   const cacheControl = response.headers.get(HEADER_CACHE_CONTROL);
   if (!cacheControl) {
     return { cacheControl };
@@ -54,8 +54,8 @@ const resolveCacheControl = (response: Response, { isPreventSoftStale, ageHardLi
     return { cacheControl, staleAt };
   }
   return {
-    cacheControl: `public, max-age=${maxAge}, must-revalidate`
-      + `, s-maxage=${(isPreventSoftStale ? cdnMaxAge : staleMaxAge)}`,
+    cacheControl: `public, max-age=${maxAge}, must-revalidate, s-maxage=${cdnMaxAge}`,
+    cdnMaxAge,
     staleAt,
   };
 };
@@ -81,10 +81,10 @@ const addHeaders = (response: Response, headers: Record<string, string | null>) 
   return res;
 };
 
-const toCacheRes = (response: Response, cacheControlOpts: {
-  isPreventSoftStale?: boolean,
-  ageHardLimit?: number,
-} = {}) => {
+const toCacheRes = (
+  response: Response,
+  cacheControlOpts: { ageHardLimit?: number } = {},
+) => {
   const { cacheControl, staleAt } = resolveCacheControl(response, cacheControlOpts);
   return addHeaders(response, {
     [HEADER_CACHE_CONTROL]: cacheControl,
@@ -189,9 +189,12 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
       new Promise((resolve) => {
         gettingCache.then((fromCache) => {
           if (fromCache) {
-            edgeSource = 'cache';
-            resolve(fromCache);
-            return;
+            const { cdnMaxAge } = resolveCacheControl(fromCache);
+            if (!cdnMaxAge || cdnMaxAge <= 86400) {
+              edgeSource = 'cache';
+              resolve(fromCache);
+              return;
+            }
           }
           gettingKv.finally(() => {
             setTimeout(() => resolve(null), 2);
@@ -240,7 +243,7 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
         const response = await fetch(request);
         const statusCode = response.status;
         if (statusCode > 199 && statusCode < 500) {
-          const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+          const newCdnCache = toCacheRes(response);
           ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
         }
         if (kv) {
@@ -259,10 +262,7 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
       if (edgeSource === 'kv') {
         const ageHardLimit = Math.ceil((cachedStaleAt - Date.now()) / 1000);
         if (ageHardLimit > 5) {
-          const newCdnCache = toCacheRes(cachedRes, {
-            isPreventSoftStale: true,
-            ageHardLimit,
-          });
+          const newCdnCache = toCacheRes(cachedRes, { ageHardLimit });
           ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
         }
       }
@@ -275,7 +275,7 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
   if (!cachedRes) {
     const statusCode = response.status;
     if (statusCode > 199 && statusCode < 500) {
-      const newCdnCache = toCacheRes(response, { isPreventSoftStale: true });
+      const newCdnCache = toCacheRes(response);
       ctx.waitUntil(caches.default.put(cacheKey, newCdnCache));
       iCdnCache = 1;
     }
