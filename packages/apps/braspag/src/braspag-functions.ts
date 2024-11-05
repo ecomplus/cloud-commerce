@@ -55,12 +55,7 @@ export const braspag = {
           process.env.BRASPAG_MERCHANT_ID = appData.merchant_id;
           process.env.BRASPAG_MERCHANT_KEY = appData.merchant_key;
         }
-        if (typeof appData.is_cielo === 'boolean') {
-          process.env.BRASPAG_API_TYPE = appData.is_cielo ? 'cielo' : 'braspag';
-        }
-        if (!process.env.BRASPAG_API_TYPE) {
-          process.env.BRASPAG_API_TYPE = 'braspag';
-        }
+        process.env.BRASPAG_API_TYPE = 'braspag';
       }
       if (!process.env.BRASPAG_MERCHANT_ID || !process.env.BRASPAG_MERCHANT_KEY) {
         logger.warn('Missing Braspag merchant credentials');
