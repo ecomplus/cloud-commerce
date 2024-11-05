@@ -180,7 +180,16 @@ export default (order: Orders, appData) => {
   }
 
   if (order.notes) {
-    tinyOrder.obs = order.notes.substring(0, 100);
+    let cleanNotes = '';
+    for (let i = 0; i < order.notes.length; i++) {
+      if (order.notes.charCodeAt(i) <= 255) {
+        cleanNotes += order.notes.charAt(i);
+        if (cleanNotes.length > 99) break;
+      }
+    }
+    if (cleanNotes) {
+      tinyOrder.obs = cleanNotes;
+    }
   }
   if (order.extra_discount && order.extra_discount.discount_coupon) {
     tinyOrder.obs = `${(tinyOrder.obs || '')} - ${order.extra_discount.discount_coupon}`
