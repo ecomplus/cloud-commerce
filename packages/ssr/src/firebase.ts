@@ -10,7 +10,7 @@ import serveStorefront from './lib/serve-storefront';
 const { ssrFunctionOptions } = config.get();
 
 export const ssr = onRequest({
-  concurrency: 80,
+  concurrency: 60,
   ...ssrFunctionOptions,
 }, (req, res) => {
   return createExecContext(() => serveStorefront(req, res));
