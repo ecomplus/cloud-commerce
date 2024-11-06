@@ -52,6 +52,7 @@ const mergeConfig = {
   },
   modulesFunctionOptions: {
     memory: (MODULES_DEPLOY_MEMORY as '256MiB' | '512MiB' | '1GiB' | '2GiB') || '512MiB',
+    timeoutSeconds: 120,
   },
   apiEvents: {
     delayedMs: API_EVENTS_DELAYED_MS
