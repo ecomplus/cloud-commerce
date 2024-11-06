@@ -33,7 +33,7 @@ const resolveCacheControl = (response, { ageHardLimit } = {}) => {
   }
   const cdnMaxAge = typeof sMaxAge === 'number' ? sMaxAge : maxAge;
   if (!cdnMaxAge || cdnMaxAge <= 1) {
-    return { cacheControl, cdnMaxAge };
+    return { cacheControl };
   }
   const staleAt = Date.now() + (cdnMaxAge * 1000);
   return {
