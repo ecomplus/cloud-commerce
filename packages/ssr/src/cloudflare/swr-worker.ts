@@ -50,9 +50,6 @@ const resolveCacheControl = (
     return { cacheControl };
   }
   const staleAt = Date.now() + (cdnMaxAge * 1000);
-  if (!staleMaxAge || staleMaxAge <= cdnMaxAge) {
-    return { cacheControl, staleAt };
-  }
   return {
     cacheControl: `public, max-age=${maxAge}, must-revalidate, s-maxage=${cdnMaxAge}`,
     cdnMaxAge,

@@ -33,12 +33,9 @@ const resolveCacheControl = (response, { ageHardLimit } = {}) => {
   }
   const cdnMaxAge = typeof sMaxAge === 'number' ? sMaxAge : maxAge;
   if (!cdnMaxAge || cdnMaxAge <= 1) {
-    return { cacheControl };
+    return { cacheControl, cdnMaxAge };
   }
   const staleAt = Date.now() + (cdnMaxAge * 1000);
-  if (!staleMaxAge || staleMaxAge <= cdnMaxAge) {
-    return { cacheControl, staleAt };
-  }
   return {
     cacheControl: `public, max-age=${maxAge}, must-revalidate, s-maxage=${cdnMaxAge}`,
     cdnMaxAge,
