@@ -226,13 +226,26 @@ const callAppModule = async (
     */
     const middleware = global.$appModuleMiddlewares[String(appId)];
     try {
-      let appResponse: any;
-      if (typeof middleware === 'function') {
-        appResponse = await middleware(data, internalModuleFn);
-      } else {
-        appResponse = await internalModuleFn(data);
-      }
-      checkErrorResponse(`${appId}_${modName}`, appResponse);
+      const appResponse: any = await Promise.race([
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            const err: any = new Error('App module timed out');
+            err.code = 'APP_TIMEOUT';
+            reject(err);
+          }, isBigTimeout ? 40000 : 20000);
+        }),
+        new Promise((resolve, reject) => {
+          const appModPromise = typeof middleware === 'function'
+            ? middleware(data, internalModuleFn)
+            : internalModuleFn(data);
+          appModPromise
+            .then((_appResponse: any) => {
+              checkErrorResponse(`${appId}_${modName}`, _appResponse);
+              resolve(_appResponse);
+            })
+            .catch(reject);
+        }),
+      ]);
       return appResponse;
     } catch (err) {
       logger.error(err);
