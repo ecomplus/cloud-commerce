@@ -1,4 +1,4 @@
-import type { Response } from 'firebase-functions';
+import type { Response } from 'firebase-functions/v1';
 import type {
   Applications,
   OrderSet,

@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 // import './init';
-import functions from 'firebase-functions';
+import functions from 'firebase-functions/v1';
 import config from './config';
 import checkStoreEvents from './handlers/check-store-events';
 

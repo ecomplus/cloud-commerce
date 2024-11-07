@@ -4,7 +4,7 @@ import type {
   ResourceListResult,
   ResourceId,
 } from '@cloudcommerce/types';
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import logger from 'firebase-functions/logger';

@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import '@cloudcommerce/firebase/lib/init';
 import api from '@cloudcommerce/api';
 import logger from 'firebase-functions/logger';

@@ -1,4 +1,4 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import type { Applications } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';

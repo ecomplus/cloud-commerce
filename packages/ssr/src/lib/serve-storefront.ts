@@ -1,5 +1,5 @@
 import type { OutgoingHttpHeaders } from 'node:http';
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import type { GroupedAnalyticsEvents } from './analytics/send-analytics-events';
 import { join as joinPath } from 'node:path';
 import { readFile } from 'node:fs/promises';

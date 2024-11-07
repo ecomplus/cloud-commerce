@@ -1,4 +1,4 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import type { FeedProducts } from './serve-feeds';
 import config from '@cloudcommerce/firebase/lib/config';
 

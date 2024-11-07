@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import '@cloudcommerce/firebase/lib/init';
 import config from '@cloudcommerce/firebase/lib/config';
-import functions from 'firebase-functions';
+import functions from 'firebase-functions/v1';
 import saveViews from './lib/cron-ssr-save-views';
 
 const { httpsFunctionOptions: { region } } = config.get();

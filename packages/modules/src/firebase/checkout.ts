@@ -1,4 +1,4 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import type { OrderSet, CheckoutBody } from '@cloudcommerce/types';
 import type {
   CheckoutBodyWithItems,

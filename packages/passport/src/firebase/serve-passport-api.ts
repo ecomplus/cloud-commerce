@@ -1,6 +1,6 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import type { Customers, ApiError } from '@cloudcommerce/api/types';
-import { logger } from 'firebase-functions';
+import { logger } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import {
   findCustomerByEmail,

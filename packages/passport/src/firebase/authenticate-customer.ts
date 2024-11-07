@@ -1,7 +1,7 @@
 import type { Resource, Customers } from '@cloudcommerce/api/types';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
-import { logger } from 'firebase-functions';
+import { logger } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import getEnv from '@cloudcommerce/firebase/lib/env';
 

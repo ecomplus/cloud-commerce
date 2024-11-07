@@ -1,4 +1,4 @@
-import type { Response } from 'firebase-functions';
+import type { Response } from 'firebase-functions/v1';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import Ajv, { Options, ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';

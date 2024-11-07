@@ -1,4 +1,4 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import type { AppModuleName, AppModuleBody } from '@cloudcommerce/types';
 import type { ApiError, ApiConfig } from '@cloudcommerce/api';
 import Ajv, { ValidateFunction } from 'ajv';

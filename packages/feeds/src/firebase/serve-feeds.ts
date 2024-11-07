@@ -1,4 +1,4 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import renderCatalog from './render-catalog';

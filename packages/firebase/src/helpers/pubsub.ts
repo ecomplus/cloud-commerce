@@ -1,5 +1,5 @@
 import type { AppEventsPayload } from '@cloudcommerce/types';
-import functions from 'firebase-functions';
+import functions from 'firebase-functions/v1';
 import config, { createExecContext } from '../config';
 import { GET_PUBSUB_TOPIC } from '../const';
 

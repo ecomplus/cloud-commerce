@@ -1,4 +1,4 @@
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import { schemas } from '../index';
 import handleModule from './handle-module';
 import checkout from './checkout';

@@ -1,5 +1,5 @@
 import type { Orders } from '@cloudcommerce/types';
-import type { Request, Response } from 'firebase-functions';
+import type { Request, Response } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import { Endpoint } from '@cloudcommerce/api/types';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
