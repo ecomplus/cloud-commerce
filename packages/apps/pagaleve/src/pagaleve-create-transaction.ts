@@ -111,7 +111,7 @@ const pagaleveCreateTransaction = async (body: AppModuleBody<'create_transaction
   if (totalQuantity > 0) {
     try {
       await pagaleve.preparing;
-      const { data } = pagaleve.axios.post('/v1/checkouts', pagaleveTransaction, {
+      const { data } = await pagaleve.axios.post('/v1/checkouts', pagaleveTransaction, {
         maxRedirects: 0,
       });
       transaction.payment_link = data.redirect_url || data.checkout_url;
