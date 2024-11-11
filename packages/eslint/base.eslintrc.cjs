@@ -20,6 +20,7 @@ module.exports = {
     '**/dist',
     '**/types/*.d.ts',
     '**/*.md',
+    '**/vendor/**',
   ],
   settings: {
     'import/resolver': {
