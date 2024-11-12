@@ -29,8 +29,12 @@ export type ImageSize = { width?: number, height?: number };
 export type TryImageSize = (src: string) => ImageSize;
 
 const resetGlobalAstroAssets = () => {
+  if (!globalThis.astroAsset) return;
   if (!globalThis.astroAsset.staticImages) {
     globalThis.astroAsset.staticImages = new Map();
+    // @ts-expect-error: Internal `__ready`.
+  } else if (globalThis.astroAsset.staticImages.get.__ready) {
+    return;
   }
   const _get = globalThis.astroAsset.staticImages.get;
   const _set = globalThis.astroAsset.staticImages.set;
@@ -41,6 +45,8 @@ const resetGlobalAstroAssets = () => {
     }
     return _get.apply(globalThis.astroAsset.staticImages, args);
   };
+  // @ts-expect-error: Internal `__ready`.
+  globalThis.astroAsset.staticImages.get.__ready = true;
   globalThis.astroAsset.staticImages.set = function set(...args) {
     if (args[0].includes(publicDir)) {
       args[0] = args[0].replace(publicDir, '');
@@ -76,6 +82,7 @@ export type UsePictureParams = PictureProps & {
 };
 
 const useSSRPicture = async (params: UsePictureParams) => {
+  resetGlobalAstroAssets();
   const {
     src,
     alt,
