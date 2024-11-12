@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.9](https://github.com/ecomplus/cloud-commerce/compare/v2.29.8...v2.29.9) (2024-11-12)
+
+
+### Bug Fixes
+
+* **braspag:** Always using Braspag API on webhooks (webhook are from Braspag only) ([acaefc7](https://github.com/ecomplus/cloud-commerce/commit/acaefc7c9dd9c6b3cde9e37a85cafa9f99ebe21a))
+* **deps:** Fix imports to `firebase-functions/v1` ([bdde25d](https://github.com/ecomplus/cloud-commerce/commit/bdde25de512f515e037d544098fb2368bbaab116))
+* **deps:** Update firebase-functions to v6 ([#463](https://github.com/ecomplus/cloud-commerce/issues/463)) ([0d89b7a](https://github.com/ecomplus/cloud-commerce/commit/0d89b7ac3341939636ff533293656c1a53f0f93a))
+* **deps:** Update non-major dependencies ([#482](https://github.com/ecomplus/cloud-commerce/issues/482)) ([caf74d5](https://github.com/ecomplus/cloud-commerce/commit/caf74d5a4f3926b427fce2f8fcde4986307a0a3a))
+* **deps:** Update non-major dependencies ([#485](https://github.com/ecomplus/cloud-commerce/issues/485)) ([5678593](https://github.com/ecomplus/cloud-commerce/commit/567859370f350bd1448eb9d8792998befd5c9678))
+* **firebase:** Update config `modulesFunctionOptions` to 120s (2 min) default timeout ([83760d6](https://github.com/ecomplus/cloud-commerce/commit/83760d6747b0eac7c0e6e6b2da86ec43ab14808d))
+* **modules:** Timeout on all module executions ([9169f7d](https://github.com/ecomplus/cloud-commerce/commit/9169f7db2407a3f084842287b55591a6b294fe5c))
+* **pagaleve:** Properly awaiting create transaction request to Pagaleve API ([5c1ecca](https://github.com/ecomplus/cloud-commerce/commit/5c1eccad29634db6f9c5ab3469461d7773fd4080))
+* **ssr:** Fix SWR working returned cache-control with CDN TTL set ([246d43a](https://github.com/ecomplus/cloud-commerce/commit/246d43a224e729a032369727034c114b291d0701))
+* **ssr:** Reducing SSR Cloud Function max concurrency to 60 executions ([2e44107](https://github.com/ecomplus/cloud-commerce/commit/2e441071d9836bdd90b3e27c22057d19afa3e67e))
+* **ssr:** Update SWR worker to ensure no soft stale on Cloudflare CDN cache ([b993b78](https://github.com/ecomplus/cloud-commerce/commit/b993b78009e15d8abfe77cb9974b0bd1b4acbbfb))
+* **storefront:** Bump Astro to latest v4.16.10 ([4e24c67](https://github.com/ecomplus/cloud-commerce/commit/4e24c670cc216b28951ae222a08f3d0c0f12df51))
+* **storefront:** Reseting global `astroAsset.staticImages` to ensure final paths from public dir ([aa94d4e](https://github.com/ecomplus/cloud-commerce/commit/aa94d4ec533083adabb36103181b0e226461ce0d))
+* **tiny-erp:** Removing special chars from order notes on export ([794ba72](https://github.com/ecomplus/cloud-commerce/commit/794ba724b633a9182fe77232e9078d5e07af559d))
+
 ## [2.29.8](https://github.com/ecomplus/cloud-commerce/compare/v2.29.7...v2.29.8) (2024-11-01)
 
 
