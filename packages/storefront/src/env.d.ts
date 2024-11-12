@@ -1,4 +1,4 @@
-/// <reference types="astro/client" />
+/// <reference path="../.astro/types.d.ts" />
 /// <reference types="vue/ref-macros" />
 /// <reference types="../client" />
 /// <reference types="../server" />
