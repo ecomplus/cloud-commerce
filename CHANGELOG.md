@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.10](https://github.com/ecomplus/cloud-commerce/compare/v2.29.9...v2.29.10) (2024-11-12)
+
+
+### Bug Fixes
+
+* **discounts:** Updating with latest discounts v2 from https://github.com/ecomplus/discounts-v2 ([9c02c48](https://github.com/ecomplus/cloud-commerce/commit/9c02c483ffbf75df1f52e18f0c100254eb0d379f))
+* **storefront:** Prevent errors with undefined `globalThis.astroAsset` ([ffe452f](https://github.com/ecomplus/cloud-commerce/commit/ffe452f25cded2fa0c474022f3b6f1eb78466269))
+
 ## [2.29.9](https://github.com/ecomplus/cloud-commerce/compare/v2.29.8...v2.29.9) (2024-11-12)
 
 
