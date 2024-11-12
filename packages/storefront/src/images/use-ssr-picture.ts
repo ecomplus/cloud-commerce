@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from 'astro/types';
 import type { GetPictureParams, GetPictureResult } from './picture-base';
 import type { OutputFormat, TransformOptions } from './get-built-image';
+import { resolve as resolvePath, basename } from 'node:path';
 
 export interface PictureComponentRemoteImageProps
   extends astroHTML.JSX.HTMLAttributes,
@@ -26,6 +27,36 @@ export type PictureProps = Omit<PictureComponentRemoteImageProps, 'aspectRatio' 
 export type ImageSize = { width?: number, height?: number };
 
 export type TryImageSize = (src: string) => ImageSize;
+
+const resetGlobalAstroAssets = () => {
+  if (!globalThis.astroAsset.staticImages) {
+    globalThis.astroAsset.staticImages = new Map();
+  }
+  const _get = globalThis.astroAsset.staticImages.get;
+  const _set = globalThis.astroAsset.staticImages.set;
+  const publicDir = resolvePath(import.meta.env.STOREFRONT_BASE_DIR, 'public');
+  globalThis.astroAsset.staticImages.get = function get(...args) {
+    if (args[0].includes(publicDir)) {
+      args[0] = args[0].replace(publicDir, '');
+    }
+    return _get.apply(globalThis.astroAsset.staticImages, args);
+  };
+  globalThis.astroAsset.staticImages.set = function set(...args) {
+    if (args[0].includes(publicDir)) {
+      args[0] = args[0].replace(publicDir, '');
+    }
+    const _transformsSet = args[1].transforms.set;
+    args[1].transforms.set = function transformsSet(...transformArgs) {
+      const { finalPath } = transformArgs[1];
+      if (finalPath.includes(publicDir)) {
+        transformArgs[1].finalPath = `/_astro/${basename(finalPath)}`;
+      }
+      return _transformsSet.apply(args[1].transforms, transformArgs);
+    };
+    return _set.apply(globalThis.astroAsset.staticImages, args);
+  };
+};
+resetGlobalAstroAssets();
 
 const getAspectRatio = (src: string | ImageSize, tryImageSize: TryImageSize) => {
   if (typeof src === 'string') {
