@@ -106,7 +106,7 @@ export default async ({ params, application }) => {
         value = maxDiscount;
       }
     }
-    return value;
+    return value !== undefined ? Number(value) : value;
   };
 
   const addDiscount = (discount, flag, label, maxDiscount) => {
@@ -537,10 +537,11 @@ export default async ({ params, application }) => {
         // show current discount rule as available discount to apply
         response.available_extra_discount = {
           label: label.substring(0, 50),
+          type: discount.type,
         };
-        ['min_amount', 'type', 'value'].forEach((field) => {
+        ['min_amount', 'value'].forEach((field) => {
           if (discount[field]) {
-            response.available_extra_discount[field] = discount[field];
+            response.available_extra_discount[field] = Number(discount[field]);
           }
         });
       }
