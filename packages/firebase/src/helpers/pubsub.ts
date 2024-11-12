@@ -62,7 +62,9 @@ const createAppEventsFunction = (
       evName,
       apiEvent: { resource_id: resourceId, timestamp },
     } = payload;
-    logger.info(`ev/${evName} ${resourceId} at ${timestamp}`);
+    logger.info(`ev/${evName} ${resourceId} at ${timestamp}`, {
+      modifiedFields: payload.apiEvent.modified_fields,
+    });
     return fn(payload, context, message);
   };
   const _fn = isSkipMiddleware === true ? fn : midd;
