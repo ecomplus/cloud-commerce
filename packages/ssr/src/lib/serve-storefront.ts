@@ -11,14 +11,12 @@ import { checkUserAgent, fetchAndCache } from './util/ssr-utils';
 import { sendAnalyticsEvents } from './analytics/send-analytics-events';
 
 declare global {
-  /* eslint-disable no-var, vars-on-top */
-  // @ts-expect-error: Request/Response mismatch.
+  // eslint-disable-next-line
   var $renderStorefront: (
     req: Request,
     res: Response,
     next: (err: any) => Promise<void>,
   ) => Promise<any>;
-  /* eslint-enable no-var, vars-on-top */
 }
 
 const { STOREFRONT_BASE_DIR } = process.env;
