@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/config",
   "type": "module",
-  "version": "2.29.8",
+  "version": "2.29.9",
   "description": "e-com.plus Cloud Commerce base config",
   "main": "lib/config.js",
   "exports": {

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-braspag",
   "type": "module",
-  "version": "2.29.8",
+  "version": "2.29.9",
   "description": "e-com.plus Cloud Commerce app to integrate Braspag",
   "main": "lib/braspag.js",
   "exports": {
