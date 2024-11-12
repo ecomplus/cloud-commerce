@@ -1018,6 +1018,10 @@ exports.params = {
           'type': 'string',
           'pattern': '^[a-f0-9]{24}$',
           'description': 'ID of customer who invited the new customer, if he was invited by another account'
+        },
+        'accepts_marketing': {
+          'type': 'boolean',
+          'description': 'Indicates whether customer would like to receive email updates from the shop'
         }
       },
       'description': 'Customer object'

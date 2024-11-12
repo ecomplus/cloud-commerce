@@ -368,6 +368,10 @@ export interface CheckoutBody {
      * ID of customer who invited the new customer, if he was invited by another account
      */
     referral?: string;
+    /**
+     * Indicates whether customer would like to receive email updates from the shop
+     */
+    accepts_marketing?: boolean;
   };
 }
 /**
