@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.11](https://github.com/ecomplus/cloud-commerce/compare/v2.29.10...v2.29.11) (2024-11-12)
+
+
+### Bug Fixes
+
+* **discounts:** Coercing discount `value` to number to fix config misses ([8ef6854](https://github.com/ecomplus/cloud-commerce/commit/8ef68541030514b390359446772a158841986583))
+
 ## [2.29.10](https://github.com/ecomplus/cloud-commerce/compare/v2.29.9...v2.29.10) (2024-11-12)
 
 
