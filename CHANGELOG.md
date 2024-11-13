@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.12](https://github.com/ecomplus/cloud-commerce/compare/v2.29.11...v2.29.12) (2024-11-13)
+
+
+### Bug Fixes
+
+* **emails:** Prevent notification skip whith last notification undefined (first email) ([c869122](https://github.com/ecomplus/cloud-commerce/commit/c869122b000dcf8c604a06ecc2ac3c0c1928498d))
+* **modules:** Add `accepts_marketing` to customer object on checkout payload schema ([95d3c86](https://github.com/ecomplus/cloud-commerce/commit/95d3c86ce524b0c47b416d9df6e73202f039fe48))
+
 ## [2.29.11](https://github.com/ecomplus/cloud-commerce/compare/v2.29.10...v2.29.11) (2024-11-12)
 
 
