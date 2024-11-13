@@ -59,7 +59,7 @@ const handleApiEvent: ApiEventHandler = async ({
         }
         const { status } = lastStatusRecord;
         const lastNotification = sortedRecords.find((entry) => entry.customer_notified);
-        if (lastNotification?.status === status) {
+        if (lastNotification && lastNotification?.status === status) {
           continue;
         }
         let templKey: typeof status | 'new_order' = status;
