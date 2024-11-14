@@ -70,12 +70,14 @@ const {
       }
     }
     const {
-      src,
+      src: absoluteSrc,
       attributes: { width, height },
     } = await getImage({
       ...imageOptions,
       src: imageMetadata || imageOptions.src,
     });
+    const filename = basename(absoluteSrc);
+    const src = import.meta.env.DEV ? absoluteSrc : `/_astro/${filename}`;
     return { src, width, height };
   }),
   assetsPrefix: Astro.locals.assetsPrefix,
