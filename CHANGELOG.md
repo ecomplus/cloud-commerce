@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.13](https://github.com/ecomplus/cloud-commerce/compare/v2.29.12...v2.29.13) (2024-11-14)
+
+
+### Bug Fixes
+
+* **storefront:** Bump Astro to latest v4.16.12 ([780d077](https://github.com/ecomplus/cloud-commerce/commit/780d07722ebc273e46979eb1266561ce6f7dacd5))
+* **storefront:** Fix built images src on static builds with custom `<Picture>` ([23d707f](https://github.com/ecomplus/cloud-commerce/commit/23d707f1a322541e65d4addc2400309fe8233652))
+
 ## [2.29.12](https://github.com/ecomplus/cloud-commerce/compare/v2.29.11...v2.29.12) (2024-11-13)
 
 
