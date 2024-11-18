@@ -40,6 +40,6 @@
   "devDependencies": {
     "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.9.2"
+    "@firebase/app-types": "^0.9.3"
   }
 }
