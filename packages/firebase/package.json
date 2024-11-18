@@ -37,7 +37,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
-    "@google-cloud/pubsub": "^4.8.0",
+    "@google-cloud/pubsub": "^4.9.0",
     "dotenv": "^16.4.5",
     "firebase-admin": "^12.7.0",
     "firebase-functions": "^6.1.0",
@@ -45,6 +45,6 @@
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.9.2"
+    "@firebase/app-types": "^0.9.3"
   }
 }
