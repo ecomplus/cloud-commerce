@@ -84,11 +84,11 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -106,11 +106,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       qs:
         specifier: ^6.13.1
         version: 6.13.1
@@ -137,11 +137,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -191,11 +191,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -232,11 +232,11 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -276,11 +276,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -304,11 +304,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -386,11 +386,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -411,11 +411,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -442,11 +442,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -464,11 +464,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       pagarme:
         specifier: 4.35.2
         version: 4.35.2
@@ -498,11 +498,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/test-base':
         specifier: workspace:*
@@ -523,11 +523,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -548,11 +548,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -576,11 +576,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -601,11 +601,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -769,11 +769,11 @@ importers:
         specifier: workspace:*
         version: link:../ssr
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -816,11 +816,11 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -920,11 +920,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -951,11 +951,11 @@ importers:
         specifier: workspace:*
         version: link:../firebase
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -997,11 +997,11 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       firebase-admin:
-        specifier: ^12.7.0
-        version: 12.7.0
+        specifier: ^13.0.0
+        version: 13.0.0
       firebase-functions:
         specifier: ^6.1.0
-        version: 6.1.0(firebase-admin@12.7.0)
+        version: 6.1.0(firebase-admin@13.0.0)
       html-minifier:
         specifier: ^4.0.0
         version: 4.0.0
@@ -2448,7 +2448,7 @@ packages:
       '@firebase/database-types': 1.0.5
       '@firebase/logger': 0.4.2
       '@firebase/util': 1.10.0
-      tslib: 2.6.2
+      tslib: 2.8.1
     dev: false
 
   /@firebase/database-compat@2.0.1:
@@ -2878,6 +2878,32 @@ packages:
       fast-xml-parser: 4.5.0
       gaxios: 6.5.0
       google-auth-library: 9.9.0
+      html-entities: 2.5.2
+      mime: 3.0.0
+      p-limit: 3.1.0
+      retry-request: 7.0.2
+      teeny-request: 9.0.0
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+    optional: true
+
+  /@google-cloud/storage@7.14.0:
+    resolution: {integrity: sha512-H41bPL2cMfSi4EEnFzKvg7XSb7T67ocSXrmF7MPjfgFB0L6CKGzfIYJheAZi1iqXjz6XaCT1OBf6HCG5vDBTOQ==}
+    engines: {node: '>=14'}
+    requiresBuild: true
+    dependencies:
+      '@google-cloud/paginator': 5.0.0
+      '@google-cloud/projectify': 4.0.0
+      '@google-cloud/promisify': 4.0.0
+      abort-controller: 3.0.0
+      async-retry: 1.3.3
+      duplexify: 4.1.3
+      fast-xml-parser: 4.5.0
+      gaxios: 6.5.0
+      google-auth-library: 9.15.0
       html-entities: 2.5.2
       mime: 3.0.0
       p-limit: 3.1.0
@@ -3686,6 +3712,12 @@ packages:
     requiresBuild: true
     dependencies:
       undici-types: 6.19.8
+
+  /@types/node@22.9.0:
+    resolution: {integrity: sha512-vuyHg81vvWA1Z1ELfvLko2c8f34gyA0zaic0+Rllc5lbCnbSyuvb2Oxpm6TAUAC/2xZN3QGqxBNggD1nNR2AfQ==}
+    dependencies:
+      undici-types: 6.19.8
+    dev: false
 
   /@types/nodemailer@6.4.16:
     resolution: {integrity: sha512-uz6hN6Pp0upXMcilM61CoKyjT7sskBoOWpptkjjJp8jIMlTdc3xG01U7proKkXzruMS4hS0zqtHNkNPFB20rKQ==}
@@ -6217,11 +6249,6 @@ packages:
       '@esbuild/win32-x64': 0.23.1
     dev: false
 
-  /escalade@3.1.2:
-    resolution: {integrity: sha512-ErCHMCae19vR8vQGe50xIsVomy19rg6gFu3+r3jkEO46suLMWBksvVyoGgQV+jOfl84ZSOSlmv6Gxa89PmTGmA==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-
   /escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
     engines: {node: '>=6'}
@@ -6779,6 +6806,28 @@ packages:
       - supports-color
     dev: false
 
+  /firebase-admin@13.0.0:
+    resolution: {integrity: sha512-tgm4+NT051tv237g4rLz6L5TJ4l1QwPjzysBJKnukP8fvdJQuXUNpqQONptNbNeLEUkRAroGNuEg5v3aVPzkbw==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@fastify/busboy': 3.0.0
+      '@firebase/database-compat': 2.0.1
+      '@firebase/database-types': 1.0.7
+      '@types/node': 22.9.0
+      farmhash-modern: 1.1.0
+      google-auth-library: 9.15.0
+      jsonwebtoken: 9.0.2
+      jwks-rsa: 3.1.0
+      node-forge: 1.3.1
+      uuid: 11.0.3
+    optionalDependencies:
+      '@google-cloud/firestore': 7.10.0
+      '@google-cloud/storage': 7.14.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
   /firebase-functions@6.1.0(firebase-admin@12.7.0):
     resolution: {integrity: sha512-7Gq7XpIA2qo9wKhYA9Ksb0v2bHfXD70zQwBJO6//Q624A7D9KAb449K6DM0swrCoPO7NGExbPf2eC7j7e+4+xA==}
     engines: {node: '>=14.10.0'}
@@ -6791,6 +6840,23 @@ packages:
       cors: 2.8.5
       express: 4.21.1
       firebase-admin: 12.7.0
+      protobufjs: 7.3.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /firebase-functions@6.1.0(firebase-admin@13.0.0):
+    resolution: {integrity: sha512-7Gq7XpIA2qo9wKhYA9Ksb0v2bHfXD70zQwBJO6//Q624A7D9KAb449K6DM0swrCoPO7NGExbPf2eC7j7e+4+xA==}
+    engines: {node: '>=14.10.0'}
+    hasBin: true
+    peerDependencies:
+      firebase-admin: ^11.10.0 || ^12.0.0
+    dependencies:
+      '@types/cors': 2.8.17
+      '@types/express': 4.17.21
+      cors: 2.8.5
+      express: 4.21.1
+      firebase-admin: 13.0.0
       protobufjs: 7.3.0
     transitivePeerDependencies:
       - supports-color
@@ -7151,6 +7217,21 @@ packages:
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
+    dev: false
+
+  /google-auth-library@9.15.0:
+    resolution: {integrity: sha512-7ccSEJFDFO7exFbO6NRyC+xH8/mZ1GZGG2xxx9iHxZWcjUjJpjWxIMw3cofAKcueZ6DATiukmmprD7yavQHOyQ==}
+    engines: {node: '>=14'}
+    dependencies:
+      base64-js: 1.5.1
+      ecdsa-sig-formatter: 1.0.11
+      gaxios: 6.5.0
+      gcp-metadata: 6.1.0
+      gtoken: 7.1.0
+      jws: 4.0.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
     dev: false
 
   /google-auth-library@9.9.0:
@@ -11051,10 +11132,6 @@ packages:
       strip-bom: 3.0.0
     dev: false
 
-  /tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: false
-
   /tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
     dev: false
@@ -11473,6 +11550,11 @@ packages:
 
   /uuid@10.0.0:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
+    dev: false
+
+  /uuid@11.0.3:
+    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
     hasBin: true
     dev: false
 
@@ -12037,7 +12119,7 @@ packages:
     requiresBuild: true
     dependencies:
       cliui: 8.0.1
-      escalade: 3.1.2
+      escalade: 3.2.0
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.3
