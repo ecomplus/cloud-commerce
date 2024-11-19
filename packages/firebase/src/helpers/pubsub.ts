@@ -67,15 +67,30 @@ const createAppEventsFunction = (
       modifiedFields: payload.apiEvent.modified_fields,
     });
     const docRef = getFirestore().doc(`storeEventRuns/${appId}:${resourceId}`);
-    const docSnap = await docRef.get();
-    if (docSnap.exists) {
-      logger.warn(`Rejecting ev/${evName} ${resourceId} for delayed retry`);
-      return Promise.reject(new Error('Concurrent event with same key'));
+    const docSnapData = (await docRef.get()).data();
+    if (docSnapData) {
+      const concurrentExecMs = (docSnapData.at as Timestamp)?.toMillis() || 0;
+      if (Date.now() - concurrentExecMs < 20000) {
+        if (docSnapData.evTimestamp === timestamp) {
+          logger.warn(`Dropping ev/${evName} ${resourceId} duplicated execution`);
+          return null;
+        }
+        logger.warn(`Fail ev/${evName} ${resourceId} for delayed retry`);
+        throw new Error('Concurrent event with same key');
+      }
     }
-    docRef.set({ at: Timestamp.now() }).catch(logger.error);
-    const result = await fn(payload, context, message);
-    docRef.delete().catch(logger.error);
-    return result;
+    docRef.set({
+      evTimestamp: timestamp,
+      at: Timestamp.now(),
+    }).catch(logger.error);
+    try {
+      const result = await fn(payload, context, message);
+      docRef.delete().catch(logger.error);
+      return result;
+    } catch (err) {
+      await docRef.delete().catch(logger.error);
+      throw err;
+    }
   };
   const _fn = isSkipMiddleware === true ? fn : midd;
   return createPubSubFunction(GET_PUBSUB_TOPIC(appId), _fn, options);
