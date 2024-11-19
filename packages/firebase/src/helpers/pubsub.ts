@@ -1,6 +1,5 @@
 import type { AppEventsPayload } from '@cloudcommerce/types';
 import functions from 'firebase-functions/v1';
-import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import config, { createExecContext } from '../config';
 import { GET_PUBSUB_TOPIC } from '../const';
 
@@ -58,7 +57,7 @@ const createAppEventsFunction = (
   } else {
     appId = appNameOrId;
   }
-  const midd: ApiEventHandler = async (payload, context, message) => {
+  const midd: ApiEventHandler = (payload, context, message) => {
     const {
       evName,
       apiEvent: { resource_id: resourceId, timestamp },
@@ -66,31 +65,7 @@ const createAppEventsFunction = (
     logger.info(`ev/${evName} ${resourceId} at ${timestamp}`, {
       modifiedFields: payload.apiEvent.modified_fields,
     });
-    const docRef = getFirestore().doc(`storeEventRuns/${appId}:${resourceId}`);
-    const docSnapData = (await docRef.get()).data();
-    if (docSnapData) {
-      const concurrentExecMs = (docSnapData.at as Timestamp)?.toMillis() || 0;
-      if (Date.now() - concurrentExecMs < 20000) {
-        if (docSnapData.evTimestamp === timestamp) {
-          logger.warn(`Dropping ev/${evName} ${resourceId} duplicated execution`);
-          return null;
-        }
-        logger.warn(`Fail ev/${evName} ${resourceId} for delayed retry`);
-        throw new Error('Concurrent event with same key');
-      }
-    }
-    docRef.set({
-      evTimestamp: timestamp,
-      at: Timestamp.now(),
-    }).catch(logger.error);
-    try {
-      const result = await fn(payload, context, message);
-      docRef.delete().catch(logger.error);
-      return result;
-    } catch (err) {
-      await docRef.delete().catch(logger.error);
-      throw err;
-    }
+    return fn(payload, context, message);
   };
   const _fn = isSkipMiddleware === true ? fn : midd;
   return createPubSubFunction(GET_PUBSUB_TOPIC(appId), _fn, options);
