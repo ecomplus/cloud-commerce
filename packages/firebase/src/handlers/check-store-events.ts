@@ -1,5 +1,6 @@
 import type {
   Resource,
+  ResourceId,
   ApiEventName,
   AppEventsPayload,
   EventsResult,
@@ -79,13 +80,14 @@ const parseEventName = (
 };
 
 const pubSubClient = new PubSub();
-const tryPubSubPublish = (
+const tryPubSubPublish = async (
   topicName: string,
-  messageObj: { messageId: string, json: any },
+  messageObj: { messageId: string, json: any, orderingKey: string },
   retries = 0,
 ) => {
   // https://cloud.google.com/pubsub/docs/samples/pubsub-publisher-retry-settings
-  pubSubClient.topic(topicName, {
+  const pubSubTopic = pubSubClient.topic(topicName, {
+    messageOrdering: true,
     gaxOpts: {
       retry: {
         retryCodes: [10, 1, 4, 13, 8, 14, 2],
@@ -100,17 +102,21 @@ const tryPubSubPublish = (
         },
       },
     },
-  }).publishMessage(messageObj)
-    .catch((err) => {
-      // eslint-disable-next-line no-param-reassign
-      err.retries = retries;
-      logger.error(err);
-      if (retries <= 3) {
+  });
+  try {
+    await pubSubTopic.publishMessage(messageObj);
+  } catch (err: any) {
+    // eslint-disable-next-line no-param-reassign
+    err.retries = retries;
+    logger.error(err);
+    if (retries <= 3) {
+      await new Promise((resolve) => {
         setTimeout(() => {
-          tryPubSubPublish(topicName, messageObj, retries + 1);
+          tryPubSubPublish(topicName, messageObj, retries + 1).then(resolve);
         }, 1000 * (2 ** retries));
-      }
-    });
+      });
+    }
+  }
 };
 
 export default async () => {
@@ -194,34 +200,48 @@ export default async () => {
     }
     if (!result.length) return;
     logger.info(`> '${listenedEventName}' ${result.length} events`);
-    const resourceIdsRead: string[] = [];
-    result.forEach(async (apiEvent) => {
-      apiEvent.resource = resource;
+    const eventsPerId: Record<ResourceId, typeof result> = {};
+    result.forEach((apiEvent) => {
       const resourceId = apiEvent.resource_id;
-      if (resourceIdsRead.includes(resourceId)) {
-        return;
+      if (!eventsPerId[resourceId]) {
+        eventsPerId[resourceId] = [];
       }
-      resourceIdsRead.push(resourceId);
-      const apiDoc = resource !== 'applications'
-        ? (await api.get(`${resource}/${resourceId}`)).data
-        : null;
-      activeApps.forEach((app) => {
-        const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
-        if (appConfig?.events.includes(listenedEventName)) {
-          const topicName = GET_PUBSUB_TOPIC(app.app_id);
-          const json: AppEventsPayload = {
-            evName: listenedEventName,
-            apiEvent,
-            apiDoc: apiDoc || app,
-            app,
-          };
-          const messageObj = {
-            messageId: `${resourceId}_${apiEvent.timestamp}`,
-            json,
-          };
-          tryPubSubPublish(topicName, messageObj);
-        }
+      eventsPerId[resourceId].push(apiEvent);
+    });
+    Object.keys(eventsPerId).forEach(async (key) => {
+      const resourceId = key as ResourceId;
+      const ascOrderedEvents = eventsPerId[resourceId].sort((a, b) => {
+        if (a.timestamp < b.timestamp) return -1;
+        return 1;
       });
+      const apiDoc = resource !== 'applications'
+        ? (await api.get(`${(resource as 'orders')}/${resourceId}`)).data
+        : null;
+      for (let i = 0; i < ascOrderedEvents.length; i++) {
+        const apiEvent = ascOrderedEvents[i];
+        apiEvent.resource = resource;
+        // Ensure messages publishing order
+        // eslint-disable-next-line no-await-in-loop
+        await Promise.all(activeApps.map((app) => {
+          const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
+          if (appConfig?.events.includes(listenedEventName)) {
+            const topicName = GET_PUBSUB_TOPIC(app.app_id);
+            const json: AppEventsPayload = {
+              evName: listenedEventName,
+              apiEvent,
+              apiDoc: apiDoc || app,
+              app,
+            };
+            const messageObj = {
+              messageId: `${resourceId}_${apiEvent.timestamp}`,
+              json,
+              orderingKey: resourceId,
+            };
+            return tryPubSubPublish(topicName, messageObj);
+          }
+          return null;
+        }));
+      }
     });
     logger.info(`> '${listenedEventName}' events: `, {
       result: result.map((apiEvent) => ({
