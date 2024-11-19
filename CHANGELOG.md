@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.14](https://github.com/ecomplus/cloud-commerce/compare/v2.29.13...v2.29.14) (2024-11-19)
+
+
+### Bug Fixes
+
+* **deps:** Revert firebase-admin to v12 ([879391d](https://github.com/ecomplus/cloud-commerce/commit/879391d1c7934f6622ac0a3f5209962e24eadfef))
+* **deps:** Update firebase-admin to v13 ([#487](https://github.com/ecomplus/cloud-commerce/issues/487)) ([737f1c8](https://github.com/ecomplus/cloud-commerce/commit/737f1c800ea0f4cfc2f5b2c41c4c1e767515e4da))
+* **deps:** Update non-major dependencies ([#486](https://github.com/ecomplus/cloud-commerce/issues/486)) ([18c54d7](https://github.com/ecomplus/cloud-commerce/commit/18c54d77aed6ede1335fd195d84c0a99d6a2e848))
+* **firebase:** Major fix on store events semantics to stop skipping same resource ID events ([d776af0](https://github.com/ecomplus/cloud-commerce/commit/d776af024e900502e0ca90f1572dcc146012ec88))
+* **storefront:** Bump Astro to latest v4.16.13 ([e61da19](https://github.com/ecomplus/cloud-commerce/commit/e61da19bd2678dbb431ad4849f80dddce185ea4f))
+* **storefront:** Bump Vue to latest v3.5.13 ([b33ef06](https://github.com/ecomplus/cloud-commerce/commit/b33ef06544eb9bdb98bd544fbf66b0f811f54c8e))
+
 ## [2.29.13](https://github.com/ecomplus/cloud-commerce/compare/v2.29.12...v2.29.13) (2024-11-14)
 
 
