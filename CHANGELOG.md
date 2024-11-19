@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.15](https://github.com/ecomplus/cloud-commerce/compare/v2.29.14...v2.29.15) (2024-11-19)
+
+
+### Bug Fixes
+
+* **firebase:** Additional delay on store events PubSub publish each resource ID ASC ordered event ([7569b20](https://github.com/ecomplus/cloud-commerce/commit/7569b20a2ea4634132cc05f6e5d7b324569a0df4))
+* **firebase:** Catch app event execution errors to delete run policy doc anyway ([d97efc5](https://github.com/ecomplus/cloud-commerce/commit/d97efc5c31e771cd11c6c1e51ffd4b947f3f5a6a))
+* **firebase:** Using local Firestore to ensure no concurrent events for same app & resource ID ([42777df](https://github.com/ecomplus/cloud-commerce/commit/42777df83eb5f50fd17f4ea6b05709f502884cd0))
+
 ## [2.29.14](https://github.com/ecomplus/cloud-commerce/compare/v2.29.13...v2.29.14) (2024-11-19)
 
 
