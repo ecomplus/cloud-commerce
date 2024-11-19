@@ -221,7 +221,10 @@ export default async () => {
         const apiEvent = ascOrderedEvents[i];
         apiEvent.resource = resource;
         // Ensure messages publishing order
-        // eslint-disable-next-line no-await-in-loop
+        /* eslint-disable no-await-in-loop */
+        if (i > 0) {
+          await new Promise((resolve) => { setTimeout(resolve, i * 100); });
+        }
         await Promise.all(activeApps.map((app) => {
           const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
           if (appConfig?.events.includes(listenedEventName)) {
@@ -241,6 +244,7 @@ export default async () => {
           }
           return null;
         }));
+        /* eslint-enable no-await-in-loop */
       }
     });
     logger.info(`> '${listenedEventName}' events: `, {
