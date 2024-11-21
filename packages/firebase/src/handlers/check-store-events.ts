@@ -120,7 +120,7 @@ const tryPubSubPublish = async (
 };
 
 export default async () => {
-  const timestamp = Date.now();
+  const maxTimestamp = Date.now() - 1000 * 2;
   const documentRef = getFirestore().doc('storeEvents/last');
   const documentSnapshot = await documentRef.get();
   const lastRunTimestamp: number = documentSnapshot.get('timestamp')
@@ -130,7 +130,7 @@ export default async () => {
   const baseApiEventsFilter = {
     'flag!': EVENT_SKIP_FLAG,
     'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
-    'timestamp<': new Date(timestamp).toISOString(),
+    'timestamp<': new Date(maxTimestamp).toISOString(),
   };
   const { apiEvents, apps } = config.get();
   const subscribersApps: Array<{ appId: number, events: ApiEventName[] }> = [];
@@ -177,7 +177,7 @@ export default async () => {
           // Defines the limits for getting events with predefined delay
           const { delayedMs } = apiEvents;
           params['timestamp>'] = new Date(lastNonOrdersTimestamp - delayedMs).toISOString();
-          params['timestamp<'] = new Date(timestamp - delayedMs).toISOString();
+          params['timestamp<'] = new Date(maxTimestamp - delayedMs).toISOString();
         } else {
           params['timestamp>'] = new Date(lastNonOrdersTimestamp).toISOString();
         }
@@ -214,8 +214,14 @@ export default async () => {
         if (a.timestamp < b.timestamp) return -1;
         return 1;
       });
+      const fetchFreshApiDoc = async () => {
+        const { data } = await api.get(`${(resource as 'orders')}/${resourceId}`, {
+          headers: { 'x-primary-db': 'true' },
+        });
+        return data;
+      };
       const apiDoc = resource !== 'applications'
-        ? (await api.get(`${(resource as 'orders')}/${resourceId}`)).data
+        ? await fetchFreshApiDoc()
         : null;
       for (let i = 0; i < ascOrderedEvents.length; i++) {
         const apiEvent = ascOrderedEvents[i];
@@ -255,8 +261,8 @@ export default async () => {
     });
   });
   return documentRef.set({
-    timestamp,
-    nonOrdersTimestamp: isOrdersOnly ? lastNonOrdersTimestamp : timestamp,
+    timestamp: maxTimestamp,
+    nonOrdersTimestamp: isOrdersOnly ? lastNonOrdersTimestamp : maxTimestamp,
     activeApps,
     listenedEvents,
   });
