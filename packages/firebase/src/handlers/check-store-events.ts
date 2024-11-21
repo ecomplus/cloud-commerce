@@ -220,6 +220,7 @@ export default async () => {
         });
         return data;
       };
+      const datasetAt = Date.now();
       const apiDoc = resource !== 'applications'
         ? await fetchFreshApiDoc()
         : null;
@@ -240,6 +241,7 @@ export default async () => {
               apiEvent,
               apiDoc: apiDoc || app,
               app,
+              at: datasetAt,
             };
             const messageObj = {
               messageId: `${resourceId}_${apiEvent.timestamp}`,

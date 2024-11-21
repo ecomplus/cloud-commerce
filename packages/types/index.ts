@@ -104,6 +104,7 @@ export type AppEventsPayload = {
     data: Applications['data'],
     hidden_data: Applications['hidden_data'],
   },
+  at?: number,
   isInternal?: boolean,
 };
 

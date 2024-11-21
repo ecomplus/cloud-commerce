@@ -1,5 +1,6 @@
-import type { AppEventsPayload } from '@cloudcommerce/types';
+import type { Orders, AppEventsPayload } from '@cloudcommerce/types';
 import functions from 'firebase-functions/v1';
+import api from '@cloudcommerce/api';
 import config, { createExecContext } from '../config';
 import { GET_PUBSUB_TOPIC } from '../const';
 
@@ -60,14 +61,24 @@ const createAppEventsFunction = (
   } else {
     appId = appNameOrId;
   }
-  const midd: ApiEventHandler = (payload, context, message) => {
+  const midd: ApiEventHandler = async (payload, context, message) => {
     const {
       evName,
-      apiEvent: { resource_id: resourceId, timestamp },
+      apiEvent: {
+        resource,
+        resource_id: resourceId,
+        timestamp,
+      },
     } = payload;
     logger.info(`ev/${evName} ${resourceId} at ${timestamp}`, {
       modifiedFields: payload.apiEvent.modified_fields,
     });
+    if (resource && payload.at && Date.now() - payload.at > 2000) {
+      const { data: apiDoc } = await api.get(`${resource as 'orders'}/${resourceId}`);
+      if (!((payload.apiDoc as Orders).updated_at > apiDoc.updated_at)) {
+        payload.apiDoc = apiDoc;
+      }
+    }
     return fn(payload, context, message);
   };
   const _fn = isSkipMiddleware === true ? fn : midd;
