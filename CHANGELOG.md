@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.18](https://github.com/ecomplus/cloud-commerce/compare/v2.29.17...v2.29.18) (2024-11-21)
+
+
+### Bug Fixes
+
+* **firebase:** Read API events with -2s gap and fetch docs with primary preference for consistency ([9f4eb2d](https://github.com/ecomplus/cloud-commerce/commit/9f4eb2d848c213eb3f9131422e93c65d60b40b4d))
+
 ## [2.29.17](https://github.com/ecomplus/cloud-commerce/compare/v2.29.16...v2.29.17) (2024-11-21)
 
 
