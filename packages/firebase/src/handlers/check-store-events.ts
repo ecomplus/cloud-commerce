@@ -94,7 +94,7 @@ const tryPubSubPublish = async (
         backoffSettings: {
           initialRetryDelayMillis: /* 100 */ 1200,
           retryDelayMultiplier: /* 1.3 */ 2,
-          maxRetryDelayMillis: 60000,
+          maxRetryDelayMillis: /* 60000 */ 120000,
           initialRpcTimeoutMillis: 5000,
           rpcTimeoutMultiplier: 1.0,
           maxRpcTimeoutMillis: 600000,
@@ -220,10 +220,10 @@ export default async () => {
       for (let i = 0; i < ascOrderedEvents.length; i++) {
         const apiEvent = ascOrderedEvents[i];
         apiEvent.resource = resource;
-        // Ensure messages publishing order
+        // "Ensure" messages publishing order
         /* eslint-disable no-await-in-loop */
         if (i > 0) {
-          await new Promise((resolve) => { setTimeout(resolve, i * 100); });
+          await new Promise((resolve) => { setTimeout(resolve, i * 150); });
         }
         await Promise.all(activeApps.map((app) => {
           const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);

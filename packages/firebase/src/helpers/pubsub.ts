@@ -23,7 +23,10 @@ const createPubSubFunction = (
   {
     eventMaxAgeMs = 60000,
     memory = '256MB',
-    maxInstances = 2,
+    /* PubSub ordering is ignored on deploys with Firebase CLI,
+    there is no hard guarantee but max instances 1 is a workaround:
+    https://stackoverflow.com/questions/70780310/firebase-pubsub-trigger-with-message-ordering */
+    maxInstances = 1,
   }: ExecOptions = {},
 ) => {
   const { httpsFunctionOptions: { region } } = config.get();
