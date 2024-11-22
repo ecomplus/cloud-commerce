@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.19](https://github.com/ecomplus/cloud-commerce/compare/v2.29.18...v2.29.19) (2024-11-22)
+
+
+### Bug Fixes
+
+* **firebase:** Refetching fresh `apiDoc` on API events PubSub middlewares when handler is 2s delayed ([f217e32](https://github.com/ecomplus/cloud-commerce/commit/f217e322dd24246251e1ddeb245b1d8f08e0555d))
+* **modules:** Read order with primary preference for consistency after checkout ([1b9b41a](https://github.com/ecomplus/cloud-commerce/commit/1b9b41ad6ed20acbd0318ce6962da5908cb922d3))
+* **modules:** Reducing apps list cache TTL to 30s ([18e47d3](https://github.com/ecomplus/cloud-commerce/commit/18e47d368efe1fb289d5c254012e5724042f6643))
+
 ## [2.29.18](https://github.com/ecomplus/cloud-commerce/compare/v2.29.17...v2.29.18) (2024-11-21)
 
 
