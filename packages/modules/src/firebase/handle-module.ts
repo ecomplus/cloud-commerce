@@ -97,7 +97,7 @@ async function runModule(
       setTimeout(() => {
         appsCache[cacheKey] = null;
         delete appsCache[cacheKey];
-      }, appsList.length ? 60000 : 3000);
+      }, appsList.length ? 30000 : 3000);
     }
     const moduleReqs: Promise<any>[] = [];
     for (let i = 0; i < appsList.length; i++) {
