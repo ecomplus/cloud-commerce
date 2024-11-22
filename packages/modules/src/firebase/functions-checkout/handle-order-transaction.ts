@@ -15,13 +15,15 @@ const newOrder = async (orderBody: OrderSet) => {
     return new Promise<{ order: Orders | null, err?: any }>((resolve) => {
       setTimeout(async () => {
         try {
-          const order = (await api.get(`orders/${orderId}`)).data as Orders;
+          const { data: order } = await api.get(`orders/${orderId}`, {
+            headers: { 'x-primary-db': 'true' },
+          });
           resolve({ order });
         } catch (err: any) {
           logger.error(err);
           resolve({ order: null, err });
         }
-      }, 800);
+      }, 400);
     });
   } catch (err: any) {
     if (err.message === 'fetch failed') {
