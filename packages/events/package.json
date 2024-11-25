@@ -48,7 +48,7 @@
     "@cloudcommerce/app-webhooks": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/ssr": "workspace:*",
-    "firebase-admin": "^12.7.0",
+    "firebase-admin": "^13.0.1",
     "firebase-functions": "^6.1.1",
     "source-map-support": "^0.5.21"
   },
