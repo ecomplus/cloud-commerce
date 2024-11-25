@@ -29,7 +29,7 @@
     "@cloudcommerce/emails": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/transactional-mails": "^2.0.4",
-    "firebase-admin": "^12.7.0",
+    "firebase-admin": "^13.0.1",
     "firebase-functions": "^6.1.1"
   },
   "devDependencies": {
