@@ -72,8 +72,9 @@ const createAppEventsFunction = (
     } = payload;
     logger.info(`ev/${evName} ${resourceId} at ${timestamp}`, {
       modifiedFields: payload.apiEvent.modified_fields,
+      datasetAt: payload.at,
     });
-    if (resource && payload.at && Date.now() - payload.at > 2000) {
+    if (resource && payload.at && Date.now() - payload.at > 600) {
       const { data: apiDoc } = await api.get(`${resource as 'orders'}/${resourceId}`);
       if (!((payload.apiDoc as Orders).updated_at > apiDoc.updated_at)) {
         payload.apiDoc = apiDoc;
