@@ -164,10 +164,20 @@ configure_edge_rule '
       "PatternMatchingType": 0,
       "PatternMatches": [
         "500",
+        "501",
         "502",
-        "504",
+        "503",
+        "504"
+      ]
+    },
+    {
+      "Type": 8,
+      "PatternMatchingType": 0,
+      "PatternMatches": [
         "401",
-        "403"
+        "403",
+        "429",
+        "302"
       ]
     }
   ],
