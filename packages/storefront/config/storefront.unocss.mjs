@@ -1,4 +1,5 @@
 import Deepmerge from '@fastify/deepmerge';
+import chroma from 'chroma-js';
 import {
   defineConfig,
   presetUno,
@@ -16,38 +17,53 @@ import {
 } from './storefront.tailwind.mjs';
 
 const deepmerge = Deepmerge();
-const colorCSSVars = {};
-Object.keys(brandColors).forEach((colorName) => {
-  Object.keys(brandColorsPalletes[colorName]).forEach((tone) => {
-    const cssRGB = brandColorsPalletes[colorName][tone];
-    const colorLabel = tone === 'DEFAULT' ? colorName : `${colorName}-${tone}`;
-    colorCSSVars[`rgb-${colorLabel}`] = cssRGB.substring(4).replace(')', ''); // rgb(rgb) -> rgb
-    if (!/\d/.test(tone)) {
-      colorCSSVars[`c-${colorLabel}`] = cssRGB;
-      colorCSSVars[`c-on-${colorLabel}`] = onBrandColors[colorLabel];
+
+export const getColorCSSVars = (tailwindConfig) => {
+  const themeColors = tailwindConfig?.theme?.extend?.colors;
+  const colorCSSVars = {};
+  Object.keys(brandColors).forEach((colorName) => {
+    const themeColor = themeColors?.[colorName];
+    if (themeColor && typeof themeColor === 'object') {
+      if (themeColor.DEFAULT) {
+        brandColors[colorName] = themeColor.DEFAULT;
+      }
+      Object.assign(brandColorsPalletes[colorName], themeColor);
+    }
+    Object.keys(brandColorsPalletes[colorName]).forEach((tone) => {
+      const colorVal = brandColorsPalletes[colorName][tone];
+      const cssRGB = colorVal.startsWith('rgb')
+        ? colorVal
+        : chroma(colorVal).css();
+      const colorLabel = tone === 'DEFAULT' ? colorName : `${colorName}-${tone}`;
+      colorCSSVars[`rgb-${colorLabel}`] = cssRGB.substring(4).replace(')', ''); // rgb(rgb) -> rgb
+      if (!/\d/.test(tone)) {
+        colorCSSVars[`c-${colorLabel}`] = cssRGB;
+        colorCSSVars[`c-on-${colorLabel}`] = onBrandColors[colorLabel];
+      }
+    });
+  });
+  Object.keys(onBrandColors).forEach((colorLabel) => {
+    const cssRGB = onBrandColors[colorLabel];
+    const [colorName] = colorLabel.split('-');
+    const colorCSSVar = Object.keys(colorCSSVars).find((varName) => {
+      return `rgb(${colorCSSVars[varName]})` === cssRGB
+        && new RegExp(`${colorName}-\\d`).test(varName);
+    });
+    if (colorCSSVar) {
+      colorCSSVars[`rgb-on-${colorLabel}`] = colorCSSVar;
+    } else {
+      colorCSSVars[`rgb-on-${colorLabel}`] = cssRGB.startsWith('rgb')
+        ? cssRGB.substring(4).replace(')', '')
+        : cssRGB.replace('--c-', '--rgb-');
     }
   });
-});
-Object.keys(onBrandColors).forEach((colorLabel) => {
-  const cssRGB = onBrandColors[colorLabel];
-  const [colorName] = colorLabel.split('-');
-  const colorCSSVar = Object.keys(colorCSSVars).find((varName) => {
-    return `rgb(${colorCSSVars[varName]})` === cssRGB
-      && new RegExp(`${colorName}-\\d`).test(varName);
-  });
-  if (colorCSSVar) {
-    colorCSSVars[`rgb-on-${colorLabel}`] = colorCSSVar;
-  } else {
-    colorCSSVars[`rgb-on-${colorLabel}`] = cssRGB.startsWith('rgb')
-      ? cssRGB.substring(4).replace(')', '')
-      : cssRGB.replace('--c-', '--rgb-');
-  }
-});
-
-export { colorCSSVars };
+  return colorCSSVars;
+};
 
 export const genUnoCSSConfig = (_tailwindConfig) => {
   const themeOptions = _tailwindConfig?.themeOptions || {};
+  const tailwindConfig = _tailwindConfig || genTailwindConfig(themeOptions);
+  const colorCSSVars = getColorCSSVars(tailwindConfig);
   const {
     preflights = [{
       getCSS: () => {
@@ -58,7 +74,6 @@ export const genUnoCSSConfig = (_tailwindConfig) => {
       },
     }],
   } = deepmerge(defaultThemeOptions, themeOptions);
-  const tailwindConfig = _tailwindConfig || genTailwindConfig(themeOptions);
   const rules = [];
   const shortcuts = [];
   const variants = [];
