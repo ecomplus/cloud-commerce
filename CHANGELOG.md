@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.29.20](https://github.com/ecomplus/cloud-commerce/compare/v2.29.19...v2.29.20) (2024-11-28)
+
+
+### Bug Fixes
+
+* **cli:** Additional status codes to skip bunny.net CDN cache within edge rule ([1af6049](https://github.com/ecomplus/cloud-commerce/commit/1af604982ac2c1b0394523279711b5a78e7d2700))
+* **deps:** Update dependency firebase-admin to v13 ([#491](https://github.com/ecomplus/cloud-commerce/issues/491)) ([7409682](https://github.com/ecomplus/cloud-commerce/commit/7409682ade66848a285e8d2e1aee0663bec23d77))
+* **deps:** Update non-major dependencies ([#490](https://github.com/ecomplus/cloud-commerce/issues/490)) ([ef9d89c](https://github.com/ecomplus/cloud-commerce/commit/ef9d89c326f7041920900d3386e267fccaa611e6))
+* **firebase:** Reducing gap to refresh `apiDoc` on API events PubSub middlewares to 600ms ([658ed51](https://github.com/ecomplus/cloud-commerce/commit/658ed51867af6980606466dbc2f3a3b6ea5ec53f))
+* **storefront:** Fix UnoCSS config generating brand colors CSS vars with custom theme options ([5934c82](https://github.com/ecomplus/cloud-commerce/commit/5934c8231044a897b37bbee134041e91d9f0962e))
+* **storefront:** Update Astro to latest v4.16.14 ([#488](https://github.com/ecomplus/cloud-commerce/issues/488)) ([3e052f4](https://github.com/ecomplus/cloud-commerce/commit/3e052f4ca469bce773f314315842fbd0e0881576))
+
 ## [2.29.19](https://github.com/ecomplus/cloud-commerce/compare/v2.29.18...v2.29.19) (2024-11-22)
 
 
