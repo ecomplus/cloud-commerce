@@ -40,7 +40,7 @@
     "@vueuse/core": "11.3.0",
     "astro": "4.16.14",
     "astro-capo": "^0.0.1",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "firebase-admin": "^13.0.1",
     "firebase-functions": "^6.1.1",
     "html-minifier": "^4.0.0",
