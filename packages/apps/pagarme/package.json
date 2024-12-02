@@ -32,7 +32,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "firebase-admin": "^13.0.1",
     "firebase-functions": "^6.1.1",
     "pagarme": "4.35.2",
