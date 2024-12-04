@@ -50,6 +50,7 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     + req.path
       .replace(/^.+\/repos\//, '/repos/')
       .replace('/repos/_/', `/repos/${GITHUB_REPO}/`);
+  res.set('X-Proxy-URL', url);
   const headers = {
     Accept: 'application/vnd.github+json',
     Authorization: `Bearer ${GITHUB_TOKEN}`,
