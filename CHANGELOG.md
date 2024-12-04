@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.30.0](https://github.com/ecomplus/cloud-commerce/compare/v2.29.20...v2.30.0) (2024-12-04)
+
+
+### Features
+
+* **feeds:** Proxying GitHub REST API with Store API authentication on `**/repos/**` routes ([2234355](https://github.com/ecomplus/cloud-commerce/commit/2234355e0ffd7c22eb198dd2e3f950ca71af6e42))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#497](https://github.com/ecomplus/cloud-commerce/issues/497)) ([8a8f887](https://github.com/ecomplus/cloud-commerce/commit/8a8f887dedc819790f0fd9494adbd5b6604138bb))
+* **storefront:** Update Astro to v4.16.16 ([#498](https://github.com/ecomplus/cloud-commerce/issues/498)) ([ffad6ab](https://github.com/ecomplus/cloud-commerce/commit/ffad6ab6306ccecd583f18576f439bfff2edf958))
+
 ## [2.29.20](https://github.com/ecomplus/cloud-commerce/compare/v2.29.19...v2.29.20) (2024-11-28)
 
 
