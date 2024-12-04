@@ -12,6 +12,17 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     res.status(403).send('Missing GitHub token');
     return;
   }
+  switch (req.method) {
+    case 'GET':
+    case 'POST':
+    case 'PATCH':
+    case 'PUT':
+    case 'DELETE':
+      break;
+    default:
+      res.sendStatus(406);
+      return;
+  }
   const accessToken = req.get('Authorization')?.slice(7); // "Bearer ***"
   if (!accessToken) {
     res.status(401).send('Access token is required on Authorization header');
@@ -32,12 +43,14 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     'X-GitHub-Api-Version': '2022-11-28',
   };
   let body: string | undefined;
-  if (typeof req.body === 'object') {
-    body = JSON.stringify(req.body);
-    headers['Content-Type'] = 'application/json';
-    headers['Content-Length'] = body.length.toString();
-  } else {
-    body = req.body;
+  if (req.method !== 'GET') {
+    if (typeof req.body === 'object') {
+      body = JSON.stringify(req.body);
+      headers['Content-Type'] = 'application/json';
+      headers['Content-Length'] = body.length.toString();
+    } else {
+      body = req.body;
+    }
   }
   const timeout = 30000;
   let abortController: AbortController | undefined;
