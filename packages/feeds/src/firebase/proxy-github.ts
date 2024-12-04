@@ -1,4 +1,5 @@
 import type { Request, Response } from 'firebase-functions/v1';
+import type { ApiError } from '@cloudcommerce/api';
 import api from '@cloudcommerce/api';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 
@@ -28,9 +29,21 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     res.status(401).send('Access token is required on Authorization header');
     return;
   }
-  const { data: authUser } = await api.get('authentications/me', { accessToken });
-  if (!authUser.edit_storefront) {
-    res.status(401).send('Your auth user does not have permission to edit storefront');
+  try {
+    const { data: authUser } = await api.get('authentications/me', { accessToken });
+    if (!authUser.edit_storefront) {
+      res.status(401).send('Your auth user does not have permission to edit storefront');
+      return;
+    }
+  } catch (_err: any) {
+    const error = _err as ApiError;
+    if (error.statusCode && error.statusCode >= 400 && error.statusCode < 500) {
+      res.status(error.statusCode);
+      res.send(error.response?.data || 'Could not authenticate to Store API');
+      return;
+    }
+    res.sendStatus(500);
+    logger.error(error);
     return;
   }
   const url = 'https://api.github.com'
@@ -88,8 +101,8 @@ const proxyGithubApi = async (req: Request, res: Response) => {
       }
     }
   } catch (err) {
-    logger.error(err);
     res.sendStatus(500);
+    logger.error(err);
   }
   clearTimeout(timer);
 };
