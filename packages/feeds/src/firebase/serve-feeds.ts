@@ -89,12 +89,23 @@ const serveFeeds = async (req: Request, res: Response) => {
     res.sendStatus(500);
     return;
   }
-  res.set('Content-Type', 'application/xml; charset=UTF-8');
-  res.set('Cache-Control', 'public, max-age=600, s-maxage=900');
   res.set('Content-Security-Policy', "default-src 'self'");
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-XSS-Protection', '1; mode=block');
   res.set('X-Frame-Options', 'DENY');
+  if (req.path.endsWith('.xml')) {
+    res.set('Content-Type', 'application/xml; charset=UTF-8');
+    res.set('Cache-Control', 'public, max-age=600, s-maxage=900');
+  } else if (!process.env.FEEDS_DISABLE_CORS) {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', '*');
+    res.set('Access-Control-Max-Age', '600');
+    res.set('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+    if (req.method === 'OPTIONS') {
+      res.end();
+      return;
+    }
+  }
   switch (req.path) {
     case '/_feeds/catalog.xml':
     case '/catalog.xml':
