@@ -3,6 +3,7 @@ import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
 import renderCatalog from './render-catalog';
 import renderSitemap from './render-sitemap';
+import proxyGithubApi from './proxy-github';
 
 const fetchProducts = async (page = 1) => {
   const limit = 300;
@@ -107,6 +108,10 @@ const serveFeeds = async (req: Request, res: Response) => {
       res.redirect(302, '/sitemap-catalog.xml');
       break;
     default:
+      if (req.path.includes('/repos/')) {
+        await proxyGithubApi(req, res);
+        break;
+      }
       res.sendStatus(404);
   }
 };

@@ -255,6 +255,7 @@ runs:
         ECOM_STORE_ID: ${{ env.ecom_store_id }}
         GIT_BRANCH: ${{ env.git_branch }}
         DEPLOY_CODEBASE: ${{ env.deploy_codebase }}
+        GITHUB_REPO: ${{ github.event.repository.full_name }}
         GITHUB_TOKEN: ${{ inputs.github-persistent-token || inputs.github-token }}
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
@@ -306,6 +307,7 @@ runs:
         ECOM_API_KEY=$ECOM_API_KEY
         ECOM_STORE_ID=$ECOM_STORE_ID
         GIT_BRANCH=$GIT_BRANCH
+        GITHUB_REPO=$GITHUB_REPO
         GITHUB_TOKEN=$GITHUB_TOKEN
         DEPLOY_CODEBASE=$DEPLOY_CODEBASE
         MAIL_SENDER=$MAIL_SENDER
