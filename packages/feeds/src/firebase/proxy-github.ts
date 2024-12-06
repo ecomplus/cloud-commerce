@@ -83,9 +83,7 @@ const proxyGithubApi = async (req: Request, res: Response) => {
       signal: abortController?.signal,
     });
     res.status(response.status);
-    response.headers.forEach((value, key) => {
-      res.set(key, value);
-    });
+    logger.info(`Proxied ${url} with status ${response.status}`);
     if (response.status === 204) {
       res.end();
     } else {
