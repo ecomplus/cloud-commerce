@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.31.0](https://github.com/ecomplus/cloud-commerce/compare/v2.30.1...v2.31.0) (2024-12-06)
+
+
+### Features
+
+* **storefront:** Start exposing default `cmsFields` from composables, first on `use-banner` ([facde99](https://github.com/ecomplus/cloud-commerce/commit/facde99eb8488f532407520b70f57be5d1de9539))
+
+
+### Bug Fixes
+
+* **feeds:** Stop bypassing all GitHub API response headers on proxy ([8775565](https://github.com/ecomplus/cloud-commerce/commit/87755657204ee2bb1f2acc58fcb5901ee36669ba))
+* **storefront:** Updating vbeta-app script version ([db79d84](https://github.com/ecomplus/cloud-commerce/commit/db79d8496f9c3b3ce3c32f82fcb5e6ec8d008d0c))
+
 ## [2.30.1](https://github.com/ecomplus/cloud-commerce/compare/v2.30.0...v2.30.1) (2024-12-06)
 
 
