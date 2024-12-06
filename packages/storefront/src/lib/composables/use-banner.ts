@@ -10,9 +10,44 @@ export type Props = {
   href?: string;
   title?: string;
   subtitle?: string;
-  buttonLink?: string;
   buttonText?: string;
+  buttonLink?: string;
 }
+
+export const bannerCmsFields = ({
+  img: {
+    widget: 'image',
+    label: { pt: 'Imagem', en: 'Image' },
+  },
+  alt: {
+    widget: 'string',
+    label: { pt: 'Texto alternativo', en: 'Alt text' },
+  },
+  mobileImg: {
+    widget: 'image',
+    label: { pt: 'Imagem em celular', en: 'Mobile image' },
+  },
+  href: {
+    widget: 'string',
+    label: { pt: 'Link no banner', en: 'Link in banner' },
+  },
+  title: {
+    widget: 'string',
+    label: { pt: 'Título sobreposto', en: 'Overlapping title' },
+  },
+  subtitle: {
+    widget: 'string',
+    label: { pt: 'Subtítulo', en: 'Subtitle' },
+  },
+  buttonText: {
+    widget: 'string',
+    label: { pt: 'Botão', en: 'Button' },
+  },
+  buttonLink: {
+    widget: 'number',
+    label: { pt: 'Link do botão', en: 'Button link' },
+  },
+}) as const;
 
 export const useBanner = (props: Props) => {
   const parsedTitle = computed(() => {
