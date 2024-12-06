@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/modules",
   "type": "module",
-  "version": "2.30.0",
+  "version": "2.30.1",
   "description": "e-com.plus Cloud Commerce modules API",
   "main": "lib/index.cjs",
   "exports": {
