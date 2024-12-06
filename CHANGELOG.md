@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.30.1](https://github.com/ecomplus/cloud-commerce/compare/v2.30.0...v2.30.1) (2024-12-06)
+
+
+### Bug Fixes
+
+* **discounts:** Properly applying kit discounts on subtotal with proportional quantity ([01b6933](https://github.com/ecomplus/cloud-commerce/commit/01b6933e74e5100edc02ffbe6ab7501188c40739))
+* **feeds:** Better handling Store API authentication errors on GitHub API proxy ([f655904](https://github.com/ecomplus/cloud-commerce/commit/f6559043f073c03906aa73e70a2a4972697fffad))
+* **feeds:** Check req method and skip body on GET requests within GitHub API proxy ([7fca67c](https://github.com/ecomplus/cloud-commerce/commit/7fca67ca32c06cc7135b5ca8e87b925b9c86b2b9))
+* **feeds:** CORS for GitHub API proxy and properly reponse headers bypass ([85bdcae](https://github.com/ecomplus/cloud-commerce/commit/85bdcae746a1031ed462001ab8852ca3d79e0004))
+
 ## [2.30.0](https://github.com/ecomplus/cloud-commerce/compare/v2.29.20...v2.30.0) (2024-12-04)
 
 
