@@ -35,7 +35,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@fastify/deepmerge": "^2.0.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "libsodium-wrappers": "^0.7.15",
     "md5": "^2.3.0",
     "typescript": "~5.7.2",
