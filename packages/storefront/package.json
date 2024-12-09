@@ -56,7 +56,7 @@
     "astro": "4.16.16",
     "astro-capo": "^0.0.1",
     "chroma-js": "^3.1.2",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "firebase": "^11.0.2",
     "image-size": "^1.1.1",
     "mitt": "^3.0.1",
@@ -72,6 +72,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.12"
+    "@types/react": "^18.3.14"
   }
 }
