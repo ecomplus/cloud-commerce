@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.32.0](https://github.com/ecomplus/cloud-commerce/compare/v2.31.0...v2.32.0) (2024-12-09)
+
+
+### Features
+
+* **api:** Checking additional env `ECOM_ACCESS_TOKEN` and exporting default middleware fn ([14bc7dc](https://github.com/ecomplus/cloud-commerce/commit/14bc7dc83306455c9cc415801aee79dc4537abc0))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#502](https://github.com/ecomplus/cloud-commerce/issues/502)) ([ea1a3ae](https://github.com/ecomplus/cloud-commerce/commit/ea1a3aea52e26b630cf029b9313f104e55e7ba1b))
+* **storefront:** Update Astro to v4.16.17 ([#503](https://github.com/ecomplus/cloud-commerce/issues/503)) ([722d28b](https://github.com/ecomplus/cloud-commerce/commit/722d28b037a8112edee2a5ebdcc78af8520d04ad))
+
 ## [2.31.0](https://github.com/ecomplus/cloud-commerce/compare/v2.30.1...v2.31.0) (2024-12-06)
 
 
