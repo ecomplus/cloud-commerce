@@ -971,7 +971,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 8.3.4
-        version: 8.3.4(astro@4.16.16)
+        version: 8.3.4(astro@4.16.17)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -988,11 +988,11 @@ importers:
         specifier: 12.0.0
         version: 12.0.0(typescript@5.7.2)
       astro:
-        specifier: 4.16.16
-        version: 4.16.16(@types/node@18.19.67)(typescript@5.7.2)
+        specifier: 4.16.17
+        version: 4.16.17(@types/node@18.19.67)(typescript@5.7.2)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.16.16)
+        version: 0.0.1(astro@4.16.17)
       axios:
         specifier: ^1.7.9
         version: 1.7.9
@@ -1035,10 +1035,10 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: 8.3.4
-        version: 8.3.4(astro@4.16.16)
+        version: 8.3.4(astro@4.16.17)
       '@astrojs/vue':
         specifier: 4.5.3
-        version: 4.5.3(@types/node@18.19.67)(astro@4.16.16)(vue@3.5.13)
+        version: 4.5.3(@types/node@18.19.67)(astro@4.16.17)(vue@3.5.13)
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
@@ -1070,11 +1070,11 @@ importers:
         specifier: 12.0.0
         version: 12.0.0(typescript@5.7.2)
       astro:
-        specifier: 4.16.16
-        version: 4.16.16(@types/node@18.19.67)(typescript@5.7.2)
+        specifier: 4.16.17
+        version: 4.16.17(@types/node@18.19.67)(typescript@5.7.2)
       astro-capo:
         specifier: ^0.0.1
-        version: 0.0.1(astro@4.16.16)
+        version: 0.0.1(astro@4.16.17)
       chroma-js:
         specifier: ^3.1.2
         version: 3.1.2
@@ -1212,12 +1212,12 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/node@8.3.4(astro@4.16.16):
+  /@astrojs/node@8.3.4(astro@4.16.17):
     resolution: {integrity: sha512-xzQs39goN7xh9np9rypGmbgZj3AmmjNxEMj9ZWz5aBERlqqFF3n8A/w/uaJeZ/bkHS60l1BXVS0tgsQt9MFqBA==}
     peerDependencies:
       astro: ^4.2.0
     dependencies:
-      astro: 4.16.16(@types/node@18.19.67)(typescript@5.7.2)
+      astro: 4.16.17(@types/node@18.19.67)(typescript@5.7.2)
       send: 0.19.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -1246,7 +1246,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vue@4.5.3(@types/node@18.19.67)(astro@4.16.16)(vue@3.5.13):
+  /@astrojs/vue@4.5.3(@types/node@18.19.67)(astro@4.16.17)(vue@3.5.13):
     resolution: {integrity: sha512-OP4qV48HKYlx5sbgadpzGofWpuvSi3Ae37PJHpFtGX7ryHNdZr96jUMlZmyW6x7sx5/hw89tNl+GjsNlKr6Gxg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
@@ -1256,7 +1256,7 @@ packages:
       '@vitejs/plugin-vue': 5.1.4(vite@5.4.11)(vue@3.5.13)
       '@vitejs/plugin-vue-jsx': 4.1.0(vite@5.4.11)(vue@3.5.13)
       '@vue/compiler-sfc': 3.5.13
-      astro: 4.16.16(@types/node@18.19.67)(typescript@5.7.2)
+      astro: 4.16.17(@types/node@18.19.67)(typescript@5.7.2)
       vite: 5.4.11(@types/node@18.19.67)
       vite-plugin-vue-devtools: 7.6.4(vite@5.4.11)(vue@3.5.13)
       vue: 3.5.13(typescript@5.7.2)
@@ -4621,12 +4621,12 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /astro-capo@0.0.1(astro@4.16.16):
+  /astro-capo@0.0.1(astro@4.16.17):
     resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
     dependencies:
-      astro: 4.16.16(@types/node@18.19.67)(typescript@5.7.2)
+      astro: 4.16.17(@types/node@18.19.67)(typescript@5.7.2)
       ultrahtml: 1.5.3
     dev: false
 
@@ -4652,8 +4652,8 @@ packages:
       - typescript
     dev: false
 
-  /astro@4.16.16(@types/node@18.19.67)(typescript@5.7.2):
-    resolution: {integrity: sha512-H1CttrV6+JFrDBQx0Mcbq5i5AeLhCbztB786+9wEu3svWL/QPNeCGqF0dgNORAYmP+rODGCPu/y9qKSh87iLuA==}
+  /astro@4.16.17(@types/node@18.19.67)(typescript@5.7.2):
+    resolution: {integrity: sha512-OuD+BP7U6OqQLKtZ/FJkU2S+TOlifxS/OKUbZOb5p6y+LLBa1J3zHRJrIl7DUSq6eXY+9wSWwbJpD9JS+lqhxA==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     dependencies:
