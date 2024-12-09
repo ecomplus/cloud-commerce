@@ -78,13 +78,14 @@ class ApiError extends Error {
   }
 }
 
-const def = {
+export const defaults = {
   middleware(config: Config) {
     const headers: Headers | Record<string, string> = { ...config.headers };
     if (!config.isNoAuth) {
-      if (config.accessToken) {
+      const accessToken = config.accessToken || _env.ECOM_ACCESS_TOKEN;
+      if (accessToken) {
         // eslint-disable-next-line dot-notation
-        headers['Authorization'] = `Bearer ${config.accessToken}`;
+        headers['Authorization'] = `Bearer ${accessToken}`;
       } else {
         const authenticationId = config.authenticationId || _env.ECOM_AUTHENTICATION_ID;
         const apiKey = config.apiKey || _env.ECOM_API_KEY;
@@ -153,8 +154,8 @@ const def = {
   },
 };
 
-const setMiddleware = (middleware: typeof def.middleware) => {
-  def.middleware = middleware;
+export const setMiddleware = (middleware: typeof defaults.middleware) => {
+  defaults.middleware = middleware;
 };
 
 const api = async <T extends Config & { body?: any, data?: any }>(
@@ -167,7 +168,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   const config = globalThis.$apiMergeConfig
     ? { ...globalThis.$apiMergeConfig, ...requestConfig }
     : requestConfig;
-  const { url, headers } = def.middleware(config);
+  const { url, headers } = defaults.middleware(config);
   const method = config.method?.toUpperCase() || 'GET';
   const {
     timeout = 20000,
@@ -324,7 +325,6 @@ api.delete = del;
 export default api;
 
 export {
-  setMiddleware,
   get,
   post,
   put,
