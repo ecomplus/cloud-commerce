@@ -77,11 +77,6 @@ const fetching = new Promise((resolve, reject) => {
 });
 
 const serveFeeds = async (req: Request, res: Response) => {
-  const { method } = req;
-  if (method !== 'GET') {
-    res.sendStatus(405);
-    return;
-  }
   try {
     await fetching;
   } catch (err) {
@@ -94,6 +89,10 @@ const serveFeeds = async (req: Request, res: Response) => {
   res.set('X-XSS-Protection', '1; mode=block');
   res.set('X-Frame-Options', 'DENY');
   if (req.path.endsWith('.xml')) {
+    if (req.method !== 'GET') {
+      res.sendStatus(405);
+      return;
+    }
     res.set('Content-Type', 'application/xml; charset=UTF-8');
     res.set('Cache-Control', 'public, max-age=600, s-maxage=900');
   } else if (!process.env.FEEDS_DISABLE_CORS) {
