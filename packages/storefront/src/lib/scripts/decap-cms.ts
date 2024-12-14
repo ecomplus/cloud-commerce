@@ -6,6 +6,7 @@ import createPreviewComponent from '../../decap-cms/create-preview-component';
 let cmsConfig: Record<string, any> = {};
 const initCmsWithPreview = () => {
   const { createClass, h, CMS } = window as any;
+  console.log({ cmsConfig });
   CMS.init({ config: cmsConfig });
   if (createClass && h) {
     const Preview = createPreviewComponent({
@@ -113,15 +114,17 @@ const authAndInitCms = async () => {
     // E.g.: https://github.com/Herohtar/netlify-cms-oauth-firebase/blob/master/functions/index.js#L9-L25
     const self = window.opener || window;
     setTimeout(() => {
-      self.postMessage('authorizing:github', '*');
-      self.postMessage(
-        `authorization:github:success:${JSON.stringify({
-          token,
-          provider: cmsConfig.backend.name,
-        })}`,
-        cmsConfig.backend.base_url,
-      );
-    }, 100);
+      self.postMessage('authorizing:github', cmsConfig.backend.base_url);
+      setTimeout(() => {
+        self.postMessage(
+          `authorization:github:success:${JSON.stringify({
+            token,
+            provider: cmsConfig.backend.name,
+          })}`,
+          cmsConfig.backend.base_url,
+        );
+      }, 300);
+    }, 500);
     return;
   }
   if (ssoToken) {
