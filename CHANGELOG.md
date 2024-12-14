@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.32.1](https://github.com/ecomplus/cloud-commerce/compare/v2.32.0...v2.32.1) (2024-12-14)
+
+
+### Bug Fixes
+
+* **feeds:** Block non-GET requests only on .xml feeds paths ([f7b6fdf](https://github.com/ecomplus/cloud-commerce/commit/f7b6fdf7e75e58b740085b5dd9bb32e7748dc27c))
+* **storefront:** Delay between GitHub "OAuth" messages for Decap CMS SSO login ([e5897fb](https://github.com/ecomplus/cloud-commerce/commit/e5897fbef3595764b25178aa0832b4d21e867e45))
+
 ## [2.32.0](https://github.com/ecomplus/cloud-commerce/compare/v2.31.0...v2.32.0) (2024-12-09)
 
 
