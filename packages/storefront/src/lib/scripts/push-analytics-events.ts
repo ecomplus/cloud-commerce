@@ -68,6 +68,7 @@ const _sendServerEvents = useDebounceFn(async (variantCtx?: AnalyticsVariantCtx)
 if (
   !import.meta.env.SSR
   && !window.location.search.includes(`__isrV=${deployRand}`)
+  && !window.location.pathname.startsWith('/admin/')
 ) {
   const variantCtx = useAnalytics();
   watchGtagEvents(async (evMessage) => {
