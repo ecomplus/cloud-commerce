@@ -49,7 +49,7 @@
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/ssr": "workspace:*",
     "firebase-admin": "^13.0.1",
-    "firebase-functions": "^6.1.1",
+    "firebase-functions": "^6.1.2",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
