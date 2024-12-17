@@ -13,6 +13,10 @@ const baseUri = `https://${region}-${process.env.GCLOUD_PROJECT}.cloudfunctions.
 
 const pagaleveCreateTransaction = async (body: AppModuleBody<'create_transaction'>) => {
   const { params, application } = body;
+  const { settingsContent } = config.get();
+  const domain = params.domain && params.domain !== 'localhost'
+    ? params.domain
+    : settingsContent.domain || 'e-com.plus';
   const appData = { ...application.data, ...application.hidden_data };
   const {
     PAGALEVE_USERNAME,
@@ -60,8 +64,8 @@ const pagaleveCreateTransaction = async (body: AppModuleBody<'create_transaction
   const hash = createHmac('sha256', appData.password)
     .update(orderId).digest('hex');
   const pagaleveTransaction: Record<string, any> = {
-    cancel_url: `https://${params.domain}/app/#/order/${orderNumber}/${orderId}`,
-    approve_url: `https://${params.domain}/app/#/order/${orderNumber}/${orderId}`,
+    cancel_url: `https://${domain}/app/#/order/${orderNumber}/${orderId}`,
+    approve_url: `https://${domain}/app/#/order/${orderNumber}/${orderId}`,
     webhook_url: `${baseUri}/pagaleve-webhook?order_id=${orderId}&hash=${hash}`,
     is_pix_upfront: !!isPix,
     order: {
@@ -95,9 +99,9 @@ const pagaleveCreateTransaction = async (body: AppModuleBody<'create_transaction
         sku: item.sku,
         quantity: item.quantity,
         price: Math.floor((item.final_price || item.price) * 100),
-        url: `https://${params.domain}`,
+        url: `https://${domain}`,
         reference: item.product_id,
-        image: objImg && objImg.url ? objImg.url : `https://${params.domain}`,
+        image: objImg && objImg.url ? objImg.url : `https://${domain}`,
       });
     }
   });
