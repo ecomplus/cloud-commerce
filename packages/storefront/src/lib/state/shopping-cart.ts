@@ -57,16 +57,35 @@ const updateCartState = async () => {
     return;
   }
   try {
-    const { data } = await api.get('search/v1', {
+    const { data } = await api.get('products', {
       params: { _id: productIds },
+      fields: [
+        "sku",
+        "name",
+        "slug",
+        "available",
+        "visible",
+        "price",
+        "base_price",
+        "quantity",
+        "min_quantity",
+        "inventory",
+        "kit_composition",
+        "pictures.normal",
+        "variations.sku",
+        "variations.name",
+        "variations.production_time",
+        "variations.base_price",
+        "variations.picture_id",
+      ] as const,
     });
     const storedItems = [...shoppingCart.items];
     resetCartItems();
-    data.result.forEach((searchItem) => {
-      const storedItem = storedItems.find((item) => item.product_id === searchItem._id);
+    data.result.forEach((productItem) => {
+      const storedItem = storedItems.find((item) => item.product_id === productItem._id);
       if (!storedItem) return;
       const { variation_id: variationId, quantity } = storedItem;
-      const cartItem = addProductToCart(searchItem, variationId, quantity);
+      const cartItem = addProductToCart(productItem, variationId, quantity);
       if (!cartItem) return;
       if (storedItem._id) {
         cartItem._id = storedItem._id;
