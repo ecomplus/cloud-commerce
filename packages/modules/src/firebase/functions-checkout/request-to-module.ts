@@ -42,29 +42,30 @@ export default async (
       is_checkout_confirmation: true,
     };
     try {
-      const resp = (await axios.post(
-        url,
-        body,
-      )).data;
+      const { data: { result } } = await axios.post(url, body);
       // find application validation error
-      if (Array.isArray(resp.result)) {
+      if (Array.isArray(result)) {
         let countAppErro = 0;
-        for (let i = 0; i < resp.result.length; i++) {
-          const result = resp.result[i];
-          if (!result.validated || result.error) {
+        for (let i = 0; i < result.length; i++) {
+          const { validated, error, response } = result[i];
+          if (!validated || error) {
             countAppErro += 1;
-            logger.error(result.response);
-            msgErr.moreInfo += ` ${result.response}`;
+            logger.error(response);
+            msgErr.moreInfo += ` ${response}`;
           }
         }
-        if (resp.result.length === countAppErro) {
+        if (result.length === countAppErro) {
           msgErr.code = 'APP_MODULE_ERROR_VALIDATION';
           return { msgErr };
         }
       }
-      return resp.result;
+      return result;
     } catch (err: any) {
       logger.error(err);
+      logger.warn(`Error on post to ${url}`, {
+        body,
+        response: err.response?.data,
+      });
       msgErr.moreInfo = 'Unexpected error ';
       if (axios.isAxiosError(err)) {
         msgErr.moreInfo = err.message;
