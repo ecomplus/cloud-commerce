@@ -72,6 +72,7 @@ const updateCartState = async () => {
         "inventory",
         "kit_composition",
         "pictures.normal",
+        "variations._id",
         "variations.sku",
         "variations.name",
         "variations.production_time",
