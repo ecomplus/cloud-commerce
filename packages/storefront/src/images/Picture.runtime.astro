@@ -48,6 +48,7 @@ const tryImageSize = (src: string) => {
 
 const {
   sizes,
+  media,
   sources,
   pictureAttrs,
   imgAttrs,
@@ -60,6 +61,6 @@ const {
 ---
 
 <picture {...pictureAttrs}>
-  {sources.map((attrs) => <source {...attrs} sizes={sizes} />)}
+  {sources.map((attrs) => <source {...attrs} {sizes} {media} />)}
   {imgAttrs && <img {...imgAttrs} />}
 </picture>

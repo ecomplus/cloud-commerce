@@ -45,6 +45,7 @@ const tryImageSize = (src: string) => {
 
 const {
   sizes,
+  media,
   sources,
   pictureAttrs,
   imgAttrs,
@@ -82,7 +83,7 @@ const {
   }),
   assetsPrefix: Astro.locals.assetsPrefix,
 });
-if (imgAttrs) {
+if (imgAttrs?.src) {
   imgAttrs.src += versionSuffix;
 }
 ---
@@ -92,7 +93,7 @@ if (imgAttrs) {
     if (versionSuffix) {
       attrs.srcset = attrs.srcset.replace(/\s(\w+)$/, `${versionSuffix} $1`);
     }
-    return <source {...attrs} sizes={sizes} />;
+    return <source {...attrs} {sizes} {media} />;
   })}
   {imgAttrs && <img {...imgAttrs} />}
 </picture>

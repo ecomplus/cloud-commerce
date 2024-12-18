@@ -134,8 +134,9 @@ const useSSRPicture = async (params: UsePictureParams) => {
     }
   }
   let sizes: string = propSizes || '';
+  let media: string | undefined;
   if (!sizes && attrs.class) {
-    const classNames = attrs.class.split(' ');
+    const classNames = attrs.class.split(/\s+/);
     let nextSize: string | undefined;
     const breakpoints = {
       sm: 640,
@@ -148,12 +149,12 @@ const useSSRPicture = async (params: UsePictureParams) => {
       ['', 0],
       ...Object.entries(breakpoints),
     ] as Array<[string, number]>).forEach(([breakpoint, minWidth]) => {
-      const classRegex = breakpoint
+      const maxWClassRegex = breakpoint
         ? new RegExp(`^${breakpoint}:max-w-(\\[\\w+\\]|screen-\\w+)$`)
         : /^max-w-(\[\w+\]|screen-\w+)$/;
       let classMaxW: string | undefined;
       classNames.find((_class) => {
-        const maxW = _class.replace(classRegex, '$1');
+        const maxW = _class.replace(maxWClassRegex, '$1');
         if (maxW !== _class) {
           classMaxW = maxW;
           return true;
@@ -181,6 +182,27 @@ const useSSRPicture = async (params: UsePictureParams) => {
     if (nextSize) {
       if (sizes) sizes += ', ';
       sizes += nextSize;
+    }
+    const ascBreakpoints = Object.keys(breakpoints).sort((a, b) => {
+      return breakpoints[a] - breakpoints[b];
+    }) as Array<keyof typeof breakpoints>;
+    if (classNames.includes('hidden')) {
+      for (let i = 0; i < ascBreakpoints.length; i++) {
+        const bp = ascBreakpoints[i];
+        const displayClassRegex = new RegExp(`${bp}:(block|inline|flex|grid)`);
+        if (classNames.some((_class) => displayClassRegex.test(_class))) {
+          media = `(min-width: ${breakpoints[bp]}px)`;
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < ascBreakpoints.length; i++) {
+        const bp = ascBreakpoints[i];
+        if (classNames.includes(`${bp}:hidden`)) {
+          media = `(max-width: ${breakpoints[bp]}px)`;
+          break;
+        }
+      }
     }
   }
   if (!sizes && widths.length === 1) {
@@ -214,19 +236,24 @@ const useSSRPicture = async (params: UsePictureParams) => {
     delete pictureAttrs.width;
     delete pictureAttrs.height;
   }
+  const imgAttrs = !hasImg ? null : {
+    ...image,
+    alt,
+    loading,
+    decoding,
+    ...attrs,
+  };
+  if (imgAttrs?.src && sources.length) {
+    imgAttrs.src = null;
+  }
 
   return {
     sizes,
+    media,
     aspectRatio,
     sources,
     pictureAttrs,
-    imgAttrs: !hasImg ? null : {
-      ...image,
-      alt,
-      loading,
-      decoding,
-      ...attrs,
-    },
+    imgAttrs,
   };
 };
 
