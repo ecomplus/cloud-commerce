@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.32.3](https://github.com/ecomplus/cloud-commerce/compare/v2.32.2...v2.32.3) (2024-12-18)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#504](https://github.com/ecomplus/cloud-commerce/issues/504)) ([503ec5e](https://github.com/ecomplus/cloud-commerce/commit/503ec5e034f2875c18f31a5749f0485d8dd156cf))
+* **modules:** Better debuging modules request errors on checkout flow ([38a8bca](https://github.com/ecomplus/cloud-commerce/commit/38a8bcacc0213f490a3d50a0142b3453a587966d))
+* **modules:** Fix handling kit products on checkout ([16f2639](https://github.com/ecomplus/cloud-commerce/commit/16f26398352d7f99dd809fd238431f007589af81))
+* **pagaleve:** Using settings content domain on localhost tests ([30f366f](https://github.com/ecomplus/cloud-commerce/commit/30f366fdf617021ff40ba84cb1f1beb5a1050316))
+* **storefront:** Also fetch variation ID on cart state update ([3272886](https://github.com/ecomplus/cloud-commerce/commit/327288621e4a88403d0569c13cc7e49b2aca0cc6))
+* **storefront:** Fetch products from list and get basic variations info on cart state update ([615237e](https://github.com/ecomplus/cloud-commerce/commit/615237e2fc78e47cc48f8595b65c960ddfa9e58a))
+* **storefront:** Minor fix product card composable adding pictures to kit items fetch fields ([e932e01](https://github.com/ecomplus/cloud-commerce/commit/e932e01913faf17756e796d614d4ca813bc46930))
+
 ## [2.32.2](https://github.com/ecomplus/cloud-commerce/compare/v2.32.1...v2.32.2) (2024-12-14)
 
 ## [2.32.1](https://github.com/ecomplus/cloud-commerce/compare/v2.32.0...v2.32.1) (2024-12-14)
