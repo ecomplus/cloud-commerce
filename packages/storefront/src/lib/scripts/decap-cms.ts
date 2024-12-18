@@ -37,7 +37,7 @@ const authAndInitCms = async () => {
     CMS_CUSTOM_CONFIG,
     CMS_SSO_URL = 'https://app.e-com.plus/pages/login?api_version=2',
   } = window;
-  cmsConfig = getCmsConfig();
+  cmsConfig = await getCmsConfig();
   if (CMS_CUSTOM_CONFIG) {
     const deepmerge = Deepmerge();
     cmsConfig = deepmerge(cmsConfig, CMS_CUSTOM_CONFIG);
@@ -109,22 +109,21 @@ const authAndInitCms = async () => {
   }
   if (token) {
     sessionStorage.removeItem(storageKey);
-    if (!window.opener) initCmsWithPreview();
     // Ref.: https://github.com/decaporg/decap-cms/blob/e93c94f1ce707719dfb7750af82b17c38b461831/packages/decap-cms-lib-auth/src/netlify-auth.js#L46
     // E.g.: https://github.com/Herohtar/netlify-cms-oauth-firebase/blob/master/functions/index.js#L9-L25
-    const self = window.opener || window;
-    setTimeout(() => {
-      self.postMessage('authorizing:github', cmsConfig.backend.base_url);
-      setTimeout(() => {
-        self.postMessage(
-          `authorization:github:success:${JSON.stringify({
-            token,
-            provider: cmsConfig.backend.name,
-          })}`,
-          cmsConfig.backend.base_url,
-        );
-      }, 300);
-    }, 500);
+    window.addEventListener('message', (event) => {
+      if (event.data === 'authorizing:github') {
+        setTimeout(() => {
+          window.postMessage(
+            `authorization:github:success:${JSON.stringify({
+              token,
+              provider: cmsConfig.backend.name,
+            })}`,
+            cmsConfig.backend.base_url,
+          );
+        }, 300);
+      }
+    }, false);
     return;
   }
   if (ssoToken) {
@@ -143,7 +142,11 @@ const authAndInitCms = async () => {
 
 if (!import.meta.env.SSR) {
   (window as any).CMS_MANUAL_INIT = true;
-  if (window.location.pathname.startsWith('/admin/')) {
+  if (window.opener?.location.pathname === window.location.pathname) {
+    // Emulating GitHub OAuth popup
+    window.opener.postMessage('authorizing:github', '*');
+    window.close();
+  } else if (window.location.pathname.startsWith('/admin/')) {
     if (window.CMS) {
       authAndInitCms();
     } else {
