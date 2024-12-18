@@ -187,61 +187,69 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       product.quantity = maxKitQnt;
     }
   };
+  const isLoadingToCart = ref(false);
+  const isFailedToCart = ref(false);
   const loadToCart = async (
     quantityToAdd = 1,
     { variationId }: {
       variationId?: ResourceId,
     } = {},
   ) => {
-    await fetching;
-    if (hasVariations.value && !variationId) return null;
-    const kitComposition = product.kit_composition;
-    if (kitComposition?.length) {
-      if (variationId) return null;
-      if (!kitItems.value) await loadKitItems();
-      if (kitItems.value?.length !== kitComposition.length) {
-        return null;
-      }
-      for (let i = 0; i < kitComposition.length; i++) {
-        const { _id, quantity } = kitComposition[i];
-        const kitItem = kitItems.value.find((item) => item._id === _id);
-        if (
-          !kitItem?.available
-          || !checkInStock(kitItem)
-          || (quantity && kitItem.quantity! < quantity)
-        ) {
-          return null;
+    isLoadingToCart.value = true;
+    const addedCartItems = await (async () => {
+      await fetching;
+      if (hasVariations.value && !variationId) return [null];
+      const kitComposition = product.kit_composition;
+      if (kitComposition?.length) {
+        if (variationId) return [null];
+        if (!kitItems.value) await loadKitItems();
+        if (kitItems.value?.length !== kitComposition.length) {
+          return [null];
         }
-      }
-      let packQuantity = 0;
-      const cartKitComposition: Array<{ _id: ResourceId, quantity: number }> = [];
-      kitComposition.forEach(({ _id, quantity }) => {
-        const kitItemQuantity = (quantity || 1) * quantityToAdd;
-        packQuantity += kitItemQuantity;
-        cartKitComposition.push(({
-          _id,
-          quantity: kitItemQuantity,
-        }));
-      });
-      return kitItems.value.map((kitItem) => {
-        const { quantity } = cartKitComposition.find(({ _id }) => {
-          return _id === kitItem._id;
-        }) || {};
-        if (!quantity) return null;
-        const cartItem = addProductToCart(kitItem, undefined, quantity);
-        if (cartItem) {
-          cartItem.kit_product = {
-            _id: product._id,
-            name: product.name,
-            price: product.price,
-            pack_quantity: packQuantity,
-            composition: cartKitComposition,
-          };
+        for (let i = 0; i < kitComposition.length; i++) {
+          const { _id, quantity } = kitComposition[i];
+          const kitItem = kitItems.value.find((item) => item._id === _id);
+          if (
+            !kitItem?.available
+            || !checkInStock(kitItem)
+            || (quantity && kitItem.quantity! < quantity)
+          ) {
+            return [null];
+          }
         }
-        return cartItem;
-      });
-    }
-    return [addProductToCart(product, variationId, quantityToAdd)];
+        let packQuantity = 0;
+        const cartKitComposition: Array<{ _id: ResourceId, quantity: number }> = [];
+        kitComposition.forEach(({ _id, quantity }) => {
+          const kitItemQuantity = (quantity || 1) * quantityToAdd;
+          packQuantity += kitItemQuantity;
+          cartKitComposition.push(({
+            _id,
+            quantity: kitItemQuantity,
+          }));
+        });
+        return kitItems.value.map((kitItem) => {
+          const { quantity } = cartKitComposition.find(({ _id }) => {
+            return _id === kitItem._id;
+          }) || {};
+          if (!quantity) return null;
+          const cartItem = addProductToCart(kitItem, undefined, quantity);
+          if (cartItem) {
+            cartItem.kit_product = {
+              _id: product._id,
+              name: product.name,
+              price: product.price,
+              pack_quantity: packQuantity,
+              composition: cartKitComposition,
+            };
+          }
+          return cartItem;
+        });
+      }
+      return [addProductToCart(product, variationId, quantityToAdd)];
+    })();
+    isLoadingToCart.value = false;
+    isFailedToCart.value = !addedCartItems.some((item) => item);
+    return addedCartItems;
   };
 
   return {
@@ -259,6 +267,8 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     kitItems,
     loadKitItems,
     loadToCart,
+    isLoadingToCart,
+    isFailedToCart,
   };
 };
 
