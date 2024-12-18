@@ -1,4 +1,16 @@
 body {
+  [class*="LoginButtonIcon"] {
+    display: none;
+  }
+  [class*="LoginButton"] {
+    font-size: 0;
+    height: 42px;
+  }
+  [class*="LoginButton"]::after {
+    font-size: 18px;
+    display: inline;
+    content: "Entrar";
+  }
   [class*="FieldLabel"] {
     font-size: 13px; 
     text-transform: none;
