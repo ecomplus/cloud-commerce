@@ -142,7 +142,7 @@ const authAndInitCms = async () => {
 
 if (!import.meta.env.SSR) {
   (window as any).CMS_MANUAL_INIT = true;
-  if (window.opener?.location.pathname === window.location.pathname) {
+  if (window.opener?.location.hostname === window.location.hostname) {
     // Emulating GitHub OAuth popup
     window.opener.postMessage('authorizing:github', '*');
     window.close();
