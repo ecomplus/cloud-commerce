@@ -58,6 +58,7 @@ export const kitItemFields = [
   'available' as const,
   'price' as const,
   'quantity' as const,
+  'pictures.normal' as const,
 ];
 
 export type KitItems = ProductsList<typeof kitItemFields>;
