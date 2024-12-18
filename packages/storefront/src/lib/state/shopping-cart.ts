@@ -6,6 +6,7 @@ import mitt from 'mitt';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
 import addItem from '@@sf/state/shopping-cart/add-cart-item';
+import removeItem from '@@sf/state/shopping-cart/remove-cart-item';
 import parseProduct from '@@sf/state/shopping-cart/parse-product';
 
 type CartItem = CartSet['items'][0];
@@ -25,13 +26,7 @@ const addCartItem = (newItem: CartItem) => {
   return addItem(shoppingCart, newItem);
 };
 const removeCartItem = (itemId: string) => {
-  for (let i = 0; i < shoppingCart.items.length; i++) {
-    const item = shoppingCart.items[i];
-    if (item._id === itemId) {
-      shoppingCart.items.splice(i, 1);
-      break;
-    }
-  }
+  return removeItem(shoppingCart, itemId);
 };
 const resetCartItems = (items?: CartItem[]) => {
   shoppingCart.items.splice(0, shoppingCart.items.length);
