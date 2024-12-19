@@ -192,7 +192,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
   const loadToCart = async (
     quantityToAdd = 1,
     { variationId }: {
-      variationId?: ResourceId,
+      variationId?: ResourceId | null,
     } = {},
   ) => {
     isLoadingToCart.value = true;
@@ -245,7 +245,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
           return cartItem;
         });
       }
-      return [addProductToCart(product, variationId, quantityToAdd)];
+      return [addProductToCart(product, variationId || undefined, quantityToAdd)];
     })();
     isLoadingToCart.value = false;
     isFailedToCart.value = !addedCartItems.some((item) => item);
