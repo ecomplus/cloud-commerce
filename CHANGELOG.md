@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.33.0](https://github.com/ecomplus/cloud-commerce/compare/v2.32.3...v2.33.0) (2024-12-19)
+
+
+### Features
+
+* **i18n:** New words for product load to cart error messages ([2befefb](https://github.com/ecomplus/cloud-commerce/commit/2befefb4cda09390d3e924e31ff934e88efce908))
+* **storefront:** Finished layout definitions on DecapCMS config ([c603739](https://github.com/ecomplus/cloud-commerce/commit/c6037396ed769826480a9199fd2b46d01811e69a))
+
+
+### Bug Fixes
+
+* **storefront:** Add `isLoadingToCart` and `isFailedToCart` to product card composable ([7eb9719](https://github.com/ecomplus/cloud-commerce/commit/7eb9719d374f84c670be8e7e4cb86cc8175f6654))
+* **storefront:** Match only hostname on GitHub OAuth popup emulation for DecapCMS signin ([ada84ba](https://github.com/ecomplus/cloud-commerce/commit/ada84ba61c7ba4dd4e559819906007182f761217))
+* **storefront:** Properly handling kit product removal on `removeCartItem` ([f45c5e3](https://github.com/ecomplus/cloud-commerce/commit/f45c5e3a34688b0da091c47f634f0cea6b597680))
+* **storefront:** Updating vbeta-app script version ([52161b8](https://github.com/ecomplus/cloud-commerce/commit/52161b88aaf06119668cdaee9a4a9f02e29cf4fb))
+
 ## [2.32.3](https://github.com/ecomplus/cloud-commerce/compare/v2.32.2...v2.32.3) (2024-12-18)
 
 
