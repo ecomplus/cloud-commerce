@@ -336,13 +336,22 @@ const getConfigsColl = ({
       },
       fields: [
         {
+          name: 'custom',
+          widget: 'hidden',
+        },
+        {
           name: 'header',
           label: {
             en: 'Header',
             pt: 'Cabeçalho',
           },
           widget: 'object',
+          collapsed: true,
           fields: [
+            {
+              name: 'custom',
+              widget: 'hidden',
+            },
             {
               name: 'pitchBar',
               label: {
@@ -351,6 +360,7 @@ const getConfigsColl = ({
               },
               widget: 'list',
               minimize_collapsed: true,
+              label_singular: 'slide',
               fields: [
                 {
                   name: 'href',
@@ -377,12 +387,17 @@ const getConfigsColl = ({
                 pt: 'Primeiro menu',
               },
               widget: 'object',
+              collapsed: true,
               fields: [
                 {
                   name: 'featured',
                   label: {
                     en: 'Featured categories',
                     pt: 'Categorias em destaque',
+                  },
+                  hint: {
+                    en: 'Comma separated slugs',
+                    pt: 'Slugs separados por vírgula',
                   },
                   widget: 'list',
                   minimize_collapsed: true,
@@ -411,6 +426,230 @@ const getConfigsColl = ({
               },
               widget: 'boolean',
               default: false,
+            },
+          ],
+        },
+        {
+          name: 'footer',
+          label: {
+            en: 'Footer',
+            pt: 'Rodapé',
+          },
+          widget: 'object',
+          collapsed: true,
+          fields: [
+            {
+              name: 'custom',
+              widget: 'hidden',
+            },
+            {
+              name: 'categoriesList',
+              label: {
+                en: 'Categories list',
+                pt: 'Lista de categorias',
+              },
+              widget: 'object',
+              collapsed: true,
+              fields: [
+                {
+                  name: 'isActive',
+                  label: {
+                    en: 'Active',
+                    pt: 'Ativa',
+                  },
+                  widget: 'boolean',
+                  default: true,
+                },
+                {
+                  name: 'title',
+                  label: {
+                    en: 'Title',
+                    pt: 'Título',
+                  },
+                  required: false,
+                  widget: 'string',
+                },
+                {
+                  name: 'categories',
+                  label: {
+                    en: 'Fixed categories',
+                    pt: 'Categorias fixadas',
+                  },
+                  widget: 'list',
+                  minimize_collapsed: true,
+                  fields: [
+                    {
+                      name: 'name',
+                      label: {
+                        en: 'Name',
+                        pt: 'Nome',
+                      },
+                      widget: 'string',
+                    },
+                    {
+                      name: 'slug',
+                      label: 'Slug',
+                      widget: 'string',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'pagesList',
+              label: {
+                en: 'Pages list',
+                pt: 'Lista de páginas',
+              },
+              widget: 'object',
+              collapsed: true,
+              fields: [
+                {
+                  name: 'isActive',
+                  label: {
+                    en: 'Active',
+                    pt: 'Ativa',
+                  },
+                  widget: 'boolean',
+                  default: true,
+                },
+                {
+                  name: 'title',
+                  label: {
+                    en: 'Title',
+                    pt: 'Título',
+                  },
+                  required: false,
+                  widget: 'string',
+                },
+                {
+                  name: 'categories',
+                  label: {
+                    en: 'Fixed categories',
+                    pt: 'Categorias fixadas',
+                  },
+                  widget: 'list',
+                  minimize_collapsed: true,
+                  fields: [
+                    {
+                      label: {
+                        en: 'Title',
+                        pt: 'Título',
+                      },
+                      name: 'title',
+                      widget: 'string',
+                    },
+                    {
+                      label: 'Link',
+                      name: 'href',
+                      widget: 'string',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'stamps',
+              label: {
+                en: 'Stamps',
+                pt: 'Selos',
+              },
+              widget: 'list',
+              minimize_collapsed: true,
+              summary: '{{fields.alt}}',
+              fields: [
+                {
+                  label: {
+                    en: 'Image',
+                    pt: 'Imagem',
+                  },
+                  name: 'img',
+                  widget: 'image',
+                },
+                {
+                  label: {
+                    en: 'Image alt text',
+                    pt: 'Texto alternativo da imagem',
+                  },
+                  name: 'alt',
+                  widget: 'string',
+                  required: false,
+                },
+                {
+                  name: 'icon',
+                  widget: 'hidden',
+                },
+                {
+                  label: 'Link',
+                  name: 'href',
+                  widget: 'string',
+                  required: false,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'metatags',
+          label: 'Metatags (social)',
+          widget: 'object',
+          collapsed: true,
+          fields: [
+            {
+              name: 'ogImage',
+              label: 'Open Graph image',
+              widget: 'image',
+              required: false,
+            },
+            {
+              name: 'fbAppId',
+              label: 'FB App ID',
+              widget: 'string',
+              required: false,
+            },
+            {
+              name: 'twitterUsername',
+              label: 'X (Twitter) username',
+              widget: 'string',
+              required: false,
+            },
+          ],
+        },
+        {
+          name: 'customCode',
+          label: {
+            en: 'Custom code',
+            pt: 'Código customizado',
+          },
+          widget: 'object',
+          collapsed: true,
+          fields: [
+            {
+              name: 'css',
+              label: 'CSS',
+              widget: 'code',
+              required: false,
+              default_language: 'css',
+              allow_language_selection: false,
+              output_code_only: true,
+            },
+            {
+              name: 'htmlHead',
+              label: 'HTML <head>',
+              widget: 'code',
+              required: false,
+              default_language: 'html',
+              allow_language_selection: false,
+              output_code_only: true,
+            },
+            {
+              name: 'htmlBody',
+              label: 'HTML <body>',
+              widget: 'code',
+              required: false,
+              default_language: 'html',
+              allow_language_selection: false,
+              output_code_only: true,
             },
           ],
         },

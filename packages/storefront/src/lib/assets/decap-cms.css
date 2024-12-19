@@ -52,9 +52,16 @@ body {
       }
     }
   }
+  [class*="ControlHint"] {
+    padding-top: 2px;
+    padding-left: 6px;
+  }
   [class*="TopBarContainer"] {
     [class*="ExpandButtonContainer"] {
-      display: none;
+      font-size: 0;
+      button {
+        font-size: 14px;
+      }
     }
   }
   [class*="ControlContainer"]:has([class*="TopBarContainer"]) {
