@@ -1,14 +1,25 @@
+import type { CmsField } from '../cms-fields';
+
+export type ParsedCmsField = Omit<CmsField, 'fields'> & {
+  widget: CmsField['widget'];
+  name: string;
+  fields?: Array<ParsedCmsField & { required: boolean }>;
+};
+
 export type CmsCollOptions = {
   domain?: string;
   baseDir: string;
   locale: string;
-  maxFileSize: number;
   markdownOptions: Record<string, any>;
+  heroConfig: ParsedCmsField;
+  sectionsConfig: ParsedCmsField & {
+    widget: 'list';
+    types: ParsedCmsField[];
+  };
 };
 
 const getConfigsColl = ({
   baseDir,
-  maxFileSize,
   markdownOptions,
 }: CmsCollOptions) => ({
   name: 'config',
@@ -33,7 +44,7 @@ const getConfigsColl = ({
       },
       file: `${baseDir}content/settings.json`,
       editor: {
-        preview: true,
+        preview: import.meta.env.DEV,
       },
       fields: [
         {
@@ -77,11 +88,6 @@ const getConfigsColl = ({
           },
           name: 'logo',
           widget: 'image',
-          media_library: {
-            config: {
-              max_file_size: maxFileSize,
-            },
-          },
         },
         {
           label: {
@@ -90,11 +96,6 @@ const getConfigsColl = ({
           },
           name: 'icon',
           widget: 'image',
-          media_library: {
-            config: {
-              max_file_size: maxFileSize,
-            },
-          },
         },
         {
           label: {
@@ -346,7 +347,6 @@ const getConfigsColl = ({
             pt: 'Cabeçalho',
           },
           widget: 'object',
-          collapsed: true,
           fields: [
             {
               name: 'custom',
@@ -359,7 +359,6 @@ const getConfigsColl = ({
                 pt: 'Barra de anúncios',
               },
               widget: 'list',
-              minimize_collapsed: true,
               label_singular: 'slide',
               fields: [
                 {
@@ -387,7 +386,6 @@ const getConfigsColl = ({
                 pt: 'Primeiro menu',
               },
               widget: 'object',
-              collapsed: true,
               fields: [
                 {
                   name: 'featured',
@@ -400,7 +398,6 @@ const getConfigsColl = ({
                     pt: 'Slugs separados por vírgula',
                   },
                   widget: 'list',
-                  minimize_collapsed: true,
                   label_singular: {
                     en: 'category',
                     pt: 'categoria',
@@ -436,7 +433,6 @@ const getConfigsColl = ({
             pt: 'Rodapé',
           },
           widget: 'object',
-          collapsed: true,
           fields: [
             {
               name: 'custom',
@@ -449,7 +445,6 @@ const getConfigsColl = ({
                 pt: 'Lista de categorias',
               },
               widget: 'object',
-              collapsed: true,
               fields: [
                 {
                   name: 'isActive',
@@ -476,7 +471,6 @@ const getConfigsColl = ({
                     pt: 'Categorias fixadas',
                   },
                   widget: 'list',
-                  minimize_collapsed: true,
                   fields: [
                     {
                       name: 'name',
@@ -502,7 +496,6 @@ const getConfigsColl = ({
                 pt: 'Lista de páginas',
               },
               widget: 'object',
-              collapsed: true,
               fields: [
                 {
                   name: 'isActive',
@@ -529,7 +522,6 @@ const getConfigsColl = ({
                     pt: 'Categorias fixadas',
                   },
                   widget: 'list',
-                  minimize_collapsed: true,
                   fields: [
                     {
                       label: {
@@ -593,7 +585,6 @@ const getConfigsColl = ({
           name: 'metatags',
           label: 'Metatags (social)',
           widget: 'object',
-          collapsed: true,
           fields: [
             {
               name: 'ogImage',
@@ -622,7 +613,6 @@ const getConfigsColl = ({
             pt: 'Código customizado',
           },
           widget: 'object',
-          collapsed: true,
           fields: [
             {
               name: 'css',

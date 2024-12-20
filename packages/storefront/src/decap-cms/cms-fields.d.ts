@@ -67,3 +67,18 @@ export type InferCmsOutput<FS extends CmsFields> = {
   [I in keyof FS as FS[I]['required'] extends true ? never : I]?:
     InferCmsFieldOutput<FS[I]>;
 };
+
+export type CmsComponent = Partial<Omit<CmsField, 'widget'>> & {
+  label: string | Record<string, string>,
+  fields: CmsFields,
+};
+
+export type CmsConfigExtend = {
+  components: {
+    hero: CmsComponent,
+    sections: Record<string, CmsComponent & {
+      summary?: string | Record<string, string>,
+    }>,
+  },
+  mergeConfig?: Record<string, any>;
+};
