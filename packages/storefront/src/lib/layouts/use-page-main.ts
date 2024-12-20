@@ -1,9 +1,10 @@
 import type { ResourceId, Collections } from '@cloudcommerce/types';
-import type { PageContent } from '@@sf/content';
+import type { CmsFields, PageContent } from '@@sf/content';
 import type { RouteContext } from '@@sf/ssr-context';
 import type { Props as UseBannerProps } from '@@sf/composables/use-banner';
 import type { Props as UseProductShelfProps } from '@@sf/composables/use-product-shelf';
 import type { Props as UseSearchShowcaseProps } from '@@sf/composables/use-search-showcase';
+import { bannerListCmsField } from '@@sf/composables/use-banner';
 import { useSharedData } from '@@sf/composables/use-shared-data';
 import { useProductShelf } from '@@sf/composables/use-product-shelf';
 import { useSearchShowcase } from '@@sf/composables/use-search-showcase';
@@ -14,6 +15,19 @@ export type Props = {
     Promise<{ props: Record<string, any> }>;
   searchEngine?: UseSearchShowcaseProps['searchEngine'];
 }
+
+export const pageHeroCmsFields = ({
+  autoplay: {
+    widget: 'number',
+    value_type: 'int',
+    label: 'Autoplay',
+    hint: { pt: 'Milissegundos', en: 'Milliseconds' },
+  },
+  slides: {
+    ...bannerListCmsField,
+    required: true,
+  },
+}) as const satisfies CmsFields;
 
 type PageContentHero = Exclude<PageContent['hero'], undefined>;
 const now = Date.now();

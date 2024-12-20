@@ -1,4 +1,4 @@
-import type { CmsField, CmsComponent, CmsConfigExtend } from './cms-fields';
+import type { CmsField, CmsFields, CmsConfigExtend } from './cms-fields';
 import type { ParsedCmsField } from './collections/get-configs-coll';
 import Deepmerge from '@fastify/deepmerge';
 import { i18n as _i18n } from '@ecomplus/utils';
@@ -31,8 +31,13 @@ export const getCmsConfig = async () => {
   }));
   const response = await afetch('/admin/config.json');
   const { components, mergeConfig } = await response.json() as CmsConfigExtend;
-  const parseNestedCmsFields = (cmsFields: CmsComponent['fields']) => {
+  const parseNestedCmsFields = (cmsFields: CmsFields) => {
     return Object.keys(cmsFields).map((name) => {
+      delete cmsFields[name]._dropped;
+      delete cmsFields[name]._nullable;
+      if (!cmsFields[name].label) {
+        cmsFields[name].widget = 'hidden';
+      }
       const nestedFields = cmsFields[name].fields;
       return {
         required: false,
@@ -47,7 +52,8 @@ export const getCmsConfig = async () => {
     label: 'Hero slider',
     ...(components.hero as any),
     widget: 'object' as const,
-    fields: parseNestedCmsFields(components.hero.fields),
+    fields: components.hero.fields
+      && parseNestedCmsFields(components.hero.fields),
   };
   const sectionsConfig = {
     name: 'sections',
@@ -64,7 +70,8 @@ export const getCmsConfig = async () => {
       name,
       ...components.sections,
       widget: 'object' as const,
-      fields: parseNestedCmsFields(components.sections[name].fields),
+      fields: components.sections[name].fields
+        && parseNestedCmsFields(components.sections[name].fields),
     })),
   };
   const collOptions = {
@@ -73,7 +80,7 @@ export const getCmsConfig = async () => {
     locale,
     markdownOptions: {
       buttons: [
-        'bold', 'italic', 'link',
+        'bold', 'italic', 'link', 'code',
         'heading-three', 'heading-four', 'heading-five',
         'quote', 'bulleted-list', 'numbered-list',
       ],
@@ -164,6 +171,14 @@ export const getCmsConfig = async () => {
           field.media_library = mediaLibrary;
         }
         return;
+      }
+      if (field.widget === 'code') {
+        Object.assign(field, {
+          default_language: 'html',
+          allow_language_selection: false,
+          output_code_only: true,
+          ...field,
+        });
       }
       if (field.widget === 'object' || field.widget === 'list') {
         if (field.collapsed === undefined) field.collapsed = true;

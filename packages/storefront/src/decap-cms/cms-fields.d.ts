@@ -23,6 +23,8 @@ export type CmsField = {
   fields?: Record<string, CmsField> | null,
   types?: Record<string, CmsField>,
   label?: string | Record<string, string>,
+  _dropped?: true,
+  _nullable?: true,
 } & Record<string, any>;
 
 export type CmsFields = Record<string, CmsField>;
@@ -62,15 +64,19 @@ export type InferCmsFieldOutput<F extends CmsField> =
 
 export type InferCmsOutput<FS extends CmsFields> = {
   [I in keyof FS as FS[I]['required'] extends true ? I : never]:
-    InferCmsFieldOutput<FS[I]>;
+    FS[I]['_dropped'] extends true ? never : InferCmsFieldOutput<FS[I]>;
 } & {
   [I in keyof FS as FS[I]['required'] extends true ? never : I]?:
-    InferCmsFieldOutput<FS[I]>;
+    FS[I]['_dropped'] extends true
+      ? never
+      : FS[I]['_nullable'] extends true
+        ? InferCmsFieldOutput<FS[I]> | null
+        : InferCmsFieldOutput<FS[I]>;
 };
 
 export type CmsComponent = Partial<Omit<CmsField, 'widget'>> & {
   label: string | Record<string, string>,
-  fields: CmsFields,
+  fields?: CmsFields,
 };
 
 export type CmsConfigExtend = {

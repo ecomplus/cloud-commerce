@@ -1,3 +1,4 @@
+import type { CmsField, CmsFields } from '@@sf/content';
 import { computed } from 'vue';
 import { parseShippingPhrase } from '@@sf/state/modules-info';
 
@@ -32,7 +33,7 @@ export const bannerCmsFields = ({
     label: { pt: 'Link no banner', en: 'Link in banner' },
   },
   title: {
-    widget: 'string',
+    widget: 'text',
     label: { pt: 'Título sobreposto', en: 'Overlapping title' },
   },
   subtitle: {
@@ -44,10 +45,18 @@ export const bannerCmsFields = ({
     label: { pt: 'Botão', en: 'Button' },
   },
   buttonLink: {
-    widget: 'number',
+    widget: 'string',
     label: { pt: 'Link do botão', en: 'Button link' },
   },
-}) as const;
+}) as const satisfies CmsFields;
+
+export const bannerListCmsField = ({
+  widget: 'list',
+  label: 'Banners',
+  label_singular: 'banner',
+  summary: '{{fields.title}}',
+  fields: bannerCmsFields,
+}) as const satisfies CmsField;
 
 export const useBanner = (props: Props) => {
   const parsedTitle = computed(() => {

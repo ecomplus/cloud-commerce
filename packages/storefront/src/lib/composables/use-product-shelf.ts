@@ -1,5 +1,6 @@
 import type { ResourceId, Collections, SearchItem } from '@cloudcommerce/types';
 import type { SectionPreviewProps } from '@@sf/state/use-cms-preview';
+import type { CmsFields } from '@@sf/content';
 import { ref, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
@@ -8,7 +9,7 @@ import { useSectionPreview } from '@@sf/state/use-cms-preview';
 
 export type Props = Partial<SectionPreviewProps> & {
   collectionId?: ResourceId | null;
-  searchQuery?: `&${string}` | '';
+  searchQuery?: string; // `&${string} | ''`
   sort?: '-sales' | '-created_at' | 'price' | '-price' | '-price_discount' | string;
   title?: string | null;
   titleLink?: string | null;
@@ -19,6 +20,67 @@ export type Props = Partial<SectionPreviewProps> & {
   orderedProductIds?: ResourceId[];
   isRelatedProducts?: boolean;
 }
+
+export const productShelfCmsFields = ({
+  collectionIdAndInfo: {
+    widget: 'string',
+    label: { pt: 'Coleção', en: 'Collection' },
+    hint: { pt: 'ID da coleção', en: 'Collection ID' },
+    // `collectionIdAndInfo` parsed to `collectionId` server-side on `usePageMain`
+    _dropped: true,
+  },
+  sort: {
+    widget: 'select',
+    options: [{
+      label: { pt: 'Vendas', en: 'Sales' },
+      value: '-sales',
+    }, {
+      label: { pt: 'Data de criação', en: 'Creation date' },
+      value: '-created_at',
+    }, {
+      label: { pt: 'Menor preço', en: 'Lowest price' },
+      value: 'price',
+    }, {
+      label: { pt: 'Maior preço', en: 'Highest price' },
+      value: '-price',
+    }, {
+      label: { pt: 'Percentual de desconto', en: 'Discount percentage' },
+      value: '-price_discount',
+    }],
+  },
+  searchQuery: {
+    widget: 'string',
+    label: { pt: 'Query adicional', en: 'Additional query' },
+    hint: { pt: 'Ex.: &brands.slug!=minha-marca', en: 'E.g. &brands.slug!=my-brand' },
+  },
+  title: {
+    widget: 'string',
+    label: { pt: 'Título', en: 'Title' },
+    _nullable: true,
+  },
+  titleLink: {
+    widget: 'string',
+    label: { pt: 'Link no título', en: 'Title link' },
+    _nullable: true,
+  },
+  isShuffle: {
+    widget: 'boolean',
+    label: { pt: 'Embaralhar itens', en: 'Shuffle result items' },
+  },
+  isHeadless: {
+    widget: 'boolean',
+  },
+  limit: {
+    widget: 'number',
+    value_type: 'int',
+    label: { pt: 'Limite de itens', en: 'Items limit' },
+    default: 12,
+  },
+  page: {
+    widget: 'number',
+    value_type: 'int',
+  },
+}) as const satisfies CmsFields;
 
 const useProductShelf = (props: Props) => {
   const title = ref<string | null>(props.title || '');
