@@ -10,7 +10,6 @@ export type CmsCollOptions = {
   domain?: string;
   baseDir: string;
   locale: string;
-  markdownOptions: Record<string, any>;
   heroConfig: ParsedCmsField;
   sectionsConfig: ParsedCmsField & {
     widget: 'list';
@@ -18,10 +17,7 @@ export type CmsCollOptions = {
   };
 };
 
-const getConfigsColl = ({
-  baseDir,
-  markdownOptions,
-}: CmsCollOptions) => ({
+const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
   name: 'config',
   label: {
     en: 'Settings & layout',
@@ -374,7 +370,6 @@ const getConfigsColl = ({
                     pt: 'Conteúdo',
                   },
                   widget: 'markdown',
-                  ...markdownOptions,
                   minimal: true,
                 },
               ],

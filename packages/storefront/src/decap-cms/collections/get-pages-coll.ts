@@ -10,6 +10,10 @@ const getPagesColl = ({
     en: 'Default pages',
     pt: 'Páginas padrão',
   },
+  description: {
+    en: 'Store main pages and catalog',
+    pt: 'Páginas principais e catálogo da loja',
+  },
   delete: false,
   editor: {
     preview: import.meta.env.DEV,

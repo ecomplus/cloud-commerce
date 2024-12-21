@@ -5,6 +5,8 @@ import { i18n as _i18n } from '@ecomplus/utils';
 import afetch from '../helpers/afetch';
 import getConfigsColl from './collections/get-configs-coll';
 import getPagesColl from './collections/get-pages-coll';
+import getExtraPagesColl from './collections/get-extra-pages-coll';
+import getBlogColl from './collections/get-blog-coll';
 
 export const getCmsConfig = async () => {
   const {
@@ -78,15 +80,6 @@ export const getCmsConfig = async () => {
     domain,
     baseDir,
     locale,
-    markdownOptions: {
-      buttons: [
-        'bold', 'italic', 'link', 'code',
-        'heading-three', 'heading-four', 'heading-five',
-        'quote', 'bulleted-list', 'numbered-list',
-      ],
-      editor_components: ['image'],
-      modes: ['rich_text'],
-    },
     heroConfig,
     sectionsConfig,
   };
@@ -109,6 +102,8 @@ export const getCmsConfig = async () => {
     collections: i18n([
       getConfigsColl(collOptions),
       getPagesColl(collOptions),
+      getExtraPagesColl(collOptions),
+      getBlogColl(collOptions),
     ]),
   };
   if (mergeConfig) {
@@ -179,6 +174,20 @@ export const getCmsConfig = async () => {
           output_code_only: true,
           ...field,
         });
+        return;
+      }
+      if (field.widget === 'markdown') {
+        Object.assign(field, {
+          buttons: [
+            'bold', 'italic', 'link', 'code',
+            'heading-three', 'heading-four', 'heading-five',
+            'quote', 'bulleted-list', 'numbered-list',
+          ],
+          editor_components: ['image'],
+          modes: ['rich_text'],
+          ...field,
+        });
+        return;
       }
       if (field.widget === 'object' || field.widget === 'list') {
         if (field.collapsed === undefined) field.collapsed = true;
@@ -190,11 +199,11 @@ export const getCmsConfig = async () => {
       }
     });
   };
-  config.collections.forEach((collection) => {
+  config.collections.forEach((collection: Record<string, any>) => {
     collection.files?.forEach((cmsColl: any) => {
       setWidgetDefaults(cmsColl.fields);
     });
-    setWidgetDefaults((collection as Record<string, any>).fields);
+    setWidgetDefaults(collection.fields);
   });
   return config;
 };
