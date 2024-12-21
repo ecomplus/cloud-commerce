@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.34.0](https://github.com/ecomplus/cloud-commerce/compare/v2.33.0...v2.34.0) (2024-12-21)
+
+
+### Features
+
+* **storefront:** Adding blog and extra pages folder collections to default DecapCMS config ([a2b3f5f](https://github.com/ecomplus/cloud-commerce/commit/a2b3f5f4a314d7277ea34cc5cb7704ffec7f1393))
+* **storefront:** Additional `bannerListCmsField` , `pageHeroCmsFields` and `productShelfCmsFields` ([ae9a77d](https://github.com/ecomplus/cloud-commerce/commit/ae9a77dee53e7c1c5b37e133124d4f10d3abe6eb))
+* **storefront:** Supporting DecapCMS deep config merge and extended component configs ([79f1294](https://github.com/ecomplus/cloud-commerce/commit/79f12941b4495166fa535ac88b62950ecc77399d))
+
+
+### Bug Fixes
+
+* **ssr:** Update Astro to v4.16.18 [security] ([#508](https://github.com/ecomplus/cloud-commerce/issues/508)) ([7dfff12](https://github.com/ecomplus/cloud-commerce/commit/7dfff124e1108551d5d75bdf976d97743f5cb5c3))
+
 ## [2.33.0](https://github.com/ecomplus/cloud-commerce/compare/v2.32.3...v2.33.0) (2024-12-19)
 
 
