@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.34.1](https://github.com/ecomplus/cloud-commerce/compare/v2.34.0...v2.34.1) (2024-12-21)
+
+
+### Bug Fixes
+
+* **storefront:** Properly calling DecapCMS init on /admin/ route with token successfully set ([0a0308a](https://github.com/ecomplus/cloud-commerce/commit/0a0308ac50242bbbdf62be476e8d0e6a8d8d20c1))
+
 ## [2.34.0](https://github.com/ecomplus/cloud-commerce/compare/v2.33.0...v2.34.0) (2024-12-21)
 
 
