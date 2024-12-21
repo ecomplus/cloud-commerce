@@ -124,7 +124,6 @@ const authAndInitCms = async () => {
         }, 300);
       }
     }, false);
-    return;
   }
   if (ssoToken) {
     window.history?.pushState(
