@@ -51,8 +51,10 @@ const authAndInitCms = async () => {
     initCmsWithPreview();
     return;
   }
-  const storageKey = '__cms_token';
-  let token = sessionStorage.getItem(storageKey);
+  const tokenStorageKey = '__cms_token';
+  let token = sessionStorage.getItem(tokenStorageKey);
+  const repoStorageKey = '__cms_repo';
+  let repository = sessionStorage.getItem(repoStorageKey);
   const searchParams = new URLSearchParams(location.search);
   const ssoToken = searchParams.get('sso_token') || searchParams.get('access_token');
   if (!cmsConfig.backend?.base_url) {
@@ -70,6 +72,7 @@ const authAndInitCms = async () => {
       base_url: `https://${location.hostname}`,
       auth_endpoint: location.pathname, // self
       branch: 'main',
+      squash_merges: true,
       commit_messages: {
         create: 'Create {{collection}} “{{slug}}”',
         update: 'Update {{collection}} “{{slug}}”',
@@ -81,34 +84,49 @@ const authAndInitCms = async () => {
       },
       ...cmsConfig.backend,
     };
+    if (cmsConfig.publish_mode === undefined) {
+      cmsConfig.publish_mode = 'editorial_workflow';
+    }
     if (cmsConfig.backend.api_root?.startsWith('https://ecomplus.app/')) {
-      const res = await afetch('https://ecomplus.app/api/github-installations', {
-        headers: {
-          'X-Store-ID': `${ECOM_STORE_ID}`,
-          Authorization: `Bearer ${ssoToken}`,
-        },
-      });
-      if (res.ok) {
-        const { installations } = await res.json();
-        if (Array.isArray(installations)) {
-          const { repo } = cmsConfig.backend;
-          const installation = repo !== '_owner/_name'
-            ? installations.find(({ repository }) => repository === repo)
-            : installations[0];
-          if (installation?.gh_token && installation.gh_token.charAt(0) !== '*') {
-            // Consume GitHub REST API directly
-            token = installation.gh_token as string;
-            // ghToken = token;
-            delete cmsConfig.backend.api_root;
-            cmsConfig.backend.repo = installation.repository;
-            cmsConfig.backend.name = 'github';
+      if (!token) {
+        const res = await afetch('https://ecomplus.app/api/github-installations', {
+          headers: {
+            'X-Store-ID': `${ECOM_STORE_ID}`,
+            Authorization: `Bearer ${ssoToken}`,
+          },
+        });
+        if (res.ok) {
+          const { installations } = await res.json();
+          if (Array.isArray(installations)) {
+            const { repo } = cmsConfig.backend;
+            const installation = repo !== '_owner/_name'
+              ? installations.find((isnt) => isnt.repository === repo)
+              : installations[0];
+            if (installation?.gh_token && installation.gh_token.charAt(0) !== '*') {
+              // Consume GitHub REST API directly
+              token = installation.gh_token as string;
+              if (repo === '_owner/_name') {
+                repository = installation.repository
+                  || `${installation.organization}/${installation.organization}`;
+              }
+            }
           }
+        }
+      }
+      if (token) {
+        delete cmsConfig.backend.api_root;
+        cmsConfig.backend.name = 'github';
+        if (repository) {
+          cmsConfig.backend.repo = repository;
         }
       }
     }
   }
   if (token) {
-    sessionStorage.removeItem(storageKey);
+    sessionStorage.setItem(tokenStorageKey, token);
+    if (repository) {
+      sessionStorage.setItem(repoStorageKey, repository);
+    }
     // Ref.: https://github.com/decaporg/decap-cms/blob/e93c94f1ce707719dfb7750af82b17c38b461831/packages/decap-cms-lib-auth/src/netlify-auth.js#L46
     // E.g.: https://github.com/Herohtar/netlify-cms-oauth-firebase/blob/master/functions/index.js#L9-L25
     window.addEventListener('message', (event) => {
@@ -129,12 +147,8 @@ const authAndInitCms = async () => {
     window.history?.pushState(
       'hide-token',
       document.title,
-      `${location.pathname}${location.search}${location.hash}`,
+      `${location.pathname}${location.hash}`,
     );
-    const provider = cmsConfig.backend.name;
-    if (provider && provider !== 'git-gateway') {
-      sessionStorage.setItem(storageKey, ssoToken);
-    }
   }
   initCmsWithPreview();
 };

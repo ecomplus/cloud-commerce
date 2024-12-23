@@ -86,7 +86,6 @@ export const getCmsConfig = async () => {
   let config = {
     locale,
     load_config_file: false,
-    publish_mode: 'editorial_workflow',
     media_folder: `${baseDir}public/img/uploads`,
     public_folder: '/img/uploads',
     site_url: `https://${domain}/~preview`,
