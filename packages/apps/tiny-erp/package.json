@@ -29,8 +29,8 @@
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
     "axios": "^1.7.9",
-    "firebase-admin": "^13.0.1",
-    "firebase-functions": "^6.1.2"
+    "firebase-admin": "^13.0.2",
+    "firebase-functions": "^6.2.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
