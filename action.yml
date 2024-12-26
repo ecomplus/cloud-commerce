@@ -111,6 +111,10 @@ runs:
     - shell: bash
       run: echo "year=$(date +'%Y')" >> $GITHUB_ENV
 
+    - if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      uses: ouzi-dev/commit-status-updater@v2.0.2
+      continue-on-error: true
+
     - uses: actions/setup-node@v4
       with:
         node-version: 18
@@ -410,6 +414,24 @@ runs:
         firebaseServiceAccount: ${{ inputs.firebase-service-account }}
         channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
         expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || null }}
+
+    - if: |
+        github.event_name == 'pull_request' && github.event.action != 'closed'
+        && env.git_branch != 'main'
+      uses: ouzi-dev/commit-status-updater@v2.0.2
+      continue-on-error: true
+      with:
+        status: ${{ (steps.deploy-preview.outputs.details_url && 'success') || 'failure' }}
+        url: ${{ steps.deploy-preview.outputs.details_url }}
+        description: "Deploy preview URL"
+    
+    - if: |
+        github.event_name == 'pull_request' && github.event.action != 'closed'
+        && env.git_branch == 'main'
+      uses: ouzi-dev/commit-status-updater@v2.0.2
+      continue-on-error: true
+      with:
+        status: cancelled
 
     - if: |
         github.event_name == 'pull_request' && github.event.action != 'closed'
