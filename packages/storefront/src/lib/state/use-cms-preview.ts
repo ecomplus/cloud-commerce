@@ -42,14 +42,17 @@ export function useCmsPreview<
     };
     window.parent.postMessage(openMessage, window.location.origin);
     window.addEventListener('message', (event) => {
-      if (event.data.id === id) {
-        if (field) {
-          liveContent.value = subfield
-            ? event.data.data[field][subfield]
-            : event.data.data[field];
-        } else {
-          liveContent.value = event.data.data;
-        }
+      if (event.data.id !== id) return;
+      if (!event.data.data) {
+        console.log('Unexpected CMS preview message', event.data);
+        return;
+      }
+      if (field) {
+        liveContent.value = subfield
+          ? event.data.data[field][subfield]
+          : event.data.data[field];
+      } else {
+        liveContent.value = event.data.data;
       }
     });
   }

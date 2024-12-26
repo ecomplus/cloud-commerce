@@ -15,6 +15,7 @@ const getExtraPagesColl = ({
     pt: 'Páginas institucionais, regras e informações do site',
   },
   folder: `${baseDir}content/extra-pages`,
+  preview_path: 'p/{{slug}}',
   create: true,
   extension: 'md',
   format: 'frontmatter',

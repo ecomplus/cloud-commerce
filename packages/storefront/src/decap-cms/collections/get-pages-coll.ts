@@ -82,6 +82,7 @@ const getPagesColl = ({
         pt: 'Página de busca',
       },
       file: `${baseDir}content/pages/search.json`,
+      preview_path: 's/',
       fields: [
         sectionsConfig,
       ],

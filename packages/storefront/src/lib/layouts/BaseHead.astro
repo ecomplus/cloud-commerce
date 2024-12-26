@@ -63,7 +63,10 @@ if (isSearchPage) {
 }
 const favicon = settings.favicon || settings.icon || '/favicon.ico';
 const shortcutIcon = settings.icon || null;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site || `https://${domain}`);
+const canonicalPath = Astro.url.pathname.startsWith('/~preview')
+  ? Astro.url.pathname.replace(/\/~preview\/?/, '/')
+  : Astro.url.pathname;
+const canonicalUrl = new URL(canonicalPath, Astro.site || `https://${domain}`);
 const { metatags: metatagsContent } = await getContent('layout');
 const ogLocale = lang.length === 2 ? lang : lang.substring(0, 2) + lang.slice(3).toUpperCase();
 let ogImage: string | undefined;
@@ -87,6 +90,8 @@ window.ECOM_CURRENCY = '${currency}';
 window.ECOM_CURRENCY_SYMBOL = '${currencySymbol}';
 window.ECOM_COUNTRY_CODE = '${countryCode}';
 window.GIT_BRANCH = '${import.meta.env.GIT_BRANCH || ''}';
+window.GIT_REPO = '${import.meta.env.GIT_REPO || import.meta.env.GITHUB_REPO || ''}';
+window.GCLOUD_PROJECT = '${import.meta.env.GCLOUD_PROJECT || ''}';
 window.$storefront = ${JSON.stringify({ settings, data: {} })};`;
 if (apiContext.error) {
   const { message, statusCode } = apiContext.error;

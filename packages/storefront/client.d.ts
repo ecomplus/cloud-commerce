@@ -28,6 +28,7 @@ interface Window {
   OAUTH_PROVIDERS?: Array<'google' | 'facebook'>;
   GIT_BRANCH: string;
   GIT_REPO?: string;
+  GCLOUD_PROJECT?: string;
   AB_EXPERIMENT_ID?: string;
   GTAG_TAG_ID?: string;
   GA_TRACKING_ID?: string;

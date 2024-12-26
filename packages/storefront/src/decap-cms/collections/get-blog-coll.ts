@@ -15,6 +15,7 @@ const getBlogColl = (collOptions: CmsCollOptions) => {
       pt: 'Posts para o blog incluso na loja',
     },
     folder: `${baseDir}content/blog`,
+    preview_path: 'posts/{{slug}}',
     create: true,
     extension: 'md',
     format: 'frontmatter',

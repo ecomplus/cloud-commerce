@@ -10,6 +10,7 @@ import getBlogColl from './collections/get-blog-coll';
 
 export const getCmsConfig = async () => {
   const {
+    GCLOUD_PROJECT,
     CMS_REPO_BASE_DIR,
     CMS_LANG,
     CMS_MAX_FILE_SIZE,
@@ -88,7 +89,9 @@ export const getCmsConfig = async () => {
     load_config_file: false,
     media_folder: `${baseDir}public/img/uploads`,
     public_folder: '/img/uploads',
-    site_url: `https://${domain}/~preview`,
+    site_url: GCLOUD_PROJECT
+      ? `https://${GCLOUD_PROJECT}.web.app/~preview/`
+      : `https://${domain}/~preview/`,
     display_url: `https://${domain}`,
     logo_url: 'https://ecom.nyc3.digitaloceanspaces.com/storefront/cms.png',
     show_preview_links: true,
