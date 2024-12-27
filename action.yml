@@ -424,7 +424,7 @@ runs:
         status: ${{ (steps.deploy-preview.outputs.details_url && 'success') || 'failure' }}
         url: ${{ steps.deploy-preview.outputs.details_url }}
         description: "Deploy preview URL"
-    
+
     - if: |
         github.event_name == 'pull_request' && github.event.action != 'closed'
         && env.git_branch == 'main'

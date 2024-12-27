@@ -58,7 +58,7 @@ export type InferCmsFieldOutput<F extends CmsField> =
   F['widget'] extends 'list'
     ? F['fields'] extends undefined | null
       ? string[]
-      : InferCmsOutput<F['fields']>[]
+      : InferCmsOutput<F['fields']>[] | undefined
     :
   unknow;
 
