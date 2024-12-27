@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.35.0](https://github.com/ecomplus/cloud-commerce/compare/v2.34.1...v2.35.0) (2024-12-27)
+
+
+### Features
+
+* **storefront:** Using store API data on DecapCMS select with widgets `sselect:{resource}` ([2badbb1](https://github.com/ecomplus/cloud-commerce/commit/2badbb10bc4d69e9618720bddc6baf8f52854194))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#509](https://github.com/ecomplus/cloud-commerce/issues/509)) ([139c93c](https://github.com/ecomplus/cloud-commerce/commit/139c93cf0535280862119a59f82611ee5172c03d))
+* **storefront:** Fix handling session tokens for DecapCMS ([db5ce92](https://github.com/ecomplus/cloud-commerce/commit/db5ce923d43a70ef1d58734ef2e638411cd52498))
+* **storefront:** Fixing `InferCmsFieldOutput` generic forcing list widget as maybe undefined ([e19e623](https://github.com/ecomplus/cloud-commerce/commit/e19e6238317b6eff698595dcadf6e7df5126eb7d))
+* **storefront:** Start fixing DecapCMS deploy preview links ([6775cc0](https://github.com/ecomplus/cloud-commerce/commit/6775cc073f583183e5dcaba99d99498316c4a84c))
+
 ## [2.34.1](https://github.com/ecomplus/cloud-commerce/compare/v2.34.0...v2.34.1) (2024-12-21)
 
 
