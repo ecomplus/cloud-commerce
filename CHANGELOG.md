@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.35.1](https://github.com/ecomplus/cloud-commerce/compare/v2.35.0...v2.35.1) (2024-12-27)
+
+
+### Bug Fixes
+
+* **storefront:** Stop saving DecapCMS token to session storage ([0efa394](https://github.com/ecomplus/cloud-commerce/commit/0efa3949a70f47b7d1cdde87e90ba164ab280ee7))
+
 ## [2.35.0](https://github.com/ecomplus/cloud-commerce/compare/v2.34.1...v2.35.0) (2024-12-27)
 
 
