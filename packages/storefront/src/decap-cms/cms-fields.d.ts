@@ -86,5 +86,8 @@ export type CmsConfigExtend = {
       summary?: string | Record<string, string>,
     }>,
   },
+  settingsMetafields?: CmsFields;
+  headerCustom?: CmsFields;
+  footerCustom?: CmsFields;
   mergeConfig?: Record<string, any>;
 };

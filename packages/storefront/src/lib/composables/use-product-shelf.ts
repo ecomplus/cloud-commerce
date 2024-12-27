@@ -23,9 +23,12 @@ export type Props = Partial<SectionPreviewProps> & {
 
 export const productShelfCmsFields = ({
   collectionIdAndInfo: {
-    widget: 'string',
-    label: { pt: 'Coleção', en: 'Collection' },
-    hint: { pt: 'ID da coleção', en: 'Collection ID' },
+    widget: 'select:shelf-catalog',
+    label: { pt: 'Coleção de produtos', en: 'Products collection' },
+    hint: {
+      pt: 'Se este campo não for preenchido, serão listados os produtos mais populares',
+      en: 'If this field is not filled in, the most popular products will be listed',
+    },
     // `collectionIdAndInfo` parsed to `collectionId` server-side on `usePageMain`
     _dropped: true,
   },

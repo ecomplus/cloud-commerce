@@ -1,5 +1,5 @@
 import type { CmsField, CmsFields, CmsConfigExtend } from './cms-fields';
-import type { ParsedCmsField } from './collections/get-configs-coll';
+import type { ParsedCmsField, CmsCollOptions } from './collections/get-configs-coll';
 import Deepmerge from '@fastify/deepmerge';
 import { i18n as _i18n } from '@ecomplus/utils';
 import afetch from '../helpers/afetch';
@@ -8,7 +8,7 @@ import getPagesColl from './collections/get-pages-coll';
 import getExtraPagesColl from './collections/get-extra-pages-coll';
 import getBlogColl from './collections/get-blog-coll';
 
-export const getCmsConfig = async () => {
+export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
   const {
     GCLOUD_PROJECT,
     CMS_REPO_BASE_DIR,
@@ -33,7 +33,13 @@ export const getCmsConfig = async () => {
     },
   }));
   const response = await afetch('/admin/config.json');
-  const { components, mergeConfig } = await response.json() as CmsConfigExtend;
+  const {
+    components,
+    settingsMetafields,
+    headerCustom,
+    footerCustom,
+    mergeConfig,
+  } = await response.json() as CmsConfigExtend;
   const parseNestedCmsFields = (cmsFields: CmsFields) => {
     return Object.keys(cmsFields).map((name) => {
       delete cmsFields[name]._dropped;
@@ -71,13 +77,14 @@ export const getCmsConfig = async () => {
     widget: 'list' as const,
     types: Object.keys(components.sections).map((name) => ({
       name,
-      ...components.sections,
+      ...components.sections[name],
       widget: 'object' as const,
       fields: components.sections[name].fields
         && parseNestedCmsFields(components.sections[name].fields),
     })),
   };
   const collOptions = {
+    ..._collOptions,
     domain,
     baseDir,
     locale,
@@ -102,7 +109,11 @@ export const getCmsConfig = async () => {
       sanitize_replacement: '-',
     },
     collections: i18n([
-      getConfigsColl(collOptions),
+      getConfigsColl(collOptions, {
+        settingsMetafields: settingsMetafields && parseNestedCmsFields(settingsMetafields),
+        headerCustom: headerCustom && parseNestedCmsFields(headerCustom),
+        footerCustom: footerCustom && parseNestedCmsFields(footerCustom),
+      }),
       getPagesColl(collOptions),
       getExtraPagesColl(collOptions),
       getBlogColl(collOptions),
@@ -147,6 +158,7 @@ export const getCmsConfig = async () => {
     delete mergeConfig.collections;
     config = deepmerge(config, mergeConfig) as any;
   }
+  const { storeData } = collOptions;
   const maxFileSize = Math.max(CMS_MAX_FILE_SIZE || 0, 1000000);
   const setWidgetDefaults = (fields?: Array<Record<string, any> &
     { widget: CmsField['widget'] }
@@ -189,6 +201,53 @@ export const getCmsConfig = async () => {
           modes: ['rich_text'],
           ...field,
         });
+        return;
+      }
+      if (field.widget.startsWith('select:')) {
+        if (storeData) {
+          const [, resource, fieldToValue] = field.widget.split(':');
+          if (resource === 'shelf-catalog') {
+            field.options = ([{
+              resource: 'collections',
+              label: '',
+            }, {
+              resource: 'categories',
+              label: i18n({ pt: 'Categoria: ', en: 'Category: ' }),
+            }, {
+              resource: 'brands',
+              label: i18n({ pt: 'Marca: ', en: 'Brand: ' }),
+            }] as const).reduce((options, shelf) => {
+              storeData[shelf.resource]?.forEach((doc) => {
+                if (doc.slug) {
+                  options.push({
+                    label: shelf.label + (doc.name || doc.slug),
+                    value: `${doc._id}:${shelf.resource}:${doc.name}:/${doc.slug}`,
+                  });
+                }
+              });
+              return options;
+            }, [] as Array<{ label: string, value: string }>);
+          } else {
+            const list = storeData[resource as 'categories'];
+            if (list) {
+              field.options = [];
+              list.forEach((doc) => {
+                let value: string | Record<string, string> | undefined;
+                if (fieldToValue === '{}') {
+                  if (doc.name && doc.slug) {
+                    value = { name: doc.name, slug: doc.slug };
+                  }
+                } else {
+                  value = fieldToValue ? doc[fieldToValue] : doc.slug;
+                }
+                if (value) {
+                  field.options.push({ value, label: doc.name || value });
+                }
+              });
+            }
+          }
+          field.widget = 'select';
+        }
         return;
       }
       if (field.widget === 'object' || field.widget === 'list') {

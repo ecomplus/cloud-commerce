@@ -1,12 +1,16 @@
+import type { CmsStoreData } from '../../decap-cms/collections/get-configs-coll';
 import Deepmerge from '@fastify/deepmerge';
+import api from '@cloudcommerce/api';
 import afetch from '../../helpers/afetch';
-import getCmsConfig from '../../decap-cms/get-cms-config';
+import _getCmsConfig from '../../decap-cms/get-cms-config';
 import createPreviewComponent from '../../decap-cms/create-preview-component';
+
+(window as any)._getCmsConfig = _getCmsConfig;
 
 let cmsConfig: Record<string, any> = {};
 const initCmsWithPreview = () => {
   const { createClass, h, CMS } = window as any;
-  console.log({ cmsConfig });
+  (window as any)._cmsConfig = cmsConfig;
   CMS.init({ config: cmsConfig });
   if (createClass && h) {
     const Preview = createPreviewComponent({
@@ -28,7 +32,7 @@ const initCmsWithPreview = () => {
   }
 };
 
-const authAndInitCms = async () => {
+const authAndInitCms = async (storeData: CmsStoreData) => {
   const {
     location,
     sessionStorage,
@@ -37,7 +41,9 @@ const authAndInitCms = async () => {
     CMS_CUSTOM_CONFIG,
     CMS_SSO_URL = 'https://app.e-com.plus/pages/login?api_version=2',
   } = window;
-  cmsConfig = await getCmsConfig();
+  const getCmsConfig = ((window as any).getCmsConfig || _getCmsConfig) as
+    typeof _getCmsConfig;
+  cmsConfig = await getCmsConfig({ storeData });
   if (CMS_CUSTOM_CONFIG) {
     const deepmerge = Deepmerge();
     cmsConfig = deepmerge(cmsConfig, CMS_CUSTOM_CONFIG);
@@ -159,16 +165,38 @@ if (!import.meta.env.SSR) {
     // Emulating GitHub OAuth popup
     window.opener.postMessage('authorizing:github', '*');
     window.close();
-  } else if (window.location.pathname.startsWith('/admin/')) {
-    if (window.CMS) {
-      authAndInitCms();
-    } else {
-      const cmsScript = document.createElement('script');
-      cmsScript.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-      cmsScript.onload = authAndInitCms;
-      document.body.appendChild(cmsScript);
-    }
   } else {
-    (window as any).initCMS = authAndInitCms;
+    const storeData: CmsStoreData = {};
+    const promises = ([
+      'categories',
+      'brands',
+      'collections',
+      'products',
+    ] as const).map(async (resource) => {
+      const isProducts = resource === 'products';
+      return api.get(resource, {
+        limit: isProducts ? 10 : 1000,
+        sort: isProducts ? ['-sales'] : undefined,
+        fields: ['_id', 'name', 'slug'] as const,
+      }).then(({ data }) => {
+        storeData[resource] = data.result;
+      });
+    });
+    const startCms = async () => {
+      await Promise.all(promises);
+      authAndInitCms(storeData);
+    };
+    if (window.location.pathname.startsWith('/admin/')) {
+      if (window.CMS) {
+        startCms();
+      } else {
+        const cmsScript = document.createElement('script');
+        cmsScript.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+        cmsScript.onload = startCms;
+        document.body.appendChild(cmsScript);
+      }
+    } else {
+      (window as any).initCMS = startCms;
+    }
   }
 }

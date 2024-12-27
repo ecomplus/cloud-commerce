@@ -1,9 +1,22 @@
+import type {
+  BrandsList,
+  CategoriesList,
+  CollectionsList,
+  ProductsList,
+} from '@cloudcommerce/api/types';
 import type { CmsField } from '../cms-fields';
 
 export type ParsedCmsField = Omit<CmsField, 'fields'> & {
   widget: CmsField['widget'];
   name: string;
   fields?: Array<ParsedCmsField & { required: boolean }>;
+};
+
+export type CmsStoreData = {
+  categories?: CategoriesList<['_id', 'name', 'slug']>;
+  brands?: BrandsList<['_id', 'name', 'slug']>;
+  collections?: CollectionsList<['_id', 'name', 'slug']>;
+  products?: ProductsList<['_id', 'name', 'slug']>;
 };
 
 export type CmsCollOptions = {
@@ -15,9 +28,17 @@ export type CmsCollOptions = {
     widget: 'list';
     types: ParsedCmsField[];
   };
+  storeData?: CmsStoreData;
 };
 
-const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
+const getConfigsColl = (
+  { baseDir }: CmsCollOptions,
+  { settingsMetafields, headerCustom, footerCustom }: {
+    settingsMetafields?: ParsedCmsField,
+    headerCustom?: ParsedCmsField,
+    footerCustom?: ParsedCmsField,
+  },
+) => ({
   name: 'config',
   label: {
     en: 'Settings & layout',
@@ -317,7 +338,9 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
         },
         {
           name: 'metafields',
-          widget: 'hidden',
+          label: 'Metafields',
+          widget: settingsMetafields ? 'object' : 'hidden',
+          fields: settingsMetafields,
         },
       ],
     },
@@ -344,10 +367,6 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
           },
           widget: 'object',
           fields: [
-            {
-              name: 'custom',
-              widget: 'hidden',
-            },
             {
               name: 'pitchBar',
               label: {
@@ -388,15 +407,8 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
                     en: 'Featured categories',
                     pt: 'Categorias em destaque',
                   },
-                  hint: {
-                    en: 'Comma separated slugs',
-                    pt: 'Slugs separados por vírgula',
-                  },
-                  widget: 'list',
-                  label_singular: {
-                    en: 'category',
-                    pt: 'categoria',
-                  },
+                  widget: 'select:categories',
+                  multiple: true,
                 },
                 {
                   name: 'random',
@@ -419,6 +431,15 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
               widget: 'boolean',
               default: false,
             },
+            {
+              name: 'custom',
+              label: {
+                en: 'Custom fields',
+                pt: 'Campos customizados',
+              },
+              widget: headerCustom ? 'object' : 'hidden',
+              fields: headerCustom,
+            },
           ],
         },
         {
@@ -429,10 +450,6 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
           },
           widget: 'object',
           fields: [
-            {
-              name: 'custom',
-              widget: 'hidden',
-            },
             {
               name: 'categoriesList',
               label: {
@@ -460,27 +477,13 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
                   widget: 'string',
                 },
                 {
-                  name: 'categories',
+                  name: 'slugs',
                   label: {
                     en: 'Fixed categories',
                     pt: 'Categorias fixadas',
                   },
-                  widget: 'list',
-                  fields: [
-                    {
-                      name: 'name',
-                      label: {
-                        en: 'Name',
-                        pt: 'Nome',
-                      },
-                      widget: 'string',
-                    },
-                    {
-                      name: 'slug',
-                      label: 'Slug',
-                      widget: 'string',
-                    },
-                  ],
+                  widget: 'select:categories',
+                  multiple: true,
                 },
               ],
             },
@@ -511,11 +514,8 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
                   widget: 'string',
                 },
                 {
-                  name: 'categories',
-                  label: {
-                    en: 'Fixed categories',
-                    pt: 'Categorias fixadas',
-                  },
+                  name: 'links',
+                  label: 'Links',
                   widget: 'list',
                   fields: [
                     {
@@ -573,6 +573,15 @@ const getConfigsColl = ({ baseDir }: CmsCollOptions) => ({
                   required: false,
                 },
               ],
+            },
+            {
+              name: 'custom',
+              label: {
+                en: 'Custom fields',
+                pt: 'Campos customizados',
+              },
+              widget: footerCustom ? 'object' : 'hidden',
+              fields: footerCustom,
             },
           ],
         },
