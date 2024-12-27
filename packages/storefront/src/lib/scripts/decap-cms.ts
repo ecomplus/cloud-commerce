@@ -35,7 +35,6 @@ const initCmsWithPreview = () => {
 const authAndInitCms = async (storeData: CmsStoreData) => {
   const {
     location,
-    sessionStorage,
     ECOM_STORE_ID,
     GIT_REPO,
     CMS_CUSTOM_CONFIG,
@@ -57,10 +56,8 @@ const authAndInitCms = async (storeData: CmsStoreData) => {
     initCmsWithPreview();
     return;
   }
-  const tokenStorageKey = '__cms_token';
-  let token = sessionStorage.getItem(tokenStorageKey);
-  const repoStorageKey = '__cms_repo';
-  let repository = sessionStorage.getItem(repoStorageKey);
+  let token: string | null = null;
+  let repository: string | null = null;
   const searchParams = new URLSearchParams(location.search);
   const ssoToken = searchParams.get('sso_token') || searchParams.get('access_token');
   if (!cmsConfig.backend?.base_url) {
@@ -129,10 +126,6 @@ const authAndInitCms = async (storeData: CmsStoreData) => {
     }
   }
   if (token) {
-    sessionStorage.setItem(tokenStorageKey, token);
-    if (repository) {
-      sessionStorage.setItem(repoStorageKey, repository);
-    }
     // Ref.: https://github.com/decaporg/decap-cms/blob/e93c94f1ce707719dfb7750af82b17c38b461831/packages/decap-cms-lib-auth/src/netlify-auth.js#L46
     // E.g.: https://github.com/Herohtar/netlify-cms-oauth-firebase/blob/master/functions/index.js#L9-L25
     window.addEventListener('message', (event) => {
