@@ -53,6 +53,7 @@ export const searchShowcaseCmsFields = ({
       pt: 'Deve ser mantido em branco para busca dinâmica ou vitrines de categorias/marcas',
       en: 'Must be left blank for dynamic search or category/brand showcases',
     },
+    _nullable: true,
   },
   fixedParams: {
     widget: 'object',
