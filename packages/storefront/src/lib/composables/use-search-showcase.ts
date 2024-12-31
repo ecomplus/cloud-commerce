@@ -58,6 +58,10 @@ export const searchShowcaseCmsFields = ({
   fixedParams: {
     widget: 'object',
     label: { pt: 'Parâmetros fixados', en: 'Fixed params' },
+    hint: {
+      pt: 'Provavelmente mantido em branco para busca dinâmica ou páginas de categorias/marcas',
+      en: 'Probably left blank for dynamic search or category/brand pages',
+    },
     fields: {
       sort: productShelfCmsFields.sort,
       'created_at>': {
