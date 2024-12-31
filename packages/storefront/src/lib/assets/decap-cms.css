@@ -90,6 +90,9 @@ body {
   }
   [class*="NestedObjectLabel"] {
     background-color: rgba(223 223 227 / .2);
+    + h3 {
+      display: none;
+    }
   }
   [class*="ControlContainer"] {
     [class*="ImageWrapper"] {
