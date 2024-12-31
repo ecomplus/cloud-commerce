@@ -2,6 +2,7 @@ import type { Ref } from 'vue';
 import type { SearchItem } from '@cloudcommerce/types';
 import type { SearchEngineInstance } from '@@sf/state/search-engine';
 import type { SectionPreviewProps } from '@@sf/state/use-cms-preview';
+import type { CmsFields } from '@@sf/content';
 import {
   ref,
   computed,
@@ -23,6 +24,7 @@ import {
 import { SearchEngine } from '@@sf/state/search-engine';
 import { emitGtagEvent } from '@@sf/state/use-analytics';
 import { useSearchActiveFilters } from '@@sf/composables/use-search-filters';
+import { productShelfCmsFields } from '@@sf/composables/use-product-shelf';
 
 export type Props = Partial<SectionPreviewProps> & {
   term?: string | null;
@@ -36,6 +38,80 @@ export type Props = Partial<SectionPreviewProps> & {
   searchEngine?: SearchEngineInstance;
   canFetchTermsOnEmpty?: boolean;
 }
+
+export const searchShowcaseCmsFields = ({
+  pageSize: {
+    widget: 'number',
+    value_type: 'int',
+    label: { pt: 'Itens por página', en: 'Items per page' },
+    default: 24,
+  },
+  term: {
+    widget: 'string',
+    label: { pt: 'Termo de busca fixado', en: 'Fixed search term' },
+    hint: {
+      pt: 'Deve ser mantido em branco para busca dinâmica ou vitrines de categorias/marcas',
+      en: 'Must be left blank for dynamic search or category/brand showcases',
+    },
+  },
+  fixedParams: {
+    widget: 'object',
+    label: { pt: 'Parâmetros fixados', en: 'Fixed params' },
+    fields: {
+      sort: productShelfCmsFields.sort,
+      'created_at>': {
+        label: {
+          pt: 'Filtro por data de criação',
+          en: 'Filter by creation date',
+        },
+        hint: {
+          pt: 'Número de dias anteriores à data corrente',
+          en: 'Number of days before the current date',
+        },
+        widget: 'number',
+        value_type: 'int',
+        max: 0,
+      },
+      'price_discount>': {
+        label: {
+          pt: 'Filtro por múltiplo de desconto',
+          en: 'Filter by discount multiple',
+        },
+        hint: {
+          pt: '1.01 para produtos com pelo menos 1% de desconto',
+          en: '1.01 for products with at least 1% discount',
+        },
+        widget: 'number',
+        value_type: 'float',
+        min: 1,
+        max: 1.99,
+        step: 0.01,
+      },
+      'categories.slug': {
+        label: { pt: 'Filtro por categorias', en: 'Filter by categories' },
+        widget: 'select:categories',
+        multiple: true,
+      },
+      'brands.slug': {
+        label: { pt: 'Filtro por marca', en: 'Filter by brand' },
+        widget: 'select:brands',
+        multiple: true,
+      },
+      'price>': {
+        label: { pt: 'Filtro por preço mínimo', en: 'Filter by minimum price' },
+        widget: 'number',
+        value_type: 'float',
+        min: 0,
+      },
+      'price<': {
+        label: { pt: 'Filtro por preço máximo', en: 'Filter by maximum price' },
+        widget: 'number',
+        value_type: 'float',
+        min: 0,
+      },
+    },
+  },
+}) as const satisfies CmsFields;
 
 const useSearchShowcase = (props: Props) => {
   let { term } = props;

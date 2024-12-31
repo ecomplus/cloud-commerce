@@ -48,7 +48,7 @@ export const productShelfCmsFields = ({
       value: '-price',
     }, {
       label: { pt: 'Percentual de desconto', en: 'Discount percentage' },
-      value: '-price_discount',
+      value: '-price_discount,-sales',
     }],
   },
   searchQuery: {
