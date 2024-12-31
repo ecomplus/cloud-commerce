@@ -11,7 +11,10 @@ export type CmsField = {
     | 'boolean'
     | 'number'
     | 'select'
-    | `select:${string}`
+    | 'select:categories'
+    | 'select:brands'
+    | 'select:collections'
+    | 'select:shelf-catalog'
     | 'object'
     | 'list'
     | 'hidden'
