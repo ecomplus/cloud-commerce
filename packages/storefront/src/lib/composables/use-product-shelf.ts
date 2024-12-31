@@ -34,6 +34,7 @@ export const productShelfCmsFields = ({
   },
   sort: {
     widget: 'select',
+    label: { pt: 'Ordenar por', en: 'Sort by' },
     options: [{
       label: { pt: 'Vendas', en: 'Sales' },
       value: '-sales',
