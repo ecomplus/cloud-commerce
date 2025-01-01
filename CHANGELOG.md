@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.0](https://github.com/ecomplus/cloud-commerce/compare/v2.35.2...v2.36.0) (2025-01-01)
+
+
+### Features
+
+* **storefront:** New missing `searchShowcaseCmsFields` from search showcase composable ([52c14cd](https://github.com/ecomplus/cloud-commerce/commit/52c14cdfa529a2f4d4fc9a299baa46f814418cd5))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#511](https://github.com/ecomplus/cloud-commerce/issues/511)) ([c3538d8](https://github.com/ecomplus/cloud-commerce/commit/c3538d866e070097fdd43aa16f5a8e09d8a3e1de))
+* **emails:** Intercept SMTP to Resend to try with REST API instead ([89c89e2](https://github.com/ecomplus/cloud-commerce/commit/89c89e2a1004aecec30da6357be02fa8780e9aa7))
+* **storefront:** On CMS content pages (folder collections) add content entry to page start ([acaa62d](https://github.com/ecomplus/cloud-commerce/commit/acaa62dae9271309f8a1ec22c7299dcbe16babed))
+* **storefront:** Specifying `CmsField` type widget options for store data with `select:*` ([10c1d66](https://github.com/ecomplus/cloud-commerce/commit/10c1d6632a61d8fba90f7bce1afc16cd72de7974))
+* **storefront:** Specifying `CmsField` type widget options for store data with custom field to value ([2a6cb91](https://github.com/ecomplus/cloud-commerce/commit/2a6cb9109ccb7f2f2004c10fc388db94312cb8ac))
+* **storefront:** Updating Decap CMS styles to hide "no fields" alert on some sections objects ([107f294](https://github.com/ecomplus/cloud-commerce/commit/107f294f5e81f869f6fbd7fc8220304416d19ef2))
+
 ## [2.35.2](https://github.com/ecomplus/cloud-commerce/compare/v2.35.1...v2.35.2) (2024-12-27)
 
 ## [2.35.1](https://github.com/ecomplus/cloud-commerce/compare/v2.35.0...v2.35.1) (2024-12-27)
