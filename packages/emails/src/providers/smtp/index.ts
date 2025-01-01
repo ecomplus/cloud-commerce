@@ -8,6 +8,7 @@ import type {
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import nodemailer from 'nodemailer';
 import axios from 'axios';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import parseTemplateToHtml from '../../parse-template-to-html';
 
 const parseEmailAddrs = (emails: EmailAdrress | EmailAdrress[]) => {
@@ -95,19 +96,27 @@ const sendEmail = async (
       );
       return { status: 202, message: data.id };
     } catch (err: any) {
-      if (err.response) {
-        const error: any = new Error('Error sending email with Resend API');
-        error.request = err.config;
-        error.status = err.response.status;
-        error.response = err.response.data;
-        throw new Error(error);
-      }
+      logger.warn(`Error ${err.response?.status} sending email with Resend API`, {
+        mailOptions,
+        message: err.message,
+        request: err.config,
+        status: err.response?.status,
+        response: err.response?.data,
+      });
       throw err;
     }
   }
   if (transporter) {
-    const info = await transporter.sendMail(mailOptions);
-    return { status: 202, message: info.messageId };
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      return { status: 202, message: info.messageId };
+    } catch (err: any) {
+      logger.warn('Error sending email with SMTP', {
+        mailOptions,
+        message: err.message,
+      });
+      throw err;
+    }
   }
   throw new Error('Error configuring SMTP settings');
 };
