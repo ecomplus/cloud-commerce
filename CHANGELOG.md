@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.3](https://github.com/ecomplus/cloud-commerce/compare/v2.36.2...v2.36.3) (2025-01-01)
+
+
+### Bug Fixes
+
+* **emails:** Fix parsing email addresses array to nodemailer SMTP and Resend API ([8c96dd1](https://github.com/ecomplus/cloud-commerce/commit/8c96dd1d4dde79b5740f651c8ca0c81416855e34))
+
 ## [2.36.2](https://github.com/ecomplus/cloud-commerce/compare/v2.36.1...v2.36.2) (2025-01-01)
 
 
