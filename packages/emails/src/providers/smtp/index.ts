@@ -11,11 +11,18 @@ import axios from 'axios';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import parseTemplateToHtml from '../../parse-template-to-html';
 
-const parseEmailAddrs = (emails: EmailAdrress | EmailAdrress[]) => {
+const parseEmailAddrs = <OneOnly extends boolean = false>(
+  emails: EmailAdrress | EmailAdrress[],
+  isOneOnly = false as OneOnly,
+): OneOnly extends true ? string : string | string[] => {
   if (Array.isArray(emails)) {
-    return emails.reduce((value: string, emailAdrress: EmailAdrress) => {
-      return `${value}, ${emailAdrress.email}`;
-    }, '');
+    if (!isOneOnly && emails.length > 1) {
+      return emails.map(({ name, email }: EmailAdrress) => {
+        if (!name) return email;
+        return `"${name.replace(/[<>"]/g, '')}" <${email}>`;
+      }) as OneOnly extends true ? never : string[];
+    }
+    emails = emails[0];
   }
   if (!emails.name) return emails.email;
   return `"${emails.name.replace(/[<>"]/g, '')}" <${emails.email}>`;
@@ -60,14 +67,14 @@ const sendEmail = async (
     throw new Error(`Email body for template: #${template}, not found`);
   }
   const mailOptions: SMTPTransport.MailOptions = {
-    from: parseEmailAddrs(from),
+    from: parseEmailAddrs(from, true),
     to: parseEmailAddrs(to),
     subject: emailHeaders.subject,
     html,
     text,
   };
   if (emailHeaders.sender) {
-    mailOptions.sender = parseEmailAddrs(emailHeaders.sender);
+    mailOptions.sender = parseEmailAddrs(emailHeaders.sender, true);
   }
   if (emailHeaders.cc) {
     mailOptions.cc = parseEmailAddrs(emailHeaders.cc);
