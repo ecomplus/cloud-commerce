@@ -86,7 +86,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
     && !sectionsContent?.find(({ type }) => type === 'content-entry')
   ) {
     if (!sectionsContent) sectionsContent = [];
-    sectionsContent.push({ type: 'content-entry' });
+    sectionsContent.unshift({ type: 'content-entry' });
   }
   const sections: Array<
     T
