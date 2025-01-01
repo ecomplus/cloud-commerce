@@ -93,7 +93,7 @@ const sendEmail = async (
           headers: { Authorization: `Bearer ${smtpConfig.auth.pass}` },
         },
       );
-      return { status: 202, message: `emailId: #${data.id}` };
+      return { status: 202, message: data.id };
     } catch (err: any) {
       if (err.response) {
         const error: any = new Error('Error sending email with Resend API');
@@ -107,7 +107,7 @@ const sendEmail = async (
   }
   if (transporter) {
     const info = await transporter.sendMail(mailOptions);
-    return { status: 202, message: `messageId: #${info.messageId}` };
+    return { status: 202, message: info.messageId };
   }
   throw new Error('Error configuring SMTP settings');
 };
