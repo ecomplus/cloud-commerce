@@ -92,14 +92,14 @@ export const searchShowcaseCmsFields = ({
         max: 1.99,
         step: 0.01,
       },
-      'categories.slug': {
+      'categories.name': {
         label: { pt: 'Filtro por categorias', en: 'Filter by categories' },
-        widget: 'select:categories',
+        widget: 'select:categories:name',
         multiple: true,
       },
-      'brands.slug': {
+      'brands.name': {
         label: { pt: 'Filtro por marca', en: 'Filter by brand' },
-        widget: 'select:brands',
+        widget: 'select:brands:name',
         multiple: true,
       },
       'price>': {
