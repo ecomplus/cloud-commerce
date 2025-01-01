@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.1](https://github.com/ecomplus/cloud-commerce/compare/v2.36.0...v2.36.1) (2025-01-01)
+
+
+### Bug Fixes
+
+* **emails:** Fixing Resend API endpoint ([5ccd101](https://github.com/ecomplus/cloud-commerce/commit/5ccd10183f521d1f86c9d2444e43f3ace5476a25))
+* **storefront:** Filter options by category/brand name instead of slug on search showcase CMS fields ([c5d7623](https://github.com/ecomplus/cloud-commerce/commit/c5d76238a7590ba3b1fb92943d12cce9c7bebed7))
+
 ## [2.36.0](https://github.com/ecomplus/cloud-commerce/compare/v2.35.2...v2.36.0) (2025-01-01)
 
 
