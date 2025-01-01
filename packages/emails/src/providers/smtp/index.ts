@@ -7,6 +7,7 @@ import type {
 } from '../../../types/index';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import nodemailer from 'nodemailer';
+import axios from 'axios';
 import parseTemplateToHtml from '../../parse-template-to-html';
 
 const parseEmailAddrs = (emails: EmailAdrress | EmailAdrress[]) => {
@@ -78,6 +79,31 @@ const sendEmail = async (
   }
   if (!transporter && smtpConfig) {
     setConfigSmtp(smtpConfig);
+  }
+  if (smtpConfig?.host === 'smtp.resend.com') {
+    try {
+      const { data } = await axios.post(
+        'https://api.resend.io/v1/email/send',
+        {
+          ...mailOptions,
+          replyTo: undefined,
+          reply_to: emailHeaders.replyTo,
+        },
+        {
+          headers: { Authorization: `Bearer ${smtpConfig.auth.pass}` },
+        },
+      );
+      return { status: 202, message: `emailId: #${data.id}` };
+    } catch (err: any) {
+      if (err.response) {
+        const error: any = new Error('Error sending email with Resend API');
+        error.request = err.config;
+        error.status = err.response.status;
+        error.response = err.response.data;
+        throw new Error(error);
+      }
+      throw err;
+    }
   }
   if (transporter) {
     const info = await transporter.sendMail(mailOptions);
