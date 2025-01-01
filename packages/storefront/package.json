@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "2.35.2",
+  "version": "2.36.0",
   "description": "e-com.plus Cloud Commerce storefront with Astro",
   "bin": {
     "storefront": "./scripts/build-prod.sh"
