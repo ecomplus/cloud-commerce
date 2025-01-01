@@ -83,7 +83,7 @@ const sendEmail = async (
   if (smtpConfig?.host === 'smtp.resend.com') {
     try {
       const { data } = await axios.post(
-        'https://api.resend.io/v1/email/send',
+        'https://api.resend.com/emails',
         {
           ...mailOptions,
           replyTo: undefined,
