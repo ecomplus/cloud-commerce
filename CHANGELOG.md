@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.2](https://github.com/ecomplus/cloud-commerce/compare/v2.36.1...v2.36.2) (2025-01-01)
+
+
+### Bug Fixes
+
+* **emails:** Properly debugging SMTP email failures to logger ([6b45876](https://github.com/ecomplus/cloud-commerce/commit/6b45876c8949a30dcca3129dff319a787b455909))
+
 ## [2.36.1](https://github.com/ecomplus/cloud-commerce/compare/v2.36.0...v2.36.1) (2025-01-01)
 
 
