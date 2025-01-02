@@ -82,7 +82,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
   const { cmsContent } = routeContext;
   let sectionsContent = cmsContent?.sections;
   if (
-    cmsContent?.markdown
+    cmsContent?.markdown?.trim()
     && !sectionsContent?.find(({ type }) => type === 'content-entry')
   ) {
     if (!sectionsContent) sectionsContent = [];
