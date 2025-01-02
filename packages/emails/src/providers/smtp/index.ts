@@ -95,7 +95,7 @@ const sendEmail = async (
         {
           ...mailOptions,
           replyTo: undefined,
-          reply_to: emailHeaders.replyTo,
+          reply_to: mailOptions.replyTo,
         },
         {
           headers: { Authorization: `Bearer ${smtpConfig.auth.pass}` },
