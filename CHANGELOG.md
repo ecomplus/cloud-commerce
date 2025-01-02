@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.4](https://github.com/ecomplus/cloud-commerce/compare/v2.36.3...v2.36.4) (2025-01-02)
+
+
+### Bug Fixes
+
+* **emails:** Fix `reply_to` format when sending emails with Resend API ([d64e743](https://github.com/ecomplus/cloud-commerce/commit/d64e743c96bbb4ed0d97b83e4bc0aa64003b8443))
+
 ## [2.36.3](https://github.com/ecomplus/cloud-commerce/compare/v2.36.2...v2.36.3) (2025-01-01)
 
 
