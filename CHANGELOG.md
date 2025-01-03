@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.6](https://github.com/ecomplus/cloud-commerce/compare/v2.36.5...v2.36.6) (2025-01-03)
+
+
+### Bug Fixes
+
+* **braspag:** Properly calculating max installments with consistent `min_installment` ([8dffdf3](https://github.com/ecomplus/cloud-commerce/commit/8dffdf32b74478f7f387b197634494980805538b))
+
 ## [2.36.5](https://github.com/ecomplus/cloud-commerce/compare/v2.36.4...v2.36.5) (2025-01-03)
 
 
