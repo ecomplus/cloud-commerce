@@ -91,6 +91,11 @@ export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
     heroConfig,
     sectionsConfig,
   };
+  const parseCustomFields = (customFields?: CmsFields) => {
+    return customFields && Object.keys(customFields).length
+      ? parseNestedCmsFields(customFields)
+      : undefined;
+  };
   let config = {
     locale,
     load_config_file: false,
@@ -110,9 +115,9 @@ export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
     },
     collections: i18n([
       getConfigsColl(collOptions, {
-        settingsMetafields: settingsMetafields && parseNestedCmsFields(settingsMetafields),
-        headerCustom: headerCustom && parseNestedCmsFields(headerCustom),
-        footerCustom: footerCustom && parseNestedCmsFields(footerCustom),
+        settingsMetafields: parseCustomFields(settingsMetafields),
+        headerCustom: parseCustomFields(headerCustom),
+        footerCustom: parseCustomFields(footerCustom),
       }),
       getPagesColl(collOptions),
       getExtraPagesColl(collOptions),
