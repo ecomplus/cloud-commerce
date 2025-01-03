@@ -4,7 +4,8 @@ const addInstallments = (amount, installments = {}, gateway = {}, response) => {
   const minInstallment = installments.min_installment || 5;
   const qtyPosssibleInstallment = Math.floor((amount.total / minInstallment));
   const maxInstallments = installments.max_number
-    || (qtyPosssibleInstallment < 12 ? qtyPosssibleInstallment : 12);
+    ? Math.min(installments.max_number, qtyPosssibleInstallment)
+    : Math.max(qtyPosssibleInstallment, 12);
   const monthlyInterest = installments.monthly_interest || 0;
   const interestFreeMinAmount = installments.interest_free_min_amount || 5;
 
