@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.5](https://github.com/ecomplus/cloud-commerce/compare/v2.36.4...v2.36.5) (2025-01-03)
+
+
+### Bug Fixes
+
+* **storefront:** Do not force `content-entry` section when MD content is empty ([6eb44f3](https://github.com/ecomplus/cloud-commerce/commit/6eb44f3958924fd1115391c4b784c240cb69db72))
+* **storefront:** Skip empty metafields and layout custom fields from CMS config ([30872f7](https://github.com/ecomplus/cloud-commerce/commit/30872f730fabfb24afe746735c568e6a8037ae60))
+
 ## [2.36.4](https://github.com/ecomplus/cloud-commerce/compare/v2.36.3...v2.36.4) (2025-01-02)
 
 
