@@ -174,39 +174,39 @@ type PaymentMethodFlag = 'pix'
   | 'diners'
   | 'discover';
 
-export type SettingsContent = {
-  domain: string,
-  name: string,
-  description: string,
-  logo: string,
-  icon: string,
-  favicon?: string,
-  primaryColor: string,
-  secondaryColor?: string,
-  bgColor?: string,
-  assetsPrefix?: string,
-  email: string,
-  phone: string,
-  address: string,
-  corporateName: string,
-  docNumber: string,
-  lang: string,
-  currency: string,
-  currencySymbol: string,
-  countryCode: string,
-  whatsapp?: string,
-  instagram?: string,
-  facebook?: string,
-  twitter?: string,
-  youtube?: string,
-  tiktok?: string,
-  pinterest?: string,
-  threads?: string,
+export interface SettingsContent {
+  domain: string;
+  name: string;
+  description: string;
+  logo: string;
+  icon: string;
+  favicon?: string;
+  primaryColor: string;
+  secondaryColor?: string;
+  bgColor?: string;
+  assetsPrefix?: string;
+  email: string;
+  phone: string;
+  address: string;
+  corporateName: string;
+  docNumber: string;
+  lang: string;
+  currency: string;
+  currencySymbol: string;
+  countryCode: string;
+  whatsapp?: string;
+  instagram?: string;
+  facebook?: string;
+  twitter?: string;
+  youtube?: string;
+  tiktok?: string;
+  pinterest?: string;
+  threads?: string;
   serviceLinks?: Array<{
     title: string,
     href: string,
-  }>,
-  paymentMethods?: PaymentMethodFlag[],
+  }>;
+  paymentMethods?: PaymentMethodFlag[];
   modules?: {
     list_payments?: {
       installments_option?: Partial<ListPaymentsResponse['installments_option']>,
@@ -223,11 +223,11 @@ export type SettingsContent = {
     apply_discount?: {
       available_extra_discount?: Partial<ApplyDiscountResponse['available_extra_discount']>,
     },
-  },
-  cartUrl?: string,
-  checkoutUrl?: string,
-  accountUrl?: string,
-  ordersUrl?: string,
-  favoritesUrl?: string,
-  metafields?: Record<string, any>,
-};
+  };
+  cartUrl?: string;
+  checkoutUrl?: string;
+  accountUrl?: string;
+  ordersUrl?: string;
+  favoritesUrl?: string;
+  metafields?: Record<string, any>;
+}

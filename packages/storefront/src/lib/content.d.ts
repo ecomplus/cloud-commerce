@@ -12,7 +12,7 @@ type _PitchBarSlide = {
   html: string;
 };
 
-export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
+export interface LayoutContent extends Omit<_LayoutContent, 'header' | 'footer'> {
   header: { custom?: Record<string, unknown> } &
     Omit<_LayoutContent['header'], 'pitchBar'> &
     {
@@ -21,10 +21,10 @@ export type LayoutContent = Omit<_LayoutContent, 'header' | 'footer'> & {
           ? _PitchBarSlide
           : Partial<_LayoutContent['header']['pitchBar'][0]> & _PitchBarSlide
       >,
-    },
-  footer: { custom?: Record<string, unknown> } & Partial<_LayoutContent['footer']>,
-  custom?: Record<string, unknown>,
-};
+    };
+  footer: { custom?: Record<string, unknown> } & Partial<_LayoutContent['footer']>;
+  custom?: Record<string, unknown>;
+}
 
 export interface PageContent {
   metaTitle?: string;
