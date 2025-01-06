@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.7](https://github.com/ecomplus/cloud-commerce/compare/v2.36.6...v2.36.7) (2025-01-06)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#517](https://github.com/ecomplus/cloud-commerce/issues/517)) ([b3f8c31](https://github.com/ecomplus/cloud-commerce/commit/b3f8c31ed4a743b8eea36305b895e5f8091e3fac))
+* **modules:** Deep clone modules params payload on each internal module function ([a512b4a](https://github.com/ecomplus/cloud-commerce/commit/a512b4a462286f34f86ea10a039b6fa30786d0a1))
+
 ## [2.36.6](https://github.com/ecomplus/cloud-commerce/compare/v2.36.5...v2.36.6) (2025-01-03)
 
 
