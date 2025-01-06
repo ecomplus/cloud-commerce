@@ -84,8 +84,8 @@ const listPayments = async ({ params, application }) => {
 
     const amount = { ...params.amount } || {};
     const minAmount = methodConfig?.min_amount || 0;
-    const validateAmount = amount.total ? (amount.total >= minAmount) : true;
-    if (methodEnable && validateAmount) {
+    const isValidAmount = amount.total ? (amount.total >= minAmount) : true;
+    if (methodEnable && isValidAmount) {
       let label = methodConfig.label;
       if (!label) {
         if (isCreditCard) {
