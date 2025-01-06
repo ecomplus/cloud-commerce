@@ -226,6 +226,7 @@ const callAppModule = async (
     */
     const middleware = global.$appModuleMiddlewares[String(appId)];
     try {
+      const _data = structuredClone(data);
       const appResponse: any = await Promise.race([
         new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -236,8 +237,8 @@ const callAppModule = async (
         }),
         new Promise((resolve, reject) => {
           const appModPromise = typeof middleware === 'function'
-            ? middleware(data, internalModuleFn)
-            : internalModuleFn(data);
+            ? middleware(_data, internalModuleFn)
+            : internalModuleFn(_data);
           appModPromise
             .then((_appResponse: any) => {
               checkErrorResponse(`${appId}_${modName}`, _appResponse);
