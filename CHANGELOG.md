@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.8](https://github.com/ecomplus/cloud-commerce/compare/v2.36.7...v2.36.8) (2025-01-07)
+
+
+### Bug Fixes
+
+* **storefront:** Update prod build script to copy static 404.html to deploy public dir ([c56ec6d](https://github.com/ecomplus/cloud-commerce/commit/c56ec6dbc4c31403ba718e90885ed7f103746394)), closes [pt-br#404](https://github.com/ecomplus/pt-br/issues/404)
+
 ## [2.36.7](https://github.com/ecomplus/cloud-commerce/compare/v2.36.6...v2.36.7) (2025-01-06)
 
 
