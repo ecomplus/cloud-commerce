@@ -11,6 +11,9 @@ mv ./.cloudcommerce/sf-tmp-dist/_astro/*.{png,jpg,jpeg,webp,avif,svg} \
   2>/dev/null
 mv ./.cloudcommerce/sf-tmp-dist/~fallback/index.html ./dist/client/~fallback.html
 mv ./.cloudcommerce/sf-tmp-dist/index.html ./dist/client/~index.html
+if [ -e "./.cloudcommerce/sf-tmp-dist/404.html" ]; then
+  mv ./.cloudcommerce/sf-tmp-dist/404.html ./dist/client/
+fi
 mv ./.cloudcommerce/sf-tmp-dist/app/ ./dist/client/
 mv ./.cloudcommerce/sf-tmp-dist/admin/ ./dist/client/
 rm -rf ./.cloudcommerce/sf-tmp-dist
