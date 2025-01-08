@@ -113,7 +113,7 @@ export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
       clean_accents: true,
       sanitize_replacement: '-',
     },
-    collections: i18n([
+    collections: [
       getConfigsColl(collOptions, {
         settingsMetafields: parseCustomFields(settingsMetafields),
         headerCustom: parseCustomFields(headerCustom),
@@ -122,7 +122,7 @@ export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
       getPagesColl(collOptions),
       getExtraPagesColl(collOptions),
       getBlogColl(collOptions),
-    ]),
+    ],
   };
   if (mergeConfig) {
     if (Array.isArray(mergeConfig.collections)) {
@@ -267,10 +267,23 @@ export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
   };
   config.collections.forEach((collection: Record<string, any>) => {
     collection.files?.forEach((cmsColl: any) => {
+      if (!cmsColl.file?.startsWith(baseDir)) {
+        cmsColl.file = baseDir + cmsColl.file;
+      }
+      if (cmsColl.fields && !Array.isArray(cmsColl.fields)) {
+        cmsColl.fields = parseNestedCmsFields(cmsColl.fields);
+      }
       setWidgetDefaults(cmsColl.fields);
     });
+    if (collection.folder && !collection.folder.startsWith(baseDir)) {
+      collection.folder = baseDir + collection.folder;
+    }
+    if (collection.fields && !Array.isArray(collection.fields)) {
+      collection.fields = parseNestedCmsFields(collection.fields);
+    }
     setWidgetDefaults(collection.fields);
   });
+  config.collections = i18n(config.collections);
   return config;
 };
 
