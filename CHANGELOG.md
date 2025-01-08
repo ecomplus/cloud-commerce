@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.9](https://github.com/ecomplus/cloud-commerce/compare/v2.36.8...v2.36.9) (2025-01-08)
+
+
+### Bug Fixes
+
+* **storefront:** Properly parse nested fields and paths from custom DecapCMS collections ([7b322cb](https://github.com/ecomplus/cloud-commerce/commit/7b322cb9e698ef4a4a211cc9b48a03d0b459cbc7))
+
 ## [2.36.8](https://github.com/ecomplus/cloud-commerce/compare/v2.36.7...v2.36.8) (2025-01-07)
 
 
