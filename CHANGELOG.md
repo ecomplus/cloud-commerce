@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.10](https://github.com/ecomplus/cloud-commerce/compare/v2.36.9...v2.36.10) (2025-01-10)
+
+
+### Bug Fixes
+
+* **passport:** Adding `loyalty_points_entries` to safe customer fields for auth level 1 ([8781819](https://github.com/ecomplus/cloud-commerce/commit/8781819f87b88ecf84bf783869843a1b49978d2c))
+* **storefront:** Skip autoloading delayed scritps (third-party) on CMS admin and preview ([fd13c3f](https://github.com/ecomplus/cloud-commerce/commit/fd13c3f9424a9f6410a7eb697a50a8d0ce52e84a))
+
 ## [2.36.9](https://github.com/ecomplus/cloud-commerce/compare/v2.36.8...v2.36.9) (2025-01-08)
 
 
