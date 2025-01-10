@@ -48,6 +48,7 @@ const maskCustomerFields = (customer: Customers) => {
       _id: order._id,
       number: order.number,
     })),
+    loyalty_points_entries: customer.loyalty_points_entries,
   };
   return safeCustomer;
 };
