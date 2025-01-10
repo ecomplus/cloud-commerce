@@ -263,15 +263,19 @@ if (!import.meta.env.SSR) {
   // Handle @ecomplus/storefront-components/src/js/helpers/wait-storefront-info.js
   const storefrontEmitter = mitt();
   modulesInfoEvents.on('*', (modName) => {
-    if (!modulesInfo[modName]) return;
-    (window as any).storefront.info[modName] = modulesInfo[modName];
-    storefrontEmitter.emit(`info:${(modName as string)}`);
+    const modInfo = modulesInfo[modName];
+    if (!modInfo) return;
+    (window as any).storefront.info[modName] = modInfo;
+    storefrontEmitter.emit(`info:${(modName as string)}`, modInfo);
   });
-  (window as any).storefront = {
+  if (!(window as any).storefront) {
+    (window as any).storefront = {};
+  }
+  Object.assign((window as any).storefront, {
     info: {},
     on: storefrontEmitter.on,
     off: storefrontEmitter.off,
-  };
+  });
 
   const initializingAuth = new Promise<ReturnType<typeof getAuth>>((resolve) => {
     initializeFirebaseAuth();
