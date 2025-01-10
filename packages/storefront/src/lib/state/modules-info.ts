@@ -8,6 +8,7 @@ import type {
   ModuleApiResult,
 } from '@cloudcommerce/types';
 import { reactive, computed } from 'vue';
+import mitt from 'mitt';
 import { formatMoney, price as getPrice } from '@ecomplus/utils';
 import loadingGlobalInfoPreset from '@@sf/scripts/modules-info-preset';
 import { utm, sessionCoupon } from '@@sf/scripts/session-utm';
@@ -35,6 +36,7 @@ const modulesInfo = reactive<{
 loadingGlobalInfoPreset.then((modulesInfoPreset) => {
   Object.assign(modulesInfo, modulesInfoPreset);
 });
+const modulesInfoEmitter = mitt();
 
 type FetchModule = <M extends ModuleApiEndpoint>(
   modName: M,
@@ -84,6 +86,8 @@ if (!import.meta.env.SSR) {
     (['list_payments', 'calculate_shipping'] as const).forEach((modName) => {
       if (!Object.keys(modulesInfo[modName]).length) {
         modulesToFetch.push({ modName });
+      } else {
+        modulesInfoEmitter.emit(modName, modulesInfo[modName]);
       }
     });
     if (Object.keys(utm).length || sessionCoupon) {
@@ -188,6 +192,7 @@ if (!import.meta.env.SSR) {
               ...modulesInfo,
               __timestamp: Date.now(),
             }));
+            modulesInfoEmitter.emit(modName, modulesInfo[modName]);
           }
         })
         .catch(console.error);
@@ -221,6 +226,11 @@ export {
   discountOption,
   loyaltyPointsPrograms,
   availableExtraDiscount,
+};
+
+export const modulesInfoEvents = {
+  on: modulesInfoEmitter.on,
+  off: modulesInfoEmitter.off,
 };
 
 const parsePhrase = <T extends keyof typeof modulesInfo>(

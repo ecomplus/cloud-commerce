@@ -5,6 +5,7 @@ import type {
 } from '@@sf/state/use-analytics';
 import { watch } from 'vue';
 import { useThrottleFn } from '@vueuse/core';
+import mitt from 'mitt';
 import { phone as getPhone } from '@ecomplus/utils';
 import {
   getAuth,
@@ -13,6 +14,7 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
 } from 'firebase/auth';
+import { modulesInfo, modulesInfoEvents } from '@@sf/state/modules-info';
 import {
   session,
   isAuthenticated,
@@ -256,6 +258,19 @@ if (!import.meta.env.SSR) {
       || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.212/dist/lib/js/app.js';
     appScript.onload = onAppLoad;
     document.body.appendChild(appScript);
+  };
+
+  // Handle @ecomplus/storefront-components/src/js/helpers/wait-storefront-info.js
+  const storefrontEmitter = mitt();
+  modulesInfoEvents.on('*', (modName) => {
+    if (!modulesInfo[modName]) return;
+    (window as any).storefront.info[modName] = modulesInfo[modName];
+    storefrontEmitter.emit(`info:${(modName as string)}`);
+  });
+  (window as any).storefront = {
+    info: {},
+    on: storefrontEmitter.on,
+    off: storefrontEmitter.off,
   };
 
   const initializingAuth = new Promise<ReturnType<typeof getAuth>>((resolve) => {
