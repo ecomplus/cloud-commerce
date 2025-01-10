@@ -49,13 +49,18 @@ const { customCode } = await getContent('layout');
             setTimeout(() => document.body.appendChild(script), delayMs);
           });
         };
-        setTimeout(() => {
-          if (typeof window.requestIdleCallback === 'function') {
-            window.requestIdleCallback(loadDelayedScripts);
-            return;
-          }
-          loadDelayedScripts();
-        }, 500);
+        if (
+          !window.CMS && !window.$isCmsPreview
+          && !window.location.pathname.startsWith('/admin/')
+        ) {
+          setTimeout(() => {
+            if (typeof window.requestIdleCallback === 'function') {
+              window.requestIdleCallback(loadDelayedScripts);
+              return;
+            }
+            loadDelayedScripts();
+          }, 500);
+        }
       });
       if (!looksLikeBot) {
         if (document.readyState !== 'loading') {
