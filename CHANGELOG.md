@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.11](https://github.com/ecomplus/cloud-commerce/compare/v2.36.10...v2.36.11) (2025-01-10)
+
+
+### Bug Fixes
+
+* **storefront:** Handle modules info watchers on checkout (vbeta app) ([a3ab982](https://github.com/ecomplus/cloud-commerce/commit/a3ab982da8a53ff46e143a402862204b61e85f2e))
+* **storefront:** Minor compat fixes on checkout with vbeta app ([ba5afc2](https://github.com/ecomplus/cloud-commerce/commit/ba5afc2f216c3e88eb09559c49071aece5af5580))
+
 ## [2.36.10](https://github.com/ecomplus/cloud-commerce/compare/v2.36.9...v2.36.10) (2025-01-10)
 
 
