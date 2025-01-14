@@ -6,7 +6,7 @@ export const parseAddress = (to) => ({
   Number: `${String(to.number) || 's/n'}`,
   street: `${to.street}`,
   District: `${to.borough}`,
-  Complement: to.complement || '',
+  Complement: (to.complement || '').substring(0, 20),
 });
 
 export const parsePaymentType = {
