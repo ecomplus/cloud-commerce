@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.12](https://github.com/ecomplus/cloud-commerce/compare/v2.36.11...v2.36.12) (2025-01-14)
+
+
+### Bug Fixes
+
+* **braspag:** Limit address component string size to 20 chars ([7a3422a](https://github.com/ecomplus/cloud-commerce/commit/7a3422a6a7b7d639d4b13d80a9c3a1079b88d60f))
+* **deps:** Update non-major dependencies ([#519](https://github.com/ecomplus/cloud-commerce/issues/519)) ([e0d8dd4](https://github.com/ecomplus/cloud-commerce/commit/e0d8dd48d08af0b16ec0b6f7e1520819b0b884ee))
+* **modules:** Saving transaction `app.intermediator` and `discount` from list payments on checkout ([e78dd6a](https://github.com/ecomplus/cloud-commerce/commit/e78dd6a56970956fd911d560f31624f3c173bac8))
+* **pagaleve:** Properly matching transaction by ID on Pagaleve webhooks ([fcc719c](https://github.com/ecomplus/cloud-commerce/commit/fcc719c78ec4d681d147f719e4404ef3217bec73))
+
 ## [2.36.11](https://github.com/ecomplus/cloud-commerce/compare/v2.36.10...v2.36.11) (2025-01-10)
 
 
