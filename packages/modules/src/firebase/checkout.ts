@@ -218,8 +218,8 @@ export default async (req: Request, res: Response) => {
     }
     const listPaymentsRes = await requestModule(paymentsBody, modulesBaseURL, 'payment');
     msgErr = listPaymentsRes.msgErr;
-    if (listPaymentsResults && !msgErr) {
-      listPaymentsResults = getValidResults(listPaymentsResults, 'payment_gateways');
+    if (listPaymentsRes && !msgErr) {
+      listPaymentsResults = getValidResults(listPaymentsRes, 'payment_gateways');
       return handleListPayments(body, listPaymentsResults, paymentsBody, amount, orderBody);
     }
     listPaymentsResults = null;
