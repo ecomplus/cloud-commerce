@@ -53,6 +53,6 @@
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.3",
     "@types/html-minifier": "^4.0.5",
-    "typescript": "~5.7.2"
+    "typescript": "~5.7.3"
   }
 }
