@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.14](https://github.com/ecomplus/cloud-commerce/compare/v2.36.13...v2.36.14) (2025-01-14)
+
+
+### Bug Fixes
+
+* **modules:** Fix regression applying cumulative discounts on checkout ([1e7a9a0](https://github.com/ecomplus/cloud-commerce/commit/1e7a9a0c0c401c98e0041029c6934cb16b92dffb))
+
 ## [2.36.13](https://github.com/ecomplus/cloud-commerce/compare/v2.36.12...v2.36.13) (2025-01-14)
 
 
