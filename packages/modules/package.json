@@ -64,6 +64,6 @@
     "@cloudcommerce/test-base": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.3",
-    "json-schema-to-typescript": "^15.0.3"
+    "json-schema-to-typescript": "^15.0.4"
   }
 }
