@@ -226,16 +226,16 @@ export default async (req: Request, res: Response) => {
     return {};
   };
 
-  // payment payment method discounts
+  // preview payment method discounts
   await listPayments();
   let discounts = await requestModule(body, modulesBaseURL, 'discount');
   if (discounts) {
     discounts = getValidResults(discounts);
+    // reset payment preview discount if any
+    amount.discount = 0;
+    fixAmount(amount, body, orderBody);
     handleApplyDiscount(body, discounts, amount, orderBody);
   }
-  // reset payment preview discount if any
-  amount.discount = 0;
-  fixAmount(amount, body, orderBody);
 
   const { paymentGateway, paymentDiscountValue } = await listPayments();
   if (!paymentGateway && !listPaymentsResults) {
