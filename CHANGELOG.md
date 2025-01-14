@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.13](https://github.com/ecomplus/cloud-commerce/compare/v2.36.12...v2.36.13) (2025-01-14)
+
+
+### Bug Fixes
+
+* **modules:** Fix regression on checkout parsing list payments response ([56ade9d](https://github.com/ecomplus/cloud-commerce/commit/56ade9d5b08346b184b537a2dfc6b70bd04b9d86))
+
 ## [2.36.12](https://github.com/ecomplus/cloud-commerce/compare/v2.36.11...v2.36.12) (2025-01-14)
 
 
