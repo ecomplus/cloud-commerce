@@ -90,29 +90,19 @@ export const pagaleve = {
       try {
         const { data: order } = await api.get(orderEndpoint);
         if (order?.transactions) {
-          const transactionIndex = order.transactions.findIndex(({ intermediator }) => {
+          const transaction = order.transactions.find(({ intermediator }) => {
             return intermediator?.transaction_id === id;
           });
-          const transactionId = order.transactions[transactionIndex]?._id;
-          if (!transactionId) {
+          if (!transaction) {
             res.sendStatus(404);
             return;
           }
-
           await api.post(`${orderEndpoint}/payments_history`, {
             date_time: new Date().toISOString(),
             status: parseStatusToEcom(state),
-            transaction_id: transactionId,
+            transaction_id: transaction._id,
             flags: ['pagaleve'],
           } as Exclude<(typeof order)['payments_history'], undefined>[0]);
-
-          await api.patch(`${orderEndpoint}/transactions/${transactionId}`, {
-            intermediator: {
-              transaction_id: id || '',
-              transaction_code: id || '',
-            },
-          } as Partial<Exclude<(typeof order)['transactions'], undefined>[0]>);
-
           if (state.toLowerCase() === 'authorized') {
             const _pagaleve = new Pagaleve(appData.username, appData.password, isSandbox);
             await _pagaleve.preparing;
