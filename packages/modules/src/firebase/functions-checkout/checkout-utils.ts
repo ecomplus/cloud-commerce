@@ -99,7 +99,7 @@ const getValidResults = (
 
 const handleListPayments = (
   body: CheckoutBodyWithItems,
-  listPayment: { [key: string]: any },
+  listPayment: any[],
   paymentsBody: Payment,
   amount: Amount,
   orderBody: OrderSet,
@@ -143,27 +143,32 @@ const handleListPayments = (
         const { discount } = paymentGateway;
         // handle discount by payment method
         const applyDiscountIn = discount && discount.apply_at;
+        let paymentDiscountValue = 0;
         if (applyDiscountIn && discount.value && amount[applyDiscountIn]) {
           const maxDiscount: number = amount[applyDiscountIn] || 0;
           // update amount discount and total
-          let discountValue: number;
           if (discount.type === 'percentage') {
-            discountValue = (maxDiscount * discount.value) / 100;
+            paymentDiscountValue = (maxDiscount * discount.value) / 100;
           } else {
-            discountValue = discount.value;
-            if (discountValue > maxDiscount) {
-              discountValue = maxDiscount;
+            paymentDiscountValue = discount.value;
+            if (paymentDiscountValue > maxDiscount) {
+              paymentDiscountValue = maxDiscount;
             }
           }
           amount.discount = amount.discount || 0;
-          amount.discount += discountValue;
+          amount.discount += paymentDiscountValue;
           fixAmount(amount, body, orderBody);
         }
         // add to order body
         orderBody.payment_method_label = paymentGateway.label || '';
+        return {
+          paymentGateway,
+          paymentDiscountValue,
+        };
       }
     }
   }
+  return {};
 };
 
 const handleShippingServices = (
@@ -247,9 +252,6 @@ const handleApplyDiscount = (
   amount: Amount,
   orderBody: OrderSet,
 ) => {
-  // reset payment preview discount if any
-  amount.discount = 0;
-  fixAmount(amount, body, orderBody);
   for (let i = 0; i < listDiscount.length; i++) {
     const result = listDiscount[i];
     // treat apply discount response

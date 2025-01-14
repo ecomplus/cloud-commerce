@@ -6,6 +6,7 @@ import type {
   CheckoutTransaction,
   TransactionOrder,
   PaymentHistory,
+  PaymentGateways,
 } from '../../types/index';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
@@ -32,6 +33,8 @@ const createOrder = async (
   orderBody: OrderSet,
   transactions: CheckoutTransaction[],
   dateTime: string,
+  paymentGateway?: PaymentGateways[number],
+  paymentDiscountValue?: number,
 ) => {
   const { order, err } = await newOrder(orderBody);
   if (order) {
@@ -122,6 +125,16 @@ const createOrder = async (
                 });
               }
               // logger.log(transaction.app)
+            }
+            if (isFirstTransaction && paymentGateway) {
+              if (!transaction.app.intermediator) {
+                transaction.app.intermediator = paymentGateway.intermediator;
+              } else if (paymentGateway.intermediator?.code) {
+                transaction.app.intermediator.code = paymentGateway.intermediator.code;
+              }
+              if (paymentDiscountValue) {
+                transaction.discount = paymentDiscountValue;
+              }
             }
 
             // check for transaction status

@@ -201,7 +201,7 @@ export default async (req: Request, res: Response) => {
     );
   }
 
-  let listPaymentGateways: any;
+  let listPaymentsResults: any[] | null | undefined;
   const listPayments = async () => {
     const { transaction, ...bodyPayment } = body;
     let paymentsBody: Payment;
@@ -216,25 +216,29 @@ export default async (req: Request, res: Response) => {
         transaction,
       };
     }
-    listPaymentGateways = await requestModule(paymentsBody, modulesBaseURL, 'payment');
-    msgErr = listPaymentGateways.msgErr;
-    if (listPaymentGateways && !msgErr) {
-      listPaymentGateways = getValidResults(listPaymentGateways, 'payment_gateways');
-      handleListPayments(body, listPaymentGateways, paymentsBody, amount, orderBody);
-      return true;
+    const listPaymentsRes = await requestModule(paymentsBody, modulesBaseURL, 'payment');
+    msgErr = listPaymentsRes.msgErr;
+    if (listPaymentsResults && !msgErr) {
+      listPaymentsResults = getValidResults(listPaymentsResults, 'payment_gateways');
+      return handleListPayments(body, listPaymentsResults, paymentsBody, amount, orderBody);
     }
-    listPaymentGateways = null;
-    return false;
+    listPaymentsResults = null;
+    return {};
   };
 
+  // payment payment method discounts
   await listPayments();
   let discounts = await requestModule(body, modulesBaseURL, 'discount');
   if (discounts) {
     discounts = getValidResults(discounts);
     handleApplyDiscount(body, discounts, amount, orderBody);
   }
+  // reset payment preview discount if any
+  amount.discount = 0;
+  fixAmount(amount, body, orderBody);
 
-  if (!(await listPayments()) && !listPaymentGateways) {
+  const { paymentGateway, paymentDiscountValue } = await listPayments();
+  if (!paymentGateway && !listPaymentsResults) {
     return sendError(
       res,
       msgErr?.status || 409,
@@ -256,5 +260,7 @@ export default async (req: Request, res: Response) => {
     orderBody,
     transactions,
     dateTime,
+    paymentGateway,
+    paymentDiscountValue,
   );
 };
