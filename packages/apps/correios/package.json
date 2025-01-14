@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-correios",
   "type": "module",
-  "version": "2.36.13",
+  "version": "2.36.14",
   "description": "e-com.plus Cloud Commerce app for Correios shipping calculation",
   "main": "lib/index.js",
   "files": [
