@@ -37,7 +37,7 @@
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "@vueuse/core": "12.3.0",
+    "@vueuse/core": "12.4.0",
     "astro": "4.16.18",
     "astro-capo": "^0.0.1",
     "axios": "^1.7.9",
@@ -53,6 +53,6 @@
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.3",
     "@types/html-minifier": "^4.0.5",
-    "typescript": "~5.7.2"
+    "typescript": "~5.7.3"
   }
 }
