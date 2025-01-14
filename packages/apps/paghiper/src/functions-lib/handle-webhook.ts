@@ -93,7 +93,7 @@ export default async (req: Request, res: Response) => {
             let transactionId: string | undefined;
             if (transactions) {
               transactions.forEach((transaction) => {
-                const { app, intermediator } = transaction;
+                const { intermediator } = transaction;
                 if (intermediator && intermediator.transaction_id === String(transactionCode)) {
                   if (transaction.status) {
                     if (
@@ -103,9 +103,6 @@ export default async (req: Request, res: Response) => {
                       // ignore old/duplicated notification
                       return;
                     }
-                  }
-                  if (app && app.intermediator && app.intermediator.code !== 'paghiper') {
-                    return;
                   }
                   transactionId = transaction._id;
                 }

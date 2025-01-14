@@ -90,8 +90,8 @@ export const pagaleve = {
       try {
         const { data: order } = await api.get(orderEndpoint);
         if (order?.transactions) {
-          const transactionIndex = order.transactions.findIndex(({ app }) => {
-            return app?.intermediator?.code === 'pagaleve';
+          const transactionIndex = order.transactions.findIndex(({ intermediator }) => {
+            return intermediator?.transaction_id === id;
           });
           const transactionId = order.transactions[transactionIndex]?._id;
           if (!transactionId) {
