@@ -197,7 +197,9 @@ export default async (appData: AppModuleBody) => {
       }
 
       transaction.status = {
-        current: pointsToConsume && pointsToConsume <= 0 ? 'authorized' : 'unauthorized',
+        current: typeof pointsToConsume === 'number' && pointsToConsume <= 0
+          ? 'authorized'
+          : 'unauthorized',
       };
 
       return {
