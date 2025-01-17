@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.15](https://github.com/ecomplus/cloud-commerce/compare/v2.36.14...v2.36.15) (2025-01-17)
+
+
+### Bug Fixes
+
+* **firebase:** Prevent changing object by reference on logger with context `execId` ([a5a1b13](https://github.com/ecomplus/cloud-commerce/commit/a5a1b13d72a2fa29855d94db538af2489d3cfda2))
+* **loyalty-points:** Fixing initial returned (un)authorized status on create transaction ([baa14cf](https://github.com/ecomplus/cloud-commerce/commit/baa14cfb0194f0694a7d6fab707fc6f4977aa262))
+* **storefront:** Clear invalid UTF-8 chars on CMS content frontmatter ([e3d95af](https://github.com/ecomplus/cloud-commerce/commit/e3d95af85791eac0dd8e6c356765ae1aa66d799b))
+
 ## [2.36.14](https://github.com/ecomplus/cloud-commerce/compare/v2.36.13...v2.36.14) (2025-01-14)
 
 
