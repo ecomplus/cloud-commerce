@@ -38,6 +38,7 @@ const getExtraPagesColl = ({
       },
       name: 'body',
       widget: 'markdown',
+      required: false,
     },
     {
       label: 'Meta title',
