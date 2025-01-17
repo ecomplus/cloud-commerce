@@ -186,7 +186,9 @@ const log = (level: 'info' | 'warn' | 'error', msg: any, d?: Record<string, any>
   const execId = asyncLocalStorage.getStore()?.execId;
   if (execId) {
     if (d) {
-      if (typeof d === 'object') d.execId = execId;
+      if (typeof d === 'object') {
+        d = { ...d, execId };
+      }
     } else {
       d = { execId };
     }

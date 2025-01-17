@@ -144,8 +144,6 @@ export default async (appData: AppModuleBody) => {
       ecom_order_id: orderId,
     },
   };
-  logger.info('>data: ', payment);
-
   const mpAccessToken = configApp.mp_access_token;
   if (typeof mpAccessToken === 'string' && mpAccessToken) {
     process.env.MERCADOPAGO_TOKEN = mpAccessToken;
@@ -164,11 +162,9 @@ export default async (appData: AppModuleBody) => {
       Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
       'Content-Type': 'application/json',
     };
-
     if (deviceId) {
       Object.assign(headers, { 'X-meli-session-id': deviceId });
     }
-
     // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post
     const { data } = await axios({
       url: 'https://api.mercadopago.com/v1/payments',
@@ -176,9 +172,8 @@ export default async (appData: AppModuleBody) => {
       headers,
       data: payment,
     });
-    if (data) {
-      logger.info('> MP Checkout #', { storeId, orderId });
 
+    if (data) {
       const statusPayment = parsePaymentStatus(data.status);
       let isSaveRetry = false;
       const saveToDb = () => {
