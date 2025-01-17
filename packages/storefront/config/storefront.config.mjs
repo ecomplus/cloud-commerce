@@ -16,7 +16,15 @@ export default () => {
     config.set({ storeId: Number(ECOM_STORE_ID) });
   }
 
-  const parseFrontmatter = (markdown) => {
+  const parseFrontmatter = (_markdown) => {
+    let markdown = '';
+    for (let i = 0; i < _markdown.length; i++) {
+      // Clear invalid UTF-8 chars
+      const charCode = _markdown.charCodeAt(i);
+      if (charCode >= 128 && charCode <= 159) continue;
+      if (charCode >= 636) continue;
+      markdown += _markdown.charAt(i);
+    }
     let matter = {};
     if (markdown.substring(0, 4) === '---\n') {
       const [frontmatter, _md] = markdown.substring(4).split('\n---\n');
