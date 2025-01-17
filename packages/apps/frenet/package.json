@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-frenet",
   "type": "module",
-  "version": "2.36.14",
+  "version": "2.36.15",
   "description": "e-com.plus Cloud Commerce app for Frenet shipping calculation",
   "main": "lib/frenet.js",
   "exports": {
