@@ -36,7 +36,7 @@
     "firebase-admin": "^13.0.2",
     "firebase-functions": "^6.2.0",
     "pagarme": "4.35.2",
-    "qs": "^6.13.1"
+    "qs": "^6.14.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
