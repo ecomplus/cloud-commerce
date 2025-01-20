@@ -131,7 +131,7 @@ export default async (appData: AppModuleBody) => {
       },
     },
     external_reference: String(params.order_number),
-    transaction_amount: params.amount.total,
+    transaction_amount: Math.round(params.amount.total * 100) / 100,
     description: `Pedido #${params.order_number} de ${buyer.fullname}`.substring(0, 60),
     payment_method_id: paymentMethodId,
     token,
@@ -161,9 +161,10 @@ export default async (appData: AppModuleBody) => {
     const headers = {
       Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
       'Content-Type': 'application/json',
+      'X-Idempotency-Key': orderId,
     };
     if (deviceId) {
-      Object.assign(headers, { 'X-meli-session-id': deviceId });
+      headers['X-Meli-Session-Id'] = deviceId;
     }
     // https://www.mercadopago.com.br/developers/pt/reference/payments/_payments/post
     const { data } = await axios({
