@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.16](https://github.com/ecomplus/cloud-commerce/compare/v2.36.15...v2.36.16) (2025-01-20)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#520](https://github.com/ecomplus/cloud-commerce/issues/520)) ([d397f2d](https://github.com/ecomplus/cloud-commerce/commit/d397f2d25c8de37de973c27e397793787f6aa606))
+* **i18n:** Direct `i19reviews` translations ([ffa3cad](https://github.com/ecomplus/cloud-commerce/commit/ffa3cadef51e6f24770fa93b764d50b4a7a46b53))
+* **mercadopago:** Setting `X-Idempotency-Key` on transaction with order ID ([77941d5](https://github.com/ecomplus/cloud-commerce/commit/77941d5a171e4dabe7f1c8d9d334d24aeace08ae))
+* **storefront:** Minor fix for Decap CMS for extra pages and blog posts body field (md) not required ([6d7b37f](https://github.com/ecomplus/cloud-commerce/commit/6d7b37f6087695fd4af1c3d85283622cb0893f51))
+
 ## [2.36.15](https://github.com/ecomplus/cloud-commerce/compare/v2.36.14...v2.36.15) (2025-01-17)
 
 
