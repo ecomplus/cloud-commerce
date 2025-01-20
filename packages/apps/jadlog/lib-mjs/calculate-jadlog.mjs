@@ -245,7 +245,7 @@ export default async ({ params, application }) => {
 
     try {
       const { data } = await axios({
-        url: 'http://www.jadlog.com.br/embarcador/api/frete/valor',
+        url: 'https://www.jadlog.com.br/embarcador/api/frete/valor',
         method: 'post',
         data: {
           frete: jadlogServices,
