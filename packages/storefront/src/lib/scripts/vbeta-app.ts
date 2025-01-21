@@ -302,6 +302,12 @@ if (!import.meta.env.SSR) {
     initializingAuth
       .then(async (firebaseAuth) => {
         await firebaseAuth.authStateReady();
+        if (searchParams.get('wait_auth') !== null && !isAuthenticated.value) {
+          watch(isAuthenticated, () => {
+            loadAppScript();
+          }, { once: true });
+          return;
+        }
         loadAppScript();
       })
       .catch((err) => {
