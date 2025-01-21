@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.18](https://github.com/ecomplus/cloud-commerce/compare/v2.36.17...v2.36.18) (2025-01-21)
+
+
+### Bug Fixes
+
+* **mercadopago:** Support settings custom Pix expiration from app data config ([86b9c0a](https://github.com/ecomplus/cloud-commerce/commit/86b9c0aff6ec4bdca8653b3efdbb27aee5d6e47a))
+* **storefront:** Force wating authentication on vbeta app with `?wait_auth` ([1abcba0](https://github.com/ecomplus/cloud-commerce/commit/1abcba027d1c6102c262c9e846d26b9cb4a326db))
+
 ## [2.36.17](https://github.com/ecomplus/cloud-commerce/compare/v2.36.16...v2.36.17) (2025-01-21)
 
 
