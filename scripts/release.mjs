@@ -92,7 +92,7 @@ if (argv.publish) {
         await $`git commit -m 'Update to v${version}' \
           -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
         await $`git push`;
-      } catch (e) {
+      } catch {
         //
       }
     }
