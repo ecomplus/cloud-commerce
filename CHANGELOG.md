@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.17](https://github.com/ecomplus/cloud-commerce/compare/v2.36.16...v2.36.17) (2025-01-21)
+
+
+### Bug Fixes
+
+* **jadlog:** Updating WS endpoint with https ([cf563fb](https://github.com/ecomplus/cloud-commerce/commit/cf563fbefb0d277b4e2b94291b1160ace4357d02))
+* **mercadopago:** Properly parsing all MP payment status ([843f9c6](https://github.com/ecomplus/cloud-commerce/commit/843f9c6311dbef524a91fa6f4d85b8348494749e))
+* **storefront:** Preseting `ecomPassport` session with cookie and local storage on vbeta app ([61f56e7](https://github.com/ecomplus/cloud-commerce/commit/61f56e7405f21005e60b1a096e9802f7907037fc))
+
 ## [2.36.16](https://github.com/ecomplus/cloud-commerce/compare/v2.36.15...v2.36.16) (2025-01-20)
 
 
