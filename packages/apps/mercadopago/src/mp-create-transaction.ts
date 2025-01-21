@@ -42,7 +42,7 @@ export default async (appData: AppModuleBody) => {
   const { application, storeId } = appData;
   const params = appData.params as CreateTransactionParams;
   // app configured options
-  const configApp = { ...application.data, ...application.hidden_data };
+  const appConfig = { ...application.data, ...application.hidden_data };
   const notificationUrl = `${baseUri}/mercadopago-webhook`;
 
   let token: string | undefined;
@@ -133,7 +133,19 @@ export default async (appData: AppModuleBody) => {
     },
   );
 
-  const payment = {
+  const mpAccessToken = appConfig.mp_access_token;
+  if (typeof mpAccessToken === 'string' && mpAccessToken) {
+    process.env.MERCADOPAGO_TOKEN = mpAccessToken;
+  }
+  if (!process.env.MERCADOPAGO_TOKEN) {
+    logger.warn('Missing Mercadopago access token');
+    return {
+      status: 409,
+      error: 'CREATE_TRANSACTION_ERR',
+      message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
+    };
+  }
+  const payment: Record<string, any> = {
     payer: {
       type: 'customer',
       email: buyer.email,
@@ -149,7 +161,7 @@ export default async (appData: AppModuleBody) => {
     description: `Pedido #${params.order_number} de ${buyer.fullname}`.substring(0, 60),
     payment_method_id: paymentMethodId,
     token,
-    statement_descriptor: configApp.statement_descriptor || `${params.domain}_MercadoPago`,
+    statement_descriptor: appConfig.statement_descriptor || `${params.domain}_MercadoPago`,
     installments: params.installments_number || 1,
     notification_url: notificationUrl,
     additional_info: additionalInfo,
@@ -158,17 +170,10 @@ export default async (appData: AppModuleBody) => {
       ecom_order_id: orderId,
     },
   };
-  const mpAccessToken = configApp.mp_access_token;
-  if (typeof mpAccessToken === 'string' && mpAccessToken) {
-    process.env.MERCADOPAGO_TOKEN = mpAccessToken;
-  }
-  if (!process.env.MERCADOPAGO_TOKEN) {
-    logger.warn('Missing Mercadopago access token');
-    return {
-      status: 409,
-      error: 'CREATE_TRANSACTION_ERR',
-      message: 'The MERCADOPAGO_TOKEN is not defined in the environment variables',
-    };
+  if (isPix && appConfig.account_deposit?.exp_minutes) {
+    const d = new Date();
+    d.setMinutes(d.getMinutes() + appConfig.account_deposit.exp_minutes);
+    payment.date_of_expiration = d.toISOString();
   }
 
   try {
