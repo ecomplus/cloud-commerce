@@ -14,6 +14,7 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
 } from 'firebase/auth';
+import { setCookie } from '@@sf/sf-lib';
 import { modulesInfo, modulesInfoEvents } from '@@sf/state/modules-info';
 import {
   session,
@@ -215,48 +216,60 @@ if (!import.meta.env.SSR) {
   (window as any).ECOMCLIENT_API_SEARCH = `${apiBaseUri}search/_els/`;
   (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
-  const onAppLoad = () => {
+  const passportStorageKey = 'ecomPassportClient';
+  watch(isAuthenticated, async () => {
     const { ecomPassport } = window as Record<string, any>;
-    watch(isAuthenticated, async () => {
-      if (isAuthenticated.value) {
+    if (isAuthenticated.value) {
+      const passportSession = {
+        auth: {
+          token: session.auth,
+          id: session.auth?.customer_id,
+          level: 3,
+        },
+      };
+      if (ecomPassport) {
         ecomPassport.setSession({
-          auth: {
-            token: session.auth,
-            id: session.auth?.customer_id,
-            level: 3,
-          },
+          ...passportSession,
           customer: customer.value,
         });
-      } else if (ecomPassport.checkLogin()) {
-        ecomPassport.logout();
+      } else {
+        setCookie(passportStorageKey, JSON.stringify(passportSession));
       }
-    }, {
-      immediate: true,
-    });
-    watch(customer, (_customer) => {
-      if (_customer.display_name || _customer.main_email) {
+    } else if (ecomPassport?.checkLogin()) {
+      ecomPassport.logout();
+    }
+  }, {
+    immediate: true,
+  });
+  watch(customer, (_customer) => {
+    const { ecomPassport } = window as Record<string, any>;
+    if (_customer.display_name || _customer.main_email) {
+      if (ecomPassport) {
         ecomPassport.setCustomer(_customer);
+      } else {
+        localStorage.setItem(passportStorageKey, JSON.stringify(_customer));
       }
-    }, {
-      immediate: true,
-    });
-    setTimeout(() => {
-      watchAppRoutes();
-      ecomPassport.on('logout', () => {
-        if (isAuthenticated.value) {
-          logout();
-          watch(isAuthenticated, () => {
-            window.location.href = '/';
-          }, { once: true });
-        }
-      });
-    }, 400);
-  };
+    }
+  }, {
+    immediate: true,
+  });
   const loadAppScript = () => {
     const appScript = document.createElement('script');
     appScript.src = (window as any)._appScriptSrc
       || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.212/dist/lib/js/app.js';
-    appScript.onload = onAppLoad;
+    appScript.onload = () => {
+      setTimeout(() => {
+        watchAppRoutes();
+        (window as any).ecomPassport.on('logout', () => {
+          if (isAuthenticated.value) {
+            logout();
+            watch(isAuthenticated, () => {
+              window.location.href = '/';
+            }, { once: true });
+          }
+        });
+      }, 400);
+    };
     document.body.appendChild(appScript);
   };
 
@@ -286,7 +299,15 @@ if (!import.meta.env.SSR) {
     });
   });
   if (window.location.hash.includes('account')) {
-    initializingAuth.finally(loadAppScript);
+    initializingAuth
+      .then(async (firebaseAuth) => {
+        await firebaseAuth.authStateReady();
+        loadAppScript();
+      })
+      .catch((err) => {
+        console.error(err);
+        loadAppScript();
+      });
   } else {
     loadAppScript();
   }

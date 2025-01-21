@@ -81,3 +81,15 @@ export const getDigestHex = async (message: string) => {
     .join('');
   return hashHex;
 };
+
+export const setCookie = (cname: string, cvalue: string, exdays = 1) => {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  const expires = 'expires=' + d.toUTCString();
+  const updatedCookie = cname + '=' + cvalue + '; ' + expires
+    + '; path=/; samesite=strict';
+  if (!import.meta.env.SSR) {
+    document.cookie = updatedCookie;
+  }
+  return updatedCookie;
+};
