@@ -1,4 +1,5 @@
 import type {
+  Orders,
   AppModuleBody,
   CreateTransactionParams,
   CreateTransactionResponse,
@@ -7,14 +8,27 @@ import { getFirestore } from 'firebase-admin/firestore';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
-const parsePaymentStatus = (status: string) => {
+type TransactionStatusEnum = Exclude<
+  Exclude<Orders['transactions'], undefined>[number]['status'],
+  undefined
+>['current'];
+
+const parsePaymentStatus = (status: string): TransactionStatusEnum => {
   switch (status) {
+    case 'authorized':
+    case 'pending':
+    case 'refunded':
+      return status;
     case 'rejected':
       return 'voided';
     case 'in_process':
       return 'under_analysis';
     case 'approved':
       return 'paid';
+    case 'charged_back':
+      return 'in_dispute';
+    case 'cancelled':
+      return 'unauthorized';
     default:
       return 'pending';
   }
