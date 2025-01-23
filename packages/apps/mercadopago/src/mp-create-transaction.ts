@@ -20,6 +20,7 @@ const parsePaymentStatus = (status: string): TransactionStatusEnum => {
     case 'refunded':
       return status;
     case 'rejected':
+    case 'cancelled':
       return 'voided';
     case 'in_process':
       return 'under_analysis';
@@ -27,8 +28,6 @@ const parsePaymentStatus = (status: string): TransactionStatusEnum => {
       return 'paid';
     case 'charged_back':
       return 'in_dispute';
-    case 'cancelled':
-      return 'unauthorized';
     default:
       return 'pending';
   }
