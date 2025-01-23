@@ -101,9 +101,13 @@ export default async (product: Products, originalTinyProduct, appData) => {
     tinyProduct.marca = product.brands[0].name;
   }
   if (product.category_tree) {
-    tinyProduct.categoria = product.category_tree.replace(/\s?>\s?/g, ' >> ');
+    tinyProduct.categoria = product.category_tree
+      .replace(/\s?>\s?/g, ' >> ')
+      .replace(/&+/g, 'e');
   } else if (product.categories && product.categories.length) {
-    tinyProduct.categoria = product.categories.map(({ name }) => name).join(' >> ');
+    tinyProduct.categoria = product.categories
+      .map(({ name }) => name).join(' >> ')
+      .replace(/&+/g, 'e');
   }
 
   if (product.pictures && product.pictures.length) {
