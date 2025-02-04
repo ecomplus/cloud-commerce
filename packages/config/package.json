@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@fastify/deepmerge": "^2.0.1"
+    "@fastify/deepmerge": "^2.0.2"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

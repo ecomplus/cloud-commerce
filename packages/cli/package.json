@@ -34,11 +34,11 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@fastify/deepmerge": "^2.0.1",
+    "@fastify/deepmerge": "^2.0.2",
     "dotenv": "^16.4.7",
     "libsodium-wrappers": "^0.7.15",
     "md5": "^2.3.0",
     "typescript": "~5.7.3",
-    "zx": "^8.3.0"
+    "zx": "^8.3.2"
   }
 }
