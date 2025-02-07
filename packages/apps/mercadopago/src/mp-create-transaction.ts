@@ -306,14 +306,14 @@ export default async (appData: AppModuleBody) => {
       if (status !== 401 && status !== 403) {
         err.payment = JSON.stringify(payment);
         err.status = status;
-        if (typeof data === 'object' && data) {
-          err.response = JSON.stringify(data);
-        } else {
-          err.response = data;
-        }
         if (typeof data.message === 'string' && data.message) {
           message = data.message;
         }
+      }
+      if (typeof data === 'object' && data) {
+        err.response = JSON.stringify(data);
+      } else {
+        err.response = data;
       }
     }
     logger.error(err);
