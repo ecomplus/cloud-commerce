@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.19](https://github.com/ecomplus/cloud-commerce/compare/v2.36.18...v2.36.19) (2025-02-07)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#522](https://github.com/ecomplus/cloud-commerce/issues/522)) ([4319501](https://github.com/ecomplus/cloud-commerce/commit/4319501ca7362ab0951af71cb7431019ffb9078f))
+* **deps:** Update non-major dependencies ([#529](https://github.com/ecomplus/cloud-commerce/issues/529)) ([5d27f60](https://github.com/ecomplus/cloud-commerce/commit/5d27f602a336d70a5a40836b112ad9442c60bd1f))
+* **firebase:** Must await all events handled and PubSub published on cron store events execution ([123659a](https://github.com/ecomplus/cloud-commerce/commit/123659aec4f12103b9f6974aef5a3d5dc6a5e467))
+* **mercadopago:** Parse payment `cancelled` status to `voided` ([5cc8d74](https://github.com/ecomplus/cloud-commerce/commit/5cc8d748d83a3855d6a17a3662c3523f7b08ae4c))
+* **tiny-erp:** Replacing "&" on product category name on export ([bf97b58](https://github.com/ecomplus/cloud-commerce/commit/bf97b589e54ce366c00ab8d78c2ad4248faab1b8))
+
 ## [2.36.18](https://github.com/ecomplus/cloud-commerce/compare/v2.36.17...v2.36.18) (2025-01-21)
 
 
