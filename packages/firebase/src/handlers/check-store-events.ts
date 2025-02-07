@@ -162,7 +162,7 @@ export default async () => {
   });
   // Some resource events are not listened to every minute
   const isOrdersOnly = Boolean(new Date().getMinutes() % 5);
-  listenedEvents.forEach(async (listenedEventName) => {
+  await Promise.all(listenedEvents.map(async (listenedEventName) => {
     const {
       resource,
       params,
@@ -208,7 +208,7 @@ export default async () => {
       }
       eventsPerId[resourceId].push(apiEvent);
     });
-    Object.keys(eventsPerId).forEach(async (key) => {
+    await Promise.all(Object.keys(eventsPerId).map(async (key) => {
       const resourceId = key as ResourceId;
       const ascOrderedEvents = eventsPerId[resourceId].sort((a, b) => {
         if (a.timestamp < b.timestamp) return -1;
@@ -254,14 +254,14 @@ export default async () => {
         }));
         /* eslint-enable no-await-in-loop */
       }
-    });
+    }));
     logger.info(`> '${listenedEventName}' events: `, {
       result: result.map((apiEvent) => ({
         timestamp: apiEvent.timestamp,
         resource_id: apiEvent.resource_id,
       })),
     });
-  });
+  }));
   return documentRef.set({
     timestamp: maxTimestamp,
     nonOrdersTimestamp: isOrdersOnly ? lastNonOrdersTimestamp : maxTimestamp,
