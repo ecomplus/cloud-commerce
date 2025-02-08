@@ -45,8 +45,13 @@ const updateCartState = async () => {
     if (shoppingCart.subtotal) shoppingCart.subtotal = 0;
     return;
   }
-  const productIds = shoppingCart.items.map((item) => item.product_id)
-    .filter((_id) => typeof _id === 'string' && _id.length === 24);
+  const productIds: Array<CartItem['product_id']> = [];
+  shoppingCart.items.forEach((item) => {
+    if (item.kit_product?._id) return;
+    const _id = item.product_id;
+    if (typeof _id !== 'string' || _id.length !== 24) return;
+    productIds.push(_id);
+  });
   if (!productIds.length) {
     resetCartItems();
     return;
@@ -77,6 +82,7 @@ const updateCartState = async () => {
     });
     data.result.forEach((productItem) => {
       shoppingCart.items.forEach((cartItem) => {
+        if (cartItem.kit_product) return;
         if (cartItem.product_id !== productItem._id) return;
         const { variation_id: variationId, quantity } = cartItem;
         const updatedItem = parseProduct({ ...productItem }, variationId, quantity);
