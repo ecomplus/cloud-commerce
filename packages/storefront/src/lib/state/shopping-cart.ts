@@ -75,19 +75,13 @@ const updateCartState = async () => {
         "variations.picture_id",
       ] as const,
     });
-    const storedItems = [...shoppingCart.items];
-    resetCartItems();
     data.result.forEach((productItem) => {
-      const storedItem = storedItems.find((item) => item.product_id === productItem._id);
-      if (!storedItem) return;
-      const { variation_id: variationId, quantity } = storedItem;
-      const cartItem = addProductToCart(productItem, variationId, quantity);
-      if (!cartItem) return;
-      if (storedItem._id) {
-        cartItem._id = storedItem._id;
-      }
-      cartItem.customizations = storedItem.customizations;
-      cartItem.flags = storedItem.flags;
+      shoppingCart.items.forEach((cartItem) => {
+        if (cartItem.product_id !== productItem._id) return;
+        const { variation_id: variationId, quantity } = cartItem;
+        const updatedItem = parseProduct({ ...productItem }, variationId, quantity);
+        Object.assign(cartItem, updatedItem);
+      });
     });
   } catch (err) {
     console.error(err);
