@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.20](https://github.com/ecomplus/cloud-commerce/compare/v2.36.19...v2.36.20) (2025-02-08)
+
+
+### Bug Fixes
+
+* **mercadopago:** Debug transaction error response even on 401/403 ([18134e2](https://github.com/ecomplus/cloud-commerce/commit/18134e2e3a24589b0154659fc966d3929f7b2d17))
+* **storefront:** Ensure kipping cart item with kit product custom price ([85b116f](https://github.com/ecomplus/cloud-commerce/commit/85b116fbe183272bfdbfef9d878fefa5d92ee7f1))
+* **storefront:** Persisting cart item kit composition and customizations on reload and navigation ([5590965](https://github.com/ecomplus/cloud-commerce/commit/5590965b16d9346c027d035b3491b9e4a4de0a20))
+
 ## [2.36.19](https://github.com/ecomplus/cloud-commerce/compare/v2.36.18...v2.36.19) (2025-02-07)
 
 
