@@ -82,7 +82,7 @@ const updateCartState = async () => {
     });
     data.result.forEach((productItem) => {
       shoppingCart.items.forEach((cartItem) => {
-        if (cartItem.kit_product) return;
+        if (cartItem.kit_product?._id) return;
         if (cartItem.product_id !== productItem._id) return;
         const { variation_id: variationId, quantity } = cartItem;
         const updatedItem = parseProduct({ ...productItem }, variationId, quantity);
