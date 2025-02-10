@@ -146,7 +146,7 @@ runs:
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.30.0
+        key: ${{ runner.os }}-npm-g-firebase-tools-13.30.0-1
 
     - if: github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true'
       shell: bash
