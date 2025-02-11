@@ -123,10 +123,12 @@ export default async () => {
   const maxTimestamp = Date.now() - 1000 * 2;
   const documentRef = getFirestore().doc('storeEvents/last');
   const documentSnapshot = await documentRef.get();
-  const lastRunTimestamp: number = documentSnapshot.get('timestamp')
-    || Date.now() - 1000 * 60 * 5;
-  const lastNonOrdersTimestamp: number = documentSnapshot.get('nonOrdersTimestamp')
-    || 0;
+  const lastRunTimestamp: number = documentSnapshot
+    .get('timestamp') || Date.now() - 1000 * 60 * 5;
+  const lastNonOrdersTimestamp: number = documentSnapshot
+    .get('nonOrdersTimestamp') || 0;
+  const lastPushedTimestamps: Record<Resource, number | undefined> = documentSnapshot
+    .get('pushedTimestamps') || {};
   const baseApiEventsFilter = {
     'flag!': EVENT_SKIP_FLAG,
     'timestamp>': new Date(lastRunTimestamp - 1).toISOString(),
@@ -183,8 +185,15 @@ export default async () => {
         }
       }
     }
+    if (
+      lastPushedTimestamps[resource]
+      && lastPushedTimestamps[resource] > maxTimestamp - 1000 * 60 * 60
+    ) {
+      params['timestamp>'] = new Date(lastPushedTimestamps[resource]).toISOString();
+    }
     let { data: { result } } = await api.get(`events/${resource}`, {
       params,
+      limit: Number(process.env.STORE_EVENTS_LIMIT || 50),
     });
     /*
     global.$transformApiEvents = async (resource: string, result: EventsResult) => {
@@ -198,8 +207,8 @@ export default async () => {
     if (typeof $transformApiEvents === 'function') {
       result = await $transformApiEvents(resource, result);
     }
+    logger.info(`> '${listenedEventName}' ${result.length} events`, { params });
     if (!result.length) return;
-    logger.info(`> '${listenedEventName}' ${result.length} events`);
     const eventsPerId: Record<ResourceId, typeof result> = {};
     result.forEach((apiEvent) => {
       const resourceId = apiEvent.resource_id;
@@ -232,7 +241,7 @@ export default async () => {
         if (i > 0) {
           await new Promise((resolve) => { setTimeout(resolve, i * 150); });
         }
-        await Promise.all(activeApps.map((app) => {
+        await Promise.all(activeApps.map(async (app) => {
           const appConfig = subscribersApps.find(({ appId }) => appId === app.app_id);
           if (appConfig?.events.includes(listenedEventName)) {
             const topicName = GET_PUBSUB_TOPIC(app.app_id);
@@ -248,9 +257,12 @@ export default async () => {
               json,
               orderingKey: resourceId,
             };
-            return tryPubSubPublish(topicName, messageObj);
+            await tryPubSubPublish(topicName, messageObj);
+            const pushedTimestamp = new Date(apiEvent.timestamp).getTime();
+            if (pushedTimestamp > (lastPushedTimestamps[resource] || 0)) {
+              lastPushedTimestamps[resource] = pushedTimestamp;
+            }
           }
-          return null;
         }));
         /* eslint-enable no-await-in-loop */
       }
@@ -265,6 +277,7 @@ export default async () => {
   return documentRef.set({
     timestamp: maxTimestamp,
     nonOrdersTimestamp: isOrdersOnly ? lastNonOrdersTimestamp : maxTimestamp,
+    pushedTimestamps: lastPushedTimestamps,
     activeApps,
     listenedEvents,
   });
