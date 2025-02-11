@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.21](https://github.com/ecomplus/cloud-commerce/compare/v2.36.20...v2.36.21) (2025-02-11)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#533](https://github.com/ecomplus/cloud-commerce/issues/533)) ([b7b75af](https://github.com/ecomplus/cloud-commerce/commit/b7b75af4daab743b206174de320a3fa49c4292da))
+* **firebase:** Start limiting listed API events and save last pushed timestamps per resource ([3a69dd3](https://github.com/ecomplus/cloud-commerce/commit/3a69dd38584713d68d44d11fc869f6e69e6bcadc))
+
 ## [2.36.20](https://github.com/ecomplus/cloud-commerce/compare/v2.36.19...v2.36.20) (2025-02-08)
 
 
