@@ -353,6 +353,9 @@ runs:
         TIKTOK_ACCESS_TOKEN=$TIKTOK_ACCESS_TOKEN
         TIKTOK_PIXEL_ID=$TIKTOK_PIXEL_ID
         " > functions/.env
+        if [[ -f "functions/public.env" ]]; then
+          cat functions/public.env >> functions/.env
+        fi
         if [[ -n "$CUSTOM_DOTENV" ]]; then
           echo "$CUSTOM_DOTENV" >> functions/.env
         fi
