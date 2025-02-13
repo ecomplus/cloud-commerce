@@ -68,6 +68,8 @@ if (argv.publish) {
     }
     for (let ii = 0; ii < storesDirs.length; ii++) {
       const storeDir = storesDirs[ii];
+      cd(`${storeDir}`);
+      await $`git pull`;
       for (let iii = 0; iii < functions.length; iii++) {
         const codebase = functions[iii];
         cd(`${storeDir}/functions/${codebase}`);
