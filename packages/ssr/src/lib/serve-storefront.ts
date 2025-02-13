@@ -186,12 +186,6 @@ export default async (req: Request, res: Response) => {
       || req.get('cf-connecting-ip')
       || req.get('fastly-client-ip');
     const ip = (ipsHeader?.split(',')[0] || req.ip)?.trim();
-    logger.info(`Detected IP ${ip}`, {
-      'x-forwarded-for': req.get('x-forwarded-for'),
-      'x-real-ip': req.get('x-real-ip'),
-      'cf-connecting-ip': req.get('cf-connecting-ip'),
-      'fastly-client-ip': req.get('fastly-client-ip'),
-    });
     await sendAnalyticsEvents({ url, events }, { ...req.body, ip });
     res.sendStatus(201);
     return;
