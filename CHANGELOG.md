@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.23](https://github.com/ecomplus/cloud-commerce/compare/v2.36.22...v2.36.23) (2025-02-13)
+
+
+### Bug Fixes
+
+* **ssr:** Prefers `x-forwarded-for` for client IP on analytics server events ([3abef60](https://github.com/ecomplus/cloud-commerce/commit/3abef60db4366169a200636a5e4e04f601b1c7c7))
+* **storefront:** Updating checkout vbeta-app script version ([b0b506b](https://github.com/ecomplus/cloud-commerce/commit/b0b506ba472a18d58924caa8a2c9aba308779955))
+
 ## [2.36.22](https://github.com/ecomplus/cloud-commerce/compare/v2.36.21...v2.36.22) (2025-02-11)
 
 
