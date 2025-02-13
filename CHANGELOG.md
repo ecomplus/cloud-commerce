@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.36.24](https://github.com/ecomplus/cloud-commerce/compare/v2.36.23...v2.36.24) (2025-02-13)
+
+
+### Bug Fixes
+
+* **ssr:** Prefers `x-real-ip` for client IP on analytics server events ([83dccbf](https://github.com/ecomplus/cloud-commerce/commit/83dccbf28f2958811d6e5429c4ab08af2c4b3721))
+
 ## [2.36.23](https://github.com/ecomplus/cloud-commerce/compare/v2.36.22...v2.36.23) (2025-02-13)
 
 
