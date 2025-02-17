@@ -35,20 +35,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - uses: actions/checkout@v4
         with:
           repository: ecomplus/store
           path: store
+          fetch-depth: 2
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       - name: Get pnpm store directory
         id: pnpm-paths
