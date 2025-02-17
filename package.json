@@ -7,8 +7,8 @@
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
   "license": "MIT",
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=7 <9"
+    "node": ">=18 <21",
+    "pnpm": ">=10 <11"
   },
   "files": [
     "/action.yml",
@@ -63,9 +63,17 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "@nuxt/kit",
-        "@babel/core"
+        "@babel/core",
+        "postcss"
       ]
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "esbuild",
+      "protobufjs",
+      "sharp"
+    ]
   },
-  "packageManager": "pnpm@8.15.7"
+  "packageManager": "pnpm@10.4.1"
 }
