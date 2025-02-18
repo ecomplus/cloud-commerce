@@ -11,7 +11,9 @@
         "^build"
       ],
       "outputs": [
-        "**/dist/**"
+        "**/dist/**",
+        "**/lib/**/*.js",
+        "**/index.js"
       ]
     },
     "test": {
