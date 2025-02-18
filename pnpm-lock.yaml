@@ -67,11 +67,11 @@ importers:
     dependencies:
       '@cloudcommerce/cli':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
         specifier: ^2.36.24
-        version: 2.36.24(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))(typescript@5.7.3)
+        version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -83,25 +83,25 @@ importers:
     dependencies:
       '@cloudcommerce/feeds':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/passport
 
   ecomplus-stores/barradoce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/api
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
+        version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
         version: 1.7.23(vue@3.5.13(typescript@5.7.3))
@@ -114,13 +114,13 @@ importers:
     devDependencies:
       '@cloudcommerce/i18n':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)(vite@5.4.14(@types/node@22.13.4)(sass@1.85.0))
+        version: link:../../../../packages/storefront
       '@cloudcommerce/types':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/types
       '@iconify-json/mingcute':
         specifier: ^1.1.18
         version: 1.2.3
@@ -132,23 +132,23 @@ importers:
     dependencies:
       '@cloudcommerce/events':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
+        version: link:../../../../packages/events
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/modules
 
   ecomplus-stores/tiasonia:
     dependencies:
       '@cloudcommerce/cli':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
         specifier: ^2.36.24
-        version: 2.36.24(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))(typescript@5.7.3)
+        version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -160,16 +160,16 @@ importers:
     dependencies:
       '@cloudcommerce/api':
         specifier: ^2.29.8
-        version: 2.36.24
+        version: link:../../../../packages/api
       '@cloudcommerce/feeds':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/passport
       '@ecomplus/client':
         specifier: ^2.4.0
         version: 2.4.0(@ecomplus/utils@1.5.0-rc.6)
@@ -178,13 +178,13 @@ importers:
     dependencies:
       '@cloudcommerce/api':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/api
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
+        version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
         version: 1.7.23(vue@3.5.13(typescript@5.7.3))
@@ -197,13 +197,13 @@ importers:
     devDependencies:
       '@cloudcommerce/i18n':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)(vite@5.4.14(@types/node@22.13.4)(sass@1.85.0))
+        version: link:../../../../packages/storefront
       '@cloudcommerce/types':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/types
       '@fontsource-variable/inter':
         specifier: 5.0.20
         version: 5.0.20
@@ -224,13 +224,13 @@ importers:
     dependencies:
       '@cloudcommerce/events':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
+        version: link:../../../../packages/events
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../../packages/modules
 
   packages/__skeleton:
     dependencies:
@@ -1314,11 +1314,11 @@ importers:
     dependencies:
       '@cloudcommerce/cli':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
         specifier: ^2.36.24
-        version: 2.36.24(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))(typescript@5.7.3)
+        version: link:../packages/eslint
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -1330,25 +1330,25 @@ importers:
     dependencies:
       '@cloudcommerce/feeds':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/firebase
       '@cloudcommerce/passport':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/api
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
+        version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
         version: 1.7.23(vue@3.5.13(typescript@5.7.3))
@@ -1358,13 +1358,13 @@ importers:
     devDependencies:
       '@cloudcommerce/i18n':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)(vite@5.4.14(@types/node@22.13.4)(sass@1.85.0))
+        version: link:../../../packages/storefront
       '@cloudcommerce/types':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.4
         version: 5.4.4
@@ -1373,13 +1373,13 @@ importers:
     dependencies:
       '@cloudcommerce/events':
         specifier: ^2.36.24
-        version: 2.36.24(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
+        version: link:../../../packages/events
       '@cloudcommerce/firebase':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/firebase
       '@cloudcommerce/modules':
         specifier: ^2.36.24
-        version: 2.36.24
+        version: link:../../../packages/modules
 
 packages:
 
@@ -1583,119 +1583,6 @@ packages:
 
   '@capsizecss/unpack@2.3.0':
     resolution: {integrity: sha512-qkf9IoFIVTOkkpr8oZtCNSmubyWFCuPU4EOWO6J/rFPP5Ks2b1k1EHDSQRLwfokh6nCd7mJgBT2lhcuDCE6w4w==}
-
-  '@cloudcommerce/api@2.36.24':
-    resolution: {integrity: sha512-3TSVksJcVAa3Q2MHUEGHoeI68xAM3pPQAF8kCDEdAvXmE5sJ6zDHadgYe0z/DMmtB5EDM1I/SZj3sYZpFZ3WPg==}
-
-  '@cloudcommerce/app-affiliate-program@2.36.24':
-    resolution: {integrity: sha512-acwZ5wzEOwJqlMQ4SP+dsL5mfeJIOgwFz6P0H3eDrZV8ppWl3ESX1SqSsx9QHSVdiBqGy2vxFAoZk8H2lfIRfQ==}
-
-  '@cloudcommerce/app-braspag@2.36.24':
-    resolution: {integrity: sha512-NxduazaW6V0ul3whUMPGdX+1cZ/tKBI0pqKwcr/OfMWgEf2B/8657UJp/maQrR/4AAV4ZSQRwyPHr4Z0Sq/p/Q==}
-
-  '@cloudcommerce/app-correios@2.36.24':
-    resolution: {integrity: sha512-/3qHU5PFtGFN2JArY7gUAaeipFNCqjcabkz272hDOa/hb8BQk7oI9wsRM0N1g3EYj+1kUExLJba/Qj8Gjn8pTg==}
-
-  '@cloudcommerce/app-custom-payment@2.36.24':
-    resolution: {integrity: sha512-Fzzk6r27EgC6/ovHXrFoUgITGMK8y8cyE2n22RkKDbny9UsngB+SbF0+JAMHTdz6TnjtV5lpoo4Y4jn5mvkFOA==}
-
-  '@cloudcommerce/app-custom-shipping@2.36.24':
-    resolution: {integrity: sha512-NwF5yA2eSRv4kF0b2EOsuAUWBZg8qDsCtBWNBuSvAZLtuXbjw5oDKyaq6JR+OIxax2YuXNxVEpiTEpprhnLvnw==}
-
-  '@cloudcommerce/app-datafrete@2.36.24':
-    resolution: {integrity: sha512-NKwA01xM9VbSnBPZjE5zmnHaYhsthPNIJeldED4EpqMFJfhEt1+tfhPmv2kTAUUUrOyBpVp5i+huRQYnkhnDbA==}
-
-  '@cloudcommerce/app-discounts@2.36.24':
-    resolution: {integrity: sha512-F4haaT9oP2PQxtAX9S2Ipe2PkVML2ZdugjiFeENgZgPvohdzu5AIcqZIVMJSkwzMRt4eMaNTgyvAnFltunotWg==}
-
-  '@cloudcommerce/app-emails@2.36.24':
-    resolution: {integrity: sha512-sn/by67sPDH6GRXBU7r073b7RCozY7cx2POC2aUstbnqg++VA2lF2kN/ptiqEgvAhSMcu/irKVdo/y5dZETMVg==}
-
-  '@cloudcommerce/app-flash-courier@2.36.24':
-    resolution: {integrity: sha512-2ECuORhL3rYN3bunibHv6o08w2Ox/y2AqeBU8eJFFpH+jZQqK3n7jjO1H5RyWBq8H8KErsKsQ4JbUy+I65r51Q==}
-
-  '@cloudcommerce/app-frenet@2.36.24':
-    resolution: {integrity: sha512-8pw3jDTC2tTVEvKaZdZGm7NCdSyAwJbYmzQzXUEbErzMaqhXZVOkVZvT19ZKE8IzJgX5/cx8NID+2LNR2iUkVw==}
-
-  '@cloudcommerce/app-galaxpay@2.36.24':
-    resolution: {integrity: sha512-mMqmjKEg99tZu7U++zl5EJ1gM40a23qCGYUoddDFKbHexoLh2GXgivtcD7ecPQMqP0P98rmR3w5L0kWj4a42jw==}
-
-  '@cloudcommerce/app-jadlog@2.36.24':
-    resolution: {integrity: sha512-HzhNeCL+z/JkZkZv2rkXx4UmiZjUKjocEAFcq3YFAUPQm9cS3DB8zByOwnG3r6F0YHyhVALl/Txy909t0GBjPQ==}
-
-  '@cloudcommerce/app-loyalty-points@2.36.24':
-    resolution: {integrity: sha512-s4EugKAhC9kJ0AZd/7+z1TCIWKF9iWXrUdhiMPOTbcYi0vGNQBQcEVIytpJxmHZouLXTDUVS/BggF5ws1cvEUw==}
-
-  '@cloudcommerce/app-mandae@2.36.24':
-    resolution: {integrity: sha512-G3vUWlJcEG12M5QIGAeFC2t2H8Tfmr1jx9eBFnPVXJGGa9CUs9CQikHN0eUvWrKtTsyp7i3S+mR+bM/Z9nKxzw==}
-
-  '@cloudcommerce/app-melhor-envio@2.36.24':
-    resolution: {integrity: sha512-p9LWTzwTQMePT1sGPqUsGjdgPMaPR2nV7S62qvD/ESUBle3D2sj7jILsEWRClpjUYPxcgDCD1OYOto9iZwfouQ==}
-
-  '@cloudcommerce/app-mercadopago@2.36.24':
-    resolution: {integrity: sha512-Zu5wKvOKo2+mix4/6Ea2gbLmxROmr3pgkWWJmHChpsBJfNVsf54T8iM6EjIIDJ51Aj8cv36gYAA9tp5QVIAYug==}
-
-  '@cloudcommerce/app-pagaleve@2.36.24':
-    resolution: {integrity: sha512-iw+D8YKbTN9boHETdUw68gK1gPGC5vD7lYRZjn3YncHFhja8O1XIZNhfSF+yD0xc97QaeaiRnU1pSkIle9Zptw==}
-
-  '@cloudcommerce/app-pagarme-v5@2.36.24':
-    resolution: {integrity: sha512-5Mb+9VRpQA/UR+HChVJCfwtSTOj8ov/V9OfAPy5JukC/JQ7kakWgSBUz6nlhiMEoKKsPCp291xNmSrQRD4abRw==}
-
-  '@cloudcommerce/app-pagarme@2.36.24':
-    resolution: {integrity: sha512-UKBd/0Yfr4OSAh9hJstr9bBrXavz+Kmrgutvb27WNloaSLGHUHGkAgw54JlM53RJ242UJLeYFZjKzNL5kTwJsw==}
-
-  '@cloudcommerce/app-paghiper@2.36.24':
-    resolution: {integrity: sha512-UHF/mCyCU/WfmD0dZCqu5AGpRldoQ9GnCqeJN2guir/7PrG8KOEr+ObpCJ6ZEw+IV9B2mczqZWmIMeKiZST6uQ==}
-
-  '@cloudcommerce/app-pix@2.36.24':
-    resolution: {integrity: sha512-ykC82vK0Xy9fR+/tbehjFrfBOTpskNf21pMaZ0HBd4/ozuDQ2+lbMJz5Me3FTW3IttnoltIzHHQ7taBhRFHoKw==}
-
-  '@cloudcommerce/app-tiny-erp@2.36.24':
-    resolution: {integrity: sha512-DAdpr42mMM9n1D4OMrADlbEwO6O6/VAk62D6z+ABDr+x922wuNUbTcqSpdico1vRi36ONN4BZOojqKqzq1OHRg==}
-
-  '@cloudcommerce/app-webhooks@2.36.24':
-    resolution: {integrity: sha512-vRC0v38gsZlSnWxiC334Id7WxKgZOWTLMM90M0rcgfzsMKNMyqH9R2OrXNCRGH8Vl7Z5Sh3x6SsTSXtFIWHjJw==}
-
-  '@cloudcommerce/cli@2.36.24':
-    resolution: {integrity: sha512-bHmnC74MmkNohBNVYx5RvsqfZGLxC+Fd4vbI1WE+FS1/ucPhyb2peYMA+zSgrH+GCv2BDvgJZ9h3F2LOQiQBqQ==}
-    hasBin: true
-
-  '@cloudcommerce/config@2.36.24':
-    resolution: {integrity: sha512-T3FZ5RWiKJNZ2U7/yvzXmKqHXx/y0KVJ2nUgxr2LEV0oZ1XeSidGFWdMjKIvMmHnSzBKN+spTOwmgWAn5fQ2lw==}
-
-  '@cloudcommerce/emails@2.36.24':
-    resolution: {integrity: sha512-NjuB5t1V97jRn9MzpM1Ha50LyuEwiE+aZ4+yTPKktpyWcCpgEC6Alb5kUCfYHsKY77ITiNCS3Y4CEGEGIEHRCg==}
-
-  '@cloudcommerce/eslint@2.36.24':
-    resolution: {integrity: sha512-H/Lr5E9pv5bPaOrT75nyxIfcx91KPbb8EA4lgzUGV5x7JkuRoqhOakPAiT0dTvZXCdXq+dQZHtkCjiDbPdrsiQ==}
-
-  '@cloudcommerce/events@2.36.24':
-    resolution: {integrity: sha512-huj8TnGu2y+SpLl+/h25NUwz+Tbj6qxAFk+opB+h9V8ghPFK7tYfcYtt3C+Ore45M+gV931C+k8bB3K9/zoWiw==}
-
-  '@cloudcommerce/feeds@2.36.24':
-    resolution: {integrity: sha512-otKSyNA1vHi5nSTDjlbuOkLRH9fv8x989y33JhQLxYdh/mT8M8nZNUONYhg22lADb1TWCOxBQQ0w3epBQM4zcA==}
-
-  '@cloudcommerce/firebase@2.36.24':
-    resolution: {integrity: sha512-7pfhfqduKEePDYmNJLje/I+RnOP52E6iqwWsp4uH/oMqyHI3wbdBdu/1iMFvp+XCq0T8wskYB5BQzyr+kOubrw==}
-
-  '@cloudcommerce/i18n@2.36.24':
-    resolution: {integrity: sha512-B45jNXo386neEBhzOw3omaL+1QPhCU53vgb2Khf27LPOj6l4HVYRG0UuuiWOqEDpBSpM+kiNwQzb+byhTEFh/A==}
-
-  '@cloudcommerce/modules@2.36.24':
-    resolution: {integrity: sha512-pbamq+02zZOgM/LP5T0zFrSYahS2ILos+tFTr76hw6jVOEsOKNwnNJyzDnRnGPsJl9FG07U6AE6TLqhe4e3z2Q==}
-
-  '@cloudcommerce/passport@2.36.24':
-    resolution: {integrity: sha512-5pM4m3i1FQs4Puzbv1dtUa2vLJThHcO8NhrOG6XRLCdf8A17KJ2r4UTVg5v88N23f+c+1MnlNBw/70uTK71ZTw==}
-
-  '@cloudcommerce/ssr@2.36.24':
-    resolution: {integrity: sha512-bE/jvnsOaJMuWbNhIWQWatYdk1lYbzPndTe5oy5Ox8tu+GU8w9/bgKD1W9zpnDMDryHiz8oDVUGLkae5KuSsyA==}
-
-  '@cloudcommerce/storefront@2.36.24':
-    resolution: {integrity: sha512-xpgGISvpt80xSMx2GBqUGnlWQCo3In2bWb9OTeKpvnmmxE+U0ctdrHs2W7exgt3A39wUKCQ549wA88W7tIVCOw==}
-    hasBin: true
-
-  '@cloudcommerce/types@2.36.24':
-    resolution: {integrity: sha512-XmzMesW6j2je9SmDXXmxvASszmzmakHCtZXWZ/BPlotDpmD2gH+9OO3MaY6kBpee7oAOob8GQ0Vw+8pTjoyCig==}
 
   '@commitlint/cli@19.7.1':
     resolution: {integrity: sha512-iObGjR1tE/PfDtDTEfd+tnRkB3/HJzpQqRTyofS2MPPkDn1mp3DBC8SoPDayokfAy+xKhF8+bwRCJO25Nea0YQ==}
@@ -3095,20 +2982,11 @@ packages:
   '@vue/shared@3.5.13':
     resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
 
-  '@vueuse/core@12.5.0':
-    resolution: {integrity: sha512-GVyH1iYqNANwcahAx8JBm6awaNgvR/SwZ1fjr10b8l1HIgDp82ngNbfzJUgOgWEoxjL+URAggnlilAEXwCOZtg==}
-
   '@vueuse/core@12.7.0':
     resolution: {integrity: sha512-jtK5B7YjZXmkGNHjviyGO4s3ZtEhbzSgrbX+s5o+Lr8i2nYqNyHuPVOeTdM1/hZ5Tkxg/KktAuAVDDiHMraMVA==}
 
-  '@vueuse/metadata@12.5.0':
-    resolution: {integrity: sha512-Ui7Lo2a7AxrMAXRF+fAp9QsXuwTeeZ8fIB9wsLHqzq9MQk+2gMYE2IGJW48VMJ8ecvCB3z3GsGLKLbSasQ5Qlg==}
-
   '@vueuse/metadata@12.7.0':
     resolution: {integrity: sha512-4VvTH9mrjXqFN5LYa5YfqHVRI6j7R00Vy4995Rw7PQxyCL3z0Lli86iN4UemWqixxEvYfRjG+hF9wL8oLOn+3g==}
-
-  '@vueuse/shared@12.5.0':
-    resolution: {integrity: sha512-vMpcL1lStUU6O+kdj6YdHDixh0odjPAUM15uJ9f7MY781jcYkIwFA4iv2EfoIPO6vBmvutI1HxxAwmf0cx5ISQ==}
 
   '@vueuse/shared@12.7.0':
     resolution: {integrity: sha512-coLlUw2HHKsm7rPN6WqHJQr18WymN4wkA/3ThFaJ4v4gWGWAQQGK+MJxLuJTBs4mojQiazlVWAKNJNpUWGRkNw==}
@@ -5165,10 +5043,6 @@ packages:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}
     engines: {node: '>=6'}
 
-  local-pkg@0.5.1:
-    resolution: {integrity: sha512-9rrA30MRRP3gBD3HTGnC6cDFpaE1kVDWxWgqWJUN0RvDNAo+Nz/9GxB+nHOH0ifbVFy0hSA1V6vFDvnx54lTEQ==}
-    engines: {node: '>=14'}
-
   local-pkg@1.0.0:
     resolution: {integrity: sha512-bbgPw/wmroJsil/GgL4qjDzs5YLTBMQ99weRsok1XCDccQeehbHA/I1oRvk2NPtr7KGZgT/Y5tPRnAtMqeG2Kg==}
     engines: {node: '>=14'}
@@ -6498,9 +6372,6 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  strip-literal@2.1.1:
-    resolution: {integrity: sha512-631UJ6O00eNGfMiWG78ck80dfBab8X6IVFB51jZK5Icd7XAs60Z5y7QdSd/wGIklnWvRbUNloVzhOKKmutxQ6Q==}
-
   strip-literal@3.0.0:
     resolution: {integrity: sha512-TcccoMhJOM3OebGhSBEmp3UZ2SfDMZUEBdRA/9ynfLi8yYajyWX3JiXArcJt4Umh4vISpspkQIY8ZZoCqjbviA==}
 
@@ -6827,9 +6698,6 @@ packages:
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
 
-  unimport@3.14.6:
-    resolution: {integrity: sha512-CYvbDaTT04Rh8bmD8jz3WPmHYZRG/NnvYVzwD6V1YAlvvKROlAeNDUBhkBGzNav2RKaeuXvlWYaa1V4Lfi/O0g==}
-
   unimport@4.1.1:
     resolution: {integrity: sha512-j9+fijH6aDd05yv1fXlyt7HSxtOWtGtrZeYTVBsSUg57Iuf+Ps2itIZjeyu7bEQ4k0WOgYhHrdW8m/pJgOpl5g==}
     engines: {node: '>=18.12.0'}
@@ -6880,18 +6748,6 @@ packages:
   unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
-
-  unplugin-auto-import@0.19.0:
-    resolution: {integrity: sha512-W97gTDEWu/L1EcKCXY5Ni8bsMW1E9kv12wYQv3mYpd7zcFctXYlLKsqeva6sbCQbzS8t9AG/XdU5/WkEJKPlFw==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@nuxt/kit': ^3.2.2
-      '@vueuse/core': '*'
-    peerDependenciesMeta:
-      '@nuxt/kit':
-        optional: true
-      '@vueuse/core':
-        optional: true
 
   unplugin-auto-import@19.1.0:
     resolution: {integrity: sha512-B+TGBEBHqY9aR+7YfShfLujETOHstzpV+yaqgy5PkfV0QG7Py+TYMX7vJ9W4SrysHR+UzR+gzcx/nuZjmPeclA==}
@@ -7345,14 +7201,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@8.3.4(astro@4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3))':
-    dependencies:
-      astro: 4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
-      send: 0.19.1
-      server-destroy: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
-
   '@astrojs/node@8.3.4(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3))':
     dependencies:
       astro: 4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
@@ -7608,538 +7456,6 @@ snapshots:
       fontkit: 2.0.4
     transitivePeerDependencies:
       - encoding
-
-  '@cloudcommerce/api@2.36.24': {}
-
-  '@cloudcommerce/app-affiliate-program@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-braspag@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      qs: 6.14.0
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-correios@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@google-cloud/pubsub': 4.10.0
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-custom-payment@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-
-  '@cloudcommerce/app-custom-shipping@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-datafrete@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-discounts@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-
-  '@cloudcommerce/app-emails@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/emails': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/transactional-mails': 2.0.4
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-flash-courier@2.36.24(firebase-admin@13.1.0)':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - firebase-admin
-      - supports-color
-
-  '@cloudcommerce/app-frenet@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-galaxpay@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-jadlog@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      axios: 1.7.9
-    transitivePeerDependencies:
-      - debug
-
-  '@cloudcommerce/app-loyalty-points@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-mandae@2.36.24(firebase-admin@13.1.0)':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      axios: 1.7.9
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - firebase-admin
-      - supports-color
-
-  '@cloudcommerce/app-melhor-envio@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-mercadopago@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-pagaleve@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-pagarme-v5@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-pagarme@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      pagarme: 4.35.2
-      qs: 6.14.0
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-paghiper@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-pix@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-tiny-erp@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/app-webhooks@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/cli@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@fastify/deepmerge': 2.0.2
-      dotenv: 16.4.7
-      libsodium-wrappers: 0.7.15
-      md5: 2.3.0
-      typescript: 5.7.3
-      zx: 8.3.2
-
-  '@cloudcommerce/config@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@fastify/deepmerge': 2.0.2
-
-  '@cloudcommerce/emails@2.36.24':
-    dependencies:
-      '@cloudcommerce/firebase': 2.36.24
-      axios: 1.7.9
-      ejs: 3.1.10
-      nodemailer: 6.10.0
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/eslint@2.36.24(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))(typescript@5.7.3)':
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 8.24.1(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)(typescript@5.7.3)
-      '@typescript-eslint/parser': 8.24.1(eslint@8.57.1)(typescript@5.7.3)
-      eslint: 8.57.1
-      eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-astro: 1.3.1(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.24.1(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1)
-      eslint-plugin-tailwindcss: 3.18.0(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3)))
-      eslint-plugin-vue: 9.32.0(eslint@8.57.1)
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))
-    transitivePeerDependencies:
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
-      - supports-color
-      - ts-node
-      - typescript
-
-  '@cloudcommerce/events@2.36.24(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/app-affiliate-program': 2.36.24
-      '@cloudcommerce/app-braspag': 2.36.24
-      '@cloudcommerce/app-datafrete': 2.36.24
-      '@cloudcommerce/app-emails': 2.36.24
-      '@cloudcommerce/app-flash-courier': 2.36.24(firebase-admin@13.1.0)
-      '@cloudcommerce/app-frenet': 2.36.24
-      '@cloudcommerce/app-galaxpay': 2.36.24
-      '@cloudcommerce/app-loyalty-points': 2.36.24
-      '@cloudcommerce/app-melhor-envio': 2.36.24
-      '@cloudcommerce/app-mercadopago': 2.36.24
-      '@cloudcommerce/app-pagaleve': 2.36.24
-      '@cloudcommerce/app-pagarme': 2.36.24
-      '@cloudcommerce/app-pagarme-v5': 2.36.24
-      '@cloudcommerce/app-paghiper': 2.36.24
-      '@cloudcommerce/app-pix': 2.36.24
-      '@cloudcommerce/app-tiny-erp': 2.36.24
-      '@cloudcommerce/app-webhooks': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@cloudcommerce/ssr': 2.36.24(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      source-map-support: 0.5.21
-    transitivePeerDependencies:
-      - '@types/node'
-      - debug
-      - encoding
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-
-  '@cloudcommerce/feeds@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/firebase@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/config': 2.36.24
-      '@google-cloud/pubsub': 4.10.0
-      dotenv: 16.4.7
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      source-map-support: 0.5.21
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/i18n@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-
-  '@cloudcommerce/modules@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/app-braspag': 2.36.24
-      '@cloudcommerce/app-correios': 2.36.24
-      '@cloudcommerce/app-custom-payment': 2.36.24
-      '@cloudcommerce/app-custom-shipping': 2.36.24
-      '@cloudcommerce/app-datafrete': 2.36.24
-      '@cloudcommerce/app-discounts': 2.36.24
-      '@cloudcommerce/app-flash-courier': 2.36.24(firebase-admin@13.1.0)
-      '@cloudcommerce/app-frenet': 2.36.24
-      '@cloudcommerce/app-galaxpay': 2.36.24
-      '@cloudcommerce/app-jadlog': 2.36.24
-      '@cloudcommerce/app-loyalty-points': 2.36.24
-      '@cloudcommerce/app-mandae': 2.36.24(firebase-admin@13.1.0)
-      '@cloudcommerce/app-melhor-envio': 2.36.24
-      '@cloudcommerce/app-mercadopago': 2.36.24
-      '@cloudcommerce/app-pagaleve': 2.36.24
-      '@cloudcommerce/app-pagarme': 2.36.24
-      '@cloudcommerce/app-pagarme-v5': 2.36.24
-      '@cloudcommerce/app-paghiper': 2.36.24
-      '@cloudcommerce/app-pix': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      source-map-support: 0.5.21
-    transitivePeerDependencies:
-      - debug
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/passport@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      source-map-support: 0.5.21
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-
-  '@cloudcommerce/ssr@2.36.24(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)':
-    dependencies:
-      '@astrojs/node': 8.3.4(astro@4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3))
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@cloudcommerce/i18n': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      '@vueuse/core': 12.5.0(typescript@5.7.3)
-      astro: 4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
-      astro-capo: 0.0.1(astro@4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3))
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      html-minifier: 4.0.0
-      mitt: 3.0.1
-      mrmime: 2.0.1
-      vue: 3.5.13(typescript@5.7.3)
-      yaml: 2.7.0
-    transitivePeerDependencies:
-      - '@types/node'
-      - debug
-      - encoding
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-
-  '@cloudcommerce/ssr@2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)':
-    dependencies:
-      '@astrojs/node': 8.3.4(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3))
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/firebase': 2.36.24
-      '@cloudcommerce/i18n': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      '@vueuse/core': 12.5.0(typescript@5.7.3)
-      astro: 4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
-      astro-capo: 0.0.1(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3))
-      axios: 1.7.9
-      firebase-admin: 13.1.0
-      firebase-functions: 6.3.2(firebase-admin@13.1.0)
-      html-minifier: 4.0.0
-      mitt: 3.0.1
-      mrmime: 2.0.1
-      vue: 3.5.13(typescript@5.7.3)
-      yaml: 2.7.0
-    transitivePeerDependencies:
-      - '@types/node'
-      - debug
-      - encoding
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-
-  '@cloudcommerce/storefront@2.36.24(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)(vite@5.4.14(@types/node@22.13.4)(sass@1.85.0))':
-    dependencies:
-      '@astrojs/node': 8.3.4(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3))
-      '@astrojs/vue': 4.5.3(@types/node@22.13.4)(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3))(rollup@4.34.8)(sass@1.85.0)(vue@3.5.13(typescript@5.7.3))
-      '@cloudcommerce/api': 2.36.24
-      '@cloudcommerce/config': 2.36.24
-      '@cloudcommerce/i18n': 2.36.24
-      '@ecomplus/utils': 1.5.0-rc.6
-      '@fastify/deepmerge': 2.0.2
-      '@iconify-json/fa6-brands': 1.2.5
-      '@iconify-json/heroicons': 1.2.2
-      '@iconify-json/logos': 1.2.4
-      '@types/gtag.js': 0.0.20
-      '@vueuse/core': 12.5.0(typescript@5.7.3)
-      astro: 4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
-      astro-capo: 0.0.1(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3))
-      chroma-js: 3.1.2
-      dotenv: 16.4.7
-      firebase: 11.3.1
-      image-size: 1.2.0
-      mitt: 3.0.1
-      mrmime: 2.0.1
-      semver: 7.7.1
-      sharp: 0.32.6
-      unocss: 65.5.0(postcss@8.5.2)(vite@5.4.14(@types/node@22.13.4)(sass@1.85.0))(vue@3.5.13(typescript@5.7.3))
-      unplugin-auto-import: 0.19.0(@vueuse/core@12.5.0(typescript@5.7.3))(rollup@4.34.8)
-      vue: 3.5.13(typescript@5.7.3)
-      wade: 0.3.3
-      yaml: 2.7.0
-    transitivePeerDependencies:
-      - '@nuxt/kit'
-      - '@react-native-async-storage/async-storage'
-      - '@types/node'
-      - '@unocss/webpack'
-      - bare-buffer
-      - less
-      - lightningcss
-      - postcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-      - vite
-
-  '@cloudcommerce/types@2.36.24':
-    dependencies:
-      '@cloudcommerce/api': 2.36.24
 
   '@commitlint/cli@19.7.1(@types/node@18.19.76)(typescript@5.7.3)':
     dependencies:
@@ -9767,15 +9083,6 @@ snapshots:
 
   '@vue/shared@3.5.13': {}
 
-  '@vueuse/core@12.5.0(typescript@5.7.3)':
-    dependencies:
-      '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 12.5.0
-      '@vueuse/shared': 12.5.0(typescript@5.7.3)
-      vue: 3.5.13(typescript@5.7.3)
-    transitivePeerDependencies:
-      - typescript
-
   '@vueuse/core@12.7.0(typescript@5.7.3)':
     dependencies:
       '@types/web-bluetooth': 0.0.20
@@ -9785,15 +9092,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/metadata@12.5.0': {}
-
   '@vueuse/metadata@12.7.0': {}
-
-  '@vueuse/shared@12.5.0(typescript@5.7.3)':
-    dependencies:
-      vue: 3.5.13(typescript@5.7.3)
-    transitivePeerDependencies:
-      - typescript
 
   '@vueuse/shared@12.7.0(typescript@5.7.3)':
     dependencies:
@@ -9953,11 +9252,6 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  astro-capo@0.0.1(astro@4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)):
-    dependencies:
-      astro: 4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3)
-      ultrahtml: 1.5.3
-
   astro-capo@0.0.1(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)):
     dependencies:
       astro: 4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3)
@@ -9979,85 +9273,6 @@ snapshots:
       semver: 7.7.1
     transitivePeerDependencies:
       - supports-color
-
-  astro@4.16.18(@types/node@18.19.76)(sass@1.85.0)(typescript@5.7.3):
-    dependencies:
-      '@astrojs/compiler': 2.10.4
-      '@astrojs/internal-helpers': 0.4.1
-      '@astrojs/markdown-remark': 5.3.0
-      '@astrojs/telemetry': 3.1.0
-      '@babel/core': 7.26.9
-      '@babel/plugin-transform-react-jsx': 7.25.9(@babel/core@7.26.9)
-      '@babel/types': 7.26.9
-      '@oslojs/encoding': 1.1.0
-      '@rollup/pluginutils': 5.1.4(rollup@4.34.8)
-      '@types/babel__core': 7.20.5
-      '@types/cookie': 0.6.0
-      acorn: 8.14.0
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      boxen: 8.0.1
-      ci-info: 4.1.0
-      clsx: 2.1.1
-      common-ancestor-path: 1.0.1
-      cookie: 0.7.2
-      cssesc: 3.0.0
-      debug: 4.4.0
-      deterministic-object-hash: 2.0.2
-      devalue: 5.1.1
-      diff: 5.2.0
-      dlv: 1.1.3
-      dset: 3.1.4
-      es-module-lexer: 1.6.0
-      esbuild: 0.21.5
-      estree-walker: 3.0.3
-      fast-glob: 3.3.3
-      flattie: 1.1.1
-      github-slugger: 2.0.0
-      gray-matter: 4.0.3
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.1.1
-      js-yaml: 4.1.0
-      kleur: 4.1.5
-      magic-string: 0.30.17
-      magicast: 0.3.5
-      micromatch: 4.0.8
-      mrmime: 2.0.1
-      neotraverse: 0.6.18
-      ora: 8.2.0
-      p-limit: 6.2.0
-      p-queue: 8.1.0
-      preferred-pm: 4.1.1
-      prompts: 2.4.2
-      rehype: 13.0.2
-      semver: 7.7.1
-      shiki: 1.29.2
-      tinyexec: 0.3.2
-      tsconfck: 3.1.5(typescript@5.7.3)
-      unist-util-visit: 5.0.0
-      vfile: 6.0.3
-      vite: 5.4.14(@types/node@18.19.76)(sass@1.85.0)
-      vitefu: 1.0.5(vite@5.4.14(@types/node@18.19.76)(sass@1.85.0))
-      which-pm: 3.0.1
-      xxhash-wasm: 1.1.0
-      yargs-parser: 21.1.1
-      zod: 3.24.2
-      zod-to-json-schema: 3.24.1(zod@3.24.2)
-      zod-to-ts: 1.2.0(typescript@5.7.3)(zod@3.24.2)
-    optionalDependencies:
-      sharp: 0.33.5
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
 
   astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.7.3):
     dependencies:
@@ -11072,12 +10287,6 @@ snapshots:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
-
-  eslint-plugin-tailwindcss@3.18.0(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))):
-    dependencies:
-      fast-glob: 3.3.3
-      postcss: 8.5.2
-      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@18.19.76)(typescript@5.7.3))
 
   eslint-plugin-tailwindcss@3.18.0(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.7.3))):
     dependencies:
@@ -12368,11 +11577,6 @@ snapshots:
       js-yaml: 3.14.1
       pify: 4.0.1
       strip-bom: 3.0.0
-
-  local-pkg@0.5.1:
-    dependencies:
-      mlly: 1.7.4
-      pkg-types: 1.3.1
 
   local-pkg@1.0.0:
     dependencies:
@@ -14052,10 +13256,6 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  strip-literal@2.1.1:
-    dependencies:
-      js-tokens: 9.0.1
-
   strip-literal@3.0.0:
     dependencies:
       js-tokens: 9.0.1
@@ -14458,25 +13658,6 @@ snapshots:
       trough: 2.2.0
       vfile: 6.0.3
 
-  unimport@3.14.6(rollup@4.34.8):
-    dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.34.8)
-      acorn: 8.14.0
-      escape-string-regexp: 5.0.0
-      estree-walker: 3.0.3
-      fast-glob: 3.3.3
-      local-pkg: 1.0.0
-      magic-string: 0.30.17
-      mlly: 1.7.4
-      pathe: 2.0.3
-      picomatch: 4.0.2
-      pkg-types: 1.3.1
-      scule: 1.3.0
-      strip-literal: 2.1.1
-      unplugin: 1.16.1
-    transitivePeerDependencies:
-      - rollup
-
   unimport@4.1.1:
     dependencies:
       acorn: 8.14.0
@@ -14565,20 +13746,6 @@ snapshots:
       - vue
 
   unpipe@1.0.0: {}
-
-  unplugin-auto-import@0.19.0(@vueuse/core@12.5.0(typescript@5.7.3))(rollup@4.34.8):
-    dependencies:
-      '@antfu/utils': 0.7.10
-      '@rollup/pluginutils': 5.1.4(rollup@4.34.8)
-      local-pkg: 0.5.1
-      magic-string: 0.30.17
-      picomatch: 4.0.2
-      unimport: 3.14.6(rollup@4.34.8)
-      unplugin: 2.2.0
-    optionalDependencies:
-      '@vueuse/core': 12.5.0(typescript@5.7.3)
-    transitivePeerDependencies:
-      - rollup
 
   unplugin-auto-import@19.1.0(@vueuse/core@12.7.0(typescript@5.7.3)):
     dependencies:
@@ -14741,10 +13908,6 @@ snapshots:
       '@types/node': 22.13.4
       fsevents: 2.3.3
       sass: 1.85.0
-
-  vitefu@1.0.5(vite@5.4.14(@types/node@18.19.76)(sass@1.85.0)):
-    optionalDependencies:
-      vite: 5.4.14(@types/node@18.19.76)(sass@1.85.0)
 
   vitefu@1.0.5(vite@5.4.14(@types/node@22.13.4)(sass@1.85.0)):
     optionalDependencies:
