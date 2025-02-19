@@ -415,7 +415,7 @@ runs:
       with:
         repoToken: ${{ inputs.github-token }}
         firebaseServiceAccount: ${{ inputs.firebase-service-account }}
-        channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || 'pr-${{ github.event.number }}' }}
+        channelId: ${{ (startsWith(env.git_branch, 'main-') && env.git_branch) || null }}
         expires: ${{ (startsWith(env.git_branch, 'main-') && '30d') || '3d' }}
 
     - if: |
