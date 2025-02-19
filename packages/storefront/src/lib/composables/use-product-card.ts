@@ -69,7 +69,7 @@ export type Props = {
   listName?: string;
   listId?: string;
   isSkipStockRefetch?: boolean;
-} & ({ product: ProductItem } | { productId: ResourceId });
+};
 
 const useProductCard = <T extends ProductItem | undefined = undefined>(props: Props) => {
   const isFetching = ref(false);
