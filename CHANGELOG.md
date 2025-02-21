@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.37.0](https://github.com/ecomplus/cloud-commerce/compare/v2.36.24...v2.37.0) (2025-02-21)
+
+
+### Features
+
+* **storefront:** New `SEARCH_ENGINE_DEFAULTS` object exported from `@@sf/state/search-engine` ([82f06fa](https://github.com/ecomplus/cloud-commerce/commit/82f06fa1054206b8a9062e2ddbb504145660adf1))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#536](https://github.com/ecomplus/cloud-commerce/issues/536)) ([e0da64c](https://github.com/ecomplus/cloud-commerce/commit/e0da64cc8edc0f267571f5d8cd4f99e42b32165b))
+* **ssr:** Testing IPv6 from analytics requests body for server events ([71f48d1](https://github.com/ecomplus/cloud-commerce/commit/71f48d1ef754298dae71f29b24dc0613c5bf68bc))
+* **storefront:** Fixed (and simpler) product card props types ([d27da86](https://github.com/ecomplus/cloud-commerce/commit/d27da8607816386f7881c47acdddb0911294f085))
+
 ## [2.36.24](https://github.com/ecomplus/cloud-commerce/compare/v2.36.23...v2.36.24) (2025-02-13)
 
 
