@@ -69,31 +69,27 @@ export const search = async ({
 };
 
 type SearchOptions = Parameters<typeof search>[0];
-type RequestParams = Exclude<ApiConfig['params'], string | undefined>;
 
 export const SEARCH_ENGINE_DEFAULTS: {
-  fields?: readonly string[],
   term: string | null,
   isWithCount: boolean,
   isWithBuckets: boolean,
-  params: RequestParams,
   pageSize: number,
 } = {
   term: null,
   isWithCount: true,
   isWithBuckets: true,
-  params: {},
   pageSize: 24,
 };
 
 export class SearchEngine {
-  fields?: readonly string[];
-  term = ref<string | null>(SEARCH_ENGINE_DEFAULTS.term);
+  term = ref(SEARCH_ENGINE_DEFAULTS.term);
   isWithCount = ref(SEARCH_ENGINE_DEFAULTS.isWithCount);
   isWithBuckets = ref(SEARCH_ENGINE_DEFAULTS.isWithBuckets);
-  params = reactive<RequestParams>(SEARCH_ENGINE_DEFAULTS.params);
   pageSize = ref(SEARCH_ENGINE_DEFAULTS.pageSize);
   pageNumber = ref(1);
+  fields?: readonly string[];
+  params = reactive<Exclude<ApiConfig['params'], string | undefined>>({});
   #middlewares: Array<(opt: SearchOptions) => void> = [];
   #isFetching = ref(false);
   isFetching = computed(() => this.#isFetching.value);
