@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.37.1](https://github.com/ecomplus/cloud-commerce/compare/v2.37.0...v2.37.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* **storefront:** Removing `params` and `fields` objects from `SEARCH_ENGINE_DEFAULTS` ([ca1ef2c](https://github.com/ecomplus/cloud-commerce/commit/ca1ef2c2c9a29b1280cf247ce25f710a9d7ae9cd))
+
 ## [2.37.0](https://github.com/ecomplus/cloud-commerce/compare/v2.36.24...v2.37.0) (2025-02-21)
 
 
