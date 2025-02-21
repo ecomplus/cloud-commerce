@@ -180,12 +180,15 @@ export default async (req: Request, res: Response) => {
       res.sendStatus(202);
       return;
     }
-    // https://stackoverflow.com/questions/48032909/how-to-get-client-ip-address-in-a-firebase-cloud-function
-    const ipsHeader = req.get('x-real-ip')
-      || req.get('x-forwarded-for')
-      || req.get('cf-connecting-ip')
-      || req.get('fastly-client-ip');
-    const ip = (ipsHeader?.split(',')[0] || req.ip)?.trim();
+    let ip = req.body?.ip6; // Only IPv4 on proxied headers
+    if (!ip) {
+      // https://stackoverflow.com/questions/48032909/how-to-get-client-ip-address-in-a-firebase-cloud-function
+      const ipsHeader = req.get('x-real-ip')
+        || req.get('x-forwarded-for')
+        || req.get('cf-connecting-ip')
+        || req.get('fastly-client-ip');
+      ip = (ipsHeader?.split(',')[0] || req.ip)?.trim();
+    }
     await sendAnalyticsEvents({ url, events }, { ...req.body, ip });
     res.sendStatus(201);
     return;

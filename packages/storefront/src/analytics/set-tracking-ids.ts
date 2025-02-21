@@ -7,6 +7,7 @@ export type TrackingIds = {
   ttclid?: string,
   client_id?: string,
   session_id?: string,
+  ip6?: string,
 };
 
 export const getTrackingIds = (trackingIds: TrackingIds, experimentId?: string) => {
@@ -84,6 +85,22 @@ export const getTrackingIds = (trackingIds: TrackingIds, experimentId?: string) 
         || `${Math.ceil(Math.random() * 1000000)}.${Math.ceil(Math.random() * 1000000)}`;
     }
     storage.setItem(`analytics_${key}`, trackingIds[key]);
+  });
+  window.$interactionOrAwaken?.then(async () => {
+    try {
+      const response = await fetch('https://api64.ipify.org/');
+      if (response.ok) {
+        const ip64 = await response.text();
+        if (
+          typeof ip64 === 'string'
+          && /([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}/.test(ip64)
+        ) {
+          trackingIds.ip6 = ip64;
+        }
+      }
+    } catch {
+      //
+    }
   });
   return {
     expVariantString,
