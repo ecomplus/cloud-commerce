@@ -45,7 +45,7 @@
     "firebase-functions": "^6.3.2",
     "html-minifier": "^4.0.0",
     "mitt": "^3.0.1",
-    "mrmime": "^2.0.0",
+    "mrmime": "^2.0.1",
     "vue": "^3.5.13",
     "yaml": "^2.7.0"
   },
