@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.37.2](https://github.com/ecomplus/cloud-commerce/compare/v2.37.1...v2.37.2) (2025-02-28)
+
+
+### Bug Fixes
+
+* **storefront:** Stop copying static SPAs HTML (/app/, /admin/) from static build stage ([39f29bd](https://github.com/ecomplus/cloud-commerce/commit/39f29bda70ef0362780a6f87600ef3c8c39503ef))
+
 ## [2.37.1](https://github.com/ecomplus/cloud-commerce/compare/v2.37.0...v2.37.1) (2025-02-21)
 
 
