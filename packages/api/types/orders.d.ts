@@ -344,6 +344,10 @@ export interface Orders {
      * Registered company name or responsible fullname
      */
     corporate_name?: string;
+    /**
+     * Customer group indentifier
+     */
+    group?: string;
   }[];
   /**
    * Whether the order is only budget, without payment transactions

@@ -54,6 +54,10 @@ export interface Customers {
    */
   affiliate_code?: string;
   /**
+   * Customer group indentifier
+   */
+  group?: string;
+  /**
    * UTM campaign HTTP parameters associated with this customer's first access
    */
   utm?: {
