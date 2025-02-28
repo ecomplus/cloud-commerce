@@ -14,8 +14,6 @@ mv ./.cloudcommerce/sf-tmp-dist/index.html ./dist/client/~index.html
 if [ -e "./.cloudcommerce/sf-tmp-dist/404.html" ]; then
   mv ./.cloudcommerce/sf-tmp-dist/404.html ./dist/client/
 fi
-mv ./.cloudcommerce/sf-tmp-dist/app/ ./dist/client/
-mv ./.cloudcommerce/sf-tmp-dist/admin/ ./dist/client/
 rm -rf ./.cloudcommerce/sf-tmp-dist
 
 css_files=($(ls ./dist/client/_astro/*.css))
