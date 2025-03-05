@@ -148,9 +148,17 @@ runs:
           ~/.npm-global/bin
         key: ${{ runner.os }}-npm-g-firebase-tools-13.32.0-1
 
-    - if: github.event_name == 'push' && steps.npm-g-cache.outputs.cache-hit != 'true'
+    - name: Ensure firebase-tools is installed
       shell: bash
-      run: npm i --location=global firebase-tools@13.32.0
+      run: |
+        if ! command -v firebase &> /dev/null; then
+          npm i --location=global firebase-tools@13.32.0
+        else
+          INSTALLED_VERSION=$(firebase --version)
+          if [[ "$INSTALLED_VERSION" != "13.32.0" ]]; then
+            npm i --location=global firebase-tools@13.32.0
+          fi
+        fi
 
     - if: github.event_name == 'push'
       uses: dorny/paths-filter@v3.0.2
