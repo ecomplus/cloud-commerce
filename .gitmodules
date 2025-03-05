@@ -7,3 +7,9 @@
 [submodule "ecomplus-stores/tiasonia"]
 	path = ecomplus-stores/tiasonia
 	url = git@github.com:tiasonia/tiasonia.git
+[submodule "ecomplus-stores/ladorosa"]
+	path = ecomplus-stores/ladorosa
+	url = git@github.com:ladotextil/ladorosa.git
+[submodule "ecomplus-stores/ladofit"]
+	path = ecomplus-stores/ladofit
+	url = git@github.com:ladotextil/ladofit.git
