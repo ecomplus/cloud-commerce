@@ -139,16 +139,18 @@ runs:
         echo "LIB_PATH=$lib_path" >> $GITHUB_OUTPUT
         echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
-    - uses: actions/cache@v4
+    - if: github.event_name == 'push'
+      uses: actions/cache@v4
       id: npm-g-cache
       with:
         path: |
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.32.0-1
+        key: ${{ runner.os }}-npm-g-firebase-tools-13.32.0-2
 
-    - name: Ensure firebase-tools is installed
+    - if: github.event_name == 'push'
+      name: Ensure firebase-tools is installed
       shell: bash
       run: |
         if ! command -v firebase &> /dev/null; then
