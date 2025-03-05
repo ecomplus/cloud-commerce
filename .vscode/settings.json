@@ -20,7 +20,9 @@
     "packages/storefront/tailwind.config.js": "packages/**",
     "store/functions/ssr/tailwind.config.js": "store/**",
     "ecomplus-stores/barradoce/functions/ssr/tailwind.config.js": "ecomplus-stores/barradoce/**",
-    "ecomplus-stores/tiasonia/functions/ssr/tailwind.config.js": "ecomplus-stores/tiasonia/**"
+    "ecomplus-stores/tiasonia/functions/ssr/tailwind.config.js": "ecomplus-stores/tiasonia/**",
+    "ecomplus-stores/ladorosa/functions/ssr/tailwind.config.js": "ecomplus-stores/ladorosa/**",
+    "ecomplus-stores/ladofit/functions/ssr/tailwind.config.js": "ecomplus-stores/ladofit/**"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": [
