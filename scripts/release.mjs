@@ -5,7 +5,6 @@ import {
   fs,
   cd,
   globby,
-  YAML,
   argv,
   retry,
   spinner,
@@ -55,14 +54,12 @@ if (argv.publish) {
     await spinner('give npm registry a time...', () => $`sleep 9`);
     const functions = await listFolders(`${pwd}/store/functions`);
     if (canUpdateStores) {
-      YAML.parse(fs.readFileSync(`${pwd}/pnpm-workspace.yaml`, 'utf8'))
-        .packages.forEach((workspaceFolder) => {
-          if (/ecomplus-stores\/[^/]+$/.test(workspaceFolder)) {
-            const [, store] = workspaceFolder.split('/');
-            const storeDir = `${pwd}/ecomplus-stores/${store}`;
-            if (!storesDirs.includes(storeDir)) {
-              storesDirs.push(storeDir);
-            }
+      fs.readdirSync(`${pwd}/ecomplus-stores`)
+        .forEach((store) => {
+          if (store.startsWith('.')) return;
+          const storeDir = `${pwd}/ecomplus-stores/${store}`;
+          if (!storesDirs.includes(storeDir) && fs.statSync(storeDir).isDirectory()) {
+            storesDirs.push(storeDir);
           }
         });
     }
