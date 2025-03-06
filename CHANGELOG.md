@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.37.3](https://github.com/ecomplus/cloud-commerce/compare/v2.37.2...v2.37.3) (2025-03-06)
+
+
+### Bug Fixes
+
+* **api:** Updating Customers and Orders interfaces with new customer `group` field ([fd2456a](https://github.com/ecomplus/cloud-commerce/commit/fd2456a7968a59f38a54c8cbf76bc575ce44afd9))
+* **deps:** Update non-major dependencies ([#545](https://github.com/ecomplus/cloud-commerce/issues/545)) ([1d68517](https://github.com/ecomplus/cloud-commerce/commit/1d685178dfd7d8b260dd35f294658c4906e31830))
+* **storefront:** Fallback to `store?.repository` on installations list for CMS SSO ([7a5314e](https://github.com/ecomplus/cloud-commerce/commit/7a5314e40a0bb010fb67a4ea2ec228db28870d1e))
+* **storefront:** Fix filtering featured slugs on `filterMainCategories` from shop header composable ([3de7e42](https://github.com/ecomplus/cloud-commerce/commit/3de7e426fcbb6f202404aaaa4d46e4a3dc6bc500))
+
 ## [2.37.2](https://github.com/ecomplus/cloud-commerce/compare/v2.37.1...v2.37.2) (2025-02-28)
 
 
