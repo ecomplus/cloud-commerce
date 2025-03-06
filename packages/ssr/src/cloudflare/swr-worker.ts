@@ -134,7 +134,13 @@ const swr = async (_rewritedReq: Request, env: Env, ctx: ExecutionContext) => {
   });
   const url = new URL(_request.url);
   const { hostname, pathname } = url;
-  const hostOverride = env[`OVERRIDE_${hostname}`];
+  let hostOverride = env[`OVERRIDE_${hostname}`];
+  if (!hostOverride && hostname.endsWith('.ecomplus.app')) {
+    const subdomain = hostname.replace('.ecomplus.app', '');
+    if (!subdomain.includes('.')) {
+      hostOverride = `ecom2${subdomain}.web.app`;
+    }
+  }
   if (hostOverride) {
     url.hostname = hostOverride;
   }
