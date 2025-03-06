@@ -103,13 +103,16 @@ const authAndInitCms = async (storeData: CmsStoreData) => {
           if (Array.isArray(installations)) {
             const { repo } = cmsConfig.backend;
             const installation = repo !== '_owner/_name'
-              ? installations.find((isnt) => isnt.repository === repo)
+              ? installations.find((inst) => {
+                return inst.repository === repo || inst.store?.repository === repo;
+              })
               : installations[0];
             if (installation?.gh_token && installation.gh_token.charAt(0) !== '*') {
               // Consume GitHub REST API directly
               token = installation.gh_token as string;
               if (repo === '_owner/_name') {
                 repository = installation.repository
+                  || installation.store?.repository
                   || `${installation.organization}/${installation.organization}`;
               }
             }
