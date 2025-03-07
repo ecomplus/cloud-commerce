@@ -13,6 +13,7 @@ import login from './login';
 import build, { prepareCodebases } from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
 import createGhSecrets from './setup-gh';
+import importFeed from './import-feed';
 
 if (!process.env.FIREBASE_PROJECT_ID && !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
   const pwd = process.cwd();
@@ -191,7 +192,7 @@ ECOM_STORE_ID=${storeId}
 
     if (hasCreatedAllSecrets) {
       return echo`
-      ****
+****
 
 CloudCommerce setup completed successfully.
 Your store repository on GitHub is ready, the first deploy will automatically start with GH Actions.
@@ -200,7 +201,7 @@ Your store repository on GitHub is ready, the first deploy will automatically st
 `;
     }
     return echo`
-    ****
+****
 
 Finish by saving the following secrets to your GitHub repository:
 
@@ -227,6 +228,11 @@ Finish by saving the following secrets to your GitHub repository:
     const port = typeof argv.port === 'string' || typeof argv.port === 'number' ? argv.port : '';
     return $`npm --prefix "${prefix}" run dev -- --host ${host} --port ${port}`;
   }
+
+  if (argv._.includes('import')) {
+    return importFeed();
+  }
+
   return $`echo 'Hello from @cloudcommerce/cli'`;
 };
 

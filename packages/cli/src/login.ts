@@ -4,7 +4,7 @@ import md5 from 'md5';
 import api from '@cloudcommerce/api';
 import createAuth from './create-auth';
 
-export default async () => {
+const login = async () => {
   await echo`-- Login with your E-Com Plus store admin account.
 (i) same credentials used to enter the dashboard (https://ecomplus.app/)
 `;
@@ -29,17 +29,19 @@ export default async () => {
     };
   });
 
-  const { data: login } = await api.post('login', {
+  const { data: credentials } = await api.post('login', {
     username,
     pass_md5_hash: passMd5,
   });
-  const storeId = login.store_ids[0];
+  const storeId = credentials.store_ids[0];
 
   const {
     data: {
       access_token: accessToken,
     },
-  } = await api.post('authenticate', login);
+  } = await api.post('authenticate', credentials);
 
   return createAuth(storeId, accessToken);
 };
+
+export default login;
