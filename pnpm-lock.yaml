@@ -936,6 +936,9 @@ importers:
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
+      fast-xml-parser:
+        specifier: ^5.0.8
+        version: 5.0.8
       libsodium-wrappers:
         specifier: ^0.7.15
         version: 0.7.15
@@ -4338,6 +4341,10 @@ packages:
     resolution: {integrity: sha512-y655CeyUQ+jj7KBbYMc4FG01V8ZQqjN+gDYGJ50RtfsUB8iG9AmwmwoAgeKLJdmueKKMrH1RJ7yXHTSoczdv5w==}
     hasBin: true
 
+  fast-xml-parser@5.0.8:
+    resolution: {integrity: sha512-qY8NiI5L8ff00F2giyICiJxSSKHO52tC36LJqx2JtvGyAd5ZfehC/l4iUVVHpmpIa6sM9N5mneSLHQG2INGoHA==}
+    hasBin: true
+
   fastq@1.19.0:
     resolution: {integrity: sha512-7SFSRCNjBQIZH/xZR3iy5iQYR8aGBE0h3VG6/cwlbrpdciNYBMotQav8c1XI3HjHH+NikUpP53nPdlZSdWmFzA==}
 
@@ -6563,6 +6570,9 @@ packages:
 
   strnum@1.0.5:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
+
+  strnum@2.0.5:
+    resolution: {integrity: sha512-YAT3K/sgpCUxhxNMrrdhtod3jckkpYwH6JAuwmUdXZsmzH1wUyzTMrrK2wYCEEqlKwrWDd35NeuUkbBy/1iK+Q==}
 
   stubs@3.0.0:
     resolution: {integrity: sha512-PdHt7hHUJKxvTCgbKX9C1V/ftOcjJQgz8BZwNfV5c4B6dcGqlpelTbJ999jBGZ2jYiPAwcX5dP6oBwVlBlUbxw==}
@@ -10749,6 +10759,10 @@ snapshots:
       strnum: 1.0.5
     optional: true
 
+  fast-xml-parser@5.0.8:
+    dependencies:
+      strnum: 2.0.5
+
   fastq@1.19.0:
     dependencies:
       reusify: 1.0.4
@@ -13510,6 +13524,8 @@ snapshots:
 
   strnum@1.0.5:
     optional: true
+
+  strnum@2.0.5: {}
 
   stubs@3.0.0: {}
 
