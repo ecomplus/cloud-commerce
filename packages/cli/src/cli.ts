@@ -13,7 +13,7 @@ import login from './login';
 import build, { prepareCodebases } from './build';
 import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
 import createGhSecrets from './setup-gh';
-import importFeed from './import-feed';
+import importFeed from './ext/import-feed';
 
 if (!process.env.FIREBASE_PROJECT_ID && !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
   const pwd = process.cwd();
