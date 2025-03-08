@@ -414,8 +414,8 @@ importers:
         specifier: workspace:^
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -445,8 +445,8 @@ importers:
         specifier: ^4.10.0
         version: 4.10.0
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -499,8 +499,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -565,8 +565,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-functions:
         specifier: ^6.3.2
         version: 6.3.2(firebase-admin@13.1.0)
@@ -584,8 +584,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -612,8 +612,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -634,8 +634,8 @@ importers:
         specifier: workspace:*
         version: link:../../api
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -672,8 +672,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-functions:
         specifier: ^6.3.2
         version: 6.3.2(firebase-admin@13.1.0)
@@ -694,8 +694,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -719,8 +719,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -750,8 +750,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -772,8 +772,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -806,8 +806,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -831,8 +831,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -856,8 +856,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -884,8 +884,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -909,8 +909,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -971,8 +971,8 @@ importers:
         specifier: workspace:*
         version: link:../firebase
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
@@ -1231,8 +1231,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(ajv@8.17.1)
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -1308,8 +1308,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1(astro@4.16.18(@types/node@22.13.4)(rollup@4.34.8)(sass@1.85.0)(typescript@5.8.2))
       axios:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       firebase-admin:
         specifier: ^13.1.0
         version: 13.1.0
@@ -3365,6 +3365,9 @@ packages:
 
   axios@1.8.1:
     resolution: {integrity: sha512-NN+fvwH/kV01dYUQ3PTOZns4LWtWhOFCAhQ/pHb88WQ1hNe5V/dvFwc4VJcDL11LT9xSX0QtsR8sWUuyOuOq7g==}
+
+  axios@1.8.2:
+    resolution: {integrity: sha512-ls4GYBm5aig9vWx8AWDSGLpnpDQRtWAfrjU+EuytuODrFBkqesN2RkOQCBzrA1RQNHw1SmRMSDDDSwzNAYQ6Rg==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -9632,6 +9635,14 @@ snapshots:
       possible-typed-array-names: 1.1.0
 
   axios@1.8.1:
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.8.2:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.2
