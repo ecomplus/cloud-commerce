@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.38.0](https://github.com/ecomplus/cloud-commerce/compare/v2.37.4...v2.38.0) (2025-03-08)
+
+
+### Features
+
+* **cli:** Starting experimental `cloudcommerce import` command for migrations with product feeds ([345870c](https://github.com/ecomplus/cloud-commerce/commit/345870c766c85753ecfaedd57b21f793253117d5))
+* **mandae:** Handle shipping rules with fixed freight value on calculate ([5b606bb](https://github.com/ecomplus/cloud-commerce/commit/5b606bb445d558616df696690a17276fe4300026))
+
+
+### Bug Fixes
+
+* **ssr:** Parsing *.ecomplus.app hostname to ecom2*.web.app on SWR worker by default ([9e5fac9](https://github.com/ecomplus/cloud-commerce/commit/9e5fac9c921af26fd84d4beed8611fe9f237a5ff))
+
 ## [2.37.4](https://github.com/ecomplus/cloud-commerce/compare/v2.37.3...v2.37.4) (2025-03-06)
 
 ## [2.37.3](https://github.com/ecomplus/cloud-commerce/compare/v2.37.2...v2.37.3) (2025-03-06)
