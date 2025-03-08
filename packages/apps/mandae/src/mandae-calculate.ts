@@ -75,6 +75,9 @@ const applyShippingDiscount = (destinationZip, totalItems, shippingRules, shippi
         if (rule.free_shipping) {
           value = 0;
           break;
+        } else if (typeof rule.fixed === 'number' && rule.fixed) {
+          value = rule.fixed;
+          break;
         } else if (rule.discount) {
           let discountValue = rule.discount.value;
           if (rule.discount.percentage || rule.discount.type === 'Percentual') {
