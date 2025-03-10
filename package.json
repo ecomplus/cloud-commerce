@@ -41,10 +41,10 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@commitlint/cli": "^19.7.1",
-    "@commitlint/config-conventional": "^19.7.1",
-    "@commitlint/rules": "^19.6.0",
-    "@types/node": "^20.17.22",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@commitlint/rules": "^19.8.0",
+    "@types/node": "^20.17.24",
     "commit-and-tag-version": "^12.5.0",
     "dotenv": "^16.4.7",
     "eslint": "^8.57.1",
@@ -57,7 +57,7 @@
     "uglify-js": "^3.19.3",
     "vite": "^5.4.14",
     "vitest": "^2.1.9",
-    "zx": "^8.3.2"
+    "zx": "^8.4.0"
   },
   "pnpm": {
     "peerDependencyRules": {
