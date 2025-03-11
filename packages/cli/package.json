@@ -37,6 +37,7 @@
     "@fastify/deepmerge": "^2.0.2",
     "dotenv": "^16.4.7",
     "fast-xml-parser": "^5.0.8",
+    "image-size": "^1.2.0",
     "libsodium-wrappers": "^0.7.15",
     "md5": "^2.3.0",
     "typescript": "~5.8.2",

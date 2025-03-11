@@ -6,6 +6,7 @@ import {
   sleep,
 } from 'zx';
 import { XMLParser } from 'fast-xml-parser';
+import { imageSize } from 'image-size';
 import api from '@cloudcommerce/api';
 
 type ProductVariation = Exclude<ProductSet['variations'], undefined>[0];
@@ -17,6 +18,66 @@ const slugify = (name: string) => {
   return clearAccents(name).toLocaleLowerCase()
     .replace(/[\s\n/]/g, '-')
     .replace(/[^a-z0-9_-]/ig, '');
+};
+
+const uploadPicture = async (downloadUrl: string, authHeaders: Record<string, any>) => {
+  const downloadRes = await fetch(downloadUrl);
+  if (!downloadRes.ok) {
+    throw new Error(`Failed downloading ${downloadUrl} with status ${downloadRes.status}`);
+  }
+  const contentType = downloadRes.headers.get('content-type');
+  if (!contentType) {
+    throw new Error(`No mime type returned for ${downloadUrl}`);
+  }
+  const imageBuffer = await downloadRes.arrayBuffer();
+  const imageBlob = new Blob([imageBuffer], { type: contentType });
+  const formData = new FormData();
+  const fileName = downloadUrl.split('/').pop() || 'image.jpg';
+  formData.append('file', imageBlob, fileName);
+  const uploadRes = await fetch('https://ecomplus.app/api/storage/upload.json', {
+    method: 'POST',
+    body: formData,
+    headers: authHeaders,
+  });
+  if (!uploadRes.ok) {
+    const err: any = new Error(`Failed uploading ${downloadUrl} with ${uploadRes.status}`);
+    err.statusCode = uploadRes.status;
+    throw err;
+  }
+  const data = await uploadRes.json();
+  const { width, height } = imageSize(Buffer.from(imageBuffer));
+  const { picture } = data;
+  if (width && height) {
+    picture.zoom.size = `${width}x${height}`;
+    Object.keys(picture).forEach((thumb) => {
+      if (thumb === 'zoom' || !picture[thumb]) return;
+      const px = parseInt(picture[thumb].size, 10);
+      if (px) {
+        if (px >= Math.max(width, height)) {
+          picture[thumb].size = picture.zoom.size;
+        } else {
+          picture[thumb].size = width > height
+            ? px + 'x' + Math.round((height * px) / width)
+            : Math.round((width * px) / height) + 'x' + px;
+        }
+      } else {
+        delete picture[thumb].size;
+      }
+    });
+  } else {
+    Object.keys(picture).forEach((thumb) => {
+      if (!picture[thumb]) return;
+      delete picture[thumb].size;
+    });
+  }
+  if (fileName) {
+    const alt = fileName.replace(/\.[^.]+$/, '');
+    Object.keys(picture).forEach((thumb) => {
+      if (!picture[thumb]) return;
+      picture[thumb].alt = alt;
+    });
+  }
+  return picture;
 };
 
 const importFeed = async () => {
@@ -57,6 +118,20 @@ const importFeed = async () => {
   if (!items?.[0] || typeof items?.[0] !== 'object') {
     await echo`The XML file does not appear to be a valid RSS 2.0 product feed`;
     return process.exit(1);
+  }
+  const ecomAuthHeaders: Record<string, any> = {
+    'X-Store-ID': process.env.ECOM_STORE_ID,
+    'X-My-ID': process.env.ECOM_AUTHENTICATION_ID,
+  };
+  const { ECOM_ACCESS_TOKEN, ECOM_API_KEY } = process.env;
+  if (ECOM_ACCESS_TOKEN) {
+    ecomAuthHeaders['X-Access-Token'] = ECOM_ACCESS_TOKEN;
+  } else {
+    const { data } = await api.post('authenticate', {
+      _id: process.env.ECOM_AUTHENTICATION_ID,
+      api_key: ECOM_API_KEY,
+    });
+    ecomAuthHeaders['X-Access-Token'] = data.access_token;
   }
   const categoryNames: string[] = [];
   const brandNames: string[] = [];
@@ -154,6 +229,7 @@ const importFeed = async () => {
     for (let ii = 0; ii < productItems.length; ii++) {
       if (result.find(({ sku }) => sku === productItems[ii]['g:id'])) {
         productItems.splice(ii, 1);
+        ii -= 1;
       }
     }
   }
@@ -207,19 +283,36 @@ const importFeed = async () => {
     });
     if (Object.keys(specifications).length) {
       productOrVatiation.specifications = specifications;
+    } else if (!isProductItem) {
+      productOrVatiation.specifications = {
+        size: [{ text: 'Único' }],
+      };
     }
   };
-  await echo`\n`;
+  const listItemRemoteImages = (item: (typeof items)[0]) => {
+    const remoteImages = Array.isArray(item['g:additional_image_link'])
+      ? item['g:additional_image_link']
+      : [];
+    if (item['g:image_link']) {
+      remoteImages.unshift(item['g:image_link']);
+    }
+    if (typeof item['g:additional_image_link'] === 'string') {
+      remoteImages.push(item['g:additional_image_link']);
+    }
+    return remoteImages;
+  };
   for (let i = 0; i < productItems.length; i++) {
     const item = productItems[i];
     const { 'g:id': sku, 'g:title': name } = item;
     if (!sku || !name) continue;
+    await echo`\n${new Date().toISOString()}`;
+    await echo`${(productItems.length - i)} products to import\n`;
     await echo`SKU: ${sku}`;
     const product: ProductSet = {
       sku,
       name,
       slug: item['g:link']
-        ? new URL(item['g:link']).pathname.substring(1)
+        ? new URL(item['g:link']).pathname.substring(1).toLowerCase()
         : slugify(name),
       condition: item['g:condition'],
     };
@@ -238,6 +331,7 @@ const importFeed = async () => {
       product.brands = [brand];
     }
     setStockAndPrices(product, item);
+    const remoteImages = listItemRemoteImages(item);
     const variationItems = items.filter((_item) => {
       return _item['g:item_group_id'] === sku;
     });
@@ -257,13 +351,41 @@ const importFeed = async () => {
         totalQuantity += variation.quantity || 0;
         setSpecifications(variation, variationItem);
         product.variations!.push(variation);
+        const variationRemoteImages = listItemRemoteImages(variationItem);
+        variationRemoteImages.forEach((imageUrl) => {
+          if (!remoteImages.includes(imageUrl)) remoteImages.push(imageUrl);
+        });
       });
       product.quantity = totalQuantity;
     } else {
       setSpecifications(product, item, true);
     }
-    await sleep(500);
-    await echo`${JSON.stringify(product, null, 2)}`;
+    if (remoteImages.length) {
+      product.pictures = [];
+    }
+    for (let ii = 0; ii < remoteImages.length; ii++) {
+      const imageUrl = remoteImages[ii];
+      if (imageUrl) {
+        let retries = 0;
+        while (retries < 4) {
+          try {
+            const picture = await uploadPicture(imageUrl, ecomAuthHeaders);
+            product.pictures?.push(picture);
+            break;
+          } catch (err: any) {
+            // eslint-disable-next-line no-console
+            console.error(err);
+            if (err.statusCode < 500) {
+              throw err;
+            }
+            retries += 1;
+            await sleep(4000);
+          }
+        }
+      }
+    }
+    await echo`${JSON.stringify(product, null, 2)}\n`;
+    await api.post('products', product);
   }
   return echo``;
 };
