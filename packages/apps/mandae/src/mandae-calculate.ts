@@ -62,7 +62,7 @@ const checkZipCode = (destinationZip, rule) => {
 };
 
 const applyShippingDiscount = (destinationZip, totalItems, shippingRules, shipping) => {
-  let value = shipping.price;
+  let value: number | undefined;
   if (Array.isArray(shippingRules)) {
     for (let i = 0; i < shippingRules.length; i++) {
       const rule = shippingRules[i];
@@ -76,27 +76,32 @@ const applyShippingDiscount = (destinationZip, totalItems, shippingRules, shippi
           value = 0;
           break;
         } else if (typeof rule.fixed === 'number' && rule.fixed) {
-          value = rule.fixed;
-          break;
+          if (value === undefined || value > rule.fixed) {
+            value = rule.fixed;
+          }
+          continue;
         } else if (rule.discount) {
           let discountValue = rule.discount.value;
           if (rule.discount.percentage || rule.discount.type === 'Percentual') {
-            discountValue *= (value / 100);
+            discountValue *= (shipping.price / 100);
           } else if (rule.discount.type === 'Percentual no subtotal') {
             discountValue *= (totalItems / 100);
           }
           if (discountValue) {
-            value -= discountValue;
+            if (value === undefined || value > shipping.price - discountValue) {
+              value = shipping.price - discountValue;
+            }
             if (value < 0) {
               value = 0;
+              break;
             }
           }
-          break;
+          continue;
         }
       }
     }
   }
-  return value;
+  return typeof value === 'number' ? value : shipping.price;
 };
 
 const isDisabledService = (destinationZip, disableServices, shipping) => {
