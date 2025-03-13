@@ -4,6 +4,10 @@
   "version": "2.38.1",
   "description": "e-com.plus Cloud Commerce app to integrate Mandaê shipping intermediator",
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./events": "./lib/mandae-events.js"
+  },
   "files": [
     "/lib",
     "/lib-mjs",

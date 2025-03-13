@@ -18,13 +18,15 @@ export * from '@cloudcommerce/app-galaxpay/events';
 
 export * from '@cloudcommerce/app-loyalty-points/events';
 
-export * from '@cloudcommerce/app-frenet/events';
-
-export * from '@cloudcommerce/app-datafrete/webhook';
-
 export * from '@cloudcommerce/app-pagaleve/webhook';
 
 export * from '@cloudcommerce/app-paghiper/webhook';
+
+export * from '@cloudcommerce/app-mandae/events';
+
+export * from '@cloudcommerce/app-frenet/events';
+
+export * from '@cloudcommerce/app-datafrete/webhook';
 
 export * from '@cloudcommerce/app-melhor-envio/events';
 

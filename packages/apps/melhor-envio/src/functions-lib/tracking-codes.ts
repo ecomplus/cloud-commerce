@@ -14,7 +14,7 @@ const getConfig = async () => {
 
     return app[0].hidden_data;
   } catch (err) {
-    logger.error('Error =>', err);
+    logger.error(err);
     return null;
   }
 };
@@ -177,7 +177,7 @@ const handleTrackingCodes = async () => {
 
   if (appConfig && accessToken && appConfig.disable_tracking) {
     await trackingCodes.catch((err) => {
-      logger.error('> Error => ', err);
+      logger.error(err);
     });
 
     if (new Date().getHours() === 23) {
