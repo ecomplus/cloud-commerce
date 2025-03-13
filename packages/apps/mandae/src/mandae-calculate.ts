@@ -70,7 +70,7 @@ const applyShippingDiscount = (destinationZip, totalItems, shippingRules, shippi
         rule
         && checkZipCode(destinationZip, rule)
         && (rule.service === 'Todos' || rule.service === shipping.name)
-        && totalItems >= rule.min_amount
+        && (!rule.min_amount || totalItems >= rule.min_amount)
       ) {
         if (rule.free_shipping) {
           value = 0;
