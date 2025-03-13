@@ -268,6 +268,10 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
         });
       }
       Object.keys(propsSet).forEach((key) => {
+        if (typeof propsSet[key] === 'string' && propsSet[key].includes('<id>')) {
+          entry[key] = propsSet[key].replace(/<id>/g, entry.id);
+          return;
+        }
         entry[key] = propsSet[key];
       });
 
