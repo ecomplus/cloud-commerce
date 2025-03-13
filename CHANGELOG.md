@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.38.1](https://github.com/ecomplus/cloud-commerce/compare/v2.38.0...v2.38.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#548](https://github.com/ecomplus/cloud-commerce/issues/548)) ([e753153](https://github.com/ecomplus/cloud-commerce/commit/e753153512938f07136674c2d79636bb9e7466cb))
+* **mandae:** Always sing best rule discount/price when multiple rules match on calculate ([dd9055b](https://github.com/ecomplus/cloud-commerce/commit/dd9055ba309681b825ef7cd5cc747c1d08176548))
+* **mandae:** Pass rules without checking items subtotal when min amount (optional) is not set ([5f7aae9](https://github.com/ecomplus/cloud-commerce/commit/5f7aae9a2ad5e420fde1e6812e0d29986ee23e9e))
+
 ## [2.38.0](https://github.com/ecomplus/cloud-commerce/compare/v2.37.4...v2.38.0) (2025-03-08)
 
 
