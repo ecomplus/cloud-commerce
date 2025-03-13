@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.39.0](https://github.com/ecomplus/cloud-commerce/compare/v2.38.1...v2.39.0) (2025-03-13)
+
+
+### Features
+
+* **feeds:** Support dynamic custom properties on products catalog with `<id>` on string value ([feca9d1](https://github.com/ecomplus/cloud-commerce/commit/feca9d1a05e348bc11f6ba3bcb4545c11fd090b5))
+* **mandae:** Cron events to send orders and update fulfillment status with tracking codes ([64f2b77](https://github.com/ecomplus/cloud-commerce/commit/64f2b7700525ecef552768f93bd72fba6cfce54e))
+
+
+### Bug Fixes
+
+* **mandae:** Properly supporting bigger box and rules max weight options ([1bd4a51](https://github.com/ecomplus/cloud-commerce/commit/1bd4a51fd3d97b2a7169cdc79fa6488722bed987))
+
 ## [2.38.1](https://github.com/ecomplus/cloud-commerce/compare/v2.38.0...v2.38.1) (2025-03-13)
 
 
