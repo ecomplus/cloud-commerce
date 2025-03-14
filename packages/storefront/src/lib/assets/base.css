@@ -105,6 +105,14 @@ d-md {
     display: inline;
   }
 }
+d-blk,
+d-block {
+  display: block;
+}
+d-iblk,
+d-iblock {
+  display: inline-block;
+}
 
 /* Fix Safari issue related to <summary> / <details> arrow */
 details > summary.list-none::-webkit-details-marker,
