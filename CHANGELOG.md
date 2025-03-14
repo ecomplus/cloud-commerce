@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.39.2](https://github.com/ecomplus/cloud-commerce/compare/v2.39.1...v2.39.2) (2025-03-14)
+
+
+### Bug Fixes
+
+* **storefront:** Ensure prefering context API doc meta title and description on base head ([7ea959b](https://github.com/ecomplus/cloud-commerce/commit/7ea959b7afbe09ca3b22ca33adf2bd447bd41a9c))
+* **storefront:** Meta tag fields on CMS config for all pages ([fdfc8ad](https://github.com/ecomplus/cloud-commerce/commit/fdfc8adf5ed8739be581e97de7c3c11bb1ffaec6))
+
 ## [2.39.1](https://github.com/ecomplus/cloud-commerce/compare/v2.39.0...v2.39.1) (2025-03-14)
 
 
