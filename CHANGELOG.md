@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.39.1](https://github.com/ecomplus/cloud-commerce/compare/v2.39.0...v2.39.1) (2025-03-14)
+
+
+### Bug Fixes
+
+* **mandae:** Fix checking shipping rules max weight ([be0acc7](https://github.com/ecomplus/cloud-commerce/commit/be0acc7ed18c8cb8d3d0b1a15e7edc75b41e0ee1))
+* **storefront:** Also pass non-parent categories on `filterMainCategories` with selected slugs ([ffed0c4](https://github.com/ecomplus/cloud-commerce/commit/ffed0c4875529026e8d91f742aac8b38bdc4ac4a))
+
 ## [2.39.0](https://github.com/ecomplus/cloud-commerce/compare/v2.38.1...v2.39.0) (2025-03-13)
 
 
