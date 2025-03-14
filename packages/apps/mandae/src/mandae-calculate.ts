@@ -63,7 +63,7 @@ const applyShippingDiscount = ({
         && checkZipCode(destinationZip, rule)
         && (rule.service === 'Todos' || rule.service === mandaeShipping.name)
         && (!rule.min_amount || itemsSubtotal >= rule.min_amount)
-        && (!rule.max_kg_weight || itemsKgWeight >= rule.max_kg_weight)
+        && (!rule.max_kg_weight || itemsKgWeight <= rule.max_kg_weight)
       ) {
         if (rule.free_shipping) {
           value = 0;
@@ -188,7 +188,7 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
       const declaredValue = ecomUtils.price(item);
       itemsSubtotal += (declaredValue * item.quantity);
       const weight = getKgWeight(item);
-      itemsKgWeight += item.quantity * weight;
+      itemsKgWeight += (item.quantity * weight);
       const mandaeItem = {
         declaredValue,
         weight,
