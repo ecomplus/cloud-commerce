@@ -1,5 +1,28 @@
 import type { CmsCollOptions } from './get-configs-coll';
 
+export const pageMetaFields = [
+  {
+    label: 'Meta title',
+    name: 'metaTitle',
+    widget: 'string',
+    hint: {
+      en: 'Title displayed in browser tab and search engine results, relevant for SEO',
+      pt: 'Título exibido na aba do navegador e nos resultados de motores de busca, relevante para SEO',
+    },
+    required: false,
+  },
+  {
+    label: 'Meta description',
+    name: 'metaDescription',
+    widget: 'text',
+    hint: {
+      en: 'Description displayed in search engine results, relevant for SEO',
+      pt: 'Descrição exibida nos resultados de motores de busca, relevante para SEO',
+    },
+    required: false,
+  },
+];
+
 const getPagesColl = ({
   baseDir,
   heroConfig,
@@ -29,6 +52,7 @@ const getPagesColl = ({
       fields: [
         heroConfig,
         sectionsConfig,
+        ...pageMetaFields,
       ],
     },
     {
@@ -40,6 +64,7 @@ const getPagesColl = ({
       file: `${baseDir}content/pages/products.json`,
       fields: [
         sectionsConfig,
+        ...pageMetaFields,
       ],
     },
     {
@@ -51,6 +76,7 @@ const getPagesColl = ({
       file: `${baseDir}content/pages/categories.json`,
       fields: [
         sectionsConfig,
+        ...pageMetaFields,
       ],
     },
     {
@@ -62,6 +88,7 @@ const getPagesColl = ({
       file: `${baseDir}content/pages/brands.json`,
       fields: [
         sectionsConfig,
+        ...pageMetaFields,
       ],
     },
     {
@@ -73,6 +100,7 @@ const getPagesColl = ({
       file: `${baseDir}content/pages/collections.json`,
       fields: [
         sectionsConfig,
+        ...pageMetaFields,
       ],
     },
     {
@@ -85,6 +113,7 @@ const getPagesColl = ({
       preview_path: 's/',
       fields: [
         sectionsConfig,
+        ...pageMetaFields,
       ],
     },
   ],

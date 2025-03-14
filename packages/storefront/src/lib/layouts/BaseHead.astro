@@ -35,13 +35,13 @@ if (fetchingApiContext) {
 
 const apiDoc = apiContext.doc;
 const state: Record<string, any> = apiDoc || cmsContent || {};
-let title: string = state.meta_title
-  || state.metaTitle
+let title: string = state.metaTitle
+  || state.meta_title
   || (state.name && `${state.name} | ${settings.name}`)
   || (state.title && `${state.title} | ${settings.name}`)
   || '';
-let description: string = state.meta_description
-  || state.metaDescription
+let description: string = state.metaDescription
+  || state.meta_description
   || state.short_description
   || state.description
   || settings.description

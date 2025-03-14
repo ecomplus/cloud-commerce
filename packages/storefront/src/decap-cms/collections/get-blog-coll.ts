@@ -1,9 +1,11 @@
 import type { CmsCollOptions } from './get-configs-coll';
-import getExtraPagesColl from './get-extra-pages-coll';
+import { pageMetaFields } from './get-pages-coll';
 
-const getBlogColl = (collOptions: CmsCollOptions) => {
-  const { baseDir } = collOptions;
-  const { fields: extraPageFields } = getExtraPagesColl(collOptions);
+const getBlogColl = ({
+  baseDir,
+  heroConfig,
+  sectionsConfig,
+}: CmsCollOptions) => {
   return {
     name: 'blog',
     label: {
@@ -23,7 +25,23 @@ const getBlogColl = (collOptions: CmsCollOptions) => {
       preview: import.meta.env.DEV,
     },
     fields: [
-      ...extraPageFields,
+      {
+        name: 'title',
+        label: {
+          en: 'Title',
+          pt: 'Título',
+        },
+        widget: 'string',
+      },
+      {
+        label: {
+          en: 'Body',
+          pt: 'Corpo',
+        },
+        name: 'body',
+        widget: 'markdown',
+        required: false,
+      },
       {
         name: 'thumbnail',
         widget: 'image',
@@ -34,9 +52,17 @@ const getBlogColl = (collOptions: CmsCollOptions) => {
         name: 'description',
         widget: 'text',
         label: {
-          en: 'Description',
-          pt: 'Descrição',
+          en: 'Short description',
+          pt: 'Descrição curta',
         },
+        required: false,
+      },
+      {
+        ...heroConfig,
+        required: false,
+      },
+      {
+        ...sectionsConfig,
         required: false,
       },
       {
@@ -58,6 +84,7 @@ const getBlogColl = (collOptions: CmsCollOptions) => {
         required: false,
         default: '{{now}}',
       },
+      ...pageMetaFields,
     ],
   };
 };

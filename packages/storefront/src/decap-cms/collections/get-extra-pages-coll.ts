@@ -1,4 +1,5 @@
 import type { CmsCollOptions } from './get-configs-coll';
+import { pageMetaFields } from './get-pages-coll';
 
 const getExtraPagesColl = ({
   baseDir,
@@ -41,26 +42,6 @@ const getExtraPagesColl = ({
       required: false,
     },
     {
-      label: 'Meta title',
-      name: 'meta_title',
-      widget: 'string',
-      hint: {
-        en: 'Title displayed in browser tab and search engine results, relevant for SEO',
-        pt: 'Título exibido na aba do navegador e nos resultados de motores de busca, relevante para SEO',
-      },
-      required: false,
-    },
-    {
-      label: 'Meta description',
-      name: 'meta_description',
-      widget: 'text',
-      hint: {
-        en: 'Description displayed in search engine results, relevant for SEO',
-        pt: 'Descrição exibida nos resultados de motores de busca, relevante para SEO',
-      },
-      required: false,
-    },
-    {
       ...heroConfig,
       required: false,
     },
@@ -68,6 +49,7 @@ const getExtraPagesColl = ({
       ...sectionsConfig,
       required: false,
     },
+    ...pageMetaFields,
   ],
 });
 
