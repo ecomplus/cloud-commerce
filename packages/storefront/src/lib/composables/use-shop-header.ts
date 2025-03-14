@@ -43,7 +43,7 @@ const filterMainCategories = (
 ) => {
   const mainCategories = categories.filter(({ name, slug, parent }) => {
     if (!slug) return false;
-    if (featuredSlugs?.length && !featuredSlugs.includes(slug)) return false;
+    if (featuredSlugs?.length) return featuredSlugs.includes(slug);
     return name && !parent;
   }) as Array<MainCategory>;
   if (featuredSlugs?.length) {
