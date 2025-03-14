@@ -44,7 +44,9 @@ const importProduct = async (
       if (variation) {
         variationId = variation._id;
       } else {
-        logger.info(`SKU not found ${queueSku}`);
+        logger.info(`SKU not found ${queueSku} on any variation`, {
+          product,
+        });
         if (!isHiddenQueue && !appData.update_product) {
           const msg = queueSku
             + ' corresponde a um produto com variações,'
