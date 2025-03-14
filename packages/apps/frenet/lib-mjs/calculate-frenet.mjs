@@ -62,10 +62,12 @@ export default async ({ params, application }) => {
         ShippingItemArray: [],
       };
       items.forEach((item) => {
-        const { weight, quantity } = item;
+        const { weight, quantity, sku } = item;
         const calculeWeight = () => {
           if (weight) {
-            return (weight.unit && weight.unit === 'g') ? (weight.value / 1000) : weight.value;
+            return (weight.unit && weight.unit === 'g')
+              ? (weight.value / 1000)
+              : weight.value;
           }
           return undefined;
         };
@@ -75,6 +77,7 @@ export default async ({ params, application }) => {
           Height: getDimension('height', item),
           Width: getDimension('width', item),
           Quantity: quantity,
+          SKU: sku,
         });
       });
       return schema;
@@ -96,6 +99,7 @@ export default async ({ params, application }) => {
         token: process.env.FRENET_TOKEN,
       },
       data: schema,
+      timeout: (params.is_checkout_confirmation ? 19000 : 10000),
     });
     if (!data || !Array.isArray(data.ShippingSevicesArray)) {
       return {
@@ -117,10 +121,19 @@ export default async ({ params, application }) => {
     response.shipping_services = ShippingSevicesArray
       .filter((service) => !service.Error)
       .map((service) => {
+        let label = service.ServiceDescription.length > 50
+          ? service.Carrier
+          : service.ServiceDescription;
+        if (Array.isArray(config.service_labels)) {
+          const serviceLabelConfig = config.service_labels.find((labels) => {
+            return labels && labels.frenet_label === label && labels.new_label;
+          });
+          if (serviceLabelConfig) {
+            label = serviceLabelConfig.new_label;
+          }
+        }
         return {
-          label: service.ServiceDescription.length > 50
-            ? service.Carrier
-            : service.ServiceDescription,
+          label,
           carrier: service.Carrier,
           service_name: service.ServiceDescription.length > 70
             ? service.Carrier
