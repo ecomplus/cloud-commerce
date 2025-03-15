@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.39.4](https://github.com/ecomplus/cloud-commerce/compare/v2.39.3...v2.39.4) (2025-03-15)
+
+
+### Bug Fixes
+
+* **frenet:** Request timeout, SKU on params and handler for mapped labels ([904058a](https://github.com/ecomplus/cloud-commerce/commit/904058a90c42ba92ad83bfc9a67e60fc18d5e69e))
+* **storefront:** Additional custom element `d-blk` and `d-iblk` styles for responsive content JSON ([99b2ba5](https://github.com/ecomplus/cloud-commerce/commit/99b2ba5bac86ce76365e0c3a209d5c93bb38cb39))
+* **tiny-erp:** Properly find by product OR variation SKU from Store API on import ([965df5f](https://github.com/ecomplus/cloud-commerce/commit/965df5f5e872919cc311b10ab49993ec07179251))
+
 ## [2.39.3](https://github.com/ecomplus/cloud-commerce/compare/v2.39.2...v2.39.3) (2025-03-14)
 
 ## [2.39.2](https://github.com/ecomplus/cloud-commerce/compare/v2.39.1...v2.39.2) (2025-03-14)
