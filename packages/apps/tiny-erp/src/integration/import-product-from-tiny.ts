@@ -75,7 +75,7 @@ const importProduct = async (
         }
         let endpoint = `products/${product._id}`;
         if (variationId) {
-          endpoint += `variations/${variationId}`;
+          endpoint += `/variations/${variationId}`;
         }
         endpoint += '/quantity';
         logger.info(endpoint, { quantity });
