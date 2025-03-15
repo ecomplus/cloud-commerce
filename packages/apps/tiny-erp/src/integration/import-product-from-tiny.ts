@@ -17,7 +17,7 @@ const importProduct = async (
   let product: Products | null = null;
   const { tinyStockUpdate } = queueEntry;
   try {
-    const resourceFind = (queueProductId || `sku:${queueSku}` as const);
+    const resourceFind = (queueProductId || `skus:${queueSku}` as const);
     product = (await api.get(`products/${resourceFind}`)).data;
   } catch (err: any) {
     if (err.statusCode !== 404) {
@@ -25,9 +25,9 @@ const importProduct = async (
     }
     if (!queueProductId) {
       const currentSku = tinyStockUpdate?.produto?.codigo;
-      if (currentSku) {
+      if (currentSku && queueSku !== currentSku) {
         try {
-          product = (await api.get(`products/sku:${currentSku}`)).data;
+          product = (await api.get(`products/skus:${currentSku}`)).data;
         } catch {
           //
         }
@@ -170,7 +170,10 @@ const importProduct = async (
     queueProductId,
     hasVariations,
     variationId,
-  }), { tinyStockUpdate });
+  }), {
+    tinyStockUpdate,
+    isProductFound: !!product,
+  });
   if (tinyStockUpdate && isHiddenQueue && (queueProductId || product?._id)) {
     return handleTinyStock(tinyStockUpdate as any, tinyStockUpdate.produto);
   }
