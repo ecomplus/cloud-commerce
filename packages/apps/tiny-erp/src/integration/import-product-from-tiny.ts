@@ -92,7 +92,7 @@ const importProduct = async (
       if (!canCreateNew) {
         return null;
       }
-      return parseProduct(tinyProduct, tipo, true)
+      return parseProduct(tinyProduct, appData, tipo, true)
         .then((bodyProduct) => {
           return api.post('products', bodyProduct);
         });

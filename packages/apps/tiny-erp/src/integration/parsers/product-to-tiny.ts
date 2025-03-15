@@ -2,7 +2,11 @@ import type { Products } from '@cloudcommerce/types';
 import config from '@cloudcommerce/firebase/lib/config';
 import ecomUtils from '@ecomplus/utils';
 
-export default async (product: Products, originalTinyProduct, appData) => {
+export default async (
+  product: Products,
+  originalTinyProduct: Record<string, any>,
+  appData: Record<string, any>,
+) => {
   const { metafields } = config.get();
   const hasVariations = product.variations && product.variations.length;
   let unidade: string = originalTinyProduct?.unidade;
@@ -49,7 +53,7 @@ export default async (product: Products, originalTinyProduct, appData) => {
     tinyProduct.garantia = product.warranty.substring(0, 20);
   }
 
-  if (product.mpn && product.mpn.length) {
+  if (product.mpn && product.mpn.length && !appData.disable_ncm) {
     [tinyProduct.ncm] = product.mpn;
   }
   if (product.gtin && product.gtin.length) {

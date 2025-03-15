@@ -88,8 +88,9 @@ const tryImageUpload = (
 });
 
 export default (
-  tinyProduct,
-  tipo?:string,
+  tinyProduct: Record<string, any>,
+  appData: Record<string, any>,
+  tipo?: string,
   isNew = true,
 ): Promise<ProductSet> => new Promise((resolve) => {
   const sku = tinyProduct.codigo || String(tinyProduct.id);
@@ -147,7 +148,7 @@ export default (
       product.min_quantity = minQnt;
     }
   }
-  if (tinyProduct.ncm) {
+  if (tinyProduct.ncm && !appData.disable_ncm) {
     product.mpn = [tinyProduct.ncm];
   }
   const validateGtin = (gtin) => {
