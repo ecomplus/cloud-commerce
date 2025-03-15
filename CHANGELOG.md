@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.39.5](https://github.com/ecomplus/cloud-commerce/compare/v2.39.4...v2.39.5) (2025-03-15)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Fix mounting endpoint for variation quantity update on product import ([aacdb4c](https://github.com/ecomplus/cloud-commerce/commit/aacdb4c6d80fce59f712b64c28432d5e19cb7ab6))
+* **tiny-erp:** Handle disable NCM/MPN config option ([a14cc28](https://github.com/ecomplus/cloud-commerce/commit/a14cc28cec46b3a93db3eefe9c3138249205fc56))
+
 ## [2.39.4](https://github.com/ecomplus/cloud-commerce/compare/v2.39.3...v2.39.4) (2025-03-15)
 
 
