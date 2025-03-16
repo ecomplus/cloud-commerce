@@ -79,7 +79,6 @@ export const productShelfCmsFields = ({
   },
   isShuffle: {
     widget: 'boolean',
-    label: { pt: 'Embaralhar itens', en: 'Shuffle result items' },
   },
   isHeadless: {
     widget: 'boolean',
