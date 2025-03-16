@@ -52,11 +52,6 @@ export const productShelfCmsFields = ({
       value: '-price_discount,-sales',
     }],
   },
-  searchQuery: {
-    widget: 'string',
-    label: { pt: 'Query adicional', en: 'Additional query' },
-    hint: { pt: 'Ex.: &brands.slug!=minha-marca', en: 'E.g. &brands.slug!=my-brand' },
-  },
   title: {
     widget: 'string',
     label: { pt: 'Título', en: 'Title' },
@@ -67,13 +62,6 @@ export const productShelfCmsFields = ({
     label: { pt: 'Link no título', en: 'Title link' },
     _nullable: true,
   },
-  isShuffle: {
-    widget: 'boolean',
-    label: { pt: 'Embaralhar itens', en: 'Shuffle result items' },
-  },
-  isHeadless: {
-    widget: 'boolean',
-  },
   limit: {
     widget: 'number',
     value_type: 'int',
@@ -83,6 +71,18 @@ export const productShelfCmsFields = ({
   page: {
     widget: 'number',
     value_type: 'int',
+  },
+  searchQuery: {
+    widget: 'string',
+    label: { pt: 'Query adicional', en: 'Additional query' },
+    hint: { pt: 'Ex.: &brands.slug!=minha-marca', en: 'E.g. &brands.slug!=my-brand' },
+  },
+  isShuffle: {
+    widget: 'boolean',
+    label: { pt: 'Embaralhar itens', en: 'Shuffle result items' },
+  },
+  isHeadless: {
+    widget: 'boolean',
   },
 }) as const satisfies CmsFields;
 
