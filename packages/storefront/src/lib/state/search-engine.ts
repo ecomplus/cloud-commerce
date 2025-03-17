@@ -75,6 +75,7 @@ export const SEARCH_ENGINE_DEFAULTS: {
   isWithCount: boolean,
   isWithBuckets: boolean,
   pageSize: number,
+  fields?: string[],
 } = {
   term: null,
   isWithCount: true,
@@ -116,6 +117,9 @@ export class SearchEngine {
     fields?: readonly string[],
     debounce?: number,
   } = {}) {
+    if (!fields && SEARCH_ENGINE_DEFAULTS.fields) {
+      fields = [...SEARCH_ENGINE_DEFAULTS.fields];
+    }
     this.fields = fields;
     this.#search = useDebounceFn((opts) => {
       this.#isFetching.value = true;

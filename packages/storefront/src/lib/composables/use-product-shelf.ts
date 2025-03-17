@@ -5,6 +5,7 @@ import { ref, shallowReactive } from 'vue';
 import api from '@cloudcommerce/api';
 import { inStock as checkInStock } from '@ecomplus/utils';
 import { i19relatedProducts } from '@@i18n';
+import { SEARCH_ENGINE_DEFAULTS } from '@@sf/state/search-engine';
 import { useSectionPreview } from '@@sf/state/use-cms-preview';
 
 export type Props = Partial<SectionPreviewProps> & {
@@ -139,6 +140,9 @@ const useProductShelf = (props: Props) => {
           searchQuery += `&_id=${productIds.slice(0, 60).join(',')}`;
         }
         endpointQuery += searchQuery;
+      }
+      if (SEARCH_ENGINE_DEFAULTS.fields?.length) {
+        endpointQuery += `&fields=${SEARCH_ENGINE_DEFAULTS.fields.join(',')}`;
       }
       try {
         const { data } = await api.get(`search/v1?${endpointQuery}`);
