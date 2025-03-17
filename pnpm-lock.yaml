@@ -620,8 +620,8 @@ importers:
         specifier: workspace:*
         version: link:../api
       '@fastify/deepmerge':
-        specifier: ^2.0.2
-        version: 2.0.2
+        specifier: ^3.0.0
+        version: 3.0.0
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -650,8 +650,8 @@ importers:
         specifier: workspace:*
         version: link:../api
       '@fastify/deepmerge':
-        specifier: ^2.0.2
-        version: 2.0.2
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -1061,8 +1061,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       '@fastify/deepmerge':
-        specifier: ^2.0.2
-        version: 2.0.2
+        specifier: ^3.0.0
+        version: 3.0.0
       '@iconify-json/fa6-brands':
         specifier: ^1.2.5
         version: 1.2.5
@@ -1619,8 +1619,8 @@ packages:
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
 
-  '@fastify/deepmerge@2.0.2':
-    resolution: {integrity: sha512-3wuLdX5iiiYeZWP6bQrjqhrcvBIf0NHbQH1Ur1WbHvoiuTYUEItgygea3zs8aHpiitn0lOB8gX20u1qO+FDm7Q==}
+  '@fastify/deepmerge@3.0.0':
+    resolution: {integrity: sha512-VW7srTEkCzbfqoRBn+k7s/nP9WVFmKSfeHBbMZLLrOYDQoShHWuEi5V6Jgz1Q0fm3pMYsiC+EVMvhZyI3hKzkw==}
 
   '@firebase/analytics-compat@0.2.18':
     resolution: {integrity: sha512-Hw9mzsSMZaQu6wrTbi3kYYwGw9nBqOHr47pVLxfr5v8CalsdrG5gfs9XUlPOZjHRVISp3oQrh1j7d3E+ulHPjQ==}
@@ -7396,7 +7396,7 @@ snapshots:
 
   '@fastify/busboy@3.1.1': {}
 
-  '@fastify/deepmerge@2.0.2': {}
+  '@fastify/deepmerge@3.0.0': {}
 
   '@firebase/analytics-compat@0.2.18(@firebase/app-compat@0.2.51)(@firebase/app@0.11.2)':
     dependencies:
