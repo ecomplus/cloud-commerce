@@ -23,7 +23,12 @@ export type Props = {
   loading?: 'lazy' | 'eager';
   decoding?: 'async' | 'sync' | 'auto';
   alt?: string;
+  sizes?: string | Array<{
+    maxScreen?: number;
+    width: number;
+  }>;
   preferredSize?: string;
+  responsiveSizes?: Record<string, number | true>;
   isImgTagOnly?: boolean;
 }
 
@@ -47,17 +52,58 @@ const attrs = computed<ImgHTMLAttributes>(() => ({
   loading: props.loading,
   decoding: props.decoding || (dimensions.value.height ? 'async' : undefined),
 }));
-const avifSrc = computed(() => {
+if (props.sizes?.length) {
+  if (Array.isArray(props.sizes)) {
+    let attrSizes = '';
+    props.sizes.forEach(({ maxScreen, width }) => {
+      if (attrSizes) attrSizes += ', ';
+      if (maxScreen) attrSizes += `(max-width: ${maxScreen}px) `;
+      attrSizes += `${width}px`;
+    });
+    if (attrSizes.length) attrs.value.sizes = attrSizes;
+  } else {
+    attrs.value.sizes = props.sizes;
+  }
+}
+const { responsiveSizes } = props;
+if (responsiveSizes) {
+  const sizeKeys = responsiveSizes && Object.keys(responsiveSizes);
+  if (sizeKeys?.length) {
+    let attrSrcset = '';
+    sizeKeys.forEach((size) => {
+      if (!responsiveSizes[size]) return;
+      const img = getImg(props.picture, undefined, size);
+      if (!img) return;
+      const width = typeof responsiveSizes[size] === 'number'
+        ? responsiveSizes[size]
+        : getImgSizes(img).width as number;
+      if (!width) return;
+      if (attrSrcset) {
+        attrSrcset += ', ';
+      }
+      attrSrcset += `${img.url} ${width}w`;
+    });
+    if (attrSrcset.length) {
+      attrs.value.srcset = attrSrcset;
+    }
+  }
+}
+const avifSrcset = computed(() => {
   if (!props.isImgTagOnly && attrs.value.src?.endsWith('.avif.webp')) {
-    return attrs.value.src.replace('.avif.webp', '.avif');
+    return (attrs.value.srcset || attrs.value.src)
+      .replace(/\.avif\.webp/g, '.avif');
   }
   return null;
 });
 </script>
 
 <template>
-  <picture v-if="avifSrc">
-    <source :srcset="avifSrc" type="image/avif" />
+  <picture v-if="avifSrcset">
+    <source
+      type="image/avif"
+      :srcset="avifSrcset"
+      :sizes="attrs.sizes"
+    />
     <img v-bind="attrs" />
   </picture>
   <img v-else v-bind="attrs" />
