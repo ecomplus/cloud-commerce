@@ -14,5 +14,7 @@ export const isScreenXs = screenWidth > 0 && screenWidth < 640;
 
 export const isScreenLg = screenWidth >= 1024;
 
+export const isScreenXl = screenWidth >= 1280;
+
 export const looksLikeBot = !/^Mozilla\//i.test(userAgent)
   || /bot|spider|crawl|http|lighthouse|inspect/i.test(userAgent);
