@@ -56,11 +56,8 @@ type FetchModule = <M extends ModuleApiEndpoint>(
 }>;
 
 export const fetchModule: FetchModule = (modName, reqOptions) => {
-  const { hostname } = window.location;
   const { domain } = globalThis.$storefront.settings;
-  const modulesBaseUri = hostname !== 'localhost' && hostname !== '127.0.0.1'
-    ? `https://${domain}/_api/modules/`
-    : '/_api/modules/';
+  const modulesBaseUri = `https://${domain}/_api/modules/`;
   return afetch(`${modulesBaseUri}${modName}`, reqOptions);
 };
 
