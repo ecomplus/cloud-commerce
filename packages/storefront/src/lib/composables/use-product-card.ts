@@ -69,6 +69,7 @@ export type Props = {
   listName?: string;
   listId?: string;
   isSkipStockRefetch?: boolean;
+  picturesSize?: string;
 };
 
 const useProductCard = <T extends ProductItem | undefined = undefined>(props: Props) => {
@@ -128,7 +129,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     const _images: PictureSize[] = [];
     if (pictures) {
       pictures.forEach(((picture) => {
-        const img = getImg(picture);
+        const img = getImg(picture, undefined, props.picturesSize);
         if (img) _images.push(img);
       }));
     }
