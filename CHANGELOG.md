@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.0](https://github.com/ecomplus/cloud-commerce/compare/v2.39.5...v2.40.0) (2025-03-17)
+
+
+### Features
+
+* **storefront:** New `picturesSize` optional prop on product card composable ([90c75a6](https://github.com/ecomplus/cloud-commerce/commit/90c75a6563033e1944bee43e39b039e236b20903))
+* **storefront:** Supporting `SEARCH_ENGINE_DEFAULTS.fields` for search default result fields ([99f7a1a](https://github.com/ecomplus/cloud-commerce/commit/99f7a1af67948138fa7e69cf8d351ec3b8b9c08a))
+* **storefront:** Supporting responsize images on `<AImg>` with `sizes` and `responsiveSizes` props ([bf70336](https://github.com/ecomplus/cloud-commerce/commit/bf703364bc6bf09071af690d0629514191f0c68b))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#550](https://github.com/ecomplus/cloud-commerce/issues/550)) ([f90f02e](https://github.com/ecomplus/cloud-commerce/commit/f90f02ec666dc62331b3e6c356c0a2044dee700f))
+
 ## [2.39.5](https://github.com/ecomplus/cloud-commerce/compare/v2.39.4...v2.39.5) (2025-03-15)
 
 
