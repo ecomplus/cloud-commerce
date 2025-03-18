@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.2](https://github.com/ecomplus/cloud-commerce/compare/v2.40.1...v2.40.2) (2025-03-18)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Prevent syntax error on after queue handler with undefined objects in app data ([46d9dfd](https://github.com/ecomplus/cloud-commerce/commit/46d9dfd373bbd2f40d073f67e79b3e8ff4fc1e60))
+* **tiny-erp:** Prevents unecessary updates on app data when handler event is not queued ([75d4bda](https://github.com/ecomplus/cloud-commerce/commit/75d4bda6761c4c45a6fc5962addfc344b3e4091e))
+
 ## [2.40.1](https://github.com/ecomplus/cloud-commerce/compare/v2.40.0...v2.40.1) (2025-03-18)
 
 
