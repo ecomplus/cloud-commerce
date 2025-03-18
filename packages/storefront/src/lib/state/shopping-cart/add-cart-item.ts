@@ -1,4 +1,5 @@
 import type { CartSet } from '@cloudcommerce/api/types';
+import type { ExtendedCartItem, ShoppingCart } from '@@sf/state/shopping-cart';
 import { randomObjectId } from '@ecomplus/utils';
 
 type CartItem = CartSet['items'][0];
@@ -13,7 +14,10 @@ const matchItemsFlags = (item: CartItem, { flags: newItemFlags }: CartItem) => {
   return item.flags.every((flag) => newItemFlags.includes(flag));
 };
 
-const addCartItem = (cart: CartSet, newItem: CartItem): null | CartItem => {
+const addCartItem = (
+  cart: CartSet | ShoppingCart,
+  newItem: ExtendedCartItem,
+): null | ExtendedCartItem => {
   if (
     typeof newItem.product_id !== 'string'
     || typeof newItem.quantity !== 'number' || !(newItem.quantity >= 0)

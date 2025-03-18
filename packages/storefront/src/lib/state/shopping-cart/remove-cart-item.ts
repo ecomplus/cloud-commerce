@@ -1,4 +1,5 @@
 import type { CartSet } from '@cloudcommerce/api/types';
+import type { ExtendedCartItem, ShoppingCart } from '@@sf/state/shopping-cart';
 
 type CartItem = CartSet['items'][0];
 type ItemKitProduct = Exclude<CartItem['kit_product'], undefined>;
@@ -10,14 +11,17 @@ const matchKitItem = (cartItem: CartItem, kitItem: ItemKitComposition[number]) =
     && kitItem.quantity === cartItem.quantity;
 };
 
-const removeCartItem = (cart: CartSet, itemId: string): Array<CartItem> => {
+const removeCartItem = (
+  cart: CartSet | ShoppingCart,
+  itemId: string,
+): Array<ExtendedCartItem> => {
   const cartItemIndex = cart.items.findIndex((item) => {
     return item._id === itemId;
   });
   if (cartItemIndex === -1) return [];
   const cartItem = cart.items[cartItemIndex];
   cart.items.splice(cartItemIndex, 1);
-  const removedItems: Array<CartItem> = [cartItem];
+  const removedItems: Array<ExtendedCartItem> = [cartItem];
   if (cartItem.kit_product) {
     const { _id: kitProductId, composition } = cartItem.kit_product;
     if (composition) {

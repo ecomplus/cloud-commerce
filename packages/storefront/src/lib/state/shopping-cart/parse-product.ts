@@ -1,7 +1,6 @@
-import type { Products, Carts, SearchItem } from '@cloudcommerce/api/types';
+import type { Products, SearchItem } from '@cloudcommerce/api/types';
+import type { ExtendedCartItem } from '@@sf/state/shopping-cart';
 import { price as getPrice } from '@ecomplus/utils';
-
-type CartItem = Carts['items'][0];
 
 export default (
   product: (Partial<Products> | Partial<SearchItem>) & { _id: Products['_id'] },
@@ -15,7 +14,7 @@ export default (
   const variation = variationId && product.variations
     ? product.variations.find(({ _id }) => _id === variationId)
     : undefined;
-  const item: CartItem = {
+  const item: ExtendedCartItem = {
     product_id: product._id,
     variation_id: variationId,
     sku: variation?.sku || product.sku,
@@ -28,6 +27,8 @@ export default (
     max_quantity: product.quantity,
     quantity: minQuantity > 0 ? Math.max(minQuantity, quantity) : quantity,
     price: getPrice(product),
+    categories: product.categories,
+    brands: product.brands,
   };
   if (variation?.picture_id && product.pictures) {
     item.picture = product.pictures.find((_picture) => {

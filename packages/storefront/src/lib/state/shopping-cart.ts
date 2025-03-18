@@ -10,25 +10,33 @@ import removeItem from '@@sf/state/shopping-cart/remove-cart-item';
 import parseProduct from '@@sf/state/shopping-cart/parse-product';
 
 type CartItem = CartSet['items'][0];
+
+export type ExtendedCartItem = Record<string, any> & CartItem;
+
+export type ShoppingCart = CartSet & {
+  items: ExtendedCartItem[];
+  subtotal: number;
+};
+
 const storageKey = 'ecomShoppingCart';
 const emptyCart = {
   subtotal: 0,
   items: [],
 };
-const shoppingCart = useStorage<CartSet & { subtotal: number }>(storageKey, emptyCart);
+const shoppingCart = useStorage<ShoppingCart>(storageKey, emptyCart);
 const totalItems = computed(() => {
   return shoppingCart.items.reduce((acc, item) => {
     return acc + item.quantity;
   }, 0);
 });
 
-const addCartItem = (newItem: CartItem) => {
+const addCartItem = (newItem: ExtendedCartItem) => {
   return addItem(shoppingCart, newItem);
 };
 const removeCartItem = (itemId: string) => {
   return removeItem(shoppingCart, itemId);
 };
-const resetCartItems = (items?: CartItem[]) => {
+const resetCartItems = (items?: ExtendedCartItem[]) => {
   shoppingCart.items.splice(0, shoppingCart.items.length);
   items?.forEach(addCartItem);
 };
@@ -108,8 +116,8 @@ export {
 };
 
 type CartEvent = {
-  addCartItem: CartItem,
-  removeCartItem: CartItem,
+  addCartItem: ExtendedCartItem,
+  removeCartItem: ExtendedCartItem,
 };
 const cartEmitter = mitt<CartEvent>();
 const cloneItems = () => shoppingCart.items.map((item) => ({ ...item }));
