@@ -28,7 +28,6 @@ export default (
     quantity: minQuantity > 0 ? Math.max(minQuantity, quantity) : quantity,
     price: getPrice(product),
     categories: product.categories,
-    brands: product.brands,
   };
   if (variation?.picture_id && product.pictures) {
     item.picture = product.pictures.find((_picture) => {

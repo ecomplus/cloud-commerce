@@ -86,6 +86,7 @@ const updateCartState = async () => {
         "variations.production_time",
         "variations.base_price",
         "variations.picture_id",
+        "categories._id",
       ] as const,
     });
     data.result.forEach((productItem) => {
