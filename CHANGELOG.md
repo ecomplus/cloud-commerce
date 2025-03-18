@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.1](https://github.com/ecomplus/cloud-commerce/compare/v2.40.0...v2.40.1) (2025-03-18)
+
+
+### Bug Fixes
+
+* **discounts:** Updating with latest from @ecomplus/discounts-v2 ([6e2ca39](https://github.com/ecomplus/cloud-commerce/commit/6e2ca396ed0059ec67318fb057b34ac6117b6fe6))
+* **storefront:** Fetch items categories on cart state update ([0f97e7f](https://github.com/ecomplus/cloud-commerce/commit/0f97e7ff3b68b9c4a98a3a9585f2bdac499678ec))
+* **storefront:** Storing product `categories` and `brands` on shopping cart items (when available) ([a0b700c](https://github.com/ecomplus/cloud-commerce/commit/a0b700c87a3b0d364e34bfe35169430753941b5b))
+
 ## [2.40.0](https://github.com/ecomplus/cloud-commerce/compare/v2.39.5...v2.40.0) (2025-03-17)
 
 
