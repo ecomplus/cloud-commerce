@@ -70,21 +70,20 @@ export default async (
   if (!action) {
     return null;
   }
-  let queueList = appData[action]?.[queue];
+  const queueList: Record<string, any>[] | undefined = appData[action]?.[queue];
   if (Array.isArray(queueList)) {
     const idIndex = queueList.indexOf(nextId);
     if (idIndex > -1) {
       queueList.splice(idIndex, 1);
+      const data = {
+        [action]: {
+          ...appData[action],
+          [queue]: queueList,
+        },
+      };
+      logger.info(JSON.stringify(data));
+      return updateAppData(application, data);
     }
-  } else {
-    queueList = [];
   }
-  const data = {
-    [action]: {
-      ...appData[action],
-      [queue]: queueList,
-    },
-  };
-  logger.info(JSON.stringify(data));
-  return updateAppData(application, data);
+  return null;
 };
