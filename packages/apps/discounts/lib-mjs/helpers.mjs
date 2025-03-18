@@ -115,16 +115,15 @@ const getValidDiscountRules = (discountRules, params, itemsForKit) => {
           });
         } else if (rule.discount_kit_subtotal) {
           value = 0;
+          let totalQuantity = 0;
           itemsForKit.forEach((item) => {
             const price = ecomUtils.price(item);
             if (price > 0 && checkProductId(item)) {
               value += price * item.quantity;
+              totalQuantity += item.quantity;
             }
           });
           if (rule.min_quantity > 1) {
-            const totalQuantity = itemsForKit.reduce((acc, item) => {
-              return item.quantity + acc;
-            }, 0);
             if (totalQuantity > rule.min_quantity) {
               value *= (rule.min_quantity / totalQuantity);
             }
@@ -215,7 +214,10 @@ const matchDiscountRule = (_discountRules, params = {}, skipApplyAt) => {
   // then try to match by domain
   if (params.domain) {
     const discountRule = filteredRules.find((rule) => {
-      return rule.domain === params.domain || params.domain === `${rule.domain}.skip-open`;
+      if (rule.domain === params.domain || params.domain === `${rule.domain}.skip-open`) {
+        return !rule.discount_coupon && !rule.utm_campaign && !rule.customer_ids?.length;
+      }
+      return false;
     });
     if (discountRule) {
       return {
