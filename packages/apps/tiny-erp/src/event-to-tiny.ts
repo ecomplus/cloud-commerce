@@ -100,7 +100,9 @@ const handleApiEvent: ApiEventHandler = async ({
                 && handler
               ) {
                 const debugFlag = `#${action}/${queue}/${nextId}`;
-                logger.info(`> Starting ${debugFlag}`);
+                logger.info(`> Starting ${debugFlag}`, {
+                  canCreateNew,
+                });
                 const queueEntry = {
                   action,
                   queue,

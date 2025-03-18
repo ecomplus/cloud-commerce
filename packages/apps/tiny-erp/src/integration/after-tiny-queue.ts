@@ -70,7 +70,7 @@ export default async (
   if (!action) {
     return null;
   }
-  let queueList = appData[action][queue];
+  let queueList = appData[action]?.[queue];
   if (Array.isArray(queueList)) {
     const idIndex = queueList.indexOf(nextId);
     if (idIndex > -1) {
