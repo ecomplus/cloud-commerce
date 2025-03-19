@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.3](https://github.com/ecomplus/cloud-commerce/compare/v2.40.2...v2.40.3) (2025-03-19)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Properly returning free shipping preview when no address received ([3769dd6](https://github.com/ecomplus/cloud-commerce/commit/3769dd68d7164dc16144737c00a120b414541579))
+
 ## [2.40.2](https://github.com/ecomplus/cloud-commerce/compare/v2.40.1...v2.40.2) (2025-03-18)
 
 
