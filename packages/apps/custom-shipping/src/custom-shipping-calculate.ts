@@ -17,14 +17,6 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   }
 
   const destinationZip = params.to?.zip.replace(/\D/g, '') || '';
-  if (config.get().countryCode === 'BR' && destinationZip.length !== 8) {
-    return {
-      error: 'CALCULATE_INVALID_ZIP',
-      message: `Zip code ${destinationZip} is invalid for BR country`,
-    };
-  }
-
-  let originZip = params.from?.zip || appData.zip || '';
   const checkZipCode = (rule) => {
     if (destinationZip && rule.zip_range) {
       const { min, max } = rule.zip_range;
@@ -32,6 +24,36 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     }
     return true;
   };
+
+  let originZip: string | undefined;
+  let warehouseCode: string | undefined;
+  let postingDeadline = appData.posting_deadline;
+  if (params.from) {
+    originZip = params.from.zip;
+  } else if (Array.isArray(appData.warehouses) && appData.warehouses.length) {
+    for (let i = 0; i < appData.warehouses.length; i++) {
+      const warehouse = appData.warehouses[i];
+      if (warehouse?.zip && checkZipCode(warehouse)) {
+        const { code } = warehouse;
+        if (!code) continue;
+        if (params.items) {
+          const itemNotOnWarehouse = params.items.find(({ quantity, inventory }) => {
+            return inventory && Object.keys(inventory).length && !(inventory[code] >= quantity);
+          });
+          if (itemNotOnWarehouse) continue;
+        }
+        originZip = warehouse.zip;
+        if (warehouse.posting_deadline?.days) {
+          postingDeadline = warehouse.posting_deadline;
+        }
+        warehouseCode = code;
+      }
+    }
+  }
+  if (!originZip) {
+    originZip = appData.zip;
+  }
+
   for (let i = 0; i < shippingRules.length; i++) {
     const rule = shippingRules[i];
     if (
@@ -57,6 +79,12 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   if (!params.to) {
     // Just a free shipping preview with no shipping address received
     return response;
+  }
+  if (config.get().countryCode === 'BR' && destinationZip.length !== 8) {
+    return {
+      error: 'CALCULATE_INVALID_ZIP',
+      message: `Zip code ${destinationZip} is invalid for BR country`,
+    };
   }
 
   if (!originZip) {
@@ -238,9 +266,10 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
               },
               posting_deadline: {
                 days: 0,
-                ...appData.posting_deadline,
+                ...postingDeadline,
                 ...rule.posting_deadline,
               },
+              warehouse_code: warehouseCode,
             },
           });
         }
