@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.4](https://github.com/ecomplus/cloud-commerce/compare/v2.40.3...v2.40.4) (2025-03-19)
+
+
+### Bug Fixes
+
+* **storefront:** Handling variation price directly on `usePrice` composable with `variationId` prop ([a58206f](https://github.com/ecomplus/cloud-commerce/commit/a58206f9dca7336b58766a7bdfef2209460662cb))
+* **storefront:** Properly parsing variation price and other fields on add to cart ([092cc7e](https://github.com/ecomplus/cloud-commerce/commit/092cc7e400537bdbe42e9cb4d4039cba99e39fa1))
+
 ## [2.40.3](https://github.com/ecomplus/cloud-commerce/compare/v2.40.2...v2.40.3) (2025-03-19)
 
 
