@@ -244,11 +244,13 @@ export default async (appData: AppModuleBody) => {
 
       if (params.payment_method.code === 'credit_card') {
         if (data.card) {
-          transaction.credit_card = {
-            holder_name: data.card.cardholder.name,
-            last_digits: data.card.last_four_digits,
-            token,
-          };
+          transaction.credit_card = { token };
+          if (data.card.cardholder?.name) {
+            transaction.credit_card.holder_name = data.card.cardholder.name;
+          }
+          if (data.card.last_four_digits?.length === 4) {
+            transaction.credit_card.last_digits = data.card.last_four_digits;
+          }
         }
         if (data.installments) {
           transaction.installments = {
