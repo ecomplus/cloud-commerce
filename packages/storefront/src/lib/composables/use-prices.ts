@@ -11,6 +11,7 @@ import {
 export type Props = {
   product?: Partial<Products> & { final_price?: number } &
     ({ price: number } | { final_price: number });
+  variationId?: Products['_id'] | null;
   price?: number;
   basePrice?: number;
   isAmountTotal?: boolean;
@@ -38,6 +39,18 @@ export const getPriceWithDiscount = (
 
 const usePrices = (props: Props) => {
   const _product = computed(() => {
+    if (props.variationId && props.product) {
+      const variation = props.product.variations?.find(({ _id }) => {
+        return _id === props.variationId;
+      });
+      if (variation) {
+        return {
+          price: variation.price || props.product.price || 0,
+          base_price: variation.base_price || props.product.base_price,
+          price_effective_date: props.product.price_effective_date,
+        };
+      }
+    }
     return props.product || {
       price: props.price || 0,
       base_price: props.basePrice,
