@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.5](https://github.com/ecomplus/cloud-commerce/compare/v2.40.4...v2.40.5) (2025-03-19)
+
+
+### Bug Fixes
+
+* **mercadopago:** Prevents invalid `transaction.credit_card.holder_name = null` ([a0946ba](https://github.com/ecomplus/cloud-commerce/commit/a0946ba306c25de916b18d4a343ec68290de768a))
+
 ## [2.40.4](https://github.com/ecomplus/cloud-commerce/compare/v2.40.3...v2.40.4) (2025-03-19)
 
 
