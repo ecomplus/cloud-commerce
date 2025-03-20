@@ -205,10 +205,10 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
       mandaeItems.push(mandaeItem);
     }
   });
-  if (appData.use_max_weight && itemsKgWeight > 50) {
+  if (appData.use_max_weight && (itemsKgWeight > 50 || itemsSubtotal > 5000)) {
     mandaeItems = [{
-      declaredValue: itemsSubtotal,
-      weight: 50,
+      declaredValue: Math.min(itemsSubtotal, 5000),
+      weight: Math.min(itemsKgWeight, 50),
       ...biggerBoxCmDimensions,
       quantity: 1,
     }];
