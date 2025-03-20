@@ -63,11 +63,20 @@ export default async (req: Request, res: Response) => {
   }
 
   const countCheckoutItems = body.items.length;
-  const { customer } = body;
+  const {
+    customer,
+    shipping: { to: shippingAddr },
+  } = body;
+  const testXss = (str: string) => {
+    return /(<script|rc=htt| src=)/i.test(str);
+  };
+  if (Object.keys(customer.name).some(testXss) || Object.keys(shippingAddr).some(testXss)) {
+    return sendError(res, 403, 'CKT803', 'Chato');
+  }
   const savedCustomer = await readOrSaveCustomer({
     ...customer,
-    addresses: !body.shipping.to.line_address?.includes('***')
-      ? [body.shipping.to]
+    addresses: !shippingAddr.line_address?.includes('***')
+      ? [shippingAddr]
       : undefined,
   });
   const customerId = savedCustomer._id;
@@ -95,7 +104,7 @@ export default async (req: Request, res: Response) => {
     }
   });
   customer._id = customerId;
-  const fixMaskedAddr = (bodyAddr: typeof body.shipping.to) => {
+  const fixMaskedAddr = (bodyAddr: typeof shippingAddr) => {
     if (bodyAddr.line_address?.includes('***') || bodyAddr.name?.includes('***')) {
       const savedAddr = savedCustomer.addresses?.find(({ zip }) => zip === bodyAddr.zip);
       if (savedAddr) {
@@ -104,7 +113,7 @@ export default async (req: Request, res: Response) => {
       }
     }
   };
-  fixMaskedAddr(body.shipping.to);
+  fixMaskedAddr(shippingAddr);
 
   // start mounting order body
   // https://developers.e-com.plus/docs/api/#/store/orders/orders
