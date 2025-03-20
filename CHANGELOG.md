@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.7](https://github.com/ecomplus/cloud-commerce/compare/v2.40.6...v2.40.7) (2025-03-20)
+
+
+### Bug Fixes
+
+* **checkout:** Prevent boring XSS on customer fields ([8c3a40c](https://github.com/ecomplus/cloud-commerce/commit/8c3a40c61f159d242ff1045937f071a477f19351))
+* **mandae:** Also hardset declared value up to R$ 5000 when config option for Mandaê limit is set ([8cd02b6](https://github.com/ecomplus/cloud-commerce/commit/8cd02b69d2166db274bf5c919dc6e7fc2943a2fc))
+
 ## [2.40.6](https://github.com/ecomplus/cloud-commerce/compare/v2.40.5...v2.40.6) (2025-03-20)
 
 
