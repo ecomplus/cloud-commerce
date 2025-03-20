@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.6](https://github.com/ecomplus/cloud-commerce/compare/v2.40.5...v2.40.6) (2025-03-20)
+
+
+### Bug Fixes
+
+* **checkout:** Prevent boring XSS on customer fields ([58671aa](https://github.com/ecomplus/cloud-commerce/commit/58671aa632321c4cf3f21710a7905413ce5de410))
+* **mandae:** Supporting config option to force package weight to 50kg limit ([0c8bc78](https://github.com/ecomplus/cloud-commerce/commit/0c8bc78903b6feeef122aa0f6432e08e2c04f54f))
+
 ## [2.40.5](https://github.com/ecomplus/cloud-commerce/compare/v2.40.4...v2.40.5) (2025-03-19)
 
 
