@@ -67,10 +67,13 @@ export default async (req: Request, res: Response) => {
     customer,
     shipping: { to: shippingAddr },
   } = body;
-  const testXss = (str: string) => {
-    return /(<script|rc=htt| src=)/i.test(str);
+  const testXss = (str: string | undefined) => {
+    return typeof str === 'string' && /(<script|rc=htt| src=)/i.test(str);
   };
-  if (Object.keys(customer.name).some(testXss) || Object.keys(shippingAddr).some(testXss)) {
+  if (
+    Object.values(customer.name).some(testXss)
+    || Object.values(shippingAddr).some(testXss)
+  ) {
     return sendError(res, 403, 'CKT803', 'Chato');
   }
   const savedCustomer = await readOrSaveCustomer({
