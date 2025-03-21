@@ -66,6 +66,9 @@ export default async (
       canSendPubSub: false,
     });
   }
+  if (isError) {
+    logger.warn(`Log for ${logEntry.resource} failure`, { logEntry });
+  }
   const { action, queue, nextId } = queueEntry;
   if (!action) {
     return null;

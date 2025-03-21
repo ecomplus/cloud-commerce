@@ -48,9 +48,11 @@ const handleApiEvent: ApiEventHandler = async ({
   if (process.env.TINYERP_TOKEN) {
     let integrationConfig;
     let canCreateNew = false;
+    let isQueued = false;
     if (evName === 'applications-dataSet') {
       integrationConfig = appData;
       canCreateNew = true;
+      isQueued = true;
     } else if (evName === 'orders-anyStatusSet') {
       canCreateNew = Boolean(appData.new_orders);
       integrationConfig = {
@@ -109,6 +111,7 @@ const handleApiEvent: ApiEventHandler = async ({
                   nextId,
                   key,
                   app,
+                  isNotQueued: !isQueued,
                 };
                 return handler(
                   apiDoc,
