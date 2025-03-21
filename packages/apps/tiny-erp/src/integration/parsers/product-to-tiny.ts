@@ -146,7 +146,15 @@ export default async (
         codigo: variation.sku || `${product.sku}-${(i + 1)}`,
         grade: {},
       };
-      if (!originalTinyProduct) {
+      if (originalTinyProduct) {
+        const originalTinyVariation = originalTinyProduct.variacoes?.find((variacaoObj) => {
+          const variacao = (variacaoObj.variacao || variacaoObj);
+          return variacao?.codigo === tinyVariation.codigo;
+        });
+        if (originalTinyVariation) {
+          tinyVariation.id = originalTinyVariation.id;
+        }
+      } else {
         tinyVariation.estoque_atual = variation.quantity || 0;
       }
       Object.keys(variation.specifications).forEach((gridId) => {

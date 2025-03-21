@@ -190,8 +190,8 @@ export default (
   if (isNew) {
     if (Array.isArray(tinyProduct.variacoes) && tinyProduct.variacoes.length) {
       product.variations = [];
-      tinyProduct.variacoes.forEach(({ variacaoObj }) => {
-        const variacao = !isProduct ? variacaoObj.variacao : variacaoObj;
+      tinyProduct.variacoes.forEach((variacaoObj) => {
+        const variacao = (variacaoObj.variacao || variacaoObj);
         const {
           codigo,
           preco,
