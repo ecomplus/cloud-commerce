@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.9](https://github.com/ecomplus/cloud-commerce/compare/v2.40.8...v2.40.9) (2025-03-21)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Consider queued events only triggered by `applications-dataSet` ([02bb73e](https://github.com/ecomplus/cloud-commerce/commit/02bb73e9a1ee70a29493b41ff3e84e08414417b3))
+* **tiny-erp:** Fix awaiting product parse to export ([2421fad](https://github.com/ecomplus/cloud-commerce/commit/2421fadeb15d0d8683093bb931aa3200754479a7))
+
 ## [2.40.8](https://github.com/ecomplus/cloud-commerce/compare/v2.40.7...v2.40.8) (2025-03-21)
 
 
