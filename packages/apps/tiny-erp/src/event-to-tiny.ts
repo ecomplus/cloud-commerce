@@ -27,6 +27,13 @@ const handleApiEvent: ApiEventHandler = async ({
   const resourceId = apiEvent.resource_id;
   logger.info(`>> ${resourceId} - Action: ${apiEvent.action}`);
   const key = `${evName}_${resourceId}`;
+  if (
+    evName === 'applications-dataSet'
+    && !apiEvent.modified_fields.includes('data')
+  ) {
+    logger.info(`>> ${key} - Skipped application event without \`data\` changes`);
+    return null;
+  }
   const appData = { ...app.data, ...app.hidden_data };
   if (
     Array.isArray(appData.ignore_events)
