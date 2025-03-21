@@ -48,7 +48,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       return null;
     }
   }
-  const tinyProduct = parseProduct(product, originalTinyProduct, appData);
+  const tinyProduct = await parseProduct(product, originalTinyProduct, appData);
   try {
     logger.info(`Posting ${productId}`, { tinyProduct });
   } catch {

@@ -3,7 +3,7 @@ import ecomUtils from '@ecomplus/utils';
 import formatDate from '../helpers/format-tiny-date';
 import parseStatus from './status-to-tiny';
 
-export default (order: Orders, appData) => {
+export default async (order: Orders, appData) => {
   const orderRef = String(order.number) || order._id;
   const tinyOrder: Record<string, any> = {
     numero_pedido_ecommerce: orderRef,

@@ -105,7 +105,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
           break;
       }
     }
-    const tinyOrder = parseOrder(order, appData);
+    const tinyOrder = await parseOrder(order, appData);
     try {
       logger.info(`Posting ${orderId}`, { tinyOrder });
     } catch {
