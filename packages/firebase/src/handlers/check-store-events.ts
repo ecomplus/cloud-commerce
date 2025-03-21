@@ -214,6 +214,13 @@ export default async () => {
       const resourceId = apiEvent.resource_id;
       if (!eventsPerId[resourceId]) {
         eventsPerId[resourceId] = [];
+      } else if (apiEvent.resource === 'applications') {
+        const hasSameFieldsEvent = eventsPerId[resourceId].some((_apiEvent) => {
+          return apiEvent.modified_fields.every((field) => {
+            return _apiEvent.modified_fields.includes(field);
+          });
+        });
+        if (hasSameFieldsEvent) return;
       }
       eventsPerId[resourceId].push(apiEvent);
     });
