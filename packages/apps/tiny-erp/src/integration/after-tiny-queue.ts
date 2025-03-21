@@ -81,7 +81,11 @@ export default async (
           [queue]: queueList,
         },
       };
-      logger.info(JSON.stringify(data));
+      try {
+        logger.info(JSON.stringify(data));
+      } catch {
+        logger.info(`Update app queue after ${nextId} (stringify failed)`);
+      }
       return updateAppData(application, data);
     }
   }

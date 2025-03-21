@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 export default (
   url: string,
@@ -15,7 +16,13 @@ export default (
       if (body[field]) {
         switch (typeof body[field]) {
           case 'object':
-            formData.append(field, JSON.stringify(body[field]));
+            try {
+              formData.append(field, JSON.stringify(body[field]));
+            } catch {
+              logger.warn(`Failed stringify ${field} to ${url}`, {
+                fieldVal: body[field],
+              });
+            }
             break;
           case 'string':
           case 'number':

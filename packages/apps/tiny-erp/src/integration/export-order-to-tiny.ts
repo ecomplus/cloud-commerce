@@ -106,7 +106,11 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       }
     }
     const tinyOrder = parseOrder(order, appData);
-    logger.info(`${orderId} ${JSON.stringify(tinyOrder)}`);
+    try {
+      logger.info(`Posting ${orderId}`, { tinyOrder });
+    } catch {
+      logger.info(`Posting ${orderId} (stringify failed)`);
+    }
     return postTiny('/pedido.incluir.php', {
       pedido: {
         pedido: tinyOrder,
