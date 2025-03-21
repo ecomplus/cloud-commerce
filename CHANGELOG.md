@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.8](https://github.com/ecomplus/cloud-commerce/compare/v2.40.7...v2.40.8) (2025-03-21)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Prevent and debug errors with obejct strigify on requests to Tiny API ([a1adaff](https://github.com/ecomplus/cloud-commerce/commit/a1adaff4f0ae5152f803832145307cbd42033acb))
+
 ## [2.40.7](https://github.com/ecomplus/cloud-commerce/compare/v2.40.6...v2.40.7) (2025-03-20)
 
 
