@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.10](https://github.com/ecomplus/cloud-commerce/compare/v2.40.9...v2.40.10) (2025-03-21)
+
+
+### Bug Fixes
+
+* **firebase:** Skip events with same modified (data) fields with applications resource ([74653c6](https://github.com/ecomplus/cloud-commerce/commit/74653c65b03b1c0638a59d8a22e1f9dfad713149))
+* **tiny-erp:** Fix importing and updating products with variations ([b9dd6d0](https://github.com/ecomplus/cloud-commerce/commit/b9dd6d01ad21c8000cb28cd36a2f2cb2da47e11a))
+* **tiny-erp:** Skip applications API events without `data` (queue) changes ([7084a67](https://github.com/ecomplus/cloud-commerce/commit/7084a677f9f55c9b1f8b07bf1d8f7298eb31cec6))
+
 ## [2.40.9](https://github.com/ecomplus/cloud-commerce/compare/v2.40.8...v2.40.9) (2025-03-21)
 
 
