@@ -1,5 +1,6 @@
 import type { Products, ProductSet } from '@cloudcommerce/types';
 import { logger } from '@cloudcommerce/firebase/lib/config';
+import api from '@cloudcommerce/api';
 import axios from 'axios';
 import ecomUtils from '@ecomplus/utils';
 import getEnv from '@cloudcommerce/firebase/lib/env';
@@ -11,11 +12,8 @@ const removeAccents = (str: string) => str.replace(/áàãâÁÀÃÂ/g, 'a')
   .replace(/úÚ/g, 'u')
   .replace(/çÇ/g, 'c');
 
-const tryImageUpload = (
-  originImgUrl: string,
-  product: Products,
-  index?: number,
-) => new Promise((resolve) => {
+let ecomAccessToken: string | undefined;
+const tryImageUpload = async (originImgUrl: string, product: Products) => {
   const {
     storeId,
     apiAuth: {
@@ -23,69 +21,65 @@ const tryImageUpload = (
       apiKey,
     },
   } = getEnv();
-  axios.get(originImgUrl, {
-    responseType: 'arraybuffer',
-  }).then(({ data, headers }) => {
+  if (!ecomAccessToken) {
+    const { data } = await api.post('authenticate', {
+      _id: authenticationId,
+      api_key: apiKey,
+    });
+    ecomAccessToken = data.access_token;
+  }
+  try {
+    const { data, headers } = await axios.get(originImgUrl, {
+      responseType: 'arraybuffer',
+    });
     const formData = new FormData();
     formData.append('file', new Blob(data), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
-
-    return axios.post(`https://apx-storage.e-com.plus/${storeId}/api/v1/upload.json`, formData, {
+    const {
+      data: { picture },
+      status,
+    } = await axios.post('https://ecomplus.app/api/storage/upload.json', formData, {
       headers: {
         'Content-Type': headers['Content-Type'],
         'Content-Length': headers['Content-Length'],
         'X-Store-ID': storeId,
         'X-My-ID': authenticationId,
-        'X-API-Key': apiKey,
+        'X-Access-Token': ecomAccessToken,
       },
-    }).then(({ data: { picture }, status }) => {
-      if (picture) {
-        Object.keys(picture).forEach((imgSize) => {
-          if (picture[imgSize]) {
-            if (!picture[imgSize].url) {
-              delete picture[imgSize];
-              return;
-            }
-            if (picture[imgSize].size !== undefined) {
-              delete picture[imgSize].size;
-            }
-            picture[imgSize].alt = `${product.name} (${imgSize})`;
+    });
+    if (picture) {
+      Object.keys(picture).forEach((imgSize) => {
+        if (picture[imgSize]) {
+          if (!picture[imgSize].url) {
+            delete picture[imgSize];
+            return;
           }
-        });
-        if (Object.keys(picture).length) {
-          return resolve({
-            _id: ecomUtils.randomObjectId(),
-            ...picture,
-          });
+          if (picture[imgSize].size !== undefined) {
+            delete picture[imgSize].size;
+          }
+          picture[imgSize].alt = `${product.name} (${imgSize})`;
         }
-      }
-      const err: any = new Error('Unexpected Storage API response');
-      err.response = { data, status };
-      throw err;
-    });
-  })
-
-    .catch((err) => {
-      logger.error(err);
-      resolve({
-        _id: ecomUtils.randomObjectId(),
-        normal: {
-          url: originImgUrl,
-          alt: product.name,
-        },
       });
-    });
-}).then((picture) => {
-  if (product && product.pictures) {
-    if (index === 0 || index) {
-      // @ts-ignore
-      product.pictures[index] = picture;
-    } else {
-      // @ts-ignore
-      product.pictures.push(picture);
+      if (Object.keys(picture).length) {
+        return {
+          _id: ecomUtils.randomObjectId(),
+          ...picture,
+        };
+      }
     }
+    const err: any = new Error('Unexpected Storage API response');
+    err.response = { data, status };
+    throw err;
+  } catch (err: any) {
+    logger.error(err);
+    return {
+      _id: ecomUtils.randomObjectId(),
+      normal: {
+        url: originImgUrl,
+        alt: product.name,
+      },
+    };
   }
-  return picture;
-});
+};
 
 export default (
   tinyProduct: Record<string, any>,
@@ -294,7 +288,13 @@ export default (
           url = anexo.url;
         }
         if (typeof url === 'string' && url.startsWith('http')) {
-          promises.push(tryImageUpload(anexo, product as Products));
+          promises.push(tryImageUpload(anexo, product as Products)
+            .then((picture) => {
+              if (product && product.pictures) {
+                product.pictures.push(picture);
+              }
+              return picture;
+            }));
         }
       });
       Promise.all(promises).then((images) => {
