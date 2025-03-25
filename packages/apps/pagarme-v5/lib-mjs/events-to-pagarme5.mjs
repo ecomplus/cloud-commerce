@@ -31,10 +31,9 @@ const eventOrderCancelled = async (
         logger.log('>> SUCESSS');
         return null;
       } catch (err) {
-        logger.error('> (App PagarMe V5): Error when canceling in Pagar.Me, return the status');
+        logger.error(err);
         await api.patch(order._id, { status: 'open' })
           .catch(logger.error);
-
         return null;
       }
     } else {

@@ -25,7 +25,6 @@ export default async (data) => {
       logger.warn('Missing PAGARMEV5 PUBLIC KEY');
     }
   }
-
   if (!process.env.PAGARMEV5_API_TOKEN) {
     const pagarmeApiKey = configApp.pagarme_api_token;
     if (pagarmeApiKey && typeof pagarmeApiKey === 'string') {
@@ -34,7 +33,6 @@ export default async (data) => {
       logger.warn('Missing PAGARMEV5 API TOKEN');
     }
   }
-
   if (!process.env.PAGARMEV5_API_TOKEN || !process.env.PAGARMEV5_PUBLIC_KEY) {
     return {
       error: 'NO_PAGARMEV5_KEYS',
@@ -46,7 +44,7 @@ export default async (data) => {
   let hasRecurrence = false;
   let isAllRecurring = true;
 
-  if (categoryIds.length) {
+  if (categoryIds?.length) {
     try {
       const { data: { result } } = await api.get('search/v1', {
         limit: items.length,
@@ -55,7 +53,6 @@ export default async (data) => {
           'categories._id': categoryIds,
         },
       });
-
       hasRecurrence = result.length > 0;
       isAllRecurring = result.length === items.length;
     } catch (err) {
@@ -66,15 +63,15 @@ export default async (data) => {
   const response = {
     payment_gateways: [],
   };
-
   const paymentTypes = [];
-  if ((isAllRecurring) && configApp.recurrence && configApp.recurrence.length
-    && configApp.recurrence[0].label) {
+  if (configApp.recurrence?.[0]?.label && isAllRecurring) {
     paymentTypes.push('recurrence');
   }
-
-  if ((!hasRecurrence) && (!configApp.credit_card.disable || !configApp.banking_billet.disable
-    || !configApp.account_deposit.disable)) {
+  if (
+    !hasRecurrence
+    && (!configApp.credit_card.disable
+      || !configApp.banking_billet.disable || !configApp.account_deposit.disable)
+  ) {
     paymentTypes.push('payment');
   }
 
@@ -97,19 +94,18 @@ export default async (data) => {
     const plans = isRecurrence ? configApp.recurrence : ['single_payment'];
     plans.forEach((plan) => {
       listPaymentMethod.forEach((paymentMethod) => {
-        // console.log('>> List Payments ', type, ' ', plan, ' ', paymentMethod)
         const amount = { ...params.amount } || {};
         const isCreditCard = paymentMethod === 'credit_card';
         const isPix = paymentMethod === 'account_deposit';
         const methodConfig = configApp[paymentMethod] || {};
-        let methodEnable = isRecurrence ? methodConfig.enable_recurrence : !methodConfig.disable;
-
+        let methodEnable = !methodConfig.disable;
+        if (isRecurrence) {
+          methodEnable = methodConfig.enable_recurrence;
+        }
         // Pix not active in recurrence
         methodEnable = isPix && isRecurrence ? false : methodEnable;
-
-        const minAmount = methodConfig?.min_amount || 0;
-        const validateAmount = amount.total
-          ? (amount.total >= minAmount) : true; // Workaround for showcase
+        const minAmount = (isRecurrence ? plan?.min_amount : methodConfig?.min_amount) || 0;
+        const validateAmount = amount.subtotal ? (amount.subtotal >= minAmount) : true;
         if (methodEnable && validateAmount) {
           let label = isRecurrence ? plan.label : methodConfig.label;
           if (!label) {
@@ -119,10 +115,10 @@ export default async (data) => {
               label = !isPix ? 'Boleto bancário' : 'Pix';
             }
           }
+
           const gateway = {
             label,
             icon: methodConfig.icon,
-            text: methodConfig.text,
             payment_method: {
               code: paymentMethod,
               name: `${isRecurrence ? `Assinatura ${plan.periodicity} ` : ''}`
@@ -131,7 +127,9 @@ export default async (data) => {
             type,
             intermediator,
           };
-
+          if (!isRecurrence && methodConfig.text) {
+            gateway.text = methodConfig.text;
+          }
           let discount;
           if (isRecurrence) {
             discount = discountPlanPayment(label, plan, amount);
@@ -141,22 +139,33 @@ export default async (data) => {
 
           if (discount) {
             if (isRecurrence) {
-              gateway.discount = !plan.discount_first_installment?.disable
-                ? plan.discount_first_installment : plan.discount;
+              if (plan.discount_first_installment?.value) {
+                gateway.discount = plan.discount_first_installment;
+              } else {
+                gateway.discount = plan.discount;
+              }
+
               gateway.discount.type = discount.discountOption.type;
-              response.discount_option = discount.discountOption;
+              // response.discount_option = discount.discountOption
             } else if (discount[paymentMethod]) {
-              gateway.discount = {
-                apply_at: discount.apply_at,
-                type: discount.type,
-                value: discount.value,
-              };
+              if (discount.apply_at !== 'freight') {
+                // default discount option
+                response.discount_option = {
+                  label: configApp.discount_option_label || gateway.label,
+                  min_amount: discount.min_amount,
+                  apply_at: discount.apply_at,
+                  type: discount.type,
+                  value: discount.value,
+                };
+              }
 
               // check amount value to apply discount
-              if (amount.total < (discount.min_amount || 0)) {
-                delete gateway.discount;
-              } else {
-                delete discount.min_amount;
+              if (!(amount.total < discount.min_amount)) {
+                gateway.discount = {
+                  apply_at: discount.apply_at,
+                  type: discount.type,
+                  value: discount.value,
+                };
 
                 // fix local amount object
                 const applyDiscount = discount.apply_at;
@@ -164,14 +173,13 @@ export default async (data) => {
                 const maxDiscount = amount[applyDiscount || 'subtotal'];
                 let discountValue;
                 if (discount.type === 'percentage') {
-                  discountValue = (maxDiscount * discount.value) / 100;
+                  discountValue = maxDiscount * (discount.value / 100);
                 } else {
                   discountValue = discount.value;
                   if (discountValue > maxDiscount) {
                     discountValue = maxDiscount;
                   }
                 }
-
                 if (discountValue) {
                   amount.discount = (amount.discount || 0) + discountValue;
                   amount.total -= discountValue;
@@ -180,15 +188,12 @@ export default async (data) => {
                   }
                 }
               }
-              if (response.discount_option) {
-                response.discount_option.min_amount = discount.min_amount;
-              }
             }
           }
 
           if (isCreditCard) {
             if (!gateway.icon) {
-              // gateway.icon = `${hostingUri}/credit-card.png`;
+              gateway.icon = 'https://ecom-pagarme5.web.app/credit-card.png';
             }
             // https://github.com/pagarme/pagarme-js
             gateway.js_client = {
@@ -204,7 +209,7 @@ export default async (data) => {
               const { installments } = configApp;
               if (installments) {
                 // list all installment options and default one
-                addInstallments(amount, response, installments, gateway);
+                addInstallments(amount, installments, gateway, response);
               }
             }
           }

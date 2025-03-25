@@ -154,10 +154,6 @@ const createNewOrderBasedOld = (oldOrder, plan, status, charge, subscriptionPaga
   return api.post('orders', body);
 };
 
-// const updateOrder = async (orderId, body) => {
-//   return api.patch(`orders/${orderId}`, body);
-// };
-
 const getOrderWithQueryString = async (query) => {
   const { data } = await api.get(`orders?${query}`);
 

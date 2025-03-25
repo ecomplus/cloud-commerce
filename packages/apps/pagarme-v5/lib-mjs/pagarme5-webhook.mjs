@@ -165,12 +165,10 @@ const handleWehook = async (req, res) => {
       return res.status(!subscription ? 404 : 400)
         .send({ message: !subscription ? 'Not found subscription' : 'Subscription not canceled' });
     } else if (type.startsWith('charge.')) {
-      // const statusChange = type.replace('charge.', '')
       const { data: charge } = await pagarmeAxios.get(`/charges/${body.data.id}`);
       logger.log('>> Charge ', JSON.stringify(charge));
       if (charge.invoice) {
         const { invoice, status } = charge;
-        logger.log('>>Parse status: ', parserChangeStatusToEcom(status));
         const order = await getOrderIntermediatorTransactionId(invoice.id);
         if (order) {
           if (order.financial_status.current !== parserChangeStatusToEcom(status)) {
@@ -179,7 +177,6 @@ const handleWehook = async (req, res) => {
               .find(
                 (transactionFind) => transactionFind.intermediator.transaction_id === invoice.id,
               );
-            logger.log('>> Try add payment history');
             const transactionPagarme = charge.last_transaction;
             let notificationCode = `${type};${body.id};`;
             if (transactionPagarme.transaction_type === 'credit_card') {
@@ -260,7 +257,6 @@ const handleWehook = async (req, res) => {
       }
 
       if (charge.order) {
-        // TODO:
         // payment update (order in pagarme)
         logger.log('>> Try update status order');
         const { order: orderPagarme, status } = charge;
@@ -273,9 +269,7 @@ const handleWehook = async (req, res) => {
             const transaction = order.transactions.find(
               (transactionFind) => transactionFind.intermediator.transaction_id === orderPagarme.id,
             );
-            // console.log('>> Try add payment history')
             const transactionPagarme = charge.last_transaction;
-            // console.log('>>> TransactionPagarme ', JSON.stringify(transactionPagarme))
             let notificationCode = `${type};${body.id};`;
             if (transactionPagarme.transaction_type === 'credit_card') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
@@ -303,7 +297,6 @@ const handleWehook = async (req, res) => {
             }
             await addPaymentHistory(order._id, bodyPaymentHistory);
             if (isUpdateTransaction && transaction._id) {
-              // console.log('>> Try Update transaction ')
               await updateTransaction(order._id, transactionBody, transaction._id)
                 .catch(logger.error);
             }

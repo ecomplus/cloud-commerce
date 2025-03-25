@@ -1,20 +1,21 @@
 import logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import { getFirestore } from 'firebase-admin/firestore';
+import addInstallments from './functions-lib/payments/add-installments.mjs';
 import { createSubscription, createPayment } from './functions-lib/pagarme/payment-subscription.mjs';
 import { getPlanInTransction } from './functions-lib/pagarme/handle-plans.mjs';
 import { parserInvoiceStatusToEcom, parseAddress } from './functions-lib/pagarme/parses-utils.mjs';
 import axios from './functions-lib/pagarme/create-axios.mjs';
 
-export default async (appData) => {
+export default async (modBody) => {
   const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
 
-  const { params, application } = appData;
+  const { params, application } = modBody;
 
-  const configApp = { ...application.data, ...application.hidden_data };
+  const appData = { ...application.data, ...application.hidden_data };
 
   if (!process.env.PAGARMEV5_API_TOKEN) {
-    const pagarmeApiToken = configApp.pagarme_api_token;
+    const pagarmeApiToken = appData.pagarme_api_token;
     if (pagarmeApiToken && typeof pagarmeApiToken === 'string') {
       process.env.PAGARMEV5_API_TOKEN = pagarmeApiToken;
     } else {
@@ -28,8 +29,7 @@ export default async (appData) => {
   const orderId = params.order_id;
 
   const { amount, to, buyer } = params;
-  logger.log(`[PagarMe V5] Transaction #${orderId}`);
-  logger.log(`[PagarMe V5] Type transaction ${params.type}`);
+  logger.info(`Transaction ${orderId} ${params.type}`);
 
   const paymentMethod = params.payment_method.code;
 
@@ -73,27 +73,22 @@ export default async (appData) => {
     }
 
     if (isRecurrence) {
-      const methodConfigName = params.payment_method.code === 'credit_card' ? configApp.credit_card.label : configApp.banking_billet.label;
+      const methodConfigName = params.payment_method.code === 'credit_card' ? appData.credit_card.label : appData.banking_billet.label;
       let labelPaymentGateway = params.payment_method.name.replace('- Pagar.me', '');
       labelPaymentGateway = labelPaymentGateway.replace(methodConfigName, '');
 
-      const plan = getPlanInTransction(labelPaymentGateway, configApp.recurrence);
+      const plan = getPlanInTransction(labelPaymentGateway, appData.recurrence);
       const { data: subcription } = await createSubscription(
         params,
-        configApp,
+        appData,
         storeId,
         plan,
         pagarMeCustomer,
       );
-      logger.log(`[PagarMe V5] Response: ${JSON.stringify(subcription)}`);
       subscriptionPagarmeId = subcription.id;
-      // /invoices
+      logger.info(`Subscription ${subscriptionPagarmeId} for ${orderId}`, { subcription });
       const { data: { data: invoices } } = await pagarmeAxios.get(`/invoices?subscription_id=${subscriptionPagarmeId}`);
-      logger.log(`[PagarMe V5] Invoices: ${JSON.stringify(invoices)}`);
-
       const { data: charge } = await pagarmeAxios.get(`/charges/${invoices[0].charge.id}`);
-
-      logger.log(`[PagarMe V5] Charge: ${JSON.stringify(charge)}`);
       const transactionPagarme = charge.last_transaction;
 
       transaction.status = {
@@ -103,7 +98,7 @@ export default async (appData) => {
 
       transaction.intermediator = {
         transaction_id: invoices[0].id,
-        transaction_code: `${transactionPagarme.acquirer_auth_code || ''}`,
+        transaction_code: `${subscriptionPagarmeId || ''}`,
         transaction_reference: `${transactionPagarme.acquirer_tid || ''}`,
       };
 
@@ -116,7 +111,6 @@ export default async (appData) => {
         transaction.payment_link = charge.last_transaction.url;
         redirectToPayment = true;
       }
-      // console.log('>> transaction ', JSON.stringify(transaction))
       await colletionFirebase.doc(orderId)
         .set({
           status: subcription.status,
@@ -130,12 +124,31 @@ export default async (appData) => {
           amount,
         })
         .catch(logger.error);
-
-      // logger.log('[PagarMe V5] Save Firebase');
     } else {
       // type payment
-      const { data: payment } = await createPayment(params, configApp, pagarMeCustomer);
-      logger.log(`[PagarMe V5] Response: ${JSON.stringify(payment)}`);
+      let installmentsNumber = params.installments_number;
+      let finalAmount = amount.total;
+      if (installmentsNumber > 1 && appData.installments) {
+        // list all installment options
+        const { gateway } = addInstallments(amount, appData.installments);
+        const installmentOption = gateway.installment_options
+          && gateway.installment_options.find(({ number }) => number === installmentsNumber);
+        if (installmentOption) {
+          transaction.installments = installmentOption;
+          transaction.installments.total = installmentOption.number * installmentOption.value;
+          finalAmount = transaction.installments.total;
+        } else {
+          installmentsNumber = 1;
+        }
+      }
+      const { data: payment } = await createPayment({
+        storeId,
+        params,
+        appData,
+        customer: pagarMeCustomer,
+        finalAmount,
+        installmentsNumber,
+      });
       const [charge] = payment.charges;
 
       const transactionPagarme = charge.last_transaction;
@@ -180,15 +193,20 @@ export default async (appData) => {
       transaction,
     };
   } catch (error) {
+    logger.warn(`Failed transaction for ${orderId}`, {
+      params,
+      appData,
+      body: error.config?.data,
+      response: error.response?.data,
+      status: error.response?.status,
+    });
     logger.error(error);
-    // try to debug request error
     const errCode = isRecurrence ? 'PAGARMEV5_SUBSCRIPTION_ERR' : 'PAGARMEV5_TRANSACTION_ERR';
     let { message } = error;
     const err = new Error(`${errCode}- ${orderId} => ${message}`);
     if (error.response) {
       const { status, data } = error.response;
       if (status !== 401 && status !== 403) {
-        // err.payment = JSON.stringify(pagarmeTransaction)
         err.status = status;
         if (typeof data === 'object' && data) {
           err.response = JSON.stringify(data);
@@ -199,7 +217,6 @@ export default async (appData) => {
         message = data.errors[0].message;
       }
     }
-    // logger.error(err);
     return {
       error: errCode,
       message,

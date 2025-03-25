@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 (function pagarmeOnload() {
   const apiKey = window._pagarmeKey;
   window._pagarmeHash = function pagarmeHash(cardClient) {
@@ -22,19 +23,23 @@
           }),
         },
       )
-        .then(async (response) => {
-          try {
-            const data = await response.json();
-            if (data.id) {
-              resolve(data.id);
-            }
-            throw new Error(`Error Token ${await response.text()}`);
-          } catch (err) {
-            // console.error(err);
-            reject(err);
-          }
+        .then((resp) => {
+          return resp.json().catch(() => {
+            return resp.text();
+          });
         })
-        .catch(reject);
+        .then((data) => {
+          if (data && data.id) {
+            resolve(data.id);
+            return null;
+          }
+          console.log(data);
+          throw new Error('Credencial inválida');
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
     });
   };
 }());
