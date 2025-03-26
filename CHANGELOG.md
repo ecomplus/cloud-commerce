@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.12](https://github.com/ecomplus/cloud-commerce/compare/v2.40.11...v2.40.12) (2025-03-26)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Fix rejecting Function for retry on Tiny API rate limit errors ([1bd2449](https://github.com/ecomplus/cloud-commerce/commit/1bd24490af069ff37b38fb59e1cbb76097917d49))
+
 ## [2.40.11](https://github.com/ecomplus/cloud-commerce/compare/v2.40.10...v2.40.11) (2025-03-26)
 
 
