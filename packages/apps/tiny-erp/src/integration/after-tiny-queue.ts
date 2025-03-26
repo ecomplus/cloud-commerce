@@ -36,9 +36,11 @@ export default async (
       if (response) {
         const { data, status } = response;
         if (isQueued && (!status || status === 429 || status >= 500)) {
-          return setTimeout(() => {
-            throw payload;
-          }, 2000);
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              reject(payload);
+            }, 2000);
+          });
         }
         notes = `Error: Status ${status} `;
         try {
@@ -50,7 +52,9 @@ export default async (
           const { url, method, data: reqData } = config;
           try {
             notes += `\n\n-- Request -- \n${method} ${url} `;
-            notes += `\n${JSON.stringify(reqData)} `;
+            if (!(reqData instanceof FormData)) {
+              notes += `\n${JSON.stringify(reqData)} `;
+            }
           } catch {
             //
           }
