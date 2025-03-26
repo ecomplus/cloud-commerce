@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.40.11](https://github.com/ecomplus/cloud-commerce/compare/v2.40.10...v2.40.11) (2025-03-26)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#552](https://github.com/ecomplus/cloud-commerce/issues/552)) ([dccc0e1](https://github.com/ecomplus/cloud-commerce/commit/dccc0e1cd4852ed69a1435530b2446cb33edb53c))
+* **pagarme-v5:** General app fixes ([6616f50](https://github.com/ecomplus/cloud-commerce/commit/6616f50257d196389f7d23addd835cee30404525))
+* **tiny-erp:** Prevent error on after queue error serialization with circular objects ([b66531e](https://github.com/ecomplus/cloud-commerce/commit/b66531e61793db4356dd2a3ef3112a1dda79e1f7))
+* **tiny-erp:** Properly handling image uploads on product imports ([849d245](https://github.com/ecomplus/cloud-commerce/commit/849d2459068b2955aaeab0b18e38ee898e9108bc))
+
 ## [2.40.10](https://github.com/ecomplus/cloud-commerce/compare/v2.40.9...v2.40.10) (2025-03-21)
 
 
