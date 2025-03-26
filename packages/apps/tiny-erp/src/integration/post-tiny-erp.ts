@@ -54,6 +54,7 @@ export default (
         err.response = response;
         err.config = response.config;
         err.request = response.request;
+        logger.error(err);
         throw err;
       }
       return retorno;

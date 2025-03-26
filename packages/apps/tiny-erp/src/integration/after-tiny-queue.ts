@@ -35,15 +35,25 @@ export default async (
       const { config, response } = payload as any;
       if (response) {
         const { data, status } = response;
-        notes = `Error: Status ${status} \n${JSON.stringify(data)}`;
         if (isQueued && (!status || status === 429 || status >= 500)) {
           return setTimeout(() => {
             throw payload;
           }, 2000);
         }
+        notes = `Error: Status ${status} `;
+        try {
+          notes += `\n${JSON.stringify(data)} `;
+        } catch {
+          //
+        }
         if (config) {
           const { url, method, data: reqData } = config;
-          notes += `\n\n-- Request -- \n${method} ${url} \n${JSON.stringify(reqData)}`;
+          try {
+            notes += `\n\n-- Request -- \n${method} ${url} `;
+            notes += `\n${JSON.stringify(reqData)} `;
+          } catch {
+            //
+          }
         }
         // @ts-ignore
       } else if (payload.isConfigError === true) {
