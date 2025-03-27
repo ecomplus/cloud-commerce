@@ -195,8 +195,15 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     if (validShippingRules.length) {
       // group by service code selecting lower price
       const shippingRulesByCode = validShippingRules.reduce((_shippingRulesByCode, rule) => {
+        const serviceCode = rule.service_code;
         if (typeof rule.total_price !== 'number') {
-          rule.total_price = 0;
+          let service: Record<string, any> | undefined;
+          if (Array.isArray(appData.services)) {
+            service = appData.services.find((_service) => {
+              return _service && _service.service_code === serviceCode;
+            });
+          }
+          rule.total_price = service?.total_price || 0;
         }
         if (typeof rule.price !== 'number') {
           rule.price = rule.total_price;
@@ -207,7 +214,6 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
         if (typeof rule.amount_tax === 'number' && !Number.isNaN(rule.amount_tax)) {
           rule.total_price += ((rule.amount_tax * amount) / 100);
         }
-        const serviceCode = rule.service_code;
         const currentShippingRule = _shippingRulesByCode[serviceCode];
         if (!currentShippingRule || currentShippingRule.total_price > rule.total_price) {
           _shippingRulesByCode[serviceCode] = rule;
@@ -230,13 +236,20 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
           delete rule.label;
 
           // also try to find corresponding service object from config
-          let service;
+          let service: Record<string, any> | undefined;
           if (Array.isArray(appData.services)) {
             service = appData.services.find((_service) => {
               return _service && _service.service_code === serviceCode;
             });
-            if (service && !label) {
-              label = service.label;
+            if (service) {
+              if (!label) {
+                label = service.label;
+              }
+              if (typeof rule.delivery_time?.days !== 'number') {
+                rule.delivery_time = service.delivery_time;
+              }
+              delete service.delivery_time;
+              delete service.total_price;
             }
           }
           if (!label) {
