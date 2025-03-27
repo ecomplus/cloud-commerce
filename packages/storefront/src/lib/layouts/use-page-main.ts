@@ -142,7 +142,7 @@ export const usePageSections = async <T extends CustomSection = CustomSection>
               string | undefined,
               string | undefined,
             ];
-          if (!resource || resource === 'collection') {
+          if (!resource || resource === 'collections') {
             collectionId = _id;
           } else if (resource === 'categories') {
             searchQuery = `&categories._id=${_id}`;
