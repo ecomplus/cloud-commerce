@@ -20,7 +20,16 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   const checkZipCode = (rule) => {
     if (destinationZip && rule.zip_range) {
       const { min, max } = rule.zip_range;
-      return Boolean((!min || destinationZip >= min) && (!max || destinationZip <= max));
+      if (!min && !max) {
+        return true;
+      }
+      if (!max) {
+        return destinationZip === min;
+      }
+      if (!min) {
+        return destinationZip === max;
+      }
+      return destinationZip >= min && destinationZip <= max;
     }
     return true;
   };
