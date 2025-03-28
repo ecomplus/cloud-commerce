@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.2](https://github.com/ecomplus/cloud-commerce/compare/v2.41.1...v2.41.2) (2025-03-28)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Prevent calculate execution error with not-string zip range min/max on rules ([412d4bf](https://github.com/ecomplus/cloud-commerce/commit/412d4bf947f31db5191b8a3f5a9dea68891319dc))
+
 ## [2.41.1](https://github.com/ecomplus/cloud-commerce/compare/v2.41.0...v2.41.1) (2025-03-28)
 
 
