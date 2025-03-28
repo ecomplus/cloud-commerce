@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.0](https://github.com/ecomplus/cloud-commerce/compare/v2.40.12...v2.41.0) (2025-03-28)
+
+
+### Features
+
+* **custom-shipping:** Supporting delivery "default" delivery time and total price from services ([44d10bb](https://github.com/ecomplus/cloud-commerce/commit/44d10bb6d8cce3da0162170bd5708b8afdb65a69))
+
+
+### Bug Fixes
+
+* **cli:** Ensure default `localhost:4321` on dev without host and port args ([3a89a3e](https://github.com/ecomplus/cloud-commerce/commit/3a89a3ee8fc5c803c9385e811eeae7016d14c022))
+* **custom-shipping:** Check rules with zip range min OR max matching only exact zip code ([564842c](https://github.com/ecomplus/cloud-commerce/commit/564842cb04d3b8e949f25f7e051914d2173c13a1))
+* **storefront:** Fetch search with term `null` when term has less than 2 chars (or empty) ([74c58b8](https://github.com/ecomplus/cloud-commerce/commit/74c58b889f5801147bfcd067e179b39e3acb093a))
+* **storefront:** Fix defining collections shelfs from content fields ([4e8fdcc](https://github.com/ecomplus/cloud-commerce/commit/4e8fdcc79f1f89be634579d66d14f87e9c3baf8f))
+* **storefront:** Update `PageContent` type for hero with maybe undefined `slides` ([3f55c5c](https://github.com/ecomplus/cloud-commerce/commit/3f55c5c90fbc7e092c20aead9eb7a0b2fef229aa))
+
 ## [2.40.12](https://github.com/ecomplus/cloud-commerce/compare/v2.40.11...v2.40.12) (2025-03-26)
 
 
