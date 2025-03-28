@@ -19,15 +19,21 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   const destinationZip = params.to?.zip.replace(/\D/g, '') || '';
   const checkZipCode = (rule) => {
     if (destinationZip && rule.zip_range) {
-      const { min, max } = rule.zip_range;
+      let { min, max } = rule.zip_range;
       if (!min && !max) {
         return true;
       }
       if (!max) {
-        return Number(destinationZip) === Number(min.replace(/\D/g, ''));
+        if (typeof min === 'string') {
+          min = min.replace(/\D/g, '');
+        }
+        return Number(destinationZip) === Number(min);
       }
       if (!min) {
-        return Number(destinationZip) === Number(max.replace(/\D/g, ''));
+        if (typeof max === 'string') {
+          max = max.replace(/\D/g, '');
+        }
+        return Number(destinationZip) === Number(max);
       }
       return destinationZip >= min && destinationZip <= max;
     }
