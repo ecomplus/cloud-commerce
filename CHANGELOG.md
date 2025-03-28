@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.3](https://github.com/ecomplus/cloud-commerce/compare/v2.41.2...v2.41.3) (2025-03-28)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Properly handling installments ([463683c](https://github.com/ecomplus/cloud-commerce/commit/463683cf53e26f33286f2bbd47b5e9c2d62c32e9))
+
 ## [2.41.2](https://github.com/ecomplus/cloud-commerce/compare/v2.41.1...v2.41.2) (2025-03-28)
 
 
