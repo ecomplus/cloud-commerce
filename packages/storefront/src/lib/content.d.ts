@@ -32,7 +32,7 @@ export interface PageContent {
   hero?: {
     [k: string]: unknown,
     autoplay?: number,
-    slides: Array<{
+    slides?: Array<{
       [k: string]: unknown,
       startsAt?: string,
       endsAt?: string,
