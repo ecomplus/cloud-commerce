@@ -1,4 +1,5 @@
-export default (amount, response, installments = {}, gateway = {}) => {
+// eslint-disable-next-line default-param-last
+export const addInstallments = (amount, installments = {}, gateway = {}, response) => {
   const interestFreeMinAmount = installments.interest_free_min_amount || 5;
   const maxInterestFree = installments.max_interest_free;
   const minInstallment = installments.min_installment || 5;
@@ -44,3 +45,5 @@ export default (amount, response, installments = {}, gateway = {}) => {
   }
   return { response, gateway };
 };
+
+export default addInstallments;
