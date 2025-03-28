@@ -24,10 +24,10 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
         return true;
       }
       if (!max) {
-        return destinationZip === min;
+        return Number(destinationZip) === Number(min.replace(/\D/g, ''));
       }
       if (!min) {
-        return destinationZip === max;
+        return Number(destinationZip) === Number(max.replace(/\D/g, ''));
       }
       return destinationZip >= min && destinationZip <= max;
     }
