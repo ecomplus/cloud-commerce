@@ -146,7 +146,7 @@ export const sendWaitingOrders = async () => {
   const mandaeToken = appConfig?.mandae_token;
   if (!mandaeToken) return;
   const mandaeOrderSettings = appConfig.order_settings || appConfig.__order_settings;
-  if (mandaeOrderSettings.data || mandaeOrderSettings.customerId) {
+  if (mandaeOrderSettings?.data || mandaeOrderSettings?.customerId) {
     const d = new Date();
     d.setDate(d.getDate() - 14);
     const endpoint = 'orders'
