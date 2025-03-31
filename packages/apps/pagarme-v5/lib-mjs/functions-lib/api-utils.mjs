@@ -19,7 +19,7 @@ const updateTransaction = (orderId, body, transactionId) => {
 
 const getOrderIntermediatorTransactionId = async (invoiceId) => {
   let queryString = `transactions.intermediator.transaction_id=${invoiceId}`;
-  queryString += '&fields=transactions,financial_status.current,status';
+  queryString += '&fields=transactions,financial_status,status';
   const { data } = await api.get(`orders?${queryString}`);
   return data.result[0] || null;
 };

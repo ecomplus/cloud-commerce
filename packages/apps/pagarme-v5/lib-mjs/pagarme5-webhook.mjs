@@ -156,7 +156,7 @@ const handleWehook = async (req, res) => {
         const { invoice, status } = charge;
         const order = await getOrderIntermediatorTransactionId(invoice.id);
         if (order) {
-          if (order.financial_status.current !== parserChangeStatusToEcom(status)) {
+          if (order.financial_status?.current !== parserChangeStatusToEcom(status)) {
             // updadte status
             const transaction = order.transactions
               .find(
@@ -247,7 +247,7 @@ const handleWehook = async (req, res) => {
         const { order: orderPagarme, status } = charge;
         const order = await getOrderIntermediatorTransactionId(orderPagarme.id);
         if (order) {
-          if (order.financial_status.current !== parserChangeStatusToEcom(status)) {
+          if (order.financial_status?.current !== parserChangeStatusToEcom(status)) {
             // updadte status
             let isUpdateTransaction = false;
             let transactionBody;
