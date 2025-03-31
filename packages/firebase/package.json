@@ -13,7 +13,8 @@
     "./lib/env": "./lib/env.js",
     "./lib/helpers/pubsub": "./lib/helpers/pubsub.js",
     "./lib/helpers/firestore": "./lib/helpers/firestore.js",
-    "./lib/helpers/update-app-data": "./lib/helpers/update-app-data.js"
+    "./lib/helpers/update-app-data": "./lib/helpers/update-app-data.js",
+    "./lib/helpers/get-app-data": "./lib/helpers/get-app-data.js"
   },
   "files": [
     "/lib",
