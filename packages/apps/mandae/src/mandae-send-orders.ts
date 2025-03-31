@@ -1,21 +1,11 @@
 import type { ResourceId, Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import _getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import axios from 'axios';
 import * as ecomUtils from '@ecomplus/utils';
 
-export const getConfig = async () => {
-  try {
-    const app = (await api.get(
-      `applications?app_id=${config.get().apps.mandae.appId}&fields=hidden_data`,
-    )).data.result;
-    return app[0].hidden_data;
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
-};
+export const getAppData = () => _getAppData('mandae', ['hidden_data']);
 
 export const exportOrder = async ({ order, mandaeToken, mandaeOrderSettings }: {
   order: Partial<Orders> & { _id: ResourceId },
@@ -142,10 +132,10 @@ export const exportOrder = async ({ order, mandaeToken, mandaeOrderSettings }: {
 
 export const sendWaitingOrders = async () => {
   const isOddExec = !!(new Date().getMinutes() % 2);
-  const appConfig = await getConfig();
-  const mandaeToken = appConfig?.mandae_token;
+  const appData = await getAppData();
+  const mandaeToken = appData?.mandae_token;
   if (!mandaeToken) return;
-  const mandaeOrderSettings = appConfig.order_settings || appConfig.__order_settings;
+  const mandaeOrderSettings = appData.order_settings || appData.__order_settings;
   if (mandaeOrderSettings?.data || mandaeOrderSettings?.customerId) {
     const d = new Date();
     d.setDate(d.getDate() - 14);

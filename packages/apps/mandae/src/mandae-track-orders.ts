@@ -2,7 +2,7 @@ import type { ResourceId, Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import axios from 'axios';
-import { getConfig, exportOrder } from './mandae-send-orders';
+import { getAppData, exportOrder } from './mandae-send-orders';
 
 export const parseMandaeStatus = ({ id /* , name */ }) => {
   switch (id) {
@@ -94,10 +94,10 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
 
 export const trackUndeliveredOrders = async () => {
   const isOddExec = !!(new Date().getMinutes() % 2);
-  const appConfig = await getConfig();
-  const mandaeToken = appConfig?.mandae_token;
+  const appData = await getAppData();
+  const mandaeToken = appData?.mandae_token;
   if (!mandaeToken) return;
-  const mandaeOrderSettings = appConfig.order_settings || appConfig.__order_settings;
+  const mandaeOrderSettings = appData.order_settings || appData.__order_settings;
   if (mandaeOrderSettings?.data || mandaeOrderSettings?.customerId) {
     const d = new Date();
     d.setDate(d.getDate() - 30);
