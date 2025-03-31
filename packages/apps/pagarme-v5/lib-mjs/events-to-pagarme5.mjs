@@ -4,7 +4,6 @@ import logger from 'firebase-functions/logger';
 import { getFirestore } from 'firebase-admin/firestore';
 import ecomUtils from '@ecomplus/utils';
 import axios from './functions-lib/pagarme/create-axios.mjs';
-import { getOrderWithQueryString } from './functions-lib/api-utils.mjs';
 import { getDocFirestore } from './functions-lib/firestore-utils.mjs';
 
 const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
@@ -32,8 +31,11 @@ const eventOrderCancelled = async (
         return null;
       } catch (err) {
         logger.error(err);
-        await api.patch(order._id, { status: 'open' })
-          .catch(logger.error);
+        try {
+          await api.patch(order._id, { status: 'open' });
+        } catch (_err) {
+          logger.error(_err);
+        }
         return null;
       }
     } else {
@@ -55,8 +57,7 @@ const eventProducts = async (
   let query = 'status!=cancelled&transactions.type=recurrence';
   query += '&transactions.app.intermediator.code=pagarme';
   query += `&items.product_id=${product._id}`;
-
-  const result = await getOrderWithQueryString(query);
+  const { data: { result } } = await api.get(`orders?${query}`);
 
   if (result && result.length) {
     let i = 0;
