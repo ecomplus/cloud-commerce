@@ -147,18 +147,18 @@ runs:
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.35.1-2
+        key: ${{ runner.os }}-npm-g-firebase-tools-14.0.1-2
 
     - if: github.event_name == 'push'
       name: Ensure firebase-tools is installed
       shell: bash
       run: |
         if ! command -v firebase &> /dev/null; then
-          npm i --location=global firebase-tools@13.35.1
+          npm i --location=global firebase-tools@14.0.1
         else
           INSTALLED_VERSION=$(firebase --version)
-          if [[ "$INSTALLED_VERSION" != "13.35.1" ]]; then
-            npm i --location=global firebase-tools@13.35.1
+          if [[ "$INSTALLED_VERSION" != "14.0.1" ]]; then
+            npm i --location=global firebase-tools@14.0.1
           fi
         fi
 
