@@ -286,12 +286,12 @@ const handleWehook = async (req, res) => {
                 .catch(logger.error);
             }
             logger.log(`>> Status update to ${parserChangeStatusToEcom(status)}`);
-            return res.sendStatus(200);
+            return res.sendStatus(201);
           }
+          return res.sendStatus(200);
         }
         return res.sendStatus(404);
       }
-
       return res.sendStatus(405);
     }
     return res.sendStatus(405);
