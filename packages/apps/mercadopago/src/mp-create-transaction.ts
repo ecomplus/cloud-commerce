@@ -58,10 +58,10 @@ export default async (appData: AppModuleBody) => {
     } catch {
       paymentMethodId = params.credit_card.company || 'visa';
     }
+  } else if (isPix) {
+    paymentMethodId = 'pix';
   } else if (params.payment_method.code === 'banking_billet') {
     paymentMethodId = 'bolbradesco';
-  } else if (params.payment_method.code === 'account_deposit') {
-    paymentMethodId = 'pix';
   } else {
     return {
       status: 400,
@@ -88,21 +88,29 @@ export default async (appData: AppModuleBody) => {
     },
   };
 
+  const parseAddress = (
+    addr: Exclude<CreateTransactionParams['to'], undefined>,
+    { isFullAddress = false } = {},
+  ) => {
+    const mpAddress: Record<string, any> = {
+      zip_code: addr.zip,
+      street_name: addr.street,
+      street_number: addr.number || 'S/N',
+    };
+    if (isFullAddress) {
+      if (addr.borough) mpAddress.neighborhood = addr.borough;
+      if (addr.city) mpAddress.city = addr.city;
+      if (addr.province_code) mpAddress.federal_unit = addr.province_code;
+    }
+    return mpAddress;
+  };
   if (params.to && params.to.street) {
     additionalInfo.shipments = {
-      receiver_address: {
-        zip_code: params.to.zip,
-        street_name: params.to.street,
-        street_number: params.to.number || 0,
-      },
+      receiver_address: parseAddress(params.to),
     };
   }
   if (params.billing_address && params.billing_address.street) {
-    additionalInfo.payer.address = {
-      zip_code: params.billing_address.zip,
-      street_name: params.billing_address.street,
-      street_number: params.billing_address.number || 0,
-    };
+    additionalInfo.payer.address = parseAddress(params.billing_address);
   } else if (additionalInfo.shipments) {
     additionalInfo.payer.address = additionalInfo.shipments.receiver_address;
   }
@@ -169,6 +177,11 @@ export default async (appData: AppModuleBody) => {
       ecom_order_id: orderId,
     },
   };
+  if (isPix || paymentMethodId.startsWith('bol')) {
+    if (params.to) {
+      payment.payer.address = parseAddress(params.to, { isFullAddress: true });
+    }
+  }
   if (isPix && appConfig.account_deposit?.exp_minutes) {
     const d = new Date();
     d.setMinutes(d.getMinutes() + appConfig.account_deposit.exp_minutes);
