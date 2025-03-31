@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.4](https://github.com/ecomplus/cloud-commerce/compare/v2.41.3...v2.41.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* **mercadopago:** Replicating full address on payer info for boleto ([60668aa](https://github.com/ecomplus/cloud-commerce/commit/60668aaac60ab28b7d5f256596143ac5286f597e))
+* **pagarme-v5:** Fix defining app data on Pagar.me webhooks handler ([0303c02](https://github.com/ecomplus/cloud-commerce/commit/0303c025c5c4f8089974808e5c7cb2585ce1e43a))
+
 ## [2.41.3](https://github.com/ecomplus/cloud-commerce/compare/v2.41.2...v2.41.3) (2025-03-28)
 
 
