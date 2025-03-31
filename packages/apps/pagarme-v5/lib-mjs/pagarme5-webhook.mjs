@@ -1,7 +1,7 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import config from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
+import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import axios from './functions-lib/pagarme/create-axios.mjs';
 import {
   getOrderById,
@@ -14,27 +14,13 @@ import {
 } from './functions-lib/api-utils.mjs';
 import { parserChangeStatusToEcom } from './functions-lib/pagarme/parses-utils.mjs';
 
-const getAppData = async () => {
-  return new Promise((resolve, reject) => {
-    api.get(
-      `applications?app_id=${config.get().apps.pagarMeV5.appId}&fields=hidden_data`,
-    )
-      .then(({ data: result }) => {
-        resolve(result[0]);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
-
 const handleWehook = async (req, res) => {
   const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
   const { body } = req;
 
   try {
     const type = body.type;
-    const appData = await getAppData();
+    const appData = await getAppData('pagarMeV5');
 
     if (!process.env.PAGARMEV5_API_TOKEN) {
       const pagarmeApiToken = appData.pagarme_api_token;
@@ -42,7 +28,6 @@ const handleWehook = async (req, res) => {
         process.env.PAGARMEV5_API_TOKEN = pagarmeApiToken;
       } else {
         logger.warn('Missing PAGARMEV5 API TOKEN');
-
         return res.status(401)
           .send({
             error: 'NO_PAGARME_KEYS',
