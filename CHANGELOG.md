@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.7](https://github.com/ecomplus/cloud-commerce/compare/v2.41.6...v2.41.7) (2025-04-01)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#554](https://github.com/ecomplus/cloud-commerce/issues/554)) ([4468a9d](https://github.com/ecomplus/cloud-commerce/commit/4468a9d819ed1ec90e975807edc7b7b78e021f37))
+* **mandae:** Prevent error with undefined order settings on cron send and track functions ([1a2b41b](https://github.com/ecomplus/cloud-commerce/commit/1a2b41b70caa5e34bc12169d1fb8dda1f645d6ae))
+* **pagarme-v5:** Prevent errors on Pagar.me webhooks for orders with no `financial_status` (yet) ([ad4ccfa](https://github.com/ecomplus/cloud-commerce/commit/ad4ccfa103062dba7e99f26933eef5fd23a57579))
+* **pagarme-v5:** Returning 200 on Pagar.me webhook with order found with same status ([00d1a94](https://github.com/ecomplus/cloud-commerce/commit/00d1a94385843161621c48922176705a5de5e5df))
+
 ## [2.41.6](https://github.com/ecomplus/cloud-commerce/compare/v2.41.5...v2.41.6) (2025-03-31)
 
 
