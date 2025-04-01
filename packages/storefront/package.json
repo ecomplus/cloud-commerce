@@ -58,7 +58,7 @@
     "chroma-js": "^3.1.2",
     "dotenv": "^16.4.7",
     "firebase": "^11.5.0",
-    "image-size": "^1.2.0",
+    "image-size": "^2.0.1",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
     "semver": "^7.7.1",
