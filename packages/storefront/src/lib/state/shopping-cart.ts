@@ -187,7 +187,7 @@ watch(shoppingCart.items, (items) => {
       ? item.final_price
       : item.price;
     if (!(quantity > 0) || !(price > 0)) return acc;
-    return acc + (item.quantity * (item.final_price || item.price));
+    return acc + (quantity * price);
   }, 0);
   emitCartEvents(items);
 });

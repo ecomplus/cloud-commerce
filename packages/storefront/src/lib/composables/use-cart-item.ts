@@ -38,7 +38,10 @@ export const useCartItem = (props: Props) => {
     return undefined;
   });
   const finalPrice = computed(() => {
-    return cartItem.value.final_price || cartItem.value.price;
+    if (typeof cartItem.value.final_price === 'number') {
+      return cartItem.value.final_price;
+    }
+    return cartItem.value.price;
   });
   return {
     cartItem,
