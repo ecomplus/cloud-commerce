@@ -73,7 +73,7 @@ const importProduct = async (
     }
     if (product && (!appData.update_product || variationId)) {
       if (hasVariations && !variationId) {
-        return Promise.all(produtoSaldo.variacoes?.map((variacao: any) => {
+        return Promise.all((produtoSaldo.variacoes || []).map((variacao: any) => {
           if (!variacao?.codigo) return null;
           const varQnt = Number(variacao.estoqueAtual);
           if (Number.isNaN(varQnt)) return null;
@@ -84,7 +84,8 @@ const importProduct = async (
             logger.info(`${endpoint} -> ${quantity} [${response.status}]`);
             return response;
           });
-        }) || []);
+        }))
+          .then(([response]) => response || null);
       }
       if (!Number.isNaN(quantity)) {
         if (quantity < 0) {
@@ -191,7 +192,7 @@ const importProduct = async (
     tinyStockUpdate,
     isProductFound: !!product,
   });
-  if (tinyStockUpdate) {
+  if (tinyStockUpdate && isHiddenQueue && (queueProductId || product?._id)) {
     return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
   if (tinyStockUpdate?.tipo === 'produto' && !queueProductId) {
@@ -209,11 +210,7 @@ const importProduct = async (
               return handleTinyStock(tinyStockUpdate as any, tinyProduct);
             }
             return postTiny('/produto.obter.estoque.php', { id: tinyProduct.id })
-              .then((tinyStock) => {
-                const res = handleTinyStock(tinyStock, tinyProduct);
-                if (Array.isArray(res)) return res[0];
-                return res;
-              });
+              .then((tinyStock) => handleTinyStock(tinyStock, tinyProduct));
           }
           return handleTinyStock({ produto: {} } as any, tinyProduct);
         }
