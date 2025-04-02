@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.8](https://github.com/ecomplus/cloud-commerce/compare/v2.41.7...v2.41.8) (2025-04-02)
+
+
+### Bug Fixes
+
+* **storefront:** Ensure persisting `final_price` on cart item when set ([5923df7](https://github.com/ecomplus/cloud-commerce/commit/5923df7d6c9f3485999374cddf20e4051c9ba28a))
+* **storefront:** Fix watch and fixing shopping cart items without loops on item middlewares ([b5e4d5d](https://github.com/ecomplus/cloud-commerce/commit/b5e4d5d6c86ade3f34b5aeaeb42bcac381329568))
+* **storefront:** Storing product `weight` on shopping cart items (when available) ([61fd7c9](https://github.com/ecomplus/cloud-commerce/commit/61fd7c9fbed854cad3aa48343fc34d0edb3a877b))
+* **tiny-erp:** Handle product with variations Tiny webhook to stock updates ([93a7263](https://github.com/ecomplus/cloud-commerce/commit/93a7263200251cb2d633fa07c9d62e84718e266a))
+* **tiny-erp:** Regressions of 93a7263 ([762586f](https://github.com/ecomplus/cloud-commerce/commit/762586ffbd2b904f444b5a81deb33251c353d11a))
+
 ## [2.41.7](https://github.com/ecomplus/cloud-commerce/compare/v2.41.6...v2.41.7) (2025-04-01)
 
 
