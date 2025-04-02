@@ -87,6 +87,7 @@ const updateCartState = async () => {
         "variations.base_price",
         "variations.picture_id",
         "categories._id",
+        "weight",
       ] as const,
     });
     data.result.forEach((productItem) => {

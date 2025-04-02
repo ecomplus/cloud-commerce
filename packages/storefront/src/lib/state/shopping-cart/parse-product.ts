@@ -29,6 +29,7 @@ export default (
     quantity: minQuantity > 0 ? Math.max(minQuantity, quantity) : quantity,
     price: getPrice(mergedProduct),
     categories: mergedProduct.categories,
+    weight: mergedProduct.weight,
   };
   if (product.pictures) {
     if (variation?.picture_id) {
