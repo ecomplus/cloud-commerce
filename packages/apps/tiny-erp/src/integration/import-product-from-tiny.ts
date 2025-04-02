@@ -46,16 +46,19 @@ const importProduct = async (
       } else {
         logger.info(`SKU not found ${queueSku} on any variation`, {
           product,
+          isHiddenQueue,
         });
-        if (!isHiddenQueue && !appData.update_product) {
-          const msg = queueSku
-            + ' corresponde a um produto com variações,'
-            + ' especifique o SKU da variação para importar.';
-          const err: any = new Error(msg);
-          err.isConfigError = true;
-          return err;
+        if (tinyStockUpdate?.tipo !== 'produto') {
+          if (!isHiddenQueue && !appData.update_product) {
+            const msg = queueSku
+              + ' corresponde a um produto com variações,'
+              + ' especifique o SKU da variação para importar.';
+            const err: any = new Error(msg);
+            err.isConfigError = true;
+            return err;
+          }
+          return null;
         }
-        return null;
       }
     }
   }
@@ -69,6 +72,20 @@ const importProduct = async (
       quantity -= Number(produtoSaldo.saldoReservado);
     }
     if (product && (!appData.update_product || variationId)) {
+      if (hasVariations && !variationId) {
+        return Promise.all(produtoSaldo.variacoes?.map((variacao: any) => {
+          if (!variacao?.codigo) return null;
+          const varQnt = Number(variacao.estoqueAtual);
+          if (Number.isNaN(varQnt)) return null;
+          const variation = product.variations?.find(({ sku }) => variacao.codigo === sku);
+          if (!variation) return null;
+          const endpoint = `products/${product._id}/variations/${variation._id}/quantity` as const;
+          return api.put(endpoint, varQnt).then((response) => {
+            logger.info(`${endpoint} -> ${quantity} [${response.status}]`);
+            return response;
+          });
+        }) || []);
+      }
       if (!Number.isNaN(quantity)) {
         if (quantity < 0) {
           quantity = 0;
@@ -174,11 +191,11 @@ const importProduct = async (
     tinyStockUpdate,
     isProductFound: !!product,
   });
-  if (tinyStockUpdate && isHiddenQueue && (queueProductId || product?._id)) {
-    return handleTinyStock(tinyStockUpdate as any, tinyStockUpdate.produto);
+  if (tinyStockUpdate) {
+    return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
   if (tinyStockUpdate?.tipo === 'produto' && !queueProductId) {
-    return handleTinyStock({ produto: {}, tipo: 'produto' }, tinyStockUpdate.produto);
+    return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
 
   return postTiny('/produtos.pesquisa.php', { pesquisa: queueSku })
@@ -192,7 +209,11 @@ const importProduct = async (
               return handleTinyStock(tinyStockUpdate as any, tinyProduct);
             }
             return postTiny('/produto.obter.estoque.php', { id: tinyProduct.id })
-              .then((tinyStock) => handleTinyStock(tinyStock, tinyProduct));
+              .then((tinyStock) => {
+                const res = handleTinyStock(tinyStock, tinyProduct);
+                if (Array.isArray(res)) return res[0];
+                return res;
+              });
           }
           return handleTinyStock({ produto: {} } as any, tinyProduct);
         }
