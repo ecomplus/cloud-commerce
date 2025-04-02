@@ -81,7 +81,7 @@ const importProduct = async (
           if (!variation) return null;
           const endpoint = `products/${product._id}/variations/${variation._id}/quantity` as const;
           return api.put(endpoint, varQnt).then((response) => {
-            logger.info(`${endpoint} -> ${quantity} [${response.status}]`);
+            logger.info(`${endpoint} -> ${varQnt} [${response.status}]`);
             return response;
           });
         }))
