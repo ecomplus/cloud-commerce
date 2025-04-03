@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.9](https://github.com/ecomplus/cloud-commerce/compare/v2.41.8...v2.41.9) (2025-04-03)
+
+
+### Bug Fixes
+
+* **emails:** Fix matching `fulfillments` on modified fields to trigger emails (typo) ([a5bdd10](https://github.com/ecomplus/cloud-commerce/commit/a5bdd10a3705d5faaa375d8cc242d10f53d543e8))
+
 ## [2.41.8](https://github.com/ecomplus/cloud-commerce/compare/v2.41.7...v2.41.8) (2025-04-02)
 
 
