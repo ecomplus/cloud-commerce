@@ -189,7 +189,7 @@ export default async () => {
       lastPushedTimestamps[resource]
       && lastPushedTimestamps[resource] > maxTimestamp - 1000 * 60 * 60
     ) {
-      params['timestamp>'] = new Date(lastPushedTimestamps[resource]).toISOString();
+      params['timestamp>'] = new Date(lastPushedTimestamps[resource] + 1).toISOString();
     }
     let { data: { result } } = await api.get(`events/${resource}`, {
       params,
