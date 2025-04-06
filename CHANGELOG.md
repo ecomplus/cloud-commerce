@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.10](https://github.com/ecomplus/cloud-commerce/compare/v2.41.9...v2.41.10) (2025-04-06)
+
+
+### Bug Fixes
+
+* **firebase:** Preventing last API event repeating every cron execution ([f172314](https://github.com/ecomplus/cloud-commerce/commit/f172314ecc1adf5c7ad293122803fe0f2db7c743))
+
 ## [2.41.9](https://github.com/ecomplus/cloud-commerce/compare/v2.41.8...v2.41.9) (2025-04-03)
 
 
