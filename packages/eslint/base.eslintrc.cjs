@@ -5,9 +5,9 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/vue3-essential',
     'airbnb-base',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
     parser: '@typescript-eslint/parser',
@@ -73,7 +73,6 @@ module.exports = {
     'no-continue': 'off',
     'lines-between-class-members': 'off',
     'arrow-body-style': 'off',
-    'vue/no-multiple-template-root': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
