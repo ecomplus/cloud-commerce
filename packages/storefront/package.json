@@ -62,7 +62,7 @@
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
     "semver": "^7.7.1",
-    "sharp": "^0.32.6",
+    "sharp": "^0.33.3",
     "unocss": "^66.0.0",
     "unplugin-auto-import": "^19.1.2",
     "vue": "^3.5.13",
