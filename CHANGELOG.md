@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.11](https://github.com/ecomplus/cloud-commerce/compare/v2.41.10...v2.41.11) (2025-04-08)
+
+
+### Bug Fixes
+
+* **ssr:** Better matching base filepath for redirect on static file not found ([3ab04da](https://github.com/ecomplus/cloud-commerce/commit/3ab04da5ef0698bb469cb6ff848a2bdb68fae684))
+* **storefront:** Better naming hoisted entry files on build output ([716570a](https://github.com/ecomplus/cloud-commerce/commit/716570a35dacb472493a4082dcdb572a18647442)), closes [/github.com/ecomplus/cloud-commerce/blob/main/packages/ssr/src/lib/serve-storefront.ts#L75-L84](https://github.com/ecomplus//github.com/ecomplus/cloud-commerce/blob/main/packages/ssr/src/lib/serve-storefront.ts/issues/L75-L84)
+
 ## [2.41.10](https://github.com/ecomplus/cloud-commerce/compare/v2.41.9...v2.41.10) (2025-04-06)
 
 
