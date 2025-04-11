@@ -294,7 +294,7 @@ const handleWehook = async (req, res) => {
       }
       return res.sendStatus(405);
     }
-    return res.sendStatus(405);
+    return res.sendStatus(204);
   } catch (error) {
     logger.error(error);
     const errCode = 'WEBHOOK_PAGARME_INTERNAL_ERR';
