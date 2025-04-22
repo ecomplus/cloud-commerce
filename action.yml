@@ -139,7 +139,7 @@ runs:
         echo "LIB_PATH=$lib_path" >> $GITHUB_OUTPUT
         echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       uses: actions/cache@v4
       id: npm-g-cache
       with:
@@ -149,7 +149,7 @@ runs:
           ~/.npm-global/bin
         key: ${{ runner.os }}-npm-g-firebase-tools-13.35.1-2
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       name: Ensure firebase-tools is installed
       shell: bash
       run: |
@@ -162,7 +162,7 @@ runs:
           fi
         fi
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       uses: dorny/paths-filter@v3.0.2
       id: changes
       with:
@@ -174,7 +174,7 @@ runs:
           ssr:
             - 'functions/ssr/**'
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       name: Check functions codebase to deploy
       shell: bash
       env:
@@ -262,7 +262,7 @@ runs:
         echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
         echo "git_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       name: Deploy to Firebase live
       shell: bash
       env:
