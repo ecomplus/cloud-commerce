@@ -64,6 +64,7 @@ const applyShippingDiscount = ({
         && (rule.service === 'Todos' || rule.service === mandaeShipping.name)
         && (!rule.min_amount || itemsSubtotal >= rule.min_amount)
         && (!rule.max_kg_weight || itemsKgWeight <= rule.max_kg_weight)
+        && (!rule.min_kg_weight || itemsKgWeight >= rule.min_kg_weight)
       ) {
         if (rule.free_shipping) {
           value = 0;
