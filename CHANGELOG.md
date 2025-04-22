@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.12](https://github.com/ecomplus/cloud-commerce/compare/v2.41.11...v2.41.12) (2025-04-22)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#565](https://github.com/ecomplus/cloud-commerce/issues/565)) ([a684290](https://github.com/ecomplus/cloud-commerce/commit/a6842909071afde249f41441717da660bb58c014))
+* **deps:** Update non-major dependencies ([#566](https://github.com/ecomplus/cloud-commerce/issues/566)) ([1a430d5](https://github.com/ecomplus/cloud-commerce/commit/1a430d576e82731ab172c056c2d292f0d7e73119))
+* **discounts:** Multiply kit discount value by qnt groups only when min quantity > 1 ([2aeb46d](https://github.com/ecomplus/cloud-commerce/commit/2aeb46d8b44fa5cb6783cbfa8afbc3c0046266a5))
+* **mandae:** Supporting shipping rules with min kg weight filter ([7bfcba7](https://github.com/ecomplus/cloud-commerce/commit/7bfcba7c52c1d30520c91bbf56a5d17ff1a26adf))
+* **storefront:** Ensure social networks on server data set after global `$storefront` init ([5c4af7d](https://github.com/ecomplus/cloud-commerce/commit/5c4af7dfa626109f6ac02c584529feb88028b509))
+
 ## [2.41.11](https://github.com/ecomplus/cloud-commerce/compare/v2.41.10...v2.41.11) (2025-04-08)
 
 
