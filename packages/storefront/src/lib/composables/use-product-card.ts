@@ -139,8 +139,8 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     return checkInStock(product);
   });
   const isActive = computed(() => {
-    return isInStock.value
-      && (product as Products).available && (product as Products).visible;
+    return isInStock.value && (product as Products).available
+      && (product as Products).visible;
   });
   const discountPercentage = computed(() => {
     if (checkOnPromotion(product)) {

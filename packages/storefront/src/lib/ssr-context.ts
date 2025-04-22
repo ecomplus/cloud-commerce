@@ -9,6 +9,7 @@ import { EventEmitter } from 'node:events';
 import api from '@cloudcommerce/api';
 import { asyncLocalStorage as _als } from '../../config/astro/node-middleware.mjs';
 import _getConfig from '../../config/storefront.config.mjs';
+import { emitStorefrontInit } from '../init-emitter';
 import { termify } from '../helpers/sf-utils';
 
 export type StorefrontConfig = {
@@ -82,6 +83,7 @@ if (!globalThis.$storefront) {
       return target[prop];
     },
   });
+  emitStorefrontInit();
 }
 
 declare global {
