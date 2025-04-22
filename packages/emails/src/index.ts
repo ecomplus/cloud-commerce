@@ -76,7 +76,7 @@ const sendEmail = (
   };
   if (!MAIL_SENDER && !emailHeaders.sender) {
     emailHeaders.sender = {
-      email: settingsContent.email,
+      email: 'noreply@e-com.plus',
       name: settingsContent.name,
     };
   }
