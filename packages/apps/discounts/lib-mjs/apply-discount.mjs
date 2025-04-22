@@ -298,7 +298,7 @@ export default async ({ params, application }) => {
         }
         return 0;
       });
-      // prevent applying duplicated kit discount for same items
+    // prevent applying duplicated kit discount for same items
     let discountedItemIds = [];
     // check buy together recommendations
     const buyTogether = [];
@@ -389,6 +389,7 @@ export default async ({ params, application }) => {
             if (
               discount.type === 'fixed'
                 && kitDiscount.cumulative_discount !== false
+                && kitDiscount.min_quantity > 1
                 && !kitDiscount.usage_limit
             ) {
               discount.value *= Math.floor(totalQuantity / kitDiscount.min_quantity);
