@@ -63,38 +63,35 @@ if (argv.publish) {
           }
         });
     }
-    for (let ii = 0; ii < storesDirs.length; ii++) {
-      const storeDir = storesDirs[ii];
-      cd(`${storeDir}`);
-      await $`git pull`;
+    await Promise.all(storesDirs.map(async (storeDir) => {
+      await $`git -C ${storeDir} pull`;
       for (let iii = 0; iii < functions.length; iii++) {
         const codebase = functions[iii];
-        cd(`${storeDir}/functions/${codebase}`);
-        await $`rm -rf node_modules package-lock.json`;
+        const funcDir = `${storeDir}/functions/${codebase}`;
+        await $`rm -rf ${funcDir}/node_modules ${funcDir}/package-lock.json`;
         if (codebase === 'ssr') {
-          await $`npm i --save @cloudcommerce/{firebase,ssr,api}@${version}`;
-          await $`npm i --save-dev @cloudcommerce/{storefront,i18n,types}@${version}`;
+          await $`npm --prefix ${funcDir} i --save @cloudcommerce/{firebase,ssr,api}@${version}`;
+          await $`npm --prefix ${funcDir} i --save-dev @cloudcommerce/{storefront,i18n,types}@${version}`;
         } else if (codebase === 'many') {
-          await $`npm i --save @cloudcommerce/{firebase,feeds,passport}@${version}`;
+          await $`npm --prefix ${funcDir} i --save @cloudcommerce/{firebase,feeds,passport}@${version}`;
         } else {
-          await $`npm i --save @cloudcommerce/{firebase,modules,events}@${version}`;
+          await $`npm --prefix ${funcDir} i --save @cloudcommerce/{firebase,modules,events}@${version}`;
         }
-        await $`rm -rf node_modules`;
+        await $`rm -rf ${funcDir}/node_modules`;
       }
-      cd(storeDir);
-      await $`rm -rf node_modules package-lock.json`;
-      await $`npm i --save @cloudcommerce/cli@${version}`;
-      await $`npm i --save-dev @cloudcommerce/eslint@${version}`;
-      await $`rm -rf node_modules`;
+      await $`rm -rf ${storeDir}/node_modules ${storeDir}/package-lock.json`;
+      await $`npm --prefix ${storeDir} i --save @cloudcommerce/cli@${version}`;
+      await $`npm --prefix ${storeDir} i --save-dev @cloudcommerce/eslint@${version}`;
+      await $`rm -rf ${storeDir}/node_modules`;
       try {
-        await $`git add package* functions/*/package*`;
-        await $`git commit -m 'Update to v${version}' \
+        await $`git -C ${storeDir} add package* functions/*/package*`;
+        await $`git -C ${storeDir} commit -m 'Update to v${version}' \
           -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
-        await $`git push`;
+        await $`git -C ${storeDir} push`;
       } catch {
         //
       }
-    }
+    }));
     return cd(pwd);
   });
   await $`pnpm fix-install`;
