@@ -15,7 +15,13 @@ fi
 
 project_id=$1
 domain=$2
-swr_origin_url=$3
+if [[ -n "$3" ]]; then
+  if [[ "$3" == http*://* ]]; then
+    swr_origin_url="$3"
+  else
+    swr_origin_url="https://$3"
+  fi
+fi
 
 response=$(curl --silent --request GET \
   --url https://api.bunny.net/pullzone \
