@@ -68,7 +68,10 @@ export default async (req: Request, res: Response) => {
       if (typeof email === 'string' && /^[^@]+@[^@]+\.[^@]+$/.test(email)) {
         const docNumber = body.doc_number ? `${body.doc_number}` : undefined;
         try {
-          const foundCustomer = await findCustomerByEmail(email, docNumber);
+          const foundCustomer = await findCustomerByEmail(email, {
+            docNumber,
+            mustHaveDocNumber: !docNumber,
+          });
           if (foundCustomer) {
             const customerId = foundCustomer._id;
             const customer = {

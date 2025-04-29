@@ -5,12 +5,20 @@ import { logger } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import getEnv from '@cloudcommerce/firebase/lib/env';
 
-export const findCustomerByEmail = async (email: string, docNumber?: string) => {
+export const findCustomerByEmail = async (
+  email: string,
+  { docNumber, mustHaveDocNumber }: {
+    docNumber?: string,
+    mustHaveDocNumber?: boolean,
+  } = {},
+) => {
   const params: Partial<Record<keyof Customers | `${keyof Customers}~`, string>> = {
     'main_email~': `^${email}$`,
   };
   if (docNumber) {
     params.doc_number = docNumber;
+  } else if (mustHaveDocNumber) {
+    params['doc_number!'] = 'null';
   }
   const { data } = await api.get('customers', {
     params,
