@@ -70,7 +70,7 @@ export default async (req: Request, res: Response) => {
         try {
           const foundCustomer = await findCustomerByEmail(email, {
             docNumber,
-            mustHaveDocNumber: !docNumber,
+            mustHaveDocNumber: true,
           });
           if (foundCustomer) {
             const customerId = foundCustomer._id;
