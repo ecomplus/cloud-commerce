@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.41.13](https://github.com/ecomplus/cloud-commerce/compare/v2.41.12...v2.41.13) (2025-04-30)
+
+
+### Bug Fixes
+
+* **cli:** Ensure persistent SWR origin set to https on bunny.net edge rule ([03281e8](https://github.com/ecomplus/cloud-commerce/commit/03281e8d47ccd0c6e01bd9080e6c2660b917a354))
+* **deps:** Update non-major dependencies ([#567](https://github.com/ecomplus/cloud-commerce/issues/567)) ([70f5cfb](https://github.com/ecomplus/cloud-commerce/commit/70f5cfbc85e2200186c763e57bb9946263643003))
+* **emails:** Mock default STMP sender to `noreply@e-com.plus` ([eae6e8c](https://github.com/ecomplus/cloud-commerce/commit/eae6e8c419ec227a37d1145b0048cd37d7595cdc))
+* **passport:** Handle email-only passport identification only if doc number is set ([153ea1c](https://github.com/ecomplus/cloud-commerce/commit/153ea1c71ae29dbce672cf3d992afa953bc7e355))
+* **storefront:** Refetch variation prices on cart state update ([9428b9d](https://github.com/ecomplus/cloud-commerce/commit/9428b9dc85e7377a3602eade829a9f5230bc6f2a))
+* **storefront:** Updating checkout vbeta-app script version ([97e57ad](https://github.com/ecomplus/cloud-commerce/commit/97e57ad207707fce71ffef0c9ba38aa6a43014d3))
+
 ## [2.41.12](https://github.com/ecomplus/cloud-commerce/compare/v2.41.11...v2.41.12) (2025-04-22)
 
 
