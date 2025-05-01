@@ -77,7 +77,7 @@ module.exports = {
     'spaced-comment': 'warn',
     'block-spacing': ['warn', 'always'],
     'no-tabs': 'warn',
-    'indent': ['warn', 2],
+    'indent': ['warn', 2, { SwitchCase: 1 }],
     'brace-style': ['warn', '1tbs', { allowSingleLine: true }],
     'no-multi-spaces': ['warn', { ignoreEOLComments: true }],
     'space-before-function-paren': ['warn', {
