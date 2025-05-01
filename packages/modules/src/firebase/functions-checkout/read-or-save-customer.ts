@@ -11,6 +11,22 @@ const readOrSaveCustomer = async (customer: CustomerToSave) => {
     : `customers/main_email:${customer.main_email}` as `customers/${string}:${string}`;
   try {
     const { data: savedCustomer } = await api.get(customerEndpoint);
+    const customerPatch: Partial<CustomerToSave> = {};
+    Object.keys(customer).forEach((field) => {
+      if (customer[field] && !savedCustomer[field]) {
+        customerPatch[field] = customer[field];
+      }
+    });
+    if (Object.keys(customerPatch).length) {
+      api.patch(customerEndpoint, customerEndpoint).catch((_err) => {
+        const err = _err as ApiError;
+        logger.warn(`Failed updating customer ${customer.main_email} on checkout`, {
+          customerPatch,
+          statusCode: err.statusCode,
+          response: err.response?.data,
+        });
+      });
+    }
     return savedCustomer;
   } catch (_err: any) {
     const err = _err as ApiError;
