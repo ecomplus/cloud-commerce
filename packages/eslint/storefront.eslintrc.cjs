@@ -7,12 +7,8 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'class-methods-use-this': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn'],
-    'max-len': 'warn',
-    'semi': 'warn',
     'arrow-parens': 'warn',
     'object-curly-newline': 'warn',
-    'comma-dangle': 'warn',
     'consistent-return': 'warn',
     'array-bracket-spacing': 'warn',
     'no-restricted-syntax': 'warn',
