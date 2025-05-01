@@ -12,6 +12,7 @@ module.exports = {
     'consistent-return': 'warn',
     'array-bracket-spacing': 'warn',
     'no-restricted-syntax': 'warn',
+    'no-plusplus': 'warn',
     'quote-props': 'off',
     'quotes': 'off',
     'global-require': 'off',

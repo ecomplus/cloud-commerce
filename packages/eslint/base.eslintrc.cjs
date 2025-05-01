@@ -73,12 +73,13 @@ module.exports = {
     'semi': 'warn',
     'no-console': 'warn',
     'operator-linebreak': 'warn',
-    'max-statements-per-line': 'warn',
+    'max-statements-per-line': ['warn', { max: 3 }],
     'spaced-comment': 'warn',
     'block-spacing': ['warn', 'always'],
     'no-tabs': 'warn',
     'indent': ['warn', 2],
     'brace-style': ['warn', '1tbs', { allowSingleLine: true }],
+    'no-multi-spaces': ['warn', { ignoreEOLComments: true }],
     'space-before-function-paren': ['warn', {
       'anonymous': 'always',
       'named': 'never',
@@ -114,10 +115,6 @@ module.exports = {
     'no-plusplus': [
       'error',
       { allowForLoopAfterthoughts: true },
-    ],
-    'no-multi-spaces': [
-      'error',
-      { ignoreEOLComments: true },
     ],
   },
   overrides: [
