@@ -31,7 +31,7 @@ const getImageFilepath = (src: string) => {
   }
   return filepath;
 };
-const tryImageSize = (src: string) => {
+const tryImageSize = async (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
   if (typeof src === 'string' && src.startsWith('/')) {
     try {
@@ -56,7 +56,7 @@ const {
     let imageMetadata: ImageMetadata | undefined;
     if (imageOptions.src.startsWith('/')) {
       const imageFilepath = getImageFilepath(imageOptions.src);
-      const { width, height } = tryImageSize(imageOptions.src);
+      const { width, height } = await tryImageSize(imageOptions.src);
       if (width && height) {
         const mimeType = lookup(imageFilepath);
         if (mimeType?.startsWith('image/')) {
