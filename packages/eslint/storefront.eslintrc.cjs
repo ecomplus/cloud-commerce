@@ -41,6 +41,12 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['*.*.ts'],
+      rules: {
+        'import/prefer-default-export': 'off',
+      },
+    },
+    {
       files: ['*.vue', '*.astro'],
       rules: {
         'padding-line-between-statements': 'off',
