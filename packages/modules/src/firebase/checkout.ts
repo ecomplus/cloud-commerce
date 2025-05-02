@@ -82,6 +82,9 @@ export default async (req: Request, res: Response) => {
       ? [shippingAddr]
       : undefined,
   });
+  if (savedCustomer.enabled === false) {
+    return sendError(res, 403, 'CKT802', 'Customer is disabled from placing new orders');
+  }
   const customerId = savedCustomer._id;
   if (customerId === customer._id) {
     Object.keys(savedCustomer).forEach((field) => {
