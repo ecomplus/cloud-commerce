@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.42.0](https://github.com/ecomplus/cloud-commerce/compare/v2.41.14...v2.42.0) (2025-05-06)
+
+
+### Features
+
+* **cli:** Edit default Remote Config template for A/B experiments (50/50) field ([76a6f42](https://github.com/ecomplus/cloud-commerce/commit/76a6f420695f747df9c3faceec3265c61475043e))
+* **storefront:** Supporting A/B experiment fields with Remote Config and CMS content ([2f18c5f](https://github.com/ecomplus/cloud-commerce/commit/2f18c5fafd9722d5f3cfe984efc9898b3cd6573f))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#574](https://github.com/ecomplus/cloud-commerce/issues/574)) ([2fc121d](https://github.com/ecomplus/cloud-commerce/commit/2fc121d928202a58330533131b6b96ade937c3c0))
+* **firebase:** Update dependency @google-cloud/pubsub to v5 ([#575](https://github.com/ecomplus/cloud-commerce/issues/575)) ([05a3423](https://github.com/ecomplus/cloud-commerce/commit/05a3423ae43e18ef47b5868a46c9aa80ae395223))
+* **modules:** Ensure blocking disabled customers on checkout ([6972604](https://github.com/ecomplus/cloud-commerce/commit/6972604eebedf4f3d749640b9a0f8e56db425206))
+* **modules:** Update found customer with new fields on checkout ([dfba251](https://github.com/ecomplus/cloud-commerce/commit/dfba251540c3a3f30230839e9e42bd62c17dd39c))
+
 ## [2.41.14](https://github.com/ecomplus/cloud-commerce/compare/v2.41.13...v2.41.14) (2025-04-30)
 
 ## [2.41.13](https://github.com/ecomplus/cloud-commerce/compare/v2.41.12...v2.41.13) (2025-04-30)
