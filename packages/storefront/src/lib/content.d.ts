@@ -57,6 +57,26 @@ export interface PageContent {
   markdown?: string;
 }
 
+export interface AbExperimentContent {
+  experimentId: string;
+  colors?: Array<{
+    name: string,
+    value: string,
+  }>;
+  strings?: Array<{
+    name: string,
+    value: string,
+  }>;
+  booleans?: Array<{
+    name: string,
+    value: boolean,
+  }>;
+  numbers?: Array<{
+    name: string,
+    value: number,
+  }>;
+}
+
 export type ContentFilename = 'settings'
   | 'layout'
   | keyof CustomContent
@@ -68,6 +88,7 @@ export type ContentData<T extends ContentFilename> =
   T extends 'layout' ? LayoutContent :
   T extends keyof CustomContent ? CustomContent[T] :
   T extends `${string}/` ? Array<string> :
+  T extends `ab-experiments/${string}` ? AbExperimentContent | null :
   T extends `${string}/${string}` ? PageContent | null :
   null;
 

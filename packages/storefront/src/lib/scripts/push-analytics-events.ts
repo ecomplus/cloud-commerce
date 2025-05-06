@@ -1,7 +1,9 @@
 import type { GtagEventMessage } from '@@sf/state/use-analytics';
+import { watch } from 'vue';
 import { useDebounceFn } from '@vueuse/core';
 import config from '@cloudcommerce/config';
 import { looksLikeBot, getDigestHex } from '@@sf/sf-lib';
+import { isAbExpReady } from '@@sf/state/ab-experiment';
 import {
   useAnalytics,
   trackingIds,
@@ -65,11 +67,11 @@ const _sendServerEvents = useDebounceFn(async (variantCtx?: AnalyticsVariantCtx)
   eventsToSend = [];
 }, 1000);
 
-if (
-  !import.meta.env.SSR
-  && !window.location.search.includes(`__isrV=${deployRand}`)
-  && !window.location.pathname.startsWith('/admin/')
-) {
+let hasStartedAnalytics = false;
+const startAnalytics = () => {
+  if (hasStartedAnalytics) return;
+  hasStartedAnalytics = true;
+
   const variantCtx = useAnalytics();
   watchGtagEvents(async (evMessage) => {
     const sendServerEvent = (analyticsEvent: AnalyticsEvent & { sent: boolean }) => {
@@ -195,5 +197,19 @@ if (
     } catch {
       sendPageView();
     }
+  });
+};
+
+if (
+  !import.meta.env.SSR
+  && !window.location.search.includes(`__isrV=${deployRand}`)
+  && !window.location.pathname.startsWith('/admin/')
+) {
+  const unwatch = watch(isAbExpReady, (_isAbExpReady) => {
+    if (!_isAbExpReady) return;
+    startAnalytics();
+    setTimeout(() => unwatch(), 100);
+  }, {
+    immediate: true,
   });
 }

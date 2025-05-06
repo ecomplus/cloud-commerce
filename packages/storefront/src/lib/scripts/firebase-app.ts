@@ -13,3 +13,9 @@ export {
   signInWithEmailLink,
   // updateProfile,
 } from 'firebase/auth';
+
+export {
+  getRemoteConfig,
+  fetchAndActivate as rcFetchAndActivate,
+  getValue as rcGetValue,
+} from 'firebase/remote-config';

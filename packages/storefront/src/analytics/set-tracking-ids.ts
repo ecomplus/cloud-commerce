@@ -10,7 +10,10 @@ export type TrackingIds = {
   ip6?: string,
 };
 
-export const getTrackingIds = (trackingIds: TrackingIds, experimentId?: string) => {
+export const getTrackingIds = (
+  trackingIds: TrackingIds,
+  experimentId?: string | null,
+) => {
   const {
     gtag,
     GTAG_TAG_ID,
@@ -19,8 +22,8 @@ export const getTrackingIds = (trackingIds: TrackingIds, experimentId?: string) 
   } = window as Window & { gtag?: Gtag.Gtag };
   const tagId = GTAG_TAG_ID || GA_TRACKING_ID;
   // https://developers.google.com/analytics/devguides/collection/ga4/integration
-  const expVariantString: string | null = GIT_BRANCH && experimentId
-    ? `${experimentId}-${GIT_BRANCH}`
+  const expVariantString: string | null = experimentId
+    ? (GIT_BRANCH && `${experimentId}-${GIT_BRANCH}`) || experimentId
     : (GIT_BRANCH?.startsWith('main-') && GIT_BRANCH) || null;
   if (typeof gtag === 'function') {
     if (tagId) {
