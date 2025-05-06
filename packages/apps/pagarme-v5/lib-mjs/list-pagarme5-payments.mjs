@@ -49,7 +49,7 @@ export default async (data) => {
       const { data: { result } } = await api.get('search/v1', {
         limit: items.length,
         params: {
-          _id: items.map((item) => item.product_id),
+          '_id': items.map((item) => item.product_id),
           'categories._id': categoryIds,
         },
       });

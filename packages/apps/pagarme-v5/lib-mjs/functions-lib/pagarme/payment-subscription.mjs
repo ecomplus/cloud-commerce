@@ -21,7 +21,6 @@ const parseIntervalPlan = {
   Mensal: {
     interval: 'month',
     interval_count: 1,
-
   },
   Bimestral: {
     interval: 'month',
@@ -185,7 +184,7 @@ const createPayment = async ({
     pagarmeOrder.shipping = {
       amount: Math.floor((amount.freight) * 100),
       description: 'Frete',
-      recipient_name: customer.name,
+      recipient_name: customer.name?.substring(0, 64),
       recipient_phone: `${phone?.area_code || ''}${phone?.number}`,
       address,
     };
