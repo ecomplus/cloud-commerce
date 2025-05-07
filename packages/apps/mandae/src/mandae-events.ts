@@ -13,6 +13,6 @@ export const mandae = {
 
   cronTrackOrders: functions
     .region(config.get().httpsFunctionOptions.region)
-    .pubsub.schedule(process.env.CRONTAB_MANDAE_TRACK_ORDERS || '11 * * * *')
+    .pubsub.schedule(process.env.CRONTAB_MANDAE_TRACK_ORDERS || '12,47 * * * *')
     .onRun(() => trackOrders()),
 };
