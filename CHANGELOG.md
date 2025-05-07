@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.42.1](https://github.com/ecomplus/cloud-commerce/compare/v2.42.0...v2.42.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* **mandae:** Ensure tracking exec on odd and even minutes for both older and newer orders ([cf60fe7](https://github.com/ecomplus/cloud-commerce/commit/cf60fe77af051e93d001303b4c0e9489f7fc3b12))
+* **pagarme-v5:** Limiting sent customer name to 64 chars ([c4f8cac](https://github.com/ecomplus/cloud-commerce/commit/c4f8cac02dd4df2367f9f914042c54f3218a79ae))
+
 ## [2.42.0](https://github.com/ecomplus/cloud-commerce/compare/v2.41.14...v2.42.0) (2025-05-06)
 
 
