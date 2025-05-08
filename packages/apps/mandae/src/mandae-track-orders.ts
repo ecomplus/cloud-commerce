@@ -43,10 +43,16 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
     logger.warn(`Skipping ${number} without invoice data`);
     return;
   }
-  const mandaeTrackingPrefix = mandaeOrderSettings?.tracking_prefix || '';
-  const trackingId = mandaeTrackingPrefix
-    + invoice.number.replace(/^0+/, '').trim()
-    + invoice.serial_number.replace(/^0+/, '').trim();
+  const lineTrackingCodes = shippingLine.tracking_codes || [];
+  let trackingId = lineTrackingCodes.find(({ tag, link }) => {
+    return tag === 'mandae' || link?.startsWith('https://rastreae.com.br');
+  })?.code;
+  if (!trackingId) {
+    const mandaeTrackingPrefix = mandaeOrderSettings?.tracking_prefix || '';
+    trackingId = mandaeTrackingPrefix
+      + invoice.number.replace(/^0+/, '').trim()
+      + invoice.serial_number.replace(/^0+/, '').trim();
+  }
   logger.info(`Tracking ${number} with ID ${trackingId}`);
   const { data } = await axios.get(`https://api.mandae.com.br/v3/trackings/${trackingId}`, {
     headers: { Authorization: mandaeToken },
@@ -55,7 +61,6 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
   const trackingResult = data?.events?.[0];
   if (!trackingResult) return;
   const status = parseMandaeStatus(trackingResult);
-  const lineTrackingCodes = shippingLine.tracking_codes || [];
   const savedTrackingCode = lineTrackingCodes.find(({ code }) => {
     return code === trackingId;
   });
