@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.42.2](https://github.com/ecomplus/cloud-commerce/compare/v2.42.1...v2.42.2) (2025-05-08)
+
+
+### Bug Fixes
+
+* **mandae:** Orders send and tracking routines with sort field varying by `updated_at` and `number` ([46a965b](https://github.com/ecomplus/cloud-commerce/commit/46a965b431e452154e77c65c4ee8c3ccd222a7f6))
+
 ## [2.42.1](https://github.com/ecomplus/cloud-commerce/compare/v2.42.0...v2.42.1) (2025-05-07)
 
 
