@@ -23,6 +23,7 @@ export const parseMandaeStatus = ({ id /* , name */ }) => {
     case '121':
       return 'shipped';
     case '66':
+    case '6':
       return 'returned';
     default:
       return null;
