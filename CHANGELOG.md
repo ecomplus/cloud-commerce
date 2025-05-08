@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.42.3](https://github.com/ecomplus/cloud-commerce/compare/v2.42.2...v2.42.3) (2025-05-08)
+
+
+### Bug Fixes
+
+* **mandae:** Keep tracking codes out of format when `mandae` tag or link is checked ([77f9d30](https://github.com/ecomplus/cloud-commerce/commit/77f9d30f575f4e588581baf0250413b3d6fd5c45))
+* **mandae:** Parse tracking result id "6" to returned ([98aaae6](https://github.com/ecomplus/cloud-commerce/commit/98aaae68f56f400c8e975cbf6c38fddda3a19dd5))
+
 ## [2.42.2](https://github.com/ecomplus/cloud-commerce/compare/v2.42.1...v2.42.2) (2025-05-08)
 
 
