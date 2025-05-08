@@ -131,7 +131,9 @@ export const exportOrder = async ({ order, mandaeToken, mandaeOrderSettings }: {
 };
 
 export const sendWaitingOrders = async () => {
-  const isOddExec = !!(new Date().getMinutes() % 2);
+  const startDate = new Date();
+  const isOddMinExec = !!(startDate.getMinutes() % 2);
+  const isOddHourExec = !!(startDate.getHours() % 2);
   const appData = await getAppData();
   const mandaeToken = appData?.mandae_token;
   if (!mandaeToken) return;
@@ -148,12 +150,16 @@ export const sendWaitingOrders = async () => {
       + '&financial_status.current=paid'
       + '&fulfillment_status.current=ready_for_shipping'
       + `&updated_at>=${d.toISOString()}`
-      + `&sort=${(isOddExec ? '-' : '')}number`
+      + `&sort=${(isOddMinExec ? '-' : '')}${(isOddHourExec ? 'number' : 'updated_at')}`
       + '&limit=200' as `orders?${string}`;
+    logger.info('Start exporting orders', { endpoint });
     try {
       const { data } = await api.get(endpoint);
       const orders = data.result;
-      logger.info('Start exporting orders', { orders });
+      logger.info(`${orders.length} orders listed`, {
+        ids: orders.map(({ _id }) => _id),
+        numbers: orders.map(({ number }) => number),
+      });
       for (let i = 0; i < orders.length; i++) {
         const order = orders[i];
         // eslint-disable-next-line no-await-in-loop

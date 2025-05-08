@@ -93,7 +93,9 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
 };
 
 export const trackUndeliveredOrders = async () => {
-  const isOddExec = !!(new Date().getMinutes() % 2);
+  const startDate = new Date();
+  const isOddMinExec = !!(startDate.getMinutes() % 2);
+  const isOddHourExec = !!(startDate.getHours() % 2);
   const appData = await getAppData();
   const mandaeToken = appData?.mandae_token;
   if (!mandaeToken) return;
@@ -107,12 +109,16 @@ export const trackUndeliveredOrders = async () => {
       + '&financial_status.current=paid'
       + '&fulfillment_status.current!=delivered'
       + `&updated_at>=${d.toISOString()}`
-      + `&sort=${(isOddExec ? '-' : '')}updated_at`
+      + `&sort=${(isOddMinExec ? '-' : '')}${(isOddHourExec ? 'number' : 'updated_at')}`
       + '&limit=200' as `orders?${string}`;
+    logger.info('Start tracking orders', { endpoint });
     try {
       const { data } = await api.get(endpoint);
       const orders = data.result;
-      logger.info('Start tracking orders', { orders });
+      logger.info(`${orders.length} orders listed`, {
+        ids: orders.map(({ _id }) => _id),
+        numbers: orders.map(({ number }) => number),
+      });
       for (let i = 0; i < orders.length; i++) {
         const order = orders[i];
         // eslint-disable-next-line no-await-in-loop
