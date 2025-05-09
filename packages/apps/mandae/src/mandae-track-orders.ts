@@ -113,7 +113,7 @@ export const trackUndeliveredOrders = async () => {
       + '?fields=_id,number,fulfillment_status,shipping_lines'
       + '&shipping_lines.tracking_codes.tag=mandae'
       + '&financial_status.current=paid'
-      + '&fulfillment_status.current!=delivered'
+      + `&fulfillment_status.current${(isOddHourExec ? '=ready_for_shipping' : '!=delivered')}`
       + `&updated_at>=${d.toISOString()}`
       + `&sort=${(isOddMinExec ? '-' : '')}${(isOddHourExec ? 'number' : 'updated_at')}`
       + '&limit=200' as `orders?${string}`;
