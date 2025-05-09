@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.42.4](https://github.com/ecomplus/cloud-commerce/compare/v2.42.3...v2.42.4) (2025-05-09)
+
+
+### Bug Fixes
+
+* **mandae:** Filter only `ready_for_shipping` orders on some executions of track routine ([c417039](https://github.com/ecomplus/cloud-commerce/commit/c41703991a72e4bda222358b5477ac2bbae65fb6))
+
 ## [2.42.3](https://github.com/ecomplus/cloud-commerce/compare/v2.42.2...v2.42.3) (2025-05-08)
 
 
