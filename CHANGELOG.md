@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.42.5](https://github.com/ecomplus/cloud-commerce/compare/v2.42.4...v2.42.5) (2025-05-10)
+
+
+### Bug Fixes
+
+* **api:** Set `response.data` as `undefined` on 204 (no content) ([07e95ef](https://github.com/ecomplus/cloud-commerce/commit/07e95efb839f18db94b40d47c178c859f4971082))
+* **loyalty-points:** Fix setting first points (new array) to new customers ([a186280](https://github.com/ecomplus/cloud-commerce/commit/a1862804b3f2f6bd45123bea4e1e75bb9847e760))
+
 ## [2.42.4](https://github.com/ecomplus/cloud-commerce/compare/v2.42.3...v2.42.4) (2025-05-09)
 
 
