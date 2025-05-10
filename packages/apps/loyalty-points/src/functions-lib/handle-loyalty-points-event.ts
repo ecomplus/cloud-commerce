@@ -164,11 +164,13 @@ const handleLoyaltyPointsEvent = async (
               }
             }
 
-            await docRef.set({
-              customerId,
-              pointEntries,
-              queuedAt: Timestamp.now(),
-            });
+            if (pointEntries.length) {
+              await docRef.set({
+                customerId,
+                pointEntries,
+                queuedAt: Timestamp.now(),
+              });
+            }
 
             return responsePubSub(ECHO_SUCCESS);
           }
