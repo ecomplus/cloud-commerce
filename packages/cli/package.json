@@ -36,11 +36,11 @@
     "@cloudcommerce/api": "workspace:*",
     "@fastify/deepmerge": "^3.1.0",
     "dotenv": "^16.5.0",
-    "fast-xml-parser": "^5.2.2",
+    "fast-xml-parser": "^5.2.3",
     "image-size": "^2.0.2",
     "libsodium-wrappers": "^0.7.15",
     "md5": "^2.3.0",
     "typescript": "~5.8.3",
-    "zx": "^8.5.3"
+    "zx": "^8.5.4"
   }
 }
