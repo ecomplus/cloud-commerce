@@ -197,12 +197,13 @@ const createPayment = async ({
   pagarmeOrder.items = [];
 
   items.forEach(async (item) => {
-    if (item.quantity > 0) {
+    const itemAmount = Math.floor((item.final_price || item.price) * 100);
+    if (itemAmount > 0 && item.quantity > 0) {
       const itemOrder = {
         quantity: item.quantity,
         description: item.name || item.variation_id || item.product_id,
         code: item.sku?.substring(0, 52) || item.variation_id || item.product_id,
-        amount: Math.floor((item.final_price || item.price) * 100),
+        amount: itemAmount,
       };
       pagarmeOrder.items.push(itemOrder);
     }
