@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.43.0](https://github.com/ecomplus/cloud-commerce/compare/v2.42.5...v2.43.0) (2025-05-23)
+
+
+### Features
+
+* **pagarme-v5:** New cron function to auto cancel expired Pix/boleto orders by configured validity ([f9d9d06](https://github.com/ecomplus/cloud-commerce/commit/f9d9d0640dfcd110a453452fc720529c95be8764))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#576](https://github.com/ecomplus/cloud-commerce/issues/576)) ([0e99edb](https://github.com/ecomplus/cloud-commerce/commit/0e99edbafe864aff787895692ce80410d760bb25))
+* **deps:** Update non-major dependencies ([#579](https://github.com/ecomplus/cloud-commerce/issues/579)) ([8a62ead](https://github.com/ecomplus/cloud-commerce/commit/8a62ead9d72ba9d5cfba5435e82830131c110191))
+* **pagarme-v5:** Skip free items (freebies) on Pagar.me order ([ccc89f8](https://github.com/ecomplus/cloud-commerce/commit/ccc89f85bb873df78a807922a6420d3197f66f1a))
+* **storefront:** Bump Vue to latest ^3.5.14 ([#578](https://github.com/ecomplus/cloud-commerce/issues/578)) ([2d02134](https://github.com/ecomplus/cloud-commerce/commit/2d021348d4f76ddeb24d9032968e4ea0a7145f2f))
+
 ## [2.42.5](https://github.com/ecomplus/cloud-commerce/compare/v2.42.4...v2.42.5) (2025-05-10)
 
 
