@@ -22,6 +22,7 @@ export const cancelExpiredOrders = async () => {
     + '&limit=500' as `orders?${string}`;
   const { data: { result: orders } } = await api.get(endpoint);
   logger.info(`${orders.length} orders listed`);
+  const now = Date.now();
   orders.forEach(({ _id, transactions }) => {
     const transaction = transactions?.find(({ app }) => {
       return app?.intermediator?.code === 'pagarme';
@@ -32,10 +33,10 @@ export const cancelExpiredOrders = async () => {
     const paymentMethod = transaction.payment_method.code;
     if (paymentMethod === 'account_deposit') {
       if (!pixValidityMs) return;
-      if (Date.now() - transactionDate.getTime() < pixValidityMs) return;
+      if (now - transactionDate.getTime() < pixValidityMs) return;
     } else if (paymentMethod === 'banking_billet') {
       if (!bolValidityMs) return;
-      if (Date.now() - transactionDate.getTime() < bolValidityMs) return;
+      if (now - transactionDate.getTime() < bolValidityMs) return;
     } else {
       return;
     }
