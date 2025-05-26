@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.43.1](https://github.com/ecomplus/cloud-commerce/compare/v2.43.0...v2.43.1) (2025-05-26)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#580](https://github.com/ecomplus/cloud-commerce/issues/580)) ([9e50c32](https://github.com/ecomplus/cloud-commerce/commit/9e50c3203c13bced8a6fce848d98a43fb4370b77))
+* **pagarme-v5:** Gap 7 days for boleto expiration and allow skipping cancel routine ([c069fbd](https://github.com/ecomplus/cloud-commerce/commit/c069fbd347f821f22dbab232cd29e7d3f957d2e4))
+
 ## [2.43.0](https://github.com/ecomplus/cloud-commerce/compare/v2.42.5...v2.43.0) (2025-05-23)
 
 
