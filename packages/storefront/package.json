@@ -57,14 +57,14 @@
     "astro-capo": "^0.0.1",
     "chroma-js": "^3.1.2",
     "dotenv": "^16.5.0",
-    "firebase": "^11.7.3",
+    "firebase": "^11.8.1",
     "image-size": "^2.0.2",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
     "semver": "^7.7.2",
     "sharp": "^0.33.3",
     "unocss": "^66.1.2",
-    "unplugin-auto-import": "^19.2.0",
+    "unplugin-auto-import": "^19.3.0",
     "vue": "^3.5.14",
     "wade": "0.3.3",
     "yaml": "^2.8.0"
@@ -72,6 +72,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.21"
+    "@types/react": "^18.3.22"
   }
 }
