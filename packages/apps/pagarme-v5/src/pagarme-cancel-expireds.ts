@@ -5,10 +5,13 @@ import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 
 export const cancelExpiredOrders = async () => {
   const appData = await getAppData('pagarMeV5', ['data']);
+  if (appData.__keep_pending_expireds || appData.keep_pending_expireds === true) {
+    return;
+  }
   const pixValidityMins = appData.account_deposit?.due_time;
   const pixValidityMs = pixValidityMins * 60 * 1000;
   const bolValidityDays = appData.banking_billet?.days_due_date;
-  const bolValidityMs = bolValidityDays * 24 * 60 * 60 * 1000;
+  const bolValidityMs = (bolValidityDays + 7) * 24 * 60 * 60 * 1000;
   if (!pixValidityMs && !bolValidityMs) {
     return;
   }
