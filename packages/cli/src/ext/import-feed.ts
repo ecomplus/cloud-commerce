@@ -1,4 +1,5 @@
 import type { ProductSet } from '@cloudcommerce/api/types';
+import { extname } from 'node:path';
 import {
   argv,
   fs,
@@ -6,6 +7,7 @@ import {
   sleep,
 } from 'zx';
 import { XMLParser } from 'fast-xml-parser';
+import { parse } from 'csv-parse/sync';
 import { imageSize } from 'image-size';
 import api from '@cloudcommerce/api';
 
@@ -21,13 +23,24 @@ const slugify = (name: string) => {
 };
 
 const uploadPicture = async (downloadUrl: string, authHeaders: Record<string, any>) => {
-  const downloadRes = await fetch(downloadUrl);
+  const downloadRes = await fetch(downloadUrl, {
+    method: 'GET',
+    redirect: 'follow',
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; E-commerce Bot/1.0)',
+    },
+  });
   if (!downloadRes.ok) {
-    throw new Error(`Failed downloading ${downloadUrl} with status ${downloadRes.status}`);
+    const msg = `Failed downloading ${downloadUrl} with status ${downloadRes.status}`;
+    const err = new Error(msg) as any;
+    err.statusCode = downloadRes.status || 0;
+    throw err;
   }
   const contentType = downloadRes.headers.get('content-type');
   if (!contentType) {
-    throw new Error(`No mime type returned for ${downloadUrl}`);
+    const err = new Error(`No mime type returned for ${downloadUrl}`) as any;
+    err.statusCode = 0;
+    throw err;
   }
   const imageBuffer = await downloadRes.arrayBuffer();
   const imageBlob = new Blob([imageBuffer], { type: contentType });
@@ -80,50 +93,143 @@ const uploadPicture = async (downloadUrl: string, authHeaders: Record<string, an
   return picture;
 };
 
+type FeedItem = {
+  'g:id': string,
+  'g:title': string,
+  'g:description'?: string,
+  'g:link'?: `https://www/${string}?${string}`,
+  'g:image_link'?: string,
+  'g:condition'?: 'new' | 'refurbished' | 'used',
+  'g:shipping_weight'?: `${string} g` | `${string} kg`,
+  'g:additional_image_link'?: string[],
+  'g:product_type'?: string,
+  'g:availability'?: 'in stock' | 'out of stock' | 'preorder' | 'backorder',
+  'g:price'?: `${string} BRL`,
+  'g:sale_price'?: `${string} BRL`,
+  'g:brand'?: string,
+  'g:item_group_id'?: string,
+  'g:color'?: string,
+  'g:gender'?: 'male' | 'female' | 'unisex',
+  'g:material'?: string,
+  'g:pattern'?: string,
+  'g:size'?: string,
+  'g:size_system'?: string,
+  'g:gtin'?: string,
+  'g:mpn'?: string,
+  'available'?: boolean,
+  'visible'?: boolean,
+  'quantity'?: number,
+};
+type CSVItem = {
+  'sku': string,
+  'tipo': string,
+  'ativo': string,
+  'usado': string,
+  'destaque': string,
+  'ncm': string,
+  'gtin': string,
+  'mpn': string,
+  'nome': string,
+  'seo-tag-title': string,
+  'seo-tag-description': string,
+  'descricao-completa': string,
+  'estoque-gerenciado': string,
+  'estoque-quantidade': string,
+  'preco-cheio': string,
+  'preco-promocional': string,
+  'marca': string,
+  'peso-em-kg': string,
+  'altura-em-cm': string,
+  'largura-em-cm': string,
+  'comprimento-em-cm': string,
+  'categoria-nome-nivel-1': string,
+  'imagem-1': string,
+  'imagem-2': string,
+  'imagem-3': string,
+  'imagem-4': string,
+  'imagem-5': string,
+};
+const mapCSVToFeed = (item: CSVItem): FeedItem => {
+  const basePrice = parseFloat(item['preco-cheio']?.replace(',', '.')) || 0;
+  const salePrice = parseFloat(item['preco-promocional']?.replace(',', '.')) || 0;
+  const isAvailable = item.ativo === 'S';
+  const quantity = Number(item['estoque-quantidade']) || 0;
+  return {
+    'g:id': item.sku,
+    'g:title': item.nome,
+    'g:description': item['descricao-completa'] || item['seo-tag-description'],
+    'g:image_link': item['imagem-1'],
+    'g:condition': item.usado === 'S' ? 'used' as const : 'new' as const,
+    'g:shipping_weight': item['peso-em-kg']
+      ? `${item['peso-em-kg']?.replace(',', '.')} kg` as const
+      : undefined,
+    'g:additional_image_link': [
+      item['imagem-2'],
+      item['imagem-3'],
+      item['imagem-4'],
+      item['imagem-5'],
+    ].filter(Boolean),
+    'g:product_type': item['categoria-nome-nivel-1'],
+    'g:availability': (isAvailable && quantity > 0)
+      ? 'in stock' as const
+      : 'out of stock' as const,
+    'g:price': `${(basePrice || salePrice)} BRL` as const,
+    'g:sale_price': (salePrice > 0 && salePrice < basePrice)
+      ? `${salePrice} BRL` as const
+      : undefined,
+    'g:brand': item.marca,
+    'g:gtin': item.gtin,
+    'g:mpn': item.mpn,
+    'available': isAvailable,
+    'visible': isAvailable,
+    'quantity': quantity,
+  };
+};
+
 const importFeed = async () => {
+  const {
+    ECOM_STORE_ID,
+    ECOM_AUTHENTICATION_ID,
+    ECOM_API_KEY,
+    ECOM_ACCESS_TOKEN,
+  } = process.env;
   const feedFilepath = typeof argv.feed === 'string' ? argv.feed : '';
   if (!feedFilepath) {
     await echo`You must specify XML file to import with --feed= argument`;
     return process.exit(1);
   }
-  const parser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: '',
-  });
-  const json = parser.parse(fs.readFileSync(argv.feed, 'utf8'));
-  const items: Array<{
-    'g:id': string,
-    'g:title': string,
-    'g:description'?: string,
-    'g:link'?: `https://www.ladofit.com.br/${string}?${string}`,
-    'g:image_link'?: string,
-    'g:condition'?: 'new' | 'refurbished' | 'used',
-    'g:shipping_weight'?: `${string} g` | `${string} kg`,
-    'g:additional_image_link'?: string[],
-    'g:product_type'?: string,
-    'g:availability'?: 'in stock' | 'out of stock' | 'preorder' | 'backorder',
-    'g:price'?: `${string} BRL`,
-    'g:sale_price'?: `${string} BRL`,
-    'g:brand'?: string,
-    'g:item_group_id'?: string,
-    'g:color'?: string,
-    'g:gender'?: 'male' | 'female' | 'unisex',
-    'g:material'?: string,
-    'g:pattern'?: string,
-    'g:size'?: string,
-    'g:size_system'?: string,
-  }> = json.rss?.channel?.item?.filter?.((item: any) => {
-    return item?.['g:id'] && item['g:title'];
-  });
+  const fileExtension = extname(feedFilepath).toLowerCase();
+  await echo`Importing ${fileExtension} file at ${feedFilepath}`;
+  await echo`Store ${ECOM_STORE_ID} with ${ECOM_AUTHENTICATION_ID}`;
+  let items: Array<FeedItem> = [];
+  if (fileExtension === '.xml') {
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: '',
+    });
+    const json = parser.parse(fs.readFileSync(argv.feed, 'utf8'));
+    items = json.rss?.channel?.item?.filter?.((item: any) => {
+      return item?.['g:id'] && item['g:title'];
+    });
+  } else if (fileExtension === '.tsv') {
+    const csvContent = fs.readFileSync(feedFilepath, 'utf8');
+    const csvRecords: CSVItem[] = parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+      delimiter: '\t',
+    });
+    items = csvRecords
+      .filter((record) => record.sku && record.nome)
+      .map(mapCSVToFeed);
+  }
   if (!items?.[0] || typeof items?.[0] !== 'object') {
     await echo`The XML file does not appear to be a valid RSS 2.0 product feed`;
     return process.exit(1);
   }
   const ecomAuthHeaders: Record<string, any> = {
-    'X-Store-ID': process.env.ECOM_STORE_ID,
-    'X-My-ID': process.env.ECOM_AUTHENTICATION_ID,
+    'X-Store-ID': ECOM_STORE_ID,
+    'X-My-ID': ECOM_AUTHENTICATION_ID,
   };
-  const { ECOM_ACCESS_TOKEN, ECOM_API_KEY } = process.env;
   if (ECOM_ACCESS_TOKEN) {
     ecomAuthHeaders['X-Access-Token'] = ECOM_ACCESS_TOKEN;
   } else {
@@ -237,7 +343,11 @@ const importFeed = async () => {
     productOrVatiation: ProductVariation | ProductSet,
     item: (typeof items)[0],
   ) => {
-    productOrVatiation.quantity = item['g:availability'] === 'in stock' ? 100 : 0;
+    if (typeof item.quantity === 'number') {
+      productOrVatiation.quantity = item.quantity;
+    } else {
+      productOrVatiation.quantity = item['g:availability'] === 'in stock' ? 100 : 0;
+    }
     const price = parseFloat(item['g:price'] || item['g:sale_price'] || '');
     if (price) {
       const salePrice = parseFloat(item['g:sale_price'] || '');
@@ -308,13 +418,20 @@ const importFeed = async () => {
     await echo`\n${new Date().toISOString()}`;
     await echo`${(productItems.length - i)} products to import\n`;
     await echo`SKU: ${sku}`;
+    let slug = item['g:link']
+      ? new URL(item['g:link']).pathname.substring(1).toLowerCase()
+      : slugify(name);
+    if (!/[a-z0-9]/.test(slug.charAt(0))) {
+      slug = `r${slug}`;
+    }
     const product: ProductSet = {
       sku,
       name,
-      slug: item['g:link']
-        ? new URL(item['g:link']).pathname.substring(1).toLowerCase()
-        : slugify(name),
+      slug,
       condition: item['g:condition'],
+      available: item.available,
+      visible: item.visible,
+      quantity: item.quantity,
     };
     const description = item['g:description']?.trim();
     if (description && description !== name) {
@@ -376,7 +493,8 @@ const importFeed = async () => {
             // eslint-disable-next-line no-console
             console.error(err);
             if (err.statusCode < 500) {
-              throw err;
+              retries = 4;
+              break;
             }
             retries += 1;
             await sleep(4000);
