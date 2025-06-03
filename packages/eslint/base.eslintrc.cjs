@@ -30,35 +30,7 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': [
-      'error',
-      {
-        ignore: [
-          'virtual:*',
-          'astro:*',
-          'uno.css',
-          // https://github.com/import-js/eslint-plugin-import/issues/1810
-          'firebase-functions/logger',
-          'firebase-functions/v2/https',
-          'firebase-functions/v1',
-          'firebase-admin/app',
-          'firebase-admin/firestore',
-          'firebase-admin/auth',
-          '@astrojs/[^/]+$',
-          'astro/config',
-          'astro/middleware',
-          'unocss/astro',
-          'unplugin-auto-import/astro',
-          'mime/lite',
-          'image-size/fromFile',
-          '@@.*',
-          'content/.*',
-          '~/.*',
-          'photoswipe/lightbox',
-          'photoswipe/style.css',
-        ],
-      },
-    ],
+    'import/no-unresolved': 'off', // https://github.com/import-js/eslint-plugin-import/issues/1810
     'import/no-named-as-default': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],
