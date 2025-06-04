@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.44.0](https://github.com/ecomplus/cloud-commerce/compare/v2.43.1...v2.44.0) (2025-06-04)
+
+
+### Features
+
+* **ssr:** Start sending server-side events to Awin conversion API ([3533a6e](https://github.com/ecomplus/cloud-commerce/commit/3533a6e52298ec2bd4020c7cdda5ae579245225c))
+
+
+### Bug Fixes
+
+* **custom-shipping:** Fix checking zip code ranges on shipping rules ([0005a0a](https://github.com/ecomplus/cloud-commerce/commit/0005a0a446c78ca82e52d8a6d134840949ebfa3d))
+* **deps:** Update non-major dependencies ([#588](https://github.com/ecomplus/cloud-commerce/issues/588)) ([9fb1009](https://github.com/ecomplus/cloud-commerce/commit/9fb1009b6123aa2803d042d531143f3267c75ed6))
+* **storefront:** Update Vue to ^3.5.16 ([#587](https://github.com/ecomplus/cloud-commerce/issues/587)) ([3931982](https://github.com/ecomplus/cloud-commerce/commit/39319826cdf84945fe85a4c398586a3a4e04b8ca))
+
 ## [2.43.1](https://github.com/ecomplus/cloud-commerce/compare/v2.43.0...v2.43.1) (2025-05-26)
 
 
