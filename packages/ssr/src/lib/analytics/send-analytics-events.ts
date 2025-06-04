@@ -4,6 +4,7 @@ import { logger } from '@cloudcommerce/firebase/lib/config';
 import sendToGa4 from './send-to-ga4';
 import sendToMeta from './send-to-meta';
 import sendToTiktok from './send-to-tiktok';
+import sendToAwin from './send-to-awin';
 
 export type AnalyticsEvent = {
   id?: string,
@@ -80,6 +81,11 @@ export const sendAnalyticsEvents = async (
       utm: payload.utm,
       originIp: payload.ip,
       originUserAgent: payload.user_agent,
+    }));
+    sendingEvents.push(sendToAwin({
+      events: gaEvents,
+      awc: payload.awc,
+      channel: payload.awin_channel,
     }));
   }
   if (metaEvents) {
