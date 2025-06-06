@@ -22,7 +22,8 @@
     "ecomplus-stores/barradoce/functions/ssr/tailwind.config.js": "ecomplus-stores/barradoce/**",
     "ecomplus-stores/tiasonia/functions/ssr/tailwind.config.js": "ecomplus-stores/tiasonia/**",
     "ecomplus-stores/ladorosa/functions/ssr/tailwind.config.js": "ecomplus-stores/ladorosa/**",
-    "ecomplus-stores/ladofit/functions/ssr/tailwind.config.js": "ecomplus-stores/ladofit/**"
+    "ecomplus-stores/ladofit/functions/ssr/tailwind.config.js": "ecomplus-stores/ladofit/**",
+    "ecomplus-stores/casamor/functions/ssr/tailwind.config.js": "ecomplus-stores/casamor/**"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": [
