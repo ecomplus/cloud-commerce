@@ -280,7 +280,14 @@ export default async ({ params, application }) => {
         return kitDiscount;
       });
     }
-    const kitDiscounts = getValidDiscountRules(config.product_kit_discounts, params, params.items)
+    const itemsForKit = params.items.filter((item) => {
+      return !item.flags?.includes('freebie');
+    });
+    const kitDiscounts = getValidDiscountRules(
+      config.product_kit_discounts,
+      params,
+      itemsForKit,
+    )
       .sort((a, b) => {
         if (!Array.isArray(a.product_ids) || !a.product_ids.length) {
           if (Array.isArray(b.product_ids) && b.product_ids.length) {
