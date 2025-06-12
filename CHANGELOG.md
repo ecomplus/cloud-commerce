@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.44.1](https://github.com/ecomplus/cloud-commerce/compare/v2.44.0...v2.44.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#589](https://github.com/ecomplus/cloud-commerce/issues/589)) ([74faa13](https://github.com/ecomplus/cloud-commerce/commit/74faa133c10c7eb5f6af2544cc26eea74bd6fd7c))
+* **discounts:** Skip freebie marked items on kit discounts ([d6b4cee](https://github.com/ecomplus/cloud-commerce/commit/d6b4cee6402b29a5eb1213279daacb1c18056248))
+
 ## [2.44.0](https://github.com/ecomplus/cloud-commerce/compare/v2.43.1...v2.44.0) (2025-06-04)
 
 
