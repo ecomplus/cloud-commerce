@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.44.4](https://github.com/ecomplus/cloud-commerce/compare/v2.44.3...v2.44.4) (2025-06-17)
+
+
+### Bug Fixes
+
+* **storefront:** Supporting delayed async scripts with eager loading ([6769967](https://github.com/ecomplus/cloud-commerce/commit/6769967f04bcfbd1a872970bb6668e05af39db83))
+
 ## [2.44.3](https://github.com/ecomplus/cloud-commerce/compare/v2.44.2...v2.44.3) (2025-06-12)
 
 ## [2.44.2](https://github.com/ecomplus/cloud-commerce/compare/v2.44.1...v2.44.2) (2025-06-12)
