@@ -201,14 +201,14 @@ const importFeed = async () => {
   const fileExtension = extname(feedFilepath).toLowerCase();
   await echo`Importing ${fileExtension} file at ${feedFilepath}`;
   await echo`Store ${ECOM_STORE_ID} with ${ECOM_AUTHENTICATION_ID}`;
-  let items: Array<FeedItem> = [];
+  let _items: Array<FeedItem> = [];
   if (fileExtension === '.xml') {
     const parser = new XMLParser({
       ignoreAttributes: false,
       attributeNamePrefix: '',
     });
     const json = parser.parse(fs.readFileSync(argv.feed, 'utf8'));
-    items = json.rss?.channel?.item?.filter?.((item: any) => {
+    _items = json.rss?.channel?.item?.filter?.((item: any) => {
       return item?.['g:id'] && item['g:title'];
     });
   } else if (fileExtension === '.tsv') {
@@ -218,14 +218,20 @@ const importFeed = async () => {
       skip_empty_lines: true,
       delimiter: '\t',
     });
-    items = csvRecords
+    _items = csvRecords
       .filter((record) => record.sku && record.nome)
       .map(mapCSVToFeed);
   }
-  if (!items?.[0] || typeof items?.[0] !== 'object') {
+  if (!_items?.[0] || typeof _items?.[0] !== 'object') {
     await echo`The XML file does not appear to be a valid RSS 2.0 product feed`;
     return process.exit(1);
   }
+  const seenIds = new Map();
+  const items = _items.filter((item) => {
+    if (seenIds.has(item['g:id'])) return false;
+    seenIds.set(item['g:id'], true);
+    return true;
+  });
   const ecomAuthHeaders: Record<string, any> = {
     'X-Store-ID': ECOM_STORE_ID,
     'X-My-ID': ECOM_AUTHENTICATION_ID,
