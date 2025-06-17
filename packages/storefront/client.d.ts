@@ -48,7 +48,11 @@ interface Window {
   };
   $firstInteraction?: Promise<any>;
   $interactionOrAwaken?: Promise<any>;
-  $delayedAsyncScripts?: Array<string | { src: string, delay?: number }>;
+  $delayedAsyncScripts?: Array<string | {
+    src: string,
+    delay?: number,
+    isEager?: boolean,
+  }>;
   $delayedScriptsMaxWait?: number;
   $isCmsPreview?: boolean;
 }
