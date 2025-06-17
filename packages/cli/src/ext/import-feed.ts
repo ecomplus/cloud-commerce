@@ -119,6 +119,7 @@ type FeedItem = {
   'available'?: boolean,
   'visible'?: boolean,
   'quantity'?: number,
+  'manage_stock'?: boolean,
 };
 type CSVItem = {
   'sku': string,
@@ -153,6 +154,7 @@ const mapCSVToFeed = (item: CSVItem): FeedItem => {
   const basePrice = parseFloat(item['preco-cheio']?.replace(',', '.')) || 0;
   const salePrice = parseFloat(item['preco-promocional']?.replace(',', '.')) || 0;
   const isAvailable = item.ativo === 'S';
+  const canManageStock = item['controlar-estoque'] !== 'N';
   const quantity = Number(item['estoque-quantidade']) || 0;
   return {
     'g:id': item.sku,
@@ -183,6 +185,7 @@ const mapCSVToFeed = (item: CSVItem): FeedItem => {
     'available': isAvailable,
     'visible': isAvailable,
     'quantity': quantity,
+    'manage_stock': canManageStock,
   };
 };
 
@@ -438,6 +441,7 @@ const importFeed = async () => {
       available: item.available,
       visible: item.visible,
       quantity: item.quantity,
+      manage_stock: item.manage_stock,
     };
     const description = item['g:description']?.trim();
     if (description && description !== name) {
