@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.44.7](https://github.com/ecomplus/cloud-commerce/compare/v2.44.6...v2.44.7) (2025-06-23)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#592](https://github.com/ecomplus/cloud-commerce/issues/592)) ([aa07494](https://github.com/ecomplus/cloud-commerce/commit/aa07494454e05190be20aaec9d3daf2c400cec87))
+* **storefront:** Update Vue to latest ^3.5.17 ([#591](https://github.com/ecomplus/cloud-commerce/issues/591)) ([eeeeda5](https://github.com/ecomplus/cloud-commerce/commit/eeeeda520878278916a328c139d2202ef7e957cf))
+
 ## [2.44.6](https://github.com/ecomplus/cloud-commerce/compare/v2.44.5...v2.44.6) (2025-06-17)
 
 ## [2.44.5](https://github.com/ecomplus/cloud-commerce/compare/v2.44.4...v2.44.5) (2025-06-17)
