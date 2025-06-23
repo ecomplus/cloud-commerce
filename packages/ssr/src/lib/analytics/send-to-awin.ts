@@ -1,17 +1,19 @@
 import type { AnalyticsEvent } from './send-analytics-events';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 // https://developer.awin.com/apidocs/conversion-api
 const {
-  AWIN_ADVERTISER_ID: awinAdvertiverId,
-  AWIN_API_KEY: awinApiKey,
+  AWIN_ADVERTISER_ID,
+  AWIN_API_KEY,
+  DEBUG_SERVER_ANALYTICS,
 } = process.env;
-const awinAxios = awinAdvertiverId && awinApiKey
+const awinAxios = AWIN_ADVERTISER_ID && AWIN_API_KEY
   ? axios.create({
-    baseURL: `https://api.awin.com/s2s/advertiser/${awinAdvertiverId}`,
+    baseURL: `https://api.awin.com/s2s/advertiser/${AWIN_ADVERTISER_ID}`,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Token': awinApiKey,
+      'Access-Token': AWIN_API_KEY,
     },
   })
   : null;
@@ -56,7 +58,11 @@ const sendToAwin = async ({
     awinOrders.push(awinOrder);
   });
   if (awinOrders.length) {
-    await awinAxios.post('/orders', { orders: awinOrders });
+    const data = { orders: awinOrders };
+    if (DEBUG_SERVER_ANALYTICS?.toLowerCase() === 'true') {
+      logger.info('Awin orders', { data });
+    }
+    await awinAxios.post('/orders', data);
   }
 };
 
