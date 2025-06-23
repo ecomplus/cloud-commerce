@@ -46,7 +46,7 @@
     "html-minifier": "^4.0.0",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
-    "vue": "^3.5.16",
+    "vue": "^3.5.17",
     "yaml": "^2.8.0"
   },
   "devDependencies": {
