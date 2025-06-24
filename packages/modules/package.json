@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/app-appmax": "workspace:*",
     "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-custom-payment": "workspace:*",
@@ -46,7 +47,7 @@
     "@cloudcommerce/app-mandae": "workspace:*",
     "@cloudcommerce/app-melhor-envio": "workspace:*",
     "@cloudcommerce/app-mercadopago": "workspace:*",
-    "@cloudcommerce/app-pagaleve": "workspace:^",
+    "@cloudcommerce/app-pagaleve": "workspace:*",
     "@cloudcommerce/app-pagarme": "workspace:*",
     "@cloudcommerce/app-pagarme-v5": "workspace:*",
     "@cloudcommerce/app-paghiper": "workspace:*",

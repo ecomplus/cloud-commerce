@@ -105,6 +105,18 @@ const callAppModule = async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.appmax.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-appmax')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -144,12 +156,6 @@ const callAppModule = async (
     if (appId === apps.pagaleve.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-pagaleve')
-          .then(({ listPayments }) => listPayments(_data));
-      };
-    }
-    if (appId === apps.pagarMeV5.appId) {
-      internalModuleFn = async (_data = data) => {
-        return import('@cloudcommerce/app-pagarme-v5')
           .then(({ listPayments }) => listPayments(_data));
       };
     }
@@ -166,6 +172,18 @@ const callAppModule = async (
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.appmax.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-appmax')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -205,12 +223,6 @@ const callAppModule = async (
     if (appId === apps.pagaleve.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-pagaleve')
-          .then(({ createTransaction }) => createTransaction(_data));
-      };
-    }
-    if (appId === apps.pagarMeV5.appId) {
-      internalModuleFn = async (_data = data) => {
-        return import('@cloudcommerce/app-pagarme-v5')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }
