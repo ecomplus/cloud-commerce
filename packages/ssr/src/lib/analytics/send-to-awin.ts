@@ -13,7 +13,7 @@ const awinAxios = AWIN_ADVERTISER_ID && AWIN_API_KEY
     baseURL: `https://api.awin.com/s2s/advertiser/${AWIN_ADVERTISER_ID}`,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Token': AWIN_API_KEY,
+      'x-api-key': AWIN_API_KEY,
     },
   })
   : null;
