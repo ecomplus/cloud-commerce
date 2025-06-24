@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.45.0](https://github.com/ecomplus/cloud-commerce/compare/v2.44.8...v2.45.0) (2025-06-24)
+
+
+### Features
+
+* **appmax:** Setup Appmax payment integration app ([02c559c](https://github.com/ecomplus/cloud-commerce/commit/02c559c81a9f7ac3dca7a078d3c738923b30a4a5))
+
+
+### Bug Fixes
+
+* **ssr:** Fix Awin conversion API `x-api-key` header ([91282be](https://github.com/ecomplus/cloud-commerce/commit/91282be2c40031cbf3429cf5bd4d08b84c56d5df))
+
 ## [2.44.8](https://github.com/ecomplus/cloud-commerce/compare/v2.44.7...v2.44.8) (2025-06-23)
 
 ## [2.44.7](https://github.com/ecomplus/cloud-commerce/compare/v2.44.6...v2.44.7) (2025-06-23)
