@@ -1,5 +1,5 @@
 import { logger } from '@cloudcommerce/firebase/lib/config';
-import axios from 'axis';
+import axios from 'axios';
 import parseStatus from './lib/parse-status.mjs';
 import getCustomer from './lib/appmax/get-customer.mjs';
 import createOrder from './lib/appmax/create-order.mjs';
