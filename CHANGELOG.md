@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.45.2](https://github.com/ecomplus/cloud-commerce/compare/v2.45.1...v2.45.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* **appmax:** Fix module imports ([be7287f](https://github.com/ecomplus/cloud-commerce/commit/be7287f1ed488a112edd26b2609b48c5ca4cb9ab))
+
 ## [2.45.1](https://github.com/ecomplus/cloud-commerce/compare/v2.45.0...v2.45.1) (2025-06-25)
 
 ## [2.45.0](https://github.com/ecomplus/cloud-commerce/compare/v2.44.8...v2.45.0) (2025-06-24)
