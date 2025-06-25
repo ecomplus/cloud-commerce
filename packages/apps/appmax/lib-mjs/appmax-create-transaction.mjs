@@ -190,11 +190,33 @@ export default async (modBody) => {
       };
       return { transaction };
     }
+
+    logger.warn(`Unexpected Appmax payment response for ${orderId}`, {
+      statusCode: response.status,
+      data,
+      appmaxTransaction,
+    });
     return {
       error: 'APPMAX_TRANSACTION_UNEXPECTED',
       message: `Received status ${response.status}/${response.data?.status}`,
     };
   } catch (error) {
+    const { response } = error;
+    if (
+      response?.status === 400
+      && params.payment_method.code === 'credit_card'
+      && response.data?.text?.includes('autorizada')
+    ) {
+      transaction.intermediator = {
+        payment_method: { code: params.payment_method.code },
+      };
+      transaction.status = {
+        updated_at: new Date().toISOString(),
+        current: 'unauthorized',
+      };
+      return { transaction };
+    }
+
     logger.warn(`Transaction failed for ${orderId}`, {
       appmaxTransaction,
     });
