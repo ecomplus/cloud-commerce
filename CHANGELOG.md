@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.45.3](https://github.com/ecomplus/cloud-commerce/compare/v2.45.2...v2.45.3) (2025-06-25)
+
+
+### Bug Fixes
+
+* **appmax:** Properly handling unauthorized card payments on create transaction ([1cfddc3](https://github.com/ecomplus/cloud-commerce/commit/1cfddc3f666e69625d05b0255ea5422a52fbc68a))
+* **storefront:** Updating checkout vbeta-app script version ([607d609](https://github.com/ecomplus/cloud-commerce/commit/607d609814083d34f412f5afb47ee50494ef8f13))
+
 ## [2.45.2](https://github.com/ecomplus/cloud-commerce/compare/v2.45.1...v2.45.2) (2025-06-25)
 
 
