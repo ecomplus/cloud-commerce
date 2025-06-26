@@ -31,6 +31,11 @@ const handleAppmaxWehook = async (req, res) => {
   );
   const appmaxOrder = data?.data;
   if (!appmaxOrder?.status) {
+    logger.warn('Appmax order status undefined', {
+      appmaxOrderId,
+      webhookBody: req.body,
+      data,
+    });
     return res.sendStatus(412);
   }
   const {
