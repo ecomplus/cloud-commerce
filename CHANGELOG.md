@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.45.5](https://github.com/ecomplus/cloud-commerce/compare/v2.45.4...v2.45.5) (2025-06-26)
+
+
+### Bug Fixes
+
+* **appmax:** Fetch Appmax order with `axxess-token` header instead of param on webhook handler ([dc3c999](https://github.com/ecomplus/cloud-commerce/commit/dc3c99929872cec4af7be81f96b88ead0dc44b25))
+* **appmax:** Fix awaiting request for Appmax order read on webhook ([6ebae54](https://github.com/ecomplus/cloud-commerce/commit/6ebae54c1be9aaeeb03d8c32a5a6a2681bac0bda))
+
 ## [2.45.4](https://github.com/ecomplus/cloud-commerce/compare/v2.45.3...v2.45.4) (2025-06-26)
 
 ## [2.45.3](https://github.com/ecomplus/cloud-commerce/compare/v2.45.2...v2.45.3) (2025-06-25)
