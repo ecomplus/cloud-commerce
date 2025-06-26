@@ -17,10 +17,10 @@ const handleAppmaxWehook = async (req, res) => {
   if (!APPMAX_TOKEN) {
     return res.sendStatus(403);
   }
-  const { data } = axios.get(
+  const { data } = await axios.get(
     `https://admin.appmax.com.br/api/v3/order/${appmaxOrderId}`,
     {
-      headers: { 'access-token': APPMAX_TOKEN },
+      params: { 'access-token': APPMAX_TOKEN },
     },
     {
       maxRedirects: 0,
