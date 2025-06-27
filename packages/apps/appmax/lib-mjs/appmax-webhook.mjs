@@ -17,7 +17,7 @@ const handleAppmaxWehook = async (req, res) => {
   if (!APPMAX_TOKEN) {
     return res.sendStatus(403);
   }
-  const { data } = await axios.get(
+  const response = await axios.get(
     `https://admin.appmax.com.br/api/v3/order/${appmaxOrderId}`,
     {
       params: { 'access-token': APPMAX_TOKEN },
@@ -25,18 +25,22 @@ const handleAppmaxWehook = async (req, res) => {
     {
       maxRedirects: 0,
       validateStatus(status) {
-        return status >= 200 && status <= 301;
+        return (status >= 200 && status <= 301) || status === 403;
       },
     },
   );
-  const appmaxOrder = data?.data;
+  if (response.status === 403) {
+    logger.warn('Appmax order 403 (other store ?)', { appmaxOrderId });
+    return res.sendStatus(204);
+  }
+  const appmaxOrder = response?.data?.data;
   if (!appmaxOrder?.status) {
     logger.warn('Appmax order status undefined', {
       appmaxOrderId,
       webhookBody: req.body,
-      data,
+      appmaxOrder,
     });
-    return res.sendStatus(412);
+    return res.sendStatus(204);
   }
   const {
     data: { result: [order] },
@@ -45,12 +49,11 @@ const handleAppmaxWehook = async (req, res) => {
     + '&fields=_id,transactions'
     + '&limit=1');
   if (!order) {
-    const error = `Order not found for ${appmaxOrderId}`;
-    logger.warn(error, {
+    logger.warn(`Order not found for ${appmaxOrderId}`, {
       body: req.body,
       appmaxOrder,
     });
-    return res.sendStatus(409);
+    return res.sendStatus(204);
   }
   const transaction = order.transactions?.find(({ intermediator }) => {
     return intermediator?.transaction_id === String(appmaxOrderId);
