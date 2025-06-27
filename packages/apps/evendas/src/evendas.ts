@@ -6,7 +6,7 @@ import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pub
 import sendAbandonedCarts from './evendas-send-carts';
 import handleApiEvent from './event-to-evendas';
 
-export const webhooks = {
+export const evendas = {
   onStoreEvent: createAppEventsFunction('evendas', handleApiEvent),
 
   cronCancelExpireds: functions
