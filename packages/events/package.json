@@ -34,6 +34,7 @@
     "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
+    "@cloudcommerce/app-evendas": "workspace:*",
     "@cloudcommerce/app-flash-courier": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",

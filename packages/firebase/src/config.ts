@@ -130,6 +130,13 @@ export const configApps = {
       'applications-dataSet',
     ] as ApiEventName[],
   },
+  evendas: {
+    appId: 109851,
+    events: [
+      'carts-customerSet',
+      'orders-anyStatusSet',
+    ] as ApiEventName[],
+  },
   affiliateProgram: {
     appId: 119753,
     events: [

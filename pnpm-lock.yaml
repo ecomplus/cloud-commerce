@@ -655,6 +655,28 @@ importers:
         specifier: ^0.9.3
         version: 0.9.3
 
+  packages/apps/evendas:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:*
+        version: link:../../firebase
+      axios:
+        specifier: ^1.10.0
+        version: 1.10.0
+      firebase-admin:
+        specifier: ^13.4.0
+        version: 13.4.0
+      firebase-functions:
+        specifier: ^6.3.2
+        version: 6.3.2(firebase-admin@13.4.0)
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/flash-courier:
     dependencies:
       '@cloudcommerce/api':
@@ -1148,6 +1170,9 @@ importers:
       '@cloudcommerce/app-emails':
         specifier: workspace:*
         version: link:../apps/emails
+      '@cloudcommerce/app-evendas':
+        specifier: workspace:^
+        version: link:../apps/evendas
       '@cloudcommerce/app-flash-courier':
         specifier: workspace:*
         version: link:../apps/flash-courier
