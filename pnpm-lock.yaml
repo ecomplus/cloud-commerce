@@ -1171,7 +1171,7 @@ importers:
         specifier: workspace:*
         version: link:../apps/emails
       '@cloudcommerce/app-evendas':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../apps/evendas
       '@cloudcommerce/app-flash-courier':
         specifier: workspace:*
