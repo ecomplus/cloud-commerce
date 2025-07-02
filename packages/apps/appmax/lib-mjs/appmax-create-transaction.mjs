@@ -131,8 +131,9 @@ export default async (modBody) => {
 
   try {
     const response = await axios({
-      url: appmaxBaseUri,
       method: 'post',
+      url: appmaxBaseUri,
+      headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
       data: appmaxTransaction,
     });
 

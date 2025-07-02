@@ -24,8 +24,9 @@ export const createOrder = async (items, amount, appmaxCustomerId, token) => {
     discount,
   };
   const { data } = await axios({
-    url: 'https://admin.appmax.com.br/api/v3/order',
     method: 'post',
+    url: 'https://admin.appmax.com.br/api/v3/order',
+    headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
     data: body,
   });
   if (data && data.status === 200) {
