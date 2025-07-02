@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.46.0](https://github.com/ecomplus/cloud-commerce/compare/v2.45.5...v2.46.0) (2025-07-02)
+
+
+### Features
+
+* **evendas:** Setup E-Vendas CRM integration app ([ffedbdf](https://github.com/ecomplus/cloud-commerce/commit/ffedbdf842787fa015bee8430add6d0030be432e))
+
+
+### Bug Fixes
+
+* **appmax:** Mocked (strange) User-Agent on Appmax API requests to prevent CDN shield blocking ([7251525](https://github.com/ecomplus/cloud-commerce/commit/72515251cb4f67abcf74edcf8afdd7aa7053fdcb))
+* **appmax:** Prevent unecessary repeated webhooks (skippable) ([38fdca2](https://github.com/ecomplus/cloud-commerce/commit/38fdca2e551be112c7b85da0f2090faaa0bdb213))
+* **evendas:** Fixed Firebase Functions `evendas` group ([11dcf84](https://github.com/ecomplus/cloud-commerce/commit/11dcf8410e3b9af2bdddc9883d40f629fcde5e17))
+
 ## [2.45.5](https://github.com/ecomplus/cloud-commerce/compare/v2.45.4...v2.45.5) (2025-06-26)
 
 
