@@ -1,6 +1,6 @@
 import { getFirestore } from 'firebase-admin/firestore';
 import api from '@cloudcommerce/api';
-import { logger } from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import axios from './functions-lib/pagarme/create-axios.mjs';
 import {
@@ -17,9 +17,16 @@ import { parserChangeStatusToEcom } from './functions-lib/pagarme/parses-utils.m
 const handleWehook = async (req, res) => {
   const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
   const { body } = req;
+  const type = body?.type;
+  if (!type || !body.data) {
+    return res.sendStatus(400);
+  }
+  const { storeId } = config.get();
+  if (body.data.metadata?.store_id && Number(body.data.metadata?.store_id) !== storeId) {
+    return res.sendStatus(204);
+  }
 
   try {
-    const type = body.type;
     const appData = await getAppData('pagarMeV5');
 
     if (!process.env.PAGARMEV5_API_TOKEN) {
