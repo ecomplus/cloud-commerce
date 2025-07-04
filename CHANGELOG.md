@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.46.1](https://github.com/ecomplus/cloud-commerce/compare/v2.46.0...v2.46.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#593](https://github.com/ecomplus/cloud-commerce/issues/593)) ([3f0dd71](https://github.com/ecomplus/cloud-commerce/commit/3f0dd718d3347259ebdc9a3642d5a875c92838ef))
+* **pagarme-v5:** On payment webhook check for past expiration cvoid and force status later date time ([bfb01e1](https://github.com/ecomplus/cloud-commerce/commit/bfb01e1131c5b55661d8538cb07f7869c5eb7834))
+
 ## [2.46.0](https://github.com/ecomplus/cloud-commerce/compare/v2.45.5...v2.46.0) (2025-07-02)
 
 
