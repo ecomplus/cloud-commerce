@@ -158,7 +158,6 @@ const handleWehook = async (req, res) => {
         .send({ message: !subscription ? 'Not found subscription' : 'Subscription not canceled' });
     } else if (type.startsWith('charge.')) {
       const { data: charge } = await pagarmeAxios.get(`/charges/${body.data.id}`);
-      logger.log('>> Charge ', JSON.stringify(charge));
       if (charge.invoice) {
         const { invoice, status } = charge;
         const order = await getOrderIntermediatorTransactionId(invoice.id);
@@ -170,7 +169,7 @@ const handleWehook = async (req, res) => {
                 (transactionFind) => transactionFind.intermediator.transaction_id === invoice.id,
               );
             const transactionPagarme = charge.last_transaction;
-            let notificationCode = `${type};${body.id};`;
+            let notificationCode = `${type};${(body.id || body.data.id)};`;
             if (transactionPagarme.transaction_type === 'credit_card') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
               notificationCode += `${transactionPagarme.acquirer_tid || ''};`;
@@ -196,7 +195,7 @@ const handleWehook = async (req, res) => {
           return res.sendStatus(200);
         }
 
-        if (status === 'paid') {
+        if (status === 'paid' && invoice.subscriptionId) {
           logger.log('>> Try create new order for recurrence');
           const { data: subscription } = await pagarmeAxios.get(`/subscriptions/${invoice.subscriptionId}`);
           const orderOriginal = await getOrderById(subscription.code);
@@ -250,8 +249,8 @@ const handleWehook = async (req, res) => {
 
       if (charge.order) {
         // payment update (order in pagarme)
-        logger.log('>> Try update status order');
         const { order: orderPagarme, status } = charge;
+        logger.info(`Pagar.me charge ${orderPagarme.id} ${status}`);
         const order = await getOrderIntermediatorTransactionId(orderPagarme.id);
         if (order) {
           if (order.financial_status?.current !== parserChangeStatusToEcom(status)) {
@@ -262,7 +261,7 @@ const handleWehook = async (req, res) => {
               (transactionFind) => transactionFind.intermediator.transaction_id === orderPagarme.id,
             );
             const transactionPagarme = charge.last_transaction;
-            let notificationCode = `${type};${body.id};`;
+            let notificationCode = `${type};${(body.id || body.data.id)};`;
             if (transactionPagarme.transaction_type === 'credit_card') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
               notificationCode += `${transactionPagarme.acquirer_tid || ''};`;
@@ -278,8 +277,14 @@ const handleWehook = async (req, res) => {
               transactionBody = { notes };
               isUpdateTransaction = true;
             }
+            let statusDateTime;
+            if (order.payments_history?.some(({ flags }) => flags?.includes('pagarme-expired'))) {
+              statusDateTime = new Date().toISOString();
+            } else {
+              statusDateTime = transactionPagarme.updated_at || new Date().toISOString();
+            }
             const bodyPaymentHistory = {
-              date_time: transactionPagarme.updated_at || new Date().toISOString(),
+              date_time: statusDateTime,
               status: parserChangeStatusToEcom(status),
               notification_code: notificationCode,
               flags: ['PagarMe'],
@@ -292,7 +297,7 @@ const handleWehook = async (req, res) => {
               await updateTransaction(order._id, transactionBody, transaction._id)
                 .catch(logger.error);
             }
-            logger.log(`>> Status update to ${parserChangeStatusToEcom(status)}`);
+            logger.info(`${order._id} update to ${parserChangeStatusToEcom(status)}`);
             return res.sendStatus(201);
           }
           return res.sendStatus(200);
