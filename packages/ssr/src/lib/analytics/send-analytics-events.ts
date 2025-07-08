@@ -120,25 +120,20 @@ export const sendAnalyticsEvents = async (
         const { status } = results[i];
         if (status === 'rejected') {
           const reason: AxiosError = (results[i] as PromiseRejectedResult).reason;
-          const err: any = new Error(reason.message);
-          err.statusCode = reason.response?.status;
-          if (reason.config) {
-            err.config = {
+          const message = `${reason.config?.method} ${reason.config?.url}`
+            + ` failed with ${reason.response?.status}`;
+          const err: any = new Error(message);
+          logger.warn(err, {
+            request: reason.config && {
               url: reason.config.url,
               method: reason.config.method,
               headers: reason.config.headers,
               data: reason.config.data,
-            };
-          }
-          if (reason.response) {
-            err.response = {
+            },
+            response: reason.response && {
               headers: reason.response.headers,
               data: reason.response.data,
-            };
-          }
-          logger.warn(err, {
-            request: err.config,
-            response: err.response,
+            },
           });
         }
       }

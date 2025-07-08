@@ -27,7 +27,7 @@ const sendToAwin = async ({
   awc?: string,
   channel?: string,
 }) => {
-  if (!awinAxios) return;
+  if (!awinAxios || !awc) return;
   const purchaseEvents = events.filter((ev) => ev.name === 'purchase');
   if (!purchaseEvents.length) return;
   const awinOrders: Array<Record<string, any>> = [];
