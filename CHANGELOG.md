@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.46.2](https://github.com/ecomplus/cloud-commerce/compare/v2.46.1...v2.46.2) (2025-07-08)
+
+
+### Bug Fixes
+
+* **ssr:** Skip sending orders without `awc` param to Awin conversion API on anaytics handler ([756e23f](https://github.com/ecomplus/cloud-commerce/commit/756e23ff0826669801d7e2d26798a4a18354f009))
+* **storefront:** New `initialResultMeta` optional prop on search filters composable ([b388965](https://github.com/ecomplus/cloud-commerce/commit/b388965c80c8ab55d7f1678fb38953047b2b00d1))
+* **storefront:** Update dependency unocss to ^66.3.3 ([#595](https://github.com/ecomplus/cloud-commerce/issues/595)) ([8ddfb07](https://github.com/ecomplus/cloud-commerce/commit/8ddfb07af81a0a4e43d2ecb5980e4d2ef6caa728))
+
 ## [2.46.1](https://github.com/ecomplus/cloud-commerce/compare/v2.46.0...v2.46.1) (2025-07-04)
 
 
