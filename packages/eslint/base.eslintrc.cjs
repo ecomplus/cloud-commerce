@@ -47,6 +47,7 @@ module.exports = {
     'operator-linebreak': 'warn',
     'max-statements-per-line': ['warn', { max: 3 }],
     'no-empty': 'warn',
+    'no-trailing-spaces': 'warn',
     'spaced-comment': 'warn',
     'block-spacing': ['warn', 'always'],
     'no-tabs': 'warn',
