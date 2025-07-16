@@ -1,6 +1,9 @@
 /* eslint-disable default-param-last, no-use-before-define */
 import ecomUtils from '@ecomplus/utils';
 
+const { DISCOUNTS_DISABLE_OPEN } = process.env;
+const isOpenPromotionEnabled = DISCOUNTS_DISABLE_OPEN?.toLowerCase() !== 'true';
+
 const validateDateRange = (rule) => {
   // filter campaings by date
   const timestamp = Date.now();
@@ -62,6 +65,7 @@ const matchFreebieRule = (rule, params = {}) => {
 };
 
 const checkOpenPromotion = (rule) => {
+  if (!isOpenPromotionEnabled) return false;
   return !rule.discount_coupon && !rule.utm_campaign
     && (!Array.isArray(rule.customer_ids) || !rule.customer_ids.length);
 };
