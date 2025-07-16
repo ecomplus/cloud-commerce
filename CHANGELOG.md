@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.47.0](https://github.com/ecomplus/cloud-commerce/compare/v2.46.3...v2.47.0) (2025-07-16)
+
+
+### Features
+
+* **i18n:** New `i19discounts` word ([b015e50](https://github.com/ecomplus/cloud-commerce/commit/b015e5002d4ffa054aff69d094bbe56028854971))
+* **storefront:** New `useCartSidebar` composable optionally abstracting discount and freight ([7ee98ca](https://github.com/ecomplus/cloud-commerce/commit/7ee98ca76c3cd876a1d84f0888af5f46cd3987f2))
+
+
+### Bug Fixes
+
+* **discounts:** Handle new optional `DISCOUNTS_DISABLE_OPEN` bool env ([c34f53c](https://github.com/ecomplus/cloud-commerce/commit/c34f53c589154c845677a667af3323d6efb9efc7))
+* **storefront:** Skip duplicating extra discount on amount total or other final price ([b4a195c](https://github.com/ecomplus/cloud-commerce/commit/b4a195c95e61193a8a042cc5d45e0bf8309c5ad1))
+
 ## [2.46.3](https://github.com/ecomplus/cloud-commerce/compare/v2.46.2...v2.46.3) (2025-07-10)
 
 
