@@ -10,7 +10,7 @@ export type Props = {
   item?: CartItem;
   product?: ProductItem;
   pictureSize?: string;
-} & ({ item: CartItem } | { product: ProductItem });
+} & ({ item: CartItem } | { product: ProductItem })
 
 export const useCartItem = (props: Props) => {
   const parsedItem = computed(() => {
