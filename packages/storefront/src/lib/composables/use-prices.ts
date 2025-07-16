@@ -15,6 +15,7 @@ export type Props = {
   price?: number;
   basePrice?: number;
   isAmountTotal?: boolean;
+  isFinalPrice?: boolean;
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
   loyaltyPointsProgram?: Exclude<ListPaymentsResponse['loyalty_points_programs'], undefined>['k'];
@@ -74,9 +75,11 @@ const usePrices = (props: Props) => {
   });
   const salePrice = computed(() => {
     const price = getPrice(_product.value);
-    const discount = availableExtraDiscount.value;
-    if (discount && (!discount.min_amount || price > discount.min_amount)) {
-      return getPriceWithDiscount(price, discount);
+    if (!props.isFinalPrice && !props.isAmountTotal) {
+      const discount = availableExtraDiscount.value;
+      if (discount && (!discount.min_amount || price > discount.min_amount)) {
+        return getPriceWithDiscount(price, discount);
+      }
     }
     return price;
   });
