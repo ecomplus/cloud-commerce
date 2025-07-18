@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.6](https://github.com/ecomplus/cloud-commerce/compare/v2.48.5...v2.48.6) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fixing intermediator code to minimum 6 chars ([fa0d583](https://github.com/ecomplus/cloud-commerce/commit/fa0d583f1f8f90fbcabc57a62967a9395ffca0d2))
+
 ## [2.48.5](https://github.com/ecomplus/cloud-commerce/compare/v2.48.4...v2.48.5) (2025-07-18)
 
 
