@@ -55,7 +55,7 @@ export const asaasListPayments = async (modBody: AppModuleBody<'list_payments'>)
   const intermediator = {
     name: 'Asaas',
     link: 'https://www.asaas.com/',
-    code: 'asaas',
+    code: 'asaas3',
   };
   const paymentMethods: PaymentGateway['payment_method']['code'][] = [
     'account_deposit',
