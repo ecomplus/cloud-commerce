@@ -504,6 +504,31 @@ importers:
         specifier: workspace:*
         version: link:../../types
 
+  packages/apps/asaas:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:*
+        version: link:../../firebase
+      '@ecomplus/utils':
+        specifier: 1.5.0-rc.6
+        version: 1.5.0-rc.6
+      axios:
+        specifier: ^1.10.0
+        version: 1.10.0
+      firebase-admin:
+        specifier: ^13.4.0
+        version: 13.4.0
+      firebase-functions:
+        specifier: ^6.3.2
+        version: 6.3.2(firebase-admin@13.4.0)
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/braspag:
     dependencies:
       '@cloudcommerce/api':
@@ -1186,6 +1211,9 @@ importers:
       '@cloudcommerce/app-appmax':
         specifier: workspace:*
         version: link:../apps/appmax
+      '@cloudcommerce/app-asaas':
+        specifier: workspace:*
+        version: link:../apps/asaas
       '@cloudcommerce/app-braspag':
         specifier: workspace:*
         version: link:../apps/braspag
@@ -1232,7 +1260,7 @@ importers:
         specifier: workspace:*
         version: link:../apps/paghiper
       '@cloudcommerce/app-paypal':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../apps/paypal
       '@cloudcommerce/app-pix':
         specifier: workspace:*
@@ -1331,6 +1359,9 @@ importers:
       '@cloudcommerce/app-appmax':
         specifier: workspace:*
         version: link:../apps/appmax
+      '@cloudcommerce/app-asaas':
+        specifier: workspace:*
+        version: link:../apps/asaas
       '@cloudcommerce/app-braspag':
         specifier: workspace:*
         version: link:../apps/braspag
@@ -1386,7 +1417,7 @@ importers:
         specifier: workspace:*
         version: link:../apps/paghiper
       '@cloudcommerce/app-paypal':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../apps/paypal
       '@cloudcommerce/app-pix':
         specifier: workspace:*

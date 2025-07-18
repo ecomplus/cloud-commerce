@@ -31,6 +31,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-affiliate-program": "workspace:*",
     "@cloudcommerce/app-appmax": "workspace:*",
+    "@cloudcommerce/app-asaas": "workspace:*",
     "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",

@@ -123,6 +123,12 @@ const callAppModule = async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.asaas.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-asaas')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -193,6 +199,12 @@ const callAppModule = async (
     if (appId === apps.paypal.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-paypal')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.asaas.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-asaas')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

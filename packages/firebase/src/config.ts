@@ -106,6 +106,9 @@ export const configApps = {
   paypal: {
     appId: 1250,
   },
+  asaas: {
+    appId: 148182,
+  },
   braspag: {
     appId: 112906,
   },

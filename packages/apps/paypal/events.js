@@ -1,1 +1,1 @@
-export * from './lib/paypal-events';
+export * from './lib/paypal-events.js';

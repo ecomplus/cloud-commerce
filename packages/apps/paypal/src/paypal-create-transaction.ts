@@ -43,7 +43,6 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
   const {
     order_id: orderId,
   } = params;
-
   const paypalPayerId = params.intermediator_buyer_id;
   let paypalPaymentId: string | undefined;
   let paypalOrderId: string | undefined;

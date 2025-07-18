@@ -1,1 +1,1 @@
-export * from './lib/appmax-events';
+export * from './lib/appmax-events.js';

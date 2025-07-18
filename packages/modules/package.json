@@ -33,6 +33,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-appmax": "workspace:*",
+    "@cloudcommerce/app-asaas": "workspace:*",
     "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-correios": "workspace:*",
     "@cloudcommerce/app-custom-payment": "workspace:*",
