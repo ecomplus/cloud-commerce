@@ -105,7 +105,9 @@ export const paypalListPayments = async (modBody: AppModuleBody<'list_payments'>
         if (!(await docRef.get()).exists) {
           await createPaypalWebhook();
           const paypalProfile = await createPaypalProfile();
-          await docRef.set(paypalProfile);
+          if (paypalProfile) {
+            await docRef.set(paypalProfile);
+          }
         }
         paypalPayment = await createPaypalPayment(parseToPaypalPayment(params));
       } catch (_err: any) {

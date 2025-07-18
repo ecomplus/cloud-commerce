@@ -112,7 +112,8 @@ export const executePaypalPayment = async (
 export const createPaypalProfile = async () => {
   const { settingsContent } = config.get();
   const { domain } = settingsContent;
-  return (await getPaypalAxios()).post('/v1/payment-experience/web-profiles/', {
+  const paypalAxios = await getPaypalAxios();
+  const { data } = await paypalAxios.post('/v1/payment-experience/web-profiles/', {
     name: `EComPlus_${Date.now()}`,
     presentation: {
       brand_name: settingsContent.name || 'Loja Virtual',
@@ -133,6 +134,7 @@ export const createPaypalProfile = async () => {
         : 'http://www.yeowza.com',
     },
   });
+  return data;
 };
 
 export const createPaypalWebhook = async () => {
