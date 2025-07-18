@@ -16,10 +16,10 @@ export default (req: Request, res: Response) => {
   }
 
   let { url } = req;
+  [url] = url.split('?');
   if (url.endsWith('.json')) {
     url = url.slice(0, -5);
   }
-  [url] = url.split('?');
   url = url.replace('/_api/modules', ''); // due to hosting rewrite
   const modName = url.split('/')[1];
 
