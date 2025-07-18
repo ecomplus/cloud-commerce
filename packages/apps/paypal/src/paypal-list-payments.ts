@@ -104,7 +104,8 @@ export const paypalListPayments = async (modBody: AppModuleBody<'list_payments'>
         const docRef = getFirestore().doc(`paypalProfiles/${PAYPAL_CLIENT_ID}`);
         if (!(await docRef.get()).exists) {
           await createPaypalWebhook();
-          await createPaypalProfile();
+          const paypalProfile = await createPaypalProfile();
+          await docRef.set(paypalProfile);
         }
         paypalPayment = await createPaypalPayment(parseToPaypalPayment(params));
       } catch (_err: any) {
