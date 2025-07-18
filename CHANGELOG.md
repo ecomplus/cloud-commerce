@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.8](https://github.com/ecomplus/cloud-commerce/compare/v2.48.7...v2.48.8) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fixing customer phone and name format on creation for new transaction ([590a0c1](https://github.com/ecomplus/cloud-commerce/commit/590a0c19a6c5c43bc119d5fa42963d327d2a48d6))
+
 ## [2.48.7](https://github.com/ecomplus/cloud-commerce/compare/v2.48.6...v2.48.7) (2025-07-18)
 
 
