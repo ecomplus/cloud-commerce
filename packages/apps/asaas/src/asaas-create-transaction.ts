@@ -72,8 +72,12 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       'postalCode': customerAddr?.zip,
       // 'externalReference': buyer.customer_id,
       'notificationDisabled': false,
-      'municipalInscription': buyer.inscription_type === 'Municipal' && buyer.inscription_number,
-      'stateInscription': buyer.inscription_type === 'State' && buyer.inscription_number,
+      'municipalInscription': buyer.inscription_type === 'Municipal'
+        ? buyer.inscription_number
+        : undefined,
+      'stateInscription': buyer.inscription_type === 'State'
+        ? buyer.inscription_number
+        : undefined,
       'foreignCustomer': false,
       'observations': `Pedido ${orderNumber}`,
     });
