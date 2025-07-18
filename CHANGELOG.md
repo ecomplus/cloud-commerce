@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.9](https://github.com/ecomplus/cloud-commerce/compare/v2.48.8...v2.48.9) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fix callback object on Asaas payment body ([e35aee9](https://github.com/ecomplus/cloud-commerce/commit/e35aee9dc1650f193866d6b8107a7f270255ec3b))
+
 ## [2.48.8](https://github.com/ecomplus/cloud-commerce/compare/v2.48.7...v2.48.8) (2025-07-18)
 
 
