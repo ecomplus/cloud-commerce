@@ -158,7 +158,10 @@ export const paypalListPayments = async (modBody: AppModuleBody<'list_payments'>
         script_uri: 'https://www.paypalobjects.com/webstatic/ppplusdcc/ppplusdcc.min.js',
       },
     };
-    if (params.payment_method?.code !== paymentGateway.payment_method.code) {
+    if (
+      params.payment_method
+      && params.payment_method?.code !== paymentGateway.payment_method.code
+    ) {
       return;
     }
     response.payment_gateways.unshift(paymentGateway);
