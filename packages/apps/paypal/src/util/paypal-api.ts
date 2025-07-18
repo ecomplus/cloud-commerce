@@ -111,12 +111,14 @@ export const executePaypalPayment = async (
 
 export const createPaypalProfile = async () => {
   const { settingsContent } = config.get();
+  const { domain } = settingsContent;
   return (await getPaypalAxios()).post('/v1/payment-experience/web-profiles/', {
     name: `EComPlus_${Date.now()}`,
     presentation: {
       brand_name: settingsContent.name || 'Loja Virtual',
-      logo_image: settingsContent.logo
-        || 'https://www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg',
+      logo_image: domain && settingsContent.logo
+        ? `https://${domain}${settingsContent.logo}`
+        : 'https://www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg',
       locale_code: settingsContent.countryCode || 'BR',
     },
     input_fields: {
@@ -126,8 +128,8 @@ export const createPaypalProfile = async () => {
     },
     flow_config: {
       landing_page_type: 'billing',
-      bank_txn_pending_url: settingsContent.domain
-        ? `https://${settingsContent.domain}/app/#/confirmation/`
+      bank_txn_pending_url: domain
+        ? `https://${domain}/app/#/confirmation/`
         : 'http://www.yeowza.com',
     },
   });
