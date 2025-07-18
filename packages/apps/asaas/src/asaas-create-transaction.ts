@@ -61,10 +61,10 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         id: asaasCustomerId,
       },
     } = await asaasAxios.post('/v3/customers', {
-      'name': getFullname(buyer),
+      'name': buyer.fullname || getFullname(buyer) || customerAddr?.name || buyer.email,
       'cpfCnpj': buyer.doc_number,
       'email': buyer.email,
-      'mobilePhone': getPhone(buyer),
+      'mobilePhone': getPhone(buyer) || undefined,
       'address': customerAddr?.street,
       'addressNumber': customerAddr?.number?.toString(),
       'complement': customerAddr?.complement,
