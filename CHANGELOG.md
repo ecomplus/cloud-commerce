@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.1](https://github.com/ecomplus/cloud-commerce/compare/v2.48.0...v2.48.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* **paypal:** Prevent skipping valid payment gateway on list payments ([906a9bb](https://github.com/ecomplus/cloud-commerce/commit/906a9bb34fc29be37fbe9b780e15f47eea3d9e64))
+
 ## [2.48.0](https://github.com/ecomplus/cloud-commerce/compare/v2.47.0...v2.48.0) (2025-07-18)
 
 
