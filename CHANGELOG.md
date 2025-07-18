@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.4](https://github.com/ecomplus/cloud-commerce/compare/v2.48.3...v2.48.4) (2025-07-18)
+
+
+### Bug Fixes
+
+* **paypal:** Proper logo URL on PayPal web profile ([34722bb](https://github.com/ecomplus/cloud-commerce/commit/34722bbfe1c014ad6dcb391e2fe7535df08299dd))
+
 ## [2.48.3](https://github.com/ecomplus/cloud-commerce/compare/v2.48.2...v2.48.3) (2025-07-18)
 
 
