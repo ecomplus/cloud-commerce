@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.0](https://github.com/ecomplus/cloud-commerce/compare/v2.47.0...v2.48.0) (2025-07-18)
+
+
+### Features
+
+* **asaas:** Setup Asaas payment integration app ([f95f319](https://github.com/ecomplus/cloud-commerce/commit/f95f3191c397f0d485d1a956cfe08c4affd96123))
+* **paypal:** Setup PayPal (Plus) payment integration app ([37e76b7](https://github.com/ecomplus/cloud-commerce/commit/37e76b7f450e58e20f22774876d2fd75f6909d5f))
+
 ## [2.47.0](https://github.com/ecomplus/cloud-commerce/compare/v2.46.3...v2.47.0) (2025-07-16)
 
 
