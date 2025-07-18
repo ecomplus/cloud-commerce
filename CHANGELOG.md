@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.7](https://github.com/ecomplus/cloud-commerce/compare/v2.48.6...v2.48.7) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fix optional inscription number params on customer creation for new transaction ([35eaaaa](https://github.com/ecomplus/cloud-commerce/commit/35eaaaa002ff24641eca89a8e8a1dc838e427aa6))
+
 ## [2.48.6](https://github.com/ecomplus/cloud-commerce/compare/v2.48.5...v2.48.6) (2025-07-18)
 
 
