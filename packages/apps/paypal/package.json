@@ -1,0 +1,43 @@
+{
+  "name": "@cloudcommerce/app-paypal",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "e-com.plus Cloud Commerce app to integrate PayPal Plus",
+  "main": "lib/paypal.js",
+  "exports": {
+    ".": "./lib/paypal.js",
+    "./events": "./lib/paypal-events.js"
+  },
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/assets",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/paypal"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/paypal#readme",
+  "scripts": {
+    "build": "bash scripts/build.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
+    "@ecomplus/utils": "1.5.0-rc.6",
+    "axios": "^1.10.0",
+    "firebase-admin": "^13.4.0",
+    "firebase-functions": "^6.3.2"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}

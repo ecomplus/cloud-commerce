@@ -968,6 +968,31 @@ importers:
         specifier: ^0.9.3
         version: 0.9.3
 
+  packages/apps/paypal:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:*
+        version: link:../../firebase
+      '@ecomplus/utils':
+        specifier: 1.5.0-rc.6
+        version: 1.5.0-rc.6
+      axios:
+        specifier: ^1.10.0
+        version: 1.10.0
+      firebase-admin:
+        specifier: ^13.4.0
+        version: 13.4.0
+      firebase-functions:
+        specifier: ^6.3.2
+        version: 6.3.2(firebase-admin@13.4.0)
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/pix:
     dependencies:
       '@cloudcommerce/api':
@@ -1206,6 +1231,9 @@ importers:
       '@cloudcommerce/app-paghiper':
         specifier: workspace:*
         version: link:../apps/paghiper
+      '@cloudcommerce/app-paypal':
+        specifier: workspace:^
+        version: link:../apps/paypal
       '@cloudcommerce/app-pix':
         specifier: workspace:*
         version: link:../apps/pix
@@ -1357,6 +1385,9 @@ importers:
       '@cloudcommerce/app-paghiper':
         specifier: workspace:*
         version: link:../apps/paghiper
+      '@cloudcommerce/app-paypal':
+        specifier: workspace:^
+        version: link:../apps/paypal
       '@cloudcommerce/app-pix':
         specifier: workspace:*
         version: link:../apps/pix
@@ -2257,10 +2288,6 @@ packages:
       '@react-native-async-storage/async-storage':
         optional: true
 
-  '@firebase/component@0.6.14':
-    resolution: {integrity: sha512-kf/zAT8GQJ9nYoHuj0mv7twp1QzifKYrO+GsmsVHHM+Hi9KkmI7E3B3J0CtihHpb34vinl4gbJrYJ2p2wfvc9A==}
-    engines: {node: '>=18.0.0'}
-
   '@firebase/component@0.6.18':
     resolution: {integrity: sha512-n28kPCkE2dL2U28fSxZJjzPPVpKsQminJ6NrzcKXAI0E/lYC8YhfwpyllScqVEvAI3J2QgJZWYgrX+1qGI+SQQ==}
     engines: {node: '>=18.0.0'}
@@ -2274,19 +2301,8 @@ packages:
     resolution: {integrity: sha512-itEsHARSsYS95+udF/TtIzNeQ0Uhx4uIna0sk4E0wQJBUnLc/G1X6D7oRljoOuwwCezRLGvWBRyNrugv/esOEw==}
     engines: {node: '>=18.0.0'}
 
-  '@firebase/database-compat@2.0.6':
-    resolution: {integrity: sha512-vv15b1E59sLwoVdjGKvJ75ok9Qu1VRJC/7KXAQGnXvURAL199Ndy1YEw6/GA9twoFlLCYnd2ltxxB2pPiL1Vqw==}
-    engines: {node: '>=18.0.0'}
-
-  '@firebase/database-types@1.0.11':
-    resolution: {integrity: sha512-LBZG/nT6GbntbIdGxBNvu9PBtj4xUEE9wX8AFF6njFK/MufYBESiKqT+jhDwmbcM4zAha9U0Pcca8FvJ1z1bYw==}
-
   '@firebase/database-types@1.0.15':
     resolution: {integrity: sha512-XWHJ0VUJ0k2E9HDMlKxlgy/ZuTa9EvHCGLjaKSUvrQnwhgZuRU5N3yX6SZ+ftf2hTzZmfRkv+b3QRvGg40bKNw==}
-
-  '@firebase/database@1.0.15':
-    resolution: {integrity: sha512-xmeTqKoIB2u1AXvLc1jq3Val0QAHUr49YycAr6feoDD7zM9dCjSk8rq9s1ESTv+tbbqS2BRoTpjIvxwXRTKhQQ==}
-    engines: {node: '>=18.0.0'}
 
   '@firebase/database@1.0.20':
     resolution: {integrity: sha512-H9Rpj1pQ1yc9+4HQOotFGLxqAXwOzCHsRSRjcQFNOr8lhUt6LeYjf0NSRL04sc4X0dWe8DsCvYKxMYvFG/iOJw==}
@@ -2400,10 +2416,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@firebase/app': 0.x
-
-  '@firebase/util@1.11.1':
-    resolution: {integrity: sha512-RXg4WE8C2LUrvoV/TMGRTu223zZf9Dq9MR8yHZio9nF9TpLnpCPURw9VWWB2WATDl6HfIdWfl2x2SJYtHkN4hw==}
-    engines: {node: '>=18.0.0'}
 
   '@firebase/util@1.12.1':
     resolution: {integrity: sha512-zGlBn/9Dnya5ta9bX/fgEoNC3Cp8s6h+uYPYaDieZsFOAdHP/ExzQ/eaDgxD3GOROdPkLKpvKY0iIzr9adle0w==}
@@ -6332,10 +6344,6 @@ packages:
     resolution: {integrity: sha512-mHPIc7zaJc26HMpgX5J7vXjliYv4Rnn5ICUyINudz76iY4zFMQHTaQXrTFn0EoHnRsLD6BE+OuHhQHFUU93I9A==}
     engines: {node: '>=18'}
 
-  protobufjs@7.4.0:
-    resolution: {integrity: sha512-mRUWCc3KUU4w1jU8sGxICXH/gNS94DvI1gxqDvBzhj1JpcsimQkYiOJfwsPUykUI5ZaspFbSgmBLER8IrQ3tqw==}
-    engines: {node: '>=12.0.0'}
-
   protobufjs@7.5.0:
     resolution: {integrity: sha512-Z2E/kOY1QjoMlCytmexzYfDm/w5fKAiRwpSzGtdnXW1zC88Z2yXazHHrOtwCzn+7wSxyE8PYM4rvVcMphF9sOA==}
     engines: {node: '>=12.0.0'}
@@ -8338,11 +8346,6 @@ snapshots:
       '@firebase/util': 1.12.1
       tslib: 2.8.1
 
-  '@firebase/component@0.6.14':
-    dependencies:
-      '@firebase/util': 1.11.1
-      tslib: 2.8.1
-
   '@firebase/component@0.6.18':
     dependencies:
       '@firebase/util': 1.12.1
@@ -8366,34 +8369,10 @@ snapshots:
       '@firebase/util': 1.12.1
       tslib: 2.8.1
 
-  '@firebase/database-compat@2.0.6':
-    dependencies:
-      '@firebase/component': 0.6.14
-      '@firebase/database': 1.0.15
-      '@firebase/database-types': 1.0.11
-      '@firebase/logger': 0.4.4
-      '@firebase/util': 1.11.1
-      tslib: 2.8.1
-
-  '@firebase/database-types@1.0.11':
-    dependencies:
-      '@firebase/app-types': 0.9.3
-      '@firebase/util': 1.11.1
-
   '@firebase/database-types@1.0.15':
     dependencies:
       '@firebase/app-types': 0.9.3
       '@firebase/util': 1.12.1
-
-  '@firebase/database@1.0.15':
-    dependencies:
-      '@firebase/app-check-interop-types': 0.3.3
-      '@firebase/auth-interop-types': 0.2.4
-      '@firebase/component': 0.6.14
-      '@firebase/logger': 0.4.4
-      '@firebase/util': 1.11.1
-      faye-websocket: 0.11.4
-      tslib: 2.8.1
 
   '@firebase/database@1.0.20':
     dependencies:
@@ -8575,10 +8554,6 @@ snapshots:
       '@firebase/app': 0.13.2
       '@firebase/component': 0.6.18
       '@firebase/util': 1.12.1
-      tslib: 2.8.1
-
-  '@firebase/util@1.11.1':
-    dependencies:
       tslib: 2.8.1
 
   '@firebase/util@1.12.1':
@@ -11292,8 +11267,8 @@ snapshots:
   firebase-admin@13.4.0:
     dependencies:
       '@fastify/busboy': 3.1.1
-      '@firebase/database-compat': 2.0.6
-      '@firebase/database-types': 1.0.11
+      '@firebase/database-compat': 2.0.11
+      '@firebase/database-types': 1.0.15
       '@types/node': 22.13.4
       farmhash-modern: 1.1.0
       google-auth-library: 9.15.1
@@ -11315,7 +11290,7 @@ snapshots:
       cors: 2.8.5
       express: 4.21.2
       firebase-admin: 13.4.0
-      protobufjs: 7.4.0
+      protobufjs: 7.5.0
     transitivePeerDependencies:
       - supports-color
 
@@ -13328,21 +13303,6 @@ snapshots:
   proto3-json-serializer@3.0.0:
     dependencies:
       protobufjs: 7.5.0
-
-  protobufjs@7.4.0:
-    dependencies:
-      '@protobufjs/aspromise': 1.1.2
-      '@protobufjs/base64': 1.1.2
-      '@protobufjs/codegen': 2.0.4
-      '@protobufjs/eventemitter': 1.1.0
-      '@protobufjs/fetch': 1.1.0
-      '@protobufjs/float': 1.0.2
-      '@protobufjs/inquire': 1.1.0
-      '@protobufjs/path': 1.1.2
-      '@protobufjs/pool': 1.1.0
-      '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.19.4
-      long: 5.3.1
 
   protobufjs@7.5.0:
     dependencies:

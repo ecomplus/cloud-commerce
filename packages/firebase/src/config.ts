@@ -103,6 +103,9 @@ export const configApps = {
   appmax: {
     appId: 100478,
   },
+  paypal: {
+    appId: 1250,
+  },
   braspag: {
     appId: 112906,
   },
