@@ -103,10 +103,8 @@ export const paypalListPayments = async (modBody: AppModuleBody<'list_payments'>
       try {
         const docRef = getFirestore().doc(`paypalProfiles/${PAYPAL_CLIENT_ID}`);
         if (!(await docRef.get()).exists) {
-          await Promise.all([
-            createPaypalWebhook(),
-            createPaypalProfile(),
-          ]);
+          await createPaypalWebhook();
+          await createPaypalProfile();
         }
         paypalPayment = await createPaypalPayment(parseToPaypalPayment(params));
       } catch (_err: any) {
@@ -114,6 +112,12 @@ export const paypalListPayments = async (modBody: AppModuleBody<'list_payments'>
         if (err.response?.status === 401) {
           throw err;
         }
+        logger.warn('PalPal setup failing', {
+          url: err.config?.url,
+          request: err.config?.data,
+          response: err.response?.data,
+          status: err.response?.status,
+        });
         logger.error(err);
       }
     }

@@ -34,29 +34,37 @@ export const getPaypalAxios = async () => {
     }
   }
   if (!token) {
-    const { data } = await axios.post(
-      '/v1/oauth2/token',
-      'grant_type=client_credentials',
-      {
-        baseURL,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+    try {
+      const { data } = await axios.post(
+        '/v1/oauth2/token',
+        'grant_type=client_credentials',
+        {
+          baseURL,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          auth: {
+            username: PAYPAL_CLIENT_ID!,
+            password: PAYPAL_CLIENT_SECRET!,
+          },
         },
-        auth: {
-          username: PAYPAL_CLIENT_ID!,
-          password: PAYPAL_CLIENT_SECRET!,
-        },
-      },
-    );
-    if (data?.access_token) {
-      _tokenExpiresAt = data.expires_in
-        ? Date.now() + (data.expires_in * 1000)
-        : Date.now() + (9 * 60 * 60 * 1000);
-      docRef.set({
-        data,
-        expiresAt: Timestamp.fromMillis(_tokenExpiresAt),
-      }).catch(logger.warn);
-      token = data.access_token;
+      );
+      if (data?.access_token) {
+        _tokenExpiresAt = data.expires_in
+          ? Date.now() + (data.expires_in * 1000)
+          : Date.now() + (9 * 60 * 60 * 1000);
+        docRef.set({
+          data,
+          expiresAt: Timestamp.fromMillis(_tokenExpiresAt),
+        }).catch(logger.warn);
+        token = data.access_token;
+      }
+    } catch (_err) {
+      const err = _err as AxiosError;
+      logger.warn(`Cannot generate PayPal token (${err.response?.status})'`, {
+        response: err.response?.data,
+      });
+      throw _err;
     }
   }
   if (!token) {
@@ -103,7 +111,7 @@ export const executePaypalPayment = async (
 
 export const createPaypalProfile = async () => {
   const { settingsContent } = config.get();
-  (await getPaypalAxios()).post('/v1/payment-experience/web-profiles/', {
+  return (await getPaypalAxios()).post('/v1/payment-experience/web-profiles/', {
     name: `EComPlus_${Date.now()}`,
     presentation: {
       brand_name: settingsContent.name || 'Loja Virtual',
@@ -128,7 +136,7 @@ export const createPaypalProfile = async () => {
 export const createPaypalWebhook = async () => {
   const locationId = config.get().httpsFunctionOptions.region;
   const appBaseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
-  (await getPaypalAxios()).post('/v1/notifications/webhooks', {
+  return (await getPaypalAxios()).post('/v1/notifications/webhooks', {
     url: `${appBaseUri}/paypal-webhook`,
     event_types: [
       // v2
@@ -153,7 +161,7 @@ export const createPaypalWebhook = async () => {
   }).catch((_err) => {
     const err = _err as AxiosError<any>;
     if (err.response?.data?.name === 'WEBHOOK_URL_ALREADY_EXISTS') {
-      return;
+      return null;
     }
     throw err;
   });
