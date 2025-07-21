@@ -1,11 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 import '@cloudcommerce/firebase/lib/init';
-import logger from 'firebase-functions/logger';
 import axios from 'axios';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import * as functions from 'firebase-functions/v1';
-import config from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { parsePaymentStatus } from './mp-create-transaction';
 
 const { httpsFunctionOptions } = config.get();
@@ -15,10 +14,9 @@ export const mercadopago = {
     .region(httpsFunctionOptions.region)
     .runWith(httpsFunctionOptions)
     .https.onRequest(async (req, res) => {
-      const { method } = req;
-      if (method === 'POST') {
-        const { body } = req;
-        logger.log('>> Webhook MP #', JSON.stringify(body), ' <<');
+      const { method, body: notification } = req;
+      if (method === 'POST' && notification) {
+        logger.info('Webhook body', { notification });
         try {
           const app = (await api.get(
             `applications?app_id=${config.get().apps.mercadoPago.appId}&fields=hidden_data`,
@@ -33,11 +31,11 @@ export const mercadopago = {
             return;
           }
 
-          const notification = req.body;
-          if (notification.type !== 'payment' || !notification.data || !notification.data.id) {
-            res.status(404).send('SKIP');
+          if (notification.type !== 'payment' || !notification.data?.id) {
+            res.sendStatus(400);
+            return;
           }
-          logger.log('> MP Notification for Payment #', notification.data.id);
+          logger.info(`MP Notification for Payment #${notification.data.id}`);
 
           const docRef = getFirestore().collection('mercadopagoPayments')
             .doc(String(notification.data.id));
@@ -50,18 +48,17 @@ export const mercadopago = {
                 const order = (await api.get(
                   `orders/${orderId}`,
                 )).data;
-                logger.log('>order ', JSON.stringify(order), '<');
                 if (order && order.transactions) {
                   const payment = (await axios.get(
                     `https://api.mercadopago.com/v1/payments/${notification.data.id}`,
                     {
                       headers: {
-                        Authorization: `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
+                        'Authorization': `Bearer ${process.env.MERCADOPAGO_TOKEN}`,
                         'Content-Type': 'application/json',
                       },
                     },
                   )).data;
-                  logger.log('>payment ', JSON.stringify(payment), ' <');
+                  logger.info(`Payment for ${order._id}`, { payment });
                   const methodPayment = payment.payment_method_id;
 
                   const transaction = order.transactions.find(({ intermediator }) => {
@@ -104,15 +101,15 @@ export const mercadopago = {
                     }
                     res.status(200).send('SUCCESS');
                   } else {
-                    logger.log('> Transaction not found #', notification.data.id);
+                    logger.info(`Transaction not found ${notification.data.id}`);
                     res.sendStatus(404);
                   }
                 } else {
-                  logger.log('> Order Not Found #', orderId);
+                  logger.info(`Order Not Found ${orderId}`);
                   res.sendStatus(404);
                 }
               } else {
-                logger.log('> Payment not found in Firestore #', notification.data.id);
+                logger.info(`Payment not found in Firestore ${notification.data.id}`);
                 res.sendStatus(404);
               }
             })
