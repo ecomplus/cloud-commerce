@@ -17,6 +17,12 @@ export const mercadopago = {
       const { method, body: notification } = req;
       if (method === 'POST' && notification) {
         logger.info('Webhook body', { notification });
+        if (notification.type !== 'payment' || !notification.data?.id) {
+          res.sendStatus(400);
+          return;
+        }
+        logger.info(`MP Notification for Payment #${notification.data.id}`);
+
         try {
           const app = (await api.get(
             `applications?app_id=${config.get().apps.mercadoPago.appId}&fields=hidden_data`,
@@ -31,15 +37,8 @@ export const mercadopago = {
             return;
           }
 
-          if (notification.type !== 'payment' || !notification.data?.id) {
-            res.sendStatus(400);
-            return;
-          }
-          logger.info(`MP Notification for Payment #${notification.data.id}`);
-
           const docRef = getFirestore().collection('mercadopagoPayments')
             .doc(String(notification.data.id));
-
           docRef.get()
             .then(async (doc) => {
               if (doc.exists) {
