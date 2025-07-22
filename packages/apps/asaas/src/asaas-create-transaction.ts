@@ -176,7 +176,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     if (docSnap.data()?.url !== webhookUrl) {
       const {
         data: webhookData,
-      } = await asaasAxios.post('/v3/pix/addressKeys', {
+      } = await asaasAxios.post('/v3/webhooks', {
         'name': `e-com.plus ${Date.now()}`,
         'url': webhookUrl,
         'enabled': true,
