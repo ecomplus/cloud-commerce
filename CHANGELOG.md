@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.11](https://github.com/ecomplus/cloud-commerce/compare/v2.48.10...v2.48.11) (2025-07-22)
+
+
+### Bug Fixes
+
+* **asaas:** Set required `email` for webhook on setup ([b333d34](https://github.com/ecomplus/cloud-commerce/commit/b333d341f2caccc640211c7d2f41ad0e193cba0a))
+
 ## [2.48.10](https://github.com/ecomplus/cloud-commerce/compare/v2.48.9...v2.48.10) (2025-07-22)
 
 
