@@ -50,16 +50,20 @@ export default (
         } else if (tinyErrorCode === 20) {
           response.status = 404;
         }
-        const err: any = new Error(`Tiny error ${tinyErrorCode} at ${response.config.url}`);
-        if (response.status !== 503) {
-          err.request = response.config.data;
-        }
-        err.status = response.status;
-        err.response = response.data;
+        const error: any = new Error(`Tiny error ${tinyErrorCode} at ${response.config.url}`);
+        error.response = response;
+        error.config = response.config;
+        error.request = response.request;
         if (response.status !== 404) {
+          const err: any = new Error(error.message);
+          if (response.status !== 503) {
+            err.request = response.config.data;
+          }
+          err.status = response.status;
+          err.response = response.data;
           logger.error(err);
         }
-        throw err;
+        throw error;
       }
       return retorno;
     });

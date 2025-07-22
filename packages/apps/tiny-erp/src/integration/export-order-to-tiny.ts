@@ -65,6 +65,9 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       tinyData = {};
     } else {
       logger.info(`${orderId} search on tiny ends with status ${status}`);
+      if (!status) {
+        logger.error(err);
+      }
       throw err;
     }
   }
