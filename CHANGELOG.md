@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.10](https://github.com/ecomplus/cloud-commerce/compare/v2.48.9...v2.48.10) (2025-07-22)
+
+
+### Bug Fixes
+
+* **asaas:** Fix webhooks setup on create transaction ([725d35e](https://github.com/ecomplus/cloud-commerce/commit/725d35ed4f072166e95ddc84a1a402ea5bce6869))
+* **deps:** Update non-major dependencies ([#597](https://github.com/ecomplus/cloud-commerce/issues/597)) ([5131a13](https://github.com/ecomplus/cloud-commerce/commit/5131a13ccf7d11287ac30bd5a289587a1a2beb1d))
+* **mercadopago:** Preventing wrong object handling errors on webhook function ([a020869](https://github.com/ecomplus/cloud-commerce/commit/a020869f13173f174e59d6d63c4923157c8ec728))
+
 ## [2.48.9](https://github.com/ecomplus/cloud-commerce/compare/v2.48.8...v2.48.9) (2025-07-18)
 
 
