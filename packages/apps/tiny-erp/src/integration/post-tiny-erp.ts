@@ -51,9 +51,11 @@ export default (
           response.status = 404;
         }
         const err: any = new Error(`Tiny error ${tinyErrorCode} at ${response.config.url}`);
-        err.response = response;
-        err.config = response.config;
-        err.request = response.request;
+        if (response.status !== 503) {
+          err.request = response.config.data;
+        }
+        err.status = response.status;
+        err.response = response.data;
         if (response.status !== 404) {
           logger.error(err);
         }
