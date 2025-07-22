@@ -13,12 +13,14 @@ const readOrSaveCustomer = async (customer: CustomerToSave) => {
     const { data: savedCustomer } = await api.get(customerEndpoint);
     const customerPatch: Partial<CustomerToSave> = {};
     Object.keys(customer).forEach((field) => {
-      if (customer[field] && !savedCustomer[field]) {
+      if (!customer[field]) return;
+      if ((customer[field] as Array<any> | string).length === 0) return;
+      if (!savedCustomer[field]) {
         customerPatch[field] = customer[field];
       }
     });
     if (Object.keys(customerPatch).length) {
-      api.patch(customerEndpoint, customerEndpoint).catch((_err) => {
+      api.patch(customerEndpoint, customerPatch).catch((_err) => {
         const err = _err as ApiError;
         logger.warn(`Failed updating customer ${customer.main_email} on checkout`, {
           customerPatch,
