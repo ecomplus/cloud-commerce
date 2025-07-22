@@ -168,38 +168,54 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       transaction.payment_link = bankSlipUrl;
     }
 
-    const locationId = config.get().httpsFunctionOptions.region;
+    const {
+      httpsFunctionOptions,
+      settingsContent,
+    } = config.get();
+    const locationId = httpsFunctionOptions.region;
     const appBaseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
     const webhookUrl = `${appBaseUri}/asaas-webhook`;
     const docRef = getFirestore().doc('asaasSetup/webhook');
     const docSnap = await docRef.get();
     if (docSnap.data()?.url !== webhookUrl) {
-      const {
-        data: webhookData,
-      } = await asaasAxios.post('/v3/webhooks', {
-        'name': `e-com.plus ${Date.now()}`,
-        'url': webhookUrl,
-        'enabled': true,
-        'interrupted': false,
-        'authToken': `w1_${ASAAS_API_KEY}`,
-        'sendType': 'SEQUENTIALLY',
-        'events': [
-          'PAYMENT_CREDIT_CARD_CAPTURE_REFUSED',
-          'PAYMENT_AWAITING_CHARGEBACK_REVERSAL',
-          'PAYMENT_CHARGEBACK_DISPUTE',
-          'PAYMENT_CHARGEBACK_REQUESTED',
-          'PAYMENT_RECEIVED_IN_CASH_UNDONE',
-          'PAYMENT_REFUND_IN_PROGRESS',
-          'PAYMENT_REFUNDED',
-          'PAYMENT_RESTORED',
-          'PAYMENT_DELETED',
-          'PAYMENT_RECEIVED',
-          'PAYMENT_CONFIRMED',
-          'PAYMENT_REPROVED_BY_RISK_ANALYSIS',
-          'PAYMENT_AWAITING_RISK_ANALYSIS',
-        ],
-      });
-      await docRef.set(webhookData).catch(logger.warn);
+      try {
+        const {
+          data: webhookData,
+        } = await asaasAxios.post('/v3/webhooks', {
+          'name': `e-com.plus ${Date.now()}`,
+          'url': webhookUrl,
+          'email': appData.webhook_email || settingsContent.email,
+          'enabled': true,
+          'interrupted': false,
+          'authToken': `w1_${ASAAS_API_KEY}`,
+          'sendType': 'SEQUENTIALLY',
+          'events': [
+            'PAYMENT_CREDIT_CARD_CAPTURE_REFUSED',
+            'PAYMENT_AWAITING_CHARGEBACK_REVERSAL',
+            'PAYMENT_CHARGEBACK_DISPUTE',
+            'PAYMENT_CHARGEBACK_REQUESTED',
+            'PAYMENT_RECEIVED_IN_CASH_UNDONE',
+            'PAYMENT_REFUND_IN_PROGRESS',
+            'PAYMENT_REFUNDED',
+            'PAYMENT_RESTORED',
+            'PAYMENT_DELETED',
+            'PAYMENT_RECEIVED',
+            'PAYMENT_CONFIRMED',
+            'PAYMENT_REPROVED_BY_RISK_ANALYSIS',
+            'PAYMENT_AWAITING_RISK_ANALYSIS',
+          ],
+        });
+        await docRef.set(webhookData).catch(logger.warn);
+      } catch (_err) {
+        const err = _err as AxiosError;
+        logger.warn('Failed saving Asaas webhook', {
+          url: err.config?.url,
+          request: err.config?.data,
+          response: err.response?.data,
+          status: err.response?.status,
+        });
+        logger.error(err);
+      }
     }
 
     return {
