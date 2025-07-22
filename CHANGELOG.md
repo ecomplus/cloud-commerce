@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.12](https://github.com/ecomplus/cloud-commerce/compare/v2.48.11...v2.48.12) (2025-07-22)
+
+
+### Bug Fixes
+
+* **checkout:** Fix api.patch call to use customerPatch instead of endpoint ([0d1338a](https://github.com/ecomplus/cloud-commerce/commit/0d1338a32910846a6936a1d0a6926924144d56f1))
+
 ## [2.48.11](https://github.com/ecomplus/cloud-commerce/compare/v2.48.10...v2.48.11) (2025-07-22)
 
 
