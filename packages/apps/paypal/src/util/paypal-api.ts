@@ -50,8 +50,8 @@ export const getPaypalAxios = async () => {
         },
       );
       if (data?.access_token) {
-        _tokenExpiresAt = data.expires_in
-          ? Date.now() + (data.expires_in * 1000)
+        _tokenExpiresAt = data.expires_in > 0
+          ? Date.now() + (Math.min(data.expires_in, 9 * 60 * 60) * 1000)
           : Date.now() + (9 * 60 * 60 * 1000);
         docRef.set({
           data,

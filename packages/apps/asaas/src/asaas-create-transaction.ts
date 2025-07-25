@@ -138,7 +138,12 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         bankSlipUrl,
         invoiceUrl,
       },
-    } = await asaasAxios.post('/v3/lean/payments', asaasPayment);
+    } = await asaasAxios.post(
+      paymentMethod.code === 'account_deposit'
+        ? '/v3/lean/payments'
+        : '/v3/payments/',
+      asaasPayment,
+    );
     transaction.intermediator = {
       payment_method: {
         code: asaasPayment.billingType || params.payment_method.code,
