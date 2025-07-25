@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.13](https://github.com/ecomplus/cloud-commerce/compare/v2.48.12...v2.48.13) (2025-07-25)
+
+
+### Bug Fixes
+
+* **asaas:** Force credit card method as `balance_on_intermediary` for payment with redirect ([a1f5c0c](https://github.com/ecomplus/cloud-commerce/commit/a1f5c0ce8ed8871571d3b0566672fceb0bc4ec34))
+* **tiny-erp:** Handle new payment and shipping method maps from app config data ([0e3cf20](https://github.com/ecomplus/cloud-commerce/commit/0e3cf201ed0dac408bc6b48483afaec5ed6f6e4c))
+
 ## [2.48.12](https://github.com/ecomplus/cloud-commerce/compare/v2.48.11...v2.48.12) (2025-07-22)
 
 
