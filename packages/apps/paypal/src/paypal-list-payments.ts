@@ -126,10 +126,13 @@ export const paypalListPayments = async (modBody: AppModuleBody<'list_payments'>
     }
   } catch (_err: any) {
     const err = _err as AxiosError;
+    const paypalErrorDescription = (err.response?.data as any)?.error_description;
     return {
       status: err.response?.status || 400,
       error: 'PAYPAL_SETUP_ERROR',
-      message: ((err.response?.data as any)?.error_description) || err.message,
+      message: paypalErrorDescription
+        ? `${paypalErrorDescription} [${err.config?.url || ''}]`
+        : err.message,
     };
   }
 
