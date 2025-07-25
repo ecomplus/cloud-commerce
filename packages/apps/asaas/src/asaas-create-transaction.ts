@@ -132,18 +132,17 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       }
     }
 
-    const {
-      data: {
-        id: asaasPaymentId,
-        bankSlipUrl,
-        invoiceUrl,
-      },
-    } = await asaasAxios.post(
+    const { data: asaasCreatedPayment } = await asaasAxios.post(
       paymentMethod.code === 'account_deposit'
         ? '/v3/lean/payments'
         : '/v3/payments/',
       asaasPayment,
     );
+    const {
+      id: asaasPaymentId,
+      bankSlipUrl,
+      invoiceUrl,
+    } = asaasCreatedPayment;
     transaction.intermediator = {
       payment_method: {
         code: asaasPayment.billingType || params.payment_method.code,
@@ -174,6 +173,19 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         code: bankSlipData.barCode,
       };
       transaction.payment_link = bankSlipUrl;
+    } else {
+      if (!transaction.payment_link) {
+        const { paymentLink } = asaasCreatedPayment;
+        if (paymentLink && typeof paymentLink === 'string') {
+          transaction.payment_link = paymentLink;
+        }
+      }
+      if (!transaction.payment_link) {
+        logger.warn('Unexpected Asaas credit card response without link', {
+          asaasCreatedPayment,
+          transaction,
+        });
+      }
     }
 
     const {
