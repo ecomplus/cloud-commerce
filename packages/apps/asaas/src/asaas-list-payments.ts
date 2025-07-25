@@ -66,7 +66,8 @@ export const asaasListPayments = async (modBody: AppModuleBody<'list_payments'>)
     const methodConfig = appData[paymentMethod] || {};
     const isPix = paymentMethod === 'account_deposit';
     if (!methodConfig.enable) return;
-    const isCreditCard = paymentMethod === 'credit_card';
+    const isCreditCard = paymentMethod === 'credit_card'
+      || paymentMethod === 'balance_on_intermediary';
     let { label } = methodConfig;
     if (!label) {
       if (isCreditCard) {
@@ -80,7 +81,7 @@ export const asaasListPayments = async (modBody: AppModuleBody<'list_payments'>)
       icon: methodConfig.icon,
       text: methodConfig.text,
       payment_method: {
-        code: paymentMethod,
+        code: isCreditCard ? 'balance_on_intermediary' : paymentMethod,
         name: `${label} - ${intermediator.name}`,
       },
       intermediator,

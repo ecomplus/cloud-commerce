@@ -109,7 +109,10 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       }
     } else if (paymentMethod.code === 'banking_billet') {
       asaasPayment.billingType = 'BOLETO';
-    } else if (paymentMethod.code === 'credit_card') {
+    } else if (
+      paymentMethod.code === 'credit_card'
+      || paymentMethod.code === 'balance_on_intermediary'
+    ) {
       asaasPayment.billingType = 'CREDIT_CARD';
       const installmentsNumber = params.installments_number || 1;
       if (installmentsNumber > 1) {
