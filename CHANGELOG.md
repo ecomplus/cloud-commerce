@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.14](https://github.com/ecomplus/cloud-commerce/compare/v2.48.13...v2.48.14) (2025-07-25)
+
+
+### Bug Fixes
+
+* **asaas:** Create payment on Asaas with full response body for payments not Pix ([7d63b88](https://github.com/ecomplus/cloud-commerce/commit/7d63b880cffeb9cff6ba58acff8a969084624405))
+* **asaas:** Try secondary field and debug Asaas credit card response without payment link ([585c66f](https://github.com/ecomplus/cloud-commerce/commit/585c66f14f4a373f6252ed34657f1ebbf8edf754))
+* **paypal:** Force reduced PayPal token expiration and reset on first create payment with 401 ([7d210ae](https://github.com/ecomplus/cloud-commerce/commit/7d210ae031365f0a9c8995105f95f5618b624ce5))
+
 ## [2.48.13](https://github.com/ecomplus/cloud-commerce/compare/v2.48.12...v2.48.13) (2025-07-25)
 
 
