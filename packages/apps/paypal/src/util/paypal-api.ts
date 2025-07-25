@@ -51,8 +51,8 @@ export const getPaypalAxios = async () => {
       );
       if (data?.access_token) {
         _tokenExpiresAt = data.expires_in > 0
-          ? Date.now() + (Math.min(data.expires_in, 9 * 60 * 60) * 1000)
-          : Date.now() + (9 * 60 * 60 * 1000);
+          ? Date.now() + (Math.min(data.expires_in, 8 * 60 * 60) * 1000)
+          : Date.now() + (8 * 60 * 60 * 1000);
         docRef.set({
           data,
           expiresAt: Timestamp.fromMillis(_tokenExpiresAt),
@@ -79,8 +79,20 @@ export const getPaypalAxios = async () => {
 
 export const createPaypalPayment = async (paypalPayment: Record<string, any>) => {
   const paypalAxios = await getPaypalAxios();
-  const { data } = await paypalAxios.post('/v1/payments/payment', paypalPayment);
-  return data as Record<string, any>;
+  try {
+    const { data } = await paypalAxios.post('/v1/payments/payment', paypalPayment);
+    return data as Record<string, any>;
+  } catch (_err) {
+    const err = _err as AxiosError;
+    if (err.response?.status === 401) {
+      const { PAYPAL_CLIENT_ID } = process.env;
+      const docRef = getFirestore().doc(`paypalTokens/${PAYPAL_CLIENT_ID}`);
+      await docRef.delete().catch(logger.warn);
+      _paypalAxios = undefined;
+      _tokenExpiresAt = undefined;
+    }
+    throw err;
+  }
 };
 
 export const readPaypalPayment = async (paymentId: string) => {
