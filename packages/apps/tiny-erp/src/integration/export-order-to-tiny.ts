@@ -119,6 +119,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
         pedido: tinyOrder,
       },
     }).then((response) => {
+      logger.info(`Created ${orderId} on Tiny`, { response });
       const tinyErpOnNewOrder = global.$tinyErpOnNewOrder;
       if (tinyErpOnNewOrder && typeof tinyErpOnNewOrder === 'function') {
         return tinyErpOnNewOrder({ response, order, postTiny });
