@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import type { Orders } from '@cloudcommerce/types';
+import type { AxiosError } from 'axios';
 import api from '@cloudcommerce/api';
 import '@cloudcommerce/firebase/lib/init';
 import * as functions from 'firebase-functions/v1';
@@ -51,7 +52,28 @@ export const paypal = {
         res.sendStatus(403);
         return;
       }
-      const paypalEvent = await readPaypalWebhookEvent(eventId);
+      let paypalEvent: Record<string, any>;
+      try {
+        paypalEvent = await readPaypalWebhookEvent(eventId);
+      } catch (_err) {
+        const err = _err as AxiosError;
+        const statusCode = err.response?.status;
+        if (statusCode) {
+          if (statusCode === 404) {
+            logger.warn(`PayPal webhook event not found for ${transactionCode}`, {
+              body: req.body,
+            });
+            res.sendStatus(202);
+            return;
+          }
+          if (statusCode >= 400 && statusCode < 500) {
+            logger.error(err);
+            res.sendStatus(202);
+            return;
+          }
+        }
+        throw err;
+      }
       const paypalEventType = paypalEvent.event_type;
       logger.info(`PayPal event type ${paypalEventType} for ${transactionCode}`);
       let status: PaymentEntry['status'] = 'pending';
@@ -81,8 +103,11 @@ export const paypal = {
         case 'PAYMENT.CAPTURE.REVERSED':
         case 'PAYMENT.SALE.REFUNDED':
         case 'PAYMENT.SALE.REVERSED':
-        case 'RISK.DISPUTE.CREATED':
           status = 'refunded';
+          break;
+        case 'RISK.DISPUTE.CREATED':
+        case 'CUSTOMER.DISPUTE.CREATED':
+          status = 'in_dispute';
           break;
         default:
           // Ignore unknow status

@@ -173,6 +173,7 @@ export const createPaypalWebhook = async () => {
       'PAYMENT.PAYOUTSBATCH.SUCCESS',
       'PAYMENT.PAYOUTSBATCH.DENIED',
       'RISK.DISPUTE.CREATED',
+      'CUSTOMER.DISPUTE.CREATED',
     ].map((name) => ({ name })),
   }).catch((_err) => {
     const err = _err as AxiosError<any>;
