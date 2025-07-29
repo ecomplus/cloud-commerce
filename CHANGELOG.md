@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.15](https://github.com/ecomplus/cloud-commerce/compare/v2.48.14...v2.48.15) (2025-07-29)
+
+
+### Bug Fixes
+
+* **firebase:** Handle 404 errors when fetching fresh API docs in event processing ([fe19d5a](https://github.com/ecomplus/cloud-commerce/commit/fe19d5ae28b7ded238f946ee4c514740bb370a54))
+* **firebase:** Only update nonOrdersTimestamp during non-orders processing runs ([9a2ca9b](https://github.com/ecomplus/cloud-commerce/commit/9a2ca9bd9a97a293494add1f6f2f73530a0504f4))
+* **paypal:** Enhanced webhook error handling and dispute status support ([8e36aea](https://github.com/ecomplus/cloud-commerce/commit/8e36aea529e09567147bc75606d73027a680731a))
+* **tiny-erp:** Properly skipping stock updates when option is disabled on app config ([b637b1e](https://github.com/ecomplus/cloud-commerce/commit/b637b1e0503f334bc51b986080f929d8118ceb07))
+
 ## [2.48.14](https://github.com/ecomplus/cloud-commerce/compare/v2.48.13...v2.48.14) (2025-07-25)
 
 
