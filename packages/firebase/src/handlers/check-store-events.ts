@@ -293,11 +293,14 @@ export default async () => {
       })),
     });
   }));
-  return documentRef.set({
+  const documentMergeData: Record<string, any> = {
     timestamp: maxTimestamp,
-    nonOrdersTimestamp: isOrdersOnly ? lastNonOrdersTimestamp : maxTimestamp,
     pushedTimestamps: lastPushedTimestamps,
     activeApps,
     listenedEvents,
-  });
+  };
+  if (!isOrdersOnly) {
+    documentMergeData.nonOrdersTimestamp = maxTimestamp;
+  }
+  return documentRef.set(documentMergeData, { merge: true });
 };
