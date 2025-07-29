@@ -5,9 +5,10 @@ import type {
   AppEventsPayload,
   EventsResult,
 } from '@cloudcommerce/types';
+import type { ApiConfig, ApiError } from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import { PubSub } from '@google-cloud/pubsub';
-import api, { ApiConfig } from '@cloudcommerce/api';
+import api from '@cloudcommerce/api';
 import config, { logger } from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
 
@@ -231,15 +232,26 @@ export default async () => {
         return 1;
       });
       const fetchFreshApiDoc = async () => {
-        const { data } = await api.get(`${(resource as 'orders')}/${resourceId}`, {
-          headers: { 'x-primary-db': 'true' },
-        });
-        return data;
+        try {
+          const { data } = await api.get(`${(resource as 'orders')}/${resourceId}`, {
+            headers: { 'x-primary-db': 'true' },
+          });
+          return data;
+        } catch (_err: any) {
+          const err: ApiError = _err;
+          if (err.statusCode === 404) {
+            return false;
+          }
+          throw err;
+        }
       };
       const datasetAt = Date.now();
       const apiDoc = resource !== 'applications'
         ? await fetchFreshApiDoc()
         : null;
+      if (apiDoc === false) {
+        return;
+      }
       for (let i = 0; i < ascOrderedEvents.length; i++) {
         const apiEvent = ascOrderedEvents[i];
         apiEvent.resource = resource;
