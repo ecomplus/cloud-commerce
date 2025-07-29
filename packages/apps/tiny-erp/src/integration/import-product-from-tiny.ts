@@ -64,6 +64,9 @@ const importProduct = async (
   }
 
   const handleTinyStock = ({ produto: produtoSaldo, tipo }, tinyProduct?: any) => {
+    if (appData.update_product === false) {
+      return null;
+    }
     let quantity = Number(produtoSaldo.saldo);
     if (Number.isNaN(quantity)) {
       quantity = Number(produtoSaldo.estoqueAtual);
