@@ -129,7 +129,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
 
   if (originalTinyOrder) {
     const { id, situacao } = originalTinyOrder;
-    logger.info(`${orderId} found with tiny status ${situacao} => ${tinyStatus}`);
+    logger.info(`${orderId} found with tiny status ${situacao} => ${tinyStatus} and id ${id}`);
     if (typeof situacao === 'string') {
       const { normalizedTinyStatus } = parseTinyStatus(tinyStatus);
       if (normalizedTinyStatus !== parseTinyStatus(situacao).normalizedTinyStatus) {
