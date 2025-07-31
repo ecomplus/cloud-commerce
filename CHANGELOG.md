@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.16](https://github.com/ecomplus/cloud-commerce/compare/v2.48.15...v2.48.16) (2025-07-31)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Properly skipping stock updates only when `update_quantity` is false on app config ([b8a966f](https://github.com/ecomplus/cloud-commerce/commit/b8a966f2de5230ccfaf476a6060b471c42c96adc))
+
 ## [2.48.15](https://github.com/ecomplus/cloud-commerce/compare/v2.48.14...v2.48.15) (2025-07-29)
 
 
