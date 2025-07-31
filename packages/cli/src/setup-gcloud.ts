@@ -30,7 +30,7 @@ const requestApi = async (
     {
       method: options?.method || 'GET',
       headers: {
-        Authorization: `Bearer ${gcpAccessToken}`,
+        'Authorization': `Bearer ${gcpAccessToken}`,
         'Content-Type': 'application/json; charset=utf-8',
       },
       body,
