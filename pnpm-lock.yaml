@@ -217,6 +217,77 @@ importers:
         specifier: ^2.48.15
         version: link:../../../../packages/modules
 
+  ecomplus-stores/efacini:
+    dependencies:
+      '@cloudcommerce/cli':
+        specifier: ^2.48.15
+        version: link:../../packages/cli
+    devDependencies:
+      '@cloudcommerce/eslint':
+        specifier: ^2.48.15
+        version: link:../../packages/eslint
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
+      lint-staged:
+        specifier: ^16.1.2
+        version: 16.1.2
+
+  ecomplus-stores/efacini/functions/many:
+    dependencies:
+      '@cloudcommerce/feeds':
+        specifier: ^2.48.15
+        version: link:../../../../packages/feeds
+      '@cloudcommerce/firebase':
+        specifier: ^2.48.15
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/passport':
+        specifier: ^2.48.15
+        version: link:../../../../packages/passport
+
+  ecomplus-stores/efacini/functions/ssr:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: ^2.48.15
+        version: link:../../../../packages/api
+      '@cloudcommerce/firebase':
+        specifier: ^2.48.15
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/ssr':
+        specifier: ^2.48.15
+        version: link:../../../../packages/ssr
+      '@headlessui/vue':
+        specifier: ^1.7.23
+        version: 1.7.23(vue@3.5.17(typescript@5.8.3))
+      micromark:
+        specifier: ^4.0.2
+        version: 4.0.2
+    devDependencies:
+      '@cloudcommerce/i18n':
+        specifier: ^2.48.15
+        version: link:../../../../packages/i18n
+      '@cloudcommerce/storefront':
+        specifier: ^2.48.15
+        version: link:../../../../packages/storefront
+      '@cloudcommerce/types':
+        specifier: ^2.48.15
+        version: link:../../../../packages/types
+      photoswipe:
+        specifier: ^5.4.4
+        version: 5.4.4
+
+  ecomplus-stores/efacini/functions/with-apps:
+    dependencies:
+      '@cloudcommerce/events':
+        specifier: ^2.48.15
+        version: link:../../../../packages/events
+      '@cloudcommerce/firebase':
+        specifier: ^2.48.15
+        version: link:../../../../packages/firebase
+      '@cloudcommerce/modules':
+        specifier: ^2.48.15
+        version: link:../../../../packages/modules
+
   ecomplus-stores/ladofit:
     dependencies:
       '@cloudcommerce/cli':

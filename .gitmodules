@@ -16,3 +16,6 @@
 [submodule "ecomplus-stores/casamor"]
 	path = ecomplus-stores/casamor
 	url = git@github.com:ladotextil/casamor.git
+[submodule "ecomplus-stores/efacini"]
+	path = ecomplus-stores/efacini
+	url = git@github.com:efacini/efacini.git
