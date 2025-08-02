@@ -35,6 +35,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
     };
   }
+  const asaasKeyId = `${ASAAS_API_KEY}`.substring(0, 6) + `${ASAAS_API_KEY}`.slice(-3);
 
   const {
     order_id: orderId,
@@ -101,11 +102,12 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       asaasPayment.billingType = 'PIX';
       const docRef = getFirestore().doc('asaasSetup/pixKey');
       const docSnap = await docRef.get();
-      if (!docSnap.data()?.key) {
+      if (docSnap.data()?.asaasKeyId !== asaasKeyId) {
         const {
           data: pixKeyData,
         } = await asaasAxios.post('/v3/pix/addressKeys', { 'type': 'EVP' });
-        await docRef.set(pixKeyData).catch(logger.warn);
+        await docRef.set({ asaasKeyId, pixKeyData })
+          .catch(logger.warn);
       }
     } else if (paymentMethod.code === 'banking_billet') {
       asaasPayment.billingType = 'BOLETO';
@@ -189,6 +191,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     }
 
     const {
+      storeId,
       httpsFunctionOptions,
       settingsContent,
     } = config.get();
@@ -197,7 +200,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     const webhookUrl = `${appBaseUri}/asaas-webhook`;
     const docRef = getFirestore().doc('asaasSetup/webhook');
     const docSnap = await docRef.get();
-    if (docSnap.data()?.url !== webhookUrl) {
+    if (docSnap.data()?.asaasKeyId !== asaasKeyId) {
       try {
         const {
           data: webhookData,
@@ -207,7 +210,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
           'email': appData.webhook_email || settingsContent.email,
           'enabled': true,
           'interrupted': false,
-          'authToken': `w1_${ASAAS_API_KEY}`,
+          'authToken': `${storeId}_${asaasKeyId}`,
           'sendType': 'SEQUENTIALLY',
           'events': [
             'PAYMENT_CREDIT_CARD_CAPTURE_REFUSED',
@@ -225,7 +228,8 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
             'PAYMENT_AWAITING_RISK_ANALYSIS',
           ],
         });
-        await docRef.set(webhookData).catch(logger.warn);
+        await docRef.set({ asaasKeyId, webhookData })
+          .catch(logger.warn);
       } catch (_err) {
         const err = _err as AxiosError;
         logger.warn('Failed saving Asaas webhook', {
