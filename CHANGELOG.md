@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.17](https://github.com/ecomplus/cloud-commerce/compare/v2.48.16...v2.48.17) (2025-08-02)
+
+
+### Bug Fixes
+
+* **asaas:** Enhance webhook validation and add payment status cron fallback ([afd1572](https://github.com/ecomplus/cloud-commerce/commit/afd1572a054fe71876368dec044f3edc31fd6836))
+* **asaas:** Improve API key tracking and configuration management ([e6cf7fb](https://github.com/ecomplus/cloud-commerce/commit/e6cf7fbe4289862dad6690a6e4919040051dc75c))
+* **cli:** Ensure SKU as strings on feed import ([0786138](https://github.com/ecomplus/cloud-commerce/commit/07861387f3578bae56b7f2c7f061643a0f54568b))
+
 ## [2.48.16](https://github.com/ecomplus/cloud-commerce/compare/v2.48.15...v2.48.16) (2025-07-31)
 
 
