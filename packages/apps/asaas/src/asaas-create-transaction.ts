@@ -197,10 +197,15 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
     } = config.get();
     const locationId = httpsFunctionOptions.region;
     const appBaseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
-    const webhookUrl = `${appBaseUri}/asaas-webhook`;
+    const webhookUrl = `${appBaseUri}/asaas-webhook?t=${Date.now()}`;
     const docRef = getFirestore().doc('asaasSetup/webhook');
     const docSnap = await docRef.get();
-    if (docSnap.data()?.asaasKeyId !== asaasKeyId) {
+    const webhookSetupData = docSnap.data();
+    if (webhookSetupData?.asaasKeyId !== asaasKeyId) {
+      const oldWebhookId = (webhookSetupData?.webhookData || webhookSetupData)?.id;
+      if (oldWebhookId) {
+        await asaasAxios.delete(`/v3/webhooks/${oldWebhookId}`).catch(logger.warn);
+      }
       try {
         const {
           data: webhookData,

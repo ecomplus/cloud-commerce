@@ -143,7 +143,7 @@ export const asaas = {
   cronCheckPayments: functions
     .region(config.get().httpsFunctionOptions.region)
     .runWith({ timeoutSeconds: 540 })
-    .pubsub.schedule(process.env.CRONTAB_ASAAS_CHECK_PAYMENTS || '28 15,2 * * *')
+    .pubsub.schedule(process.env.CRONTAB_ASAAS_CHECK_PAYMENTS || '18 18,5 * * *')
     .timeZone('America/Sao_Paulo')
     .onRun(async () => {
       await setAsaasEnv();
@@ -157,7 +157,7 @@ export const asaas = {
         + '&transactions.app.intermediator.code=asaas3'
         + '&financial_status.current=pending'
         + `&created_at>=${d.toISOString()}`
-        + `&sort=${(isOddHourExec ? '' : '-')}number`
+        + `&sort=${(isOddHourExec ? '-' : '')}number`
         + '&limit=500' as `orders?${string}`;
       const { data: { result: orders } } = await api.get(endpoint);
       logger.info(`${orders.length} orders listed`, {
