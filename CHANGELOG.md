@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.18](https://github.com/ecomplus/cloud-commerce/compare/v2.48.17...v2.48.18) (2025-08-02)
+
+
+### Bug Fixes
+
+* **asaas:** Improve webhook lifecycle and cron scheduling ([fec3851](https://github.com/ecomplus/cloud-commerce/commit/fec3851ecc800a9d52fae23707e18d53e585d4b3))
+
 ## [2.48.17](https://github.com/ecomplus/cloud-commerce/compare/v2.48.16...v2.48.17) (2025-08-02)
 
 
