@@ -157,7 +157,7 @@ const mapCSVToFeed = (item: CSVItem): FeedItem => {
   const canManageStock = item['controlar-estoque'] !== 'N';
   const quantity = Number(item['estoque-quantidade']) || 0;
   return {
-    'g:id': item.sku,
+    'g:id': `${item.sku}`,
     'g:title': item.nome,
     'g:description': item['descricao-completa'] || item['seo-tag-description'],
     'g:image_link': item['imagem-1'],
@@ -211,8 +211,14 @@ const importFeed = async () => {
       attributeNamePrefix: '',
     });
     const json = parser.parse(fs.readFileSync(argv.feed, 'utf8'));
-    _items = json.rss?.channel?.item?.filter?.((item: any) => {
-      return item?.['g:id'] && item['g:title'];
+    json.rss?.channel?.item?.forEach?.((item: any) => {
+      if (item?.['g:id'] && item['g:title']) {
+        item['g:id'] = `${item['g:id']}`;
+        if (item['g:item_group_id']) {
+          item['g:item_group_id'] = `${item['g:item_group_id']}`;
+        }
+        _items.push(item);
+      }
     });
   } else if (fileExtension === '.tsv') {
     const csvContent = fs.readFileSync(feedFilepath, 'utf8');
