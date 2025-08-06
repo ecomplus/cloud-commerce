@@ -26,16 +26,16 @@ export const getPriceWithDiscount = (
   discount: Exclude<Props['discountOption'], undefined>,
 ) => {
   const { type, value } = discount;
-  let priceWithDiscount: number;
-  if (value) {
-    if (type === 'percentage') {
-      priceWithDiscount = price * ((100 - value) / 100);
-    } else {
-      priceWithDiscount = price - value;
-    }
-    return priceWithDiscount > 0 ? priceWithDiscount : 0;
+  if (!value || (discount.min_amount && price < discount.min_amount)) {
+    return price;
   }
-  return price;
+  let priceWithDiscount: number;
+  if (type === 'percentage') {
+    priceWithDiscount = price * ((100 - value) / 100);
+  } else {
+    priceWithDiscount = price - value;
+  }
+  return priceWithDiscount > 0 ? priceWithDiscount : 0;
 };
 
 const usePrices = (props: Props) => {
@@ -77,7 +77,7 @@ const usePrices = (props: Props) => {
     const price = getPrice(_product.value);
     if (!props.isFinalPrice && !props.isAmountTotal) {
       const discount = availableExtraDiscount.value;
-      if (discount && (!discount.min_amount || price > discount.min_amount)) {
+      if (discount) {
         return getPriceWithDiscount(price, discount);
       }
     }
