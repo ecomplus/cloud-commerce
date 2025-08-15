@@ -87,7 +87,6 @@ const useSSRPicture = async (params: UsePictureParams) => {
     src,
     alt,
     sizes: propSizes,
-    widths,
     aspectRatio: propAspectRatio,
     fit,
     background,
@@ -101,6 +100,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
     assetsPrefix,
     ...attrs
   } = params;
+  const widths = [...params.widths];
 
   let aspectRatio: number | undefined;
   if (propAspectRatio) {
