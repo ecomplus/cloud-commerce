@@ -43,7 +43,7 @@ export default async (apiDoc, queueEntry) => {
       fields: ['_id', 'payments_history', 'fulfillments', 'shipping_lines'] as const,
       limit: 1,
       params: {
-        number: orderNumber || undefined,
+        'number': orderNumber || undefined,
         'hidden_metafields.value': orderNumber ? undefined : `${tinyOrderId}_tiny`,
       },
     });
@@ -97,10 +97,13 @@ export default async (apiDoc, queueEntry) => {
       prop = 'numero_ecommerce';
       tinyOrderNumberSearch = tinyOrderNumber.substring(5);
     }
-    const tinyOrder = pedidos.find(({ pedido }) => {
-      return Number(tinyOrderNumberSearch) === Number(pedido[prop]);
-    });
-
+    const tinyOrder = pedidos
+      .sort((a: { pedido: Record<string, any> }, b: { pedido: Record<string, any> }) => {
+        return a.pedido.id < b.pedido.id ? 1 : -1;
+      })
+      .find(({ pedido }) => {
+        return Number(tinyOrderNumberSearch) === Number(pedido[prop]);
+      });
     if (tinyOrder) {
       return getTinyOrder(tinyOrder.pedido.id);
     }

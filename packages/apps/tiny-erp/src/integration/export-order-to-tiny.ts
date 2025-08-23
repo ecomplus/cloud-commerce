@@ -72,15 +72,20 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
     }
   }
   const { pedidos } = tinyData;
-  let originalTinyOrder;
+  let originalTinyOrder: undefined | Record<string, any>;
   if (Array.isArray(pedidos)) {
-    originalTinyOrder = pedidos.find(({ pedido }) => {
-      return order.number === Number(pedido.numero_ecommerce);
-    });
+    originalTinyOrder = pedidos
+      .sort((a: { pedido: Record<string, any> }, b: { pedido: Record<string, any> }) => {
+        return a.pedido.id < b.pedido.id ? 1 : -1;
+      })
+      .find(({ pedido }) => {
+        return order.number === Number(pedido.numero_ecommerce);
+      });
     if (originalTinyOrder) {
       originalTinyOrder = originalTinyOrder.pedido;
     }
   }
+
   if (!originalTinyOrder) {
     if (!canCreateNew) {
       return null;
