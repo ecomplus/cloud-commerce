@@ -57,7 +57,7 @@
     "uglify-js": "^3.19.3",
     "vite": "^5.4.19",
     "vitest": "^2.1.9",
-    "zx": "^8.8.0"
+    "zx": "^8.8.1"
   },
   "pnpm": {
     "peerDependencyRules": {
