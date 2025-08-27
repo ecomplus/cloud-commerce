@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.20](https://github.com/ecomplus/cloud-commerce/compare/v2.48.19...v2.48.20) (2025-08-27)
+
 ## [2.48.19](https://github.com/ecomplus/cloud-commerce/compare/v2.48.18...v2.48.19) (2025-08-27)
 
 
