@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.48.19](https://github.com/ecomplus/cloud-commerce/compare/v2.48.18...v2.48.19) (2025-08-27)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#608](https://github.com/ecomplus/cloud-commerce/issues/608)) ([b4a36d6](https://github.com/ecomplus/cloud-commerce/commit/b4a36d6465d85125100316527bf44081ae0307d0))
+* **deps:** Update Vue to ^3.5.18 ([#605](https://github.com/ecomplus/cloud-commerce/issues/605)) ([9834b50](https://github.com/ecomplus/cloud-commerce/commit/9834b50f8ea26cd963e737b98a3acf7ed0a15100))
+* **melhor-envio:** Updating to https://github.com/ecomplus/app-melhor-envio/releases/tag/v1.12.1 ([0b099f3](https://github.com/ecomplus/cloud-commerce/commit/0b099f394ba55b1e448fdf1bf792949b9d68bbe9))
+* **ssr:** Update Astro to v4.16.19 [security] ([#610](https://github.com/ecomplus/cloud-commerce/issues/610)) ([7bc0238](https://github.com/ecomplus/cloud-commerce/commit/7bc0238e78b82f86a74b317495a8a13771ae0cf0))
+* **storefront:** Fix SSR context Astro typedef to support .ts "API" routes ([362e213](https://github.com/ecomplus/cloud-commerce/commit/362e21383f1b7e4dbccdef5f41c0a350a18b0687))
+* **storefront:** Prevent changing Picture `widths` array prop by reference ([168e447](https://github.com/ecomplus/cloud-commerce/commit/168e4472e9b78fad79a31486bed55e35ed35cee8))
+* **storefront:** Properly checking discount rule min amount on exported `getPriceWithDiscount` ([f341964](https://github.com/ecomplus/cloud-commerce/commit/f34196486120e99c78f79e7e87b908ff19b6f503))
+* **storefront:** Update Vue to ^3.5.19 ([#611](https://github.com/ecomplus/cloud-commerce/issues/611)) ([b6516b8](https://github.com/ecomplus/cloud-commerce/commit/b6516b8d8f56797e90ed4803e6d2394acd26e457))
+* **tiny-erp:** Read last order (bigger ID) on Tiny when more than one is found by number ([13c20ad](https://github.com/ecomplus/cloud-commerce/commit/13c20ade9ca2d0830b36d6fe3a88ffdc4873c570))
+
 ## [2.48.18](https://github.com/ecomplus/cloud-commerce/compare/v2.48.17...v2.48.18) (2025-08-02)
 
 
