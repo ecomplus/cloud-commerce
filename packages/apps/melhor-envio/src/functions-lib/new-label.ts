@@ -8,19 +8,47 @@ export default (
   const {
     firstname, lastname, phone, email, address,
   } = merchantData;
-  const from: { [x: string]: any } = {
+  const from: Record<string, any> = {
     name: `${firstname} ${lastname}`,
     phone: (phone && phone.phone) || '',
     email,
   };
-  if (merchantData.company_document) {
-    from.company_document = merchantData.company_document;
+  if (appConfig.sender_info) {
+    if (appConfig.sender_info.doc_number) {
+      const docNumber = appConfig.sender_info.doc_number.replace(/\D/g, '');
+      from[docNumber > 11 ? 'company_document' : 'document'] = docNumber;
+    }
+    if (appConfig.sender_info.doc_number_type) {
+      from.economic_activity_code = appConfig.sender_info.doc_number_type
+        .replace('.', '').replace('-', '');
+    }
+    ['name', 'phone', 'email'].forEach((field) => {
+      if (appConfig.sender_info[field]) {
+        from[field] = appConfig.sender_info[field];
+      }
+    });
   }
-  if (merchantData.document) {
-    const field = merchantData.document.length > 11 ? 'company_document' : 'document';
-    from[field] = merchantData.document;
+  if (!from.company_document && !from.document) {
+    if (merchantData.company_document) {
+      from.company_document = merchantData.company_document;
+    }
+    if (merchantData.document) {
+      const docNumber = merchantData.document.replace(/\D/g, '');
+      from[docNumber.length > 11 ? 'company_document' : 'document'] = docNumber;
+    }
   }
-  if (address) {
+
+  const shippingLine = order.shipping_lines?.[0];
+  if (shippingLine?.from?.street && shippingLine.from.city) {
+    from.address = shippingLine.from.street;
+    from.complement = shippingLine.from.complement || '';
+    from.number = shippingLine.from.number || 'SN';
+    from.district = shippingLine.from.borough;
+    from.postal_code = shippingLine.from.zip.replace(/\D/g, '');
+    from.city = shippingLine.from.city;
+    from.state_abbr = shippingLine.from.province_code;
+    from.country_id = 'BR';
+  } else if (address) {
     if (typeof address === 'string') {
       from.address = address;
     } else {
@@ -46,36 +74,27 @@ export default (
     }
   }
 
-  const shippingLine = (order.shipping_lines && order.shipping_lines[0]);
-  // || {};
   const buyer = order.buyers && order.buyers[0];
-  const to = {
+  const to: Record<string, any> = {
     email: '',
   };
 
   if (buyer && buyer.main_email) {
     to.email = buyer.main_email;
     if (buyer.registry_type === 'j') {
-      Object.assign(to, { company_document: buyer.doc_number || '' });
+      to.company_document = buyer.doc_number || '';
     } else {
-      Object.assign(to, { document: buyer.doc_number || '' });
+      to.document = buyer.doc_number || '';
     }
     if (buyer.phones && buyer.phones[0]) {
-      Object.assign(to, { phone: buyer.phones[0].number });
+      to.phone = buyer.phones[0].number;
     }
   }
 
   if (shippingLine?.to) {
     const {
-      name,
-      street,
-      complement,
-      number,
-      borough,
-      city,
-      zip,
+      name, street, complement, number, borough, city, zip,
     } = shippingLine.to;
-
     Object.assign(to, {
       name,
       address: street || '',
@@ -111,11 +130,11 @@ export default (
   }
 
   const getDimensions = (side: string) => {
-    const dimensions = shippingLine?.package && shippingLine.package.dimensions;
+    const dimensions = shippingLine?.package?.dimensions;
     if (dimensions && dimensions[side]) {
       const dimension = dimensions[side];
       if (dimension && dimension.unit) {
-        let dimensionValue = 0;
+        let dimensionValue: number | undefined;
         switch (dimension.unit) {
           case 'cm':
             dimensionValue = dimension.value;
@@ -127,7 +146,6 @@ export default (
             dimensionValue = dimension.value / 10;
             break;
           default:
-            break;
         }
         return dimensionValue;
       }
@@ -135,25 +153,24 @@ export default (
     return 0;
   };
 
-  const products: {
-    name: string
-    quantity: number
-    unitary_value: number
-  }[] = [];
-
+  const products: Array<Record<string, any>> = [];
   let insuranceValue = 0;
   if (order.items) {
     order.items.forEach((item) => {
       products.push({
-        name: item.name || item.product_id,
+        name: item.name,
         quantity: item.quantity,
-        unitary_value: item.price,
+        unitary_value: item.final_price || item.price,
       });
       insuranceValue += item.final_price || item.price;
     });
   }
 
-  const options = {
+  let obs = `Etiqueta referente ao pedido: #${order.number}`;
+  if (shippingLine?.warehouse_code) {
+    obs += ` [${shippingLine.warehouse_code}]`;
+  }
+  const options: Record<string, any> = {
     insurance_value: insuranceValue,
     receipt: (appConfig.receipt),
     own_hand: (appConfig.own_hand),
@@ -162,7 +179,7 @@ export default (
     platform: 'E-Com Plus',
     tags: [
       {
-        tag: `Etiqueta referente ao pedido: #${order.number}`,
+        tag: obs,
       },
       {
         tag: 'order_id',
@@ -173,20 +190,18 @@ export default (
 
   // https://docs.menv.io/?version=latest#9a8f308b-4872-4268-b402-e1b0d64d1f1c
   if (appConfig.enabled_non_commercial) {
-    Object.assign(options, { non_commercial: true });
+    options.non_commercial = true;
   }
 
-  const invoices = shippingLine?.invoices;
-  if (invoices && Array.isArray(invoices) && invoices[0].number) {
-    Object.assign(options, {
-      invoice: {
-        number: invoices[0].number,
-        key: invoices[0].access_key,
-      },
-    });
+  const invoice = shippingLine?.invoices?.[0];
+  if (invoice?.number) {
+    options.invoice = {
+      number: invoice.number,
+      key: invoice.access_key,
+    };
   }
 
-  const label = {
+  const label: Record<string, any> = {
     from,
     to,
     package: {
@@ -199,15 +214,42 @@ export default (
     options,
   };
 
-  if (shippingLine?.app && shippingLine.app.service_code) {
-    Object.assign(label, {
-      service: parseInt(shippingLine.app.service_code.replace('ME ', ''), 10),
-    });
-  }
-  if (appConfig.jadlog_agency) {
-    Object.assign(label, {
-      agency: appConfig.jadlog_agency,
-    });
+  if (shippingLine?.app?.service_code) {
+    const serviceCode = shippingLine.app.service_code;
+    label.service = parseInt(serviceCode.replace('ME ', ''), 10);
+    let propAgency;
+    switch (serviceCode) {
+      case 'ME 31':
+        propAgency = 'loggi_agency';
+        break;
+      case 'ME 12':
+        propAgency = 'latam_agency';
+        break;
+      case 'ME 3':
+      case 'ME 4':
+        propAgency = 'jadlog_agency';
+        break;
+      case 'ME 15':
+      case 'ME 16':
+        propAgency = 'azul_agency';
+        break;
+      default:
+        propAgency = 'melhor_agency';
+    }
+    let warehouseConfig = {};
+    if (shippingLine.warehouse_code && Array.isArray(appConfig.warehouses)) {
+      for (let i = 0; i < appConfig.warehouses.length; i++) {
+        const warehouse = appConfig.warehouses[i];
+        if (warehouse && warehouse.code === shippingLine.warehouse_code) {
+          warehouseConfig = warehouse;
+          break;
+        }
+      }
+    }
+    const agencyCode = warehouseConfig[propAgency] || appConfig[propAgency];
+    if (agencyCode) {
+      label.agency = agencyCode;
+    }
   }
 
   return label;

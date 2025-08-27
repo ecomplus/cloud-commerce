@@ -1,4 +1,6 @@
-const convertDimensions = (dimension) => {
+/* eslint-disable no-restricted-syntax, guard-for-in */
+
+export const convertDimensions = (dimension) => {
   let dimensionValue = 0;
   if (dimension && dimension.unit) {
     switch (dimension.unit) {
@@ -12,19 +14,24 @@ const convertDimensions = (dimension) => {
         dimensionValue = dimension.value / 10;
         break;
       default:
-        break;
     }
   }
   return dimensionValue;
 };
 
-const newShipment = (appConfig, params) => {
+export const newShipment = (appConfig, params) => {
   const calculate = {};
-  const { to, items } = params;
+  const { originZip, to, items } = params;
 
   // https://docs.menv.io/?version=latest#9bbc2460-7786-4871-a0cc-2ae3cd54333e
   // creates a new model for calculating freight in the Melhor Envio API.
   calculate.from = appConfig.merchant_address;
+  if (originZip) {
+    calculate.from = {
+      postal_code: originZip,
+    };
+  }
+  const useCubicWeight = appConfig.use_cubic_weight;
 
   calculate.to = {
     postal_code: to.zip,
@@ -40,10 +47,15 @@ const newShipment = (appConfig, params) => {
 
   calculate.products = [];
 
+  let finalCubicWeight = 0;
+  let finalPhysicalWeight = 0;
+  let finalWeight = 0;
+  let cartSubtotal = 0;
   items.forEach((item) => {
     const { dimensions, weight, quantity } = item;
     // sum physical weight
     let physicalWeight = 0;
+    let cubicWeight = 0;
     if (weight && weight.value) {
       switch (weight.unit) {
         case 'kg':
@@ -56,8 +68,55 @@ const newShipment = (appConfig, params) => {
           physicalWeight = weight.value / 1000000;
           break;
         default:
-          break;
       }
+    }
+
+    finalPhysicalWeight += (quantity * physicalWeight);
+    cartSubtotal += (quantity * (item.final_price || item.price));
+
+    const cmDimensions = {};
+    const sumDimensions = {};
+
+    if (dimensions && useCubicWeight) {
+      for (const side in dimensions) {
+        const dimension = dimensions[side];
+        if (dimension && dimension.value) {
+          switch (dimension.unit) {
+            case 'm':
+              cmDimensions[side] = dimension.value * 100;
+              break;
+            case 'mm':
+              cmDimensions[side] = dimension.value / 10;
+              break;
+            default:
+              cmDimensions[side] = dimension.value;
+          }
+          // add/sum current side to final dimensions object
+          if (cmDimensions[side]) {
+            sumDimensions[side] = sumDimensions[side]
+              ? sumDimensions[side] + cmDimensions[side]
+              : cmDimensions[side];
+          }
+        }
+      }
+
+      for (const sideCubic in sumDimensions) {
+        if (sumDimensions[sideCubic]) {
+          cubicWeight = cubicWeight > 0
+            ? cubicWeight * sumDimensions[sideCubic]
+            : sumDimensions[sideCubic];
+        }
+      }
+      if (cubicWeight > 0) {
+        cubicWeight /= 6000;
+      }
+    }
+
+    if (useCubicWeight && physicalWeight > 0) {
+      finalCubicWeight += (quantity * cubicWeight);
+      const correctedWeight = cubicWeight < 5 || physicalWeight > quantity
+        ? physicalWeight : cubicWeight;
+      finalWeight += (quantity * correctedWeight);
     }
 
     calculate.products.push({
@@ -71,10 +130,23 @@ const newShipment = (appConfig, params) => {
     });
   });
 
+  if (useCubicWeight && finalCubicWeight > 0) {
+    const num = Math.cbrt(finalCubicWeight);
+    const cubicDimension = Math.round(num * 100) / 100;
+    delete calculate.products;
+    calculate.volumes = [{
+      weight: finalWeight || finalPhysicalWeight || 0.5,
+      width: cubicDimension || 10,
+      height: cubicDimension || 10,
+      length: cubicDimension || 10,
+      insurance_value: cartSubtotal,
+    }];
+  }
+
   return calculate;
 };
 
-const matchService = (service, name) => {
+export const matchService = (service, name) => {
   const fields = ['service_name', 'service_code'];
   for (let i = 0; i < fields.length; i++) {
     if (service[fields[i]]) {
@@ -84,36 +156,25 @@ const matchService = (service, name) => {
   return true;
 };
 
-const sortServicesBy = (by) => {
+export const sortServicesBy = (by) => {
   switch (by) {
     case 'Maior preço':
-      return function sort(a, b) {
+      return (a, b) => {
         return a.shipping_line.total_price < b.shipping_line.total_price;
       };
     case 'Menor preço':
-      return function sort(a, b) {
+      return (a, b) => {
         return a.shipping_line.total_price > b.shipping_line.total_price;
       };
     case 'Maior prazo de entrega':
-      return function sort(a, b) {
+      return (a, b) => {
         return a.shipping_line.delivery_time.days < b.shipping_line.delivery_time.days;
       };
     case 'Menor prazo de entrega':
-      return function sort(a, b) {
+      return (a, b) => {
         return a.shipping_line.delivery_time.days > b.shipping_line.delivery_time.days;
       };
     default:
-      break;
   }
-
-  // default
-  return function sort(a, b) {
-    return a.shipping_line.total_price > b.shipping_line.total_price;
-  };
-};
-
-export {
-  newShipment,
-  matchService,
-  sortServicesBy,
+  return () => 0;
 };
