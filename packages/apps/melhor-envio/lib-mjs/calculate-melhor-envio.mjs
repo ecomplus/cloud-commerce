@@ -177,13 +177,6 @@ export default async ({ params, application }) => {
     try {
       const { data } = await meAxios.post('/shipment/calculate', schema);
 
-      if (!data.length) {
-        logger.warn('Empty ME calculate result', {
-          data,
-          schema,
-        });
-      }
-
       let errorMsg;
       data.forEach((service) => {
         let isAvailable = true;
@@ -373,6 +366,10 @@ export default async ({ params, application }) => {
             message: errorMsg,
           };
         }
+        logger.warn('Empty ME calculate result', {
+          data,
+          schema,
+        });
       }
       return response;
     } catch (err) {
