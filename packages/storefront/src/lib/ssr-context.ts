@@ -86,13 +86,21 @@ if (!globalThis.$storefront) {
   emitStorefrontInit();
 }
 
+type _AstroGlobal = AstroGlobal | Readonly<AstroGlobal<any, any, any>>;
+type AstroContext = Omit<_AstroGlobal, 'glob' | 'self' | 'slots'> & {
+  glob?: _AstroGlobal['glob'],
+  self?: _AstroGlobal['self'],
+  slots?: _AstroGlobal['slots'],
+};
+
 declare global {
   /* eslint-disable no-var, vars-on-top */
   var $storefrontCacheController: undefined
-    | ((Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => string | null);
+    | ((Astro: AstroContext, maxAge: number, sMaxAge?: number) => string | null);
   /* eslint-enable no-var */
 }
-const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) => {
+
+const setResponseCache = (Astro: AstroContext, maxAge: number, sMaxAge?: number) => {
   const headerName = import.meta.env.PROD ? 'Cache-Control' : 'X-Cache-Control';
   let cacheControl: string | null = null;
   if (globalThis.$storefrontCacheController) {
@@ -110,7 +118,7 @@ const setResponseCache = (Astro: AstroGlobal, maxAge: number, sMaxAge?: number) 
 export type ApiPrefetchEndpoints = Array<ApiEndpoint | ':slug'>;
 
 const loadRouteContext = async (
-  Astro: AstroGlobal | Readonly<AstroGlobal<any, any, any>>,
+  Astro: AstroContext,
   {
     contentCollection,
     apiPrefetchEndpoints = globalThis.$apiPrefetchEndpoints,
