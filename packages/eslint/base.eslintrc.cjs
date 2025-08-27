@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/no-useless-constructor': ['off'],
     'no-nested-ternary': 'warn',
     'no-await-in-loop': 'warn',
+    'no-constant-condition': ['warn', { checkLoops: false }],
     'no-shadow': 'warn',
     'quote-props': ['warn', 'consistent'],
     'comma-dangle': ['warn', 'always-multiline'],
