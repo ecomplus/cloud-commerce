@@ -33,7 +33,7 @@ type PageContentHero = Exclude<PageContent['hero'], undefined>;
 const now = Date.now();
 const parseBanners = (banners: PageContentHero['slides']) => {
   const validBanners: UseBannerProps[] = [];
-  banners.forEach(({
+  banners?.forEach(({
     startsAt,
     endsAt,
     ...bannerProps
