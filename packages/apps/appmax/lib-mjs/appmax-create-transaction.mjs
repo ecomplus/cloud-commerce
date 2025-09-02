@@ -61,7 +61,7 @@ export default async (modBody) => {
   let appmaxBaseUri;
   if (params.payment_method.code === 'credit_card') {
     appmaxBaseUri = 'https://admin.appmax.com.br/api/v3/payment/credit-card';
-    let installmentsNumber = params.installments_number;
+    let installmentsNumber = params.installments_number || 1;
     if (installmentsNumber > 1) {
       if (appData.installments) {
         // list all installment options
@@ -225,7 +225,7 @@ export default async (modBody) => {
     let { message } = error;
     if (error.response) {
       const { status, data } = error.response;
-      if (status !== 401 && status !== 403) {
+      if (status !== 401) {
         const err = new Error(`${errCode} - ${orderId} => ${message}`);
         err.payment = JSON.stringify(appmaxTransaction);
         err.status = status;
