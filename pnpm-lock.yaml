@@ -272,6 +272,9 @@ importers:
       '@cloudcommerce/types':
         specifier: ^2.48.20
         version: link:../../../../packages/types
+      '@iconify-json/clarity':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@iconify-json/ri':
         specifier: ^1.2.5
         version: 1.2.5
@@ -2722,6 +2725,9 @@ packages:
   '@hutson/parse-repository-url@3.0.2':
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
+
+  '@iconify-json/clarity@1.2.4':
+    resolution: {integrity: sha512-9hQ405dgvK2b2BWQdAIb/+ayH02k5VE4lKw2456wpjtq+57shHXE4Kk8bFa7RwchQHFuTtJBItVhlU4kjejxDw==}
 
   '@iconify-json/fa6-brands@1.2.6':
     resolution: {integrity: sha512-twL3X4KWcxAhbc1vz/mIDsVr+CAItk1/EIfxKUVQtpv6O4eydk5KNYqTZWdvJNHGInUgd6vKg21aWfVgb5DXEg==}
@@ -9430,6 +9436,10 @@ snapshots:
   '@humanwhocodes/object-schema@2.0.3': {}
 
   '@hutson/parse-repository-url@3.0.2': {}
+
+  '@iconify-json/clarity@1.2.4':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/fa6-brands@1.2.6':
     dependencies:
