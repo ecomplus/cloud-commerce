@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.49.0](https://github.com/ecomplus/cloud-commerce/compare/v2.48.20...v2.49.0) (2025-09-05)
+
+
+### Features
+
+* **vindi:** Setup Vindi payment integration app ([05a3b86](https://github.com/ecomplus/cloud-commerce/commit/05a3b864d6caadfe0ee3387ff46c8124e96410f5))
+
+
+### Bug Fixes
+
+* **appmax:** Ensure installments is sent on transaction ([204b427](https://github.com/ecomplus/cloud-commerce/commit/204b4277b1ff73dc63a2d07ef7c1c24977d9cd90))
+* **custom-payment:** Create transaction directly paid when order amount is zero (free) ([3f773cf](https://github.com/ecomplus/cloud-commerce/commit/3f773cf416e0f373236be2c48b2ad981de8d31e2))
+
 ## [2.48.20](https://github.com/ecomplus/cloud-commerce/compare/v2.48.19...v2.48.20) (2025-08-27)
 
 ## [2.48.19](https://github.com/ecomplus/cloud-commerce/compare/v2.48.18...v2.48.19) (2025-08-27)
