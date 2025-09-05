@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-webhooks",
   "type": "module",
-  "version": "2.48.20",
+  "version": "2.49.0",
   "description": "e-com.plus Cloud Commerce app for general order webhooks",
   "main": "lib/index.js",
   "files": [

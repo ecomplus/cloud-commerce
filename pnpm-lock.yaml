@@ -66,11 +66,11 @@ importers:
   ecomplus-stores/barradoce:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -82,25 +82,25 @@ importers:
   ecomplus-stores/barradoce/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/barradoce/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -113,13 +113,13 @@ importers:
         version: 4.2.4
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/types
       '@iconify-json/mingcute':
         specifier: ^1.1.18
@@ -131,23 +131,23 @@ importers:
   ecomplus-stores/barradoce/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/casamor:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -159,25 +159,25 @@ importers:
   ecomplus-stores/casamor/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/casamor/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -187,13 +187,13 @@ importers:
         version: 4.0.2
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/types
       '@fontsource-variable/quicksand':
         specifier: ^5.2.8
@@ -208,23 +208,23 @@ importers:
   ecomplus-stores/casamor/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/efacini:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -236,25 +236,25 @@ importers:
   ecomplus-stores/efacini/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/efacini/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -264,13 +264,13 @@ importers:
         version: 4.0.2
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/types
       '@iconify-json/clarity':
         specifier: ^1.2.4
@@ -285,23 +285,23 @@ importers:
   ecomplus-stores/efacini/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/ladofit:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -313,25 +313,25 @@ importers:
   ecomplus-stores/ladofit/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/ladofit/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -341,13 +341,13 @@ importers:
         version: 4.0.2
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/types
       photoswipe:
         specifier: ^5.4.4
@@ -356,23 +356,23 @@ importers:
   ecomplus-stores/ladofit/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/ladorosa:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -384,25 +384,25 @@ importers:
   ecomplus-stores/ladorosa/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/passport
 
   ecomplus-stores/ladorosa/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -412,13 +412,13 @@ importers:
         version: 4.0.2
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/types
       photoswipe:
         specifier: ^5.4.4
@@ -427,23 +427,23 @@ importers:
   ecomplus-stores/ladorosa/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/modules
 
   ecomplus-stores/tiasonia:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -458,13 +458,13 @@ importers:
         specifier: ^2.29.8
         version: link:../../../../packages/api
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/passport
       '@ecomplus/client':
         specifier: ^2.4.0
@@ -473,13 +473,13 @@ importers:
   ecomplus-stores/tiasonia/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -492,13 +492,13 @@ importers:
         version: 1.5.3
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/types
       '@fontsource-variable/inter':
         specifier: 5.0.20
@@ -519,13 +519,13 @@ importers:
   ecomplus-stores/tiasonia/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../../packages/modules
 
   packages/__skeleton:
@@ -1368,7 +1368,7 @@ importers:
         specifier: workspace:*
         version: link:../apps/tiny-erp
       '@cloudcommerce/app-vindi':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../apps/vindi
       '@cloudcommerce/app-webhooks':
         specifier: workspace:*
@@ -1724,7 +1724,7 @@ importers:
         version: 0.33.5
       unocss:
         specifier: ^66.4.2
-        version: 66.4.2(postcss@8.5.6)(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
+        version: 66.4.2(postcss@8.5.6)(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
       unplugin-auto-import:
         specifier: ^19.3.0
         version: 19.3.0(@vueuse/core@13.7.0(vue@3.5.19(typescript@5.9.2)))
@@ -1767,11 +1767,11 @@ importers:
   store:
     dependencies:
       '@cloudcommerce/cli':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../packages/cli
     devDependencies:
       '@cloudcommerce/eslint':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../packages/eslint
       husky:
         specifier: ^9.1.7
@@ -1783,25 +1783,25 @@ importers:
   store/functions/many:
     dependencies:
       '@cloudcommerce/feeds':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/feeds
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/firebase
       '@cloudcommerce/passport':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/passport
 
   store/functions/ssr:
     dependencies:
       '@cloudcommerce/api':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/api
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/firebase
       '@cloudcommerce/ssr':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
@@ -1811,13 +1811,13 @@ importers:
         version: 4.0.2
     devDependencies:
       '@cloudcommerce/i18n':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/i18n
       '@cloudcommerce/storefront':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/storefront
       '@cloudcommerce/types':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/types
       photoswipe:
         specifier: ^5.4.4
@@ -1826,13 +1826,13 @@ importers:
   store/functions/with-apps:
     dependencies:
       '@cloudcommerce/events':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/events
       '@cloudcommerce/firebase':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/firebase
       '@cloudcommerce/modules':
-        specifier: ^2.48.20
+        specifier: ^2.49.0
         version: link:../../../packages/modules
 
 packages:
@@ -10438,13 +10438,13 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unocss/astro@66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))':
+  '@unocss/astro@66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))':
     dependencies:
       '@unocss/core': 66.4.2
       '@unocss/reset': 66.4.2
-      '@unocss/vite': 66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
+      '@unocss/vite': 66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
     optionalDependencies:
-      vite: 5.4.19(@types/node@22.13.4)(sass@1.85.0)
+      vite: 5.4.18(@types/node@22.13.4)(sass@1.85.0)
 
   '@unocss/cli@66.4.2':
     dependencies:
@@ -10575,7 +10575,7 @@ snapshots:
     dependencies:
       '@unocss/core': 66.4.2
 
-  '@unocss/vite@66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))':
+  '@unocss/vite@66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@unocss/config': 66.4.2
@@ -10586,7 +10586,7 @@ snapshots:
       pathe: 2.0.3
       tinyglobby: 0.2.14
       unplugin-utils: 0.2.4
-      vite: 5.4.19(@types/node@22.13.4)(sass@1.85.0)
+      vite: 5.4.18(@types/node@22.13.4)(sass@1.85.0)
 
   '@vitejs/plugin-vue-jsx@4.1.1(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))(vue@3.5.19(typescript@5.9.2))':
     dependencies:
@@ -15496,9 +15496,9 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss@66.4.2(postcss@8.5.6)(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0)):
+  unocss@66.4.2(postcss@8.5.6)(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0)):
     dependencies:
-      '@unocss/astro': 66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
+      '@unocss/astro': 66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
       '@unocss/cli': 66.4.2
       '@unocss/core': 66.4.2
       '@unocss/postcss': 66.4.2(postcss@8.5.6)
@@ -15516,9 +15516,9 @@ snapshots:
       '@unocss/transformer-compile-class': 66.4.2
       '@unocss/transformer-directives': 66.4.2
       '@unocss/transformer-variant-group': 66.4.2
-      '@unocss/vite': 66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
+      '@unocss/vite': 66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
     optionalDependencies:
-      vite: 5.4.19(@types/node@22.13.4)(sass@1.85.0)
+      vite: 5.4.18(@types/node@22.13.4)(sass@1.85.0)
     transitivePeerDependencies:
       - postcss
       - supports-color
