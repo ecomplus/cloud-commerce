@@ -109,6 +109,9 @@ export const configApps = {
   asaas: {
     appId: 148182,
   },
+  vindi: {
+    appId: 120952,
+  },
   braspag: {
     appId: 112906,
   },

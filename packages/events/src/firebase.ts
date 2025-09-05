@@ -16,6 +16,8 @@ export * from '@cloudcommerce/app-paypal/events';
 
 export * from '@cloudcommerce/app-asaas/events';
 
+export * from '@cloudcommerce/app-vindi/events';
+
 export * from '@cloudcommerce/app-mercadopago/webhook';
 
 export * from '@cloudcommerce/app-pagarme/webhook';

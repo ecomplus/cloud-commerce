@@ -50,6 +50,7 @@
     "@cloudcommerce/app-paypal": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",
     "@cloudcommerce/app-tiny-erp": "workspace:*",
+    "@cloudcommerce/app-vindi": "workspace:*",
     "@cloudcommerce/app-webhooks": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/ssr": "workspace:*",

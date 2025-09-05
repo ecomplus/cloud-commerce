@@ -129,6 +129,12 @@ const callAppModule = async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.vindi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-vindi')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -205,6 +211,12 @@ const callAppModule = async (
     if (appId === apps.asaas.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-asaas')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.vindi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-vindi')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

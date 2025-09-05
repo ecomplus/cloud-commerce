@@ -1,0 +1,42 @@
+{
+  "name": "@cloudcommerce/app-vindi",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "e-com.plus Cloud Commerce app to integrate Vindi Gateway",
+  "main": "lib/vindi.js",
+  "exports": {
+    ".": "./lib/vindi.js",
+    "./events": "./lib/vindi-events.js"
+  },
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/assets",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/vindi"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/vindi#readme",
+  "scripts": {
+    "build": "bash ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
+    "axios": "^1.11.0",
+    "firebase-admin": "^13.4.0",
+    "firebase-functions": "^6.4.0"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}

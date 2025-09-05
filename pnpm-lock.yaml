@@ -1148,6 +1148,28 @@ importers:
         specifier: ^0.9.3
         version: 0.9.3
 
+  packages/apps/vindi:
+    dependencies:
+      '@cloudcommerce/api':
+        specifier: workspace:*
+        version: link:../../api
+      '@cloudcommerce/firebase':
+        specifier: workspace:*
+        version: link:../../firebase
+      axios:
+        specifier: ^1.11.0
+        version: 1.11.0
+      firebase-admin:
+        specifier: ^13.4.0
+        version: 13.4.0
+      firebase-functions:
+        specifier: ^6.4.0
+        version: 6.4.0(firebase-admin@13.4.0)
+    devDependencies:
+      '@cloudcommerce/types':
+        specifier: workspace:*
+        version: link:../../types
+
   packages/apps/webhooks:
     dependencies:
       '@cloudcommerce/api':
@@ -1345,6 +1367,9 @@ importers:
       '@cloudcommerce/app-tiny-erp':
         specifier: workspace:*
         version: link:../apps/tiny-erp
+      '@cloudcommerce/app-vindi':
+        specifier: workspace:^
+        version: link:../apps/vindi
       '@cloudcommerce/app-webhooks':
         specifier: workspace:*
         version: link:../apps/webhooks
@@ -1499,6 +1524,9 @@ importers:
       '@cloudcommerce/app-pix':
         specifier: workspace:*
         version: link:../apps/pix
+      '@cloudcommerce/app-vindi':
+        specifier: workspace:*
+        version: link:../apps/vindi
       '@cloudcommerce/firebase':
         specifier: workspace:*
         version: link:../firebase
@@ -1696,7 +1724,7 @@ importers:
         version: 0.33.5
       unocss:
         specifier: ^66.4.2
-        version: 66.4.2(postcss@8.5.6)(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
+        version: 66.4.2(postcss@8.5.6)(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
       unplugin-auto-import:
         specifier: ^19.3.0
         version: 19.3.0(@vueuse/core@13.7.0(vue@3.5.19(typescript@5.9.2)))
@@ -10410,13 +10438,13 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unocss/astro@66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))':
+  '@unocss/astro@66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))':
     dependencies:
       '@unocss/core': 66.4.2
       '@unocss/reset': 66.4.2
-      '@unocss/vite': 66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
+      '@unocss/vite': 66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
     optionalDependencies:
-      vite: 5.4.18(@types/node@22.13.4)(sass@1.85.0)
+      vite: 5.4.19(@types/node@22.13.4)(sass@1.85.0)
 
   '@unocss/cli@66.4.2':
     dependencies:
@@ -10547,7 +10575,7 @@ snapshots:
     dependencies:
       '@unocss/core': 66.4.2
 
-  '@unocss/vite@66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))':
+  '@unocss/vite@66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@unocss/config': 66.4.2
@@ -10558,7 +10586,7 @@ snapshots:
       pathe: 2.0.3
       tinyglobby: 0.2.14
       unplugin-utils: 0.2.4
-      vite: 5.4.18(@types/node@22.13.4)(sass@1.85.0)
+      vite: 5.4.19(@types/node@22.13.4)(sass@1.85.0)
 
   '@vitejs/plugin-vue-jsx@4.1.1(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))(vue@3.5.19(typescript@5.9.2))':
     dependencies:
@@ -15468,9 +15496,9 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss@66.4.2(postcss@8.5.6)(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0)):
+  unocss@66.4.2(postcss@8.5.6)(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0)):
     dependencies:
-      '@unocss/astro': 66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
+      '@unocss/astro': 66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
       '@unocss/cli': 66.4.2
       '@unocss/core': 66.4.2
       '@unocss/postcss': 66.4.2(postcss@8.5.6)
@@ -15488,9 +15516,9 @@ snapshots:
       '@unocss/transformer-compile-class': 66.4.2
       '@unocss/transformer-directives': 66.4.2
       '@unocss/transformer-variant-group': 66.4.2
-      '@unocss/vite': 66.4.2(vite@5.4.18(@types/node@22.13.4)(sass@1.85.0))
+      '@unocss/vite': 66.4.2(vite@5.4.19(@types/node@22.13.4)(sass@1.85.0))
     optionalDependencies:
-      vite: 5.4.18(@types/node@22.13.4)(sass@1.85.0)
+      vite: 5.4.19(@types/node@22.13.4)(sass@1.85.0)
     transitivePeerDependencies:
       - postcss
       - supports-color
