@@ -5,7 +5,7 @@ import type {
 } from '@cloudcommerce/types';
 import type { PagHiperApp } from '../types/config-app';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
-import axios from './functions-lib/create-axios';
+import createAxios from './functions-lib/create-axios';
 
 type ItemsPagHiper = {
   description: string,
@@ -37,7 +37,7 @@ const createTransactionPagHiper = async (
   // returns request promise
   const endpoint = `/${(isPix ? 'invoice' : 'transaction')}/create/`;
   return new Promise((resolve, reject) => {
-    axios(isPix).post(endpoint, body)
+    createAxios(isPix).post(endpoint, body)
       .then(({ data }) => {
         // save transaction ID on database first
         let createRequest: any;

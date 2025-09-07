@@ -3,7 +3,7 @@ import type { Request, Response } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import { Endpoint } from '@cloudcommerce/api/types';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
-import Axios from './create-axios';
+import createAxios from './create-axios';
 
 const { apps } = config.get();
 
@@ -24,7 +24,7 @@ const readNotification = async (readNotificationBody: { [x: string]: any }, isPi
   // https://dev.paghiper.com/reference#qq
   // returns request promise
   const endpoint = `/${(isPix ? 'invoice' : 'transaction')}/notification/`;
-  const { data } = await Axios(isPix).post(endpoint, readNotificationBody);
+  const { data } = await createAxios(isPix).post(endpoint, readNotificationBody);
   return data;
 };
 
