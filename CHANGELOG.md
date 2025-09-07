@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.49.1](https://github.com/ecomplus/cloud-commerce/compare/v2.49.0...v2.49.1) (2025-09-07)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Add changedback charge status parsed to `in_dispute` ([e637b5f](https://github.com/ecomplus/cloud-commerce/commit/e637b5f696798cb4da6ead1931ae43be795538ef))
+* **paghiper:** Fix reading PagHiper notifications on webhooks process ([4783a80](https://github.com/ecomplus/cloud-commerce/commit/4783a80ba88390f780b69122df58a92c42974dda))
+
 ## [2.49.0](https://github.com/ecomplus/cloud-commerce/compare/v2.48.20...v2.49.0) (2025-09-05)
 
 
