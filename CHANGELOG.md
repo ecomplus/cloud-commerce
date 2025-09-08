@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.49.3](https://github.com/ecomplus/cloud-commerce/compare/v2.49.2...v2.49.3) (2025-09-08)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#621](https://github.com/ecomplus/cloud-commerce/issues/621)) ([57e2040](https://github.com/ecomplus/cloud-commerce/commit/57e204087705f4a049f2a3e6ac1c80735b395b67))
+* **paghiper:** Properly detecting Pix webhooks to handle notification ([31bfad7](https://github.com/ecomplus/cloud-commerce/commit/31bfad7ec8cd505fc83a5ea895616d3f2f888c98))
+
 ## [2.49.2](https://github.com/ecomplus/cloud-commerce/compare/v2.49.1...v2.49.2) (2025-09-07)
 
 ## [2.49.1](https://github.com/ecomplus/cloud-commerce/compare/v2.49.0...v2.49.1) (2025-09-07)
