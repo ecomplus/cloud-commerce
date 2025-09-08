@@ -3,6 +3,7 @@ import type { Request, Response } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import { Endpoint } from '@cloudcommerce/api/types';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
+import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import createAxios from './create-axios';
 
 const { apps } = config.get();
@@ -39,26 +40,27 @@ export default async (req: Request, res: Response) => {
   }
 
   logger.info(`> Paghiper notification for ${transactionCode}`);
-  // const docRef = (await collectionSubscription.doc(transactionCode).get()).data();
-  const Apps = (await api.get(
-    `applications?app_id=${apps.pagHiper.appId}&fields=hidden_data`,
-  )).data.result;
-  const configApp = Apps[0].hidden_data;
-  if (!process.env.PAGHIPER_TOKEN) {
-    const pagHiperToken = configApp?.paghiper_api_key;
-    if (typeof pagHiperToken === 'string' && pagHiperToken) {
-      process.env.PAGHIPER_TOKEN = pagHiperToken;
-    } else {
-      logger.warn('Missing PagHiper API token');
+  if (!process.env.PAGHIPER_API_KEY || !process.env.PAGHIPER_TOKEN) {
+    const appData = await getAppData('pagHiper');
+    if (appData.paghiper_api_key) {
+      process.env.PAGHIPER_API_KEY = appData.paghiper_api_key;
     }
+    if (appData.paghiper_token) {
+      process.env.PAGHIPER_TOKEN = appData.paghiper_token;
+    }
+  }
+  const { PAGHIPER_API_KEY, PAGHIPER_TOKEN } = process.env;
+  if (!PAGHIPER_API_KEY || !PAGHIPER_TOKEN) {
+    logger.warn('Missing PagHiper credentials');
+    return res.sendStatus(403);
   }
 
   try {
-    if (process.env.PAGHIPER_TOKEN && process.env.PAGHIPER_TOKEN === body.apiKey) {
+    if (PAGHIPER_API_KEY && PAGHIPER_API_KEY === body.apiKey) {
       // list order IDs for respective transaction code
       const orders = await listOrdersByTransaction(transactionCode);
       const paghiperResponse = await readNotification(
-        { ...body, token: process.env.PAGHIPER_TOKEN },
+        { ...body, token: PAGHIPER_TOKEN },
         isPix,
       );
 

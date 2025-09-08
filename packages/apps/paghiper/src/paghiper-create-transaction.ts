@@ -135,9 +135,9 @@ export default async (appData: AppModuleBody) => {
 
   const pagHiperToken = configApp.paghiper_api_key;
   if (typeof pagHiperToken === 'string' && pagHiperToken) {
-    process.env.PAGHIPER_TOKEN = pagHiperToken;
+    process.env.PAGHIPER_API_KEY = pagHiperToken;
   }
-  if (!process.env.PAGHIPER_TOKEN) {
+  if (!process.env.PAGHIPER_API_KEY) {
     logger.warn('Missing PagHiper API token');
     return {
       error: 'NO_PAGHIPER_KEYS',
@@ -145,7 +145,7 @@ export default async (appData: AppModuleBody) => {
     };
   }
 
-  paghiperTransaction.apiKey = process.env.PAGHIPER_TOKEN;
+  paghiperTransaction.apiKey = process.env.PAGHIPER_API_KEY;
   // merge configured banking billet options
   const options = configApp.banking_billet_options;
   if (typeof options === 'object' && options !== null) {

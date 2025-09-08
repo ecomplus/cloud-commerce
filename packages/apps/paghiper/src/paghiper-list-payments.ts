@@ -34,10 +34,10 @@ export default async (data: AppModuleBody) => {
     payment_gateways: [],
   };
 
-  if (!process.env.PAGHIPER_TOKEN) {
+  if (!process.env.PAGHIPER_API_KEY) {
     const pagHiperToken = configApp.paghiper_api_key;
     if (typeof pagHiperToken === 'string' && pagHiperToken) {
-      process.env.PAGHIPER_TOKEN = pagHiperToken;
+      process.env.PAGHIPER_API_KEY = pagHiperToken;
     } else {
       logger.warn('Missing PagHiper API token');
 
