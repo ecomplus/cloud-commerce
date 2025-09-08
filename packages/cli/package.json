@@ -36,7 +36,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@fastify/deepmerge": "^3.1.0",
     "csv-parse": "^5.6.0",
-    "dotenv": "^17.2.1",
+    "dotenv": "^17.2.2",
     "fast-xml-parser": "^5.2.5",
     "image-size": "^2.0.2",
     "libsodium-wrappers": "^0.7.15",
