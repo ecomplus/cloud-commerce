@@ -78,8 +78,20 @@ inputs:
     description: 'App: Pagar.me API token'
   pagarme-partner-id:
     description: 'App: Pagar.me partner ID'
+  paghiper-api-key:
+    description: 'App: PagHiper API key'
   paghiper-token:
-    description: 'App: PagHiper API token'
+    description: 'App: PagHiper token'
+  vindi-api-key:
+    description: 'App: Vindi API key'
+  vindi-public-key:
+    description: 'App: Vindi public key'
+  asaas-api-key:
+    description: 'App: Asaas API key'
+  appmax-token:
+    description: 'App: Appmax token'
+  appmax-public-key:
+    description: 'App: Appmax public key'
   pix-credentials:
     description: 'App: Pix credentials'
   flashcourier-contract:
@@ -304,7 +316,13 @@ runs:
         PAGARME_ENCRYPT_KEY: ${{ inputs.pagarme-encrypt-key }}
         PAGARME_TOKEN: ${{ inputs.pagarme-token }}
         PAGARME_PARTNER_ID: ${{ inputs.pagarme-partner-id }}
+        PAGHIPER_API_KEY: ${{ inputs.paghiper-api-key }}
         PAGHIPER_TOKEN: ${{ inputs.paghiper-token }}
+        VINDI_API_KEY: ${{ inputs.vindi-api-key }}
+        VINDI_PUBLIC_KEY: ${{ inputs.vindi-public-key }}
+        ASAAS_API_KEY: ${{ inputs.asaas-api-key }}
+        APPMAX_TOKEN: ${{ inputs.appmax-token }}
+        APPMAX_PUBLIC_KEY: ${{ inputs.appmax-public-key }}
         PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
         WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
@@ -356,7 +374,13 @@ runs:
         PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYPT_KEY
         PAGARME_TOKEN=$PAGARME_TOKEN
         PAGARME_PARTNER_ID=$PAGARME_PARTNER_ID
+        PAGHIPER_API_KEY=$PAGHIPER_API_KEY
         PAGHIPER_TOKEN=$PAGHIPER_TOKEN
+        VINDI_API_KEY=$VINDI_API_KEY
+        VINDI_PUBLIC_KEY=$VINDI_PUBLIC_KEY
+        ASAAS_API_KEY=$ASAAS_API_KEY
+        APPMAX_TOKEN=$APPMAX_TOKEN
+        APPMAX_PUBLIC_KEY=$APPMAX_PUBLIC_KEY
         PIX_CREDENTIALS=$PIX_CREDENTIALS
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
