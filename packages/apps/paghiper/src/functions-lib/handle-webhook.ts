@@ -2,11 +2,9 @@ import type { Orders } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import { Endpoint } from '@cloudcommerce/api/types';
-import config, { logger } from '@cloudcommerce/firebase/lib/config';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import createAxios from './create-axios';
-
-const { apps } = config.get();
 
 const CLIENT_ERR = 'invalidClient';
 
@@ -172,7 +170,7 @@ export default async (req: Request, res: Response) => {
             });
         }
       };
-      await handleNotification();
+      return await handleNotification();
     }
 
     return res.status(400).send('API key does not match');
