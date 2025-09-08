@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.49.4](https://github.com/ecomplus/cloud-commerce/compare/v2.49.3...v2.49.4) (2025-09-08)
+
+
+### Bug Fixes
+
+* **paghiper:** Properly separate API key and token usage ([00bdcd9](https://github.com/ecomplus/cloud-commerce/commit/00bdcd9c42b5bf2cf56f74a7f37e8a29e6658cab))
+* **storefront:** Update Vue to ^3.5.21 ([#620](https://github.com/ecomplus/cloud-commerce/issues/620)) ([d279d8d](https://github.com/ecomplus/cloud-commerce/commit/d279d8db5e6e621b22e547775c56dd95a2861c5c))
+
 ## [2.49.3](https://github.com/ecomplus/cloud-commerce/compare/v2.49.2...v2.49.3) (2025-09-08)
 
 
