@@ -30,7 +30,7 @@ const readNotification = async (readNotificationBody: { [x: string]: any }, isPi
 
 export default async (req: Request, res: Response) => {
   const { body } = req;
-  const isPix = Boolean(req.params.pix);
+  const isPix = Boolean(req.params.pix) || req.path.includes('/pix');
   // handle PagHiper notification request
   // https://dev.paghiper.com/reference#qq
   const transactionCode = (body && body.transaction_id);
@@ -64,7 +64,7 @@ export default async (req: Request, res: Response) => {
 
       const handleNotification = async (isRetry?: boolean) => {
         let { status } = paghiperResponse.status_request;
-        logger.info(`PagHiper ${transactionCode} -> '${status}'`);
+        logger.info(`PagHiper ${transactionCode} -> '${status}'`, { paghiperResponse });
         switch (status) {
           case 'pending':
           case 'paid':
