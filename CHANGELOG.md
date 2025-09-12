@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.49.5](https://github.com/ecomplus/cloud-commerce/compare/v2.49.4...v2.49.5) (2025-09-12)
+
+
+### Bug Fixes
+
+* **appmax:** Fix handling/debugging customer and order creation on Appmax API ([b208039](https://github.com/ecomplus/cloud-commerce/commit/b208039a19b698aee01899d6a1a283ab2866ade8))
+* **paghiper:** Minor fix preventing duplicated response call on webhook (on sucess) ([b6d5d07](https://github.com/ecomplus/cloud-commerce/commit/b6d5d07923cfdb9346defc7f414071631312768f))
+
 ## [2.49.4](https://github.com/ecomplus/cloud-commerce/compare/v2.49.3...v2.49.4) (2025-09-08)
 
 
