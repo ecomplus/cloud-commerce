@@ -1,3 +1,4 @@
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 export const createOrder = async (items, amount, appmaxCustomerId, token) => {
@@ -29,9 +30,11 @@ export const createOrder = async (items, amount, appmaxCustomerId, token) => {
     headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
     data: body,
   });
-  if (data && data.status === 200) {
-    return data.data && data.data.id;
+  if (data?.status === 200) {
+    const orderId = data.order_id || data.data?.order_id || data.data?.id;
+    return orderId;
   }
+  logger.warn('Unexpected response from Appmax create order', { body, data });
   return null;
 };
 

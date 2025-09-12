@@ -1,3 +1,4 @@
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
 export const createOrUpdateCustomer = async (
@@ -49,9 +50,11 @@ export const createOrUpdateCustomer = async (
     headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
     data: body,
   });
-  if (data && data.status === 200) {
-    return data.data && data.data.id;
+  if (data?.status === 200) {
+    const customerId = data.customer_id || data.data?.customer_id || data.data?.id;
+    if (customerId) return customerId;
   }
+  logger.warn('Unexpected response from Appmax create customer', { body, data });
   return null;
 };
 
