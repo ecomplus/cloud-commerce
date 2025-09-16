@@ -127,7 +127,7 @@ runs:
       uses: ouzi-dev/commit-status-updater@v2.0.2
       continue-on-error: true
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v5
       with:
         node-version: 20
         cache: 'npm'
