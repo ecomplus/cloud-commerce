@@ -120,7 +120,6 @@ const sendEmail = (
 const sendGrid = {
   send: sendEmailSendGrid,
   setConfig: setApiKeySendGrid,
-
 };
 
 const smtp = {
