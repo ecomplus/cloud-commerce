@@ -872,9 +872,6 @@ importers:
       '@cloudcommerce/firebase':
         specifier: workspace:*
         version: link:../../firebase
-      '@ecomplus/transactional-mails':
-        specifier: ^2.2.1
-        version: 2.2.1
       '@ecomplus/utils':
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
