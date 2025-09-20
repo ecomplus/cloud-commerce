@@ -8,7 +8,7 @@ import type {
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import { logger } from '@cloudcommerce/firebase/lib/config';
-import getProgramId from './functions-lib/get-program-id';
+import getProgramId from './util/get-program-id';
 
 type UsedPointsEntries = Exclude<Customers['loyalty_points_entries'], undefined>[number]
   & { original_active_points: number }

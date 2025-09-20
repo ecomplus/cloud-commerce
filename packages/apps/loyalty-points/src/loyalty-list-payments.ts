@@ -3,7 +3,7 @@ import type {
   ListPaymentsResponse,
   ListPaymentsParams,
 } from '@cloudcommerce/types';
-import getProgramId from './functions-lib/get-program-id';
+import getProgramId from './util/get-program-id';
 
 export default (data: AppModuleBody) => {
   const { application } = data;
