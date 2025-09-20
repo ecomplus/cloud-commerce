@@ -12,13 +12,16 @@ const { httpsFunctionOptions: { region } } = config.get();
 export const emails = {
   onStoreEvent: createAppEventsFunction('emails', handleApiEvent),
 
-  cronAbandonedCarts: functions.region(region).pubsub
-    .schedule(process.env.CRONTAB_EMAILS_ABANDONED_CARTS || '25 */3 * * *')
+  cronAbandonedCarts: functions.region(region)
+    .runWith({ timeoutSeconds: 300 })
+    .pubsub
+    .schedule(process.env.CRONTAB_EMAILS_ABANDONED_CARTS || '25 12,15,19 * * *')
     .onRun(() => {
       return sendCartEmails();
     }),
 
-  cronExpiringPoints: functions.region(region).pubsub
+  cronExpiringPoints: functions.region(region)
+    .pubsub
     .schedule(process.env.CRONTAB_EMAILS_EXPIRING_POINTS || '37 14 * * 1,4')
     .onRun(() => {
       return sendPointsEmails();

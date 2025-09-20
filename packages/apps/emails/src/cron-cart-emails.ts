@@ -26,7 +26,7 @@ const sendCartEmails = async () => {
     },
     fields: ['_id', 'flags', 'completed', 'customers'] as const,
     sort: ['-updated_at'],
-    limit: 100,
+    limit: 200,
   });
   if (!abandonedCarts.length) {
     return;
