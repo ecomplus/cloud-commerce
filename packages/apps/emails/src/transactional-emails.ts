@@ -21,6 +21,7 @@ export const emails = {
     }),
 
   cronExpiringPoints: functions.region(region)
+    .runWith({ timeoutSeconds: 540 })
     .pubsub
     .schedule(process.env.CRONTAB_EMAILS_EXPIRING_POINTS || '37 14 * * 1,4')
     .onRun(() => {
