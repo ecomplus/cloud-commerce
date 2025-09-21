@@ -9,7 +9,7 @@ const sendPointsEmails = async () => {
     return;
   }
   const startDate = new Date();
-  startDate.setDate(startDate.getDate() + 1);
+  startDate.setHours(startDate.getHours() + 8);
   const endDate = new Date();
   endDate.setDate(endDate.getDate() + 10);
   const {
@@ -45,7 +45,12 @@ const sendPointsEmails = async () => {
       if (!validThruTime) return false;
       return validThruTime >= startDateTime && validThruTime <= endDateTime;
     });
-    if (!activePoints?.length) continue;
+    if (!activePoints?.length) {
+      logger.warn(`Customer ${customer._id} skipped with no active points`, {
+        customer,
+      });
+      continue;
+    }
     const pointsToExpire = activePoints.reduce((acc, pointsEntry) => {
       return acc + pointsEntry.active_points;
     }, 0);
@@ -60,8 +65,8 @@ const sendPointsEmails = async () => {
           Compre em nossa loja com desconto usando os
           <b>${pointsToExpire} pontos</b>
           ativos na sua conta.
-          Aproveite enquanto os pontos estão disponíveis,
-          <b>seus pontos estão expirando nos próximos dias!</b>
+          <b>Seus pontos estão expirando</b>,
+          aproveite enquanto disponíveis!
           `,
           'button_text': 'Usar meus pontos',
           'button_link': `https://${store.domain}/`
