@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.50.0](https://github.com/ecomplus/cloud-commerce/compare/v2.49.5...v2.50.0) (2025-09-21)
+
+
+### Features
+
+* **emails:** Handle abandoned carts and send recovery emails when enabled ([f568716](https://github.com/ecomplus/cloud-commerce/commit/f568716e131289c582c311479f965346034327fa))
+* **emails:** Handle expiring loyalty points and start sending a default email template ([bebaf8f](https://github.com/ecomplus/cloud-commerce/commit/bebaf8fdd5aba05130561c014c7faba120ee0c2d))
+
+
+### Bug Fixes
+
+* **deps:** Escape org dependencies from pnpm minimum release age ([b0d92af](https://github.com/ecomplus/cloud-commerce/commit/b0d92af6a3df941e716153c7790dbb243e685bc2))
+* **deps:** Update dependency axios to v1.12.0 [security] ([#622](https://github.com/ecomplus/cloud-commerce/issues/622)) ([e2b1619](https://github.com/ecomplus/cloud-commerce/commit/e2b16194660067d032c8459703087bd1d7f75f5f))
+* **deps:** Update non-major dependencies ([#623](https://github.com/ecomplus/cloud-commerce/issues/623)) ([98a8f9e](https://github.com/ecomplus/cloud-commerce/commit/98a8f9e093f76aa139962c9136ef3a678548a45c))
+* **emails:** Update default abandoned cart emails cron and handle up to 200 carts each exec ([e6449a2](https://github.com/ecomplus/cloud-commerce/commit/e6449a2e68f6c7121389f58c0483e519a715afc3))
+
 ## [2.49.5](https://github.com/ecomplus/cloud-commerce/compare/v2.49.4...v2.49.5) (2025-09-12)
 
 
