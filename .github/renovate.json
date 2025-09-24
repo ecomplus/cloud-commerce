@@ -36,7 +36,8 @@
         "minor",
         "patch"
       ],
-      "matchCurrentVersion": "!/^0/"
+      "matchCurrentVersion": "!/^0/",
+      "minimumReleaseAge": "3 days"
     },
     {
       "groupName": "Non-major dependencies",
@@ -50,7 +51,8 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "matchCurrentVersion": "/^0/"
+      "matchCurrentVersion": "/^0/",
+      "minimumReleaseAge": "3 days"
     },
     {
       "groupName": "Astro",
@@ -59,7 +61,8 @@
       ],
       "matchPackagePrefixes": [
         "@astrojs/"
-      ]
+      ],
+      "minimumReleaseAge": "2 days"
     },
     {
       "groupName": "Vue",
@@ -68,7 +71,8 @@
       ],
       "matchPackagePrefixes": [
         "@vue/"
-      ]
+      ],
+      "minimumReleaseAge": "2 days"
     }
   ]
 }
