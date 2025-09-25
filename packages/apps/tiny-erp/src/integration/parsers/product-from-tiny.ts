@@ -288,7 +288,7 @@ export default (
           url = anexo.url;
         }
         if (typeof url === 'string' && url.startsWith('http')) {
-          promises.push(tryImageUpload(anexo, product as Products)
+          promises.push(tryImageUpload(url, product as Products)
             .then((picture) => {
               if (product && product.pictures) {
                 product.pictures.push(picture);
