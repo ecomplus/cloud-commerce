@@ -135,7 +135,12 @@ const importProduct = async (
           return null;
         }
         // @ts-ignore
-        return parseProduct(produto, tipo, method === 'POST').then((parsedProduct: Products) => {
+        return parseProduct(
+          produto,
+          appData,
+          tipo,
+          method === 'POST',
+        ).then((parsedProduct) => {
           if (!Number.isNaN(quantity)) {
             parsedProduct.quantity = quantity >= 0 ? quantity : 0;
           }
