@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.50.1](https://github.com/ecomplus/cloud-commerce/compare/v2.50.0...v2.50.1) (2025-09-25)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#625](https://github.com/ecomplus/cloud-commerce/issues/625)) ([a609e48](https://github.com/ecomplus/cloud-commerce/commit/a609e4804665653f0a47614bd9a40ca874fdc9ca))
+* **tiny-erp:** Fix uploading images when importing new products from Tiny ([fbebed8](https://github.com/ecomplus/cloud-commerce/commit/fbebed88fb1c9ed4e60f9d74bada633fd478c03f))
+* **tiny-erp:** Properly handling product parse on Tiny webhook with product overwrite enabled ([0b26ad9](https://github.com/ecomplus/cloud-commerce/commit/0b26ad9cfdbe47124677657a87b28d36a1c59763))
+
 ## [2.50.0](https://github.com/ecomplus/cloud-commerce/compare/v2.49.5...v2.50.0) (2025-09-21)
 
 
