@@ -110,11 +110,16 @@ const importProduct = async (
     }
 
     if (!product && tinyProduct && tipo === 'produto') {
+      logger.info('Tiny product to import', {
+        tinyProduct,
+        canCreateNew,
+      });
       if (!canCreateNew) {
         return null;
       }
       return parseProduct(tinyProduct, appData, tipo, true)
         .then((bodyProduct) => {
+          logger.info(`Creating ${queueSku}`, { bodyProduct });
           return api.post('products', bodyProduct);
         });
     }
@@ -204,6 +209,7 @@ const importProduct = async (
     return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
   if (tinyStockUpdate?.tipo === 'produto' && !queueProductId) {
+    logger.info(`Handling new SKU ${queueSku}`);
     return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
 
