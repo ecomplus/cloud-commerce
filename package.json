@@ -49,15 +49,15 @@
     "dotenv": "^17.2.2",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.6",
+    "lint-staged": "^16.2.1",
     "tailwindcss": "^3.4.17",
     "ts-node": "^10.9.2",
-    "turbo": "^2.5.6",
+    "turbo": "^2.5.8",
     "typescript": "~5.9.2",
     "uglify-js": "^3.19.3",
     "vite": "^5.4.20",
     "vitest": "^2.1.9",
-    "zx": "^8.8.2"
+    "zx": "^8.8.3"
   },
   "pnpm": {
     "peerDependencyRules": {
