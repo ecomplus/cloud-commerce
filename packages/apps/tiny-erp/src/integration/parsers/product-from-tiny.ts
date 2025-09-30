@@ -31,6 +31,7 @@ const tryImageUpload = async (originImgUrl: string, product: Products) => {
   try {
     const { data, headers } = await axios.get(originImgUrl, {
       responseType: 'arraybuffer',
+      timeout: 10000,
     });
     const formData = new FormData();
     formData.append('file', new Blob(data), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
@@ -45,6 +46,7 @@ const tryImageUpload = async (originImgUrl: string, product: Products) => {
         'X-My-ID': authenticationId,
         'X-Access-Token': ecomAccessToken,
       },
+      timeout: 35000,
     });
     if (picture) {
       Object.keys(picture).forEach((imgSize) => {
@@ -297,12 +299,23 @@ export default (
             }));
         }
       });
-      Promise.all(promises).then((images) => {
+      Promise.allSettled(promises).then((results) => {
+        const images = results.map((result, index) => {
+          if (result.status === 'rejected') {
+            logger.warn('Image upload promise rejected', {
+              index,
+              reason: result.reason?.message || result.reason,
+              productSku: product.sku,
+            });
+            return null;
+          }
+          return result.value;
+        }).filter(Boolean);
         if (Array.isArray(product.variations) && product.variations.length) {
           product.variations.forEach((variation) => {
             if (typeof variation.picture_id === 'number') {
               const variationImage = images[variation.picture_id];
-              if (variationImage._id) {
+              if (variationImage?._id) {
                 variation.picture_id = variationImage._id;
               } else {
                 delete variation.picture_id;
@@ -310,7 +323,10 @@ export default (
             }
           });
         }
-        return resolve(product);
+        resolve(product);
+      }).catch((err) => {
+        logger.error(err);
+        resolve(product);
       });
       return;
     }
