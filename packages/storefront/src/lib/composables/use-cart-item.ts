@@ -43,12 +43,16 @@ export const useCartItem = (props: Props) => {
     }
     return cartItem.value.price;
   });
+  const isFreebie = computed(() => {
+    return cartItem.value.flags?.includes('freebie');
+  });
   return {
     cartItem,
     title,
     link,
     image,
     finalPrice,
+    isFreebie,
   };
 };
 
