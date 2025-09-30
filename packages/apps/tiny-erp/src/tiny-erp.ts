@@ -19,7 +19,10 @@ export const tinyerp = {
 
   webhook: functions
     .region(region)
-    .runWith(httpsFunctionOptions)
+    .runWith({
+      ...httpsFunctionOptions,
+      memory: '512MB',
+    })
     .https.onRequest((req, res) => {
       return createExecContext(() => handleTinyWebhook(req, res));
     }),

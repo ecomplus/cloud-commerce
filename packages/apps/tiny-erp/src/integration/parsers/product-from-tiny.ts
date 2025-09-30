@@ -13,7 +13,11 @@ const removeAccents = (str: string) => str.replace(/áàãâÁÀÃÂ/g, 'a')
   .replace(/çÇ/g, 'c');
 
 let ecomAccessToken: string | undefined;
-const tryImageUpload = async (originImgUrl: string, product: Products) => {
+const tryImageUpload = async (
+  originImgUrl: string,
+  product: Products | ProductSet,
+) => {
+  logger.info(`Starting image upload for ${product.sku}`, { originImgUrl });
   const {
     storeId,
     apiAuth: {
@@ -290,17 +294,15 @@ export default (
           url = anexo.url;
         }
         if (typeof url === 'string' && url.startsWith('http')) {
-          promises.push(tryImageUpload(url, product as Products)
+          promises.push(tryImageUpload(url, product)
             .then((picture) => {
-              if (product && product.pictures) {
-                product.pictures.push(picture);
-              }
+              if (product.pictures) product.pictures.push(picture);
               return picture;
             }));
         }
       });
       Promise.allSettled(promises).then((results) => {
-        const images = results.map((result, index) => {
+        const pictures = results.map((result, index) => {
           if (result.status === 'rejected') {
             logger.warn('Image upload promise rejected', {
               index,
@@ -314,9 +316,9 @@ export default (
         if (Array.isArray(product.variations) && product.variations.length) {
           product.variations.forEach((variation) => {
             if (typeof variation.picture_id === 'number') {
-              const variationImage = images[variation.picture_id];
-              if (variationImage?._id) {
-                variation.picture_id = variationImage._id;
+              const variationPicture = pictures[variation.picture_id];
+              if (variationPicture?._id) {
+                variation.picture_id = variationPicture._id;
               } else {
                 delete variation.picture_id;
               }
