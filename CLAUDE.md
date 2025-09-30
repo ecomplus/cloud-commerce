@@ -8,6 +8,18 @@
 - Always check what files are being staged before committing
 - Ask for confirmation if dependency files would be included unintentionally
 
+## Git Commit Message Rules
+
+**IMPORTANT**: Commit messages must be user-friendly and business-focused:
+- **Main message** should describe what the change accomplishes for users/business
+- **Secondary lines** can include technical implementation details
+- Focus on the problem being solved rather than technical jargon in the main message
+- Example:
+  - Good: "Fix product import when image uploads fail"
+  - Bad: "Add Promise.allSettled and timeout handling to parseProduct"
+- Keep main message concise and clear about the user impact
+- Technical details belong in the commit body, not the subject line
+
 ## Project Context
 
 Complete platform on top of headless commerce APIs. High performant Astro + Vue storefront with built-in CMS. Integrations for payments, shipping, ERPs, CRMs and others. Truly extensible event-driven and serverless architecture. Easy and cheap deploy to Firebase.
