@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.51.1](https://github.com/ecomplus/cloud-commerce/compare/v2.51.0...v2.51.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#628](https://github.com/ecomplus/cloud-commerce/issues/628)) ([88f7c61](https://github.com/ecomplus/cloud-commerce/commit/88f7c61cee490907f7f3b5c327fad48747a2ca78))
+* **storefront:** Update Vue to ^3.5.22 ([#627](https://github.com/ecomplus/cloud-commerce/issues/627)) ([8cc69b2](https://github.com/ecomplus/cloud-commerce/commit/8cc69b20e67b50fa665641e974de5333d9d13985))
+* **tiny-erp:** Fix product import when image uploads fail ([8e9c9c7](https://github.com/ecomplus/cloud-commerce/commit/8e9c9c79c5378a3b0b5a4d8d95917e1cf002f603))
+
 ## [2.51.0](https://github.com/ecomplus/cloud-commerce/compare/v2.50.1...v2.51.0) (2025-09-28)
 
 
