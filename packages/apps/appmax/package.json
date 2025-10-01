@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-appmax",
   "type": "module",
-  "version": "2.51.1",
+  "version": "2.51.2",
   "description": "e-com.plus Cloud Commerce app to integrate Appmax",
   "main": "lib/appmax.js",
   "exports": {
