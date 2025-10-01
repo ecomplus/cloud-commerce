@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.51.2](https://github.com/ecomplus/cloud-commerce/compare/v2.51.1...v2.51.2) (2025-10-01)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Increase memory and improve product import with images ([f17a345](https://github.com/ecomplus/cloud-commerce/commit/f17a345a8af70060bb5eef3ef3a2932ebb8fce3f))
+
 ## [2.51.1](https://github.com/ecomplus/cloud-commerce/compare/v2.51.0...v2.51.1) (2025-09-30)
 
 
