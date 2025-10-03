@@ -284,7 +284,7 @@ export default (
         product.pictures = [];
       }
       const promises: Promise<any>[] = [];
-      tinyProduct.anexos.forEach((anexo) => {
+      tinyProduct.anexos.slice(0, 3).forEach((anexo) => {
         let url;
         if (anexo && anexo.anexo) {
           url = anexo.anexo;
