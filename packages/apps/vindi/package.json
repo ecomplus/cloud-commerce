@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-vindi",
   "type": "module",
-  "version": "2.51.3",
+  "version": "2.51.4",
   "description": "e-com.plus Cloud Commerce app to integrate Vindi Gateway",
   "main": "lib/vindi.js",
   "exports": {
