@@ -33,24 +33,22 @@ const tryImageUpload = async (
     ecomAccessToken = data.access_token;
   }
   try {
-    const { data, headers } = await axios.get(originImgUrl, {
+    const { data } = await axios.get(originImgUrl, {
       responseType: 'arraybuffer',
-      timeout: 10000,
+      timeout: 20000,
     });
     const formData = new FormData();
-    formData.append('file', new Blob(data), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
+    formData.append('file', new Blob([data]), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
     const {
       data: { picture },
       status,
     } = await axios.post('https://ecomplus.app/api/storage/upload.json', formData, {
       headers: {
-        'Content-Type': headers['Content-Type'],
-        'Content-Length': headers['Content-Length'],
         'X-Store-ID': storeId,
         'X-My-ID': authenticationId,
         'X-Access-Token': ecomAccessToken,
       },
-      timeout: 35000,
+      timeout: 60000,
     });
     if (picture) {
       Object.keys(picture).forEach((imgSize) => {

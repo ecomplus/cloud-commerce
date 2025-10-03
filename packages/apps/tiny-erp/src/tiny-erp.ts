@@ -22,6 +22,7 @@ export const tinyerp = {
     .runWith({
       ...httpsFunctionOptions,
       memory: '512MB',
+      timeoutSeconds: 180,
     })
     .https.onRequest((req, res) => {
       return createExecContext(() => handleTinyWebhook(req, res));
