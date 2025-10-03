@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.51.4](https://github.com/ecomplus/cloud-commerce/compare/v2.51.3...v2.51.4) (2025-10-03)
+
+
+### Bug Fixes
+
+* **appmax:** Removing mocked User-Agent and debug strange unauthorizeds on notes ([7a563ef](https://github.com/ecomplus/cloud-commerce/commit/7a563efa63df2c3b2060bc90dd5ed9cfb711a9c7))
+
 ## [2.51.3](https://github.com/ecomplus/cloud-commerce/compare/v2.51.2...v2.51.3) (2025-10-03)
 
 
