@@ -27,12 +27,11 @@ export const createOrder = async (items, amount, appmaxCustomerId, token) => {
   const { data } = await axios({
     method: 'post',
     url: 'https://admin.appmax.com.br/api/v3/order',
-    headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
     data: body,
   });
   if (data?.status === 200) {
     const orderId = data.order_id || data.data?.order_id || data.data?.id;
-    return orderId;
+    if (orderId) return orderId;
   }
   logger.warn('Unexpected response from Appmax create order', { body, data });
   return null;

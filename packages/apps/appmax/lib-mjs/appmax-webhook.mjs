@@ -21,7 +21,6 @@ const handleAppmaxWehook = async (req, res) => {
     `https://admin.appmax.com.br/api/v3/order/${appmaxOrderId}`,
     {
       params: { 'access-token': APPMAX_TOKEN },
-      headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
       maxRedirects: 0,
       validateStatus(status) {
         return (status >= 200 && status <= 301) || status === 403;

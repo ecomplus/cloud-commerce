@@ -47,7 +47,6 @@ export const createOrUpdateCustomer = async (
   const { data } = await axios({
     method: 'post',
     url: 'https://admin.appmax.com.br/api/v3/customer',
-    headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
     data: body,
   });
   if (data?.status === 200) {

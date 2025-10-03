@@ -133,7 +133,6 @@ export default async (modBody) => {
     const response = await axios({
       method: 'post',
       url: appmaxBaseUri,
-      headers: { 'User-Agent': 'SEC07-Lintfr-VA3' },
       data: appmaxTransaction,
     });
 
@@ -215,6 +214,7 @@ export default async (modBody) => {
         updated_at: new Date().toISOString(),
         current: 'unauthorized',
       };
+      transaction.notes = response.data.text;
       return { transaction };
     }
 
