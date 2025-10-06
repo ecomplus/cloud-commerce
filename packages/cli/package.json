@@ -41,7 +41,7 @@
     "image-size": "^2.0.2",
     "libsodium-wrappers": "^0.7.15",
     "md5": "^2.3.0",
-    "typescript": "~5.9.2",
+    "typescript": "~5.9.3",
     "zx": "^8.8.4"
   }
 }
