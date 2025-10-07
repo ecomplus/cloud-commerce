@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.52.0](https://github.com/ecomplus/cloud-commerce/compare/v2.51.4...v2.52.0) (2025-10-07)
+
+
+### Features
+
+* **storefront:** Enable CMS preview in production for default store pages ([dc3917f](https://github.com/ecomplus/cloud-commerce/commit/dc3917fa1397f8f34568a8c50984d0c0172cae23))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#630](https://github.com/ecomplus/cloud-commerce/issues/630)) ([46f522d](https://github.com/ecomplus/cloud-commerce/commit/46f522d3f455c16ca2d526fecb18f894ca3a18f9))
+* **emails:** Update nodemailer to v7.0.7 [security] ([#631](https://github.com/ecomplus/cloud-commerce/issues/631)) ([ac68612](https://github.com/ecomplus/cloud-commerce/commit/ac68612693137bf85a58ddceeb8c7e81ef8b7b62))
+* **storefront:** CMS panel styles and organization improves ([6c6f299](https://github.com/ecomplus/cloud-commerce/commit/6c6f299a5b6658895439b7b38be562c445a180d8))
+* **tiny-erp:** Increasing max images processed on new products import to 5 uploads ([bb22a1c](https://github.com/ecomplus/cloud-commerce/commit/bb22a1c5bb45c214813e510bd70f002778f6d914))
+
 ## [2.51.4](https://github.com/ecomplus/cloud-commerce/compare/v2.51.3...v2.51.4) (2025-10-03)
 
 
