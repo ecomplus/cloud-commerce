@@ -52,15 +52,34 @@ body {
       }
     }
   }
+  [class*="ControlPaneContainer"] {
+    padding-bottom: 14px;
+    > [class*="ControlContainer"] {
+      margin-top: 28px;
+      &:first-of-type {
+        margin-top: 36px;
+      }
+    }
+    > div > div > [class*="FieldLabel"] {
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
   [class*="ControlHint"] {
     padding-top: 2px;
     padding-left: 6px;
   }
   [class*="TopBarContainer"] {
+    background: none;
+    padding: 10px 13px;
     [class*="ExpandButtonContainer"] {
       font-size: 0;
       button {
-        font-size: 14px;
+        padding-right: 12px;
+        font-size: 16px;
+        &:hover {
+          color: rgb(58, 105, 199);
+        }
       }
     }
   }
@@ -71,6 +90,22 @@ body {
     > div {
       border-radius: 5px;
     }
+    [class*="ControlTopbar"] + div {
+      border-top-left-radius: 0;
+      &:has(> .css-1lxv15y) {
+        padding-bottom: 0;
+      }
+    }
+    > div > div > [class*="ControlContainer"] {
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+    > div > div > [class*="listControlItem"] {
+      &:first-of-type {
+        margin-top: 12px;
+      }
+    }
   }
   [class*="listControlItem"] {
     [class*="ControlContainer"]:first-of-type {
@@ -79,6 +114,16 @@ body {
     [class*="DragIconContainer"] [class*="IconWrapper"] {
       width: 26px;
       height: 26px;
+    }
+    &:has(> .css-dcc2zv) > [class*="FieldLabel"] {
+      display: none;
+    }
+    > [class*="FieldLabel"] {
+      background: none;
+      font-size: 14px;
+      line-height: 2;
+      font-weight: 500;
+      opacity: 0.8;
     }
   }
   [class*="StyledListItemTopBar"] {
