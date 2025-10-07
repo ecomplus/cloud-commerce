@@ -323,6 +323,8 @@ const loadRouteContext = async (
     Astro.response.headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
   }
   const routeContext = {
+    // @ts-expect-error: lang fallback
+    lang: 'pt_br',
     ...config,
     isHomepage,
     isSearchPage,
