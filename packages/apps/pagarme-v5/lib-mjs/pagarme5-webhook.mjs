@@ -248,13 +248,12 @@ const handleWehook = async (req, res) => {
       }
 
       if (charge.order) {
-        // payment update (order in pagarme)
         const { order: orderPagarme, status } = charge;
         logger.info(`Pagar.me charge ${orderPagarme.id} ${status}`);
         const order = await getOrderIntermediatorTransactionId(orderPagarme.id);
         if (order) {
-          if (order.financial_status?.current !== parserChangeStatusToEcom(status)) {
-            // updadte status
+          const newEcomStatus = parserChangeStatusToEcom(status);
+          if (order.financial_status?.current !== newEcomStatus) {
             let isUpdateTransaction = false;
             let transactionBody;
             const transaction = order.transactions.find(
@@ -270,12 +269,13 @@ const handleWehook = async (req, res) => {
             } else if (transactionPagarme.transaction_type === 'boleto') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
             } else if (transactionPagarme.transaction_type === 'pix') {
-              let notes = transaction.notes;
-              // pix_provider_tid"
-              notes = notes.replaceAll('display:block', 'display:none'); // disable QR Code
-              notes = `${notes} # PIX Aprovado`;
-              transactionBody = { notes };
-              isUpdateTransaction = true;
+              if (newEcomStatus === 'paid') {
+                let notes = transaction.notes;
+                notes = notes.replaceAll('display:block', 'display:none');
+                notes = `${notes} # PIX Aprovado`;
+                transactionBody = { notes };
+                isUpdateTransaction = true;
+              }
             }
             let statusDateTime;
             if (order.payments_history?.some(({ flags }) => flags?.includes('pagarme-expired'))) {
@@ -285,7 +285,7 @@ const handleWehook = async (req, res) => {
             }
             const bodyPaymentHistory = {
               date_time: statusDateTime,
-              status: parserChangeStatusToEcom(status),
+              status: newEcomStatus,
               notification_code: notificationCode,
               flags: ['PagarMe'],
             };
@@ -297,7 +297,7 @@ const handleWehook = async (req, res) => {
               await updateTransaction(order._id, transactionBody, transaction._id)
                 .catch(logger.error);
             }
-            logger.info(`${order._id} update to ${parserChangeStatusToEcom(status)}`);
+            logger.info(`${order._id} update to ${newEcomStatus}`);
             return res.sendStatus(201);
           }
           return res.sendStatus(200);
