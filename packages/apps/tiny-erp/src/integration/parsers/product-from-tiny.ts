@@ -4,6 +4,17 @@ import api from '@cloudcommerce/api';
 import axios from 'axios';
 import ecomUtils from '@ecomplus/utils';
 import getEnv from '@cloudcommerce/firebase/lib/env';
+import { imageSize } from 'image-size';
+
+const tryImageSize = (data: any) => {
+  try {
+    const buffer = Buffer.from(data);
+    const dimensions = imageSize(buffer);
+    return dimensions;
+  } catch {
+    return null;
+  }
+};
 
 const removeAccents = (str: string) => str.replace(/áàãâÁÀÃÂ/g, 'a')
   .replace(/éêÉÊ/g, 'e')
@@ -37,6 +48,7 @@ const tryImageUpload = async (
       responseType: 'arraybuffer',
       timeout: 20000,
     });
+    const dimensions = tryImageSize(data);
     const formData = new FormData();
     formData.append('file', new Blob([data]), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
     const {
@@ -51,18 +63,46 @@ const tryImageUpload = async (
       timeout: 60000,
     });
     if (picture) {
-      Object.keys(picture).forEach((imgSize) => {
-        if (picture[imgSize]) {
-          if (!picture[imgSize].url) {
-            delete picture[imgSize];
-            return;
-          }
-          if (picture[imgSize].size !== undefined) {
-            delete picture[imgSize].size;
-          }
-          picture[imgSize].alt = `${product.name} (${imgSize})`;
+      if (dimensions?.width && dimensions.height) {
+        const { width: w, height: h } = dimensions;
+        if (picture.zoom) {
+          picture.zoom.size = `${w}x${h}`;
         }
-      });
+        Object.keys(picture).forEach((imgSize) => {
+          if (picture[imgSize]) {
+            if (!picture[imgSize].url) {
+              delete picture[imgSize];
+              return;
+            }
+            const maxPx = picture[imgSize].size;
+            if (maxPx > 0) {
+              if (maxPx >= Math.max(w, h)) {
+                picture[imgSize].size = `${w}x${h}`;
+              } else {
+                picture[imgSize].size = w > h
+                  ? `${maxPx}x${Math.round((h * maxPx) / w)}`
+                  : `${Math.round((w * maxPx) / h)}x${maxPx}`;
+              }
+            } else if (picture[imgSize].size !== undefined) {
+              delete picture[imgSize].size;
+            }
+            picture[imgSize].alt = `${product.name} (${imgSize})`;
+          }
+        });
+      } else {
+        Object.keys(picture).forEach((imgSize) => {
+          if (picture[imgSize]) {
+            if (!picture[imgSize].url) {
+              delete picture[imgSize];
+              return;
+            }
+            if (picture[imgSize].size !== undefined) {
+              delete picture[imgSize].size;
+            }
+            picture[imgSize].alt = `${product.name} (${imgSize})`;
+          }
+        });
+      }
       if (Object.keys(picture).length) {
         return {
           _id: ecomUtils.randomObjectId(),
