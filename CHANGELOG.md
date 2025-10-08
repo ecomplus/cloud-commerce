@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.52.1](https://github.com/ecomplus/cloud-commerce/compare/v2.52.0...v2.52.1) (2025-10-08)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Hide Pix QR Code on webhook with paid status check only ([b7c84c8](https://github.com/ecomplus/cloud-commerce/commit/b7c84c89702e46e2382a7b75d4e8ba6b73ef5055))
+* **tiny-erp:** Calculate and save proper image dimensions for product pictures ([aba0858](https://github.com/ecomplus/cloud-commerce/commit/aba08580af2f627e2e08d723b5d0cfdd21015c44))
+
 ## [2.52.0](https://github.com/ecomplus/cloud-commerce/compare/v2.51.4...v2.52.0) (2025-10-07)
 
 
