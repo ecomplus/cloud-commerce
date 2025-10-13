@@ -41,9 +41,9 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@commitlint/rules": "^19.8.1",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@commitlint/rules": "^20.0.0",
     "@types/node": "^20.19.20",
     "commit-and-tag-version": "^12.6.0",
     "dotenv": "^17.2.3",
