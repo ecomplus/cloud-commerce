@@ -163,9 +163,10 @@ if (abExperimentIds.length) {
     if (!expContent?.experimentId) return false;
     const keys = Object.keys(expContent);
     for (let i = 0; i < keys.length; i++) {
-      const key = keys[i] as 'strings';
+      const key = keys[i] as 'strings' | 'booleans';
       if (Array.isArray(expContent[key])) {
-        if (expContent[key].find(({ name, value }) => name && value)) {
+        if (expContent[key]
+          .find(({ name, value }) => name && (value || value === false))) {
           return true;
         }
       }

@@ -52,6 +52,7 @@ export const setAbVariant = (experimentId: string) => {
   const _abVariantContent = globalThis._abExperiments?.find((abExp: any) => {
     return abExp?.experimentId === experimentId;
   });
+  console.log({ _abVariantContent });
   if (_abVariantContent) {
     Object.assign(abVariantContent, _abVariantContent);
     if (!import.meta.env.SSR && !window.AB_EXPERIMENT_ID) {
@@ -94,8 +95,12 @@ export const initializeRemoteConfig = (canWaitIdle = true) => {
 
 if (!import.meta.env.SSR) {
   if (globalThis._abExperiments?.length) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlExpId = urlParams.get('exp_id');
     if (window.AB_EXPERIMENT_ID) {
       setAbVariant(window.AB_EXPERIMENT_ID);
+    } else if (urlExpId) {
+      setAbVariant(urlExpId);
     } else if (abVariantContent.experimentId) {
       isAbExpReady.value = true;
     } else {
