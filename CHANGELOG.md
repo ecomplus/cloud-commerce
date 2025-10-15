@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.52.2](https://github.com/ecomplus/cloud-commerce/compare/v2.52.1...v2.52.2) (2025-10-15)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#633](https://github.com/ecomplus/cloud-commerce/issues/633)) ([6c72941](https://github.com/ecomplus/cloud-commerce/commit/6c72941f5351e63340ed28a9488257f3ee54608f))
+* **storefront:** Handle ?exp_id URL param to force A/B experiment variant ([2016d5f](https://github.com/ecomplus/cloud-commerce/commit/2016d5f685549064ba00f6c1d5317c16d6ca796d))
+
 ## [2.52.1](https://github.com/ecomplus/cloud-commerce/compare/v2.52.0...v2.52.1) (2025-10-08)
 
 
