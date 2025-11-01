@@ -35,7 +35,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@fastify/deepmerge": "^3.1.0",
-    "csv-parse": "^5.6.0",
+    "csv-parse": "^6.1.0",
     "dotenv": "^17.2.3",
     "fast-xml-parser": "^5.3.0",
     "image-size": "^2.0.2",
