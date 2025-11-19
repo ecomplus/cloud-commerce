@@ -53,7 +53,7 @@
     "@iconify-json/logos": "^1.2.10",
     "@types/gtag.js": "^0.0.20",
     "@vueuse/core": "13.9.0",
-    "astro": "4.16.19",
+    "astro": "5.15.9",
     "astro-capo": "^0.0.1",
     "chroma-js": "^3.1.2",
     "dotenv": "^17.2.3",
