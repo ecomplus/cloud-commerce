@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.53.0](https://github.com/ecomplus/cloud-commerce/compare/v2.52.2...v2.53.0) (2025-11-21)
+
+
+### Features
+
+* **storefront:** Add web push notifications support with Firebase Cloud Messaging ([4fd93b6](https://github.com/ecomplus/cloud-commerce/commit/4fd93b674307bc3acb5021367f855ba613beab15))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#635](https://github.com/ecomplus/cloud-commerce/issues/635)) ([636bdbb](https://github.com/ecomplus/cloud-commerce/commit/636bdbbbb67ae9634ae81b45062f1bdd997025d2))
+* **deps:** Update non-major dependencies ([#638](https://github.com/ecomplus/cloud-commerce/issues/638)) ([5e2f42a](https://github.com/ecomplus/cloud-commerce/commit/5e2f42ae8b3160255164d4d48eeb55198d594fe2))
+* **deps:** Update non-major dependencies ([#646](https://github.com/ecomplus/cloud-commerce/issues/646)) ([425acab](https://github.com/ecomplus/cloud-commerce/commit/425acab404ed5c89d8b81873d67ff45fab531564))
+* **storefront:** Update Vue to ^3.5.24 ([#645](https://github.com/ecomplus/cloud-commerce/issues/645)) ([d8f927a](https://github.com/ecomplus/cloud-commerce/commit/d8f927ad89ea6adaed2a455245d8b71d0e7fd80e))
+
 ## [2.52.2](https://github.com/ecomplus/cloud-commerce/compare/v2.52.1...v2.52.2) (2025-10-15)
 
 
