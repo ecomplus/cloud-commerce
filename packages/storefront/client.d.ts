@@ -18,6 +18,7 @@ interface Window {
     messagingSenderId: string,
     appId: string,
     measurementId?: string,
+    vapidKey?: string,
   };
   $reCaptchaSiteKey?: string;
   ECOM_STORE_ID: number;
