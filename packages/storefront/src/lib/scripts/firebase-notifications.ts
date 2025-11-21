@@ -5,23 +5,19 @@ export const registerNotification = async (): Promise<string | null> => {
       console.error('VAPID key not configured');
       return null;
     }
-
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
       console.warn('Notification permission denied');
       return null;
     }
-
     const { firebaseApp } = await import('./firebase-app');
     const { getMessaging, getToken } = await import('firebase/messaging');
-
     const messaging = getMessaging(firebaseApp);
     const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
     const token = await getToken(messaging, {
       vapidKey,
       serviceWorkerRegistration: registration,
     });
-
     if (token) {
       console.log('FCM token:', token);
       return token;
@@ -39,11 +35,9 @@ export const setupForegroundListener = async (
 ): Promise<void> => {
   if (import.meta.env.SSR) return;
   if (Notification.permission !== 'granted') return;
-
   try {
     const { firebaseApp } = await import('./firebase-app');
     const { getMessaging, onMessage } = await import('firebase/messaging');
-
     const messaging = getMessaging(firebaseApp);
     onMessage(messaging, callback);
   } catch (error) {
