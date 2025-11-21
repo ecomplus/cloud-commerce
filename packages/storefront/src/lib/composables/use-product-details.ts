@@ -29,6 +29,7 @@ export const useProductDetails = (props: Props) => {
   const quantity = ref(product.min_quantity || 1);
   const hasSkuSelectionAlert = ref(false);
   const variationId = ref<ResourceId | null>(props.variationId || null);
+
   watch(toRef(props.variationId), () => {
     if (props.variationId === undefined) return;
     variationId.value = props.variationId;
@@ -49,6 +50,7 @@ export const useProductDetails = (props: Props) => {
       }, { immediate: true });
     });
   }
+
   const isSkuSelected = computed(() => {
     return Boolean(!product.variations?.length || variationId.value);
   });
@@ -61,10 +63,12 @@ export const useProductDetails = (props: Props) => {
     }
     return !hasSkuSelectionAlert.value;
   };
+
   const addToCart = () => {
     if (!checkVariation()) return;
     loadToCart(quantity.value, { variationId: variationId.value });
   };
+
   const shippedItems = reactive([{
     ...product,
     body_html: undefined,
@@ -73,6 +77,7 @@ export const useProductDetails = (props: Props) => {
   watch(quantity, () => {
     shippedItems[0].quantity = quantity.value;
   });
+
   return {
     product,
     variationId,

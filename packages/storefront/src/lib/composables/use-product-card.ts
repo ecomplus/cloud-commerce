@@ -103,6 +103,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       isFetching.value = false;
     })();
   }
+
   if (shouldRefetchStock) {
     idsToStockRefetch.push(product._id);
     refetchStock();
@@ -188,6 +189,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       product.quantity = maxKitQnt;
     }
   };
+
   const isLoadingToCart = ref(false);
   const isFailedToCart = ref(false);
   const loadToCart = async (
