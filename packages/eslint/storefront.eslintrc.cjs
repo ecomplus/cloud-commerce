@@ -13,6 +13,7 @@ module.exports = {
     'array-bracket-spacing': 'warn',
     'no-restricted-syntax': 'warn',
     'no-plusplus': 'warn',
+    'max-len': ['warn', { 'code': 120 }],
     'quote-props': 'off',
     'quotes': 'off',
     'global-require': 'off',

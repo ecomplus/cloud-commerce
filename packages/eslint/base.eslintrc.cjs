@@ -67,6 +67,7 @@ module.exports = {
     'no-continue': 'off',
     'lines-between-class-members': 'off',
     'arrow-body-style': 'off',
+    'no-new': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
