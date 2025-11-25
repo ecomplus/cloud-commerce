@@ -38,20 +38,25 @@ const useNotificationPermission = (props: Props = {}) => {
       return;
     }
     isRequesting.value = true;
-    try {
-      const token = await registerFn();
-      if (token) {
-        if (onTokenReceived) {
-          await onTokenReceived(token);
+    const registrationPromise = (async () => {
+      try {
+        const token = await registerFn();
+        if (token) {
+          if (onTokenReceived) {
+            await onTokenReceived(token);
+          }
+          localStorage.removeItem('notification-prompt-dismissed');
         }
-        isVisible.value = false;
-        localStorage.removeItem('notification-prompt-dismissed');
+      } catch (error) {
+        console.error('Error enabling notifications:', error);
       }
-    } catch (error) {
-      console.error('Error enabling notifications:', error);
-    } finally {
-      isRequesting.value = false;
-    }
+    })();
+    const timeoutPromise = new Promise<void>((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+    await Promise.race([registrationPromise, timeoutPromise]);
+    isVisible.value = false;
+    isRequesting.value = false;
   };
 
   const dismiss = () => {
