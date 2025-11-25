@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.53.1](https://github.com/ecomplus/cloud-commerce/compare/v2.53.0...v2.53.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#647](https://github.com/ecomplus/cloud-commerce/issues/647)) ([0d8b8aa](https://github.com/ecomplus/cloud-commerce/commit/0d8b8aa275b1c603feb4c69ad8ebd1e6759f60b4))
+* **storefront:** Close notification popup quickly after user response ([dae714b](https://github.com/ecomplus/cloud-commerce/commit/dae714bafc73f92e3f3e42d79020255074ac4c15))
+
 ## [2.53.0](https://github.com/ecomplus/cloud-commerce/compare/v2.52.2...v2.53.0) (2025-11-21)
 
 
