@@ -88,12 +88,22 @@ export default async (modBody) => {
   }
 
   // setup payment gateway objects
-  ['credit_card', 'banking_billet'].forEach((paymentMethod) => {
+  ['credit_card', 'banking_billet', 'account_deposit'].forEach((paymentMethod) => {
     paymentTypes.forEach((type) => {
       const methodConfig = appData[paymentMethod] || {};
       if (!methodConfig.disable) {
         const isCreditCard = paymentMethod === 'credit_card';
-        let label = methodConfig.label || (isCreditCard ? 'Cartão de crédito' : 'Boleto bancário');
+        const isPix = paymentMethod === 'account_deposit';
+        let label = methodConfig.label;
+        if (!label) {
+          if (isCreditCard) {
+            label = 'Cartão de crédito';
+          } else if (isPix) {
+            label = 'Pix';
+          } else {
+            label = 'Boleto bancário';
+          }
+        }
         if (type === 'recurrence' && appData.subscription_label) {
           label = appData.subscription_label + label;
         }

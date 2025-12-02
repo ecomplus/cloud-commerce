@@ -98,8 +98,9 @@ export default async (modBody) => {
     }
     vindiBill.payment_method_code = 'credit_card';
     vindiBill.installments = installmentsNumber;
+  } else if (params.payment_method.code === 'account_deposit') {
+    vindiBill.payment_method_code = 'pix';
   } else {
-    // banking billet
     vindiBill.payment_method_code = appData.banking_billet?.is_yapay
       ? 'bank_slip_yapay' : 'bank_slip';
   }
@@ -222,7 +223,11 @@ export default async (modBody) => {
         transaction.banking_billet = {
           link: vindiCharge.print_url,
         };
+      } else if (params.payment_method.code === 'account_deposit') {
+        transaction.payment_link = vindiCharge.print_url || createdBill.url;
       }
+    } else if (params.payment_method.code === 'account_deposit' && createdBill.url) {
+      transaction.payment_link = createdBill.url;
     }
 
     const vindiTransaction = vindiCharge.last_transaction;
@@ -247,7 +252,10 @@ export default async (modBody) => {
       updated_at: vindiBillRes.updated_at || vindiBillRes.created_at || new Date().toISOString(),
       current: parseVindiStatus(vindiCharge.status),
     };
-    return { transaction };
+    return {
+      redirect_to_payment: Boolean(transaction.payment_link),
+      transaction,
+    };
   } catch (error) {
     // try to debug request error
     const errCode = 'VINDI_BILL_ERR';
