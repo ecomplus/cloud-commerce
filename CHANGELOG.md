@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.54.0](https://github.com/ecomplus/cloud-commerce/compare/v2.53.2...v2.54.0) (2025-12-02)
+
+
+### Features
+
+* **vindi:** Adding initial support for Pix payments on Vindi integration ([6e187d0](https://github.com/ecomplus/cloud-commerce/commit/6e187d0815358d271eaeb132d0fff2b2597ba721))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#652](https://github.com/ecomplus/cloud-commerce/issues/652)) ([8cdea42](https://github.com/ecomplus/cloud-commerce/commit/8cdea422b98843d106e1caec2e0aec3e7e9aa979))
+
 ## [2.53.2](https://github.com/ecomplus/cloud-commerce/compare/v2.53.1...v2.53.2) (2025-11-25)
 
 ## [2.53.1](https://github.com/ecomplus/cloud-commerce/compare/v2.53.0...v2.53.1) (2025-11-25)
