@@ -11,7 +11,7 @@ export const getYapayAxios = async () => {
   });
   yapayAxios.interceptors.request.use((config) => {
     if (config.data && typeof config.data === 'object' && !config.data.token) {
-      config.data.token = YAPAY_API_TOKEN;
+      config.data.token_account = YAPAY_API_TOKEN;
     } else {
       config.params = {
         token_account: YAPAY_API_TOKEN,
