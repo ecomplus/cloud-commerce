@@ -145,9 +145,11 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
         name: yapayData.payment?.payment_method_name,
       },
     };
+    /*
     if (yapayData.payment.url_payment) {
       transaction.payment_link = yapayData.payment.url_payment;
     }
+    */
     if (yapayData.payment.qrcode_path) {
       transaction.notes = `<img src="${yapayData.payment.qrcode_path}" style="display:block;margin:0 auto">`;
     }
