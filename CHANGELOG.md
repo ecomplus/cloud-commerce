@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.55.2](https://github.com/ecomplus/cloud-commerce/compare/v2.55.1...v2.55.2) (2025-12-05)
+
+
+### Bug Fixes
+
+* **yapay:** Fix handling buyer phone number on create transaction ([327228e](https://github.com/ecomplus/cloud-commerce/commit/327228eb5826e02858828111a6c1c47924b7da91))
+
 ## [2.55.1](https://github.com/ecomplus/cloud-commerce/compare/v2.55.0...v2.55.1) (2025-12-05)
 
 
