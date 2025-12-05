@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.55.0](https://github.com/ecomplus/cloud-commerce/compare/v2.54.0...v2.55.0) (2025-12-05)
+
+
+### Features
+
+* **yapay:** Setup new Yapay (Vindi Pagamentos) integration app ([77eb73b](https://github.com/ecomplus/cloud-commerce/commit/77eb73be54f3bc712717855f599f79669ff9853d))
+
+
+### Bug Fixes
+
+* **storefront:** Update Vue to ^3.5.25 ([#651](https://github.com/ecomplus/cloud-commerce/issues/651)) ([9442aa0](https://github.com/ecomplus/cloud-commerce/commit/9442aa0c81e44db94c4f2fadeee3c463709154bc))
+
 ## [2.54.0](https://github.com/ecomplus/cloud-commerce/compare/v2.53.2...v2.54.0) (2025-12-02)
 
 
