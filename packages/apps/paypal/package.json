@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-paypal",
   "type": "module",
-  "version": "2.54.0",
+  "version": "2.55.0",
   "description": "e-com.plus Cloud Commerce app to integrate PayPal Plus",
   "main": "lib/paypal.js",
   "exports": {
