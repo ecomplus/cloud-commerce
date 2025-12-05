@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.55.1](https://github.com/ecomplus/cloud-commerce/compare/v2.55.0...v2.55.1) (2025-12-05)
+
+
+### Bug Fixes
+
+* **yapay:** Fix setting `token_account` on Yapay API requests ([69be2dd](https://github.com/ecomplus/cloud-commerce/commit/69be2ddc5eb44132b399d9207b37b7d2acf8afca))
+
 ## [2.55.0](https://github.com/ecomplus/cloud-commerce/compare/v2.54.0...v2.55.0) (2025-12-05)
 
 
