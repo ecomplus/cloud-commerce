@@ -63,10 +63,10 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
   }
 
   try {
-    const phone = getPhone(buyer);
+    const phone = getPhone(buyer.phone);
     const phoneContacts: Array<Record<string, any>> = [];
     if (phone) {
-      const phoneNumber = phone.replace(/\D/g, '');
+      const phoneNumber = phone.replace('+55', '').replace(/\D/g, '');
       if (phoneNumber.length === 11) {
         phoneContacts.push({
           type_contact: 'M',
