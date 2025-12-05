@@ -112,6 +112,9 @@ export const configApps = {
   vindi: {
     appId: 120952,
   },
+  yapay: {
+    appId: 120950,
+  },
   braspag: {
     appId: 112906,
   },

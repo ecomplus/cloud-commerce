@@ -52,6 +52,7 @@
     "@cloudcommerce/app-tiny-erp": "workspace:*",
     "@cloudcommerce/app-vindi": "workspace:*",
     "@cloudcommerce/app-webhooks": "workspace:*",
+    "@cloudcommerce/app-yapay": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/ssr": "workspace:*",
     "firebase-admin": "^13.6.0",

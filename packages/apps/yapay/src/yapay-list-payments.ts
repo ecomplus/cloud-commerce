@@ -2,35 +2,25 @@ import type {
   AppModuleBody,
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
-import { addInstallments } from './util/asaas-utils';
 
 type PaymentGateway = ListPaymentsResponse['payment_gateways'][number]
 
-export const asaasListPayments = async (modBody: AppModuleBody<'list_payments'>) => {
-  const {
-    application,
-    params,
-  } = modBody;
+export const yapayListPayments = async (modBody: AppModuleBody<'list_payments'>) => {
+  const { application } = modBody;
   const appData = {
     ...application.data,
     ...application.hidden_data,
   };
-  if (appData.asaas_api_key) {
-    process.env.ASAAS_API_KEY = appData.asaas_api_key;
+  if (appData.yapay_api_token) {
+    process.env.YAPAY_API_TOKEN = appData.yapay_api_token;
   }
-  process.env.ASAAS_ENV = appData.asaas_sandbox
-    ? 'sandbox'
-    : process.env.ASAAS_ENV || 'live';
-  if (!process.env.ASAAS_API_KEY) {
+  if (!process.env.YAPAY_API_TOKEN) {
     return {
-      error: 'NO_ASAAS_KEY',
-      message: 'Chave de API não configurada (lojista deve configurar o aplicativo)',
+      error: 'NO_YAPAY_TOKEN',
+      message: 'Token da conta não configurado (lojista deve configurar o aplicativo)',
     };
   }
 
-  const {
-    amount = { total: 0 },
-  } = params;
   const response: ListPaymentsResponse = {
     payment_gateways: [],
   };
@@ -53,14 +43,14 @@ export const asaasListPayments = async (modBody: AppModuleBody<'list_payments'>)
   }
 
   const intermediator = {
-    name: 'Asaas',
-    link: 'https://www.asaas.com/',
-    code: 'asaas3',
+    name: 'Vindi Pagamentos',
+    link: 'https://vindi.com.br/',
+    code: 'yapay3',
   };
   const paymentMethods: PaymentGateway['payment_method']['code'][] = [
     'account_deposit',
-    'credit_card',
-    'banking_billet',
+    // 'credit_card',
+    // 'banking_billet',
   ];
   paymentMethods.forEach((paymentMethod) => {
     const methodConfig = appData[paymentMethod] || {};
@@ -94,26 +84,10 @@ export const asaasListPayments = async (modBody: AppModuleBody<'list_payments'>)
         response.discount_option.label = label;
       }
     }
-    if (isCreditCard) {
-      if (!gateway.icon) {
-        // gateway.icon = `${baseUri}/credit-card.png`; // TODO: baseUri
-        gateway.icon = 'https://ecom-pagarme5.web.app/credit-card.png';
-      }
-      const { installments } = appData;
-      if (installments) {
-        // list all installment options and default one
-        addInstallments(
-          amount.total,
-          installments,
-          gateway,
-          response,
-        );
-      }
-    }
     response.payment_gateways.push(gateway);
   });
 
   return response;
 };
 
-export default asaasListPayments;
+export default yapayListPayments;

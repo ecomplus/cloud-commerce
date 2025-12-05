@@ -55,6 +55,7 @@
     "@cloudcommerce/app-paypal": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",
     "@cloudcommerce/app-vindi": "workspace:*",
+    "@cloudcommerce/app-yapay": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
     "ajv": "^8.17.1",
