@@ -133,7 +133,7 @@ runs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
 
-    - uses: actions/cache@v4
+    - uses: actions/cache@v5
       id: npm-cache-root
       with:
         path: node_modules
@@ -152,7 +152,7 @@ runs:
         echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
     - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-g-cache
       with:
         path: |
@@ -215,27 +215,27 @@ runs:
       run: echo "deploy_codebase=ssr" >> $GITHUB_ENV
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'many'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-cache-many
       with:
         path: functions/many/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('functions/many/package-lock.json') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-cache-ssr
       with:
         path: functions/ssr/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('functions/ssr/package-lock.json') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: functions/ssr/.cache
         key: ${{ runner.os }}-${{ env.year }}-sf-${{ hashFiles('functions/ssr/public/**/*') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-cache-with-apps
       with:
         path: functions/with-apps/node_modules
