@@ -31,6 +31,7 @@ export const cancelExpiredOrders = async () => {
       return app?.intermediator?.code === 'pagarme';
     });
     if (!transaction) return;
+    if (transaction.status?.current !== 'pending') return;
     const transactionDate = transaction.created_at && new Date(transaction.created_at);
     if (!transactionDate) return;
     const paymentMethod = transaction.payment_method.code;
@@ -43,6 +44,7 @@ export const cancelExpiredOrders = async () => {
     } else {
       return;
     }
+    logger.info(`Canceling order ${_id}`, { transaction });
     api.post(`orders/${_id}/payments_history`, {
       transaction_id: transaction._id,
       date_time: new Date().toISOString(),
