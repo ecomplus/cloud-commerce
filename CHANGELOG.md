@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.55.3](https://github.com/ecomplus/cloud-commerce/compare/v2.55.2...v2.55.3) (2025-12-20)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#658](https://github.com/ecomplus/cloud-commerce/issues/658)) ([59faa91](https://github.com/ecomplus/cloud-commerce/commit/59faa9147dfae8f24f0f223db1c5b32fd9d1abca))
+* **deps:** Update non-major dependencies ([#660](https://github.com/ecomplus/cloud-commerce/issues/660)) ([fb85de6](https://github.com/ecomplus/cloud-commerce/commit/fb85de6e0eb74ed6fea58153d64fc4b6260f62f1))
+* **pagarme-v5:** Double check pending transaction status to cancel by expiration ([fb2de27](https://github.com/ecomplus/cloud-commerce/commit/fb2de27ee3c61e5463acdd698efa9acc09162c67))
+* **storefront:** Updating checkout vbeta-app script version ([0449b33](https://github.com/ecomplus/cloud-commerce/commit/0449b33a13b8898e11bafec6f77a2fe295e5bebd))
+* **yapay:** Removing (bad) payment link on Pix payments ([22f229f](https://github.com/ecomplus/cloud-commerce/commit/22f229f119293b3bb1e641ba8fd6f033aa03c2c9))
+
 ## [2.55.2](https://github.com/ecomplus/cloud-commerce/compare/v2.55.1...v2.55.2) (2025-12-05)
 
 
