@@ -32,7 +32,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       message: 'AppID não configurado (lojista deve configurar o aplicativo)',
     };
   }
-  const wooviKeyId = `${WOOVI_APP_ID}`.substring(0, 6) + `${WOOVI_APP_ID}`.slice(-3);
+  const wooviKeyId = '2-' + `${WOOVI_APP_ID}`.substring(0, 6) + `${WOOVI_APP_ID}`.slice(-3);
 
   const {
     order_id: orderId,

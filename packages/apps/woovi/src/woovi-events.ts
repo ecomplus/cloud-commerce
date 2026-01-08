@@ -35,7 +35,11 @@ const listOrdersByTransaction = async (correlationID: string) => {
 };
 
 const handleWebhook = async (req: Request, res: Response) => {
-  const { body } = req;
+  const { headers, body } = req;
+  if (body.evento === 'teste_webhook') {
+    logger.info('Woovi test webhook', { headers });
+    return res.status(200).send();
+  }
   const event = body?.event as string | undefined;
   const charge = body?.charge || body?.pix?.charge;
   if (!event || !charge) {
@@ -54,7 +58,7 @@ const handleWebhook = async (req: Request, res: Response) => {
     return res.sendStatus(204);
   }
 
-  const authorization = req.headers.authorization as string | undefined;
+  const authorization = headers.authorization as string | undefined;
   if (!authorization) {
     logger.warn('Woovi webhook missing Authorization header');
     return res.sendStatus(401);
