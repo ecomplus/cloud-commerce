@@ -51,7 +51,7 @@ const handleWebhook = async (req: Request, res: Response) => {
     logger.warn('Woovi webhook missing correlationID', { body });
     return res.sendStatus(400);
   }
-  logger.info(`> Woovi notification: ${event}`, { correlationID });
+  logger.info(`> Woovi notification: ${event} for ${correlationID}`);
   const status = parseWooviStatus(event);
   if (!status) {
     logger.info(`Ignoring Woovi event: ${event}`);
@@ -81,8 +81,8 @@ const handleWebhook = async (req: Request, res: Response) => {
   try {
     const orders = await listOrdersByTransaction(correlationID);
     if (!orders.length) {
-      logger.warn('Order not found for Woovi charge', { correlationID });
-      return res.sendStatus(404);
+      logger.warn(`Order not found for Woovi charge ${correlationID}`);
+      return res.status(200).send();
     }
 
     await Promise.all(orders.map(async (order) => {
@@ -108,7 +108,7 @@ const handleWebhook = async (req: Request, res: Response) => {
       logger.info(`Updated order ${orderId} to ${status}`);
     }));
 
-    return res.sendStatus(200);
+    return res.status(200).send();
   } catch (err: any) {
     logger.error('Woovi webhook error', err);
     return res.status(500).send({
