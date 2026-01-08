@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.56.3](https://github.com/ecomplus/cloud-commerce/compare/v2.56.2...v2.56.3) (2026-01-08)
+
+
+### Bug Fixes
+
+* **woovi:** Respond to test webhook and update key ID format ([b714040](https://github.com/ecomplus/cloud-commerce/commit/b7140406a92532bfe84d067427f097ed3e9df116))
+
 ## [2.56.2](https://github.com/ecomplus/cloud-commerce/compare/v2.56.1...v2.56.2) (2026-01-08)
 
 
