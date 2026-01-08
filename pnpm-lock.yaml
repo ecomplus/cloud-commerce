@@ -1269,8 +1269,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       libsodium-wrappers:
-        specifier: ^0.7.16
-        version: 0.7.16
+        specifier: 0.7.15
+        version: 0.7.15
       md5:
         specifier: ^2.3.0
         version: 2.3.0
@@ -6198,8 +6198,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  libsodium-wrappers@0.7.16:
-    resolution: {integrity: sha512-Gtr/WBx4dKjvRL1pvfwZqu7gO6AfrQ0u9vFL+kXihtHf6NfkROR8pjYWn98MFDI3jN19Ii1ZUfPR9afGiPyfHg==}
+  libsodium-wrappers@0.7.15:
+    resolution: {integrity: sha512-E4anqJQwcfiC6+Yrl01C1m8p99wEhLmJSs0VQqST66SbQXXBoaJY0pF4BNjRYa/sOQAxx6lXAaAFIlx+15tXJQ==}
 
   libsodium@0.7.16:
     resolution: {integrity: sha512-3HrzSPuzm6Yt9aTYCDxYEG8x8/6C0+ag655Y7rhhWZM9PT4NpdnbqlzXhGZlDnkgR6MeSTnOt/VIyHLs9aSf+Q==}
@@ -13834,7 +13834,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  libsodium-wrappers@0.7.16:
+  libsodium-wrappers@0.7.15:
     dependencies:
       libsodium: 0.7.16
 
