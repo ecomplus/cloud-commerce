@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.56.4](https://github.com/ecomplus/cloud-commerce/compare/v2.56.3...v2.56.4) (2026-01-08)
+
+
+### Bug Fixes
+
+* **woovi:** End webhook handler with status 200 always than body is valid and authorization passes ([143c4e6](https://github.com/ecomplus/cloud-commerce/commit/143c4e6b937ac08622cb14e66b83224291face4a))
+
 ## [2.56.3](https://github.com/ecomplus/cloud-commerce/compare/v2.56.2...v2.56.3) (2026-01-08)
 
 
