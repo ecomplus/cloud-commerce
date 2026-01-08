@@ -3,9 +3,9 @@ import '@cloudcommerce/firebase/lib/init';
 import type { Orders } from '@cloudcommerce/types';
 import type { Request, Response } from 'firebase-functions/v1';
 import * as functions from 'firebase-functions/v1';
+import { getFirestore } from 'firebase-admin/firestore';
 import api from '@cloudcommerce/api';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
-import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 
 type PaymentEntry = Exclude<Orders['payments_history'], undefined>[0]
 
@@ -37,7 +37,7 @@ const listOrdersByTransaction = async (correlationID: string) => {
 const handleWebhook = async (req: Request, res: Response) => {
   const { body } = req;
   const event = body?.event as string | undefined;
-  const charge = body?.charge || body?.pix;
+  const charge = body?.charge || body?.pix?.charge;
   if (!event || !charge) {
     logger.warn('Woovi webhook missing event or charge', { body });
     return res.sendStatus(400);
@@ -48,30 +48,34 @@ const handleWebhook = async (req: Request, res: Response) => {
     return res.sendStatus(400);
   }
   logger.info(`> Woovi notification: ${event}`, { correlationID });
-
-  if (!process.env.WOOVI_APP_ID) {
-    const appData = await getAppData('woovi');
-    if (appData.woovi_app_id) {
-      process.env.WOOVI_APP_ID = appData.woovi_app_id;
-    }
+  const status = parseWooviStatus(event);
+  if (!status) {
+    logger.info(`Ignoring Woovi event: ${event}`);
+    return res.sendStatus(204);
   }
-  const { WOOVI_APP_ID } = process.env;
-  if (!WOOVI_APP_ID) {
-    logger.warn('Missing Woovi AppID');
+
+  const authorization = req.headers.authorization as string | undefined;
+  if (!authorization) {
+    logger.warn('Woovi webhook missing Authorization header');
+    return res.sendStatus(401);
+  }
+  const docRef = getFirestore().doc('wooviSetup/webhook');
+  const docSnap = await docRef.get();
+  const webhookSetupData = docSnap.data();
+  const { storeId } = config.get();
+  const expectedAuth = webhookSetupData?.wooviKeyId
+    ? `${storeId}_${webhookSetupData.wooviKeyId}`
+    : null;
+  if (!expectedAuth || authorization !== expectedAuth) {
+    logger.warn('Woovi webhook authorization mismatch', {
+      authorization,
+      expectedAuth,
+    });
     return res.sendStatus(403);
   }
 
   try {
-    const status = parseWooviStatus(event);
-    if (!status) {
-      logger.info(`Ignoring Woovi event: ${event}`);
-      return res.sendStatus(204);
-    }
-
-    let orders: Orders[] = [];
-    if (correlationID) {
-      orders = await listOrdersByTransaction(correlationID);
-    }
+    const orders = await listOrdersByTransaction(correlationID);
     if (!orders.length) {
       logger.warn('Order not found for Woovi charge', { correlationID });
       return res.sendStatus(404);

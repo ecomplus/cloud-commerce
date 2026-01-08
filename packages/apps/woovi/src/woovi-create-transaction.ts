@@ -4,7 +4,8 @@ import type {
 } from '@cloudcommerce/types';
 import type { AxiosError } from 'axios';
 import { randomUUID } from 'node:crypto';
-import { logger } from '@cloudcommerce/firebase/lib/config';
+import { getFirestore } from 'firebase-admin/firestore';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import {
   fullName as getFullname,
   phone as getPhone,
@@ -31,6 +32,7 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       message: 'AppID não configurado (lojista deve configurar o aplicativo)',
     };
   }
+  const wooviKeyId = `${WOOVI_APP_ID}`.substring(0, 6) + `${WOOVI_APP_ID}`.slice(-3);
 
   const {
     order_id: orderId,
@@ -111,6 +113,62 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       transaction.account_deposit = {
         valid_thru: new Date(charge.expiresDate).toISOString(),
       };
+    }
+
+    const {
+      storeId,
+      httpsFunctionOptions,
+    } = config.get();
+    const locationId = httpsFunctionOptions.region;
+    const appBaseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net`;
+    const webhookUrl = `${appBaseUri}/woovi-webhook`;
+    const docRef = getFirestore().doc('wooviSetup/webhook');
+    const docSnap = await docRef.get();
+    const webhookSetupData = docSnap.data();
+    if (webhookSetupData?.wooviKeyId !== wooviKeyId) {
+      const oldWebhookIds = webhookSetupData?.webhookIds as string[] | undefined;
+      if (oldWebhookIds?.length) {
+        await Promise.all(oldWebhookIds.map(async (id) => {
+          return wooviAxios.delete(`/webhook/${id}`).catch(logger.warn);
+        }));
+      }
+      const webhookEvents = [
+        'OPENPIX:CHARGE_CREATED',
+        'OPENPIX:CHARGE_COMPLETED',
+        'OPENPIX:CHARGE_COMPLETED_NOT_SAME_CUSTOMER_PAYER',
+        'PIX_AUTOMATIC_COBR_COMPLETED',
+        'OPENPIX:CHARGE_EXPIRED',
+        'OPENPIX:TRANSACTION_REFUND_RECEIVED',
+        'PIX_TRANSACTION_REFUND_SENT_CONFIRMED',
+      ];
+      const webhookIds: string[] = [];
+      try {
+        await Promise.all(webhookEvents.map(async (event) => {
+          const { data } = await wooviAxios.post('/webhook', {
+            webhook: {
+              name: `ecom.plus #${storeId} ${event.replace('OPENPIX:', '').replace('PIX_', '')}`,
+              event,
+              url: webhookUrl,
+              authorization: `${storeId}_${wooviKeyId}`,
+              isActive: true,
+            },
+          });
+          if (data.webhook?.id) {
+            webhookIds.push(data.webhook.id);
+          }
+        }));
+        await docRef.set({ wooviKeyId, webhookIds })
+          .catch(logger.warn);
+      } catch (_err) {
+        const err = _err as AxiosError;
+        logger.warn('Failed saving Woovi webhook', {
+          url: err.config?.url,
+          request: err.config?.data,
+          response: err.response?.data,
+          status: err.response?.status,
+        });
+        logger.error(err);
+      }
     }
 
     return { transaction };
