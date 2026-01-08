@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-woovi",
   "type": "module",
-  "version": "2.56.3",
+  "version": "2.56.4",
   "description": "e-com.plus Cloud Commerce app to integrate Woovi (OpenPix) Pix payments",
   "main": "lib/woovi.js",
   "exports": {
