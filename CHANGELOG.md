@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.56.2](https://github.com/ecomplus/cloud-commerce/compare/v2.56.1...v2.56.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* **woovi:** Auto-register webhooks and validate by authorization header ([4e5cd05](https://github.com/ecomplus/cloud-commerce/commit/4e5cd052c67ba875b09f909b8d9b6a5b9f6d1b7b))
+
 ## [2.56.1](https://github.com/ecomplus/cloud-commerce/compare/v2.56.0...v2.56.1) (2026-01-08)
 
 
