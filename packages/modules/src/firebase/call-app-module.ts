@@ -141,6 +141,12 @@ const callAppModule = async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.woovi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-woovi')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -229,6 +235,12 @@ const callAppModule = async (
     if (appId === apps.yapay.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-yapay')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.woovi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-woovi')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

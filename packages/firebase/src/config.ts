@@ -115,6 +115,9 @@ export const configApps = {
   yapay: {
     appId: 120950,
   },
+  woovi: {
+    appId: 120963,
+  },
   braspag: {
     appId: 112906,
   },
