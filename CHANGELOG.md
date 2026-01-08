@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.56.1](https://github.com/ecomplus/cloud-commerce/compare/v2.56.0...v2.56.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* **deps:** Revert `libsodium-wrappers` to fixed v0.7.15 ([5c3bf7e](https://github.com/ecomplus/cloud-commerce/commit/5c3bf7e41aeb9e8a3fea93a1a8dce4208081e0c3))
+
 ## [2.56.0](https://github.com/ecomplus/cloud-commerce/compare/v2.55.3...v2.56.0) (2026-01-08)
 
 
