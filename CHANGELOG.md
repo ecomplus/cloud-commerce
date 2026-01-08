@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.56.0](https://github.com/ecomplus/cloud-commerce/compare/v2.55.3...v2.56.0) (2026-01-08)
+
+
+### Features
+
+* **woovi:** Setup new Woovi integration app for Pix payments ([d069f10](https://github.com/ecomplus/cloud-commerce/commit/d069f103898d10a29f2d70994bc38557dcdfb08e))
+
+
+### Bug Fixes
+
+* **cli:** Update dependency csv-parse to v6 ([#673](https://github.com/ecomplus/cloud-commerce/issues/673)) ([aa72ab8](https://github.com/ecomplus/cloud-commerce/commit/aa72ab8ca2b4d06a0d032488f4bddf67965560f9))
+* **deps:** update dependency @vueuse/core to v14 ([#665](https://github.com/ecomplus/cloud-commerce/issues/665)) ([0227687](https://github.com/ecomplus/cloud-commerce/commit/0227687663800b8eeaaf3b2f97a79ee9af2c8e2c))
+* **deps:** Update non-major dependencies ([#663](https://github.com/ecomplus/cloud-commerce/issues/663)) ([79383e6](https://github.com/ecomplus/cloud-commerce/commit/79383e68087f5793691e32758413dd98f87d4766))
+* **deps:** Update non-major dependencies ([#664](https://github.com/ecomplus/cloud-commerce/issues/664)) ([78cadb2](https://github.com/ecomplus/cloud-commerce/commit/78cadb2f1728f86b60eaacfb686ef3179aa05ff5))
+* **deps:** Update non-major dependencies ([#672](https://github.com/ecomplus/cloud-commerce/issues/672)) ([70f1605](https://github.com/ecomplus/cloud-commerce/commit/70f1605d4eb418a470ca2f55292f2f1e7f855612))
+* **storefront:** Update Vue to ^3.5.26 ([#662](https://github.com/ecomplus/cloud-commerce/issues/662)) ([97cad79](https://github.com/ecomplus/cloud-commerce/commit/97cad79b3218cd377a01305b0b7cd9d1112363db))
+
 ## [2.55.3](https://github.com/ecomplus/cloud-commerce/compare/v2.55.2...v2.55.3) (2025-12-20)
 
 
