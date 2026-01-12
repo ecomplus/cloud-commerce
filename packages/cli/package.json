@@ -39,7 +39,7 @@
     "dotenv": "^17.2.3",
     "fast-xml-parser": "^5.3.3",
     "image-size": "^2.0.2",
-    "libsodium-wrappers": "0.7.15",
+    "libsodium-wrappers": "0.8.0",
     "md5": "^2.3.0",
     "typescript": "~5.9.3",
     "zx": "^8.8.5"
