@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.57.0](https://github.com/ecomplus/cloud-commerce/compare/v2.56.4...v2.57.0) (2026-01-23)
+
+
+### Features
+
+* **tiny-erp:** New `cronSendOrders` function to work as queue fallback ([a534e5a](https://github.com/ecomplus/cloud-commerce/commit/a534e5ad3622ec2d34e9cab7630748b7e12989df))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#674](https://github.com/ecomplus/cloud-commerce/issues/674)) ([3c4cdf7](https://github.com/ecomplus/cloud-commerce/commit/3c4cdf704e64d02ef6def3470b00dee580b61f12))
+* **deps:** Update non-major dependencies ([#676](https://github.com/ecomplus/cloud-commerce/issues/676)) ([7bd06b4](https://github.com/ecomplus/cloud-commerce/commit/7bd06b4b5149eb9adf52941a53ce4acb694fd3e5))
+
 ## [2.56.4](https://github.com/ecomplus/cloud-commerce/compare/v2.56.3...v2.56.4) (2026-01-08)
 
 
