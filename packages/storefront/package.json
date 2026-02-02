@@ -47,7 +47,7 @@
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "@fastify/deepmerge": "^3.1.0",
+    "@fastify/deepmerge": "^3.2.0",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/logos": "^1.2.10",
