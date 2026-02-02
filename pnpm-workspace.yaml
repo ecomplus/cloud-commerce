@@ -2,6 +2,8 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - '@ecomplus/*'
   - '@cloudcommerce/*'
+  # Renovate security update: fast-xml-parser@5.3.4
+  - fast-xml-parser@5.3.4
 packages:
   - 'packages/*'
   - 'packages/apps/*'
