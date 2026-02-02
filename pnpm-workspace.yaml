@@ -2,6 +2,8 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - '@ecomplus/*'
   - '@cloudcommerce/*'
+  # Renovate security update: eslint@9.26.0
+  - eslint@9.26.0
 packages:
   - 'packages/*'
   - 'packages/apps/*'
