@@ -21,57 +21,7 @@ const { customCode } = await getContent('layout');
   <slot name="base-body-scripts">
     <script src="../scripts/session-utm"></script>
     <script src="../scripts/push-analytics-events"></script>
-
-    <script>
-      import { isMobile, looksLikeBot } from '@@sf/sf-lib';
-
-      const raceAndLoadScripts = () => Promise.race([
-        window.$firstInteraction,
-        new Promise((resolve) => {
-          const maxWait = window.$delayedScriptsMaxWait || (isMobile ? 4000 : 2500);
-          setTimeout(resolve, maxWait);
-        }),
-      ]).then(() => {
-        const loadDelayedScripts = () => {
-          window.$delayedAsyncScripts?.forEach((src) => {
-            let delayMs: number | undefined;
-            if (typeof src !== 'string') {
-              delayMs = src.delay;
-              src = src.src;
-            }
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = src;
-            if (!delayMs) {
-              document.body.appendChild(script);
-              return;
-            }
-            setTimeout(() => document.body.appendChild(script), delayMs);
-          });
-        };
-        if (
-          !window.CMS && !window.$isCmsPreview
-          && !window.location.pathname.startsWith('/admin/')
-        ) {
-          setTimeout(() => {
-            if (typeof window.requestIdleCallback === 'function') {
-              window.requestIdleCallback(loadDelayedScripts);
-              return;
-            }
-            loadDelayedScripts();
-          }, 500);
-        }
-      });
-      if (!looksLikeBot) {
-        if (document.readyState !== 'loading') {
-          raceAndLoadScripts();
-        } else {
-          document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(raceAndLoadScripts, 50);
-          });
-        }
-      }
-    </script>
+    <script src="../scripts/load-delayed-scripts"></script>
   </slot>
   <slot name="before-body-end" />
 </BaseBody>

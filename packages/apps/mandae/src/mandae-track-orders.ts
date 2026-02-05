@@ -2,7 +2,7 @@ import type { ResourceId, Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import axios from 'axios';
-import { getConfig, exportOrder } from './mandae-send-orders';
+import { getAppData, exportOrder } from './mandae-send-orders';
 
 export const parseMandaeStatus = ({ id /* , name */ }) => {
   switch (id) {
@@ -23,6 +23,7 @@ export const parseMandaeStatus = ({ id /* , name */ }) => {
     case '121':
       return 'shipped';
     case '66':
+    case '6':
       return 'returned';
     default:
       return null;
@@ -42,10 +43,16 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
     logger.warn(`Skipping ${number} without invoice data`);
     return;
   }
-  const mandaeTrackingPrefix = mandaeOrderSettings?.tracking_prefix || '';
-  const trackingId = mandaeTrackingPrefix
-    + invoice.number.replace(/^0+/, '').trim()
-    + invoice.serial_number.replace(/^0+/, '').trim();
+  const lineTrackingCodes = shippingLine.tracking_codes || [];
+  let trackingId = lineTrackingCodes.find(({ tag, link }) => {
+    return tag === 'mandae' || link?.startsWith('https://rastreae.com.br');
+  })?.code;
+  if (!trackingId) {
+    const mandaeTrackingPrefix = mandaeOrderSettings?.tracking_prefix || '';
+    trackingId = mandaeTrackingPrefix
+      + invoice.number.replace(/^0+/, '').trim()
+      + invoice.serial_number.replace(/^0+/, '').trim();
+  }
   logger.info(`Tracking ${number} with ID ${trackingId}`);
   const { data } = await axios.get(`https://api.mandae.com.br/v3/trackings/${trackingId}`, {
     headers: { Authorization: mandaeToken },
@@ -54,7 +61,6 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
   const trackingResult = data?.events?.[0];
   if (!trackingResult) return;
   const status = parseMandaeStatus(trackingResult);
-  const lineTrackingCodes = shippingLine.tracking_codes || [];
   const savedTrackingCode = lineTrackingCodes.find(({ code }) => {
     return code === trackingId;
   });
@@ -93,26 +99,32 @@ export const importOrderStatus = async ({ order, mandaeToken, mandaeOrderSetting
 };
 
 export const trackUndeliveredOrders = async () => {
-  const isOddExec = !!(new Date().getMinutes() % 2);
-  const appConfig = await getConfig();
-  const mandaeToken = appConfig?.mandae_token;
+  const startDate = new Date();
+  const isOddMinExec = !!(startDate.getMinutes() % 2);
+  const isOddHourExec = !!(startDate.getHours() % 2);
+  const appData = await getAppData();
+  const mandaeToken = appData?.mandae_token;
   if (!mandaeToken) return;
-  const mandaeOrderSettings = appConfig.order_settings || appConfig.__order_settings;
-  if (mandaeOrderSettings.data || mandaeOrderSettings.customerId) {
+  const mandaeOrderSettings = appData.order_settings || appData.__order_settings;
+  if (mandaeOrderSettings?.data || mandaeOrderSettings?.customerId) {
     const d = new Date();
     d.setDate(d.getDate() - 30);
     const endpoint = 'orders'
       + '?fields=_id,number,fulfillment_status,shipping_lines'
       + '&shipping_lines.tracking_codes.tag=mandae'
       + '&financial_status.current=paid'
-      + '&fulfillment_status.current!=delivered'
+      + `&fulfillment_status.current${(isOddHourExec ? '=ready_for_shipping' : '!=delivered')}`
       + `&updated_at>=${d.toISOString()}`
-      + `&sort=${(isOddExec ? '-' : '')}updated_at`
+      + `&sort=${(isOddMinExec ? '-' : '')}${(isOddHourExec ? 'number' : 'updated_at')}`
       + '&limit=200' as `orders?${string}`;
+    logger.info('Start tracking orders', { endpoint });
     try {
       const { data } = await api.get(endpoint);
       const orders = data.result;
-      logger.info('Start tracking orders', { orders });
+      logger.info(`${orders.length} orders listed`, {
+        ids: orders.map(({ _id }) => _id),
+        numbers: orders.map(({ number }) => number),
+      });
       for (let i = 0; i < orders.length; i++) {
         const order = orders[i];
         // eslint-disable-next-line no-await-in-loop

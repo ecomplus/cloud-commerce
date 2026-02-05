@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/storefront",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce storefront with Astro",
   "bin": {
     "storefront": "./scripts/build-prod.sh"
@@ -47,31 +47,31 @@
     "@cloudcommerce/config": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "@fastify/deepmerge": "^3.0.0",
-    "@iconify-json/fa6-brands": "^1.2.5",
-    "@iconify-json/heroicons": "^1.2.2",
-    "@iconify-json/logos": "^1.2.4",
+    "@fastify/deepmerge": "^3.2.0",
+    "@iconify-json/fa6-brands": "^1.2.6",
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/logos": "^1.2.10",
     "@types/gtag.js": "^0.0.20",
-    "@vueuse/core": "12.8.2",
-    "astro": "4.16.18",
+    "@vueuse/core": "14.1.0",
+    "astro": "4.16.19",
     "astro-capo": "^0.0.1",
-    "chroma-js": "^3.1.2",
-    "dotenv": "^16.4.7",
-    "firebase": "^11.4.0",
-    "image-size": "^1.2.0",
+    "chroma-js": "^3.2.0",
+    "dotenv": "^17.2.3",
+    "firebase": "^11.10.0",
+    "image-size": "^2.0.2",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
-    "semver": "^7.7.1",
-    "sharp": "^0.32.6",
-    "unocss": "^66.0.0",
-    "unplugin-auto-import": "^19.1.1",
-    "vue": "^3.5.13",
+    "semver": "^7.7.3",
+    "sharp": "^0.33.3",
+    "unocss": "^66.6.0",
+    "unplugin-auto-import": "^19.3.0",
+    "vue": "^3.5.27",
     "wade": "0.3.3",
-    "yaml": "^2.7.0"
+    "yaml": "^2.8.2"
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.18"
+    "@types/react": "^18.3.27"
   }
 }

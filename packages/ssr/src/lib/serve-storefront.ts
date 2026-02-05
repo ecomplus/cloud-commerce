@@ -71,7 +71,9 @@ export default async (req: Request, res: Response) => {
 
   const ext = req.path.split('.').pop();
   if (ext === 'js' || ext === 'css' || ext === 'avif' || ext === 'webp') {
-    const baseFilepath = req.path.replace(new RegExp(`(\\.|_)[a-zA-Z0-9]+\\.${ext}$`), '');
+    const baseFilepath = ext === 'js' || ext === 'css'
+      ? req.path.replace(new RegExp(`\\.[a-zA-Z0-9_]+\\.${ext}$`), '')
+      : req.path.replace(new RegExp(`_[a-zA-Z0-9]+\\.${ext}$`), '');
     if (baseFilepath !== req.path) {
       const filepath = staticFilepaths.find((_filepath) => {
         return _filepath.startsWith(baseFilepath) && _filepath.endsWith(`.${ext}`);

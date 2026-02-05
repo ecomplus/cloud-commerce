@@ -11,18 +11,17 @@ const addPaymentHistory = async (orderId, body) => {
 };
 
 const updateTransaction = (orderId, body, transactionId) => {
-  const urlTransaction = transactionId ? `/${transactionId}` : '';
-  const method = transactionId ? 'PATCH' : 'POST';
-
-  return api[method](`orders/${orderId}/transactions${urlTransaction}`, body);
+  if (transactionId) {
+    return api.patch(`orders/${orderId}/transactions/${transactionId}`, body);
+  }
+  return api.post(`orders/${orderId}/transactions`, body);
 };
 
 const getOrderIntermediatorTransactionId = async (invoiceId) => {
-  let queryString = `?transactions.intermediator.transaction_id=${invoiceId}`;
-  queryString += '&fields=transactions,financial_status.current,status';
-  const data = await api.get(`orders${queryString}`);
-
-  return data?.result.length ? data?.result[0] : null;
+  let queryString = `transactions.intermediator.transaction_id=${invoiceId}`;
+  queryString += '&fields=transactions,financial_status,status,payments_history';
+  const { data } = await api.get(`orders?${queryString}`);
+  return data.result[0] || null;
 };
 
 const checkItemsAndRecalculeteOrder = (amount, items, plan, itemsPagarme) => {
@@ -154,21 +153,6 @@ const createNewOrderBasedOld = (oldOrder, plan, status, charge, subscriptionPaga
   return api.post('orders', body);
 };
 
-// const updateOrder = async (orderId, body) => {
-//   return api.patch(`orders/${orderId}`, body);
-// };
-
-const getOrderWithQueryString = async (query) => {
-  const { data } = await api.get(`orders?${query}`);
-
-  return data?.result.length ? data?.result : null;
-};
-
-const getProductById = async (productId) => {
-  const { data } = await api.get(`products/${productId}`);
-  return data;
-};
-
 const checkItemCategory = async (categoryIds, itemsPagarme, itemsApi) => {
   let i = 0;
 
@@ -182,7 +166,7 @@ const checkItemCategory = async (categoryIds, itemsPagarme, itemsApi) => {
 
     if (itemFound && !isItemFreigth) {
       // eslint-disable-next-line no-await-in-loop
-      const product = await getProductById(itemFound.product_id);
+      const { data: product } = await api.get(`products/${itemFound.product_id}`);
       if (product.categories) {
         let canSign = false;
         product.categories.forEach((category) => {
@@ -214,7 +198,5 @@ export {
   updateTransaction,
   getOrderIntermediatorTransactionId,
   createNewOrderBasedOld,
-  getOrderWithQueryString,
-  getProductById,
   checkItemCategory,
 };

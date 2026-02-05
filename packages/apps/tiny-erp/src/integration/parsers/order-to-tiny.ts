@@ -3,7 +3,7 @@ import ecomUtils from '@ecomplus/utils';
 import formatDate from '../helpers/format-tiny-date';
 import parseStatus from './status-to-tiny';
 
-export default (order: Orders, appData) => {
+export default async (order: Orders, appData) => {
   const orderRef = String(order.number) || order._id;
   const tinyOrder: Record<string, any> = {
     numero_pedido_ecommerce: orderRef,
@@ -128,6 +128,14 @@ export default (order: Orders, appData) => {
       tinyOrder.meio_pagamento = transaction.payment_method.name.substring(0, 100);
     }
   }
+  if (tinyOrder.meio_pagamento && appData.payment_method_maps?.length) {
+    const paymentMethodMap = appData.payment_method_maps.find(({ from }) => {
+      return tinyOrder.meio_pagamento === from;
+    });
+    if (paymentMethodMap?.to) {
+      tinyOrder.meio_pagamento = paymentMethodMap.to;
+    }
+  }
 
   const tinyErpOrderParser = global.$tinyErpOrderParser;
   if (tinyErpOrderParser && typeof tinyErpOrderParser === 'function') {
@@ -164,6 +172,14 @@ export default (order: Orders, appData) => {
     }
   } else {
     tinyOrder.forma_envio = 'S';
+  }
+  if (tinyOrder.forma_frete && appData.shipping_method_maps?.length) {
+    const shippingMethodMap = appData.shipping_method_maps.find(({ from }) => {
+      return tinyOrder.forma_frete === from;
+    });
+    if (shippingMethodMap?.to) {
+      tinyOrder.forma_frete = shippingMethodMap.to;
+    }
   }
 
   const { amount } = order;

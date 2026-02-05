@@ -10,7 +10,7 @@ export type Props = {
   item?: CartItem;
   product?: ProductItem;
   pictureSize?: string;
-} & ({ item: CartItem } | { product: ProductItem });
+} & ({ item: CartItem } | { product: ProductItem })
 
 export const useCartItem = (props: Props) => {
   const parsedItem = computed(() => {
@@ -38,7 +38,13 @@ export const useCartItem = (props: Props) => {
     return undefined;
   });
   const finalPrice = computed(() => {
-    return cartItem.value.final_price || cartItem.value.price;
+    if (typeof cartItem.value.final_price === 'number') {
+      return cartItem.value.final_price;
+    }
+    return cartItem.value.price;
+  });
+  const isFreebie = computed(() => {
+    return cartItem.value.flags?.includes('freebie');
   });
   return {
     cartItem,
@@ -46,6 +52,7 @@ export const useCartItem = (props: Props) => {
     link,
     image,
     finalPrice,
+    isFreebie,
   };
 };
 

@@ -1,0 +1,42 @@
+{
+  "name": "@cloudcommerce/app-evendas",
+  "type": "module",
+  "version": "2.57.0",
+  "description": "e-com.plus Cloud Commerce app to integrate E-Vendas CRM",
+  "main": "lib/evendas.js",
+  "exports": {
+    ".": "./lib/evendas.js",
+    "./events": "./lib/evendas-events.js"
+  },
+  "files": [
+    "/lib",
+    "/lib-mjs",
+    "/assets",
+    "/types",
+    "/*.{js,mjs,ts}"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomplus/cloud-commerce.git",
+    "directory": "packages/apps/evendas"
+  },
+  "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecomplus/cloud-commerce/issues"
+  },
+  "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/evendas#readme",
+  "scripts": {
+    "build": "bash ../../../scripts/build-lib.sh"
+  },
+  "dependencies": {
+    "@cloudcommerce/api": "workspace:*",
+    "@cloudcommerce/firebase": "workspace:*",
+    "axios": "^1.13.4",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^6.6.0"
+  },
+  "devDependencies": {
+    "@cloudcommerce/types": "workspace:*"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/eslint",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce ESLint config",
   "main": "lib/index.js",
   "files": [
@@ -22,14 +22,15 @@
     "build": "echo '@ecomplus/eslint'"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.26.1",
-    "@typescript-eslint/parser": "^8.26.1",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-astro": "^1.3.1",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-tailwindcss": "3.18.0",
-    "eslint-plugin-vue": "^9.33.0",
-    "tailwindcss": "^3.4.17"
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-tailwindcss": "3.18.2",
+    "eslint-plugin-vue": "^10.7.0",
+    "tailwindcss": "^3.4.19",
+    "vue-eslint-parser": "^10.2.0"
   }
 }

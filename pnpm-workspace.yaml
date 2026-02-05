@@ -1,3 +1,7 @@
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@ecomplus/*'
+  - '@cloudcommerce/*'
 packages:
   - 'packages/*'
   - 'packages/apps/*'

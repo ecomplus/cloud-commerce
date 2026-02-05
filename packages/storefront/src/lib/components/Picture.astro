@@ -4,7 +4,7 @@ import { resolve as resolvePath, basename } from 'node:path';
 import { copyFileSync } from 'node:fs';
 import { lookup } from 'mrmime';
 import { getImage } from 'astro:assets';
-import imageSize from 'image-size';
+import { imageSizeFromFile } from 'image-size/fromFile';
 import { createPictureGetter } from '../../images/picture-base';
 import { type PictureProps, useSSRPicture } from '../../images/use-ssr-picture';
 
@@ -31,11 +31,11 @@ const getImageFilepath = (src: string) => {
   }
   return filepath;
 };
-const tryImageSize = (src: string) => {
+const tryImageSize = async (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
   if (typeof src === 'string' && src.startsWith('/')) {
     try {
-      dimensions = imageSize(getImageFilepath(src));
+      dimensions = await imageSizeFromFile(getImageFilepath(src));
     } catch {
       dimensions = {};
     }
@@ -56,7 +56,7 @@ const {
     let imageMetadata: ImageMetadata | undefined;
     if (imageOptions.src.startsWith('/')) {
       const imageFilepath = getImageFilepath(imageOptions.src);
-      const { width, height } = tryImageSize(imageOptions.src);
+      const { width, height } = await tryImageSize(imageOptions.src);
       if (width && height) {
         const mimeType = lookup(imageFilepath);
         if (mimeType?.startsWith('image/')) {

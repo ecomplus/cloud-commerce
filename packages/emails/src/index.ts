@@ -76,7 +76,7 @@ const sendEmail = (
   };
   if (!MAIL_SENDER && !emailHeaders.sender) {
     emailHeaders.sender = {
-      email: settingsContent.email,
+      email: 'noreply@e-com.plus',
       name: settingsContent.name,
     };
   }
@@ -120,7 +120,6 @@ const sendEmail = (
 const sendGrid = {
   send: sendEmailSendGrid,
   setConfig: setApiKeySendGrid,
-
 };
 
 const smtp = {

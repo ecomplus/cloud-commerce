@@ -12,6 +12,7 @@ import {
 export type Props = {
   searchEngine: SearchEngineInstance;
   fixedParams?: SearchEngineInstance['params'];
+  initialResultMeta?: SearchEngineInstance['meta'];
 }
 
 type PriceRange = Exclude<
@@ -69,7 +70,7 @@ const useSearchActiveFilters = ({ searchEngine, fixedParams }: Props) => {
 };
 
 const useSearchFilters = (props: Props) => {
-  const { searchEngine, fixedParams } = props;
+  const { searchEngine, fixedParams, initialResultMeta } = props;
   const resultMeta = computed(() => searchEngine.meta);
   const resultBuckets = computed(() => searchEngine.meta.buckets);
   const { activeFilters, filtersCount } = useSearchActiveFilters(props);
@@ -77,6 +78,33 @@ const useSearchFilters = (props: Props) => {
     searchEngine.fetch();
   });
   let _lastParamChanged: null | string = null;
+  let _initialParamChanged: null | string = null;
+  const _initialFilterKeys = Object.keys(activeFilters.value);
+  if (_initialFilterKeys.length === 1) {
+    let specsFilter = activeFilters.value['specs,'];
+    if (specsFilter) {
+      if (typeof specsFilter === 'string') {
+        specsFilter = [specsFilter];
+      }
+      if (Array.isArray(specsFilter) && specsFilter.length) {
+        const [spec] = `${specsFilter[0]}`.split(':');
+        if (spec) {
+          _initialParamChanged = `specs.${spec}`;
+        }
+      }
+    } else {
+      switch (_initialFilterKeys[0]) {
+        case 'brands.name':
+        case 'categories.name':
+        case 'price':
+          _initialParamChanged = _initialFilterKeys[0];
+          break;
+        default:
+      }
+    }
+  } else if (_initialFilterKeys.every((key) => /price[<>]?$/.test(key))) {
+    _initialParamChanged = 'price';
+  }
   const clearFilters = () => {
     Object.keys(searchEngine.params).forEach((param) => {
       if (fixedParams?.[param] !== undefined) return;
@@ -175,54 +203,74 @@ const useSearchFilters = (props: Props) => {
         i -= 1;
       }
     }
-    const buckets = resultBuckets.value;
-    if (buckets) {
-      [['brands', i19brands], ['categories', i19categories]]
-        .forEach(([resource, title]) => {
-          const field = `${resource}.name`;
-          const fixedParam = fixedParams?.[field];
-          if (
-            !buckets[field]
-            || _lastParamChanged === field
-            || filterOptions.value.find((filter) => filter.field === field)
-            || typeof fixedParam === 'string'
-          ) {
-            return;
-          }
-          const options = { ...buckets[field] };
-          if (Array.isArray(fixedParam)) {
-            if (fixedParam.length <= 1) return;
-            Object.keys(options).forEach((name) => {
-              if (!(fixedParam as string[]).includes(name)) {
-                delete options[name];
+    const buckets = { ...resultBuckets.value };
+    if (_initialParamChanged) {
+      const initialBuckets = initialResultMeta?.buckets;
+      if (initialBuckets) {
+        if (initialBuckets[_initialParamChanged as 'brands.name']) {
+          buckets[_initialParamChanged] = initialBuckets[_initialParamChanged];
+        } else if (_initialParamChanged.startsWith('specs.')) {
+          const [, spec] = _initialParamChanged.split('.');
+          if (initialBuckets.specs) {
+            if (!buckets.specs) buckets.specs = {};
+            Object.keys(initialBuckets.specs).forEach((specAndVal) => {
+              if (specAndVal.startsWith(`${spec}:`)) {
+                buckets.specs![specAndVal] = initialBuckets.specs![specAndVal];
               }
             });
           }
-          filterOptions.value.push({ title, options, field });
-        });
-      if (buckets.specs) {
-        const { grids } = globalThis.$storefront.data;
-        Object.keys(buckets.specs).forEach((specAndVal) => {
-          const [spec, value] = specAndVal.split(':');
-          if (value) {
-            const field = `specs.${spec}`;
-            if (_lastParamChanged === field || fixedParams?.[field] !== undefined) {
-              return;
-            }
-            const title = getGridTitle(spec, grids || []);
-            let filterOption = filterOptions.value.find((filter) => {
-              return filter.field === field;
-            });
-            if (filterOption) {
-              if (filterOption.options[value]) return;
-            } else {
-              filterOption = { title, options: {}, field };
-              filterOptions.value.push(filterOption);
-            }
-            filterOption.options[value] = buckets.specs![specAndVal];
+        } else if (_initialParamChanged === 'price') {
+          if (initialBuckets.prices) {
+            buckets.prices = initialBuckets.prices;
           }
-        });
+        }
       }
+    }
+    [['brands', i19brands], ['categories', i19categories]]
+      .forEach(([resource, title]) => {
+        const field = `${resource}.name`;
+        const fixedParam = fixedParams?.[field];
+        if (
+          !buckets[field]
+          || _lastParamChanged === field
+          || filterOptions.value.find((filter) => filter.field === field)
+          || typeof fixedParam === 'string'
+        ) {
+          return;
+        }
+        const options = { ...buckets[field] };
+        if (Array.isArray(fixedParam)) {
+          if (fixedParam.length <= 1) return;
+          Object.keys(options).forEach((name) => {
+            if (!(fixedParam as string[]).includes(name)) {
+              delete options[name];
+            }
+          });
+        }
+        filterOptions.value.push({ title, options, field });
+      });
+    if (buckets.specs) {
+      const { grids } = globalThis.$storefront.data;
+      Object.keys(buckets.specs).forEach((specAndVal) => {
+        const [spec, value] = specAndVal.split(':');
+        if (value) {
+          const field = `specs.${spec}`;
+          if (_lastParamChanged === field || fixedParams?.[field] !== undefined) {
+            return;
+          }
+          const title = getGridTitle(spec, grids || []);
+          let filterOption = filterOptions.value.find((filter) => {
+            return filter.field === field;
+          });
+          if (filterOption) {
+            if (filterOption.options[value]) return;
+          } else {
+            filterOption = { title, options: {}, field };
+            filterOptions.value.push(filterOption);
+          }
+          filterOption.options[value] = buckets.specs![specAndVal];
+        }
+      });
     }
   }, 50);
   _updateFilterOptions();
@@ -240,6 +288,7 @@ const useSearchFilters = (props: Props) => {
       && (fieldParams as string[]).includes(value as string);
   };
   const toggleFilterOption = (field: string, value: string | number) => {
+    _initialParamChanged = null;
     _lastParamChanged = field;
     if (field.startsWith('specs.')) {
       [field, value] = parseSpecsField(field, value);
@@ -247,7 +296,12 @@ const useSearchFilters = (props: Props) => {
     const isToActivate = !checkFilterOption(field, value);
     let fieldParams = searchEngine.params[field];
     if (!Array.isArray(fieldParams)) {
-      fieldParams = [];
+      const currValue = searchEngine.params[field];
+      if (currValue && typeof currValue === 'string') {
+        fieldParams = [currValue];
+      } else {
+        fieldParams = [];
+      }
       searchEngine.params[field] = fieldParams;
     }
     if (isToActivate) {

@@ -1,7 +1,7 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import config from '@cloudcommerce/firebase/lib/config';
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
+import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import axios from './functions-lib/pagarme/create-axios.mjs';
 import {
   getOrderById,
@@ -14,27 +14,20 @@ import {
 } from './functions-lib/api-utils.mjs';
 import { parserChangeStatusToEcom } from './functions-lib/pagarme/parses-utils.mjs';
 
-const getAppData = async () => {
-  return new Promise((resolve, reject) => {
-    api.get(
-      `applications?app_id=${config.get().apps.pagarMeV5.appId}&fields=hidden_data`,
-    )
-      .then(({ data: result }) => {
-        resolve(result[0]);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
-
 const handleWehook = async (req, res) => {
   const colletionFirebase = getFirestore().collection('pagarmeV5Subscriptions');
   const { body } = req;
+  const type = body?.type;
+  if (!type || !body.data) {
+    return res.sendStatus(400);
+  }
+  const { storeId } = config.get();
+  if (body.data.metadata?.store_id && Number(body.data.metadata?.store_id) !== storeId) {
+    return res.sendStatus(204);
+  }
 
   try {
-    const type = body.type;
-    const appData = await getAppData();
+    const appData = await getAppData('pagarMeV5');
 
     if (!process.env.PAGARMEV5_API_TOKEN) {
       const pagarmeApiToken = appData.pagarme_api_token;
@@ -42,7 +35,6 @@ const handleWehook = async (req, res) => {
         process.env.PAGARMEV5_API_TOKEN = pagarmeApiToken;
       } else {
         logger.warn('Missing PAGARMEV5 API TOKEN');
-
         return res.status(401)
           .send({
             error: 'NO_PAGARME_KEYS',
@@ -165,23 +157,19 @@ const handleWehook = async (req, res) => {
       return res.status(!subscription ? 404 : 400)
         .send({ message: !subscription ? 'Not found subscription' : 'Subscription not canceled' });
     } else if (type.startsWith('charge.')) {
-      // const statusChange = type.replace('charge.', '')
       const { data: charge } = await pagarmeAxios.get(`/charges/${body.data.id}`);
-      logger.log('>> Charge ', JSON.stringify(charge));
       if (charge.invoice) {
         const { invoice, status } = charge;
-        logger.log('>>Parse status: ', parserChangeStatusToEcom(status));
         const order = await getOrderIntermediatorTransactionId(invoice.id);
         if (order) {
-          if (order.financial_status.current !== parserChangeStatusToEcom(status)) {
+          if (order.financial_status?.current !== parserChangeStatusToEcom(status)) {
             // updadte status
             const transaction = order.transactions
               .find(
                 (transactionFind) => transactionFind.intermediator.transaction_id === invoice.id,
               );
-            logger.log('>> Try add payment history');
             const transactionPagarme = charge.last_transaction;
-            let notificationCode = `${type};${body.id};`;
+            let notificationCode = `${type};${(body.id || body.data.id)};`;
             if (transactionPagarme.transaction_type === 'credit_card') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
               notificationCode += `${transactionPagarme.acquirer_tid || ''};`;
@@ -207,7 +195,7 @@ const handleWehook = async (req, res) => {
           return res.sendStatus(200);
         }
 
-        if (status === 'paid') {
+        if (status === 'paid' && invoice.subscriptionId) {
           logger.log('>> Try create new order for recurrence');
           const { data: subscription } = await pagarmeAxios.get(`/subscriptions/${invoice.subscriptionId}`);
           const orderOriginal = await getOrderById(subscription.code);
@@ -260,23 +248,19 @@ const handleWehook = async (req, res) => {
       }
 
       if (charge.order) {
-        // TODO:
-        // payment update (order in pagarme)
-        logger.log('>> Try update status order');
         const { order: orderPagarme, status } = charge;
+        logger.info(`Pagar.me charge ${orderPagarme.id} ${status}`);
         const order = await getOrderIntermediatorTransactionId(orderPagarme.id);
         if (order) {
-          if (order.financial_status.current !== parserChangeStatusToEcom(status)) {
-            // updadte status
+          const newEcomStatus = parserChangeStatusToEcom(status);
+          if (order.financial_status?.current !== newEcomStatus) {
             let isUpdateTransaction = false;
             let transactionBody;
             const transaction = order.transactions.find(
               (transactionFind) => transactionFind.intermediator.transaction_id === orderPagarme.id,
             );
-            // console.log('>> Try add payment history')
             const transactionPagarme = charge.last_transaction;
-            // console.log('>>> TransactionPagarme ', JSON.stringify(transactionPagarme))
-            let notificationCode = `${type};${body.id};`;
+            let notificationCode = `${type};${(body.id || body.data.id)};`;
             if (transactionPagarme.transaction_type === 'credit_card') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
               notificationCode += `${transactionPagarme.acquirer_tid || ''};`;
@@ -285,16 +269,23 @@ const handleWehook = async (req, res) => {
             } else if (transactionPagarme.transaction_type === 'boleto') {
               notificationCode += `${transactionPagarme.gateway_id || ''};`;
             } else if (transactionPagarme.transaction_type === 'pix') {
-              let notes = transaction.notes;
-              // pix_provider_tid"
-              notes = notes.replaceAll('display:block', 'display:none'); // disable QR Code
-              notes = `${notes} # PIX Aprovado`;
-              transactionBody = { notes };
-              isUpdateTransaction = true;
+              if (newEcomStatus === 'paid') {
+                let notes = transaction.notes;
+                notes = notes.replaceAll('display:block', 'display:none');
+                notes = `${notes} # PIX Aprovado`;
+                transactionBody = { notes };
+                isUpdateTransaction = true;
+              }
+            }
+            let statusDateTime;
+            if (order.payments_history?.some(({ flags }) => flags?.includes('pagarme-expired'))) {
+              statusDateTime = new Date().toISOString();
+            } else {
+              statusDateTime = transactionPagarme.updated_at || new Date().toISOString();
             }
             const bodyPaymentHistory = {
-              date_time: transactionPagarme.updated_at || new Date().toISOString(),
-              status: parserChangeStatusToEcom(status),
+              date_time: statusDateTime,
+              status: newEcomStatus,
               notification_code: notificationCode,
               flags: ['PagarMe'],
             };
@@ -303,20 +294,19 @@ const handleWehook = async (req, res) => {
             }
             await addPaymentHistory(order._id, bodyPaymentHistory);
             if (isUpdateTransaction && transaction._id) {
-              // console.log('>> Try Update transaction ')
               await updateTransaction(order._id, transactionBody, transaction._id)
                 .catch(logger.error);
             }
-            logger.log(`>> Status update to ${parserChangeStatusToEcom(status)}`);
-            return res.sendStatus(200);
+            logger.info(`${order._id} update to ${newEcomStatus}`);
+            return res.sendStatus(201);
           }
+          return res.sendStatus(200);
         }
         return res.sendStatus(404);
       }
-
       return res.sendStatus(405);
     }
-    return res.sendStatus(405);
+    return res.sendStatus(204);
   } catch (error) {
     logger.error(error);
     const errCode = 'WEBHOOK_PAGARME_INTERNAL_ERR';

@@ -2,6 +2,864 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.57.0](https://github.com/ecomplus/cloud-commerce/compare/v2.56.4...v2.57.0) (2026-01-23)
+
+
+### Features
+
+* **tiny-erp:** New `cronSendOrders` function to work as queue fallback ([a534e5a](https://github.com/ecomplus/cloud-commerce/commit/a534e5ad3622ec2d34e9cab7630748b7e12989df))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#674](https://github.com/ecomplus/cloud-commerce/issues/674)) ([3c4cdf7](https://github.com/ecomplus/cloud-commerce/commit/3c4cdf704e64d02ef6def3470b00dee580b61f12))
+* **deps:** Update non-major dependencies ([#676](https://github.com/ecomplus/cloud-commerce/issues/676)) ([7bd06b4](https://github.com/ecomplus/cloud-commerce/commit/7bd06b4b5149eb9adf52941a53ce4acb694fd3e5))
+
+## [2.56.4](https://github.com/ecomplus/cloud-commerce/compare/v2.56.3...v2.56.4) (2026-01-08)
+
+
+### Bug Fixes
+
+* **woovi:** End webhook handler with status 200 always than body is valid and authorization passes ([143c4e6](https://github.com/ecomplus/cloud-commerce/commit/143c4e6b937ac08622cb14e66b83224291face4a))
+
+## [2.56.3](https://github.com/ecomplus/cloud-commerce/compare/v2.56.2...v2.56.3) (2026-01-08)
+
+
+### Bug Fixes
+
+* **woovi:** Respond to test webhook and update key ID format ([b714040](https://github.com/ecomplus/cloud-commerce/commit/b7140406a92532bfe84d067427f097ed3e9df116))
+
+## [2.56.2](https://github.com/ecomplus/cloud-commerce/compare/v2.56.1...v2.56.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* **woovi:** Auto-register webhooks and validate by authorization header ([4e5cd05](https://github.com/ecomplus/cloud-commerce/commit/4e5cd052c67ba875b09f909b8d9b6a5b9f6d1b7b))
+
+## [2.56.1](https://github.com/ecomplus/cloud-commerce/compare/v2.56.0...v2.56.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* **deps:** Revert `libsodium-wrappers` to fixed v0.7.15 ([5c3bf7e](https://github.com/ecomplus/cloud-commerce/commit/5c3bf7e41aeb9e8a3fea93a1a8dce4208081e0c3))
+
+## [2.56.0](https://github.com/ecomplus/cloud-commerce/compare/v2.55.3...v2.56.0) (2026-01-08)
+
+
+### Features
+
+* **woovi:** Setup new Woovi integration app for Pix payments ([d069f10](https://github.com/ecomplus/cloud-commerce/commit/d069f103898d10a29f2d70994bc38557dcdfb08e))
+
+
+### Bug Fixes
+
+* **cli:** Update dependency csv-parse to v6 ([#673](https://github.com/ecomplus/cloud-commerce/issues/673)) ([aa72ab8](https://github.com/ecomplus/cloud-commerce/commit/aa72ab8ca2b4d06a0d032488f4bddf67965560f9))
+* **deps:** update dependency @vueuse/core to v14 ([#665](https://github.com/ecomplus/cloud-commerce/issues/665)) ([0227687](https://github.com/ecomplus/cloud-commerce/commit/0227687663800b8eeaaf3b2f97a79ee9af2c8e2c))
+* **deps:** Update non-major dependencies ([#663](https://github.com/ecomplus/cloud-commerce/issues/663)) ([79383e6](https://github.com/ecomplus/cloud-commerce/commit/79383e68087f5793691e32758413dd98f87d4766))
+* **deps:** Update non-major dependencies ([#664](https://github.com/ecomplus/cloud-commerce/issues/664)) ([78cadb2](https://github.com/ecomplus/cloud-commerce/commit/78cadb2f1728f86b60eaacfb686ef3179aa05ff5))
+* **deps:** Update non-major dependencies ([#672](https://github.com/ecomplus/cloud-commerce/issues/672)) ([70f1605](https://github.com/ecomplus/cloud-commerce/commit/70f1605d4eb418a470ca2f55292f2f1e7f855612))
+* **storefront:** Update Vue to ^3.5.26 ([#662](https://github.com/ecomplus/cloud-commerce/issues/662)) ([97cad79](https://github.com/ecomplus/cloud-commerce/commit/97cad79b3218cd377a01305b0b7cd9d1112363db))
+
+## [2.55.3](https://github.com/ecomplus/cloud-commerce/compare/v2.55.2...v2.55.3) (2025-12-20)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#658](https://github.com/ecomplus/cloud-commerce/issues/658)) ([59faa91](https://github.com/ecomplus/cloud-commerce/commit/59faa9147dfae8f24f0f223db1c5b32fd9d1abca))
+* **deps:** Update non-major dependencies ([#660](https://github.com/ecomplus/cloud-commerce/issues/660)) ([fb85de6](https://github.com/ecomplus/cloud-commerce/commit/fb85de6e0eb74ed6fea58153d64fc4b6260f62f1))
+* **pagarme-v5:** Double check pending transaction status to cancel by expiration ([fb2de27](https://github.com/ecomplus/cloud-commerce/commit/fb2de27ee3c61e5463acdd698efa9acc09162c67))
+* **storefront:** Updating checkout vbeta-app script version ([0449b33](https://github.com/ecomplus/cloud-commerce/commit/0449b33a13b8898e11bafec6f77a2fe295e5bebd))
+* **yapay:** Removing (bad) payment link on Pix payments ([22f229f](https://github.com/ecomplus/cloud-commerce/commit/22f229f119293b3bb1e641ba8fd6f033aa03c2c9))
+
+## [2.55.2](https://github.com/ecomplus/cloud-commerce/compare/v2.55.1...v2.55.2) (2025-12-05)
+
+
+### Bug Fixes
+
+* **yapay:** Fix handling buyer phone number on create transaction ([327228e](https://github.com/ecomplus/cloud-commerce/commit/327228eb5826e02858828111a6c1c47924b7da91))
+
+## [2.55.1](https://github.com/ecomplus/cloud-commerce/compare/v2.55.0...v2.55.1) (2025-12-05)
+
+
+### Bug Fixes
+
+* **yapay:** Fix setting `token_account` on Yapay API requests ([69be2dd](https://github.com/ecomplus/cloud-commerce/commit/69be2ddc5eb44132b399d9207b37b7d2acf8afca))
+
+## [2.55.0](https://github.com/ecomplus/cloud-commerce/compare/v2.54.0...v2.55.0) (2025-12-05)
+
+
+### Features
+
+* **yapay:** Setup new Yapay (Vindi Pagamentos) integration app ([77eb73b](https://github.com/ecomplus/cloud-commerce/commit/77eb73be54f3bc712717855f599f79669ff9853d))
+
+
+### Bug Fixes
+
+* **storefront:** Update Vue to ^3.5.25 ([#651](https://github.com/ecomplus/cloud-commerce/issues/651)) ([9442aa0](https://github.com/ecomplus/cloud-commerce/commit/9442aa0c81e44db94c4f2fadeee3c463709154bc))
+
+## [2.54.0](https://github.com/ecomplus/cloud-commerce/compare/v2.53.2...v2.54.0) (2025-12-02)
+
+
+### Features
+
+* **vindi:** Adding initial support for Pix payments on Vindi integration ([6e187d0](https://github.com/ecomplus/cloud-commerce/commit/6e187d0815358d271eaeb132d0fff2b2597ba721))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#652](https://github.com/ecomplus/cloud-commerce/issues/652)) ([8cdea42](https://github.com/ecomplus/cloud-commerce/commit/8cdea422b98843d106e1caec2e0aec3e7e9aa979))
+
+## [2.53.2](https://github.com/ecomplus/cloud-commerce/compare/v2.53.1...v2.53.2) (2025-11-25)
+
+## [2.53.1](https://github.com/ecomplus/cloud-commerce/compare/v2.53.0...v2.53.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#647](https://github.com/ecomplus/cloud-commerce/issues/647)) ([0d8b8aa](https://github.com/ecomplus/cloud-commerce/commit/0d8b8aa275b1c603feb4c69ad8ebd1e6759f60b4))
+* **storefront:** Close notification popup quickly after user response ([dae714b](https://github.com/ecomplus/cloud-commerce/commit/dae714bafc73f92e3f3e42d79020255074ac4c15))
+
+## [2.53.0](https://github.com/ecomplus/cloud-commerce/compare/v2.52.2...v2.53.0) (2025-11-21)
+
+
+### Features
+
+* **storefront:** Add web push notifications support with Firebase Cloud Messaging ([4fd93b6](https://github.com/ecomplus/cloud-commerce/commit/4fd93b674307bc3acb5021367f855ba613beab15))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#635](https://github.com/ecomplus/cloud-commerce/issues/635)) ([636bdbb](https://github.com/ecomplus/cloud-commerce/commit/636bdbbbb67ae9634ae81b45062f1bdd997025d2))
+* **deps:** Update non-major dependencies ([#638](https://github.com/ecomplus/cloud-commerce/issues/638)) ([5e2f42a](https://github.com/ecomplus/cloud-commerce/commit/5e2f42ae8b3160255164d4d48eeb55198d594fe2))
+* **deps:** Update non-major dependencies ([#646](https://github.com/ecomplus/cloud-commerce/issues/646)) ([425acab](https://github.com/ecomplus/cloud-commerce/commit/425acab404ed5c89d8b81873d67ff45fab531564))
+* **storefront:** Update Vue to ^3.5.24 ([#645](https://github.com/ecomplus/cloud-commerce/issues/645)) ([d8f927a](https://github.com/ecomplus/cloud-commerce/commit/d8f927ad89ea6adaed2a455245d8b71d0e7fd80e))
+
+## [2.52.2](https://github.com/ecomplus/cloud-commerce/compare/v2.52.1...v2.52.2) (2025-10-15)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#633](https://github.com/ecomplus/cloud-commerce/issues/633)) ([6c72941](https://github.com/ecomplus/cloud-commerce/commit/6c72941f5351e63340ed28a9488257f3ee54608f))
+* **storefront:** Handle ?exp_id URL param to force A/B experiment variant ([2016d5f](https://github.com/ecomplus/cloud-commerce/commit/2016d5f685549064ba00f6c1d5317c16d6ca796d))
+
+## [2.52.1](https://github.com/ecomplus/cloud-commerce/compare/v2.52.0...v2.52.1) (2025-10-08)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Hide Pix QR Code on webhook with paid status check only ([b7c84c8](https://github.com/ecomplus/cloud-commerce/commit/b7c84c89702e46e2382a7b75d4e8ba6b73ef5055))
+* **tiny-erp:** Calculate and save proper image dimensions for product pictures ([aba0858](https://github.com/ecomplus/cloud-commerce/commit/aba08580af2f627e2e08d723b5d0cfdd21015c44))
+
+## [2.52.0](https://github.com/ecomplus/cloud-commerce/compare/v2.51.4...v2.52.0) (2025-10-07)
+
+
+### Features
+
+* **storefront:** Enable CMS preview in production for default store pages ([dc3917f](https://github.com/ecomplus/cloud-commerce/commit/dc3917fa1397f8f34568a8c50984d0c0172cae23))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#630](https://github.com/ecomplus/cloud-commerce/issues/630)) ([46f522d](https://github.com/ecomplus/cloud-commerce/commit/46f522d3f455c16ca2d526fecb18f894ca3a18f9))
+* **emails:** Update nodemailer to v7.0.7 [security] ([#631](https://github.com/ecomplus/cloud-commerce/issues/631)) ([ac68612](https://github.com/ecomplus/cloud-commerce/commit/ac68612693137bf85a58ddceeb8c7e81ef8b7b62))
+* **storefront:** CMS panel styles and organization improves ([6c6f299](https://github.com/ecomplus/cloud-commerce/commit/6c6f299a5b6658895439b7b38be562c445a180d8))
+* **tiny-erp:** Increasing max images processed on new products import to 5 uploads ([bb22a1c](https://github.com/ecomplus/cloud-commerce/commit/bb22a1c5bb45c214813e510bd70f002778f6d914))
+
+## [2.51.4](https://github.com/ecomplus/cloud-commerce/compare/v2.51.3...v2.51.4) (2025-10-03)
+
+
+### Bug Fixes
+
+* **appmax:** Removing mocked User-Agent and debug strange unauthorizeds on notes ([7a563ef](https://github.com/ecomplus/cloud-commerce/commit/7a563efa63df2c3b2060bc90dd5ed9cfb711a9c7))
+
+## [2.51.3](https://github.com/ecomplus/cloud-commerce/compare/v2.51.2...v2.51.3) (2025-10-03)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Fix uploading images when importing new products from Tiny ([de2d225](https://github.com/ecomplus/cloud-commerce/commit/de2d22517e0c9df3cdbbec1244d9e962354a89d1))
+
+## [2.51.2](https://github.com/ecomplus/cloud-commerce/compare/v2.51.1...v2.51.2) (2025-10-01)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Increase memory and improve product import with images ([f17a345](https://github.com/ecomplus/cloud-commerce/commit/f17a345a8af70060bb5eef3ef3a2932ebb8fce3f))
+
+## [2.51.1](https://github.com/ecomplus/cloud-commerce/compare/v2.51.0...v2.51.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#628](https://github.com/ecomplus/cloud-commerce/issues/628)) ([88f7c61](https://github.com/ecomplus/cloud-commerce/commit/88f7c61cee490907f7f3b5c327fad48747a2ca78))
+* **storefront:** Update Vue to ^3.5.22 ([#627](https://github.com/ecomplus/cloud-commerce/issues/627)) ([8cc69b2](https://github.com/ecomplus/cloud-commerce/commit/8cc69b20e67b50fa665641e974de5333d9d13985))
+* **tiny-erp:** Fix product import when image uploads fail ([8e9c9c7](https://github.com/ecomplus/cloud-commerce/commit/8e9c9c79c5378a3b0b5a4d8d95917e1cf002f603))
+
+## [2.51.0](https://github.com/ecomplus/cloud-commerce/compare/v2.50.1...v2.51.0) (2025-09-28)
+
+
+### Features
+
+* **storefront:** New `useProductDetails` composable abstract variation and shipped items handlers ([0903741](https://github.com/ecomplus/cloud-commerce/commit/0903741a6d00bad722c6e8b3983070260b3c23d8))
+
+## [2.50.1](https://github.com/ecomplus/cloud-commerce/compare/v2.50.0...v2.50.1) (2025-09-25)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#625](https://github.com/ecomplus/cloud-commerce/issues/625)) ([a609e48](https://github.com/ecomplus/cloud-commerce/commit/a609e4804665653f0a47614bd9a40ca874fdc9ca))
+* **tiny-erp:** Fix uploading images when importing new products from Tiny ([fbebed8](https://github.com/ecomplus/cloud-commerce/commit/fbebed88fb1c9ed4e60f9d74bada633fd478c03f))
+* **tiny-erp:** Properly handling product parse on Tiny webhook with product overwrite enabled ([0b26ad9](https://github.com/ecomplus/cloud-commerce/commit/0b26ad9cfdbe47124677657a87b28d36a1c59763))
+
+## [2.50.0](https://github.com/ecomplus/cloud-commerce/compare/v2.49.5...v2.50.0) (2025-09-21)
+
+
+### Features
+
+* **emails:** Handle abandoned carts and send recovery emails when enabled ([f568716](https://github.com/ecomplus/cloud-commerce/commit/f568716e131289c582c311479f965346034327fa))
+* **emails:** Handle expiring loyalty points and start sending a default email template ([bebaf8f](https://github.com/ecomplus/cloud-commerce/commit/bebaf8fdd5aba05130561c014c7faba120ee0c2d))
+
+
+### Bug Fixes
+
+* **deps:** Escape org dependencies from pnpm minimum release age ([b0d92af](https://github.com/ecomplus/cloud-commerce/commit/b0d92af6a3df941e716153c7790dbb243e685bc2))
+* **deps:** Update dependency axios to v1.12.0 [security] ([#622](https://github.com/ecomplus/cloud-commerce/issues/622)) ([e2b1619](https://github.com/ecomplus/cloud-commerce/commit/e2b16194660067d032c8459703087bd1d7f75f5f))
+* **deps:** Update non-major dependencies ([#623](https://github.com/ecomplus/cloud-commerce/issues/623)) ([98a8f9e](https://github.com/ecomplus/cloud-commerce/commit/98a8f9e093f76aa139962c9136ef3a678548a45c))
+* **emails:** Update default abandoned cart emails cron and handle up to 200 carts each exec ([e6449a2](https://github.com/ecomplus/cloud-commerce/commit/e6449a2e68f6c7121389f58c0483e519a715afc3))
+
+## [2.49.5](https://github.com/ecomplus/cloud-commerce/compare/v2.49.4...v2.49.5) (2025-09-12)
+
+
+### Bug Fixes
+
+* **appmax:** Fix handling/debugging customer and order creation on Appmax API ([b208039](https://github.com/ecomplus/cloud-commerce/commit/b208039a19b698aee01899d6a1a283ab2866ade8))
+* **paghiper:** Minor fix preventing duplicated response call on webhook (on sucess) ([b6d5d07](https://github.com/ecomplus/cloud-commerce/commit/b6d5d07923cfdb9346defc7f414071631312768f))
+
+## [2.49.4](https://github.com/ecomplus/cloud-commerce/compare/v2.49.3...v2.49.4) (2025-09-08)
+
+
+### Bug Fixes
+
+* **paghiper:** Properly separate API key and token usage ([00bdcd9](https://github.com/ecomplus/cloud-commerce/commit/00bdcd9c42b5bf2cf56f74a7f37e8a29e6658cab))
+* **storefront:** Update Vue to ^3.5.21 ([#620](https://github.com/ecomplus/cloud-commerce/issues/620)) ([d279d8d](https://github.com/ecomplus/cloud-commerce/commit/d279d8db5e6e621b22e547775c56dd95a2861c5c))
+
+## [2.49.3](https://github.com/ecomplus/cloud-commerce/compare/v2.49.2...v2.49.3) (2025-09-08)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#621](https://github.com/ecomplus/cloud-commerce/issues/621)) ([57e2040](https://github.com/ecomplus/cloud-commerce/commit/57e204087705f4a049f2a3e6ac1c80735b395b67))
+* **paghiper:** Properly detecting Pix webhooks to handle notification ([31bfad7](https://github.com/ecomplus/cloud-commerce/commit/31bfad7ec8cd505fc83a5ea895616d3f2f888c98))
+
+## [2.49.2](https://github.com/ecomplus/cloud-commerce/compare/v2.49.1...v2.49.2) (2025-09-07)
+
+## [2.49.1](https://github.com/ecomplus/cloud-commerce/compare/v2.49.0...v2.49.1) (2025-09-07)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Add changedback charge status parsed to `in_dispute` ([e637b5f](https://github.com/ecomplus/cloud-commerce/commit/e637b5f696798cb4da6ead1931ae43be795538ef))
+* **paghiper:** Fix reading PagHiper notifications on webhooks process ([4783a80](https://github.com/ecomplus/cloud-commerce/commit/4783a80ba88390f780b69122df58a92c42974dda))
+
+## [2.49.0](https://github.com/ecomplus/cloud-commerce/compare/v2.48.20...v2.49.0) (2025-09-05)
+
+
+### Features
+
+* **vindi:** Setup Vindi payment integration app ([05a3b86](https://github.com/ecomplus/cloud-commerce/commit/05a3b864d6caadfe0ee3387ff46c8124e96410f5))
+
+
+### Bug Fixes
+
+* **appmax:** Ensure installments is sent on transaction ([204b427](https://github.com/ecomplus/cloud-commerce/commit/204b4277b1ff73dc63a2d07ef7c1c24977d9cd90))
+* **custom-payment:** Create transaction directly paid when order amount is zero (free) ([3f773cf](https://github.com/ecomplus/cloud-commerce/commit/3f773cf416e0f373236be2c48b2ad981de8d31e2))
+
+## [2.48.20](https://github.com/ecomplus/cloud-commerce/compare/v2.48.19...v2.48.20) (2025-08-27)
+
+## [2.48.19](https://github.com/ecomplus/cloud-commerce/compare/v2.48.18...v2.48.19) (2025-08-27)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#608](https://github.com/ecomplus/cloud-commerce/issues/608)) ([b4a36d6](https://github.com/ecomplus/cloud-commerce/commit/b4a36d6465d85125100316527bf44081ae0307d0))
+* **deps:** Update Vue to ^3.5.18 ([#605](https://github.com/ecomplus/cloud-commerce/issues/605)) ([9834b50](https://github.com/ecomplus/cloud-commerce/commit/9834b50f8ea26cd963e737b98a3acf7ed0a15100))
+* **melhor-envio:** Updating to https://github.com/ecomplus/app-melhor-envio/releases/tag/v1.12.1 ([0b099f3](https://github.com/ecomplus/cloud-commerce/commit/0b099f394ba55b1e448fdf1bf792949b9d68bbe9))
+* **ssr:** Update Astro to v4.16.19 [security] ([#610](https://github.com/ecomplus/cloud-commerce/issues/610)) ([7bc0238](https://github.com/ecomplus/cloud-commerce/commit/7bc0238e78b82f86a74b317495a8a13771ae0cf0))
+* **storefront:** Fix SSR context Astro typedef to support .ts "API" routes ([362e213](https://github.com/ecomplus/cloud-commerce/commit/362e21383f1b7e4dbccdef5f41c0a350a18b0687))
+* **storefront:** Prevent changing Picture `widths` array prop by reference ([168e447](https://github.com/ecomplus/cloud-commerce/commit/168e4472e9b78fad79a31486bed55e35ed35cee8))
+* **storefront:** Properly checking discount rule min amount on exported `getPriceWithDiscount` ([f341964](https://github.com/ecomplus/cloud-commerce/commit/f34196486120e99c78f79e7e87b908ff19b6f503))
+* **storefront:** Update Vue to ^3.5.19 ([#611](https://github.com/ecomplus/cloud-commerce/issues/611)) ([b6516b8](https://github.com/ecomplus/cloud-commerce/commit/b6516b8d8f56797e90ed4803e6d2394acd26e457))
+* **tiny-erp:** Read last order (bigger ID) on Tiny when more than one is found by number ([13c20ad](https://github.com/ecomplus/cloud-commerce/commit/13c20ade9ca2d0830b36d6fe3a88ffdc4873c570))
+
+## [2.48.18](https://github.com/ecomplus/cloud-commerce/compare/v2.48.17...v2.48.18) (2025-08-02)
+
+
+### Bug Fixes
+
+* **asaas:** Improve webhook lifecycle and cron scheduling ([fec3851](https://github.com/ecomplus/cloud-commerce/commit/fec3851ecc800a9d52fae23707e18d53e585d4b3))
+
+## [2.48.17](https://github.com/ecomplus/cloud-commerce/compare/v2.48.16...v2.48.17) (2025-08-02)
+
+
+### Bug Fixes
+
+* **asaas:** Enhance webhook validation and add payment status cron fallback ([afd1572](https://github.com/ecomplus/cloud-commerce/commit/afd1572a054fe71876368dec044f3edc31fd6836))
+* **asaas:** Improve API key tracking and configuration management ([e6cf7fb](https://github.com/ecomplus/cloud-commerce/commit/e6cf7fbe4289862dad6690a6e4919040051dc75c))
+* **cli:** Ensure SKU as strings on feed import ([0786138](https://github.com/ecomplus/cloud-commerce/commit/07861387f3578bae56b7f2c7f061643a0f54568b))
+
+## [2.48.16](https://github.com/ecomplus/cloud-commerce/compare/v2.48.15...v2.48.16) (2025-07-31)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Properly skipping stock updates only when `update_quantity` is false on app config ([b8a966f](https://github.com/ecomplus/cloud-commerce/commit/b8a966f2de5230ccfaf476a6060b471c42c96adc))
+
+## [2.48.15](https://github.com/ecomplus/cloud-commerce/compare/v2.48.14...v2.48.15) (2025-07-29)
+
+
+### Bug Fixes
+
+* **firebase:** Handle 404 errors when fetching fresh API docs in event processing ([fe19d5a](https://github.com/ecomplus/cloud-commerce/commit/fe19d5ae28b7ded238f946ee4c514740bb370a54))
+* **firebase:** Only update nonOrdersTimestamp during non-orders processing runs ([9a2ca9b](https://github.com/ecomplus/cloud-commerce/commit/9a2ca9bd9a97a293494add1f6f2f73530a0504f4))
+* **paypal:** Enhanced webhook error handling and dispute status support ([8e36aea](https://github.com/ecomplus/cloud-commerce/commit/8e36aea529e09567147bc75606d73027a680731a))
+* **tiny-erp:** Properly skipping stock updates when option is disabled on app config ([b637b1e](https://github.com/ecomplus/cloud-commerce/commit/b637b1e0503f334bc51b986080f929d8118ceb07))
+
+## [2.48.14](https://github.com/ecomplus/cloud-commerce/compare/v2.48.13...v2.48.14) (2025-07-25)
+
+
+### Bug Fixes
+
+* **asaas:** Create payment on Asaas with full response body for payments not Pix ([7d63b88](https://github.com/ecomplus/cloud-commerce/commit/7d63b880cffeb9cff6ba58acff8a969084624405))
+* **asaas:** Try secondary field and debug Asaas credit card response without payment link ([585c66f](https://github.com/ecomplus/cloud-commerce/commit/585c66f14f4a373f6252ed34657f1ebbf8edf754))
+* **paypal:** Force reduced PayPal token expiration and reset on first create payment with 401 ([7d210ae](https://github.com/ecomplus/cloud-commerce/commit/7d210ae031365f0a9c8995105f95f5618b624ce5))
+
+## [2.48.13](https://github.com/ecomplus/cloud-commerce/compare/v2.48.12...v2.48.13) (2025-07-25)
+
+
+### Bug Fixes
+
+* **asaas:** Force credit card method as `balance_on_intermediary` for payment with redirect ([a1f5c0c](https://github.com/ecomplus/cloud-commerce/commit/a1f5c0ce8ed8871571d3b0566672fceb0bc4ec34))
+* **tiny-erp:** Handle new payment and shipping method maps from app config data ([0e3cf20](https://github.com/ecomplus/cloud-commerce/commit/0e3cf201ed0dac408bc6b48483afaec5ed6f6e4c))
+
+## [2.48.12](https://github.com/ecomplus/cloud-commerce/compare/v2.48.11...v2.48.12) (2025-07-22)
+
+
+### Bug Fixes
+
+* **checkout:** Fix api.patch call to use customerPatch instead of endpoint ([0d1338a](https://github.com/ecomplus/cloud-commerce/commit/0d1338a32910846a6936a1d0a6926924144d56f1))
+
+## [2.48.11](https://github.com/ecomplus/cloud-commerce/compare/v2.48.10...v2.48.11) (2025-07-22)
+
+
+### Bug Fixes
+
+* **asaas:** Set required `email` for webhook on setup ([b333d34](https://github.com/ecomplus/cloud-commerce/commit/b333d341f2caccc640211c7d2f41ad0e193cba0a))
+
+## [2.48.10](https://github.com/ecomplus/cloud-commerce/compare/v2.48.9...v2.48.10) (2025-07-22)
+
+
+### Bug Fixes
+
+* **asaas:** Fix webhooks setup on create transaction ([725d35e](https://github.com/ecomplus/cloud-commerce/commit/725d35ed4f072166e95ddc84a1a402ea5bce6869))
+* **deps:** Update non-major dependencies ([#597](https://github.com/ecomplus/cloud-commerce/issues/597)) ([5131a13](https://github.com/ecomplus/cloud-commerce/commit/5131a13ccf7d11287ac30bd5a289587a1a2beb1d))
+* **mercadopago:** Preventing wrong object handling errors on webhook function ([a020869](https://github.com/ecomplus/cloud-commerce/commit/a020869f13173f174e59d6d63c4923157c8ec728))
+
+## [2.48.9](https://github.com/ecomplus/cloud-commerce/compare/v2.48.8...v2.48.9) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fix callback object on Asaas payment body ([e35aee9](https://github.com/ecomplus/cloud-commerce/commit/e35aee9dc1650f193866d6b8107a7f270255ec3b))
+
+## [2.48.8](https://github.com/ecomplus/cloud-commerce/compare/v2.48.7...v2.48.8) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fixing customer phone and name format on creation for new transaction ([590a0c1](https://github.com/ecomplus/cloud-commerce/commit/590a0c19a6c5c43bc119d5fa42963d327d2a48d6))
+
+## [2.48.7](https://github.com/ecomplus/cloud-commerce/compare/v2.48.6...v2.48.7) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fix optional inscription number params on customer creation for new transaction ([35eaaaa](https://github.com/ecomplus/cloud-commerce/commit/35eaaaa002ff24641eca89a8e8a1dc838e427aa6))
+
+## [2.48.6](https://github.com/ecomplus/cloud-commerce/compare/v2.48.5...v2.48.6) (2025-07-18)
+
+
+### Bug Fixes
+
+* **asaas:** Fixing intermediator code to minimum 6 chars ([fa0d583](https://github.com/ecomplus/cloud-commerce/commit/fa0d583f1f8f90fbcabc57a62967a9395ffca0d2))
+
+## [2.48.5](https://github.com/ecomplus/cloud-commerce/compare/v2.48.4...v2.48.5) (2025-07-18)
+
+
+### Bug Fixes
+
+* **paypal:** Fix saving PayPal web profile to Firestore on creation ([19422d8](https://github.com/ecomplus/cloud-commerce/commit/19422d85059b15bfe44ec6e32ccfa3e0a3b804a9))
+
+## [2.48.4](https://github.com/ecomplus/cloud-commerce/compare/v2.48.3...v2.48.4) (2025-07-18)
+
+
+### Bug Fixes
+
+* **paypal:** Proper logo URL on PayPal web profile ([34722bb](https://github.com/ecomplus/cloud-commerce/commit/34722bbfe1c014ad6dcb391e2fe7535df08299dd))
+
+## [2.48.3](https://github.com/ecomplus/cloud-commerce/compare/v2.48.2...v2.48.3) (2025-07-18)
+
+
+### Bug Fixes
+
+* **paypal:** Better error handling, fix calling webhooks and profiles one by one ([b5abd57](https://github.com/ecomplus/cloud-commerce/commit/b5abd570d126bcfe8499bac0fbc6bd1d6326de53))
+* **paypal:** Saving PayPal web profile after creation ([ecab6cb](https://github.com/ecomplus/cloud-commerce/commit/ecab6cbfb36c023e510ad6f4dab011cbfcb77790))
+
+## [2.48.2](https://github.com/ecomplus/cloud-commerce/compare/v2.48.1...v2.48.2) (2025-07-18)
+
+
+### Bug Fixes
+
+* **modules:** Fix handling modules endpoints with URL params (`?app_id`) ([f722c5a](https://github.com/ecomplus/cloud-commerce/commit/f722c5a724bee39b58fee85a4a0dd404dc70f1bd))
+
+## [2.48.1](https://github.com/ecomplus/cloud-commerce/compare/v2.48.0...v2.48.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* **paypal:** Prevent skipping valid payment gateway on list payments ([906a9bb](https://github.com/ecomplus/cloud-commerce/commit/906a9bb34fc29be37fbe9b780e15f47eea3d9e64))
+
+## [2.48.0](https://github.com/ecomplus/cloud-commerce/compare/v2.47.0...v2.48.0) (2025-07-18)
+
+
+### Features
+
+* **asaas:** Setup Asaas payment integration app ([f95f319](https://github.com/ecomplus/cloud-commerce/commit/f95f3191c397f0d485d1a956cfe08c4affd96123))
+* **paypal:** Setup PayPal (Plus) payment integration app ([37e76b7](https://github.com/ecomplus/cloud-commerce/commit/37e76b7f450e58e20f22774876d2fd75f6909d5f))
+
+## [2.47.0](https://github.com/ecomplus/cloud-commerce/compare/v2.46.3...v2.47.0) (2025-07-16)
+
+
+### Features
+
+* **i18n:** New `i19discounts` word ([b015e50](https://github.com/ecomplus/cloud-commerce/commit/b015e5002d4ffa054aff69d094bbe56028854971))
+* **storefront:** New `useCartSidebar` composable optionally abstracting discount and freight ([7ee98ca](https://github.com/ecomplus/cloud-commerce/commit/7ee98ca76c3cd876a1d84f0888af5f46cd3987f2))
+
+
+### Bug Fixes
+
+* **discounts:** Handle new optional `DISCOUNTS_DISABLE_OPEN` bool env ([c34f53c](https://github.com/ecomplus/cloud-commerce/commit/c34f53c589154c845677a667af3323d6efb9efc7))
+* **storefront:** Skip duplicating extra discount on amount total or other final price ([b4a195c](https://github.com/ecomplus/cloud-commerce/commit/b4a195c95e61193a8a042cc5d45e0bf8309c5ad1))
+
+## [2.46.3](https://github.com/ecomplus/cloud-commerce/compare/v2.46.2...v2.46.3) (2025-07-10)
+
+
+### Bug Fixes
+
+* **storefront:** Updating checkout vbeta-app script version ([1dbe646](https://github.com/ecomplus/cloud-commerce/commit/1dbe646d0a6d84a693e27238fd3166c7ad5b7053))
+
+## [2.46.2](https://github.com/ecomplus/cloud-commerce/compare/v2.46.1...v2.46.2) (2025-07-08)
+
+
+### Bug Fixes
+
+* **ssr:** Skip sending orders without `awc` param to Awin conversion API on anaytics handler ([756e23f](https://github.com/ecomplus/cloud-commerce/commit/756e23ff0826669801d7e2d26798a4a18354f009))
+* **storefront:** New `initialResultMeta` optional prop on search filters composable ([b388965](https://github.com/ecomplus/cloud-commerce/commit/b388965c80c8ab55d7f1678fb38953047b2b00d1))
+* **storefront:** Update dependency unocss to ^66.3.3 ([#595](https://github.com/ecomplus/cloud-commerce/issues/595)) ([8ddfb07](https://github.com/ecomplus/cloud-commerce/commit/8ddfb07af81a0a4e43d2ecb5980e4d2ef6caa728))
+
+## [2.46.1](https://github.com/ecomplus/cloud-commerce/compare/v2.46.0...v2.46.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#593](https://github.com/ecomplus/cloud-commerce/issues/593)) ([3f0dd71](https://github.com/ecomplus/cloud-commerce/commit/3f0dd718d3347259ebdc9a3642d5a875c92838ef))
+* **pagarme-v5:** On payment webhook check for past expiration cvoid and force status later date time ([bfb01e1](https://github.com/ecomplus/cloud-commerce/commit/bfb01e1131c5b55661d8538cb07f7869c5eb7834))
+
+## [2.46.0](https://github.com/ecomplus/cloud-commerce/compare/v2.45.5...v2.46.0) (2025-07-02)
+
+
+### Features
+
+* **evendas:** Setup E-Vendas CRM integration app ([ffedbdf](https://github.com/ecomplus/cloud-commerce/commit/ffedbdf842787fa015bee8430add6d0030be432e))
+
+
+### Bug Fixes
+
+* **appmax:** Mocked (strange) User-Agent on Appmax API requests to prevent CDN shield blocking ([7251525](https://github.com/ecomplus/cloud-commerce/commit/72515251cb4f67abcf74edcf8afdd7aa7053fdcb))
+* **appmax:** Prevent unecessary repeated webhooks (skippable) ([38fdca2](https://github.com/ecomplus/cloud-commerce/commit/38fdca2e551be112c7b85da0f2090faaa0bdb213))
+* **evendas:** Fixed Firebase Functions `evendas` group ([11dcf84](https://github.com/ecomplus/cloud-commerce/commit/11dcf8410e3b9af2bdddc9883d40f629fcde5e17))
+
+## [2.45.5](https://github.com/ecomplus/cloud-commerce/compare/v2.45.4...v2.45.5) (2025-06-26)
+
+
+### Bug Fixes
+
+* **appmax:** Fetch Appmax order with `axxess-token` header instead of param on webhook handler ([dc3c999](https://github.com/ecomplus/cloud-commerce/commit/dc3c99929872cec4af7be81f96b88ead0dc44b25))
+* **appmax:** Fix awaiting request for Appmax order read on webhook ([6ebae54](https://github.com/ecomplus/cloud-commerce/commit/6ebae54c1be9aaeeb03d8c32a5a6a2681bac0bda))
+
+## [2.45.4](https://github.com/ecomplus/cloud-commerce/compare/v2.45.3...v2.45.4) (2025-06-26)
+
+## [2.45.3](https://github.com/ecomplus/cloud-commerce/compare/v2.45.2...v2.45.3) (2025-06-25)
+
+
+### Bug Fixes
+
+* **appmax:** Properly handling unauthorized card payments on create transaction ([1cfddc3](https://github.com/ecomplus/cloud-commerce/commit/1cfddc3f666e69625d05b0255ea5422a52fbc68a))
+* **storefront:** Updating checkout vbeta-app script version ([607d609](https://github.com/ecomplus/cloud-commerce/commit/607d609814083d34f412f5afb47ee50494ef8f13))
+
+## [2.45.2](https://github.com/ecomplus/cloud-commerce/compare/v2.45.1...v2.45.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* **appmax:** Fix module imports ([be7287f](https://github.com/ecomplus/cloud-commerce/commit/be7287f1ed488a112edd26b2609b48c5ca4cb9ab))
+
+## [2.45.1](https://github.com/ecomplus/cloud-commerce/compare/v2.45.0...v2.45.1) (2025-06-25)
+
+## [2.45.0](https://github.com/ecomplus/cloud-commerce/compare/v2.44.8...v2.45.0) (2025-06-24)
+
+
+### Features
+
+* **appmax:** Setup Appmax payment integration app ([02c559c](https://github.com/ecomplus/cloud-commerce/commit/02c559c81a9f7ac3dca7a078d3c738923b30a4a5))
+
+
+### Bug Fixes
+
+* **ssr:** Fix Awin conversion API `x-api-key` header ([91282be](https://github.com/ecomplus/cloud-commerce/commit/91282be2c40031cbf3429cf5bd4d08b84c56d5df))
+
+## [2.44.8](https://github.com/ecomplus/cloud-commerce/compare/v2.44.7...v2.44.8) (2025-06-23)
+
+## [2.44.7](https://github.com/ecomplus/cloud-commerce/compare/v2.44.6...v2.44.7) (2025-06-23)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#592](https://github.com/ecomplus/cloud-commerce/issues/592)) ([aa07494](https://github.com/ecomplus/cloud-commerce/commit/aa07494454e05190be20aaec9d3daf2c400cec87))
+* **storefront:** Update Vue to latest ^3.5.17 ([#591](https://github.com/ecomplus/cloud-commerce/issues/591)) ([eeeeda5](https://github.com/ecomplus/cloud-commerce/commit/eeeeda520878278916a328c139d2202ef7e957cf))
+
+## [2.44.6](https://github.com/ecomplus/cloud-commerce/compare/v2.44.5...v2.44.6) (2025-06-17)
+
+## [2.44.5](https://github.com/ecomplus/cloud-commerce/compare/v2.44.4...v2.44.5) (2025-06-17)
+
+## [2.44.4](https://github.com/ecomplus/cloud-commerce/compare/v2.44.3...v2.44.4) (2025-06-17)
+
+
+### Bug Fixes
+
+* **storefront:** Supporting delayed async scripts with eager loading ([6769967](https://github.com/ecomplus/cloud-commerce/commit/6769967f04bcfbd1a872970bb6668e05af39db83))
+
+## [2.44.3](https://github.com/ecomplus/cloud-commerce/compare/v2.44.2...v2.44.3) (2025-06-12)
+
+## [2.44.2](https://github.com/ecomplus/cloud-commerce/compare/v2.44.1...v2.44.2) (2025-06-12)
+
+## [2.44.1](https://github.com/ecomplus/cloud-commerce/compare/v2.44.0...v2.44.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#589](https://github.com/ecomplus/cloud-commerce/issues/589)) ([74faa13](https://github.com/ecomplus/cloud-commerce/commit/74faa133c10c7eb5f6af2544cc26eea74bd6fd7c))
+* **discounts:** Skip freebie marked items on kit discounts ([d6b4cee](https://github.com/ecomplus/cloud-commerce/commit/d6b4cee6402b29a5eb1213279daacb1c18056248))
+
+## [2.44.0](https://github.com/ecomplus/cloud-commerce/compare/v2.43.1...v2.44.0) (2025-06-04)
+
+
+### Features
+
+* **ssr:** Start sending server-side events to Awin conversion API ([3533a6e](https://github.com/ecomplus/cloud-commerce/commit/3533a6e52298ec2bd4020c7cdda5ae579245225c))
+
+
+### Bug Fixes
+
+* **custom-shipping:** Fix checking zip code ranges on shipping rules ([0005a0a](https://github.com/ecomplus/cloud-commerce/commit/0005a0a446c78ca82e52d8a6d134840949ebfa3d))
+* **deps:** Update non-major dependencies ([#588](https://github.com/ecomplus/cloud-commerce/issues/588)) ([9fb1009](https://github.com/ecomplus/cloud-commerce/commit/9fb1009b6123aa2803d042d531143f3267c75ed6))
+* **storefront:** Update Vue to ^3.5.16 ([#587](https://github.com/ecomplus/cloud-commerce/issues/587)) ([3931982](https://github.com/ecomplus/cloud-commerce/commit/39319826cdf84945fe85a4c398586a3a4e04b8ca))
+
+## [2.43.1](https://github.com/ecomplus/cloud-commerce/compare/v2.43.0...v2.43.1) (2025-05-26)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#580](https://github.com/ecomplus/cloud-commerce/issues/580)) ([9e50c32](https://github.com/ecomplus/cloud-commerce/commit/9e50c3203c13bced8a6fce848d98a43fb4370b77))
+* **pagarme-v5:** Gap 7 days for boleto expiration and allow skipping cancel routine ([c069fbd](https://github.com/ecomplus/cloud-commerce/commit/c069fbd347f821f22dbab232cd29e7d3f957d2e4))
+
+## [2.43.0](https://github.com/ecomplus/cloud-commerce/compare/v2.42.5...v2.43.0) (2025-05-23)
+
+
+### Features
+
+* **pagarme-v5:** New cron function to auto cancel expired Pix/boleto orders by configured validity ([f9d9d06](https://github.com/ecomplus/cloud-commerce/commit/f9d9d0640dfcd110a453452fc720529c95be8764))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#576](https://github.com/ecomplus/cloud-commerce/issues/576)) ([0e99edb](https://github.com/ecomplus/cloud-commerce/commit/0e99edbafe864aff787895692ce80410d760bb25))
+* **deps:** Update non-major dependencies ([#579](https://github.com/ecomplus/cloud-commerce/issues/579)) ([8a62ead](https://github.com/ecomplus/cloud-commerce/commit/8a62ead9d72ba9d5cfba5435e82830131c110191))
+* **pagarme-v5:** Skip free items (freebies) on Pagar.me order ([ccc89f8](https://github.com/ecomplus/cloud-commerce/commit/ccc89f85bb873df78a807922a6420d3197f66f1a))
+* **storefront:** Bump Vue to latest ^3.5.14 ([#578](https://github.com/ecomplus/cloud-commerce/issues/578)) ([2d02134](https://github.com/ecomplus/cloud-commerce/commit/2d021348d4f76ddeb24d9032968e4ea0a7145f2f))
+
+## [2.42.5](https://github.com/ecomplus/cloud-commerce/compare/v2.42.4...v2.42.5) (2025-05-10)
+
+
+### Bug Fixes
+
+* **api:** Set `response.data` as `undefined` on 204 (no content) ([07e95ef](https://github.com/ecomplus/cloud-commerce/commit/07e95efb839f18db94b40d47c178c859f4971082))
+* **loyalty-points:** Fix setting first points (new array) to new customers ([a186280](https://github.com/ecomplus/cloud-commerce/commit/a1862804b3f2f6bd45123bea4e1e75bb9847e760))
+
+## [2.42.4](https://github.com/ecomplus/cloud-commerce/compare/v2.42.3...v2.42.4) (2025-05-09)
+
+
+### Bug Fixes
+
+* **mandae:** Filter only `ready_for_shipping` orders on some executions of track routine ([c417039](https://github.com/ecomplus/cloud-commerce/commit/c41703991a72e4bda222358b5477ac2bbae65fb6))
+
+## [2.42.3](https://github.com/ecomplus/cloud-commerce/compare/v2.42.2...v2.42.3) (2025-05-08)
+
+
+### Bug Fixes
+
+* **mandae:** Keep tracking codes out of format when `mandae` tag or link is checked ([77f9d30](https://github.com/ecomplus/cloud-commerce/commit/77f9d30f575f4e588581baf0250413b3d6fd5c45))
+* **mandae:** Parse tracking result id "6" to returned ([98aaae6](https://github.com/ecomplus/cloud-commerce/commit/98aaae68f56f400c8e975cbf6c38fddda3a19dd5))
+
+## [2.42.2](https://github.com/ecomplus/cloud-commerce/compare/v2.42.1...v2.42.2) (2025-05-08)
+
+
+### Bug Fixes
+
+* **mandae:** Orders send and tracking routines with sort field varying by `updated_at` and `number` ([46a965b](https://github.com/ecomplus/cloud-commerce/commit/46a965b431e452154e77c65c4ee8c3ccd222a7f6))
+
+## [2.42.1](https://github.com/ecomplus/cloud-commerce/compare/v2.42.0...v2.42.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* **mandae:** Ensure tracking exec on odd and even minutes for both older and newer orders ([cf60fe7](https://github.com/ecomplus/cloud-commerce/commit/cf60fe77af051e93d001303b4c0e9489f7fc3b12))
+* **pagarme-v5:** Limiting sent customer name to 64 chars ([c4f8cac](https://github.com/ecomplus/cloud-commerce/commit/c4f8cac02dd4df2367f9f914042c54f3218a79ae))
+
+## [2.42.0](https://github.com/ecomplus/cloud-commerce/compare/v2.41.14...v2.42.0) (2025-05-06)
+
+
+### Features
+
+* **cli:** Edit default Remote Config template for A/B experiments (50/50) field ([76a6f42](https://github.com/ecomplus/cloud-commerce/commit/76a6f420695f747df9c3faceec3265c61475043e))
+* **storefront:** Supporting A/B experiment fields with Remote Config and CMS content ([2f18c5f](https://github.com/ecomplus/cloud-commerce/commit/2f18c5fafd9722d5f3cfe984efc9898b3cd6573f))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#574](https://github.com/ecomplus/cloud-commerce/issues/574)) ([2fc121d](https://github.com/ecomplus/cloud-commerce/commit/2fc121d928202a58330533131b6b96ade937c3c0))
+* **firebase:** Update dependency @google-cloud/pubsub to v5 ([#575](https://github.com/ecomplus/cloud-commerce/issues/575)) ([05a3423](https://github.com/ecomplus/cloud-commerce/commit/05a3423ae43e18ef47b5868a46c9aa80ae395223))
+* **modules:** Ensure blocking disabled customers on checkout ([6972604](https://github.com/ecomplus/cloud-commerce/commit/6972604eebedf4f3d749640b9a0f8e56db425206))
+* **modules:** Update found customer with new fields on checkout ([dfba251](https://github.com/ecomplus/cloud-commerce/commit/dfba251540c3a3f30230839e9e42bd62c17dd39c))
+
+## [2.41.14](https://github.com/ecomplus/cloud-commerce/compare/v2.41.13...v2.41.14) (2025-04-30)
+
+## [2.41.13](https://github.com/ecomplus/cloud-commerce/compare/v2.41.12...v2.41.13) (2025-04-30)
+
+
+### Bug Fixes
+
+* **cli:** Ensure persistent SWR origin set to https on bunny.net edge rule ([03281e8](https://github.com/ecomplus/cloud-commerce/commit/03281e8d47ccd0c6e01bd9080e6c2660b917a354))
+* **deps:** Update non-major dependencies ([#567](https://github.com/ecomplus/cloud-commerce/issues/567)) ([70f5cfb](https://github.com/ecomplus/cloud-commerce/commit/70f5cfbc85e2200186c763e57bb9946263643003))
+* **emails:** Mock default STMP sender to `noreply@e-com.plus` ([eae6e8c](https://github.com/ecomplus/cloud-commerce/commit/eae6e8c419ec227a37d1145b0048cd37d7595cdc))
+* **passport:** Handle email-only passport identification only if doc number is set ([153ea1c](https://github.com/ecomplus/cloud-commerce/commit/153ea1c71ae29dbce672cf3d992afa953bc7e355))
+* **storefront:** Refetch variation prices on cart state update ([9428b9d](https://github.com/ecomplus/cloud-commerce/commit/9428b9dc85e7377a3602eade829a9f5230bc6f2a))
+* **storefront:** Updating checkout vbeta-app script version ([97e57ad](https://github.com/ecomplus/cloud-commerce/commit/97e57ad207707fce71ffef0c9ba38aa6a43014d3))
+
+## [2.41.12](https://github.com/ecomplus/cloud-commerce/compare/v2.41.11...v2.41.12) (2025-04-22)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#565](https://github.com/ecomplus/cloud-commerce/issues/565)) ([a684290](https://github.com/ecomplus/cloud-commerce/commit/a6842909071afde249f41441717da660bb58c014))
+* **deps:** Update non-major dependencies ([#566](https://github.com/ecomplus/cloud-commerce/issues/566)) ([1a430d5](https://github.com/ecomplus/cloud-commerce/commit/1a430d576e82731ab172c056c2d292f0d7e73119))
+* **discounts:** Multiply kit discount value by qnt groups only when min quantity > 1 ([2aeb46d](https://github.com/ecomplus/cloud-commerce/commit/2aeb46d8b44fa5cb6783cbfa8afbc3c0046266a5))
+* **mandae:** Supporting shipping rules with min kg weight filter ([7bfcba7](https://github.com/ecomplus/cloud-commerce/commit/7bfcba7c52c1d30520c91bbf56a5d17ff1a26adf))
+* **storefront:** Ensure social networks on server data set after global `$storefront` init ([5c4af7d](https://github.com/ecomplus/cloud-commerce/commit/5c4af7dfa626109f6ac02c584529feb88028b509))
+
+## [2.41.11](https://github.com/ecomplus/cloud-commerce/compare/v2.41.10...v2.41.11) (2025-04-08)
+
+
+### Bug Fixes
+
+* **ssr:** Better matching base filepath for redirect on static file not found ([3ab04da](https://github.com/ecomplus/cloud-commerce/commit/3ab04da5ef0698bb469cb6ff848a2bdb68fae684))
+* **storefront:** Better naming hoisted entry files on build output ([716570a](https://github.com/ecomplus/cloud-commerce/commit/716570a35dacb472493a4082dcdb572a18647442)), closes [/github.com/ecomplus/cloud-commerce/blob/main/packages/ssr/src/lib/serve-storefront.ts#L75-L84](https://github.com/ecomplus//github.com/ecomplus/cloud-commerce/blob/main/packages/ssr/src/lib/serve-storefront.ts/issues/L75-L84)
+
+## [2.41.10](https://github.com/ecomplus/cloud-commerce/compare/v2.41.9...v2.41.10) (2025-04-06)
+
+
+### Bug Fixes
+
+* **firebase:** Preventing last API event repeating every cron execution ([f172314](https://github.com/ecomplus/cloud-commerce/commit/f172314ecc1adf5c7ad293122803fe0f2db7c743))
+
+## [2.41.9](https://github.com/ecomplus/cloud-commerce/compare/v2.41.8...v2.41.9) (2025-04-03)
+
+
+### Bug Fixes
+
+* **emails:** Fix matching `fulfillments` on modified fields to trigger emails (typo) ([a5bdd10](https://github.com/ecomplus/cloud-commerce/commit/a5bdd10a3705d5faaa375d8cc242d10f53d543e8))
+
+## [2.41.8](https://github.com/ecomplus/cloud-commerce/compare/v2.41.7...v2.41.8) (2025-04-02)
+
+
+### Bug Fixes
+
+* **storefront:** Ensure persisting `final_price` on cart item when set ([5923df7](https://github.com/ecomplus/cloud-commerce/commit/5923df7d6c9f3485999374cddf20e4051c9ba28a))
+* **storefront:** Fix watch and fixing shopping cart items without loops on item middlewares ([b5e4d5d](https://github.com/ecomplus/cloud-commerce/commit/b5e4d5d6c86ade3f34b5aeaeb42bcac381329568))
+* **storefront:** Storing product `weight` on shopping cart items (when available) ([61fd7c9](https://github.com/ecomplus/cloud-commerce/commit/61fd7c9fbed854cad3aa48343fc34d0edb3a877b))
+* **tiny-erp:** Handle product with variations Tiny webhook to stock updates ([93a7263](https://github.com/ecomplus/cloud-commerce/commit/93a7263200251cb2d633fa07c9d62e84718e266a))
+* **tiny-erp:** Regressions of 93a7263 ([762586f](https://github.com/ecomplus/cloud-commerce/commit/762586ffbd2b904f444b5a81deb33251c353d11a))
+
+## [2.41.7](https://github.com/ecomplus/cloud-commerce/compare/v2.41.6...v2.41.7) (2025-04-01)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#554](https://github.com/ecomplus/cloud-commerce/issues/554)) ([4468a9d](https://github.com/ecomplus/cloud-commerce/commit/4468a9d819ed1ec90e975807edc7b7b78e021f37))
+* **mandae:** Prevent error with undefined order settings on cron send and track functions ([1a2b41b](https://github.com/ecomplus/cloud-commerce/commit/1a2b41b70caa5e34bc12169d1fb8dda1f645d6ae))
+* **pagarme-v5:** Prevent errors on Pagar.me webhooks for orders with no `financial_status` (yet) ([ad4ccfa](https://github.com/ecomplus/cloud-commerce/commit/ad4ccfa103062dba7e99f26933eef5fd23a57579))
+* **pagarme-v5:** Returning 200 on Pagar.me webhook with order found with same status ([00d1a94](https://github.com/ecomplus/cloud-commerce/commit/00d1a94385843161621c48922176705a5de5e5df))
+
+## [2.41.6](https://github.com/ecomplus/cloud-commerce/compare/v2.41.5...v2.41.6) (2025-03-31)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Fix reading order on Pagar.me webhooks ([e16757f](https://github.com/ecomplus/cloud-commerce/commit/e16757feac3fd61ffe9ec303cd510420d85807c9))
+
+## [2.41.5](https://github.com/ecomplus/cloud-commerce/compare/v2.41.4...v2.41.5) (2025-03-31)
+
+## [2.41.4](https://github.com/ecomplus/cloud-commerce/compare/v2.41.3...v2.41.4) (2025-03-31)
+
+
+### Bug Fixes
+
+* **mercadopago:** Replicating full address on payer info for boleto ([60668aa](https://github.com/ecomplus/cloud-commerce/commit/60668aaac60ab28b7d5f256596143ac5286f597e))
+* **pagarme-v5:** Fix defining app data on Pagar.me webhooks handler ([0303c02](https://github.com/ecomplus/cloud-commerce/commit/0303c025c5c4f8089974808e5c7cb2585ce1e43a))
+
+## [2.41.3](https://github.com/ecomplus/cloud-commerce/compare/v2.41.2...v2.41.3) (2025-03-28)
+
+
+### Bug Fixes
+
+* **pagarme-v5:** Properly handling installments ([463683c](https://github.com/ecomplus/cloud-commerce/commit/463683cf53e26f33286f2bbd47b5e9c2d62c32e9))
+
+## [2.41.2](https://github.com/ecomplus/cloud-commerce/compare/v2.41.1...v2.41.2) (2025-03-28)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Prevent calculate execution error with not-string zip range min/max on rules ([412d4bf](https://github.com/ecomplus/cloud-commerce/commit/412d4bf947f31db5191b8a3f5a9dea68891319dc))
+
+## [2.41.1](https://github.com/ecomplus/cloud-commerce/compare/v2.41.0...v2.41.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Must parse to number to match exact zip code on rules with only min OR max ([b9f9b30](https://github.com/ecomplus/cloud-commerce/commit/b9f9b30e8e9c7cb412cd2166cb1922c1a39d34f9))
+
+## [2.41.0](https://github.com/ecomplus/cloud-commerce/compare/v2.40.12...v2.41.0) (2025-03-28)
+
+
+### Features
+
+* **custom-shipping:** Supporting delivery "default" delivery time and total price from services ([44d10bb](https://github.com/ecomplus/cloud-commerce/commit/44d10bb6d8cce3da0162170bd5708b8afdb65a69))
+
+
+### Bug Fixes
+
+* **cli:** Ensure default `localhost:4321` on dev without host and port args ([3a89a3e](https://github.com/ecomplus/cloud-commerce/commit/3a89a3ee8fc5c803c9385e811eeae7016d14c022))
+* **custom-shipping:** Check rules with zip range min OR max matching only exact zip code ([564842c](https://github.com/ecomplus/cloud-commerce/commit/564842cb04d3b8e949f25f7e051914d2173c13a1))
+* **storefront:** Fetch search with term `null` when term has less than 2 chars (or empty) ([74c58b8](https://github.com/ecomplus/cloud-commerce/commit/74c58b889f5801147bfcd067e179b39e3acb093a))
+* **storefront:** Fix defining collections shelfs from content fields ([4e8fdcc](https://github.com/ecomplus/cloud-commerce/commit/4e8fdcc79f1f89be634579d66d14f87e9c3baf8f))
+* **storefront:** Update `PageContent` type for hero with maybe undefined `slides` ([3f55c5c](https://github.com/ecomplus/cloud-commerce/commit/3f55c5c90fbc7e092c20aead9eb7a0b2fef229aa))
+
+## [2.40.12](https://github.com/ecomplus/cloud-commerce/compare/v2.40.11...v2.40.12) (2025-03-26)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Fix rejecting Function for retry on Tiny API rate limit errors ([1bd2449](https://github.com/ecomplus/cloud-commerce/commit/1bd24490af069ff37b38fb59e1cbb76097917d49))
+
+## [2.40.11](https://github.com/ecomplus/cloud-commerce/compare/v2.40.10...v2.40.11) (2025-03-26)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#552](https://github.com/ecomplus/cloud-commerce/issues/552)) ([dccc0e1](https://github.com/ecomplus/cloud-commerce/commit/dccc0e1cd4852ed69a1435530b2446cb33edb53c))
+* **pagarme-v5:** General app fixes ([6616f50](https://github.com/ecomplus/cloud-commerce/commit/6616f50257d196389f7d23addd835cee30404525))
+* **tiny-erp:** Prevent error on after queue error serialization with circular objects ([b66531e](https://github.com/ecomplus/cloud-commerce/commit/b66531e61793db4356dd2a3ef3112a1dda79e1f7))
+* **tiny-erp:** Properly handling image uploads on product imports ([849d245](https://github.com/ecomplus/cloud-commerce/commit/849d2459068b2955aaeab0b18e38ee898e9108bc))
+
+## [2.40.10](https://github.com/ecomplus/cloud-commerce/compare/v2.40.9...v2.40.10) (2025-03-21)
+
+
+### Bug Fixes
+
+* **firebase:** Skip events with same modified (data) fields with applications resource ([74653c6](https://github.com/ecomplus/cloud-commerce/commit/74653c65b03b1c0638a59d8a22e1f9dfad713149))
+* **tiny-erp:** Fix importing and updating products with variations ([b9dd6d0](https://github.com/ecomplus/cloud-commerce/commit/b9dd6d01ad21c8000cb28cd36a2f2cb2da47e11a))
+* **tiny-erp:** Skip applications API events without `data` (queue) changes ([7084a67](https://github.com/ecomplus/cloud-commerce/commit/7084a677f9f55c9b1f8b07bf1d8f7298eb31cec6))
+
+## [2.40.9](https://github.com/ecomplus/cloud-commerce/compare/v2.40.8...v2.40.9) (2025-03-21)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Consider queued events only triggered by `applications-dataSet` ([02bb73e](https://github.com/ecomplus/cloud-commerce/commit/02bb73e9a1ee70a29493b41ff3e84e08414417b3))
+* **tiny-erp:** Fix awaiting product parse to export ([2421fad](https://github.com/ecomplus/cloud-commerce/commit/2421fadeb15d0d8683093bb931aa3200754479a7))
+
+## [2.40.8](https://github.com/ecomplus/cloud-commerce/compare/v2.40.7...v2.40.8) (2025-03-21)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Prevent and debug errors with obejct strigify on requests to Tiny API ([a1adaff](https://github.com/ecomplus/cloud-commerce/commit/a1adaff4f0ae5152f803832145307cbd42033acb))
+
+## [2.40.7](https://github.com/ecomplus/cloud-commerce/compare/v2.40.6...v2.40.7) (2025-03-20)
+
+
+### Bug Fixes
+
+* **checkout:** Prevent boring XSS on customer fields ([8c3a40c](https://github.com/ecomplus/cloud-commerce/commit/8c3a40c61f159d242ff1045937f071a477f19351))
+* **mandae:** Also hardset declared value up to R$ 5000 when config option for Mandaê limit is set ([8cd02b6](https://github.com/ecomplus/cloud-commerce/commit/8cd02b69d2166db274bf5c919dc6e7fc2943a2fc))
+
+## [2.40.6](https://github.com/ecomplus/cloud-commerce/compare/v2.40.5...v2.40.6) (2025-03-20)
+
+
+### Bug Fixes
+
+* **checkout:** Prevent boring XSS on customer fields ([58671aa](https://github.com/ecomplus/cloud-commerce/commit/58671aa632321c4cf3f21710a7905413ce5de410))
+* **mandae:** Supporting config option to force package weight to 50kg limit ([0c8bc78](https://github.com/ecomplus/cloud-commerce/commit/0c8bc78903b6feeef122aa0f6432e08e2c04f54f))
+
+## [2.40.5](https://github.com/ecomplus/cloud-commerce/compare/v2.40.4...v2.40.5) (2025-03-19)
+
+
+### Bug Fixes
+
+* **mercadopago:** Prevents invalid `transaction.credit_card.holder_name = null` ([a0946ba](https://github.com/ecomplus/cloud-commerce/commit/a0946ba306c25de916b18d4a343ec68290de768a))
+
+## [2.40.4](https://github.com/ecomplus/cloud-commerce/compare/v2.40.3...v2.40.4) (2025-03-19)
+
+
+### Bug Fixes
+
+* **storefront:** Handling variation price directly on `usePrice` composable with `variationId` prop ([a58206f](https://github.com/ecomplus/cloud-commerce/commit/a58206f9dca7336b58766a7bdfef2209460662cb))
+* **storefront:** Properly parsing variation price and other fields on add to cart ([092cc7e](https://github.com/ecomplus/cloud-commerce/commit/092cc7e400537bdbe42e9cb4d4039cba99e39fa1))
+
+## [2.40.3](https://github.com/ecomplus/cloud-commerce/compare/v2.40.2...v2.40.3) (2025-03-19)
+
+
+### Bug Fixes
+
+* **custom-shipping:** Properly returning free shipping preview when no address received ([3769dd6](https://github.com/ecomplus/cloud-commerce/commit/3769dd68d7164dc16144737c00a120b414541579))
+
+## [2.40.2](https://github.com/ecomplus/cloud-commerce/compare/v2.40.1...v2.40.2) (2025-03-18)
+
+
+### Bug Fixes
+
+* **tiny-erp:** Prevent syntax error on after queue handler with undefined objects in app data ([46d9dfd](https://github.com/ecomplus/cloud-commerce/commit/46d9dfd373bbd2f40d073f67e79b3e8ff4fc1e60))
+* **tiny-erp:** Prevents unecessary updates on app data when handler event is not queued ([75d4bda](https://github.com/ecomplus/cloud-commerce/commit/75d4bda6761c4c45a6fc5962addfc344b3e4091e))
+
 ## [2.40.1](https://github.com/ecomplus/cloud-commerce/compare/v2.40.0...v2.40.1) (2025-03-18)
 
 

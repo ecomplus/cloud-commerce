@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/events",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce app events",
   "main": "lib/index.js",
   "exports": {
@@ -30,9 +30,12 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/app-affiliate-program": "workspace:*",
+    "@cloudcommerce/app-appmax": "workspace:*",
+    "@cloudcommerce/app-asaas": "workspace:*",
     "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
+    "@cloudcommerce/app-evendas": "workspace:*",
     "@cloudcommerce/app-flash-courier": "workspace:*",
     "@cloudcommerce/app-frenet": "workspace:*",
     "@cloudcommerce/app-galaxpay": "workspace:*",
@@ -44,13 +47,17 @@
     "@cloudcommerce/app-pagarme": "workspace:*",
     "@cloudcommerce/app-pagarme-v5": "workspace:*",
     "@cloudcommerce/app-paghiper": "workspace:*",
+    "@cloudcommerce/app-paypal": "workspace:*",
     "@cloudcommerce/app-pix": "workspace:*",
     "@cloudcommerce/app-tiny-erp": "workspace:*",
+    "@cloudcommerce/app-vindi": "workspace:*",
     "@cloudcommerce/app-webhooks": "workspace:*",
+    "@cloudcommerce/app-woovi": "workspace:*",
+    "@cloudcommerce/app-yapay": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/ssr": "workspace:*",
-    "firebase-admin": "^13.2.0",
-    "firebase-functions": "^6.3.2",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^6.6.0",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {

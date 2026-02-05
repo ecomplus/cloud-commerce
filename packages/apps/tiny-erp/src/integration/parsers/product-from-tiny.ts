@@ -1,8 +1,20 @@
 import type { Products, ProductSet } from '@cloudcommerce/types';
 import { logger } from '@cloudcommerce/firebase/lib/config';
+import api from '@cloudcommerce/api';
 import axios from 'axios';
 import ecomUtils from '@ecomplus/utils';
 import getEnv from '@cloudcommerce/firebase/lib/env';
+import { imageSize } from 'image-size';
+
+const tryImageSize = (data: any) => {
+  try {
+    const buffer = Buffer.from(data);
+    const dimensions = imageSize(buffer);
+    return dimensions;
+  } catch {
+    return null;
+  }
+};
 
 const removeAccents = (str: string) => str.replace(/áàãâÁÀÃÂ/g, 'a')
   .replace(/éêÉÊ/g, 'e')
@@ -11,11 +23,12 @@ const removeAccents = (str: string) => str.replace(/áàãâÁÀÃÂ/g, 'a')
   .replace(/úÚ/g, 'u')
   .replace(/çÇ/g, 'c');
 
-const tryImageUpload = (
+let ecomAccessToken: string | undefined;
+const tryImageUpload = async (
   originImgUrl: string,
-  product: Products,
-  index?: number,
-) => new Promise((resolve) => {
+  product: Products | ProductSet,
+) => {
+  logger.info(`Starting image upload for ${product.sku}`, { originImgUrl });
   const {
     storeId,
     apiAuth: {
@@ -23,22 +36,60 @@ const tryImageUpload = (
       apiKey,
     },
   } = getEnv();
-  axios.get(originImgUrl, {
-    responseType: 'arraybuffer',
-  }).then(({ data, headers }) => {
+  if (!ecomAccessToken) {
+    const { data } = await api.post('authenticate', {
+      _id: authenticationId,
+      api_key: apiKey,
+    });
+    ecomAccessToken = data.access_token;
+  }
+  try {
+    const { data } = await axios.get(originImgUrl, {
+      responseType: 'arraybuffer',
+      timeout: 20000,
+    });
+    const dimensions = tryImageSize(data);
     const formData = new FormData();
-    formData.append('file', new Blob(data), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
-
-    return axios.post(`https://apx-storage.e-com.plus/${storeId}/api/v1/upload.json`, formData, {
+    formData.append('file', new Blob([data]), originImgUrl.replace(/.*\/([^/]+)$/, '$1'));
+    const {
+      data: { picture },
+      status,
+    } = await axios.post('https://ecomplus.app/api/storage/upload.json', formData, {
       headers: {
-        'Content-Type': headers['Content-Type'],
-        'Content-Length': headers['Content-Length'],
         'X-Store-ID': storeId,
         'X-My-ID': authenticationId,
-        'X-API-Key': apiKey,
+        'X-Access-Token': ecomAccessToken,
       },
-    }).then(({ data: { picture }, status }) => {
-      if (picture) {
+      timeout: 60000,
+    });
+    if (picture) {
+      if (dimensions?.width && dimensions.height) {
+        const { width: w, height: h } = dimensions;
+        if (picture.zoom) {
+          picture.zoom.size = `${w}x${h}`;
+        }
+        Object.keys(picture).forEach((imgSize) => {
+          if (picture[imgSize]) {
+            if (!picture[imgSize].url) {
+              delete picture[imgSize];
+              return;
+            }
+            const maxPx = picture[imgSize].size;
+            if (maxPx > 0) {
+              if (maxPx >= Math.max(w, h)) {
+                picture[imgSize].size = `${w}x${h}`;
+              } else {
+                picture[imgSize].size = w > h
+                  ? `${maxPx}x${Math.round((h * maxPx) / w)}`
+                  : `${Math.round((w * maxPx) / h)}x${maxPx}`;
+              }
+            } else if (picture[imgSize].size !== undefined) {
+              delete picture[imgSize].size;
+            }
+            picture[imgSize].alt = `${product.name} (${imgSize})`;
+          }
+        });
+      } else {
         Object.keys(picture).forEach((imgSize) => {
           if (picture[imgSize]) {
             if (!picture[imgSize].url) {
@@ -51,45 +102,32 @@ const tryImageUpload = (
             picture[imgSize].alt = `${product.name} (${imgSize})`;
           }
         });
-        if (Object.keys(picture).length) {
-          return resolve({
-            _id: ecomUtils.randomObjectId(),
-            ...picture,
-          });
-        }
       }
-      const err: any = new Error('Unexpected Storage API response');
-      err.response = { data, status };
-      throw err;
-    });
-  })
-
-    .catch((err) => {
-      logger.error(err);
-      resolve({
-        _id: ecomUtils.randomObjectId(),
-        normal: {
-          url: originImgUrl,
-          alt: product.name,
-        },
-      });
-    });
-}).then((picture) => {
-  if (product && product.pictures) {
-    if (index === 0 || index) {
-      // @ts-ignore
-      product.pictures[index] = picture;
-    } else {
-      // @ts-ignore
-      product.pictures.push(picture);
+      if (Object.keys(picture).length) {
+        return {
+          _id: ecomUtils.randomObjectId(),
+          ...picture,
+        };
+      }
     }
+    const err: any = new Error('Unexpected Storage API response');
+    err.response = { data, status };
+    throw err;
+  } catch (err: any) {
+    logger.error(err);
+    return {
+      _id: ecomUtils.randomObjectId(),
+      normal: {
+        url: originImgUrl,
+        alt: product.name,
+      },
+    };
   }
-  return picture;
-});
+};
 
 export default (
   tinyProduct: Record<string, any>,
-  appData: Record<string, any>,
+  appData?: Record<string, any>,
   tipo?: string,
   isNew = true,
   priceListData?: { preco?: number; preco_promocional?: number },
@@ -153,7 +191,7 @@ export default (
       product.min_quantity = minQnt;
     }
   }
-  if (tinyProduct.ncm && !appData.disable_ncm) {
+  if (tinyProduct.ncm && !appData?.disable_ncm) {
     product.mpn = [tinyProduct.ncm];
   }
   const validateGtin = (gtin) => {
@@ -195,8 +233,8 @@ export default (
   if (isNew) {
     if (Array.isArray(tinyProduct.variacoes) && tinyProduct.variacoes.length) {
       product.variations = [];
-      tinyProduct.variacoes.forEach(({ variacaoObj }) => {
-        const variacao = !isProduct ? variacaoObj.variacao : variacaoObj;
+      tinyProduct.variacoes.forEach((variacaoObj) => {
+        const variacao = (variacaoObj.variacao || variacaoObj);
         const {
           codigo,
           preco,
@@ -291,31 +329,49 @@ export default (
         product.pictures = [];
       }
       const promises: Promise<any>[] = [];
-      tinyProduct.anexos.forEach((anexo) => {
-        let url;
+      tinyProduct.anexos.slice(0, 5).forEach((anexo) => {
+        let url: string | undefined;
         if (anexo && anexo.anexo) {
           url = anexo.anexo;
         } else if (anexo.url) {
           url = anexo.url;
         }
         if (typeof url === 'string' && url.startsWith('http')) {
-          promises.push(tryImageUpload(anexo, product as Products));
+          promises.push(tryImageUpload(url, product)
+            .then((picture) => {
+              if (product.pictures) product.pictures.push(picture);
+              return picture;
+            }));
         }
       });
-      Promise.all(promises).then((images) => {
+      Promise.allSettled(promises).then((results) => {
+        const pictures = results.map((result, index) => {
+          if (result.status === 'rejected') {
+            logger.warn('Image upload promise rejected', {
+              index,
+              reason: result.reason?.message || result.reason,
+              productSku: product.sku,
+            });
+            return null;
+          }
+          return result.value;
+        }).filter(Boolean);
         if (Array.isArray(product.variations) && product.variations.length) {
           product.variations.forEach((variation) => {
             if (typeof variation.picture_id === 'number') {
-              const variationImage = images[variation.picture_id];
-              if (variationImage._id) {
-                variation.picture_id = variationImage._id;
+              const variationPicture = pictures[variation.picture_id];
+              if (variationPicture?._id) {
+                variation.picture_id = variationPicture._id;
               } else {
                 delete variation.picture_id;
               }
             }
           });
         }
-        return resolve(product);
+        resolve(product);
+      }).catch((err) => {
+        logger.error(err);
+        resolve(product);
       });
       return;
     }

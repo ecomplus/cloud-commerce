@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/config",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce base config",
   "main": "lib/config.js",
   "exports": {
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@fastify/deepmerge": "^3.0.0"
+    "@fastify/deepmerge": "^3.2.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

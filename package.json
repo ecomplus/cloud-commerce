@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -41,23 +41,23 @@
   },
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
-    "@commitlint/rules": "^19.8.0",
-    "@types/node": "^20.17.24",
-    "commit-and-tag-version": "^12.5.0",
-    "dotenv": "^16.4.7",
+    "@commitlint/cli": "^20.4.0",
+    "@commitlint/config-conventional": "^20.4.0",
+    "@commitlint/rules": "^20.4.0",
+    "@types/node": "^20.19.30",
+    "commit-and-tag-version": "^12.6.1",
+    "dotenv": "^17.2.3",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.0",
-    "tailwindcss": "^3.4.17",
+    "lint-staged": "^16.2.7",
+    "tailwindcss": "^3.4.19",
     "ts-node": "^10.9.2",
-    "turbo": "^2.4.4",
-    "typescript": "~5.8.2",
+    "turbo": "^2.8.0",
+    "typescript": "~5.9.3",
     "uglify-js": "^3.19.3",
-    "vite": "^5.4.14",
+    "vite": "^5.4.21",
     "vitest": "^2.1.9",
-    "zx": "^8.4.1"
+    "zx": "^8.8.5"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -75,5 +75,5 @@
       "sharp"
     ]
   },
-  "packageManager": "pnpm@10.6.4"
+  "packageManager": "pnpm@10.17.0"
 }

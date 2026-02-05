@@ -2,7 +2,7 @@ import type { Orders, ResourceAndId } from '@cloudcommerce/api/types';
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import meClient from '../../lib-mjs/functions/client-melhor-envio.mjs';
+import { getMEAxios } from '../../lib-mjs/util/melhor-envio-api.mjs';
 import errorHandling from '../../lib-mjs/functions/error-handling.mjs';
 import db from './database';
 import orderIsValid from './order-is-valid';
@@ -34,32 +34,32 @@ const handleApiEvent: ApiEventHandler = async ({
   try {
     const trackingCode = await db.searchLabel(resourceId);
     if (!trackingCode) {
-      const melhorEnvioToken = appData.access_token;
-      if (typeof melhorEnvioToken === 'string' && melhorEnvioToken) {
-        process.env.MELHORENVIO_TOKEN = melhorEnvioToken;
+      if (appData.access_token) {
+        process.env.MELHORENVIO_TOKEN = appData.access_token;
       }
+      process.env.MELHORENVIO_ENV = appData.sandbox
+        ? 'sandbox'
+        : process.env.MELHORENVIO_ENV || 'live';
       if (!process.env.MELHORENVIO_TOKEN) {
         logger.warn('Missing Melhor Envio token');
         return null;
       }
-
-      const { sandbox } = appData;
 
       const order = apiDoc as Orders;
       if (!appData.enabled_label_purchase || !orderIsValid(order, appData)) {
         ECHO_SKIP();
         return null;
       }
-      const merchantData = await meClient(process.env.MELHORENVIO_TOKEN, sandbox).get('/')
-        .then(({ data }) => data);
+      const meAxios = await getMEAxios();
+      const { data: merchantData } = await meAxios.get('/');
 
       const label = newLabel(order, appData, merchantData);
       // logger.log(`>> Comprando etiquetas #${storeId} ${order._id}`);
-      const { data } = await meClient(process.env.MELHORENVIO_TOKEN, sandbox).post('/cart', label);
+      const { data } = await meAxios.post('/cart', label);
       if (data) {
         logger.log(`>> Etiqueta inserida no carrinho com sucesso #${data.id}`);
         if (appData.enabled_label_checkout) {
-          await meClient(process.env.MELHORENVIO_TOKEN, sandbox).post('/shipment/checkout', { orders: [data.id] });
+          await meAxios.post('/shipment/checkout', { orders: [data.id] });
         }
 
         // logger.log(`>> Carrinho finalizado com sucesso #${data.id}`);

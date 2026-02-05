@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/ssr",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce storefront SSR",
   "main": "lib/index.js",
   "exports": {
@@ -37,22 +37,22 @@
     "@cloudcommerce/firebase": "workspace:*",
     "@cloudcommerce/i18n": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "@vueuse/core": "12.8.2",
-    "astro": "4.16.18",
+    "@vueuse/core": "14.1.0",
+    "astro": "4.16.19",
     "astro-capo": "^0.0.1",
-    "axios": "^1.8.3",
-    "firebase-admin": "^13.2.0",
-    "firebase-functions": "^6.3.2",
+    "axios": "^1.13.4",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^6.6.0",
     "html-minifier": "^4.0.0",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
-    "vue": "^3.5.13",
-    "yaml": "^2.7.0"
+    "vue": "^3.5.27",
+    "yaml": "^2.8.2"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
     "@firebase/app-types": "^0.9.3",
-    "@types/html-minifier": "^4.0.5",
-    "typescript": "~5.8.2"
+    "@types/html-minifier": "^4.0.6",
+    "typescript": "~5.9.3"
   }
 }

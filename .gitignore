@@ -9,6 +9,7 @@ serviceAccountKey.json
 .cloudcommerce
 .turbo
 .cache
+.clauderc
 
 package-lock.json
 yarn.lock

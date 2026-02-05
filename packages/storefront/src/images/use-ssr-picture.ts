@@ -26,7 +26,7 @@ export type PictureProps = Omit<PictureComponentRemoteImageProps, 'aspectRatio' 
 
 export type ImageSize = { width?: number, height?: number };
 
-export type TryImageSize = (src: string) => ImageSize;
+export type TryImageSize = (src: string) => Promise<ImageSize>;
 
 const resetGlobalAstroAssets = () => {
   if (!globalThis.astroAsset) return;
@@ -64,9 +64,9 @@ const resetGlobalAstroAssets = () => {
 };
 resetGlobalAstroAssets();
 
-const getAspectRatio = (src: string | ImageSize, tryImageSize: TryImageSize) => {
+const getAspectRatio = async (src: string | ImageSize, tryImageSize: TryImageSize) => {
   if (typeof src === 'string') {
-    src = tryImageSize(src);
+    src = await tryImageSize(src);
   }
   if (src.width) {
     return src.height ? src.width / src.height : 1;
@@ -87,7 +87,6 @@ const useSSRPicture = async (params: UsePictureParams) => {
     src,
     alt,
     sizes: propSizes,
-    widths,
     aspectRatio: propAspectRatio,
     fit,
     background,
@@ -101,6 +100,7 @@ const useSSRPicture = async (params: UsePictureParams) => {
     assetsPrefix,
     ...attrs
   } = params;
+  const widths = [...params.widths];
 
   let aspectRatio: number | undefined;
   if (propAspectRatio) {
@@ -111,9 +111,9 @@ const useSSRPicture = async (params: UsePictureParams) => {
       aspectRatio = Number(width) / Number(height);
     }
   } else if ((!attrs.width || !attrs.height) && typeof src === 'string') {
-    const { width, height } = tryImageSize(src);
+    const { width, height } = await tryImageSize(src);
     if (width && height) {
-      aspectRatio = getAspectRatio({ width, height }, tryImageSize);
+      aspectRatio = await getAspectRatio({ width, height }, tryImageSize);
       let hasSplicedWidths = false;
       for (let i = widths.length - 1; i >= 0; i--) {
         if (widths[i] > width) {

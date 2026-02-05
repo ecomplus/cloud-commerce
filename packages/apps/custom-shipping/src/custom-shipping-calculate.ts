@@ -17,21 +17,53 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   }
 
   const destinationZip = params.to?.zip.replace(/\D/g, '') || '';
-  if (config.get().countryCode === 'BR' && destinationZip.length !== 8) {
-    return {
-      error: 'CALCULATE_INVALID_ZIP',
-      message: `Zip code ${destinationZip} is invalid for BR country`,
-    };
-  }
-
-  let originZip = params.from?.zip || appData.zip || '';
   const checkZipCode = (rule) => {
     if (destinationZip && rule.zip_range) {
-      const { min, max } = rule.zip_range;
-      return Boolean((!min || destinationZip >= min) && (!max || destinationZip <= max));
+      let { min, max } = rule.zip_range;
+      if (!min && !max) {
+        return true;
+      }
+      if (typeof min === 'string') {
+        min = min.replace(/\D/g, '');
+      }
+      if (typeof max === 'string') {
+        max = max.replace(/\D/g, '');
+      }
+      const zipNumber = Number(destinationZip);
+      return zipNumber >= (Number(min) || 0) && zipNumber <= (Number(max) || 99999999);
     }
     return true;
   };
+
+  let originZip: string | undefined;
+  let warehouseCode: string | undefined;
+  let postingDeadline = appData.posting_deadline;
+  if (params.from) {
+    originZip = params.from.zip;
+  } else if (Array.isArray(appData.warehouses) && appData.warehouses.length) {
+    for (let i = 0; i < appData.warehouses.length; i++) {
+      const warehouse = appData.warehouses[i];
+      if (warehouse?.zip && checkZipCode(warehouse)) {
+        const { code } = warehouse;
+        if (!code) continue;
+        if (params.items) {
+          const itemNotOnWarehouse = params.items.find(({ quantity, inventory }) => {
+            return inventory && Object.keys(inventory).length && !(inventory[code] >= quantity);
+          });
+          if (itemNotOnWarehouse) continue;
+        }
+        originZip = warehouse.zip;
+        if (warehouse.posting_deadline?.days) {
+          postingDeadline = warehouse.posting_deadline;
+        }
+        warehouseCode = code;
+      }
+    }
+  }
+  if (!originZip) {
+    originZip = appData.zip;
+  }
+
   for (let i = 0; i < shippingRules.length; i++) {
     const rule = shippingRules[i];
     if (
@@ -57,6 +89,12 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
   if (!params.to) {
     // Just a free shipping preview with no shipping address received
     return response;
+  }
+  if (config.get().countryCode === 'BR' && destinationZip.length !== 8) {
+    return {
+      error: 'CALCULATE_INVALID_ZIP',
+      message: `Zip code ${destinationZip} is invalid for BR country`,
+    };
   }
 
   if (!originZip) {
@@ -167,8 +205,15 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
     if (validShippingRules.length) {
       // group by service code selecting lower price
       const shippingRulesByCode = validShippingRules.reduce((_shippingRulesByCode, rule) => {
+        const serviceCode = rule.service_code;
         if (typeof rule.total_price !== 'number') {
-          rule.total_price = 0;
+          let service: Record<string, any> | undefined;
+          if (Array.isArray(appData.services)) {
+            service = appData.services.find((_service) => {
+              return _service && _service.service_code === serviceCode;
+            });
+          }
+          rule.total_price = service?.total_price || 0;
         }
         if (typeof rule.price !== 'number') {
           rule.price = rule.total_price;
@@ -179,7 +224,6 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
         if (typeof rule.amount_tax === 'number' && !Number.isNaN(rule.amount_tax)) {
           rule.total_price += ((rule.amount_tax * amount) / 100);
         }
-        const serviceCode = rule.service_code;
         const currentShippingRule = _shippingRulesByCode[serviceCode];
         if (!currentShippingRule || currentShippingRule.total_price > rule.total_price) {
           _shippingRulesByCode[serviceCode] = rule;
@@ -202,13 +246,20 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
           delete rule.label;
 
           // also try to find corresponding service object from config
-          let service;
+          let service: Record<string, any> | undefined;
           if (Array.isArray(appData.services)) {
             service = appData.services.find((_service) => {
               return _service && _service.service_code === serviceCode;
             });
-            if (service && !label) {
-              label = service.label;
+            if (service) {
+              if (!label) {
+                label = service.label;
+              }
+              if (typeof rule.delivery_time?.days !== 'number') {
+                rule.delivery_time = service.delivery_time;
+              }
+              delete service.delivery_time;
+              delete service.total_price;
             }
           }
           if (!label) {
@@ -238,9 +289,10 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
               },
               posting_deadline: {
                 days: 0,
-                ...appData.posting_deadline,
+                ...postingDeadline,
                 ...rule.posting_deadline,
               },
+              warehouse_code: warehouseCode,
             },
           });
         }

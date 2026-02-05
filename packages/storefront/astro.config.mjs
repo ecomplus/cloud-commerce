@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { lstatSync, readFileSync } from 'node:fs';
-import { join as joinPath, relative as relativePath } from 'node:path';
+import { join as joinPath, relative as relativePath, basename } from 'node:path';
 import * as dotenv from 'dotenv';
 import { defineConfig, passthroughImageService } from 'astro/config';
 import node from '@astrojs/node';
@@ -133,6 +133,12 @@ const genAstroConfig = ({
       replacement: joinPath(__dirname, 'config/astro/mock-pwa-info.mjs'),
     });
   }
+  const buildConfig = {
+    assetsPrefix: !isSSG ? settings.assetsPrefix : undefined,
+    inlineStylesheets: 'never',
+    assets: '_astro',
+    ...settings.build,
+  };
   return {
     output: isSSG ? 'static' : 'server',
     adapter: isSSG ? undefined : node({
@@ -145,11 +151,7 @@ const genAstroConfig = ({
     image: isToServerless ? { service: passthroughImageService() } : undefined,
     site,
     compressHTML: isToServerless,
-    build: {
-      assetsPrefix: !isSSG ? settings.assetsPrefix : undefined,
-      inlineStylesheets: 'never',
-      ...settings.build,
-    },
+    build: buildConfig,
     vite: {
       cacheDir: './.cache/vite',
       plugins: [
@@ -178,6 +180,24 @@ const genAstroConfig = ({
       },
       define: {
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+      },
+      build: {
+        rollupOptions: {
+          output: {
+            entryFileNames: (chunkInfo) => {
+              if (chunkInfo.name.includes('hoisted')) {
+                const sfScripts = chunkInfo.moduleIds?.filter((id) => {
+                  return id.includes('storefront/src/lib/scripts/');
+                });
+                if (sfScripts?.length === 1) {
+                  const scriptName = basename(sfScripts[0], '.ts').replaceAll('.', '');
+                  return `${buildConfig.assets}/[name]-${scriptName}.[hash].js`;
+                }
+              }
+              return `${buildConfig.assets}/[name].[hash].js`;
+            },
+          },
+        },
       },
     },
   };

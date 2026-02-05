@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-braspag",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce app to integrate Braspag",
   "main": "lib/braspag.js",
   "exports": {
@@ -31,11 +31,11 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@cloudcommerce/firebase": "workspace:^",
-    "axios": "^1.8.3",
-    "firebase-admin": "^13.2.0",
-    "firebase-functions": "^6.3.2",
-    "qs": "^6.14.0"
+    "@cloudcommerce/firebase": "workspace:*",
+    "axios": "^1.13.4",
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^6.6.0",
+    "qs": "^6.14.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",

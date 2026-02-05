@@ -20,6 +20,8 @@ inputs:
     description: 'Store ID if not defined in config.json'
   deploy-codebase:
     description: 'Specific Firebase Functions codebase for partial deploy'
+  bunnynet-api-key:
+    description: 'bunny.net API key (additional CDN layer)'
   mail-sender:
     description: 'Emails: sender email (default from settings contact email)'
   mail-sender-name:
@@ -34,12 +36,24 @@ inputs:
     description: 'Emails: SMTP username'
   smtp-pass:
     description: 'Emails: SMTP password'
-  passport-unverified-auth:
-    description: 'Set `true` to pass simpler customer login without email verification'
-  bunnynet-api-key:
-    description: 'bunny.net API key (additional CDN layer)'
   sendgrid-api-key:
-    description: 'App: SendGrid API key'
+    description: 'Emails: SendGrid API key'
+  ga-measurement-id:
+    description: 'Analytics: Google Analytics API measurement id'
+  ga-api-secret:
+    description: 'Analytics: Google Analytics API secret'
+  fb-pixel-id:
+    description: 'Analytics: Facebook pixel ID'
+  fb-graph-token:
+    description: 'Analytics: Facebook Graph token'
+  tiktok-pixel-id:
+    description: 'Analytics: Tiktok pixel ID'
+  tiktok-access-token:
+    description: 'Analytics: Tiktok access token'
+  awin-advertiser-id:
+    description: 'Analytics: Awin advertiser account ID'
+  awin-api-key: 
+    description: 'Analytics: Awin API key'
   tinyerp-token:
     description: 'App: Tiny ERP API token'
   galaxpay-partner-id:
@@ -56,18 +70,6 @@ inputs:
     description: 'App: Galax Pay ID'
   galaxpay-hash:
     description: 'App: Galax Pay hash'
-  ga-measurement-id:
-    description: 'App: Google Analytics API measurement id'
-  ga-api-secret:
-    description: 'App: Google Analytics API secret'
-  infinitepay-id:
-    description: 'App: InifinitePay client ID'
-  infinitepay-secret: 
-    description: 'App: InifinitePay client secret'
-  fb-pixel-id:
-    description: 'App: Facebook pixel ID'
-  fb-graph-token:
-    description: 'App: Facebook Graph token'
   jadlog-contract-token:
     description: 'App: Jadlog contract token'
   pagarme-encrypt-key: 
@@ -76,8 +78,20 @@ inputs:
     description: 'App: Pagar.me API token'
   pagarme-partner-id:
     description: 'App: Pagar.me partner ID'
+  paghiper-api-key:
+    description: 'App: PagHiper API key'
   paghiper-token:
-    description: 'App: PagHiper API token'
+    description: 'App: PagHiper token'
+  vindi-api-key:
+    description: 'App: Vindi API key'
+  vindi-public-key:
+    description: 'App: Vindi public key'
+  asaas-api-key:
+    description: 'App: Asaas API key'
+  appmax-token:
+    description: 'App: Appmax token'
+  appmax-public-key:
+    description: 'App: Appmax public key'
   pix-credentials:
     description: 'App: Pix credentials'
   flashcourier-contract:
@@ -96,12 +110,10 @@ inputs:
     description: 'App: Pagar.me API V5 token'
   pagarmev5-public-key: 
     description: 'App: Pagar.me API V5 public key'
-  tiktok-pixel-id: 
-    description: 'App: Tiktok pixel ID'
-  tiktok-access-token: 
-    description: 'App: Tiktok access token'
   custom-dotenv:
     description: 'Raw `.env` file content to set additional env vars'
+  passport-unverified-auth:
+    description: 'Set `true` to pass simpler customer login without email verification'
 
 outputs: {}
 
@@ -115,13 +127,13 @@ runs:
       uses: ouzi-dev/commit-status-updater@v2.0.2
       continue-on-error: true
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
         node-version: 20
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
 
-    - uses: actions/cache@v4
+    - uses: actions/cache@v5
       id: npm-cache-root
       with:
         path: node_modules
@@ -139,30 +151,30 @@ runs:
         echo "LIB_PATH=$lib_path" >> $GITHUB_OUTPUT
         echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
-    - if: github.event_name == 'push'
-      uses: actions/cache@v4
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+      uses: actions/cache@v5
       id: npm-g-cache
       with:
         path: |
           ${{ steps.npm-paths.outputs.LIB_PATH }}
           ${{ steps.npm-paths.outputs.BIN_PATH }}
           ~/.npm-global/bin
-        key: ${{ runner.os }}-npm-g-firebase-tools-13.33.0-2
+        key: ${{ runner.os }}-npm-g-firebase-tools-14.15.2-1
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       name: Ensure firebase-tools is installed
       shell: bash
       run: |
         if ! command -v firebase &> /dev/null; then
-          npm i --location=global firebase-tools@13.33.0
+          npm i --location=global firebase-tools@14.15.2
         else
           INSTALLED_VERSION=$(firebase --version)
-          if [[ "$INSTALLED_VERSION" != "13.33.0" ]]; then
-            npm i --location=global firebase-tools@13.33.0
+          if [[ "$INSTALLED_VERSION" != "14.15.2" ]]; then
+            npm i --location=global firebase-tools@14.15.2
           fi
         fi
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       uses: dorny/paths-filter@v3.0.2
       id: changes
       with:
@@ -174,7 +186,7 @@ runs:
           ssr:
             - 'functions/ssr/**'
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       name: Check functions codebase to deploy
       shell: bash
       env:
@@ -203,27 +215,27 @@ runs:
       run: echo "deploy_codebase=ssr" >> $GITHUB_ENV
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'many'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-cache-many
       with:
         path: functions/many/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('functions/many/package-lock.json') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-cache-ssr
       with:
         path: functions/ssr/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles('functions/ssr/package-lock.json') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'ssr'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: functions/ssr/.cache
         key: ${{ runner.os }}-${{ env.year }}-sf-${{ hashFiles('functions/ssr/public/**/*') }}
 
     - if: env.deploy_codebase == '' || env.deploy_codebase == 'with-apps'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: npm-cache-with-apps
       with:
         path: functions/with-apps/node_modules
@@ -262,7 +274,7 @@ runs:
         echo "ecom_store_id=${ECOM_STORE_ID:-$(cat config.json | jq -r '.storeId')}" >> $GITHUB_ENV
         echo "git_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}" >> $GITHUB_ENV
 
-    - if: github.event_name == 'push'
+    - if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       name: Deploy to Firebase live
       shell: bash
       env:
@@ -274,6 +286,8 @@ runs:
         FIREBASE_SERVICE_ACCOUNT: ${{ inputs.firebase-service-account }}
         ECOM_AUTHENTICATION_ID: ${{ inputs.ecom-authentication-id }}
         ECOM_API_KEY: ${{ inputs.ecom-api-key }}
+        PASSPORT_UNVERIFIED_AUTH: ${{ inputs.passport-unverified-auth }}
+        BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         MAIL_SENDER: ${{ inputs.mail-sender }}
         MAIL_SENDER_NAME: ${{ inputs.mail-sender-name }}
         MAIL_REPLY_TO: ${{ inputs.mail-reply-to }}
@@ -281,9 +295,15 @@ runs:
         SMTP_PORT: ${{ inputs.smtp-port }}
         SMTP_USER: ${{ inputs.smtp-user }}
         SMTP_PASS: ${{ inputs.smtp-pass }}
-        PASSPORT_UNVERIFIED_AUTH: ${{ inputs.passport-unverified-auth }}
-        BUNNYNET_API_KEY: ${{ inputs.bunnynet-api-key }}
         SENDGRID_API_KEY: ${{ inputs.sendgrid-api-key }}
+        GA_MEASUREMENT_ID: ${{ inputs.ga-measurement-id }}
+        GA_API_SECRET: ${{ inputs.ga-api-secret }}
+        FB_PIXEL_ID: ${{ inputs.fb-pixel-id }}
+        FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
+        TIKTOK_PIXEL_ID: ${{ inputs.tiktok-pixel-id }}
+        TIKTOK_ACCESS_TOKEN: ${{ inputs.tiktok-access-token }}
+        AWIN_ADVERTISER_ID: ${{ inputs.awin-advertiser-id }}
+        AWIN_API_KEY: ${{ inputs.awin-api-key }}
         TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
@@ -292,15 +312,17 @@ runs:
         FRENET_TOKEN: ${{ inputs.frenet-token }}
         GALAXPAY_ID: ${{ inputs.galaxpay-id }}
         GALAXPAY_HASH: ${{ inputs.galaxpay-hash }}
-        GA_MEASUREMENT_ID: ${{ inputs.ga-measurement-id }}
-        GA_API_SECRET: ${{ inputs.ga-api-secret }}
-        FB_PIXEL_ID: ${{ inputs.fb-pixel-id }}
-        FB_GRAPH_TOKEN: ${{ inputs.fb-graph-token }}
         JADLOG_CONTRACT_TOKEN: ${{ inputs.jadlog-contract-token }}
         PAGARME_ENCRYPT_KEY: ${{ inputs.pagarme-encrypt-key }}
         PAGARME_TOKEN: ${{ inputs.pagarme-token }}
         PAGARME_PARTNER_ID: ${{ inputs.pagarme-partner-id }}
+        PAGHIPER_API_KEY: ${{ inputs.paghiper-api-key }}
         PAGHIPER_TOKEN: ${{ inputs.paghiper-token }}
+        VINDI_API_KEY: ${{ inputs.vindi-api-key }}
+        VINDI_PUBLIC_KEY: ${{ inputs.vindi-public-key }}
+        ASAAS_API_KEY: ${{ inputs.asaas-api-key }}
+        APPMAX_TOKEN: ${{ inputs.appmax-token }}
+        APPMAX_PUBLIC_KEY: ${{ inputs.appmax-public-key }}
         PIX_CREDENTIALS: ${{ inputs.pix-credentials }}
         FLASHCOURIER_CONTRACT: ${{ inputs.flashcourier-contract }}
         WEBHOOKS_TOKEN: ${{ inputs.webhooks-token }}
@@ -310,20 +332,20 @@ runs:
         CORREIOS_POSTCARD: ${{ inputs.correios-postcard-number }}
         PAGARMEV5_API_TOKEN: ${{ inputs.pagarmev5-api-token }}
         PAGARMEV5_PUBLIC_KEY: ${{ inputs.pagarmev5-public-key }}
-        TIKTOK_ACCESS_TOKEN: ${{ inputs.tiktok-access-token }}
-        TIKTOK_PIXEL_ID: ${{ inputs.tiktok-pixel-id }}
         CUSTOM_DOTENV: ${{ inputs.custom-dotenv }}
       run: |
         export GAC_FILENAME=".gac-$RANDOM.json"
         echo $FIREBASE_SERVICE_ACCOUNT > $GAC_FILENAME
         printf "DEPLOY_RAND=$RANDOM$RANDOM
-        ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
-        ECOM_API_KEY=$ECOM_API_KEY
         ECOM_STORE_ID=$ECOM_STORE_ID
         GIT_BRANCH=$GIT_BRANCH
+        DEPLOY_CODEBASE=$DEPLOY_CODEBASE
         GITHUB_REPO=$GITHUB_REPO
         GITHUB_TOKEN=$GITHUB_TOKEN
-        DEPLOY_CODEBASE=$DEPLOY_CODEBASE
+        ECOM_AUTHENTICATION_ID=$ECOM_AUTHENTICATION_ID
+        ECOM_API_KEY=$ECOM_API_KEY
+        PASSPORT_UNVERIFIED_AUTH=$PASSPORT_UNVERIFIED_AUTH
+        BUNNYNET_API_KEY=$BUNNYNET_API_KEY
         MAIL_SENDER=$MAIL_SENDER
         MAIL_SENDER_NAME=$MAIL_SENDER_NAME
         MAIL_REPLY_TO=$MAIL_REPLY_TO
@@ -331,9 +353,15 @@ runs:
         SMTP_PORT=$SMTP_PORT
         SMTP_USER=$SMTP_USER
         SMTP_PASS=$SMTP_PASS
-        PASSPORT_UNVERIFIED_AUTH=$PASSPORT_UNVERIFIED_AUTH
-        BUNNYNET_API_KEY=$BUNNYNET_API_KEY
         SENDGRID_API_KEY=$SENDGRID_API_KEY
+        GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID
+        GA_API_SECRET=$GA_API_SECRET
+        FB_PIXEL_ID=$FB_PIXEL_ID
+        FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
+        TIKTOK_PIXEL_ID=$TIKTOK_PIXEL_ID
+        TIKTOK_ACCESS_TOKEN=$TIKTOK_ACCESS_TOKEN
+        AWIN_ADVERTISER_ID=$AWIN_ADVERTISER_ID
+        AWIN_API_KEY=$AWIN_API_KEY
         TINYERP_TOKEN=$TINYERP_TOKEN
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
@@ -342,15 +370,17 @@ runs:
         FRENET_TOKEN=$FRENET_TOKEN
         GALAXPAY_ID=$GALAXPAY_ID
         GALAXPAY_HASH=$GALAXPAY_HASH
-        GA_MEASUREMENT_ID=$GA_MEASUREMENT_ID
-        GA_API_SECRET=$GA_API_SECRET
-        FB_PIXEL_ID=$FB_PIXEL_ID
-        FB_GRAPH_TOKEN=$FB_GRAPH_TOKEN
         JADLOG_CONTRACT_TOKEN=$JADLOG_CONTRACT_TOKEN
-        PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYP_KEY
+        PAGARME_ENCRYPT_KEY=$PAGARME_ENCRYPT_KEY
         PAGARME_TOKEN=$PAGARME_TOKEN
         PAGARME_PARTNER_ID=$PAGARME_PARTNER_ID
+        PAGHIPER_API_KEY=$PAGHIPER_API_KEY
         PAGHIPER_TOKEN=$PAGHIPER_TOKEN
+        VINDI_API_KEY=$VINDI_API_KEY
+        VINDI_PUBLIC_KEY=$VINDI_PUBLIC_KEY
+        ASAAS_API_KEY=$ASAAS_API_KEY
+        APPMAX_TOKEN=$APPMAX_TOKEN
+        APPMAX_PUBLIC_KEY=$APPMAX_PUBLIC_KEY
         PIX_CREDENTIALS=$PIX_CREDENTIALS
         FLASHCOURIER_CONTRACT=$FLASHCOURIER_CONTRACT
         WEBHOOKS_TOKEN=$WEBHOOKS_TOKEN
@@ -360,8 +390,6 @@ runs:
         CORREIOS_POSTCARD=$CORREIOS_POSTCARD
         PAGARMEV5_API_TOKEN=$PAGARMEV5_API_TOKEN
         PAGARMEV5_PUBLIC_KEY=$PAGARMEV5_PUBLIC_KEY
-        TIKTOK_ACCESS_TOKEN=$TIKTOK_ACCESS_TOKEN
-        TIKTOK_PIXEL_ID=$TIKTOK_PIXEL_ID
         " > functions/.env
         if [[ -f "functions/public.env" ]]; then
           cat functions/public.env >> functions/.env

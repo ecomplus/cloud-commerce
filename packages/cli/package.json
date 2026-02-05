@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/cli",
   "type": "module",
-  "version": "2.40.1",
+  "version": "2.57.0",
   "description": "e-com.plus Cloud Commerce CLI tools",
   "bin": {
     "cloudcommerce": "./bin/run.mjs"
@@ -34,13 +34,14 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@fastify/deepmerge": "^3.0.0",
-    "dotenv": "^16.4.7",
-    "fast-xml-parser": "^5.0.9",
-    "image-size": "^1.2.0",
-    "libsodium-wrappers": "^0.7.15",
+    "@fastify/deepmerge": "^3.2.0",
+    "csv-parse": "^6.1.0",
+    "dotenv": "^17.2.3",
+    "fast-xml-parser": "^5.3.3",
+    "image-size": "^2.0.2",
+    "libsodium-wrappers": "0.7.15",
     "md5": "^2.3.0",
-    "typescript": "~5.8.2",
-    "zx": "^8.4.1"
+    "typescript": "~5.9.3",
+    "zx": "^8.8.5"
   }
 }

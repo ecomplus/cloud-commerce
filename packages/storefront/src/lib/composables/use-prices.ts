@@ -11,9 +11,11 @@ import {
 export type Props = {
   product?: Partial<Products> & { final_price?: number } &
     ({ price: number } | { final_price: number });
+  variationId?: Products['_id'] | null;
   price?: number;
   basePrice?: number;
   isAmountTotal?: boolean;
+  isFinalPrice?: boolean;
   installmentsOption?: ListPaymentsResponse['installments_option'];
   discountOption?: ListPaymentsResponse['discount_option'];
   loyaltyPointsProgram?: Exclude<ListPaymentsResponse['loyalty_points_programs'], undefined>['k'];
@@ -24,20 +26,32 @@ export const getPriceWithDiscount = (
   discount: Exclude<Props['discountOption'], undefined>,
 ) => {
   const { type, value } = discount;
-  let priceWithDiscount: number;
-  if (value) {
-    if (type === 'percentage') {
-      priceWithDiscount = price * ((100 - value) / 100);
-    } else {
-      priceWithDiscount = price - value;
-    }
-    return priceWithDiscount > 0 ? priceWithDiscount : 0;
+  if (!value || (discount.min_amount && price < discount.min_amount)) {
+    return price;
   }
-  return price;
+  let priceWithDiscount: number;
+  if (type === 'percentage') {
+    priceWithDiscount = price * ((100 - value) / 100);
+  } else {
+    priceWithDiscount = price - value;
+  }
+  return priceWithDiscount > 0 ? priceWithDiscount : 0;
 };
 
 const usePrices = (props: Props) => {
   const _product = computed(() => {
+    if (props.variationId && props.product) {
+      const variation = props.product.variations?.find(({ _id }) => {
+        return _id === props.variationId;
+      });
+      if (variation) {
+        return {
+          price: variation.price || props.product.price || 0,
+          base_price: variation.base_price || props.product.base_price,
+          price_effective_date: props.product.price_effective_date,
+        };
+      }
+    }
     return props.product || {
       price: props.price || 0,
       base_price: props.basePrice,
@@ -61,9 +75,11 @@ const usePrices = (props: Props) => {
   });
   const salePrice = computed(() => {
     const price = getPrice(_product.value);
-    const discount = availableExtraDiscount.value;
-    if (discount && (!discount.min_amount || price > discount.min_amount)) {
-      return getPriceWithDiscount(price, discount);
+    if (!props.isFinalPrice && !props.isAmountTotal) {
+      const discount = availableExtraDiscount.value;
+      if (discount) {
+        return getPriceWithDiscount(price, discount);
+      }
     }
     return price;
   });

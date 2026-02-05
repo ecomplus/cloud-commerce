@@ -32,7 +32,7 @@ export default {
     },
   ],
   rules: {
-    'scope-case': [1, 'always', 'kebab-case'],
+    'scope-case': [1, 'always', 'lower-case'],
     'subject-case': [1, 'always', 'sentence-case'],
     'body-case': [1, 'always', 'sentence-case'],
     'bytype-subject-case': [2, 'always'],

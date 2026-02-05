@@ -5,7 +5,7 @@ import type {
 } from '@cloudcommerce/types';
 import type { PagHiperApp } from '../types/config-app';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
-import axios from './functions-lib/create-axios';
+import createAxios from './functions-lib/create-axios';
 
 type ItemsPagHiper = {
   description: string,
@@ -37,7 +37,7 @@ const createTransactionPagHiper = async (
   // returns request promise
   const endpoint = `/${(isPix ? 'invoice' : 'transaction')}/create/`;
   return new Promise((resolve, reject) => {
-    axios(isPix).post(endpoint, body)
+    createAxios(isPix).post(endpoint, body)
       .then(({ data }) => {
         // save transaction ID on database first
         let createRequest: any;
@@ -135,9 +135,9 @@ export default async (appData: AppModuleBody) => {
 
   const pagHiperToken = configApp.paghiper_api_key;
   if (typeof pagHiperToken === 'string' && pagHiperToken) {
-    process.env.PAGHIPER_TOKEN = pagHiperToken;
+    process.env.PAGHIPER_API_KEY = pagHiperToken;
   }
-  if (!process.env.PAGHIPER_TOKEN) {
+  if (!process.env.PAGHIPER_API_KEY) {
     logger.warn('Missing PagHiper API token');
     return {
       error: 'NO_PAGHIPER_KEYS',
@@ -145,7 +145,7 @@ export default async (appData: AppModuleBody) => {
     };
   }
 
-  paghiperTransaction.apiKey = process.env.PAGHIPER_TOKEN;
+  paghiperTransaction.apiKey = process.env.PAGHIPER_API_KEY;
   // merge configured banking billet options
   const options = configApp.banking_billet_options;
   if (typeof options === 'object' && options !== null) {

@@ -35,15 +35,29 @@ export default async (
       const { config, response } = payload as any;
       if (response) {
         const { data, status } = response;
-        notes = `Error: Status ${status} \n${JSON.stringify(data)}`;
         if (isQueued && (!status || status === 429 || status >= 500)) {
-          return setTimeout(() => {
-            throw payload;
-          }, 2000);
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              reject(payload);
+            }, 2000);
+          });
+        }
+        notes = `Error: Status ${status} `;
+        try {
+          notes += `\n${JSON.stringify(data)} `;
+        } catch {
+          //
         }
         if (config) {
           const { url, method, data: reqData } = config;
-          notes += `\n\n-- Request -- \n${method} ${url} \n${JSON.stringify(reqData)}`;
+          try {
+            notes += `\n\n-- Request -- \n${method} ${url} `;
+            if (!(reqData instanceof FormData)) {
+              notes += `\n${JSON.stringify(reqData)} `;
+            }
+          } catch {
+            //
+          }
         }
         // @ts-ignore
       } else if (payload.isConfigError === true) {
@@ -66,25 +80,31 @@ export default async (
       canSendPubSub: false,
     });
   }
+  if (isError) {
+    logger.warn(`Log for ${logEntry.resource} failure`, { logEntry });
+  }
   const { action, queue, nextId } = queueEntry;
   if (!action) {
     return null;
   }
-  let queueList = appData[action] && appData[action][queue];
+  const queueList: Record<string, any>[] | undefined = appData[action]?.[queue];
   if (Array.isArray(queueList)) {
     const idIndex = queueList.indexOf(nextId);
     if (idIndex > -1) {
       queueList.splice(idIndex, 1);
+      const data = {
+        [action]: {
+          ...appData[action],
+          [queue]: queueList,
+        },
+      };
+      try {
+        logger.info(JSON.stringify(data));
+      } catch {
+        logger.info(`Update app queue after ${nextId} (stringify failed)`);
+      }
+      return updateAppData(application, data);
     }
-  } else {
-    queueList = [];
   }
-  const data = {
-    [action]: {
-      ...(appData[action] || {}),
-      [queue]: queueList,
-    },
-  };
-  logger.info(JSON.stringify(data));
-  return updateAppData(application, data);
+  return null;
 };

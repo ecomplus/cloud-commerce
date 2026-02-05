@@ -34,11 +34,11 @@ jobs:
       !contains(github.event.head_commit.author.name, '[bot]')
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           repository: ecomplus/store
           path: store
@@ -48,7 +48,7 @@ jobs:
         with:
           run_install: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: 'pnpm'
@@ -59,7 +59,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ${{ steps.pnpm-paths.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -69,7 +69,7 @@ jobs:
       - shell: bash
         run: bash scripts/pre-install.sh && pnpm install --no-frozen-lockfile
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: |
             **/.turbo
@@ -100,18 +100,18 @@ jobs:
           echo "LIB_PATH=$lib_path" >> $GITHUB_OUTPUT
           echo "BIN_PATH=${lib_path/\/lib//bin}" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         id: npm-g-cache
         with:
           path: |
             ${{ steps.npm-paths.outputs.LIB_PATH }}
             ${{ steps.npm-paths.outputs.BIN_PATH }}
             ~/.npm-global/bin
-          key: ${{ runner.os }}-npm-globals-firebase-tools-13.33.0
+          key: ${{ runner.os }}-npm-globals-firebase-tools-14.15.2
 
       - if: steps.npm-g-cache.outputs.cache-hit != 'true'
         shell: bash
-        run: npm install -g firebase-tools@13.33.0
+        run: npm install -g firebase-tools@14.15.2
 
       - name: Initialize Firebase emulators
         shell: bash

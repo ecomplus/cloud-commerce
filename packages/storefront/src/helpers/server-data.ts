@@ -1,3 +1,5 @@
+import { onStorefrontInit } from '../init-emitter';
+
 const networkNames = [
   'whatsapp',
   'instagram',
@@ -21,8 +23,10 @@ const setSocialNetworks = () => {
     }
   });
 };
-if (import.meta.env.SSR && global.$storefront?.onLoad) {
-  global.$storefront.onLoad(() => setSocialNetworks());
+if (import.meta.env.SSR) {
+  onStorefrontInit(() => {
+    global.$storefront.onLoad(() => setSocialNetworks());
+  });
 } else {
   setSocialNetworks();
 }

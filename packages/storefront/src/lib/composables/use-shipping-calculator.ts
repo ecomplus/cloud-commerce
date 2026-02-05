@@ -27,10 +27,7 @@ import {
   i19upTo,
   i19workingDays,
 } from '@@i18n';
-import {
-  fetchModule,
-  availableExtraDiscount,
-} from '@@sf/state/modules-info';
+import { fetchModule, availableExtraDiscount } from '@@sf/state/modules-info';
 import { getPriceWithDiscount } from '@@sf/composables/use-prices';
 
 export type ShippedItem = Exclude<CalculateShippingParams['items'], undefined>[0] & {
