@@ -6,7 +6,7 @@ import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-from-tiny';
 
 const getPriceListData = async (productId: number) => {
-  const priceListId = process.env.TINY_PRICE_LIST_ID;
+  const priceListId = process.env.TINYERP_PRICE_LIST_ID;
   if (!priceListId) return undefined;
   try {
     const { registros } = await postTiny('/listas.precos.excecoes.php', {
