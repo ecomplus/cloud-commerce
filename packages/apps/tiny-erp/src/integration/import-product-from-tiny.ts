@@ -5,6 +5,27 @@ import updateAppData from '@cloudcommerce/firebase/lib/helpers/update-app-data';
 import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-from-tiny';
 
+const getPriceListData = async (productId: number) => {
+  const priceListId = process.env.TINYERP_PRICE_LIST_ID;
+  if (!priceListId) return undefined;
+  try {
+    const { registros } = await postTiny('/listas.precos.excecoes.php', {
+      idListaPreco: Number(priceListId),
+      idProduto: productId,
+    });
+    if (Array.isArray(registros) && registros.length > 0) {
+      const registro = registros[0];
+      return {
+        preco: registro.preco,
+        preco_promocional: registro.preco_promocional,
+      };
+    }
+  } catch (err) {
+    logger.warn(`Failed to get price list data for product ${productId}`, err);
+  }
+  return undefined;
+};
+
 const importProduct = async (
   apiDoc,
   queueEntry,
@@ -117,7 +138,8 @@ const importProduct = async (
       if (!canCreateNew) {
         return null;
       }
-      return parseProduct(tinyProduct, appData, tipo, true)
+      return getPriceListData(tinyProduct.id)
+        .then((priceListData) => parseProduct(tinyProduct, appData, tipo, true, priceListData))
         .then((bodyProduct) => {
           logger.info(`Creating ${queueSku}`, { bodyProduct });
           return api.post('products', bodyProduct);
@@ -126,7 +148,7 @@ const importProduct = async (
     if (!tinyProduct) return null;
 
     return postTiny('/produto.obter.php', { id: (tinyProduct.id || produtoSaldo.id) })
-      .then(({ produto }) => {
+      .then(async ({ produto }) => {
         let method;
         let endpoint;
         let productId = product && product._id;
@@ -139,12 +161,14 @@ const importProduct = async (
         } else {
           return null;
         }
+        const priceListData = await getPriceListData(produto.id);
         // @ts-ignore
         return parseProduct(
           produto,
           appData,
           tipo,
           method === 'POST',
+          priceListData,
         ).then((parsedProduct) => {
           if (!Number.isNaN(quantity)) {
             parsedProduct.quantity = quantity >= 0 ? quantity : 0;

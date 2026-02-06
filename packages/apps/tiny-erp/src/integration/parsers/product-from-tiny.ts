@@ -130,6 +130,7 @@ export default (
   appData?: Record<string, any>,
   tipo?: string,
   isNew = true,
+  priceListData?: { preco?: number; preco_promocional?: number },
 ): Promise<ProductSet> => new Promise((resolve) => {
   const sku = tinyProduct.codigo || String(tinyProduct.id);
   const name = (tinyProduct.nome || sku).trim();
@@ -137,14 +138,18 @@ export default (
   const fixToNumber = (shouldBeNumber: any) => {
     return Number(shouldBeNumber) > 0 ? Number(shouldBeNumber) : 0;
   };
-  const price = fixToNumber(tinyProduct.preco_promocional || tinyProduct.precoPromocional)
-    || fixToNumber(tinyProduct.preco);
+  const listPrice = priceListData?.preco;
+  const listPromoPrice = priceListData?.preco_promocional;
+  const basePrice = fixToNumber(listPrice) || fixToNumber(tinyProduct.preco);
+  const price = fixToNumber(listPromoPrice)
+    || fixToNumber(tinyProduct.preco_promocional || tinyProduct.precoPromocional)
+    || basePrice;
   const product: ProductSet = {
     available: tinyProduct.situacao === 'A',
     sku,
     name,
     price,
-    base_price: fixToNumber(tinyProduct.preco),
+    base_price: basePrice,
     body_html: tinyProduct.descricao_complementar || tinyProduct.descricaoComplementar,
   };
   const costPrice = fixToNumber(tinyProduct.preco_custo || tinyProduct.precoCusto);
