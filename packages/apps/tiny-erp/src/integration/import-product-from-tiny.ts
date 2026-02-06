@@ -139,7 +139,8 @@ const importProduct = async (
       if (!canCreateNew) {
         return null;
       }
-      return parseProduct(tinyProduct, appData, tipo, true)
+      return getPriceListData(tinyProduct.id)
+        .then((priceListData) => parseProduct(tinyProduct, appData, tipo, true, priceListData))
         .then((bodyProduct) => {
           logger.info(`Creating ${queueSku}`, { bodyProduct });
           return api.post('products', bodyProduct);
