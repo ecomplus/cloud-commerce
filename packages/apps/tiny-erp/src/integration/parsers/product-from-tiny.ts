@@ -129,7 +129,7 @@ export default (
   tinyProduct: Record<string, any>,
   appData?: Record<string, any>,
   tipo?: string,
-  isNew = true,
+  isNew?: boolean,
   priceListData?: { preco?: number; preco_promocional?: number },
 ): Promise<ProductSet> => new Promise((resolve) => {
   const sku = tinyProduct.codigo || String(tinyProduct.id);

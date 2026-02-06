@@ -20,7 +20,7 @@ const getPriceListData = async (productId: number) => {
         preco_promocional: registro.preco_promocional,
       };
     }
-  } catch (err) {
+  } catch (err: any) {
     logger.warn(`Failed to get price list data for product ${productId}`, err);
   }
   return undefined;
