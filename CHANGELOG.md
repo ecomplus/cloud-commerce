@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.58.0](https://github.com/ecomplus/cloud-commerce/compare/v2.57.0...v2.58.0) (2026-02-09)
+
+
+### Features
+
+* **tiny-erp:** Support custom product price list on import ([#689](https://github.com/ecomplus/cloud-commerce/issues/689)) ([84ea061](https://github.com/ecomplus/cloud-commerce/commit/84ea0615052835d3657d01358d64a85b275243a3))
+
+
+### Bug Fixes
+
+* **deps:** Downgrade eslint-plugin-vue to v9 for ESLint 8 compatibility ([44eeaad](https://github.com/ecomplus/cloud-commerce/commit/44eeaada00a7a11163c3a0fac2b11604388727b7))
+* **deps:** Update non-major dependencies ([#686](https://github.com/ecomplus/cloud-commerce/issues/686)) ([1c0dd7f](https://github.com/ecomplus/cloud-commerce/commit/1c0dd7fc4eb3dd3a4c6b17299e0588a7fc9ec18e))
+* **emails:** Update templates with `@ecomplus/transactional-mails` v2.2.2 [skip ci] ([2ecfcde](https://github.com/ecomplus/cloud-commerce/commit/2ecfcde860d02f348232a4f179b5ff50db88914d))
+* **storefront:** Update Vue to ^3.5.27 ([#678](https://github.com/ecomplus/cloud-commerce/issues/678)) ([5aa8e7d](https://github.com/ecomplus/cloud-commerce/commit/5aa8e7d3dc7f249685cc235552a62a7b7c2f1467))
+* **storefront:** Updating checkout vbeta-app script version ([c9fc10e](https://github.com/ecomplus/cloud-commerce/commit/c9fc10e8d8613586a0285f1af4aa7c9fdd40b23e))
+
 ## [2.57.0](https://github.com/ecomplus/cloud-commerce/compare/v2.56.4...v2.57.0) (2026-01-23)
 
 
