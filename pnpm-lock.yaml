@@ -741,8 +741,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       '@ecomplus/transactional-mails':
-        specifier: ^2.2.1
-        version: 2.2.1
+        specifier: ^2.2.2
+        version: 2.2.2
       firebase-admin:
         specifier: ^13.6.0
         version: 13.6.0
@@ -2246,8 +2246,8 @@ packages:
     peerDependencies:
       '@ecomplus/utils': 1.x
 
-  '@ecomplus/transactional-mails@2.2.1':
-    resolution: {integrity: sha512-VScXIqGIC1YBEBbVbmmW9cPRNKWvCsaTijLg3NTlCffqGcAGyLzCJj8DNuGa/hJGC4Wn8g1M2IPFloQUzQlJXA==}
+  '@ecomplus/transactional-mails@2.2.2':
+    resolution: {integrity: sha512-HRwehiBMZL0bM5Oc81/aSzsKlv/qRBHhp4MSH/M949wkWZWg1AU4lvwtns/oPgGVHERJtJsMw4urASUxY/SmZg==}
 
   '@ecomplus/utils@1.4.1':
     resolution: {integrity: sha512-siIMZu5qjwwtvFTqt/F29i/SkzZcIFrb/6WcmUJToh4HiBoJVx8H/id2WQRQf7EzcL9c0uYMWX6DNIN/DymvcA==}
@@ -8567,7 +8567,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@ecomplus/transactional-mails@2.2.1':
+  '@ecomplus/transactional-mails@2.2.2':
     dependencies:
       '@ecomplus/utils': 1.4.1
       ejs: 3.1.10
