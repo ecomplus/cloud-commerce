@@ -30,7 +30,7 @@
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
-    "firebase-admin": "^13.6.0",
+    "firebase-admin": "^13.6.1",
     "firebase-functions": "^6.6.0",
     "source-map-support": "^0.5.21"
   },
