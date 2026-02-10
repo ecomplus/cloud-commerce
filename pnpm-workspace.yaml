@@ -2,6 +2,8 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - '@ecomplus/*'
   - '@cloudcommerce/*'
+  # Renovate security update: axios@1.13.5
+  - axios@1.13.5
 packages:
   - 'packages/*'
   - 'packages/apps/*'
