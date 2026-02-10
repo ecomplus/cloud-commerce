@@ -47,7 +47,7 @@
     "@types/node": "^20.19.32",
     "commit-and-tag-version": "^12.6.1",
     "dotenv": "^17.2.4",
-    "eslint": "^8.57.1",
+    "eslint": "^10.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "tailwindcss": "^3.4.19",
