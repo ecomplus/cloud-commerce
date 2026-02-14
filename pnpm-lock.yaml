@@ -160,7 +160,7 @@ importers:
         version: 6.6.0(firebase-admin@13.6.1)
       qs:
         specifier: ^6.14.1
-        version: 6.14.1
+        version: 6.14.2
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -543,7 +543,7 @@ importers:
         version: 4.35.2
       qs:
         specifier: ^6.14.1
-        version: 6.14.1
+        version: 6.14.2
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -6130,8 +6130,8 @@ packages:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
     engines: {node: '>=0.6'}
 
-  qs@6.14.1:
-    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
+  qs@6.14.2:
+    resolution: {integrity: sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==}
     engines: {node: '>=0.6'}
 
   quansync@0.2.10:
@@ -13121,7 +13121,7 @@ snapshots:
     dependencies:
       side-channel: 1.1.0
 
-  qs@6.14.1:
+  qs@6.14.2:
     dependencies:
       side-channel: 1.1.0
 
