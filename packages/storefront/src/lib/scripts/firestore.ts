@@ -1,10 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   Timestamp,
   getFirestore,
   collection,
   addDoc,
-} from '@firebase/firestore/lite';
+} from 'firebase/firestore/lite';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import firebaseApp from './firebase-app';
 
