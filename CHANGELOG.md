@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.58.1](https://github.com/ecomplus/cloud-commerce/compare/v2.58.0...v2.58.1) (2026-02-16)
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#690](https://github.com/ecomplus/cloud-commerce/issues/690)) ([e7a9052](https://github.com/ecomplus/cloud-commerce/commit/e7a905209e7ec595e21fc68e1e193b631c99703d))
+* **deps:** Update non-major dependencies ([#697](https://github.com/ecomplus/cloud-commerce/issues/697)) ([44b2fb5](https://github.com/ecomplus/cloud-commerce/commit/44b2fb5b21b5dc568c0d8b97331e1f2aeda25678))
+* **storefront:** Bump Firebase SDK and fix firestore/lite import ([d495157](https://github.com/ecomplus/cloud-commerce/commit/d495157ea0c088f0abdbfb5e455b32b24e69f9a8))
+* **storefront:** Update Vue to ^3.5.28 ([#696](https://github.com/ecomplus/cloud-commerce/issues/696)) ([0526746](https://github.com/ecomplus/cloud-commerce/commit/0526746b63e27275733f4a857129f6064b675c1f))
+* **storefront:** Updating checkout vbeta-app script version ([4ea33f8](https://github.com/ecomplus/cloud-commerce/commit/4ea33f834ccb33dc651796dda42e0a42c6a0767e))
+
 ## [2.58.0](https://github.com/ecomplus/cloud-commerce/compare/v2.57.0...v2.58.0) (2026-02-09)
 
 
