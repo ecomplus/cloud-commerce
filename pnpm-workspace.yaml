@@ -4,6 +4,8 @@ minimumReleaseAgeExclude:
   - '@cloudcommerce/*'
   # Renovate security update: axios@1.13.5
   - axios@1.13.5
+  # Renovate security update: qs@6.14.2
+  - qs@6.14.2
 packages:
   - 'packages/*'
   - 'packages/apps/*'
