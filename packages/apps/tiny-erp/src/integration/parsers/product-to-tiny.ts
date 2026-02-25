@@ -5,7 +5,7 @@ import ecomUtils from '@ecomplus/utils';
 export default async (
   product: Products,
   originalTinyProduct: Record<string, any>,
-  appData: Record<string, any>,
+  appData?: Record<string, any>,
 ) => {
   const { metafields } = config.get();
   const hasVariations = product.variations && product.variations.length;
@@ -53,7 +53,7 @@ export default async (
     tinyProduct.garantia = product.warranty.substring(0, 20);
   }
 
-  if (product.mpn && product.mpn.length && !appData.disable_ncm) {
+  if (product.mpn && product.mpn.length && !appData?.disable_ncm) {
     [tinyProduct.ncm] = product.mpn;
   }
   if (product.gtin && product.gtin.length) {
@@ -128,7 +128,7 @@ export default async (
 
   if (originalTinyProduct) {
     tinyProduct.id = originalTinyProduct.id;
-    if (!appData.update_price) {
+    if (!appData?.update_price) {
       ['preco', 'preco_promocional', 'preco_custo'].forEach((field) => {
         if (typeof originalTinyProduct[field] === 'number') {
           tinyProduct[field] = originalTinyProduct[field];
@@ -146,7 +146,15 @@ export default async (
         codigo: variation.sku || `${product.sku}-${(i + 1)}`,
         grade: {},
       };
-      if (!originalTinyProduct) {
+      if (originalTinyProduct) {
+        const originalTinyVariation = originalTinyProduct.variacoes?.find((variacaoObj) => {
+          const variacao = (variacaoObj.variacao || variacaoObj);
+          return variacao?.codigo === tinyVariation.codigo;
+        });
+        if (originalTinyVariation) {
+          tinyVariation.id = originalTinyVariation.id;
+        }
+      } else {
         tinyVariation.estoque_atual = variation.quantity || 0;
       }
       Object.keys(variation.specifications).forEach((gridId) => {

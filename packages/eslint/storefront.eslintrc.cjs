@@ -1,20 +1,19 @@
 module.exports = {
   extends: [
     './base.eslintrc.cjs',
+    'plugin:vue/essential',
     'plugin:astro/recommended',
   ],
   rules: {
     'no-console': 'off',
     'class-methods-use-this': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn'],
-    'max-len': 'warn',
-    'semi': 'warn',
     'arrow-parens': 'warn',
     'object-curly-newline': 'warn',
-    'comma-dangle': 'warn',
     'consistent-return': 'warn',
     'array-bracket-spacing': 'warn',
     'no-restricted-syntax': 'warn',
+    'no-plusplus': 'warn',
+    'max-len': ['warn', { 'code': 120 }],
     'quote-props': 'off',
     'quotes': 'off',
     'global-require': 'off',
@@ -23,6 +22,7 @@ module.exports = {
     'import/prefer-default-export': 'warn',
     'import/no-named-default': 'off',
     'import/extensions': 'off',
+    'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': ['error', {
       ignores: [
         'Fade',
@@ -41,6 +41,12 @@ module.exports = {
     }],
   },
   overrides: [
+    {
+      files: ['*.*.ts'],
+      rules: {
+        'import/prefer-default-export': 'off',
+      },
+    },
     {
       files: ['*.vue', '*.astro'],
       rules: {

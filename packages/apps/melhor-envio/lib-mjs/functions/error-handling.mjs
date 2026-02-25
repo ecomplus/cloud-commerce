@@ -39,7 +39,7 @@ export default (err) => {
     }
 
     // debug unexpected response
-    logger.error('>>(App Melhor Envio) =>', err);
+    logger.error(err);
   } else if (err.appErrorLog && !err.appErrorLogged) {
     // cannot log to app hidden data
     // debug app log error
@@ -56,7 +56,7 @@ export default (err) => {
         originalRequest: JSON.stringify(err.config),
         logRequest: JSON.stringify(config),
       };
-      logger.error('>>(App Melhor Envio) => ', error);
+      logger.error(error);
     }
   }
 };

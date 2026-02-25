@@ -1,21 +1,11 @@
 import type { ResourceId, Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
-import config from '@cloudcommerce/firebase/lib/config';
+import _getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import axios from 'axios';
 import * as ecomUtils from '@ecomplus/utils';
 
-export const getConfig = async () => {
-  try {
-    const app = (await api.get(
-      `applications?app_id=${config.get().apps.mandae.appId}&fields=hidden_data`,
-    )).data.result;
-    return app[0].hidden_data;
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
-};
+export const getAppData = () => _getAppData('mandae', ['hidden_data']);
 
 export const exportOrder = async ({ order, mandaeToken, mandaeOrderSettings }: {
   order: Partial<Orders> & { _id: ResourceId },
@@ -141,12 +131,14 @@ export const exportOrder = async ({ order, mandaeToken, mandaeOrderSettings }: {
 };
 
 export const sendWaitingOrders = async () => {
-  const isOddExec = !!(new Date().getMinutes() % 2);
-  const appConfig = await getConfig();
-  const mandaeToken = appConfig?.mandae_token;
+  const startDate = new Date();
+  const isOddMinExec = !!(startDate.getMinutes() % 2);
+  const isOddHourExec = !!(startDate.getHours() % 2);
+  const appData = await getAppData();
+  const mandaeToken = appData?.mandae_token;
   if (!mandaeToken) return;
-  const mandaeOrderSettings = appConfig.order_settings || appConfig.__order_settings;
-  if (mandaeOrderSettings.data || mandaeOrderSettings.customerId) {
+  const mandaeOrderSettings = appData.order_settings || appData.__order_settings;
+  if (mandaeOrderSettings?.data || mandaeOrderSettings?.customerId) {
     const d = new Date();
     d.setDate(d.getDate() - 14);
     const endpoint = 'orders'
@@ -158,12 +150,16 @@ export const sendWaitingOrders = async () => {
       + '&financial_status.current=paid'
       + '&fulfillment_status.current=ready_for_shipping'
       + `&updated_at>=${d.toISOString()}`
-      + `&sort=${(isOddExec ? '-' : '')}number`
+      + `&sort=${(isOddMinExec ? '-' : '')}${(isOddHourExec ? 'number' : 'updated_at')}`
       + '&limit=200' as `orders?${string}`;
+    logger.info('Start exporting orders', { endpoint });
     try {
       const { data } = await api.get(endpoint);
       const orders = data.result;
-      logger.info('Start exporting orders', { orders });
+      logger.info(`${orders.length} orders listed`, {
+        ids: orders.map(({ _id }) => _id),
+        numbers: orders.map(({ number }) => number),
+      });
       for (let i = 0; i < orders.length; i++) {
         const order = orders[i];
         // eslint-disable-next-line no-await-in-loop

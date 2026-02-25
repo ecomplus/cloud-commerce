@@ -64,6 +64,7 @@ const applyShippingDiscount = ({
         && (rule.service === 'Todos' || rule.service === mandaeShipping.name)
         && (!rule.min_amount || itemsSubtotal >= rule.min_amount)
         && (!rule.max_kg_weight || itemsKgWeight <= rule.max_kg_weight)
+        && (!rule.min_kg_weight || itemsKgWeight >= rule.min_kg_weight)
       ) {
         if (rule.free_shipping) {
           value = 0;
@@ -205,7 +206,14 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
       mandaeItems.push(mandaeItem);
     }
   });
-  if (appData.use_bigger_box) {
+  if (appData.use_max_weight && (itemsKgWeight > 50 || itemsSubtotal > 5000)) {
+    mandaeItems = [{
+      declaredValue: Math.min(itemsSubtotal, 5000),
+      weight: Math.min(itemsKgWeight, 50),
+      ...biggerBoxCmDimensions,
+      quantity: 1,
+    }];
+  } else if (appData.use_bigger_box) {
     mandaeItems = [{
       declaredValue: itemsSubtotal,
       weight: itemsKgWeight || 0.001,

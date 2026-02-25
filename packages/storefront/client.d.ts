@@ -18,6 +18,7 @@ interface Window {
     messagingSenderId: string,
     appId: string,
     measurementId?: string,
+    vapidKey?: string,
   };
   $reCaptchaSiteKey?: string;
   ECOM_STORE_ID: number;
@@ -48,7 +49,11 @@ interface Window {
   };
   $firstInteraction?: Promise<any>;
   $interactionOrAwaken?: Promise<any>;
-  $delayedAsyncScripts?: Array<string | { src: string, delay?: number }>;
+  $delayedAsyncScripts?: Array<string | {
+    src: string,
+    delay?: number,
+    isEager?: boolean,
+  }>;
   $delayedScriptsMaxWait?: number;
   $isCmsPreview?: boolean;
 }

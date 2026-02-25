@@ -1,7 +1,7 @@
 import type { Products, CartSet, SearchItem } from '@cloudcommerce/api/types';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import api from '@cloudcommerce/api';
-import { useDebounceFn, watchDebounced } from '@vueuse/core';
+import { useDebounceFn } from '@vueuse/core';
 import mitt from 'mitt';
 import { requestIdleCallback } from '@@sf/sf-lib';
 import useStorage from '@@sf/state/use-storage';
@@ -84,9 +84,11 @@ const updateCartState = async () => {
         "variations.sku",
         "variations.name",
         "variations.production_time",
+        "variations.price",
         "variations.base_price",
         "variations.picture_id",
         "categories._id",
+        "weight",
       ] as const,
     });
     data.result.forEach((productItem) => {
@@ -143,13 +145,13 @@ const emitCartEvents = useDebounceFn((items: CartItem[]) => {
   oldItems = cloneItems();
 }, 200);
 
-const cartItemMiddlewares: Array<(item: CartItem) => void> = [];
+const cartItemMiddlewares: Array<(item: CartItem) => any> = [];
 
-export const addCartItemMiddleware = (cb: (item: CartItem) => void) => {
-  cartItemMiddlewares.push(cb);
+export const addCartItemMiddleware = (cb: (item: CartItem) => any) => {
+  if (!cartItemMiddlewares.includes(cb)) cartItemMiddlewares.push(cb);
 };
 
-watchDebounced(shoppingCart.items, (items) => {
+watch(shoppingCart.items, (items) => {
   items.forEach((item) => {
     let finalPrice = item.kit_product?.price && item.kit_product.pack_quantity
       ? item.kit_product.price / item.kit_product.pack_quantity
@@ -164,7 +166,8 @@ watchDebounced(shoppingCart.items, (items) => {
         }
       });
     }
-    item.final_price = finalPrice;
+    const itemCopy = { ...item };
+    itemCopy.final_price = finalPrice;
     const min = item.min_quantity || 1;
     const max = item.max_quantity;
     if (
@@ -172,25 +175,22 @@ watchDebounced(shoppingCart.items, (items) => {
       || Number.isNaN(item.quantity)
       || item.quantity < min
     ) {
-      setTimeout(() => {
-        item.quantity = min;
-      }, 9);
+      itemCopy.quantity = min;
     } else if (max && item.quantity > max) {
-      setTimeout(() => {
-        item.quantity = max;
-      }, 9);
+      itemCopy.quantity = max;
     }
-    cartItemMiddlewares.forEach((midd) => midd(item));
+    cartItemMiddlewares.forEach((midd) => midd(itemCopy));
+    Object.assign(item, itemCopy);
   });
   shoppingCart.subtotal = items.reduce((acc, item) => {
     const { quantity } = item;
-    const price = (item.final_price || item.price);
+    const price = typeof item.final_price === 'number'
+      ? item.final_price
+      : item.price;
     if (!(quantity > 0) || !(price > 0)) return acc;
-    return acc + (item.quantity * (item.final_price || item.price));
+    return acc + (quantity * price);
   }, 0);
   emitCartEvents(items);
-}, {
-  debounce: 50,
 });
 
 export const cartEvents = {

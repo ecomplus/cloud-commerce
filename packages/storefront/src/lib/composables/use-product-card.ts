@@ -103,6 +103,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       isFetching.value = false;
     })();
   }
+
   if (shouldRefetchStock) {
     idsToStockRefetch.push(product._id);
     refetchStock();
@@ -139,8 +140,8 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     return checkInStock(product);
   });
   const isActive = computed(() => {
-    return isInStock.value
-      && (product as Products).available && (product as Products).visible;
+    return isInStock.value && (product as Products).available
+      && (product as Products).visible;
   });
   const discountPercentage = computed(() => {
     if (checkOnPromotion(product)) {
@@ -188,6 +189,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       product.quantity = maxKitQnt;
     }
   };
+
   const isLoadingToCart = ref(false);
   const isFailedToCart = ref(false);
   const loadToCart = async (

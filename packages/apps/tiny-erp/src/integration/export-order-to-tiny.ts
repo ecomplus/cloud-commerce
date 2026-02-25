@@ -65,19 +65,27 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       tinyData = {};
     } else {
       logger.info(`${orderId} search on tiny ends with status ${status}`);
+      if (!status) {
+        logger.error(err);
+      }
       throw err;
     }
   }
   const { pedidos } = tinyData;
-  let originalTinyOrder;
+  let originalTinyOrder: undefined | Record<string, any>;
   if (Array.isArray(pedidos)) {
-    originalTinyOrder = pedidos.find(({ pedido }) => {
-      return order.number === Number(pedido.numero_ecommerce);
-    });
+    originalTinyOrder = pedidos
+      .sort((a: { pedido: Record<string, any> }, b: { pedido: Record<string, any> }) => {
+        return a.pedido.id < b.pedido.id ? 1 : -1;
+      })
+      .find(({ pedido }) => {
+        return order.number === Number(pedido.numero_ecommerce);
+      });
     if (originalTinyOrder) {
       originalTinyOrder = originalTinyOrder.pedido;
     }
   }
+
   if (!originalTinyOrder) {
     if (!canCreateNew) {
       return null;
@@ -105,13 +113,18 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
           break;
       }
     }
-    const tinyOrder = parseOrder(order, appData);
-    logger.info(`${orderId} ${JSON.stringify(tinyOrder)}`);
+    const tinyOrder = await parseOrder(order, appData);
+    try {
+      logger.info(`Posting ${orderId}`, { tinyOrder });
+    } catch {
+      logger.info(`Posting ${orderId} (stringify failed)`);
+    }
     return postTiny('/pedido.incluir.php', {
       pedido: {
         pedido: tinyOrder,
       },
     }).then((response) => {
+      logger.info(`Created ${orderId} on Tiny`, { response });
       const tinyErpOnNewOrder = global.$tinyErpOnNewOrder;
       if (tinyErpOnNewOrder && typeof tinyErpOnNewOrder === 'function') {
         return tinyErpOnNewOrder({ response, order, postTiny });
@@ -122,7 +135,7 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
 
   if (originalTinyOrder) {
     const { id, situacao } = originalTinyOrder;
-    logger.info(`${orderId} found with tiny status ${situacao} => ${tinyStatus}`);
+    logger.info(`${orderId} found with tiny status ${situacao} => ${tinyStatus} and id ${id}`);
     if (typeof situacao === 'string') {
       const { normalizedTinyStatus } = parseTinyStatus(tinyStatus);
       if (normalizedTinyStatus !== parseTinyStatus(situacao).normalizedTinyStatus) {

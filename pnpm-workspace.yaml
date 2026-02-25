@@ -1,3 +1,15 @@
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@ecomplus/*'
+  - '@cloudcommerce/*'
+  # Renovate security update: axios@1.13.5
+  - axios@1.13.5
+  # Renovate security update: qs@6.14.2
+  - qs@6.14.2
+  # Renovate security update: ajv@8.18.0
+  - ajv@8.18.0
+  # Renovate security update: fast-xml-parser@5.3.6
+  - fast-xml-parser@5.3.6
 packages:
   - 'packages/*'
   - 'packages/apps/*'

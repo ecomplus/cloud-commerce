@@ -2,11 +2,27 @@
 
 export * from '@cloudcommerce/ssr/events';
 
+export * from '@cloudcommerce/app-emails';
+
 export * from '@cloudcommerce/app-tiny-erp';
 
-export * from '@cloudcommerce/app-mercadopago/webhook';
+export * from '@cloudcommerce/app-evendas';
 
-export * from '@cloudcommerce/app-emails';
+export * from '@cloudcommerce/app-pagarme-v5/events';
+
+export * from '@cloudcommerce/app-appmax/events';
+
+export * from '@cloudcommerce/app-paypal/events';
+
+export * from '@cloudcommerce/app-asaas/events';
+
+export * from '@cloudcommerce/app-vindi/events';
+
+export * from '@cloudcommerce/app-yapay/events';
+
+export * from '@cloudcommerce/app-woovi/events';
+
+export * from '@cloudcommerce/app-mercadopago/webhook';
 
 export * from '@cloudcommerce/app-pagarme/webhook';
 
@@ -35,5 +51,3 @@ export * from '@cloudcommerce/app-webhooks';
 export * from '@cloudcommerce/app-affiliate-program';
 
 export * from '@cloudcommerce/app-flash-courier/events';
-
-export * from '@cloudcommerce/app-pagarme-v5/events';

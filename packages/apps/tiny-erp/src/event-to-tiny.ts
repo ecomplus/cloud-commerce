@@ -27,6 +27,13 @@ const handleApiEvent: ApiEventHandler = async ({
   const resourceId = apiEvent.resource_id;
   logger.info(`>> ${resourceId} - Action: ${apiEvent.action}`);
   const key = `${evName}_${resourceId}`;
+  if (
+    evName === 'applications-dataSet'
+    && !apiEvent.modified_fields.includes('data')
+  ) {
+    logger.info(`>> ${key} - Skipped application event without \`data\` changes`);
+    return null;
+  }
   const appData = { ...app.data, ...app.hidden_data };
   if (
     Array.isArray(appData.ignore_events)
@@ -48,9 +55,11 @@ const handleApiEvent: ApiEventHandler = async ({
   if (process.env.TINYERP_TOKEN) {
     let integrationConfig;
     let canCreateNew = false;
+    let isQueued = false;
     if (evName === 'applications-dataSet') {
       integrationConfig = appData;
       canCreateNew = true;
+      isQueued = true;
     } else if (evName === 'orders-anyStatusSet') {
       canCreateNew = Boolean(appData.new_orders);
       integrationConfig = {
@@ -100,13 +109,16 @@ const handleApiEvent: ApiEventHandler = async ({
                 && handler
               ) {
                 const debugFlag = `#${action}/${queue}/${nextId}`;
-                logger.info(`> Starting ${debugFlag}`);
+                logger.info(`> Starting ${debugFlag}`, {
+                  canCreateNew,
+                });
                 const queueEntry = {
                   action,
                   queue,
                   nextId,
                   key,
                   app,
+                  isNotQueued: !isQueued,
                 };
                 return handler(
                   apiDoc,

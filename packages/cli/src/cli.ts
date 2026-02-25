@@ -224,8 +224,10 @@ Finish by saving the following secrets to your GitHub repository:
     $.verbose = true;
     const prefix = joinPath(pwd, 'functions/ssr');
     // https://docs.astro.build/en/reference/cli-reference/#astro-dev
-    const host = typeof argv.host === 'string' ? argv.host : '';
-    const port = typeof argv.port === 'string' || typeof argv.port === 'number' ? argv.port : '';
+    const host = typeof argv.host === 'string'
+      ? argv.host : 'localhost';
+    const port = typeof argv.port === 'string' || typeof argv.port === 'number'
+      ? argv.port : '4321';
     return $`npm --prefix "${prefix}" run dev -- --host ${host} --port ${port}`;
   }
 

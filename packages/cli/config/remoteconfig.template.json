@@ -1,1 +1,22 @@
-{}
+{
+  "conditions": [
+    {
+      "name": "fifty_percent",
+      "expression": "percent <= 50",
+      "tagColor": "INDIGO"
+    }
+  ],
+  "parameters": {
+    "ab_experiment_id": {
+      "defaultValue": {
+        "value": "A"
+      },
+      "conditionalValues": {
+        "fifty_percent": {
+          "value": "B"
+        }
+      },
+      "description": "A/B test: 50% users get A, 50% get B"
+    }
+  }
+}

@@ -6,9 +6,8 @@ import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-from-tiny';
 
 const getPriceListData = async (productId: number) => {
-  const priceListId = process.env.TINY_PRICE_LIST_ID;
+  const priceListId = process.env.TINYERP_PRICE_LIST_ID;
   if (!priceListId) return undefined;
-
   try {
     const { registros } = await postTiny('/listas.precos.excecoes.php', {
       idListaPreco: Number(priceListId),
@@ -21,7 +20,7 @@ const getPriceListData = async (productId: number) => {
         preco_promocional: registro.preco_promocional,
       };
     }
-  } catch (err) {
+  } catch (err: any) {
     logger.warn(`Failed to get price list data for product ${productId}`, err);
   }
   return undefined;
@@ -68,21 +67,27 @@ const importProduct = async (
       } else {
         logger.info(`SKU not found ${queueSku} on any variation`, {
           product,
+          isHiddenQueue,
         });
-        if (!isHiddenQueue && !appData.update_product) {
-          const msg = queueSku
-            + ' corresponde a um produto com variações,'
-            + ' especifique o SKU da variação para importar.';
-          const err: any = new Error(msg);
-          err.isConfigError = true;
-          return err;
+        if (tinyStockUpdate?.tipo !== 'produto') {
+          if (!isHiddenQueue && !appData.update_product) {
+            const msg = queueSku
+              + ' corresponde a um produto com variações,'
+              + ' especifique o SKU da variação para importar.';
+            const err: any = new Error(msg);
+            err.isConfigError = true;
+            return err;
+          }
+          return null;
         }
-        return null;
       }
     }
   }
 
   const handleTinyStock = ({ produto: produtoSaldo, tipo }, tinyProduct?: any) => {
+    if (appData.update_quantity === false) {
+      return null;
+    }
     let quantity = Number(produtoSaldo.saldo);
     if (Number.isNaN(quantity)) {
       quantity = Number(produtoSaldo.estoqueAtual);
@@ -91,6 +96,21 @@ const importProduct = async (
       quantity -= Number(produtoSaldo.saldoReservado);
     }
     if (product && (!appData.update_product || variationId)) {
+      if (hasVariations && !variationId) {
+        return Promise.all((produtoSaldo.variacoes || []).map((variacao: any) => {
+          if (!variacao?.codigo) return null;
+          const varQnt = Number(variacao.estoqueAtual);
+          if (Number.isNaN(varQnt)) return null;
+          const variation = product.variations?.find(({ sku }) => variacao.codigo === sku);
+          if (!variation) return null;
+          const endpoint = `products/${product._id}/variations/${variation._id}/quantity` as const;
+          return api.put(endpoint, varQnt).then((response) => {
+            logger.info(`${endpoint} -> ${varQnt} [${response.status}]`);
+            return response;
+          });
+        }))
+          .then(([response]) => response || null);
+      }
       if (!Number.isNaN(quantity)) {
         if (quantity < 0) {
           quantity = 0;
@@ -111,11 +131,17 @@ const importProduct = async (
     }
 
     if (!product && tinyProduct && tipo === 'produto') {
+      logger.info('Tiny product to import', {
+        tinyProduct,
+        canCreateNew,
+      });
       if (!canCreateNew) {
         return null;
       }
-      return parseProduct(tinyProduct, appData, tipo, true)
+      return getPriceListData(tinyProduct.id)
+        .then((priceListData) => parseProduct(tinyProduct, appData, tipo, true, priceListData))
         .then((bodyProduct) => {
+          logger.info(`Creating ${queueSku}`, { bodyProduct });
           return api.post('products', bodyProduct);
         });
     }
@@ -136,8 +162,14 @@ const importProduct = async (
           return null;
         }
         const priceListData = await getPriceListData(produto.id);
-        return parseProduct(produto, appData, tipo, method === 'POST', priceListData)
-          .then((parsedProduct: Products) => {
+        // @ts-ignore
+        return parseProduct(
+          produto,
+          appData,
+          tipo,
+          method === 'POST',
+          priceListData,
+        ).then((parsedProduct) => {
           if (!Number.isNaN(quantity)) {
             parsedProduct.quantity = quantity >= 0 ? quantity : 0;
           }
@@ -198,10 +230,11 @@ const importProduct = async (
     isProductFound: !!product,
   });
   if (tinyStockUpdate && isHiddenQueue && (queueProductId || product?._id)) {
-    return handleTinyStock(tinyStockUpdate as any, tinyStockUpdate.produto);
+    return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
   if (tinyStockUpdate?.tipo === 'produto' && !queueProductId) {
-    return handleTinyStock({ produto: {}, tipo: 'produto' }, tinyStockUpdate.produto);
+    logger.info(`Handling new SKU ${queueSku}`);
+    return handleTinyStock(tinyStockUpdate, tinyStockUpdate.produto);
   }
 
   return postTiny('/produtos.pesquisa.php', { pesquisa: queueSku })

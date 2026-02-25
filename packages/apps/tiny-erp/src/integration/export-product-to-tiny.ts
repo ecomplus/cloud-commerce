@@ -1,5 +1,6 @@
 import type { Products } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import postTiny from './post-tiny-erp';
 import parseProduct from './parsers/product-to-tiny';
 
@@ -47,7 +48,12 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
       return null;
     }
   }
-  const tinyProduct = parseProduct(product, originalTinyProduct, appData);
+  const tinyProduct = await parseProduct(product, originalTinyProduct, appData);
+  try {
+    logger.info(`Posting ${productId}`, { tinyProduct });
+  } catch {
+    logger.info(`Posting ${productId} (stringify failed)`);
+  }
   return tinyProduct
     ? postTiny(originalTinyProduct ? '/produto.alterar.php' : '/produto.incluir.php', {
       produto: {

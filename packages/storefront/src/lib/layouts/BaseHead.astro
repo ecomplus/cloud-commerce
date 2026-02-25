@@ -153,6 +153,31 @@ if (isPreview) {
   inlineClientJS += `
 window.$isCmsPreview = true;`;
 }
+const abExperimentIds = await getContent('ab-experiments/');
+if (abExperimentIds.length) {
+  const abExperiments = (
+    await Promise.all(abExperimentIds.map(async (expId) => {
+      return getContent(`ab-experiments/${expId}`);
+    }))
+  ).filter((expContent) => {
+    if (!expContent?.experimentId) return false;
+    const keys = Object.keys(expContent);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i] as 'strings' | 'booleans';
+      if (Array.isArray(expContent[key])) {
+        if (expContent[key]
+          .find(({ name, value }) => name && (value || value === false))) {
+          return true;
+        }
+      }
+    }
+    return false;
+  });
+  if (abExperiments.length) {
+    inlineClientJS += `
+window._abExperiments = ${JSON.stringify(abExperiments)};`;
+  }
+}
 
 const inlineJSONLdOrg = JSON.stringify({
   '@context': 'http://schema.org',

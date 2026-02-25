@@ -36,6 +36,139 @@ if (!existsSync(settingsContentFile)) {
 }
 const settingsContent: SettingsContent = JSON.parse(readFileSync(settingsContentFile, 'utf-8'));
 
+export const configApps = {
+  emails: {
+    appId: 1243,
+    events: [
+      'orders-anyStatusSet',
+    ] as ApiEventName[],
+  },
+  discounts: {
+    appId: 1252,
+  },
+  customShipping: {
+    appId: 1253,
+  },
+  correios: {
+    appId: 126334,
+  },
+  frenet: {
+    appId: 1244,
+    events: [
+      'orders-new',
+    ] as ApiEventName[],
+  },
+  flashCourier: {
+    appId: 104136,
+  },
+  mandae: {
+    appId: 124677,
+  },
+  jadlog: {
+    appId: 115229,
+  },
+  datafrete: {
+    appId: 123886,
+  },
+  melhorEnvio: {
+    appId: 1236,
+    events: [
+      'orders-anyStatusSet',
+    ] as ApiEventName[],
+  },
+  customPayment: {
+    appId: 108091,
+  },
+  loyaltyPoints: {
+    appId: 124890,
+    events: [
+      'orders-new',
+      'orders-anyStatusSet',
+    ] as ApiEventName[],
+  },
+  mercadoPago: {
+    appId: 111223,
+  },
+  pagarMe: {
+    appId: 117391,
+  },
+  pagarMeV5: {
+    appId: 112381,
+    events: [
+      'orders-cancelled',
+      'products-priceSet',
+      'products-quantitySet',
+    ] as ApiEventName[],
+  },
+  appmax: {
+    appId: 100478,
+  },
+  paypal: {
+    appId: 1250,
+  },
+  asaas: {
+    appId: 148182,
+  },
+  vindi: {
+    appId: 120952,
+  },
+  yapay: {
+    appId: 120950,
+  },
+  woovi: {
+    appId: 120963,
+  },
+  braspag: {
+    appId: 112906,
+  },
+  pix: {
+    appId: 101827,
+  },
+  galaxPay: {
+    appId: 123188,
+    events: [
+      'orders-cancelled',
+    ] as ApiEventName[],
+  },
+  pagaleve: {
+    appId: 113537,
+  },
+  pagHiper: {
+    appId: 1251,
+  },
+  tinyErp: {
+    appId: 105922,
+    events: [
+      'orders-anyStatusSet',
+      'products-new',
+      'products-priceSet',
+      'applications-dataSet',
+    ] as ApiEventName[],
+  },
+  evendas: {
+    appId: 109851,
+    events: [
+      'carts-customerSet',
+      'orders-anyStatusSet',
+    ] as ApiEventName[],
+  },
+  affiliateProgram: {
+    appId: 119753,
+    events: [
+      'orders-anyStatusSet',
+      'customers-new',
+    ] as ApiEventName[],
+  },
+  webhooksApp: {
+    appId: 123113,
+    events: [
+      'applications-dataSet',
+      'orders-anyStatusSet',
+      'carts-delayed',
+    ] as ApiEventName[],
+  },
+};
+
 const disabledEvents: ApiEventName[] = [];
 const mergeConfig = {
   hello: 'from @cloudcommerce/firebase',
@@ -60,113 +193,7 @@ const mergeConfig = {
       : 1000 * 60 * 5,
     disabledEvents,
   },
-  apps: {
-    discounts: {
-      appId: 1252,
-    },
-    correios: {
-      appId: 126334,
-    },
-    customShipping: {
-      appId: 1253,
-    },
-    emails: {
-      appId: 1243,
-      events: [
-        'orders-anyStatusSet',
-      ] as ApiEventName[],
-    },
-    frenet: {
-      appId: 1244,
-      events: [
-        'orders-new',
-      ] as ApiEventName[],
-    },
-    tinyErp: {
-      appId: 105922,
-      events: [
-        'orders-anyStatusSet',
-        'products-new',
-        'products-priceSet',
-        'applications-dataSet',
-      ] as ApiEventName[],
-    },
-    mercadoPago: {
-      appId: 111223,
-    },
-    pagarMe: {
-      appId: 117391,
-    },
-    braspag: {
-      appId: 112906,
-    },
-    pix: {
-      appId: 101827,
-    },
-    jadlog: {
-      appId: 115229,
-    },
-    galaxPay: {
-      appId: 123188,
-      events: [
-        'orders-cancelled',
-      ] as ApiEventName[],
-    },
-    customPayment: {
-      appId: 108091,
-    },
-    loyaltyPoints: {
-      appId: 124890,
-      events: [
-        'orders-new',
-        'orders-anyStatusSet',
-      ] as ApiEventName[],
-    },
-    affiliateProgram: {
-      appId: 119753,
-      events: [
-        'orders-anyStatusSet',
-        'customers-new',
-      ] as ApiEventName[],
-    },
-    datafrete: {
-      appId: 123886,
-    },
-    pagaleve: {
-      appId: 113537,
-    },
-    pagHiper: {
-      appId: 1251,
-    },
-    melhorEnvio: {
-      appId: 1236,
-      events: [
-        'orders-anyStatusSet',
-      ] as ApiEventName[],
-    },
-    webhooksApp: {
-      appId: 123113,
-      events: [
-        'applications-dataSet',
-        'orders-anyStatusSet',
-        'carts-delayed',
-      ] as ApiEventName[],
-    },
-    flashCourier: {
-      appId: 104136,
-    },
-    mandae: {
-      appId: 124677,
-    },
-    pagarMeV5: {
-      appId: 112381,
-      events: [
-        'orders-cancelled',
-        'products-priceSet',
-        'products-quantitySet',
-      ] as ApiEventName[],
-    },
-  },
+  apps: configApps,
   settingsContent,
   metafields: {},
 };

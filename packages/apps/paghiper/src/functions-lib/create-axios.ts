@@ -8,14 +8,13 @@ export default (isPix?: boolean) => axios.create({
     : 'https://api.paghiper.com/',
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
-    Accept: 'application/json',
+    'Accept': 'application/json',
     'Accept-Charset': 'UTF-8',
     'Accept-Encoding': 'application/json',
   },
   // wait up to 30s
   timeout: 30000,
   validateStatus(status) {
-    // success only when received 201
-    return status === 201;
+    return status === 200 || status === 201;
   },
 });

@@ -35,7 +35,7 @@ export const search = async ({
   if (typeof term === 'string') {
     term = term.trim();
     if (term.length < 2) {
-      return { data: { result: [], meta: null } };
+      term = null;
     }
   }
   const response = await api.get(url, {

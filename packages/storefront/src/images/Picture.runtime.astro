@@ -23,7 +23,7 @@ readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
   });
 });
 
-const tryImageSize = (src: string) => {
+const tryImageSize = async (src: string) => {
   let dimensions: { width?: number, height?: number } = {};
   if (typeof src === 'string' && src.startsWith('/')) {
     const originalImage = originalImages.find(({ filepath }) => {

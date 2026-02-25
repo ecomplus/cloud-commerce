@@ -26,8 +26,8 @@ const handleApiEvent: ApiEventHandler = async ({
   const appData = { ...app.data, ...app.hidden_data };
   const store = getStore();
   const modifiedFields = apiEvent.modified_fields.filter((field) => {
-    return field === 'payments_history' || field === 'fulfillment';
-  }) as Array<'payments_history' | 'fulfillment'>;
+    return field === 'payments_history' || field === 'fulfillments';
+  }) as Array<'payments_history' | 'fulfillments'>;
   if (!modifiedFields.length) {
     return null;
   }
@@ -49,10 +49,13 @@ const handleApiEvent: ApiEventHandler = async ({
       const subresource = modifiedFields[i];
       if (order[subresource]?.length) {
         const sortedRecords = order[subresource]
-          .sort((a: PaymentHistoryEntry, b: PaymentHistoryEntry) => {
+          .sort((
+            a: PaymentHistoryEntry | FulfillmentsEntry,
+            b: PaymentHistoryEntry | FulfillmentsEntry,
+          ) => {
             if (!a.date_time || !b.date_time) return 0;
             return a.date_time > b.date_time ? -1 : 1;
-          }) as (PaymentHistoryEntry | FulfillmentsEntry)[];
+          });
         const lastStatusRecord = sortedRecords[0];
         if (lastStatusRecord.customer_notified) {
           continue;

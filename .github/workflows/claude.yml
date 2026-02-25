@@ -1,0 +1,115 @@
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: read
+  id-token: write
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          settings: |
+            {
+              "permissions": {
+                "allow": [
+                  "WebSearch",
+                  "WebFetch(domain:github.com)",
+                  "WebFetch(domain:api.anthropic.com)",
+                  "WebFetch(domain:developer.mozilla.org)",
+                  "WebFetch(domain:ecomplus.io)",
+                  "WebFetch(domain:developers.e-com.plus)",
+                  "WebFetch(domain:vuejs.org)",
+                  "WebFetch(domain:docs.astro.build)",
+                  "WebFetch(domain:tiny.com.br)",
+                  "WebFetch(domain:cloudflare.com)",
+                  "WebFetch(domain:developers.cloudflare.com)",
+                  "WebFetch(domain:npmjs.com)",
+                  "WebFetch(domain:registry.npmjs.org)",
+                  "Bash(bun install)",
+                  "Bash(bun run build)",
+                  "Bash(bun run build:*)",
+                  "Bash(bun run test)",
+                  "Bash(bun run test:*)",
+                  "Bash(bun run lint)",
+                  "Bash(bun run lint:*)",
+                  "Bash(bun run typecheck)",
+                  "Bash(bun run typecheck:*)",
+                  "Bash(bun run format)",
+                  "Bash(bun run format:*)",
+                  "Bash(bun add *)",
+                  "Bash(bun remove *)",
+                  "Bash(bun update *)",
+                  "Bash(bunx *)",
+                  "Bash(git status)",
+                  "Bash(git add *)",
+                  "Bash(git commit *)",
+                  "Bash(git checkout -b *)",
+                  "Bash(git branch)",
+                  "Bash(git branch -a)",
+                  "Bash(git diff *)",
+                  "Bash(git log *)",
+                  "Bash(git fetch)",
+                  "Bash(git stash)",
+                  "Bash(git stash pop)",
+                  "Bash(git push origin claude/*)",
+                  "Bash(git push origin claude/* *)",
+                  "Bash(cat *)",
+                  "Bash(ls *)",
+                  "Bash(find *)",
+                  "Bash(grep *)",
+                  "Bash(head *)",
+                  "Bash(tail *)",
+                  "Bash(wc *)",
+                  "Bash(mkdir *)",
+                  "Read",
+                  "Write"
+                ],
+                "deny": [
+                  "Bash(git push origin staging)",
+                  "Bash(git push origin prod)",
+                  "Bash(git push origin main)",
+                  "Bash(git push origin *:staging)",
+                  "Bash(git push origin *:prod)",
+                  "Bash(git push origin *:main)",
+                  "Bash(git push origin :*)",
+                  "Bash(git push --force *)",
+                  "Bash(git push -f *)",
+                  "Bash(git push --all *)",
+                  "Bash(git push --mirror *)",
+                  "Bash(git push --delete *)",
+                  "Bash(git merge *)",
+                  "Bash(git rebase *)",
+                  "Bash(git reset --hard *)",
+                  "Bash(git clean *)",
+                  "Bash(rm -rf *)",
+                  "Bash(rm -r *)"
+                ]
+              }
+            }

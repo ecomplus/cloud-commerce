@@ -1,5 +1,5 @@
-import api from '@cloudcommerce/api';
-import config, { logger } from '@cloudcommerce/firebase/lib/config';
+import { logger } from '@cloudcommerce/firebase/lib/config';
+import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import { PubSub } from '@google-cloud/pubsub';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import calculateV2 from './correios-v2.mjs';
@@ -17,17 +17,6 @@ const VERSION = 1;
 const firstZipCode = 1000001;
 const maxZipCode = 99999999;
 const lastZipCode = maxZipCode - zipRangeStep + 2;
-
-const getAppData = async () => {
-  const [application] = (await api.get(
-    `applications?app_id=${config.get().apps.correios.appId}&fields=hidden_data,data`,
-  )).data.result;
-
-  return {
-    ...application.data,
-    ...application.hidden_data,
-  };
-};
 
 const fillDb = async (state) => {
   if (state?.nextZipCode && state.V !== VERSION) {
@@ -67,7 +56,7 @@ const fillDb = async (state) => {
   ) {
     logger.info('> Set credentials');
     try {
-      configApp = await getAppData();
+      configApp = await getAppData('correios');
       if (configApp) {
         setCredentials(configApp);
       }

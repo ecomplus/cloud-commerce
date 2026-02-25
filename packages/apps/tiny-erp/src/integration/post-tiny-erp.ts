@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 export default (
   url: string,
@@ -15,7 +16,13 @@ export default (
       if (body[field]) {
         switch (typeof body[field]) {
           case 'object':
-            formData.append(field, JSON.stringify(body[field]));
+            try {
+              formData.append(field, JSON.stringify(body[field]));
+            } catch {
+              logger.warn(`Failed stringify ${field} to ${url}`, {
+                fieldVal: body[field],
+              });
+            }
             break;
           case 'string':
           case 'number':
@@ -43,11 +50,20 @@ export default (
         } else if (tinyErrorCode === 20) {
           response.status = 404;
         }
-        const err: any = new Error(`Tiny error ${tinyErrorCode} at ${response.config.url}`);
-        err.response = response;
-        err.config = response.config;
-        err.request = response.request;
-        throw err;
+        const error: any = new Error(`Tiny error ${tinyErrorCode} at ${response.config.url}`);
+        error.response = response;
+        error.config = response.config;
+        error.request = response.request;
+        if (response.status !== 404) {
+          const err: any = new Error(error.message);
+          if (response.status !== 503) {
+            err.request = response.config.data;
+          }
+          err.status = response.status;
+          err.response = response.data;
+          logger.error(err);
+        }
+        throw error;
       }
       return retorno;
     });

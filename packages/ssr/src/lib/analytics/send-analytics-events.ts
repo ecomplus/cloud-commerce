@@ -4,6 +4,7 @@ import { logger } from '@cloudcommerce/firebase/lib/config';
 import sendToGa4 from './send-to-ga4';
 import sendToMeta from './send-to-meta';
 import sendToTiktok from './send-to-tiktok';
+import sendToAwin from './send-to-awin';
 
 export type AnalyticsEvent = {
   id?: string,
@@ -81,6 +82,11 @@ export const sendAnalyticsEvents = async (
       originIp: payload.ip,
       originUserAgent: payload.user_agent,
     }));
+    sendingEvents.push(sendToAwin({
+      events: gaEvents,
+      awc: payload.awc,
+      channel: payload.awin_channel,
+    }));
   }
   if (metaEvents) {
     sendingEvents.push(sendToMeta({
@@ -114,25 +120,22 @@ export const sendAnalyticsEvents = async (
         const { status } = results[i];
         if (status === 'rejected') {
           const reason: AxiosError = (results[i] as PromiseRejectedResult).reason;
-          const err: any = new Error(reason.message);
-          err.statusCode = reason.response?.status;
-          if (reason.config) {
-            err.config = {
+          const message = reason.config?.url
+            ? `${reason.config.method} ${reason.config.url}`
+              + ` failed with ${reason.response?.status}`
+            : reason.message;
+          const err = new Error(message);
+          logger.warn(err, {
+            request: reason.config && {
               url: reason.config.url,
               method: reason.config.method,
               headers: reason.config.headers,
               data: reason.config.data,
-            };
-          }
-          if (reason.response) {
-            err.response = {
+            },
+            response: reason.response && {
               headers: reason.response.headers,
               data: reason.response.data,
-            };
-          }
-          logger.warn(err, {
-            request: err.config,
-            response: err.response,
+            },
           });
         }
       }

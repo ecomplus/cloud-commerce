@@ -54,10 +54,15 @@ export default async (req: Request, res: Response) => {
     importOrder({}, queueEntry).catch((err: any) => {
       return afterQueue(queueEntry, appData, application, err);
     });
-  } else if (
+    res.sendStatus(200);
+    return;
+  }
+
+  if (
     (tipo === 'produto' || tipo === 'estoque')
     && (dados.id || dados.idProduto)
     && (dados.codigo || dados.sku)
+    && (appData.update_product || appData.update_quantity !== false)
   ) {
     const nextId = String(dados.skuMapeamento || dados.sku || dados.codigo);
     const tinyStockUpdate = {

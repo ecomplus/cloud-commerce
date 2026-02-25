@@ -23,23 +23,20 @@ const parserChangeStatusToEcom = (status) => {
     case 'paid':
     case 'refunded':
       return status;
-
     case 'overpaid':
       return 'paid';
-
     case 'processing':
       return 'under_analysis';
-
     case 'canceled':
       return 'voided';
-
     case 'payment_failed':
     case 'failed':
       return 'unauthorized';
-
     case 'underpaid':
       return 'partially_paid';
-
+    case 'chargedback':
+    case 'chargeback':
+      return 'in_dispute';
     default:
       return 'unknown';
   }

@@ -2,7 +2,7 @@ import type { Orders } from '@cloudcommerce/types';
 import logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
-import meClient from '../../lib-mjs/functions/client-melhor-envio.mjs';
+import { getMEAxios } from '../../lib-mjs/util/melhor-envio-api.mjs';
 import errorHandling from '../../lib-mjs/functions/error-handling.mjs';
 import db, { Label } from './database';
 
@@ -20,9 +20,17 @@ const getConfig = async () => {
 };
 
 const handleTrackingCodes = async () => {
-  const appConfig = await getConfig();
-  const accessToken: string | undefined = appConfig?.access_token;
-  const isSandbox = appConfig?.sandbox;
+  const appData = await getConfig();
+  if (appData?.access_token) {
+    process.env.MELHORENVIO_TOKEN = appData.access_token;
+  }
+  process.env.MELHORENVIO_ENV = appData?.sandbox
+    ? 'sandbox'
+    : process.env.MELHORENVIO_ENV || 'live';
+  if (!process.env.MELHORENVIO_TOKEN) {
+    return;
+  }
+  const meAxios = await getMEAxios();
 
   // eslint-disable-next-line no-async-promise-executor
   const trackingCodes = new Promise(async (resolve, reject) => {
@@ -54,7 +62,7 @@ const handleTrackingCodes = async () => {
         }
 
         try {
-          const { data } = await meClient(accessToken, isSandbox)
+          const { data } = await meAxios
             .post('/shipment/tracking', { orders: [label.labelId] });
 
           const orderLabel = order.hidden_metafields?.find((metafield) => {
@@ -175,11 +183,10 @@ const handleTrackingCodes = async () => {
     }
   });
 
-  if (appConfig && accessToken && appConfig.disable_tracking) {
+  if (appData?.disable_tracking) {
     await trackingCodes.catch((err) => {
       logger.error(err);
     });
-
     if (new Date().getHours() === 23) {
       await db.clearLabels().catch((err) => {
         logger.error('> Error removing old Labels => ', err);

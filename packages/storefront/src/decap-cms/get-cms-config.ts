@@ -7,6 +7,7 @@ import getConfigsColl from './collections/get-configs-coll';
 import getPagesColl from './collections/get-pages-coll';
 import getExtraPagesColl from './collections/get-extra-pages-coll';
 import getBlogColl from './collections/get-blog-coll';
+import getAbExperimentsColl from './collections/get-ab-experiments-coll';
 
 export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
   const {
@@ -122,6 +123,7 @@ export const getCmsConfig = async (_collOptions: Partial<CmsCollOptions>) => {
       getPagesColl(collOptions),
       getExtraPagesColl(collOptions),
       getBlogColl(collOptions),
+      getAbExperimentsColl(collOptions),
     ],
   };
   if (mergeConfig) {

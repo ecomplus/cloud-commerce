@@ -51,7 +51,7 @@ export default async (appData: AppModuleBody) => {
     currency_symbol: params.currency_symbol,
     amount: amount.total,
     status: {
-      current: 'pending',
+      current: amount.total > 0.01 ? 'pending' : 'paid',
     },
     flags: [
       'app-custom-payments',

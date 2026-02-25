@@ -224,7 +224,7 @@ const api = async <T extends Config & { body?: any, data?: any }>(
   if (response) {
     if (response.ok) {
       const res = response as Response & { data: any, config: Config };
-      res.data = response.status !== 204 ? await response.json() : null;
+      res.data = response.status !== 204 ? await response.json() : undefined;
       if (canCache && cacheKey) {
         globalThis.__apiCache[cacheKey] = {
           timestamp: Date.now(),

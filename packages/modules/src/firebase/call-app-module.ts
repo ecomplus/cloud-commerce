@@ -105,6 +105,48 @@ const callAppModule = async (
           .then(({ listPayments }) => listPayments(_data));
       };
     }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.appmax.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-appmax')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.paypal.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-paypal')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.asaas.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-asaas')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.vindi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-vindi')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.yapay.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-yapay')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
+    if (appId === apps.woovi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-woovi')
+          .then(({ listPayments }) => listPayments(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -144,12 +186,6 @@ const callAppModule = async (
     if (appId === apps.pagaleve.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-pagaleve')
-          .then(({ listPayments }) => listPayments(_data));
-      };
-    }
-    if (appId === apps.pagarMeV5.appId) {
-      internalModuleFn = async (_data = data) => {
-        return import('@cloudcommerce/app-pagarme-v5')
           .then(({ listPayments }) => listPayments(_data));
       };
     }
@@ -166,6 +202,48 @@ const callAppModule = async (
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }
+    if (appId === apps.pagarMeV5.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-pagarme-v5')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.appmax.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-appmax')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.paypal.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-paypal')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.asaas.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-asaas')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.vindi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-vindi')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.yapay.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-yapay')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
+    if (appId === apps.woovi.appId) {
+      internalModuleFn = async (_data = data) => {
+        return import('@cloudcommerce/app-woovi')
+          .then(({ createTransaction }) => createTransaction(_data));
+      };
+    }
     if (appId === apps.braspag.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-braspag')
@@ -205,12 +283,6 @@ const callAppModule = async (
     if (appId === apps.pagaleve.appId) {
       internalModuleFn = async (_data = data) => {
         return import('@cloudcommerce/app-pagaleve')
-          .then(({ createTransaction }) => createTransaction(_data));
-      };
-    }
-    if (appId === apps.pagarMeV5.appId) {
-      internalModuleFn = async (_data = data) => {
-        return import('@cloudcommerce/app-pagarme-v5')
           .then(({ createTransaction }) => createTransaction(_data));
       };
     }

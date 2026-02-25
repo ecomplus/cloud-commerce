@@ -6,6 +6,7 @@ import { getDigestHex } from '@@sf/sf-lib';
 import { customer, isLogged } from '@@sf/state/customer-session';
 import { cartEvents } from '@@sf/state/shopping-cart';
 import { searchHistory } from '@@sf/state/search-engine';
+import { abExperimentId } from '@@sf/state/ab-experiment';
 import utm from '@@sf/scripts/session-utm';
 import setTrackingIds from '../../analytics/set-tracking-ids';
 
@@ -284,9 +285,9 @@ export const getGtagItem = (product: Partial<Products> | SearchItem | CartItem) 
 };
 
 export const useAnalytics = ({
-  experimentId = window.AB_EXPERIMENT_ID,
+  experimentId = abExperimentId.value || window.AB_EXPERIMENT_ID,
 }: {
-  experimentId?: string,
+  experimentId?: string | null,
 } = {}) => {
   const variantCtx = setTrackingIds(trackingIds, experimentId);
   if (isLogged.value) {

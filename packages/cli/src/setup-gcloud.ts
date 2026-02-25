@@ -30,7 +30,7 @@ const requestApi = async (
     {
       method: options?.method || 'GET',
       headers: {
-        Authorization: `Bearer ${gcpAccessToken}`,
+        'Authorization': `Bearer ${gcpAccessToken}`,
         'Content-Type': 'application/json; charset=utf-8',
       },
       body,
@@ -142,6 +142,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     'roles/iam.serviceAccountUser',
     'roles/run.viewer',
     'roles/serviceusage.apiKeysViewer',
+    'roles/serviceusage.serviceUsageConsumer',
     'roles/serviceusage.serviceUsageAdmin',
   ];
   let { bindings } = policyIAM;

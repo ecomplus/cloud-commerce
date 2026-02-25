@@ -7,8 +7,8 @@ import {
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import functions from 'firebase-functions/v1';
-import handleLoyaltyPointsEvent from './functions-lib/handle-loyalty-points-event';
-import addPoints from './functions-lib/cron-add-points';
+import handleLoyaltyPointsEvent from './util/handle-loyalty-points-event';
+import addPoints from './util/cron-add-points';
 
 const { httpsFunctionOptions: { region } } = config.get();
 
@@ -22,7 +22,6 @@ const handleApiEvent: ApiEventHandler = async ({
   const key = `${evName}_${resourceId}`;
   const appData = { ...app.data, ...app.hidden_data };
   const programRules = appData.programs_rules;
-
   if (
     (Array.isArray(appData.ignore_events)
       && appData.ignore_events.includes(evName))
@@ -31,8 +30,6 @@ const handleApiEvent: ApiEventHandler = async ({
     logger.info(`>> ${key} - Ignored event`);
     return null;
   }
-  logger.info(`> Webhook ${resourceId} [${evName}]`);
-
   return handleLoyaltyPointsEvent(apiDoc as Orders, programRules);
 };
 

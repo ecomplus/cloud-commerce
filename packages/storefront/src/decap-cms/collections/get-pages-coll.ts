@@ -39,7 +39,7 @@ const getPagesColl = ({
   },
   delete: false,
   editor: {
-    preview: import.meta.env.DEV,
+    preview: true,
   },
   files: [
     {

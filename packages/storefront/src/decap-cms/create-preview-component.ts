@@ -58,11 +58,12 @@ export const createPreviewComponent = ({ createClass, h }: {
     slug: string,
     contents: { filename: string, data: Record<string, any> }[],
   ) => {
-    previewUrl.value = new URL(`http${isLocal ? '' : 's'}://${host}/~preview/${slug}`);
+    const newUrl = new URL(`http${isLocal ? '' : 's'}://${host}/~preview/${slug}`);
     contents.forEach(({ filename, data: _data }) => {
-      previewUrl.value!.searchParams
-        .append(`content:${filename}`, JSON.stringify(_data));
+      newUrl.searchParams.append(`content:${filename}`, JSON.stringify(_data));
     });
+    previewUrl.value = newUrl;
+    console.debug?.('preview reload', { newUrl });
   }, 100);
 
   // https://decapcms.org/docs/customization/#react-components-inline-interaction
@@ -73,20 +74,31 @@ export const createPreviewComponent = ({ createClass, h }: {
       const entry = (this as any).props.entry;
       dataRef.value = entry.toJS().data;
       // console.debug?.('preview', { filename, data });
-      const html = `
-      <iframe
-        id="${previewIframeId}"
-        border="0"
-        width="100%"
-        height="100%"
-        style="border: 1px solid #EEE; height: calc(100dvh - 12px)"
-      ></iframe>`;
       return h('div', {
-        dangerouslySetInnerHTML: { __html: html },
+        ref: (node: HTMLDivElement) => {
+          if (node && !(this as any).iframeCreated) {
+            const iframe = document.createElement('iframe');
+            iframe.id = previewIframeId;
+            iframe.setAttribute('border', '0');
+            iframe.width = '100%';
+            iframe.height = '100%';
+            iframe.style.cssText = 'border: 1px solid #EEE; height: calc(100dvh - 12px)';
+            node.appendChild(iframe);
+            (this as any).iframeCreated = true;
+          }
+        },
       });
     },
     componentDidMount() {
-      const filename = window.location.hash.split('/entries/').pop() || '';
+      const { hash } = window.location;
+      let filename = hash.split('/entries/').pop() || '';
+      const folderCollections = ['pages', 'extra-pages', 'blog'];
+      for (let i = 0; i < folderCollections.length; i++) {
+        if (hash.includes(`/${folderCollections[i]}/`)) {
+          filename = `${folderCollections[i]}/${filename}`;
+          break;
+        }
+      }
       const slug = '';
       const paneIframe = document.getElementById('preview-pane') as HTMLIFrameElement;
       const paneWindow = paneIframe.contentWindow!;
@@ -112,6 +124,7 @@ export const createPreviewComponent = ({ createClass, h }: {
       watch(dataRef, (data, oldData) => {
         if (previewUrl.value && oldData) {
           const diffs = getDataDiffs(data, oldData);
+          console.debug?.('preview diffs', { diffs, liveFields });
           const isLiveWatchingAll = diffs.every((diff) => {
             return liveFields.some(([field, subfield]) => {
               return field === diff[0] && subfield === diff[1];
