@@ -280,7 +280,25 @@ export default async ({ params, application }) => {
         return kitDiscount;
       });
     }
-    const kitDiscounts = getValidDiscountRules(config.product_kit_discounts, params, params.items)
+    const freebieProductIds = [];
+    if (Array.isArray(config.freebies_rules)) {
+      config.freebies_rules.forEach((rule) => {
+        if (
+          validateDateRange(rule)
+          && validateCustomerId(rule, params)
+          && Array.isArray(rule.product_ids)
+          && matchFreebieRule(rule, params)
+        ) {
+          rule.product_ids.forEach((id) => {
+            if (!freebieProductIds.includes(id)) freebieProductIds.push(id);
+          });
+        }
+      });
+    }
+    const kitEligibleItems = freebieProductIds.length
+      ? params.items.filter((item) => !freebieProductIds.includes(item.product_id))
+      : params.items;
+    const kitDiscounts = getValidDiscountRules(config.product_kit_discounts, params, kitEligibleItems)
       .sort((a, b) => {
         if (!Array.isArray(a.product_ids) || !a.product_ids.length) {
           if (Array.isArray(b.product_ids) && b.product_ids.length) {
@@ -332,7 +350,9 @@ export default async ({ params, application }) => {
         }
         // eslint-disable-next-line no-loop-func
         kitItems = kitItems.filter((item) => {
-          return item.quantity && discountedItemIds.indexOf(item.product_id) === -1;
+          return item.quantity
+            && discountedItemIds.indexOf(item.product_id) === -1
+            && !freebieProductIds.includes(item.product_id);
         });
         if (!kitItems.length) {
           continue;
