@@ -142,6 +142,7 @@ const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
     'roles/iam.serviceAccountUser',
     'roles/run.viewer',
     'roles/serviceusage.apiKeysViewer',
+    'roles/serviceusage.serviceUsageConsumer',
     'roles/serviceusage.serviceUsageAdmin',
   ];
   let { bindings } = policyIAM;
