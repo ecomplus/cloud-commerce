@@ -10,6 +10,8 @@ minimumReleaseAgeExclude:
   - ajv@8.18.0
   # Renovate security update: fast-xml-parser@5.3.6 || 5.3.8 || 5.5.6 || 5.5.7
   - fast-xml-parser@5.3.6 || 5.3.8 || 5.5.6 || 5.5.7
+  # Renovate security update: @astrojs/node@10.0.0
+  - "@astrojs/node@10.0.0"
 packages:
   - 'packages/*'
   - 'packages/apps/*'
