@@ -12,6 +12,8 @@ minimumReleaseAgeExclude:
   - fast-xml-parser@5.3.6 || 5.3.8 || 5.5.6 || 5.5.7
   # Renovate security update: yaml@2.8.3
   - yaml@2.8.3
+  # Renovate security update: nodemailer@8.0.4
+  - nodemailer@8.0.4
 packages:
   - 'packages/*'
   - 'packages/apps/*'

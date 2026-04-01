@@ -841,8 +841,8 @@ importers:
         specifier: ^3.1.10
         version: 3.1.10
       nodemailer:
-        specifier: ^7.0.13
-        version: 7.0.13
+        specifier: ^8.0.0
+        version: 8.0.4
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -5955,8 +5955,8 @@ packages:
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
 
-  nodemailer@7.0.13:
-    resolution: {integrity: sha512-PNDFSJdP+KFgdsG3ZzMXCgquO7I6McjY2vlqILjtJd0hy8wEvtugS9xKRF2NWlPNGxvLCXlTNIae4serI7dinw==}
+  nodemailer@8.0.4:
+    resolution: {integrity: sha512-k+jf6N8PfQJ0Fe8ZhJlgqU5qJU44Lpvp2yvidH3vp1lPnVQMgi4yEEMPXg5eJS1gFIJTVq1NHBk7Ia9ARdSBdQ==}
     engines: {node: '>=6.0.0'}
 
   normalize-package-data@2.5.0:
@@ -13075,7 +13075,7 @@ snapshots:
 
   node-releases@2.0.19: {}
 
-  nodemailer@7.0.13: {}
+  nodemailer@8.0.4: {}
 
   normalize-package-data@2.5.0:
     dependencies:
