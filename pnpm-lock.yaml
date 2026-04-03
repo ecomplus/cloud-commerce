@@ -838,8 +838,8 @@ importers:
         specifier: ^1.13.6
         version: 1.13.6
       ejs:
-        specifier: ^3.1.10
-        version: 3.1.10
+        specifier: ^5.0.1
+        version: 5.0.1
       nodemailer:
         specifier: ^8.0.0
         version: 8.0.4
@@ -4294,6 +4294,11 @@ packages:
   ejs@3.1.10:
     resolution: {integrity: sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==}
     engines: {node: '>=0.10.0'}
+    hasBin: true
+
+  ejs@5.0.1:
+    resolution: {integrity: sha512-COqBPFMxuPTPspXl2DkVYaDS3HtrD1GpzOGkNTJ1IYkifq/r9h8SVEFrjA3D9/VJGOEoMQcrlhpntcSUrM8k6A==}
+    engines: {node: '>=0.12.18'}
     hasBin: true
 
   electron-to-chromium@1.5.102:
@@ -10855,6 +10860,8 @@ snapshots:
   ejs@3.1.10:
     dependencies:
       jake: 10.9.2
+
+  ejs@5.0.1: {}
 
   electron-to-chromium@1.5.102: {}
 
