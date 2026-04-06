@@ -39,7 +39,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/config": "workspace:*",
     "@google-cloud/pubsub": "^5.3.0",
-    "dotenv": "^17.3.1",
+    "dotenv": "^17.4.0",
     "firebase-admin": "^13.7.0",
     "firebase-functions": "^7.2.2",
     "source-map-support": "^0.5.21"
