@@ -40,9 +40,9 @@
     "@vueuse/core": "14.2.1",
     "astro": "4.16.19",
     "astro-capo": "^0.0.1",
-    "axios": "^1.14.0",
-    "firebase-admin": "^13.7.0",
-    "firebase-functions": "^7.2.2",
+    "axios": "^1.15.0",
+    "firebase-admin": "^13.8.0",
+    "firebase-functions": "^7.2.5",
     "html-minifier": "^4.0.0",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.9.3",
+    "@firebase/app-types": "^0.9.4",
     "@types/html-minifier": "^4.0.6",
     "typescript": "~5.9.3"
   }
