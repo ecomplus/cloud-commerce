@@ -286,7 +286,9 @@ export default async ({ params, application }) => {
         if (
           validateDateRange(rule)
           && validateCustomerId(rule, params)
+          && mapCampaignProducts({ product_ids: rule.check_product_ids }, params).valid
           && Array.isArray(rule.product_ids)
+          && rule.product_ids.length
           && matchFreebieRule(rule, params)
         ) {
           rule.product_ids.forEach((id) => {
