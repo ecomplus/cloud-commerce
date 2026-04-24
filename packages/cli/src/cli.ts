@@ -82,20 +82,21 @@ const run = async () => {
         );
         const userRewrites: Array<Record<string, any>> | undefined = userFirebaseConfig?.hosting?.rewrites;
         if (Array.isArray(userRewrites) && Array.isArray(baseFirebaseConfig.hosting?.rewrites)) {
-          const { rewrites: _omit, ...hostingRest } = userFirebaseConfig.hosting as Record<string, any>;
+          const hostingRest: Record<string, any> = { ...userFirebaseConfig.hosting };
+          delete hostingRest.rewrites;
           const mergedConfig = deepmerge(baseFirebaseConfig, {
             ...userFirebaseConfig,
             hosting: hostingRest,
           });
           const mergedRewrites: Array<Record<string, any>> = [...baseFirebaseConfig.hosting.rewrites];
-          for (const userRewrite of userRewrites) {
+          userRewrites.forEach((userRewrite) => {
             const matchIdx = mergedRewrites.findIndex((r) => r.function === userRewrite.function);
             if (matchIdx >= 0) {
               mergedRewrites[matchIdx] = { ...mergedRewrites[matchIdx], ...userRewrite };
             } else {
               mergedRewrites.push(userRewrite);
             }
-          }
+          });
           mergedConfig.hosting.rewrites = mergedRewrites;
           fs.writeFileSync(
             joinPath(pwd, 'firebase.json'),
