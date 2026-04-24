@@ -106,10 +106,6 @@ const serveFeeds = async (req: Request, res: Response) => {
     }
   }
   switch (req.path) {
-    case '/_feeds/catalog.xml':
-    case '/catalog.xml':
-      await renderCatalog(req, res, products);
-      break;
     case '/sitemap-catalog.xml':
       await renderSitemap(req, res, products);
       break;
@@ -120,6 +116,10 @@ const serveFeeds = async (req: Request, res: Response) => {
     default:
       if (req.path.includes('/repos/')) {
         await proxyGithubApi(req, res);
+        break;
+      }
+      if (req.path.endsWith('.xml')) {
+        await renderCatalog(req, res, products);
         break;
       }
       res.sendStatus(404);
