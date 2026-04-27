@@ -63,252 +63,6 @@ importers:
         specifier: ^8.8.5
         version: 8.8.5
 
-  ecomplus-stores/barradoce:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^2.58.1
-        version: link:../../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^2.58.1
-        version: link:../../packages/eslint
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      lint-staged:
-        specifier: ^16.4.0
-        version: 16.4.0
-
-  ecomplus-stores/barradoce/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^2.58.1
-        version: link:../../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^2.58.1
-        version: link:../../../../packages/passport
-
-  ecomplus-stores/barradoce/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^2.58.1
-        version: link:../../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^2.58.1
-        version: link:../../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.32(typescript@5.9.3))
-      micromark:
-        specifier: ^4.0.2
-        version: 4.0.2
-      web-vitals:
-        specifier: ^4.2.4
-        version: 4.2.4
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^2.58.1
-        version: link:../../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^2.58.1
-        version: link:../../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^2.58.1
-        version: link:../../../../packages/types
-      '@iconify-json/mingcute':
-        specifier: ^1.1.18
-        version: 1.2.7
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
-
-  ecomplus-stores/barradoce/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^2.58.1
-        version: link:../../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^2.58.1
-        version: link:../../../../packages/modules
-
-  ecomplus-stores/efacini:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^2.58.1
-        version: link:../../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^2.58.1
-        version: link:../../packages/eslint
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      lint-staged:
-        specifier: ^16.4.0
-        version: 16.4.0
-
-  ecomplus-stores/efacini/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^2.58.1
-        version: link:../../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^2.58.1
-        version: link:../../../../packages/passport
-
-  ecomplus-stores/efacini/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^2.58.1
-        version: link:../../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^2.58.1
-        version: link:../../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.32(typescript@5.9.3))
-      micromark:
-        specifier: ^4.0.2
-        version: 4.0.2
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^2.58.1
-        version: link:../../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^2.58.1
-        version: link:../../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^2.58.1
-        version: link:../../../../packages/types
-      '@iconify-json/clarity':
-        specifier: ^1.2.4
-        version: 1.2.4
-      '@iconify-json/ri':
-        specifier: ^1.2.5
-        version: 1.2.10
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
-
-  ecomplus-stores/efacini/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^2.58.1
-        version: link:../../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^2.58.1
-        version: link:../../../../packages/modules
-
-  ecomplus-stores/tiasonia:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^2.58.1
-        version: link:../../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^2.58.1
-        version: link:../../packages/eslint
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      lint-staged:
-        specifier: ^16.4.0
-        version: 16.4.0
-
-  ecomplus-stores/tiasonia/functions/many:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^2.29.8
-        version: link:../../../../packages/api
-      '@cloudcommerce/feeds':
-        specifier: ^2.58.1
-        version: link:../../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^2.58.1
-        version: link:../../../../packages/passport
-      '@ecomplus/client':
-        specifier: ^2.4.0
-        version: 2.4.0(@ecomplus/utils@1.5.0-rc.6)
-
-  ecomplus-stores/tiasonia/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^2.58.1
-        version: link:../../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^2.58.1
-        version: link:../../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.32(typescript@5.9.3))
-      micromark:
-        specifier: ^4.0.2
-        version: 4.0.2
-      ultrahtml:
-        specifier: ^1.5.3
-        version: 1.5.3
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^2.58.1
-        version: link:../../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^2.58.1
-        version: link:../../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^2.58.1
-        version: link:../../../../packages/types
-      '@fontsource-variable/inter':
-        specifier: 5.0.20
-        version: 5.0.20
-      '@fontsource/dm-serif-display':
-        specifier: 5.0.20
-        version: 5.0.20
-      '@iconify-json/lucide':
-        specifier: ^1.1.182
-        version: 1.2.102
-      fontaine:
-        specifier: ^0.5.0
-        version: 0.5.0
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
-
-  ecomplus-stores/tiasonia/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^2.58.1
-        version: link:../../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^2.58.1
-        version: link:../../../../packages/modules
-
   packages/__skeleton:
     dependencies:
       '@cloudcommerce/api':
@@ -349,8 +103,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -374,8 +128,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -396,8 +150,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -427,8 +181,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -481,8 +235,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -547,8 +301,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -569,8 +323,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-functions:
         specifier: ^7.2.5
         version: 7.2.5(firebase-admin@13.8.0)
@@ -588,8 +342,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -616,8 +370,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -638,8 +392,8 @@ importers:
         specifier: workspace:*
         version: link:../../api
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -676,8 +430,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-functions:
         specifier: ^7.2.5
         version: 7.2.5(firebase-admin@13.8.0)
@@ -698,8 +452,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -723,8 +477,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -754,8 +508,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -776,8 +530,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -810,8 +564,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -835,8 +589,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -863,8 +617,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -885,8 +639,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -913,8 +667,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -941,8 +695,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -963,8 +717,8 @@ importers:
         specifier: workspace:*
         version: link:../../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -991,8 +745,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -1016,8 +770,8 @@ importers:
         specifier: 1.5.0-rc.6
         version: 1.5.0-rc.6
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -1044,7 +798,7 @@ importers:
         specifier: ^17.4.2
         version: 17.4.2
       fast-xml-parser:
-        specifier: ^5.6.0
+        specifier: ^5.7.1
         version: 5.7.1
       image-size:
         specifier: ^2.0.2
@@ -1081,14 +835,14 @@ importers:
         specifier: workspace:*
         version: link:../firebase
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
       nodemailer:
-        specifier: ^8.0.5
-        version: 8.0.5
+        specifier: ^8.0.6
+        version: 8.0.6
     devDependencies:
       '@cloudcommerce/types':
         specifier: workspace:*
@@ -1103,32 +857,32 @@ importers:
   packages/eslint:
     dependencies:
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.58.2
-        version: 8.58.2(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
+        specifier: ^8.59.0
+        version: 8.59.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
       '@typescript-eslint/parser':
-        specifier: ^8.58.2
-        version: 8.58.2(eslint@8.57.1)(typescript@5.9.3)
+        specifier: ^8.59.0
+        version: 8.59.0(eslint@8.57.1)(typescript@5.9.3)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-config-airbnb-base:
         specifier: ^15.0.0
-        version: 15.0.0(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1)
+        version: 15.0.0(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-astro:
         specifier: ^1.7.0
         version: 1.7.0(eslint@8.57.1)
       eslint-plugin-import:
         specifier: ^2.32.0
-        version: 2.32.0(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)
+        version: 2.32.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)
       eslint-plugin-tailwindcss:
         specifier: 3.18.3
-        version: 3.18.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3)))
+        version: 3.18.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3)))
       eslint-plugin-vue:
         specifier: ^9.33.0
         version: 9.33.0(eslint@8.57.1)
       tailwindcss:
         specifier: ^3.4.19
-        version: 3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3))
+        version: 3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3))
       vue-eslint-parser:
         specifier: ^9.4.3
         version: 9.4.3(eslint@8.57.1)
@@ -1386,8 +1140,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(ajv@8.18.0)
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -1463,8 +1217,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1(astro@4.16.19(@types/node@22.13.4)(rollup@4.52.5)(sass@1.85.0)(typescript@5.9.3))
       axios:
-        specifier: ^1.15.0
-        version: 1.15.0
+        specifier: ^1.15.2
+        version: 1.15.2
       firebase-admin:
         specifier: ^13.8.0
         version: 13.8.0
@@ -1554,8 +1308,8 @@ importers:
         specifier: ^17.4.2
         version: 17.4.2
       firebase:
-        specifier: ^12.12.0
-        version: 12.12.0
+        specifier: ^12.12.1
+        version: 12.12.1
       image-size:
         specifier: ^2.0.2
         version: 2.0.2
@@ -1612,77 +1366,6 @@ importers:
       '@cloudcommerce/api':
         specifier: workspace:*
         version: link:../api
-
-  store:
-    dependencies:
-      '@cloudcommerce/cli':
-        specifier: ^2.58.1
-        version: link:../packages/cli
-    devDependencies:
-      '@cloudcommerce/eslint':
-        specifier: ^2.58.1
-        version: link:../packages/eslint
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      lint-staged:
-        specifier: ^16.4.0
-        version: 16.4.0
-
-  store/functions/many:
-    dependencies:
-      '@cloudcommerce/feeds':
-        specifier: ^2.58.1
-        version: link:../../../packages/feeds
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../packages/firebase
-      '@cloudcommerce/passport':
-        specifier: ^2.58.1
-        version: link:../../../packages/passport
-
-  store/functions/ssr:
-    dependencies:
-      '@cloudcommerce/api':
-        specifier: ^2.58.1
-        version: link:../../../packages/api
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../packages/firebase
-      '@cloudcommerce/ssr':
-        specifier: ^2.58.1
-        version: link:../../../packages/ssr
-      '@headlessui/vue':
-        specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.32(typescript@5.9.3))
-      micromark:
-        specifier: ^4.0.2
-        version: 4.0.2
-    devDependencies:
-      '@cloudcommerce/i18n':
-        specifier: ^2.58.1
-        version: link:../../../packages/i18n
-      '@cloudcommerce/storefront':
-        specifier: ^2.58.1
-        version: link:../../../packages/storefront
-      '@cloudcommerce/types':
-        specifier: ^2.58.1
-        version: link:../../../packages/types
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
-
-  store/functions/with-apps:
-    dependencies:
-      '@cloudcommerce/events':
-        specifier: ^2.58.1
-        version: link:../../../packages/events
-      '@cloudcommerce/firebase':
-        specifier: ^2.58.1
-        version: link:../../../packages/firebase
-      '@cloudcommerce/modules':
-        specifier: ^2.58.1
-        version: link:../../../packages/modules
 
 packages:
 
@@ -1909,12 +1592,6 @@ packages:
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
 
-  '@capsizecss/metrics@2.2.0':
-    resolution: {integrity: sha512-DkFIser1KbGxWyG2hhQQeCit72TnOQDx5pr9bkA7+XlIy7qv+4lYtslH3bidVxm2qkY2guAgypSIPYuQQuk70A==}
-
-  '@capsizecss/unpack@2.4.0':
-    resolution: {integrity: sha512-GrSU71meACqcmIUxPYOJvGKF0yryjN/L1aCuE9DViCTJI7bfkjgYDPD1zbNDcINJwSSP6UaBZY9GAbYDO7re0Q==}
-
   '@commitlint/cli@20.5.0':
     resolution: {integrity: sha512-yNkyN/tuKTJS3wdVfsZ2tXDM4G4Gi7z+jW54Cki8N8tZqwKBltbIvUUrSbT4hz1bhW/h0CdR+5sCSpXD+wMKaQ==}
     engines: {node: '>=v18'}
@@ -2027,11 +1704,6 @@ packages:
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
-
-  '@ecomplus/client@2.4.0':
-    resolution: {integrity: sha512-7Q9SaNPv46xezFKv8EnjJkyi0Gx8kAYKIcVqWpubL6mS1KHe3uiVa01djHPRpkFOnhGxKmIcbWqZqdc41olZJw==}
-    peerDependencies:
-      '@ecomplus/utils': 1.x
 
   '@ecomplus/transactional-mails@2.2.2':
     resolution: {integrity: sha512-HRwehiBMZL0bM5Oc81/aSzsKlv/qRBHhp4MSH/M949wkWZWg1AU4lvwtns/oPgGVHERJtJsMw4urASUxY/SmZg==}
@@ -2226,8 +1898,8 @@ packages:
   '@fastify/deepmerge@3.2.1':
     resolution: {integrity: sha512-N5Oqvltoa2r9z1tbx4xjky0oRR60v+T47Ic4J1ukoVQcptLOrIdRnCSdTGmOmajZuHVKlTnfcmrjyqsGEW1ztA==}
 
-  '@firebase/ai@2.11.0':
-    resolution: {integrity: sha512-+oqOne/h5J51LezazR+VyzKe3AK455W29JXnb4jOeVvQhC7FymledN5+XE+w5vEcMhRQ6n1f62fdGs4A44X32A==}
+  '@firebase/ai@2.11.1':
+    resolution: {integrity: sha512-WGTF81W3WBKJY+c7xqTzO15OGAkCAs8cpADqflAI0skhTZjIkhF0qyf55rq4Ctt6jKygkv99rPfMrjAHTgXaVQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@firebase/app': 0.x
@@ -2446,12 +2118,6 @@ packages:
   '@firebase/webchannel-wrapper@1.0.5':
     resolution: {integrity: sha512-+uGNN7rkfn41HLO0vekTFhTxk61eKa8mTpRGLO0QSqlQdKvIoGAvLp3ppdVIWbTGYJWM6Kp0iN+PjMIOcnVqTw==}
 
-  '@fontsource-variable/inter@5.0.20':
-    resolution: {integrity: sha512-dhzG4Zls/tIrf8h0FhTNi8jT/uFwNhdTY2vKe6DYqoXDYOfEcTVZDyh1hKml1rlLT44Y7OoKoGz8w7czDW7twQ==}
-
-  '@fontsource/dm-serif-display@5.0.20':
-    resolution: {integrity: sha512-/2lKZzzbEJMNsqizgZPPCL9PquWTWgeA2hLrq74XVDwoI3HOLSaopmOusuD8eDke33WoM/EbpKeB0/jnpv8Ogg==}
-
   '@google-cloud/firestore@7.11.0':
     resolution: {integrity: sha512-88uZ+jLsp1aVMj7gh3EKYH1aulTAMFAp8sH/v5a9w8q8iqSG27RiWLoxSAFr/XocZ9hGiWH1kEnBw+zl3xAgNA==}
     engines: {node: '>=14.0.0'}
@@ -2510,12 +2176,6 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  '@headlessui/vue@1.7.23':
-    resolution: {integrity: sha512-JzdCNqurrtuu0YW6QaDtR2PIYCKPUWq28csDyMvN4zmGccmE7lz40Is6hc3LA4HFeCI7sekZ/PQMTNmn9I/4Wg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      vue: ^3.2.0
-
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
     engines: {node: '>=10.10.0'}
@@ -2533,9 +2193,6 @@ packages:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
 
-  '@iconify-json/clarity@1.2.4':
-    resolution: {integrity: sha512-9hQ405dgvK2b2BWQdAIb/+ayH02k5VE4lKw2456wpjtq+57shHXE4Kk8bFa7RwchQHFuTtJBItVhlU4kjejxDw==}
-
   '@iconify-json/fa6-brands@1.2.6':
     resolution: {integrity: sha512-twL3X4KWcxAhbc1vz/mIDsVr+CAItk1/EIfxKUVQtpv6O4eydk5KNYqTZWdvJNHGInUgd6vKg21aWfVgb5DXEg==}
 
@@ -2544,15 +2201,6 @@ packages:
 
   '@iconify-json/logos@1.2.11':
     resolution: {integrity: sha512-fOo4pGEatuyuCFNL+cwquYMa2Im0oJHRHV7lt/Qqs5Ode/lPImHCQcfTtPzZj7qYMPb/h8YHN3TG54uEowrjNQ==}
-
-  '@iconify-json/lucide@1.2.102':
-    resolution: {integrity: sha512-Dm3EEqu5NrmzyDMB2U1+8yroEj2/dB9V4KlH0m/szwwF/ofSf0cPaGTZqkd1aExXjCor+vU53ttRMCGuXf+/cg==}
-
-  '@iconify-json/mingcute@1.2.7':
-    resolution: {integrity: sha512-bp4z6F53KAQp99aSL7qPCHL7HWUNGMNKIhfo/dx9pwVHiad/WusUbTOFXEZfpA44syJPzSOxa3O6Pwiq7qZz1g==}
-
-  '@iconify-json/ri@1.2.10':
-    resolution: {integrity: sha512-WWMhoncVVM+Xmu9T5fgu2lhYRrKTEWhKk3Com0KiM111EeEsRLiASjpsFKnC/SrB6covhUp95r2mH8tGxhgd5Q==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -3294,17 +2942,6 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@swc/helpers@0.5.21':
-    resolution: {integrity: sha512-jI/VAmtdjB/RnI8GTnokyX7Ug8c+g+ffD6QRLa6XQewtnGyukKkKSk3wLTM3b5cjt1jNh9x0jfVlagdN2gDKQg==}
-
-  '@tanstack/virtual-core@3.14.0':
-    resolution: {integrity: sha512-JLANqGy/D6k4Ujmh8Tr25lGimuOXNiaVyXaCAZS0W+1390sADdGnyUdSWNIfd49gebtIxGMij4IktRVzrdr12Q==}
-
-  '@tanstack/vue-virtual@3.13.24':
-    resolution: {integrity: sha512-A0k2qF0zFSUStXSZkGXABouXr2Tw2Ztl/cVIYG9qy84uR8W7UNjAcX3DvzBS3YnDcwvLxab8v7dbmYBZ39itDA==}
-    peerDependencies:
-      vue: ^2.7.0 || ^3.0.0
-
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -3495,23 +3132,23 @@ packages:
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
 
-  '@typescript-eslint/eslint-plugin@8.58.2':
-    resolution: {integrity: sha512-aC2qc5thQahutKjP+cl8cgN9DWe3ZUqVko30CMSZHnFEHyhOYoZSzkGtAI2mcwZ38xeImDucI4dnqsHiOYuuCw==}
+  '@typescript-eslint/eslint-plugin@8.59.0':
+    resolution: {integrity: sha512-HyAZtpdkgZwpq8Sz3FSUvCR4c+ScbuWa9AksK2Jweub7w4M3yTz4O11AqVJzLYjy/B9ZWPyc81I+mOdJU/bDQw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      '@typescript-eslint/parser': ^8.58.2
+      '@typescript-eslint/parser': ^8.59.0
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/parser@8.58.2':
-    resolution: {integrity: sha512-/Zb/xaIDfxeJnvishjGdcR4jmr7S+bda8PKNhRGdljDM+elXhlvN0FyPSsMnLmJUrVG9aPO6dof80wjMawsASg==}
+  '@typescript-eslint/parser@8.59.0':
+    resolution: {integrity: sha512-TI1XGwKbDpo9tRW8UDIXCOeLk55qe9ZFGs8MTKU6/M08HWTw52DD/IYhfQtOEhEdPhLMT26Ka/x7p70nd3dzDg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/project-service@8.58.2':
-    resolution: {integrity: sha512-Cq6UfpZZk15+r87BkIh5rDpi38W4b+Sjnb8wQCPPDDweS/LRCFjCyViEbzHk5Ck3f2QDfgmlxqSa7S7clDtlfg==}
+  '@typescript-eslint/project-service@8.59.0':
+    resolution: {integrity: sha512-Lw5ITrR5s5TbC19YSvlr63ZfLaJoU6vtKTHyB0GQOpX0W7d5/Ir6vUahWi/8Sps/nOukZQ0IB3SmlxZnjaKVnw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       typescript: '>=4.8.4 <6.1.0'
@@ -3520,18 +3157,18 @@ packages:
     resolution: {integrity: sha512-W1Lur1oF50FxSnNdGp3Vs6P+yBRSmZiw4IIjEeYxd8UQJwhUF0gDgDD/W/Tgmh73mxgEU3qX0Bzdl/NGuSPEpQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript-eslint/scope-manager@8.58.2':
-    resolution: {integrity: sha512-SgmyvDPexWETQek+qzZnrG6844IaO02UVyOLhI4wpo82dpZJY9+6YZCKAMFzXb7qhx37mFK1QcPQ18tud+vo6Q==}
+  '@typescript-eslint/scope-manager@8.59.0':
+    resolution: {integrity: sha512-UzR16Ut8IpA3Mc4DbgAShlPPkVm8xXMWafXxB0BocaVRHs8ZGakAxGRskF7FId3sdk9lgGD73GSFaWmWFDE4dg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript-eslint/tsconfig-utils@8.58.2':
-    resolution: {integrity: sha512-3SR+RukipDvkkKp/d0jP0dyzuls3DbGmwDpVEc5wqk5f38KFThakqAAO0XMirWAE+kT00oTauTbzMFGPoAzB0A==}
+  '@typescript-eslint/tsconfig-utils@8.59.0':
+    resolution: {integrity: sha512-91Sbl3s4Kb3SybliIY6muFBmHVv+pYXfybC4Oolp3dvk8BvIE3wOPc+403CWIT7mJNkfQRGtdqghzs2+Z91Tqg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/type-utils@8.58.2':
-    resolution: {integrity: sha512-Z7EloNR/B389FvabdGeTo2XMs4W9TjtPiO9DAsmT0yom0bwlPyRjkJ1uCdW1DvrrrYP50AJZ9Xc3sByZA9+dcg==}
+  '@typescript-eslint/type-utils@8.59.0':
+    resolution: {integrity: sha512-3TRiZaQSltGqGeNrJzzr1+8YcEobKH9rHnqIp/1psfKFmhRQDNMGP5hBufanYTGznwShzVLs3Mz+gDN7HkWfXg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
@@ -3541,18 +3178,18 @@ packages:
     resolution: {integrity: sha512-O9CjxypDT89fbHxRfETNoAnHj/i6IpRK0CvbVN3qibxlLdo5p5hcLmUuCCrHMpxiWSwKyI8mCP7qRNYuOJ0Uww==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript-eslint/types@8.58.2':
-    resolution: {integrity: sha512-9TukXyATBQf/Jq9AMQXfvurk+G5R2MwfqQGDR2GzGz28HvY/lXNKGhkY+6IOubwcquikWk5cjlgPvD2uAA7htQ==}
+  '@typescript-eslint/types@8.59.0':
+    resolution: {integrity: sha512-nLzdsT1gdOgFxxxwrlNVUBzSNBEEHJ86bblmk4QAS6stfig7rcJzWKqCyxFy3YRRHXDWEkb2NralA1nOYkkm/A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript-eslint/typescript-estree@8.58.2':
-    resolution: {integrity: sha512-ELGuoofuhhoCvNbQjFFiobFcGgcDCEm0ThWdmO4Z0UzLqPXS3KFvnEZ+SHewwOYHjM09tkzOWXNTv9u6Gqtyuw==}
+  '@typescript-eslint/typescript-estree@8.59.0':
+    resolution: {integrity: sha512-O9Re9P1BmBLFJyikRbQpLku/QA3/AueZNO9WePLBwQrvkixTmDe8u76B6CYUAITRl/rHawggEqUGn5QIkVRLMw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/utils@8.58.2':
-    resolution: {integrity: sha512-QZfjHNEzPY8+l0+fIXMvuQ2sJlplB4zgDZvA+NmvZsZv3EQwOcc1DuIU1VJUTWZ/RKouBMhDyNaBMx4sWvrzRA==}
+  '@typescript-eslint/utils@8.59.0':
+    resolution: {integrity: sha512-I1R/K7V07XsMJ12Oaxg/O9GfrysGTmCRhvZJBv0RE0NcULMzjqVpR5kRRQjHsz3J/bElU7HwCO7zkqL+MSUz+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
@@ -3562,8 +3199,8 @@ packages:
     resolution: {integrity: sha512-XJ9UD9+bbDo4a4epraTwG3TsNPeiB9aShrUneAVXy8q4LuwowN+qu89/6ByLMINqvIMeI9H9hOHQtg/ijrYXzQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript-eslint/visitor-keys@8.58.2':
-    resolution: {integrity: sha512-f1WO2Lx8a9t8DARmcWAUPJbu0G20bJlj8L4z72K00TMeJAoyLr/tHhI/pzYBLrR4dXWkcxO1cWYZEOX8DKHTqA==}
+  '@typescript-eslint/visitor-keys@8.59.0':
+    resolution: {integrity: sha512-/uejZt4dSere1bx12WLlPfv8GktzcaDtuJ7s42/HEZ5zGj9oxRaD4bj7qwSunXkf+pbAhFt2zjpHYUiT5lHf0Q==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@ungap/structured-clone@1.3.0':
@@ -3984,8 +3621,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.15.0:
-    resolution: {integrity: sha512-wWyJDlAatxk30ZJer+GeCWS209sA42X+N5jU2jy6oHTp7ufw8uzUTVFBX9+wTfAlhiJXGS0Bq7X6efruWjuK9Q==}
+  axios@1.15.2:
+    resolution: {integrity: sha512-wLrXxPtcrPTsNlJmKjkPnNPK2Ihe0hn0wGSaTEiHRPxwjvJwT3hKmXF4dpqxmPO9SoNb2FsYXj/xEo0gHN+D5A==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -4017,9 +3654,6 @@ packages:
   birpc@0.2.19:
     resolution: {integrity: sha512-5WeXXAvTmitV1RqJFppT5QtUiz2p1mRSYU000Jkft5ZUCLJIk4uQriYNO50HknxKwM6jd8utNc66K1qGIwwWBQ==}
 
-  blob-to-buffer@1.2.9:
-    resolution: {integrity: sha512-BF033y5fN6OCofD3vgHmNtwZWRcq9NLyyxyILx9hfMy1sXYy4ojFl765hJ2lP0YaN2fuxPaLO2Vzzoxy0FLFFA==}
-
   body-parser@1.20.3:
     resolution: {integrity: sha512-7rAxByjUMqQ3/bHJy7D6OGXvx/MMc4IqBn/X0fcM1QUcAItpZrBEYhWGem+tzXH90c+G01ypMcYJBO9Y30203g==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -4044,9 +3678,6 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
-
-  brotli@1.3.3:
-    resolution: {integrity: sha512-oTKjJdShmDuGW94SyyaoQvAjf30dZaHnjJ8uAF+u2/vGJkJbJPJAT1gDiOJP5v1Zb6f9KEyW/1HpuaWIXtGHPg==}
 
   browserslist@4.24.4:
     resolution: {integrity: sha512-KDi1Ny1gSePi1vm0q4oxSF8b4DR44GF4BbmS2YdhPLOEqd8pDviZOGH/GsmRwoWJ2+5Lr085X7naowMwKHDG1A==}
@@ -4197,10 +3828,6 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
-
-  clone@2.1.2:
-    resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
-    engines: {node: '>=0.8'}
 
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
@@ -4417,9 +4044,6 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
-  cross-fetch@3.2.0:
-    resolution: {integrity: sha512-Q+xVJLoGOeIMXZmbUK4HYk+69cQH6LudR0Vu/pRm2YlU/hDV9CiS0gKUMaWY5f2NeUH9C1nV3bsTlCo0FsTV1Q==}
-
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -4605,9 +4229,6 @@ packages:
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
-
-  dfa@1.2.0:
-    resolution: {integrity: sha512-ED3jP8saaweFTjeGX8HQPjeC1YYyZs98jGNZx6IiBvxW7JG5v492kamAQB3m2wop07CvU/RQmzcKr6bgcC5D/Q==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -5075,8 +4696,8 @@ packages:
       graphql:
         optional: true
 
-  firebase@12.12.0:
-    resolution: {integrity: sha512-5Ap+pN5iEJUvBlQEZEmLuUm7Gvu6I5xv1jZ5SiSNyw4jrwlHo+4tmZv3OPPoKfN9eo1kBwyyBvi+pWHIPXwfYw==}
+  firebase@12.12.1:
+    resolution: {integrity: sha512-ee7xA+bTJLfjB9BP/8FQr3EkxmpAAGc1lNc5QkWgTDpUw24HYXFPm7FEWRdLtGnygxIdYpFmepSc5VjkI6NHhw==}
 
   flat-cache@3.2.0:
     resolution: {integrity: sha512-CYcENa+FtcUKLmhhqyctpclsq7QF38pKjZHsGNiSQF5r4FtoKDWabFDl3hzaEQMvT1LHEysw5twgLvpYYb4vbw==}
@@ -5097,12 +4718,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-
-  fontaine@0.5.0:
-    resolution: {integrity: sha512-vPDSWKhVAfTx4hRKT777+N6Szh2pAosAuzLpbppZ6O3UdD/1m6OlHjNcC3vIbgkRTIcLjzySLHXzPeLO2rE8cA==}
-
-  fontkit@2.0.4:
-    resolution: {integrity: sha512-syetQadaUEDNdxdugga9CpEYVaQIxOwk7GlwZWWZ19//qW4zE5bknOKeMBDYAASwnpaSHKJITRLMF9m1fp3s6g==}
 
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
@@ -6015,9 +5630,6 @@ packages:
   magic-regexp@0.10.0:
     resolution: {integrity: sha512-Uly1Bu4lO1hwHUW0CQeSWuRtzCMNO00CmXtS8N6fyvB3B979GOEEeAkiTUDsmbYLAbvpUS/Kt5c4ibosAzVyVg==}
 
-  magic-regexp@0.8.0:
-    resolution: {integrity: sha512-lOSLWdE156csDYwCTIGiAymOLN7Epu/TU5e/oAnISZfU6qP+pgjkE+xbVjVn3yLPKN8n1G2yIAYTAM5KRk6/ow==}
-
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
@@ -6343,8 +5955,8 @@ packages:
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
 
-  nodemailer@8.0.5:
-    resolution: {integrity: sha512-0PF8Yb1yZuQfQbq+5/pZJrtF6WQcjTd5/S4JOHs9PGFxuTqoB/icwuB44pOdURHJbRKX1PPoJZtY7R4VUoCC8w==}
+  nodemailer@8.0.6:
+    resolution: {integrity: sha512-Nm2XeuDwwy2wi5A+8jPWwQwNzcjNjhWdE3pVLoXEusxJqCnAPAgnBGkSmiLknbnWuOF9qraRpYZjfxqtKZ4tPw==}
     engines: {node: '>=6.0.0'}
 
   normalize-package-data@2.5.0:
@@ -6507,9 +6119,6 @@ packages:
   pagarme@4.35.2:
     resolution: {integrity: sha512-ikNU9AZ/K973vlRI1dT7S4VbCpSFQVUxMTBsLw3fURr7y1acNEYdVbD6/LC+QA0wIjE0viwMaeIzSJYjKn59Jg==}
 
-  pako@0.2.9:
-    resolution: {integrity: sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==}
-
   param-case@2.1.1:
     resolution: {integrity: sha512-eQE845L6ot89sk2N8liD8HAuH4ca6Vvr7VWAWwt7+kvvG5aBcPmmphQ68JsEG2qa9n1TykS2DLeMt363AAH8/w==}
 
@@ -6595,10 +6204,6 @@ packages:
 
   perfect-debounce@2.1.0:
     resolution: {integrity: sha512-LjgdTytVFXeUgtHZr9WYViYSM/g8MkcTPYDlPa3cDqMirHjKiSZPYd6DoL7pK8AJQr+uWkQvCjHNdiMqsrJs+g==}
-
-  photoswipe@5.4.4:
-    resolution: {integrity: sha512-WNFHoKrkZNnvFFhbHL93WDkW3ifwVOXSW3w1UuZZelSmgXpIGiZSNlZJq37rR8YejqME2rHs9EhH9ZvlvFH2NA==}
-    engines: {node: '>= 0.12.0'}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -6901,9 +6506,6 @@ packages:
   restore-cursor@5.1.0:
     resolution: {integrity: sha512-oMA2dcrw6u0YfxJQXm342bFKX/E4sG9rbTzO9ptUcR/e8A33cHuvStiYOwH7fszkZlZ1z/ta9AAoPk2F4qIOHA==}
     engines: {node: '>=18'}
-
-  restructure@3.0.2:
-    resolution: {integrity: sha512-gSfoiOEA0VPE6Tukkrr7I0RBdE0s7H1eFCDBk05l1KIQT1UIKNc5JZy6jdyW6eYH3aR3g5b3PuL77rq0hvwtAw==}
 
   retext-latin@4.0.0:
     resolution: {integrity: sha512-hv9woG7Fy0M9IlRQloq/N6atV82NxLGveq+3H2WOi79dtIYWN8OaxogDm77f8YnVXJL2VD3bbqowu5E3EMhBYA==}
@@ -7332,9 +6934,6 @@ packages:
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
-  tiny-inflate@1.0.3:
-    resolution: {integrity: sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==}
-
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
 
@@ -7537,12 +7136,6 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  unicode-properties@1.4.1:
-    resolution: {integrity: sha512-CLjCCLQ6UuMxWnbIylkisbRj31qxHPAurvena/0iwSVbQ2G1VY5/HjV0IRabOEbDHlzZlRdCrD4NhB0JtU40Pg==}
-
-  unicode-trie@2.0.0:
-    resolution: {integrity: sha512-x7bc76x0bm4prf1VLg79uhAzKw8DVboClSN5VxJuQ+LKDOVEW9CdH+VY7SP+vX7xCYQqzzgQpFqz15zeLvAtZQ==}
-
   unicorn-magic@0.3.0:
     resolution: {integrity: sha512-+QBBXBCvifc56fsbuxZQ6Sic3wqqc3WWaqxs58gvJrcOuN83HGTCwz3oS5phzU9LthRNE9VrJCFCLUgHeeFnfA==}
     engines: {node: '>=18'}
@@ -7623,10 +7216,6 @@ packages:
   unplugin-utils@0.3.1:
     resolution: {integrity: sha512-5lWVjgi6vuHhJ526bI4nlCOmkCIF3nnfXkCMDeMJrtdvxTs6ZFCM8oNufGTsDbKv/tJ/xj8RpvXjRuPBZJuJog==}
     engines: {node: '>=20.19.0'}
-
-  unplugin@1.16.1:
-    resolution: {integrity: sha512-4/u/j4FrCKdi17jaxuJA0jClGxB1AvU2hw/IuayPc4ay1XGaJs/rbb4v5WKwAjNifjmXK9PIFyuPiaK8azyR9w==}
-    engines: {node: '>=14.0.0'}
 
   unplugin@2.3.4:
     resolution: {integrity: sha512-m4PjxTurwpWfpMomp8AptjD5yj8qEZN5uQjjGM3TAs9MWWD2tXSSNNj6jGR2FoVGod4293ytyV6SwBbertfyJg==}
@@ -8397,16 +7986,6 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@capsizecss/metrics@2.2.0': {}
-
-  '@capsizecss/unpack@2.4.0':
-    dependencies:
-      blob-to-buffer: 1.2.9
-      cross-fetch: 3.2.0
-      fontkit: 2.0.4
-    transitivePeerDependencies:
-      - encoding
-
   '@commitlint/cli@20.5.0(@types/node@20.19.39)(conventional-commits-parser@6.3.0)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 20.5.0
@@ -8558,15 +8137,6 @@ snapshots:
   '@csstools/css-tokenizer@3.0.4':
     optional: true
 
-  '@ecomplus/client@2.4.0(@ecomplus/utils@1.5.0-rc.6)':
-    dependencies:
-      '@ecomplus/utils': 1.5.0-rc.6
-      axios: 1.15.0
-    optionalDependencies:
-      core-js: 3.40.0
-    transitivePeerDependencies:
-      - debug
-
   '@ecomplus/transactional-mails@2.2.2':
     dependencies:
       '@ecomplus/utils': 1.4.1
@@ -8707,7 +8277,7 @@ snapshots:
 
   '@fastify/deepmerge@3.2.1': {}
 
-  '@firebase/ai@2.11.0(@firebase/app-types@0.9.4)(@firebase/app@0.14.11)':
+  '@firebase/ai@2.11.1(@firebase/app-types@0.9.4)(@firebase/app@0.14.11)':
     dependencies:
       '@firebase/app': 0.14.11
       '@firebase/app-check-interop-types': 0.3.3
@@ -9043,10 +8613,6 @@ snapshots:
 
   '@firebase/webchannel-wrapper@1.0.5': {}
 
-  '@fontsource-variable/inter@5.0.20': {}
-
-  '@fontsource/dm-serif-display@5.0.20': {}
-
   '@google-cloud/firestore@7.11.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
@@ -9147,11 +8713,6 @@ snapshots:
       protobufjs: 7.5.4
       yargs: 17.7.2
 
-  '@headlessui/vue@1.7.23(vue@3.5.32(typescript@5.9.3))':
-    dependencies:
-      '@tanstack/vue-virtual': 3.13.24(vue@3.5.32(typescript@5.9.3))
-      vue: 3.5.32(typescript@5.9.3)
-
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -9166,10 +8727,6 @@ snapshots:
 
   '@hutson/parse-repository-url@3.0.2': {}
 
-  '@iconify-json/clarity@1.2.4':
-    dependencies:
-      '@iconify/types': 2.0.0
-
   '@iconify-json/fa6-brands@1.2.6':
     dependencies:
       '@iconify/types': 2.0.0
@@ -9179,18 +8736,6 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/logos@1.2.11':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/lucide@1.2.102':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/mingcute@1.2.7':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/ri@1.2.10':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -9693,17 +9238,6 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@swc/helpers@0.5.21':
-    dependencies:
-      tslib: 2.8.1
-
-  '@tanstack/virtual-core@3.14.0': {}
-
-  '@tanstack/vue-virtual@3.13.24(vue@3.5.32(typescript@5.9.3))':
-    dependencies:
-      '@tanstack/virtual-core': 3.14.0
-      vue: 3.5.32(typescript@5.9.3)
-
   '@tootallnate/once@2.0.0': {}
 
   '@tsconfig/node10@1.0.11': {}
@@ -9906,14 +9440,14 @@ snapshots:
 
   '@types/web-bluetooth@0.0.21': {}
 
-  '@typescript-eslint/eslint-plugin@8.58.2(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)':
+  '@typescript-eslint/eslint-plugin@8.59.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
-      '@typescript-eslint/parser': 8.58.2(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/scope-manager': 8.58.2
-      '@typescript-eslint/type-utils': 8.58.2(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/utils': 8.58.2(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/visitor-keys': 8.58.2
+      '@typescript-eslint/parser': 8.59.0(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/scope-manager': 8.59.0
+      '@typescript-eslint/type-utils': 8.59.0(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/utils': 8.59.0(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/visitor-keys': 8.59.0
       eslint: 8.57.1
       ignore: 7.0.5
       natural-compare: 1.4.0
@@ -9922,22 +9456,22 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3)':
+  '@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/scope-manager': 8.58.2
-      '@typescript-eslint/types': 8.58.2
-      '@typescript-eslint/typescript-estree': 8.58.2(typescript@5.9.3)
-      '@typescript-eslint/visitor-keys': 8.58.2
+      '@typescript-eslint/scope-manager': 8.59.0
+      '@typescript-eslint/types': 8.59.0
+      '@typescript-eslint/typescript-estree': 8.59.0(typescript@5.9.3)
+      '@typescript-eslint/visitor-keys': 8.59.0
       debug: 4.4.3
       eslint: 8.57.1
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.58.2(typescript@5.9.3)':
+  '@typescript-eslint/project-service@8.59.0(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.58.2(typescript@5.9.3)
-      '@typescript-eslint/types': 8.58.2
+      '@typescript-eslint/tsconfig-utils': 8.59.0(typescript@5.9.3)
+      '@typescript-eslint/types': 8.59.0
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -9948,20 +9482,20 @@ snapshots:
       '@typescript-eslint/types': 8.58.0
       '@typescript-eslint/visitor-keys': 8.58.0
 
-  '@typescript-eslint/scope-manager@8.58.2':
+  '@typescript-eslint/scope-manager@8.59.0':
     dependencies:
-      '@typescript-eslint/types': 8.58.2
-      '@typescript-eslint/visitor-keys': 8.58.2
+      '@typescript-eslint/types': 8.59.0
+      '@typescript-eslint/visitor-keys': 8.59.0
 
-  '@typescript-eslint/tsconfig-utils@8.58.2(typescript@5.9.3)':
+  '@typescript-eslint/tsconfig-utils@8.59.0(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
 
-  '@typescript-eslint/type-utils@8.58.2(eslint@8.57.1)(typescript@5.9.3)':
+  '@typescript-eslint/type-utils@8.59.0(eslint@8.57.1)(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/types': 8.58.2
-      '@typescript-eslint/typescript-estree': 8.58.2(typescript@5.9.3)
-      '@typescript-eslint/utils': 8.58.2(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/types': 8.59.0
+      '@typescript-eslint/typescript-estree': 8.59.0(typescript@5.9.3)
+      '@typescript-eslint/utils': 8.59.0(eslint@8.57.1)(typescript@5.9.3)
       debug: 4.4.3
       eslint: 8.57.1
       ts-api-utils: 2.5.0(typescript@5.9.3)
@@ -9971,14 +9505,14 @@ snapshots:
 
   '@typescript-eslint/types@8.58.0': {}
 
-  '@typescript-eslint/types@8.58.2': {}
+  '@typescript-eslint/types@8.59.0': {}
 
-  '@typescript-eslint/typescript-estree@8.58.2(typescript@5.9.3)':
+  '@typescript-eslint/typescript-estree@8.59.0(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/project-service': 8.58.2(typescript@5.9.3)
-      '@typescript-eslint/tsconfig-utils': 8.58.2(typescript@5.9.3)
-      '@typescript-eslint/types': 8.58.2
-      '@typescript-eslint/visitor-keys': 8.58.2
+      '@typescript-eslint/project-service': 8.59.0(typescript@5.9.3)
+      '@typescript-eslint/tsconfig-utils': 8.59.0(typescript@5.9.3)
+      '@typescript-eslint/types': 8.59.0
+      '@typescript-eslint/visitor-keys': 8.59.0
       debug: 4.4.3
       minimatch: 10.2.4
       semver: 7.7.4
@@ -9988,12 +9522,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.58.2(eslint@8.57.1)(typescript@5.9.3)':
+  '@typescript-eslint/utils@8.59.0(eslint@8.57.1)(typescript@5.9.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@8.57.1)
-      '@typescript-eslint/scope-manager': 8.58.2
-      '@typescript-eslint/types': 8.58.2
-      '@typescript-eslint/typescript-estree': 8.58.2(typescript@5.9.3)
+      '@typescript-eslint/scope-manager': 8.59.0
+      '@typescript-eslint/types': 8.59.0
+      '@typescript-eslint/typescript-estree': 8.59.0(typescript@5.9.3)
       eslint: 8.57.1
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -10004,9 +9538,9 @@ snapshots:
       '@typescript-eslint/types': 8.58.0
       eslint-visitor-keys: 5.0.1
 
-  '@typescript-eslint/visitor-keys@8.58.2':
+  '@typescript-eslint/visitor-keys@8.59.0':
     dependencies:
-      '@typescript-eslint/types': 8.58.2
+      '@typescript-eslint/types': 8.59.0
       eslint-visitor-keys: 5.0.1
 
   '@ungap/structured-clone@1.3.0': {}
@@ -10680,7 +10214,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.15.0:
+  axios@1.15.2:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.5
@@ -10705,8 +10239,6 @@ snapshots:
   binary-extensions@2.3.0: {}
 
   birpc@0.2.19: {}
-
-  blob-to-buffer@1.2.9: {}
 
   body-parser@1.20.3:
     dependencies:
@@ -10754,10 +10286,6 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
-
-  brotli@1.3.3:
-    dependencies:
-      base64-js: 1.5.1
 
   browserslist@4.24.4:
     dependencies:
@@ -10908,8 +10436,6 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
-
-  clone@2.1.2: {}
 
   clsx@2.1.1: {}
 
@@ -11138,12 +10664,6 @@ snapshots:
 
   create-require@1.1.1: {}
 
-  cross-fetch@3.2.0:
-    dependencies:
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
-
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -11288,8 +10808,6 @@ snapshots:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
-
-  dfa@1.2.0: {}
 
   didyoumean@1.2.2: {}
 
@@ -11565,11 +11083,11 @@ snapshots:
       eslint: 8.57.1
       semver: 7.7.4
 
-  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 8.57.1
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)
       object.assign: 4.1.7
       object.entries: 1.1.8
       semver: 6.3.1
@@ -11582,11 +11100,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.1):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
-      '@typescript-eslint/parser': 8.58.2(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser': 8.59.0(eslint@8.57.1)(typescript@5.9.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
@@ -11606,7 +11124,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -11617,7 +11135,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.58.2(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.1)
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.59.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -11629,19 +11147,19 @@ snapshots:
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 8.58.2(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser': 8.59.0(eslint@8.57.1)(typescript@5.9.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-tailwindcss@3.18.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3))):
+  eslint-plugin-tailwindcss@3.18.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3))):
     dependencies:
       fast-glob: 3.3.3
       postcss: 8.5.8
       synckit: 0.11.12
-      tailwind-api-utils: 1.0.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3)))
-      tailwindcss: 3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3))
+      tailwind-api-utils: 1.0.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3)))
+      tailwindcss: 3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3))
 
   eslint-plugin-vue@9.33.0(eslint@8.57.1):
     dependencies:
@@ -11957,9 +11475,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  firebase@12.12.0:
+  firebase@12.12.1:
     dependencies:
-      '@firebase/ai': 2.11.0(@firebase/app-types@0.9.4)(@firebase/app@0.14.11)
+      '@firebase/ai': 2.11.1(@firebase/app-types@0.9.4)(@firebase/app@0.14.11)
       '@firebase/analytics': 0.10.21(@firebase/app@0.14.11)
       '@firebase/analytics-compat': 0.2.27(@firebase/app-compat@0.5.11)(@firebase/app@0.14.11)
       '@firebase/app': 0.14.11
@@ -12001,30 +11519,6 @@ snapshots:
   flattie@1.1.1: {}
 
   follow-redirects@1.15.11: {}
-
-  fontaine@0.5.0:
-    dependencies:
-      '@capsizecss/metrics': 2.2.0
-      '@capsizecss/unpack': 2.4.0
-      magic-regexp: 0.8.0
-      magic-string: 0.30.21
-      pathe: 1.1.2
-      ufo: 1.6.1
-      unplugin: 1.16.1
-    transitivePeerDependencies:
-      - encoding
-
-  fontkit@2.0.4:
-    dependencies:
-      '@swc/helpers': 0.5.21
-      brotli: 1.3.3
-      clone: 2.1.2
-      dfa: 1.2.0
-      fast-deep-equal: 3.1.3
-      restructure: 3.0.2
-      tiny-inflate: 1.0.3
-      unicode-properties: 1.4.1
-      unicode-trie: 2.0.0
 
   for-each@0.3.5:
     dependencies:
@@ -13109,16 +12603,6 @@ snapshots:
       ufo: 1.6.1
       unplugin: 2.3.4
 
-  magic-regexp@0.8.0:
-    dependencies:
-      estree-walker: 3.0.3
-      magic-string: 0.30.21
-      mlly: 1.8.0
-      regexp-tree: 0.1.27
-      type-level-regexp: 0.1.17
-      ufo: 1.6.1
-      unplugin: 1.16.1
-
   magic-string@0.30.17:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -13596,6 +13080,7 @@ snapshots:
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
+    optional: true
 
   node-fetch@3.3.2:
     dependencies:
@@ -13607,7 +13092,7 @@ snapshots:
 
   node-releases@2.0.19: {}
 
-  nodemailer@8.0.5: {}
+  nodemailer@8.0.6: {}
 
   normalize-package-data@2.5.0:
     dependencies:
@@ -13822,8 +13307,6 @@ snapshots:
 
   pagarme@4.35.2: {}
 
-  pako@0.2.9: {}
-
   param-case@2.1.1:
     dependencies:
       no-case: 2.3.2
@@ -13901,8 +13384,6 @@ snapshots:
 
   perfect-debounce@2.1.0: {}
 
-  photoswipe@5.4.4: {}
-
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
@@ -13958,14 +13439,6 @@ snapshots:
     optionalDependencies:
       postcss: 8.5.6
       ts-node: 10.9.2(@types/node@20.19.39)(typescript@5.9.3)
-
-  postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3)):
-    dependencies:
-      lilconfig: 3.1.3
-      yaml: 2.8.3
-    optionalDependencies:
-      postcss: 8.5.6
-      ts-node: 10.9.2(@types/node@22.13.4)(typescript@5.9.3)
 
   postcss-nested@6.2.0(postcss@8.5.6):
     dependencies:
@@ -14255,8 +13728,6 @@ snapshots:
     dependencies:
       onetime: 7.0.0
       signal-exit: 4.1.0
-
-  restructure@3.0.2: {}
 
   retext-latin@4.0.0:
     dependencies:
@@ -14789,12 +14260,12 @@ snapshots:
       '@pkgr/core': 0.1.1
       tslib: 2.8.1
 
-  tailwind-api-utils@1.0.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3))):
+  tailwind-api-utils@1.0.3(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3))):
     dependencies:
       enhanced-resolve: 5.20.1
       jiti: 2.6.1
       local-pkg: 1.1.1
-      tailwindcss: 3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3))
+      tailwindcss: 3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3))
 
   tailwindcss@3.4.19(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3)):
     dependencies:
@@ -14816,33 +14287,6 @@ snapshots:
       postcss-import: 15.1.0(postcss@8.5.6)
       postcss-js: 4.0.1(postcss@8.5.6)
       postcss-load-config: 4.0.2(postcss@8.5.6)(ts-node@10.9.2(@types/node@20.19.39)(typescript@5.9.3))
-      postcss-nested: 6.2.0(postcss@8.5.6)
-      postcss-selector-parser: 6.1.2
-      resolve: 1.22.10
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-
-  tailwindcss@3.4.19(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3)):
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.3
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.7
-      lilconfig: 3.1.3
-      micromatch: 4.0.8
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.1.1
-      postcss: 8.5.6
-      postcss-import: 15.1.0(postcss@8.5.6)
-      postcss-js: 4.0.1(postcss@8.5.6)
-      postcss-load-config: 4.0.2(postcss@8.5.6)(ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3))
       postcss-nested: 6.2.0(postcss@8.5.6)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.10
@@ -14892,8 +14336,6 @@ snapshots:
 
   through@2.3.8: {}
 
-  tiny-inflate@1.0.3: {}
-
   tinybench@2.9.0: {}
 
   tinyexec@0.3.2: {}
@@ -14942,7 +14384,8 @@ snapshots:
       tldts: 6.1.86
     optional: true
 
-  tr46@0.0.3: {}
+  tr46@0.0.3:
+    optional: true
 
   tr46@5.1.1:
     dependencies:
@@ -14978,25 +14421,6 @@ snapshots:
       typescript: 5.9.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-
-  ts-node@10.9.2(@types/node@22.13.4)(typescript@5.9.3):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 22.13.4
-      acorn: 8.14.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.9.3
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optional: true
 
   tsconfck@3.1.5(typescript@5.9.3):
     optionalDependencies:
@@ -15110,16 +14534,6 @@ snapshots:
     optional: true
 
   undici-types@6.21.0: {}
-
-  unicode-properties@1.4.1:
-    dependencies:
-      base64-js: 1.5.1
-      unicode-trie: 2.0.0
-
-  unicode-trie@2.0.0:
-    dependencies:
-      pako: 0.2.9
-      tiny-inflate: 1.0.3
 
   unicorn-magic@0.3.0: {}
 
@@ -15242,11 +14656,6 @@ snapshots:
     dependencies:
       pathe: 2.0.3
       picomatch: 4.0.3
-
-  unplugin@1.16.1:
-    dependencies:
-      acorn: 8.15.0
-      webpack-virtual-modules: 0.6.2
 
   unplugin@2.3.4:
     dependencies:
@@ -15487,7 +14896,8 @@ snapshots:
 
   web-vitals@4.2.4: {}
 
-  webidl-conversions@3.0.1: {}
+  webidl-conversions@3.0.1:
+    optional: true
 
   webidl-conversions@7.0.0:
     optional: true
@@ -15520,6 +14930,7 @@ snapshots:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
+    optional: true
 
   which-boxed-primitive@1.1.1:
     dependencies:
