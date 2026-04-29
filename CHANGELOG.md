@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.59.0](https://github.com/ecomplus/cloud-commerce/compare/v2.58.1...v2.59.0) (2026-04-29)
+
+
+### Features
+
+* **cli,feeds:** smart rewrites merge and generic xml handler ([a334caa](https://github.com/ecomplus/cloud-commerce/commit/a334caa73493217ab372d2208cdc6efeec66f931))
+
+
+### Bug Fixes
+
+* **cli:** Grant permanent serviceUsageConsumer role to avoid deploys failing after setup ([f5dadc8](https://github.com/ecomplus/cloud-commerce/commit/f5dadc877e3abbc20c1e5a5d5de0b94437269f38))
+* **cli:** replace for-of with forEach and remove unused destructuring var ([6047e8d](https://github.com/ecomplus/cloud-commerce/commit/6047e8d05b54b5c046aa4f83ebc5e4ad3789e529))
+* **deps:** Add `@unocss/astro` to storefront dependencies ([899c37f](https://github.com/ecomplus/cloud-commerce/commit/899c37f79f3789624d5b65d3b790306e3250e20c))
+* **deps:** Update dependency axios to v1.15.0 [security] ([#739](https://github.com/ecomplus/cloud-commerce/issues/739)) ([eb6e50d](https://github.com/ecomplus/cloud-commerce/commit/eb6e50d6bd45929aabf712f05024ed7edf643bcd))
+* **deps:** update dependency firebase-functions to v7 ([#701](https://github.com/ecomplus/cloud-commerce/issues/701)) ([4cdecff](https://github.com/ecomplus/cloud-commerce/commit/4cdecfffe5673d3067033dd957cd1090a7e49a6d))
+* **deps:** Update dependency nodemailer to v8 [security] ([#724](https://github.com/ecomplus/cloud-commerce/issues/724)) ([08a1dc0](https://github.com/ecomplus/cloud-commerce/commit/08a1dc0488d41a11430e8dcdcb121604c8b9beab))
+* **deps:** Update non-major dependencies ([#700](https://github.com/ecomplus/cloud-commerce/issues/700)) ([144b467](https://github.com/ecomplus/cloud-commerce/commit/144b4678533b03cfddcd026f0ea33707b96ee6e0))
+* **deps:** Update non-major dependencies ([#712](https://github.com/ecomplus/cloud-commerce/issues/712)) ([87b0a4c](https://github.com/ecomplus/cloud-commerce/commit/87b0a4c1fe2a0785216aff8a87ab097271ec1452))
+* **deps:** Update non-major dependencies ([#713](https://github.com/ecomplus/cloud-commerce/issues/713)) ([e384c29](https://github.com/ecomplus/cloud-commerce/commit/e384c29b8dfb56d205ca8706fe2b0c8ea87cb3b8))
+* **deps:** Update non-major dependencies ([#716](https://github.com/ecomplus/cloud-commerce/issues/716)) ([9e73361](https://github.com/ecomplus/cloud-commerce/commit/9e73361ea7eb9985259148eb1bafee438169682c))
+* **deps:** update non-major dependencies ([#720](https://github.com/ecomplus/cloud-commerce/issues/720)) ([012a727](https://github.com/ecomplus/cloud-commerce/commit/012a727ac431af73e7a08ab0ecbf9914ba2c73d5))
+* **deps:** Update non-major dependencies ([#726](https://github.com/ecomplus/cloud-commerce/issues/726)) ([b8731c5](https://github.com/ecomplus/cloud-commerce/commit/b8731c5a032bf79d8faa3beca85d06688d105caf))
+* **deps:** update non-major dependencies ([#735](https://github.com/ecomplus/cloud-commerce/issues/735)) ([8e00361](https://github.com/ecomplus/cloud-commerce/commit/8e0036107cbd18a8b84e9b056db91d32cf0f4659))
+* **deps:** Update non-major dependencies ([#740](https://github.com/ecomplus/cloud-commerce/issues/740)) ([738ce65](https://github.com/ecomplus/cloud-commerce/commit/738ce6543b6b33df59fc313ffde8b34863825a40))
+* **deps:** Update non-major dependencies ([#742](https://github.com/ecomplus/cloud-commerce/issues/742)) ([0247478](https://github.com/ecomplus/cloud-commerce/commit/02474783ea0ceb4825976d8bd6f104d3d7cfbf80))
+* **deps:** Update non-major dependencies ([#747](https://github.com/ecomplus/cloud-commerce/issues/747)) ([9c4e3fa](https://github.com/ecomplus/cloud-commerce/commit/9c4e3fa73c6fe02b3eb72b92262932bc0c619a07))
+* **discounts:** ensure kit discounts not applying to freebie items ([#704](https://github.com/ecomplus/cloud-commerce/issues/704)) ([699d7a7](https://github.com/ecomplus/cloud-commerce/commit/699d7a7ff9eb881c4a066f5f3c2e3027696d31c4))
+* **discounts:** Prevent freebie items from reducing product kit discounts ([#703](https://github.com/ecomplus/cloud-commerce/issues/703)) ([6a44ad5](https://github.com/ecomplus/cloud-commerce/commit/6a44ad504b3bca23ce327110762e05c2568c76d0))
+* **storefront:** Update Vue to ^3.5.29 ([#711](https://github.com/ecomplus/cloud-commerce/issues/711)) ([863c129](https://github.com/ecomplus/cloud-commerce/commit/863c129ad9a45a05b665267af24b03a4c9633d3b))
+* **storefront:** Update Vue to ^3.5.30 ([#715](https://github.com/ecomplus/cloud-commerce/issues/715)) ([1add2d4](https://github.com/ecomplus/cloud-commerce/commit/1add2d493d6d730932f0a60c1e7114b43a32718e))
+* **storefront:** Update Vue to ^3.5.31 ([#725](https://github.com/ecomplus/cloud-commerce/issues/725)) ([ba7df98](https://github.com/ecomplus/cloud-commerce/commit/ba7df982a001309a8ff2626fca08d7a00d540599))
+* **storefront:** Update Vue to ^3.5.32 ([#734](https://github.com/ecomplus/cloud-commerce/issues/734)) ([07efcd3](https://github.com/ecomplus/cloud-commerce/commit/07efcd345c4414ccf83d5bdfbc2de6a20b14af86))
+* **storefront:** Update Vue to ^3.5.33 ([#746](https://github.com/ecomplus/cloud-commerce/issues/746)) ([7072300](https://github.com/ecomplus/cloud-commerce/commit/70723008629f74061cdbb533e609bc94c4843dc2))
+* **tiny-erp:** add cpf_cnpj and tipo_pessoa to endereco_entrega ([6489005](https://github.com/ecomplus/cloud-commerce/commit/6489005cfc9164372102a78a402d13719d69d407))
+
 ## [2.58.1](https://github.com/ecomplus/cloud-commerce/compare/v2.58.0...v2.58.1) (2026-02-16)
 
 
