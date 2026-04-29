@@ -80,11 +80,35 @@ const run = async () => {
         const baseFirebaseConfig = JSON.parse(
           fs.readFileSync(joinPath(baseConfigDir, 'firebase.json'), 'utf8'),
         );
-        const mergedConfig = deepmerge(baseFirebaseConfig, userFirebaseConfig);
-        fs.writeFileSync(
-          joinPath(pwd, 'firebase.json'),
-          JSON.stringify(mergedConfig, null, 2),
-        );
+        const userRewrites: Array<Record<string, any>> | undefined = userFirebaseConfig?.hosting?.rewrites;
+        if (Array.isArray(userRewrites) && Array.isArray(baseFirebaseConfig.hosting?.rewrites)) {
+          const hostingRest: Record<string, any> = { ...userFirebaseConfig.hosting };
+          delete hostingRest.rewrites;
+          const mergedConfig = deepmerge(baseFirebaseConfig, {
+            ...userFirebaseConfig,
+            hosting: hostingRest,
+          });
+          const mergedRewrites: Array<Record<string, any>> = [...baseFirebaseConfig.hosting.rewrites];
+          userRewrites.forEach((userRewrite) => {
+            const matchIdx = mergedRewrites.findIndex((r) => r.function === userRewrite.function);
+            if (matchIdx >= 0) {
+              mergedRewrites[matchIdx] = { ...mergedRewrites[matchIdx], ...userRewrite };
+            } else {
+              mergedRewrites.push(userRewrite);
+            }
+          });
+          mergedConfig.hosting.rewrites = mergedRewrites;
+          fs.writeFileSync(
+            joinPath(pwd, 'firebase.json'),
+            JSON.stringify(mergedConfig, null, 2),
+          );
+        } else {
+          const mergedConfig = deepmerge(baseFirebaseConfig, userFirebaseConfig);
+          fs.writeFileSync(
+            joinPath(pwd, 'firebase.json'),
+            JSON.stringify(mergedConfig, null, 2),
+          );
+        }
       }
     }
   }

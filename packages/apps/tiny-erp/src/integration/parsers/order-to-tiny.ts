@@ -83,6 +83,10 @@ export default async (order: Orders, appData) => {
     if (shippingAddress.name) {
       tinyOrder.endereco_entrega.nome_destinatario = shippingAddress.name.substring(0, 60);
     }
+    if (buyer && buyer.doc_number && buyer.doc_number.length <= 18) {
+      tinyOrder.endereco_entrega.cpf_cnpj = buyer.doc_number;
+      tinyOrder.endereco_entrega.tipo_pessoa = buyer.registry_type === 'j' ? 'J' : 'F';
+    }
   }
 
   if (order.items) {
