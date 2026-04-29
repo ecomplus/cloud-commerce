@@ -118,7 +118,7 @@ const serveFeeds = async (req: Request, res: Response) => {
         await proxyGithubApi(req, res);
         break;
       }
-      if (req.path.endsWith('.xml')) {
+      if (req.path.endsWith('/catalog.xml')) {
         await renderCatalog(req, res, products);
         break;
       }
