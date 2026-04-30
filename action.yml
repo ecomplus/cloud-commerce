@@ -123,11 +123,6 @@ runs:
     - shell: bash
       run: echo "year=$(date +'%Y')" >> $GITHUB_ENV
 
-    - name: Set up swap space
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 10
-
     - if: github.event_name == 'pull_request' && github.event.action != 'closed'
       uses: ouzi-dev/commit-status-updater@v2.0.2
       continue-on-error: true
