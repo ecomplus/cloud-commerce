@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.59.4](https://github.com/ecomplus/cloud-commerce/compare/v2.59.3...v2.59.4) (2026-04-30)
+
+
+### Bug Fixes
+
+* **apps:** Fix default imports from firebase-functions in compiled lib-mjs files ([6bef837](https://github.com/ecomplus/cloud-commerce/commit/6bef837e7b8ca4ada0dfec8e87783baabf26fb37))
+* **ci:** Remove swap space setup step ([ce17313](https://github.com/ecomplus/cloud-commerce/commit/ce173133da55e6e30b9775262c93b2df53080d47))
+
 ## [2.59.3](https://github.com/ecomplus/cloud-commerce/compare/v2.59.2...v2.59.3) (2026-04-30)
 
 
