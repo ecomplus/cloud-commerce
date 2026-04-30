@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import axios from './create-axios.mjs';
 import { parseAddress } from './parses-utils.mjs';
 

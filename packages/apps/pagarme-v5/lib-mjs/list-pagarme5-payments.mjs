@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import url from 'node:url';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import addInstallments from './functions-lib/payments/add-installments.mjs';
 import { discountPlanPayment } from './functions-lib/pagarme/handle-plans.mjs';

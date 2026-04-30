@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 
 const getDocFirestore = async (collection, documentId) => {
   const documentSnapshot = await collection.doc(documentId).get();

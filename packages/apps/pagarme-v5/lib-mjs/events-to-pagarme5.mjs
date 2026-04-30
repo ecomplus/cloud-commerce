@@ -1,5 +1,5 @@
 import api from '@cloudcommerce/api';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 // import config from '@cloudcommerce/firebase/lib/config';
 import { getFirestore } from 'firebase-admin/firestore';
 import ecomUtils from '@ecomplus/utils';

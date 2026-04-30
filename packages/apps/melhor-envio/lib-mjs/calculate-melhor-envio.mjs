@@ -1,4 +1,4 @@
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import { newShipment, matchService, sortServicesBy } from './functions/new-shipment.mjs';
 import { getMEAxios } from './util/melhor-envio-api.mjs';
