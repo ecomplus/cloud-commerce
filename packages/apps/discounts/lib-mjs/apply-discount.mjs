@@ -334,9 +334,9 @@ export default async ({ params, application }) => {
           : [];
         let kitItems = [];
         if (productIds.length) {
-          kitItems = itemsForKit.filter((item) => productIds.indexOf(item.product_id) > -1);
+          kitItems = kitEligibleItems.filter((item) => productIds.indexOf(item.product_id) > -1);
         } else if (categoryIds.length) {
-          kitItems = itemsForKit.filter((item) => {
+          kitItems = kitEligibleItems.filter((item) => {
             if (Array.isArray(item.categories)) {
               for (let i = 0; i < item.categories.length; i++) {
                 const category = item.categories[i];
@@ -348,7 +348,7 @@ export default async ({ params, application }) => {
             return false;
           });
         } else {
-          kitItems = [...itemsForKit];
+          kitItems = [...kitEligibleItems];
         }
         // eslint-disable-next-line no-loop-func
         kitItems = kitItems.filter((item) => {
