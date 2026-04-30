@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export NODE_OPTIONS="--max-old-space-size=5000"
+
 BUILD_OUTPUT=static \
 BUILD_MINIMAL=true \
 BUILD_OUT_DIR=./.cloudcommerce/sf-tmp-dist \

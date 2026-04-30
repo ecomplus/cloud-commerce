@@ -123,6 +123,15 @@ runs:
     - shell: bash
       run: echo "year=$(date +'%Y')" >> $GITHUB_ENV
 
+    - name: Set up swap space
+      shell: bash
+      run: |
+        sudo fallocate -l 4G /swapfile
+        sudo chmod 600 /swapfile
+        sudo mkswap /swapfile
+        sudo swapon /swapfile
+        free -h
+
     - if: github.event_name == 'pull_request' && github.event.action != 'closed'
       uses: ouzi-dev/commit-status-updater@v2.0.2
       continue-on-error: true
