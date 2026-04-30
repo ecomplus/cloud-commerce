@@ -23,6 +23,7 @@ module.exports = {
     'import/no-named-default': 'off',
     'import/extensions': 'off',
     'vue/no-multiple-template-root': 'off',
+    'vue/no-v-model-argument': 'off',
     'vue/multi-word-component-names': ['error', {
       ignores: [
         'Fade',
