@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.59.3](https://github.com/ecomplus/cloud-commerce/compare/v2.59.2...v2.59.3) (2026-04-30)
+
+
+### Bug Fixes
+
+* **ci:** Use /mnt/swapfile to avoid conflict with existing runner swap ([64ffa1e](https://github.com/ecomplus/cloud-commerce/commit/64ffa1eb708c122ef61abe4eb7d520ab9f9e44dd))
+* **ci:** Use dd instead of fallocate for extra swap space ([b350aa8](https://github.com/ecomplus/cloud-commerce/commit/b350aa84677794632cb666cb45958fd511d7f0d3))
+* **firebase:** Replace default imports from firebase-functions subpaths with namespace imports ([98510ce](https://github.com/ecomplus/cloud-commerce/commit/98510cea7cc91a5f6da2183aa3faaaa618789b55))
+
 ## [2.59.2](https://github.com/ecomplus/cloud-commerce/compare/v2.59.1...v2.59.2) (2026-04-30)
 
 
