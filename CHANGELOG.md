@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.59.5](https://github.com/ecomplus/cloud-commerce/compare/v2.59.4...v2.59.5) (2026-04-30)
+
+
+### Bug Fixes
+
+* **discounts:** Fix itemsForKit reference broken by rename to kitEligibleItems ([4b06f25](https://github.com/ecomplus/cloud-commerce/commit/4b06f2541391d722e785323fac83bb64fb847b98))
+
 ## [2.59.4](https://github.com/ecomplus/cloud-commerce/compare/v2.59.3...v2.59.4) (2026-04-30)
 
 
