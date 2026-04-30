@@ -7,7 +7,7 @@ import type {
 import type { Request, Response } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import config from '@cloudcommerce/firebase/lib/config';
 import { parseStatus, parsePeriodicityToEcom, gerateId } from '../all-parses';
 import GalaxpayAxios from './auth/create-access';

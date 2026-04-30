@@ -3,7 +3,7 @@ import type {
   ListPaymentsParams,
   ListPaymentsResponse,
 } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 

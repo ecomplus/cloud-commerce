@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import '@cloudcommerce/firebase/lib/init';
-import functions from 'firebase-functions/v1';
+import * as functions from 'firebase-functions/v1';
 import config, { createExecContext } from '@cloudcommerce/firebase/lib/config';
 import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from './event-to-tiny';

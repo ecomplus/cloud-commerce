@@ -1,5 +1,5 @@
 import type { Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import exportOrderToTiny from './integration/export-order-to-tiny';

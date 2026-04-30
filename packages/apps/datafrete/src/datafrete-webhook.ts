@@ -4,7 +4,7 @@ import type { Orders } from '@cloudcommerce/types';
 import api from '@cloudcommerce/api';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import getEnv from '@cloudcommerce/firebase/lib/env';
-import functions from 'firebase-functions/v1';
+import * as functions from 'firebase-functions/v1';
 
 const handleWebhook = async (req: Request, res: Response) => {
   const operatorToken = process.env.DATAFRETE_OPERATOR_TOKEN || getEnv().apiAuth.apiKey;

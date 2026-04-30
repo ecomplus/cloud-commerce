@@ -1,5 +1,5 @@
 import type { ResourceId, Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import _getAppData from '@cloudcommerce/firebase/lib/helpers/get-app-data';
 import axios from 'axios';

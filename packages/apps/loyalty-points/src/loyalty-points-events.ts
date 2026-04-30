@@ -6,7 +6,7 @@ import {
   ApiEventHandler,
 } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
-import functions from 'firebase-functions/v1';
+import * as functions from 'firebase-functions/v1';
 import handleLoyaltyPointsEvent from './util/handle-loyalty-points-event';
 import addPoints from './util/cron-add-points';
 

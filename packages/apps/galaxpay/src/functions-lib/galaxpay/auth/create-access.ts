@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import { getFirestore } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import { isSandbox } from '../../utils';
 import gerateAccessToken from './gerate-token';
 import createAxios from './create-axios';

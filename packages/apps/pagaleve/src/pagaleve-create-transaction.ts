@@ -3,7 +3,7 @@ import type {
   CreateTransactionResponse,
 } from '@cloudcommerce/types';
 import { createHmac } from 'node:crypto';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import { img as getImg } from '@ecomplus/utils';
 import config from '@cloudcommerce/firebase/lib/config';
 import Pagaleve from './pagaleve-constructor';

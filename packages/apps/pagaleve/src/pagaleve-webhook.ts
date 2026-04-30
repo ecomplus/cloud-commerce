@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import functions from 'firebase-functions/v1';
-import logger from 'firebase-functions/logger';
+import * as functions from 'firebase-functions/v1';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 import Pagaleve from './pagaleve-constructor';

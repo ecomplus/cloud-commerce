@@ -6,7 +6,7 @@ import type {
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']

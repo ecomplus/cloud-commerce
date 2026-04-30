@@ -1,6 +1,6 @@
 import type { Orders, ResourceAndId } from '@cloudcommerce/api/types';
 import type { ApiEventHandler } from '@cloudcommerce/firebase/lib/helpers/pubsub';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import { getMEAxios } from '../../lib-mjs/util/melhor-envio-api.mjs';
 import errorHandling from '../../lib-mjs/functions/error-handling.mjs';

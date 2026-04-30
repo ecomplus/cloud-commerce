@@ -1,5 +1,5 @@
 import type { Orders, Applications } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import GalaxpayAxios from './auth/create-access';
 
 const checkAmountItemsOrder = (

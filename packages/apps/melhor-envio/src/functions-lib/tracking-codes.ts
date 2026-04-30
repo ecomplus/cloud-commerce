@@ -1,5 +1,5 @@
 import type { Orders } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 import api from '@cloudcommerce/api';
 import config from '@cloudcommerce/firebase/lib/config';
 import { getMEAxios } from '../../lib-mjs/util/melhor-envio-api.mjs';

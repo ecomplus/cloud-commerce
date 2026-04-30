@@ -1,13 +1,13 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 
 const createAxios = (token?: string | null, isSandbox = false) => {
   const headers = {
     'Content-Type': 'application/json',
     'Idempotency-Key': `${Date.now() + Math.random()}`,
-    Authorization: token,
+    'Authorization': token,
   };
   const baseURL = isSandbox
     ? 'https://sandbox-api.pagaleve.io'

@@ -1,5 +1,5 @@
 import type { AppModuleBody, ListPaymentsResponse } from '@cloudcommerce/types';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 
 const pagaleveListPayments = (body: AppModuleBody<'list_payments'>) => {
   const { application } = body;

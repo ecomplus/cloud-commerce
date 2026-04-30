@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import '@cloudcommerce/firebase/lib/init';
 import config from '@cloudcommerce/firebase/lib/config';
-import functions from 'firebase-functions/v1';
+import * as functions from 'firebase-functions/v1';
 import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import handleApiEvent from './event-to-emails';
 import sendCartEmails from './cron-cart-emails';

@@ -2,7 +2,7 @@
 import '@cloudcommerce/firebase/lib/init';
 import { createAppEventsFunction } from '@cloudcommerce/firebase/lib/helpers/pubsub';
 import config from '@cloudcommerce/firebase/lib/config';
-import functions from 'firebase-functions/v1';
+import * as functions from 'firebase-functions/v1';
 import handleTrackingCodes from './functions-lib/tracking-codes';
 import handleApiEvent from './functions-lib/events-to-frenet';
 

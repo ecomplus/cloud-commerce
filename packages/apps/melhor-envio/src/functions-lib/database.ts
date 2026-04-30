@@ -1,6 +1,6 @@
 import type { ResourceId } from '@cloudcommerce/types';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 
 const firestoreColl = 'melhorEnvioTracking';
 
