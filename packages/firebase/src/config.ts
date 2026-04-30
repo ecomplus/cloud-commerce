@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import * as dotenv from 'dotenv';
 import _config, { BaseConfig } from '@cloudcommerce/config';
-import _logger from 'firebase-functions/logger';
+import * as _logger from 'firebase-functions/logger';
 
 if (
   !process.env.DEPLOY_REGION
