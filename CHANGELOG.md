@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.59.2](https://github.com/ecomplus/cloud-commerce/compare/v2.59.1...v2.59.2) (2026-04-30)
+
+
+### Bug Fixes
+
+* **firebase:** Fix ESM import of firebase-functions/logger ([50d658c](https://github.com/ecomplus/cloud-commerce/commit/50d658ca1a7d469d7c33356620450a4697a96730))
+
 ## [2.59.1](https://github.com/ecomplus/cloud-commerce/compare/v2.59.0...v2.59.1) (2026-04-30)
 
 
