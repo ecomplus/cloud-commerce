@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.59.1](https://github.com/ecomplus/cloud-commerce/compare/v2.59.0...v2.59.1) (2026-04-30)
+
+
+### Bug Fixes
+
+* **ci:** Prevent OOM crash on stores with large image catalogs ([a4a2266](https://github.com/ecomplus/cloud-commerce/commit/a4a2266013afda2dc26a9931fa0c8e4204adc955))
+
 ## [2.59.0](https://github.com/ecomplus/cloud-commerce/compare/v2.58.1...v2.59.0) (2026-04-29)
 
 
