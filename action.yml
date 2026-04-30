@@ -126,10 +126,10 @@ runs:
     - name: Set up swap space
       shell: bash
       run: |
-        sudo fallocate -l 4G /mnt/swapfile
-        sudo chmod 600 /mnt/swapfile
-        sudo mkswap /mnt/swapfile
-        sudo swapon /mnt/swapfile
+        sudo dd if=/dev/zero of=/mnt/build-swap bs=128M count=32 status=none
+        sudo chmod 600 /mnt/build-swap
+        sudo mkswap /mnt/build-swap
+        sudo swapon /mnt/build-swap
         free -h
 
     - if: github.event_name == 'pull_request' && github.event.action != 'closed'
