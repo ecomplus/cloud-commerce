@@ -59,7 +59,7 @@
     "@cloudcommerce/app-yapay": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "@ecomplus/utils": "1.5.0-rc.6",
-    "ajv": "^8.18.0",
+    "ajv": "^8.20.0",
     "ajv-formats": "^2.1.1",
     "axios": "^1.15.2",
     "firebase-admin": "^13.8.0",
