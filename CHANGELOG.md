@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.60.0](https://github.com/ecomplus/cloud-commerce/compare/v2.59.5...v2.60.0) (2026-05-07)
+
+
+### Features
+
+* **feeds:** Add skip_specs URL param to exclude products by specification ([b98ac5b](https://github.com/ecomplus/cloud-commerce/commit/b98ac5b7b145e6a759775ea235666e11a5c456bc))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#754](https://github.com/ecomplus/cloud-commerce/issues/754)) ([cf1c92e](https://github.com/ecomplus/cloud-commerce/commit/cf1c92e59b0c5ce0d750111a376cd531be8e1c32))
+
 ## [2.59.5](https://github.com/ecomplus/cloud-commerce/compare/v2.59.4...v2.59.5) (2026-04-30)
 
 
