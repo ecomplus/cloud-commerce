@@ -32,6 +32,20 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
     skippedSkus = req.query.skip_skus
       .filter((s) => typeof s === 'string') as string[];
   }
+  let skippedSpecs: Array<{ key: string; value?: string }> | undefined;
+  const rawSkipSpecs = req.query.skip_specs;
+  const parseSkipSpec = (s: string) => {
+    const colonIdx = s.indexOf(':');
+    if (colonIdx === -1) return { key: s };
+    return { key: s.slice(0, colonIdx), value: s.slice(colonIdx + 1).toLowerCase() };
+  };
+  if (typeof rawSkipSpecs === 'string') {
+    skippedSpecs = [parseSkipSpec(rawSkipSpecs)];
+  } else if (Array.isArray(rawSkipSpecs)) {
+    skippedSpecs = rawSkipSpecs
+      .filter((s) => typeof s === 'string')
+      .map((s) => parseSkipSpec(s as string));
+  }
   const discount = Number(req.query.discount) || 0;
   let querystring = req.query.qs ? String(req.query.qs) : '?_=feed';
   if (querystring.charAt(0) !== '?') {
@@ -65,6 +79,15 @@ const renderCatalog = async (req: Request, res: Response, products: FeedProducts
     if (p.name) {
       if (skippedSkus?.includes(p.sku)) {
         return;
+      }
+      if (skippedSpecs?.length && p.specifications) {
+        const isSkipped = skippedSpecs.some(({ key, value }) => {
+          const specValues = p.specifications![key];
+          if (!specValues?.length) return false;
+          if (value === undefined) return true;
+          return specValues.some((sv) => (sv.value || sv.text).toLowerCase() === value);
+        });
+        if (isSkipped) return;
       }
       const entry: Record<string, any> = {
         id: p.sku || p._id,
