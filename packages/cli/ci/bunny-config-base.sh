@@ -162,7 +162,8 @@ configure_edge_rule '
       "PatternMatches": [
         "*/_api/*",
         "*/_feeds/*",
-        "*/admin/*"
+        "*/admin/*",
+        "*/catalog.xml"
       ]
     },
     {
