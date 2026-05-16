@@ -11,7 +11,11 @@ import * as dotenv from 'dotenv';
 import Deepmerge from '@fastify/deepmerge';
 import login from './login';
 import build, { prepareCodebases } from './build';
-import { siginGcloudAndSetIAM, createServiceAccountKey } from './setup-gcloud';
+import {
+  ensureGcfArtifactsRepo,
+  siginGcloudAndSetIAM,
+  createServiceAccountKey,
+} from './setup-gcloud';
 import createGhSecrets from './setup-gh';
 import importFeed from './ext/import-feed';
 
@@ -80,7 +84,8 @@ const run = async () => {
         const baseFirebaseConfig = JSON.parse(
           fs.readFileSync(joinPath(baseConfigDir, 'firebase.json'), 'utf8'),
         );
-        const userRewrites: Array<Record<string, any>> | undefined = userFirebaseConfig?.hosting?.rewrites;
+        const userRewrites: Array<Record<string, any>> | undefined = userFirebaseConfig
+          ?.hosting?.rewrites;
         if (Array.isArray(userRewrites) && Array.isArray(baseFirebaseConfig.hosting?.rewrites)) {
           const hostingRest: Record<string, any> = { ...userFirebaseConfig.hosting };
           delete hostingRest.rewrites;
@@ -88,7 +93,9 @@ const run = async () => {
             ...userFirebaseConfig,
             hosting: hostingRest,
           });
-          const mergedRewrites: Array<Record<string, any>> = [...baseFirebaseConfig.hosting.rewrites];
+          const mergedRewrites: Array<Record<string, any>> = [
+            ...baseFirebaseConfig.hosting.rewrites,
+          ];
           userRewrites.forEach((userRewrite) => {
             const matchIdx = mergedRewrites.findIndex((r) => r.function === userRewrite.function);
             if (matchIdx >= 0) {
@@ -174,6 +181,11 @@ ECOM_STORE_ID=${storeId}
     );
 
     if (argv.deploy !== false) {
+      if (argv.gcloud !== false) {
+        try {
+          await ensureGcfArtifactsRepo(projectId!);
+        } catch {}
+      }
       await $firebase('deploy');
     }
     if (argv.commit !== false) {

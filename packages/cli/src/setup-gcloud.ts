@@ -74,6 +74,25 @@ const checkServiceAccountExists = async (projectId: string) => {
   return hasServiceAccount;
 };
 
+const ensureGcfArtifactsRepo = async (
+  projectId: string,
+  location = process.env.DEPLOY_REGION || 'us-east4',
+) => {
+  $.verbose = true;
+  try {
+    await $`gcloud artifacts repositories describe gcf-artifacts \
+      --location=${location} --project=${projectId}`;
+    return;
+  } catch {
+    // repo doesn't exist
+  }
+  await $`gcloud artifacts repositories create gcf-artifacts \
+    --repository-format=docker \
+    --location=${location} \
+    --project=${projectId} \
+    --description=${'Cloud Functions build artifacts'}`;
+};
+
 const siginGcloudAndSetIAM = async (projectId: string, pwd: string) => {
   $.verbose = true;
   let hasGcloud: boolean;
@@ -227,6 +246,7 @@ const createServiceAccountKey = async (projectId: string, pwd: string) => {
 export default siginGcloudAndSetIAM;
 
 export {
+  ensureGcfArtifactsRepo,
   siginGcloudAndSetIAM,
   createServiceAccountKey,
 };

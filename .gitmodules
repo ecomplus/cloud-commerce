@@ -10,3 +10,6 @@
 [submodule "ecomplus-stores/efacini"]
 	path = ecomplus-stores/efacini
 	url = git@github.com:efacini/efacini.git
+[submodule "ecomplus-stores/forjaestelar"]
+	path = ecomplus-stores/forjaestelar
+	url = git@github.com:doppelstore/forjaestelar.git
