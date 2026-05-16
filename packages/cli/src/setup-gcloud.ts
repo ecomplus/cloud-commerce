@@ -79,6 +79,7 @@ const ensureGcfArtifactsRepo = async (
   location = process.env.DEPLOY_REGION || 'us-east4',
 ) => {
   $.verbose = true;
+  await $`gcloud services enable cloudbilling.googleapis.com --project=${projectId}`;
   try {
     await $`gcloud artifacts repositories describe gcf-artifacts \
       --location=${location} --project=${projectId}`;
