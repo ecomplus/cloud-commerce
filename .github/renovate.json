@@ -20,9 +20,6 @@
     {
       "groupName": "Non-major dependencies",
       "groupSlug": "many-minor-patch",
-      "matchPackagePatterns": [
-        "*"
-      ],
       "excludePackageNames": [
         "astro",
         "vue",
@@ -42,9 +39,6 @@
     {
       "groupName": "Non-major dependencies",
       "groupSlug": "many-minor-patch",
-      "matchPackagePatterns": [
-        "*"
-      ],
       "excludePackagePrefixes": [
         "@astrojs/"
       ],
