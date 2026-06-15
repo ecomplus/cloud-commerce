@@ -61,10 +61,10 @@
     "image-size": "^2.0.2",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
-    "semver": "^7.8.2",
+    "semver": "^7.8.4",
     "sharp": "^0.33.3",
-    "@unocss/astro": "^66.7.0",
-    "unocss": "^66.7.0",
+    "@unocss/astro": "^66.7.2",
+    "unocss": "^66.7.2",
     "unplugin-auto-import": "^19.3.0",
     "vue": "^3.5.35",
     "wade": "0.3.3",
@@ -73,6 +73,6 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.30"
+    "@types/react": "^18.3.31"
   }
 }
