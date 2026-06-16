@@ -159,7 +159,7 @@ export default async (appData: AppModuleBody) => {
       first_name: payerOrBuyer.fullname.replace(/\s.*/, ''),
       last_name: payerOrBuyer.fullname.replace(/[^\s]+\s/, ''),
       identification: {
-        type: payerOrBuyer.registry_type === 'j' ? 'CNPJ' : 'CPF',
+        type: String(payerOrBuyer.doc_number).replace(/\D/g, '').length === 14 ? 'CNPJ' : 'CPF',
         number: String(payerOrBuyer.doc_number),
       },
     },
