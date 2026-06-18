@@ -4,6 +4,9 @@
 
   window._mpHash = function (data) {
     return new Promise((resolve, reject) => {
+      if (data.doc) {
+        data = Object.assign({}, data, { doc: data.doc.replace(/\D/g, '') });
+      }
       window
         ._mpBrand(data.number)
         .then(() => {
@@ -122,8 +125,10 @@
       const $typeDoc = document.createElement('select');
       $typeDoc.setAttribute('data-checkout', 'docType');
       const $typeDocOption = document.createElement('option');
-      $typeDocOption.text = customer.registry_type === 'j' ? 'CNPJ' : 'CPF';
-      $typeDocOption.value = customer.registry_type === 'j' ? 'CNPJ' : 'CPF';
+      const _docNum = (mpParams.docNumber || '').replace(/\D/g, '');
+      const _docType = _docNum.length === 14 ? 'CNPJ' : 'CPF';
+      $typeDocOption.text = _docType;
+      $typeDocOption.value = _docType;
       $typeDocOption.setAttribute('selected', true);
       $typeDoc.add($typeDocOption);
 
