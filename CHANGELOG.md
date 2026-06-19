@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.60.4](https://github.com/ecomplus/cloud-commerce/compare/v2.60.3...v2.60.4) (2026-06-19)
+
+
+### Bug Fixes
+
+* **cli:** Enable Cloud Billing API before first Firebase deploy ([e27d254](https://github.com/ecomplus/cloud-commerce/commit/e27d2548b53fe96e37d2f91604ec85ee935bfcdd))
+* **cli:** Ensure Artifact Registry repo exists before first deploy ([8a6eb53](https://github.com/ecomplus/cloud-commerce/commit/8a6eb53aed1853a71b1220d5d2372cd041c0eb55))
+* **deps:** Update non-major dependencies ([#757](https://github.com/ecomplus/cloud-commerce/issues/757)) ([66cb542](https://github.com/ecomplus/cloud-commerce/commit/66cb542a71e9dfe53632f130a4bd253cf83d7992))
+* **deps:** Update non-major dependencies ([#758](https://github.com/ecomplus/cloud-commerce/issues/758)) ([adf6d8b](https://github.com/ecomplus/cloud-commerce/commit/adf6d8bcca8d844642002b6a433cb9565e38235e))
+* **deps:** update non-major dependencies ([#760](https://github.com/ecomplus/cloud-commerce/issues/760)) ([cdff12e](https://github.com/ecomplus/cloud-commerce/commit/cdff12e460a161899d9431a3e92a4e4adad3b515))
+* **deps:** Update non-major dependencies ([#767](https://github.com/ecomplus/cloud-commerce/issues/767)) ([1d06f62](https://github.com/ecomplus/cloud-commerce/commit/1d06f6272d27fe3c289f70ca919df64a11998dae))
+* **deps:** Update non-major dependencies ([#770](https://github.com/ecomplus/cloud-commerce/issues/770)) ([3b62ddd](https://github.com/ecomplus/cloud-commerce/commit/3b62ddd9f02507c3a2a3ab36072d653bbcaf2761))
+* **deps:** Update Vue to ^3.5.38 ([#771](https://github.com/ecomplus/cloud-commerce/issues/771)) ([dabe41f](https://github.com/ecomplus/cloud-commerce/commit/dabe41ff807f7d357dd8eba2f59fed27e44641b0))
+* **mercadopago:** Infere tipo do documento pelo número de dígitos, não pelo cadastro ([#772](https://github.com/ecomplus/cloud-commerce/issues/772)) ([de8d3ed](https://github.com/ecomplus/cloud-commerce/commit/de8d3ed927c515b92803fa0461926d8fbbc1efec))
+* **renovate:** Remove deprecated wildcard matchPackagePatterns ([20741c4](https://github.com/ecomplus/cloud-commerce/commit/20741c4f0f96fb1f5beb4803dfd82fc90adab11a)), closes [#769](https://github.com/ecomplus/cloud-commerce/issues/769)
+* **storefront:** Update Vue to ^3.5.34 ([#756](https://github.com/ecomplus/cloud-commerce/issues/756)) ([26eb095](https://github.com/ecomplus/cloud-commerce/commit/26eb095164787c22959463b8963318a91db230f8))
+* **storefront:** Update Vue to ^3.5.35 ([#768](https://github.com/ecomplus/cloud-commerce/issues/768)) ([2531a60](https://github.com/ecomplus/cloud-commerce/commit/2531a60beefc725622c6bcf2b1e1b9dd53256988))
+
 ## [2.60.3](https://github.com/ecomplus/cloud-commerce/compare/v2.60.2...v2.60.3) (2026-05-07)
 
 ## [2.60.2](https://github.com/ecomplus/cloud-commerce/compare/v2.60.1...v2.60.2) (2026-05-07)
