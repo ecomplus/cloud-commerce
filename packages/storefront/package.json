@@ -57,7 +57,7 @@
     "astro-capo": "^0.0.1",
     "chroma-js": "^3.2.0",
     "dotenv": "^17.4.2",
-    "firebase": "^12.14.0",
+    "firebase": "^12.15.0",
     "image-size": "^2.0.2",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
