@@ -2,8 +2,10 @@ import type { Request, Response } from 'firebase-functions/v1';
 import { schemas } from '../index';
 import handleModule from './handle-module';
 import checkout from './checkout';
+import config from '@cloudcommerce/firebase/lib/config';
+import antiFraudRateLimit from './antifraud-rate-limit.js';
 
-export default (req: Request, res: Response) => {
+export default async (req: Request, res: Response) => {
   const { method } = req;
   if (method !== 'POST' && method !== 'GET') {
     return res.sendStatus(405);
@@ -38,6 +40,20 @@ export default (req: Request, res: Response) => {
             message: 'GET is acceptable only to JSON schema, at /@checkout/schema',
           });
       }
+      const { checkoutAntiFraud } = config.get();
+      if (checkoutAntiFraud !== false) {
+        const { blocked } = await antiFraudRateLimit(
+          req,
+          typeof checkoutAntiFraud === 'object' ? checkoutAntiFraud : {},
+        );
+        if (blocked) {
+          return res.status(429).json({
+            error_code: 'CKT429',
+            message: 'Too many checkout attempts. Try again later.',
+          });
+        }
+      }
+
       return checkout(req, res);
     }
     if (url === '/@checkout/schema') {

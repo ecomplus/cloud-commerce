@@ -199,8 +199,18 @@ const mergeConfig = {
 };
 _config.set(mergeConfig);
 
+export type AntiFraudConfig = false | {
+  checkoutWindowMs?: number;
+  checkoutLimitAddr?: number;
+  checkoutLimitIp?: number;
+  ttlHours?: number;
+};
+
 export const config = _config as {
-  get(): BaseConfig & typeof mergeConfig & { metafields: Record<string, any> };
+  get(): BaseConfig & typeof mergeConfig & {
+    metafields: Record<string, any>;
+    checkoutAntiFraud?: AntiFraudConfig;
+  };
   // eslint-disable-next-line
   set(config: any): void;
 };
