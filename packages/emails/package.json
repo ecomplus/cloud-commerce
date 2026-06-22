@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@cloudcommerce/firebase": "workspace:*",
-    "axios": "^1.17.0",
+    "axios": "^1.18.0",
     "ejs": "^3.1.10",
     "nodemailer": "^8.0.11"
   },
