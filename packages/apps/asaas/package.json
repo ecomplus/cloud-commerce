@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-asaas",
   "type": "module",
-  "version": "2.60.4",
+  "version": "2.61.0",
   "description": "e-com.plus Cloud Commerce app to integrate Asaas",
   "main": "lib/asaas.js",
   "exports": {
