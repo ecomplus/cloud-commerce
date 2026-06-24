@@ -1,7 +1,17 @@
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
-import { logger, type AntiFraudConfig } from '@cloudcommerce/firebase/lib/config';
+import {
+  logger,
+  checkoutRateLimitsCollection as COLLECTION,
+  type AntiFraudConfig,
+} from '@cloudcommerce/firebase/lib/config';
 
-const COLLECTION = 'checkout_rate_limits';
+const firstHeader = (
+  headers: Record<string, string | string[] | undefined>,
+  name: string,
+) => {
+  const value = headers[name];
+  return Array.isArray(value) ? value[0] : value;
+};
 
 const checkKey = async (
   firestore: ReturnType<typeof getFirestore>,
@@ -20,7 +30,9 @@ const checkKey = async (
     const withinWindow = (now - data.windowStart) < checkoutWindowMs;
     const count = withinWindow ? data.count + 1 : 1;
     const windowStart = withinWindow ? data.windowStart : now;
-    t.set(ref, { count, windowStart, updatedAt: now, key, expireAt });
+    t.set(ref, {
+      count, windowStart, updatedAt: now, key, expireAt,
+    });
     if (count > limit) blocked = true;
   });
 
@@ -28,13 +40,13 @@ const checkKey = async (
 };
 
 export default async function antiFraudRateLimit(
-  req: { body: any; headers: Record<string, string | string[] | undefined>; ip: string },
+  req: { body: any; headers: Record<string, string | string[] | undefined>; ip?: string },
   options: Exclude<AntiFraudConfig, false> = {},
 ): Promise<{ blocked: boolean; reason?: string }> {
   const {
     checkoutWindowMs = 10 * 60 * 1000,
     checkoutLimitAddr = 10,
-    checkoutLimitIp = 20,
+    checkoutLimitIp = 10,
     ttlHours = 24,
   } = options;
 
@@ -43,9 +55,13 @@ export default async function antiFraudRateLimit(
     const now = Date.now();
     const expireAt = Timestamp.fromMillis(now + ttlHours * 60 * 60 * 1000);
 
-    const forwardedFor = req.headers['x-forwarded-for'];
-    const realIp = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor || req.ip)
-      .split(',')[0].trim();
+    // Client IP may pass through CDN layers; mirror the SSR header chain,
+    // preferring edge-set headers over the spoofable X-Forwarded-For.
+    const ipsHeader = firstHeader(req.headers, 'x-real-ip')
+      || firstHeader(req.headers, 'x-forwarded-for')
+      || firstHeader(req.headers, 'cf-connecting-ip')
+      || firstHeader(req.headers, 'fastly-client-ip');
+    const realIp = (ipsHeader?.split(',')[0] || req.ip)?.trim() || '';
 
     const to = req.body?.shipping?.to;
     const zip = String(to?.zip || '').replace(/\D/g, '');
@@ -58,7 +74,9 @@ export default async function antiFraudRateLimit(
     if (ipKey) checks.push({ key: ipKey, limit: checkoutLimitIp });
 
     const results = await Promise.all(
-      checks.map(({ key, limit }) => checkKey(firestore, key, limit, now, checkoutWindowMs, expireAt)),
+      checks.map(({ key, limit }) => {
+        return checkKey(firestore, key, limit, now, checkoutWindowMs, expireAt);
+      }),
     );
 
     const hit = results.find((r) => r.blocked);

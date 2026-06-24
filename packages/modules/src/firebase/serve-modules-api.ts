@@ -1,8 +1,8 @@
 import type { Request, Response } from 'firebase-functions/v1';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { schemas } from '../index';
 import handleModule from './handle-module';
 import checkout from './checkout';
-import config from '@cloudcommerce/firebase/lib/config';
 import antiFraudRateLimit from './antifraud-rate-limit.js';
 
 export default async (req: Request, res: Response) => {
@@ -42,10 +42,15 @@ export default async (req: Request, res: Response) => {
       }
       const { checkoutAntiFraud } = config.get();
       if (checkoutAntiFraud !== false) {
-        const { blocked } = await antiFraudRateLimit(
-          req,
-          typeof checkoutAntiFraud === 'object' ? checkoutAntiFraud : {},
-        );
+        let blocked = false;
+        try {
+          ({ blocked } = await antiFraudRateLimit(
+            req,
+            typeof checkoutAntiFraud === 'object' ? checkoutAntiFraud : {},
+          ));
+        } catch (err) {
+          logger.warn('Anti-fraud guard threw, allowing checkout', { err });
+        }
         if (blocked) {
           return res.status(429).json({
             error_code: 'CKT429',
