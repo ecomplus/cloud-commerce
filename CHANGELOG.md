@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.61.0](https://github.com/ecomplus/cloud-commerce/compare/v2.60.4...v2.61.0) (2026-06-24)
+
+
+### Features
+
+* Add anti-fraud rate limiting to checkout to prevent card storm attacks ([#775](https://github.com/ecomplus/cloud-commerce/issues/775)) ([1158865](https://github.com/ecomplus/cloud-commerce/commit/11588650ee26e04d3a76a386fef01b794ff46912))
+
+
+### Bug Fixes
+
+* **deps:** Update non-major dependencies ([#773](https://github.com/ecomplus/cloud-commerce/issues/773)) ([4337fc2](https://github.com/ecomplus/cloud-commerce/commit/4337fc228c80893babe3ae8d67dfe07b4d908990))
+* Restore modules API loading broken by anti-fraud import path ([6845b08](https://github.com/ecomplus/cloud-commerce/commit/6845b084c4f2f83e20539a8b754fc991b657aae9))
+
 ## [2.60.4](https://github.com/ecomplus/cloud-commerce/compare/v2.60.3...v2.60.4) (2026-06-19)
 
 
