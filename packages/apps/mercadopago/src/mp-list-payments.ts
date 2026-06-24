@@ -7,6 +7,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
 import * as logger from 'firebase-functions/logger';
+import config from '@cloudcommerce/firebase/lib/config';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']
@@ -14,6 +15,8 @@ type CodePaymentMethod = Gateway['payment_method']['code']
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export default (data: AppModuleBody) => {
+  const locationId = config.get().httpsFunctionOptions.region;
+  const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/app`;
   const { application } = data;
   const params = data.params as ListPaymentsParams;
   // https://apx-mods.e-com.plus/api/v1/list_payments/schema.json?store_id=100
@@ -136,8 +139,7 @@ export default (data: AppModuleBody) => {
 
       if (isCreditCard) {
         if (!gateway.icon) {
-          // gateway.icon = `${baseUri}/checkout-stamp.png`; // TODO: baseUri
-          gateway.icon = 'https://us-central1-mercadopago-ecom.cloudfunctions.net/app/checkout-stamp.png';
+          gateway.icon = `${baseUri}/checkout-stamp.png`;
         }
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
