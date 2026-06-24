@@ -206,6 +206,8 @@ export type AntiFraudConfig = false | {
   ttlHours?: number;
 };
 
+export const checkoutRateLimitsCollection = 'checkoutRateLimits';
+
 export const config = _config as {
   get(): BaseConfig & typeof mergeConfig & {
     metafields: Record<string, any>;
