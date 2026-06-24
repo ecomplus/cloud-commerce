@@ -7,7 +7,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import url from 'node:url';
 import * as logger from 'firebase-functions/logger';
-import config from '@cloudcommerce/firebase/lib/config';
+import firebaseConfig from '@cloudcommerce/firebase/lib/config';
 
 type Gateway = ListPaymentsResponse['payment_gateways'][number]
 type CodePaymentMethod = Gateway['payment_method']['code']
@@ -15,7 +15,7 @@ type CodePaymentMethod = Gateway['payment_method']['code']
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export default (data: AppModuleBody) => {
-  const locationId = config.get().httpsFunctionOptions.region;
+  const locationId = firebaseConfig.get().httpsFunctionOptions.region;
   const baseUri = `https://${locationId}-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/app`;
   const { application } = data;
   const params = data.params as ListPaymentsParams;
