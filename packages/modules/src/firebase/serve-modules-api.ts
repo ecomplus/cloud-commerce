@@ -3,7 +3,7 @@ import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { schemas } from '../index';
 import handleModule from './handle-module';
 import checkout from './checkout';
-import antiFraudRateLimit from './antifraud-rate-limit.js';
+import antiFraudRateLimit from './antifraud-rate-limit';
 
 export default async (req: Request, res: Response) => {
   const { method } = req;
