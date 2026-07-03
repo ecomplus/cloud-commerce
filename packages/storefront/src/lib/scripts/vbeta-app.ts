@@ -253,10 +253,11 @@ if (!import.meta.env.SSR) {
   }, {
     immediate: true,
   });
-  const loadAppScript = () => {
+  const loadAppScript = (src?: string) => {
     const appScript = document.createElement('script');
-    appScript.src = (window as any)._appScriptSrc
-      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.225/dist/lib/js/app.js';
+    appScript.src = src
+      || (window as any)._appScriptSrc
+      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.226/dist/lib/js/app.js';
     appScript.onload = () => {
       setTimeout(() => {
         watchAppRoutes();
@@ -269,6 +270,11 @@ if (!import.meta.env.SSR) {
           }
         });
       }, 400);
+    };
+    appScript.onerror = () => {
+      if (appScript.src.includes('cdn.jsdelivr.net/npm/')) {
+        loadAppScript(appScript.src.replace('cdn.jsdelivr.net/npm/', 'unpkg.com/'));
+      }
     };
     document.body.appendChild(appScript);
   };
