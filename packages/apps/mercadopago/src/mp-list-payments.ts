@@ -137,7 +137,7 @@ export default (data: AppModuleBody) => {
       if (isCreditCard) {
         if (!gateway.icon) {
           // gateway.icon = `${baseUri}/checkout-stamp.png`; // TODO: baseUri
-          gateway.icon = 'https://us-central1-mercadopago-ecom.cloudfunctions.net/app/checkout-stamp.png';
+          gateway.icon = 'https://us-central1-ecom-mp.cloudfunctions.net/app/checkout-stamp.png';
         }
         gateway.js_client = {
           script_uri: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
