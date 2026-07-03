@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.61.1](https://github.com/ecomplus/cloud-commerce/compare/v2.61.0...v2.61.1) (2026-07-03)
+
+
+### Bug Fixes
+
+* **mercadopago:** Update MP payment gateway icon ([a849e4d](https://github.com/ecomplus/cloud-commerce/commit/a849e4dbee65ed418a12bfd554ece4b2fedc26a6))
+* **storefront:** Updating checkout vbeta-app script version and retry on unpkg CDN ([b1af691](https://github.com/ecomplus/cloud-commerce/commit/b1af69168724c879b5c944c6510e0a64598adeff))
+
 ## [2.61.0](https://github.com/ecomplus/cloud-commerce/compare/v2.60.4...v2.61.0) (2026-06-24)
 
 
