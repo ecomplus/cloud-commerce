@@ -257,7 +257,7 @@ if (!import.meta.env.SSR) {
     const appScript = document.createElement('script');
     appScript.src = src
       || (window as any)._appScriptSrc
-      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.226/dist/lib/js/app.js';
+      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.227/dist/lib/js/app.js';
     appScript.onload = () => {
       setTimeout(() => {
         watchAppRoutes();
