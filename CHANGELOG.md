@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.61.2](https://github.com/ecomplus/cloud-commerce/compare/v2.61.1...v2.61.2) (2026-07-06)
+
+
+### Bug Fixes
+
+* **storefront:** Updating checkout vbeta-app script version ([e626d17](https://github.com/ecomplus/cloud-commerce/commit/e626d17c0f2fecb297ee34412c3dd8d4526f061d))
+
 ## [2.61.1](https://github.com/ecomplus/cloud-commerce/compare/v2.61.0...v2.61.1) (2026-07-03)
 
 
