@@ -26,8 +26,24 @@ import {
   isAuthReady,
 } from '@@sf/state/customer-session';
 import { shoppingCart } from '@@sf/state/shopping-cart';
-import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
+import { emitGtagEvent, getGtagItem, trackingIds } from '@@sf/state/use-analytics';
 import utm from '@@sf/scripts/session-utm';
+
+// https://help.awin.com/apidocs - fallback pixel, redundant to the server-to-server
+// Conversion API call already made from send-to-awin.ts
+const emitAwinFallbackPixel = (orderId: string, amount: number, coupon?: string) => {
+  if (!window.AWIN_ADVERTISER_ID || !trackingIds.awc) return;
+  const src = 'https://www.awin1.com/sread.img'
+    + `?tt=ns&tv=2&merchant=${encodeURIComponent(window.AWIN_ADVERTISER_ID)}`
+    + `&amount=${amount}&cr=${encodeURIComponent(window.ECOM_CURRENCY)}`
+    + `&ref=${encodeURIComponent(orderId)}`
+    + `&parts=${encodeURIComponent(`DEFAULT:${amount}`)}`
+    + `&vc=${encodeURIComponent(coupon || '')}`
+    + `&ch=${encodeURIComponent(trackingIds.awin_channel || 'aw')}`
+    + '&testmode=0';
+  const img = new Image(0, 0);
+  img.src = src;
+};
 
 const watchAppRoutes = () => {
   const router = (window as any).storefrontApp?.router;
@@ -140,6 +156,7 @@ const watchAppRoutes = () => {
             params.shipping_delivery_days = days;
           }
           emitGtagEvent('purchase', params, paramsToHash);
+          emitAwinFallbackPixel(orderId, params.value as number, params.coupon);
           localStorage.setItem('gtag.orderIdSent', orderId);
         }
         isPurchaseSent = true;
