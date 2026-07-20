@@ -94,6 +94,7 @@ window.ECOM_COUNTRY_CODE = '${countryCode}';
 window.GIT_BRANCH = '${import.meta.env.GIT_BRANCH || ''}';
 window.GIT_REPO = '${import.meta.env.GIT_REPO || import.meta.env.GITHUB_REPO || ''}';
 window.GCLOUD_PROJECT = '${import.meta.env.GCLOUD_PROJECT || ''}';
+window.AWIN_ADVERTISER_ID = '${import.meta.env.AWIN_ADVERTISER_ID || ''}';
 window.$storefront = ${JSON.stringify({ settings, data: {} })};`;
 if (apiContext.error) {
   const { message, statusCode } = apiContext.error;
