@@ -1,8 +1,8 @@
 import type { AnalyticsEvent } from './send-analytics-events';
-import { logger } from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 
-// https://developer.awin.com/apidocs/conversion-api
+// https://help.awin.com/apidocs/conversion-api
 const {
   AWIN_ADVERTISER_ID,
   AWIN_API_KEY,
@@ -17,6 +17,16 @@ const awinAxios = AWIN_ADVERTISER_ID && AWIN_API_KEY
     },
   })
   : null;
+
+// https://help.awin.com/apidocs/conversion-api - accepted "channel" values
+const validChannels = new Set([
+  'aw', 'ppcgeneric', 'ppcbrand', 'display', 'social', 'Other', 'Organic', 'direct',
+]);
+
+// Awin forbids the pipe character in id/name/sku/category basket fields
+const stripPipes = (value: unknown) => (
+  typeof value === 'string' ? value.replace(/\|/g, '') : value
+);
 
 const sendToAwin = async ({
   events,
@@ -36,23 +46,23 @@ const sendToAwin = async ({
     const voucher = params.coupon;
     const awinOrder: Record<string, any> = {
       orderReference: params.transaction_id,
-      channel,
+      channel: validChannels.has(channel) ? channel : 'aw',
       awc,
       voucher,
       amount: params.value,
-      currency: params.currency || 'BRL',
+      currency: params.currency || config.get().currency,
       commissionGroups: [{
         code: 'DEFAULT',
         amount: params.value,
       }],
       basket: params.items?.map((item: Record<string, any>) => ({
-        id: item.object_id || item.item_id,
-        name: item.item_name,
+        id: stripPipes(item.object_id || item.item_id),
+        name: stripPipes(item.item_name),
         price: item.price,
         quantity: item.quantity || 1,
         commissionGroupCode: 'DEFAULT',
-        sku: item.item_id,
-        category: item.category || item.item_brand || item.item_id,
+        sku: stripPipes(item.item_id),
+        category: stripPipes(item.item_category || item.item_brand || item.item_id),
       })),
     };
     awinOrders.push(awinOrder);

@@ -34,6 +34,7 @@ interface Window {
   GTAG_TAG_ID?: string;
   GA_TRACKING_ID?: string;
   GOOGLE_ADS_ID?: string;
+  AWIN_ADVERTISER_ID?: string;
   CMS_CUSTOM_CONFIG?: Record<string, any>;
   CMS_SSO_URL?: string | null;
   CMS_REPO_BASE_DIR?: string;
