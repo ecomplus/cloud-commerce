@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.61.3](https://github.com/ecomplus/cloud-commerce/compare/v2.61.2...v2.61.3) (2026-07-21)
+
+
+### Bug Fixes
+
+* **storefront:** Correct Awin conversion tracking data and add fallback pixel ([#784](https://github.com/ecomplus/cloud-commerce/issues/784)) ([d3b9b11](https://github.com/ecomplus/cloud-commerce/commit/d3b9b11be53507fdfcfb7e069fbddd28d8031290))
+
 ## [2.61.2](https://github.com/ecomplus/cloud-commerce/compare/v2.61.1...v2.61.2) (2026-07-06)
 
 
