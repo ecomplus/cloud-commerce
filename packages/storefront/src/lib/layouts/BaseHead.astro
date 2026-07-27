@@ -8,6 +8,7 @@ import {
   inStock as checkInStock,
 } from '@ecomplus/utils';
 import { i19searchProducts } from '@@i18n';
+import { getPriceWithDiscount } from '@@sf/composables/use-prices';
 
 // @ts-ignore
 const isPWA = pwaInfo !== false; // config/astro/mock-pwa-info.mjs
@@ -211,7 +212,10 @@ if (apiContext.resource === 'products' && apiContext.doc) {
       url: canonicalUrl,
       availability: `${(checkInStock(product) ? 'In' : 'OutOf')}Stock`,
       priceCurrency: settings.currency,
-      price: getPrice(product),
+      price: getPriceWithDiscount(
+        getPrice(product),
+        settings.modules?.list_payments?.discount_option || {},
+      ),
       itemCondition: 'http://schema.org/'
         + `${(product.condition !== 'new' ? 'Used' : 'New')}Condition`,
       seller: {
