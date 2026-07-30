@@ -1,3 +1,5 @@
+import { setCookie } from '@@sf/sf-lib';
+
 export type TrackingIds = {
   gclid?: string,
   g_client_id?: string,
@@ -48,6 +50,11 @@ export const getTrackingIds = (
     if (id) {
       value = id;
       sessionStorage.setItem(`analytics_${key}`, id);
+      if (key === 'awc') {
+        // Persist as a real cookie (not just sessionStorage) so it survives
+        // a manually-opened new tab, per Awin's "last click direto" scenario
+        setCookie('awc', id, 30);
+      }
     } else {
       value = sessionStorage.getItem(`analytics_${key}`) || undefined;
     }
