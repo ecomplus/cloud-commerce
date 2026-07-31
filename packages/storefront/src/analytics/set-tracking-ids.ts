@@ -51,8 +51,7 @@ export const getTrackingIds = (
       value = id;
       sessionStorage.setItem(`analytics_${key}`, id);
       if (key === 'awc') {
-        // Persist as a real cookie (not just sessionStorage) so it survives
-        // a manually-opened new tab, per Awin's "last click direto" scenario
+        // Awin prescribes an awc cookie; sessionStorage doesn't survive a manually-opened tab
         setCookie('awc', id, 30);
       }
     } else {

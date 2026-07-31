@@ -29,8 +29,8 @@ import { shoppingCart } from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem, trackingIds } from '@@sf/state/use-analytics';
 import utm from '@@sf/scripts/session-utm';
 
-// https://help.awin.com/apidocs - fallback pixel, redundant to the server-to-server
-// Conversion API call already made from send-to-awin.ts
+// https://help.awin.com/developers/docs/fall-back-conversion-pixel
+// Awin prioritizes one tracking method per order ref, no double-count with the S2S call
 const emitAwinFallbackPixel = (orderId: string, amount: number, coupon?: string) => {
   if (!window.AWIN_ADVERTISER_ID || !trackingIds.awc) return;
   const src = 'https://www.awin1.com/sread.img'
