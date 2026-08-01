@@ -18,7 +18,7 @@ const awinAxios = AWIN_ADVERTISER_ID && AWIN_API_KEY
   })
   : null;
 
-// https://help.awin.com/apidocs/conversion-api - accepted "channel" values
+// Expected AwinChannelCookie values — Awin docs mandate 'aw' as the fallback
 const validChannels = new Set([
   'aw', 'ppcgeneric', 'ppcbrand', 'display', 'social', 'Other', 'Organic', 'direct',
 ]);

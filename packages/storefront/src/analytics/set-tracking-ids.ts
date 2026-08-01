@@ -1,3 +1,5 @@
+import { setCookie } from '@@sf/sf-lib';
+
 export type TrackingIds = {
   gclid?: string,
   g_client_id?: string,
@@ -48,6 +50,10 @@ export const getTrackingIds = (
     if (id) {
       value = id;
       sessionStorage.setItem(`analytics_${key}`, id);
+      if (key === 'awc') {
+        // Awin prescribes an awc cookie; sessionStorage doesn't survive a manually-opened tab
+        setCookie('awc', id, 30);
+      }
     } else {
       value = sessionStorage.getItem(`analytics_${key}`) || undefined;
     }
