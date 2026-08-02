@@ -274,7 +274,7 @@ if (!import.meta.env.SSR) {
     const appScript = document.createElement('script');
     appScript.src = src
       || (window as any)._appScriptSrc
-      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.227/dist/lib/js/app.js';
+      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.228/dist/lib/js/app.js';
     appScript.onload = () => {
       setTimeout(() => {
         watchAppRoutes();
@@ -337,6 +337,24 @@ if (!import.meta.env.SSR) {
         console.error(err);
         loadAppScript();
       });
+  } else if (session.auth && !isAuthenticated.value) {
+    // Stored passport token is stale: wait for Firebase auth to renew it
+    // before app.js starts fetching with it
+    const waitingTokenRefresh = initializingAuth.then(async (firebaseAuth) => {
+      await firebaseAuth.authStateReady();
+      if (isAuthReady.value) return;
+      await new Promise<void>((resolve) => {
+        const unwatch = watch(isAuthReady, (ready) => {
+          if (!ready) return;
+          unwatch();
+          resolve();
+        });
+      });
+    });
+    Promise.race([
+      waitingTokenRefresh.catch(console.error),
+      new Promise((resolve) => { setTimeout(resolve, 10000); }),
+    ]).then(() => loadAppScript());
   } else {
     loadAppScript();
   }
