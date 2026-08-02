@@ -321,10 +321,6 @@ if (!import.meta.env.SSR) {
       resolve(getAuth());
     });
   });
-  const storedTokenExpiresAt = session.auth ? new Date(session.auth.expires).getTime() : 0;
-  const storedTokenNeedsRefresh = storedTokenExpiresAt > 0
-    && storedTokenExpiresAt - Date.now() <= 10 * 1000;
-  const rejectAfter = (ms: number) => new Promise<never>((_, reject) => { setTimeout(() => reject(new Error('timeout')), ms); });
   if (window.location.hash.includes('account')) {
     initializingAuth
       .then(async (firebaseAuth) => {
@@ -341,23 +337,24 @@ if (!import.meta.env.SSR) {
         console.error(err);
         loadAppScript();
       });
-  } else if (storedTokenNeedsRefresh) {
-    Promise.race([initializingAuth, rejectAfter(10000)])
-      .then(async (firebaseAuth) => {
-        await Promise.race([firebaseAuth.authStateReady(), rejectAfter(5000)]);
-        if (!isAuthReady.value) {
-          await Promise.race([
-            new Promise<void>((res) => {
-              const u = watch(isAuthReady, (v) => {
-                if (v) { u(); res(); }
-              });
-            }),
-            rejectAfter(5000),
-          ]);
-        }
-        loadAppScript();
-      })
-      .catch(() => loadAppScript());
+  } else if (session.auth && !isAuthenticated.value) {
+    // Stored passport token is stale: wait for Firebase auth to renew it
+    // before app.js starts fetching with it
+    const waitingTokenRefresh = initializingAuth.then(async (firebaseAuth) => {
+      await firebaseAuth.authStateReady();
+      if (isAuthReady.value) return;
+      await new Promise<void>((resolve) => {
+        const unwatch = watch(isAuthReady, (ready) => {
+          if (!ready) return;
+          unwatch();
+          resolve();
+        });
+      });
+    });
+    Promise.race([
+      waitingTokenRefresh.catch(console.error),
+      new Promise((resolve) => { setTimeout(resolve, 10000); }),
+    ]).then(() => loadAppScript());
   } else {
     loadAppScript();
   }
