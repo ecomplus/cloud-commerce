@@ -80,12 +80,98 @@ export type KitItem = KitItems[number];
  */
 export type KitVariationIds = Array<ResourceId | null | undefined>;
 
+type KitComposition = Exclude<Products['kit_composition'], undefined>;
+
+type CartKitComposition = Exclude<
+  Exclude<ExtendedCartItem['kit_product'], undefined>['composition'],
+  undefined
+>;
+
 const getKitItemStock = (kitItem: KitItem, variationId?: ResourceId | null) => {
   const variation = variationId
     ? kitItem.variations?.find(({ _id }) => _id === variationId)
     : undefined;
   const quantity = variation?.quantity ?? kitItem.quantity;
   return typeof quantity === 'number' ? quantity : Infinity;
+};
+
+/**
+ * Matches a `kit_composition` entry to its (buyable) product and variation,
+ * `null` when the item can't be sold with the given selection.
+ */
+const matchKitItem = (
+  kitItems: KitItems,
+  composition: KitComposition[number],
+  selectedVariationId?: ResourceId | null,
+) => {
+  const kitItem = kitItems.find(({ _id }) => _id === composition._id);
+  if (!kitItem?.available || kitItem.visible === false) return null;
+  const variationId = composition.variation_id || selectedVariationId || undefined;
+  const variation = variationId
+    ? kitItem.variations?.find(({ _id }) => _id === variationId)
+    : undefined;
+  // Kit item with variations requires a selected (and valid) SKU
+  if (kitItem.variations?.length && !variation) return null;
+  return { kitItem, variationId, variation };
+};
+
+const sumToKitComposition = (
+  composition: CartKitComposition,
+  newItem: CartKitComposition[number],
+) => {
+  const currentItem = composition.find((item) => {
+    return item._id === newItem._id && item.variation_id === newItem.variation_id;
+  });
+  if (currentItem) {
+    currentItem.quantity = (currentItem.quantity || 0) + (newItem.quantity || 0);
+  } else {
+    composition.push(newItem);
+  }
+};
+
+/**
+ * Cart items (with `kit_product` set) for one kit pack, `null` when any item
+ * is unavailable, out of stock or missing its variation selection.
+ */
+const parseKitCartItems = (
+  kitProduct: { _id: ResourceId, name?: string, price: number },
+  kitComposition: KitComposition,
+  kitItems: KitItems,
+  quantityToAdd: number,
+  kitVariationIds?: KitVariationIds,
+) => {
+  let packQuantity = 0;
+  const composition: CartKitComposition = [];
+  /* The same product may be repeated on kit composition (with distinct
+  variations), items must be merged to a single cart item each. */
+  const cartItemsByKey: Record<string, ExtendedCartItem> = {};
+  for (let i = 0; i < kitComposition.length; i++) {
+    const matched = matchKitItem(kitItems, kitComposition[i], kitVariationIds?.[i]);
+    if (!matched) return null;
+    const { kitItem, variationId, variation } = matched;
+    const quantity = (kitComposition[i].quantity || 1) * quantityToAdd;
+    if (!checkInStock({ ...kitItem, ...variation, min_quantity: quantity })) {
+      return null;
+    }
+    packQuantity += quantity;
+    sumToKitComposition(composition, { _id: kitItem._id, variation_id: variationId, quantity });
+    const key = `${kitItem._id}:${variationId || ''}`;
+    if (cartItemsByKey[key]) {
+      cartItemsByKey[key].quantity += quantity;
+    } else {
+      cartItemsByKey[key] = parseProduct(kitItem, variationId, quantity);
+    }
+  }
+  return Object.keys(cartItemsByKey).map((key) => ({
+    ...cartItemsByKey[key],
+    kit_product: {
+      _id: kitProduct._id,
+      name: kitProduct.name,
+      price: kitProduct.price,
+      pack_quantity: packQuantity,
+      composition,
+    },
+  }));
 };
 
 export type Props = {
@@ -253,75 +339,18 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       if (kitComposition?.length) {
         if (variationId) return [null];
         if (!kitItems.value) await loadKitItems();
-        const loadedKitItems = kitItems.value;
-        if (!loadedKitItems?.length) return [null];
-        let packQuantity = 0;
-        const cartKitComposition: Array<{
-          _id: ResourceId,
-          variation_id?: ResourceId,
-          quantity: number,
-        }> = [];
-        /* The same product may be repeated on kit composition (with distinct
-        variations), items must be merged to a single cart item each. */
-        const cartItemsByKey: Record<string, ExtendedCartItem> = {};
-        for (let i = 0; i < kitComposition.length; i++) {
-          const { _id, quantity } = kitComposition[i];
-          const kitItem = loadedKitItems.find((item) => item._id === _id);
-          if (!kitItem?.available || kitItem.visible === false) {
-            return [null];
-          }
-          const kitItemVariationId = kitComposition[i].variation_id
-            || kitVariationIds?.[i]
-            || undefined;
-          const variation = kitItemVariationId
-            ? kitItem.variations?.find(({ _id: id }) => id === kitItemVariationId)
-            : undefined;
-          if (kitItem.variations?.length && !variation) {
-            // Kit item with variations requires a selected (and valid) SKU
-            return [null];
-          }
-          const kitItemQuantity = (quantity || 1) * quantityToAdd;
-          if (!checkInStock({
-            ...kitItem,
-            ...variation,
-            min_quantity: kitItemQuantity,
-          })) {
-            return [null];
-          }
-          packQuantity += kitItemQuantity;
-          const compositionItem = cartKitComposition.find((item) => {
-            return item._id === _id && item.variation_id === kitItemVariationId;
-          });
-          if (compositionItem) {
-            compositionItem.quantity += kitItemQuantity;
-          } else {
-            cartKitComposition.push({
-              _id,
-              variation_id: kitItemVariationId,
-              quantity: kitItemQuantity,
-            });
-          }
-          const key = `${_id}:${kitItemVariationId || ''}`;
-          if (cartItemsByKey[key]) {
-            cartItemsByKey[key].quantity += kitItemQuantity;
-          } else {
-            cartItemsByKey[key] = parseProduct(kitItem, kitItemVariationId, kitItemQuantity);
-          }
-        }
-        return Object.keys(cartItemsByKey).map((key) => {
-          /* `kit_product` must be set before adding to cart, otherwise the new item
-          may be merged with a matching (standalone) item already on cart. */
-          return addCartItem({
-            ...cartItemsByKey[key],
-            kit_product: {
-              _id: product._id,
-              name: product.name,
-              price: product.price,
-              pack_quantity: packQuantity,
-              composition: cartKitComposition,
-            },
-          });
-        });
+        if (!kitItems.value?.length) return [null];
+        const kitCartItems = parseKitCartItems(
+          product,
+          kitComposition,
+          kitItems.value,
+          quantityToAdd,
+          kitVariationIds,
+        );
+        if (!kitCartItems) return [null];
+        /* `kit_product` is set before adding to cart, otherwise each new item
+        may be merged with a matching (standalone) item already on cart. */
+        return kitCartItems.map(addCartItem);
       }
       return [addProductToCart(product, variationId || undefined, quantityToAdd)];
     })();
