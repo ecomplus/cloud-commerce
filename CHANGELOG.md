@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.62.0](https://github.com/ecomplus/cloud-commerce/compare/v2.61.3...v2.62.0) (2026-08-03)
+
+
+### Features
+
+* **storefront:** Show cash discount price in product JSON-LD ([#788](https://github.com/ecomplus/cloud-commerce/issues/788)) ([a611eb8](https://github.com/ecomplus/cloud-commerce/commit/a611eb85d107ba1dedaa85d7ab8880d92a90bcf6))
+
+
+### Bug Fixes
+
+* **deps:** update non-major dependencies ([#798](https://github.com/ecomplus/cloud-commerce/issues/798)) ([35e33f1](https://github.com/ecomplus/cloud-commerce/commit/35e33f14e978657b877cdefc86343a5134fb1e96))
+* **storefront:** Persist awc as a cookie so it survives a new tab ([#789](https://github.com/ecomplus/cloud-commerce/issues/789)) ([1760abc](https://github.com/ecomplus/cloud-commerce/commit/1760abca82bbe59cf3949b2c200e3bc1dbbbfd6f))
+* **storefront:** Refresh passport token before loading checkout app when near expiry ([#785](https://github.com/ecomplus/cloud-commerce/issues/785)) ([d3715c5](https://github.com/ecomplus/cloud-commerce/commit/d3715c57176ed049ce606ab0bb80b992c8a6efd8)), closes [ecomplus/storefront#1298](https://github.com/ecomplus/storefront/issues/1298)
+* **storefront:** Update Vue to ^3.5.40 ([#786](https://github.com/ecomplus/cloud-commerce/issues/786)) ([d47f339](https://github.com/ecomplus/cloud-commerce/commit/d47f33902f9549cae28e26ff209a19ce7e43e298))
+
 ## [2.61.3](https://github.com/ecomplus/cloud-commerce/compare/v2.61.2...v2.61.3) (2026-07-21)
 
 
