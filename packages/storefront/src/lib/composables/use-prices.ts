@@ -7,6 +7,7 @@ import {
   loyaltyPointsPrograms,
   availableExtraDiscount,
 } from '@@sf/state/modules-info';
+import { getPriceWithDiscount } from '../../helpers/prices';
 
 export type Props = {
   product?: Partial<Products> & { final_price?: number } &
@@ -21,22 +22,7 @@ export type Props = {
   loyaltyPointsProgram?: Exclude<ListPaymentsResponse['loyalty_points_programs'], undefined>['k'];
 }
 
-export const getPriceWithDiscount = (
-  price: number,
-  discount: Exclude<Props['discountOption'], undefined>,
-) => {
-  const { type, value } = discount;
-  if (!value || (discount.min_amount && price < discount.min_amount)) {
-    return price;
-  }
-  let priceWithDiscount: number;
-  if (type === 'percentage') {
-    priceWithDiscount = price * ((100 - value) / 100);
-  } else {
-    priceWithDiscount = price - value;
-  }
-  return priceWithDiscount > 0 ? priceWithDiscount : 0;
-};
+export { getPriceWithDiscount };
 
 const usePrices = (props: Props) => {
   const _product = computed(() => {
