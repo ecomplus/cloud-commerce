@@ -6,6 +6,8 @@ export * from '@cloudcommerce/app-emails';
 
 export * from '@cloudcommerce/app-tiny-erp';
 
+export * from '@cloudcommerce/app-bling-erp';
+
 export * from '@cloudcommerce/app-evendas';
 
 export * from '@cloudcommerce/app-pagarme-v5/events';
