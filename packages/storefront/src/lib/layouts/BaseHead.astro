@@ -8,7 +8,6 @@ import {
   inStock as checkInStock,
 } from '@ecomplus/utils';
 import { i19searchProducts } from '@@i18n';
-import { getPriceWithDiscount } from '@@sf/composables/use-prices';
 
 // @ts-ignore
 const isPWA = pwaInfo !== false; // config/astro/mock-pwa-info.mjs
@@ -201,10 +200,6 @@ const inlineJSONLdWebsite = JSON.stringify({
 let inlineJSONLdOffer: string | undefined;
 if (apiContext.resource === 'products' && apiContext.doc) {
   const product = apiContext.doc;
-  const offerPrice = getPriceWithDiscount(
-    getPrice(product),
-    settings.modules?.list_payments?.discount_option || {},
-  );
   const productJSONLd: Record<string, any> = {
     '@context': 'http://schema.org',
     '@type': 'Product',
@@ -216,7 +211,7 @@ if (apiContext.resource === 'products' && apiContext.doc) {
       url: canonicalUrl,
       availability: `${(checkInStock(product) ? 'In' : 'OutOf')}Stock`,
       priceCurrency: settings.currency,
-      price: Math.round(offerPrice * 100) / 100,
+      price: getPrice(product),
       itemCondition: 'http://schema.org/'
         + `${(product.condition !== 'new' ? 'Used' : 'New')}Condition`,
       seller: {

@@ -1,3 +1,5 @@
+import { onStorefrontInit } from '../../init-emitter';
+
 type ModulesInfoPreset = typeof window.$storefront.modulesInfoPreset;
 
 const checkObjNotNull = (obj: { [k: string]: any }) => {
@@ -49,8 +51,12 @@ const getModulesInfoPreset = (settingsModules = globalThis.$storefront.settings.
 
 const loadingGlobalInfoPreset: Promise<ModulesInfoPreset> = new Promise((resolve) => {
   if (import.meta.env.SSR) {
-    global.$storefront.onLoad(() => {
-      resolve(getModulesInfoPreset());
+    // `ssr-context` may not have set the global up yet when this module is
+    // evaluated, depending on where the bundler places it in the SSR graph.
+    onStorefrontInit(() => {
+      global.$storefront.onLoad(() => {
+        resolve(getModulesInfoPreset());
+      });
     });
   } else {
     window.$storefront.modulesInfoPreset = getModulesInfoPreset();
