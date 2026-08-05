@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.62.1](https://github.com/ecomplus/cloud-commerce/compare/v2.62.0...v2.62.1) (2026-08-05)
+
+
+### Bug Fixes
+
+* **storefront:** Prevent build crashes when modules info preset is evaluated early ([30a721a](https://github.com/ecomplus/cloud-commerce/commit/30a721a8024b4901cc807fbea47a0936238aa9a2)), closes [#788](https://github.com/ecomplus/cloud-commerce/issues/788)
+* **storefront:** Restore prerendered homepage and offline fallback on store builds ([9219fb2](https://github.com/ecomplus/cloud-commerce/commit/9219fb26caeeb810f0a914b2e46ed0ef138c0d83)), closes [#788](https://github.com/ecomplus/cloud-commerce/issues/788)
+
 ## [2.62.0](https://github.com/ecomplus/cloud-commerce/compare/v2.61.3...v2.62.0) (2026-08-03)
 
 
