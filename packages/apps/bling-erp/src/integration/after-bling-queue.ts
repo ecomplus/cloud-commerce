@@ -68,7 +68,12 @@ export default async (
     logEntry.notes = notes.substring(0, 5000);
   }
 
-  if (isQueued && (isError || !isImportation)) {
+  /*
+  Failures are always logged on app data, so the merchant sees them on the admin
+  panel even for automatic (not manually queued) exportations. Successes are kept
+  out of importation logs to avoid flooding it with stock updates.
+  */
+  if (isError || (isQueued && !isImportation)) {
     logs.unshift(logEntry);
     await updateAppData(application, {
       logs: logs.slice(0, 200),
