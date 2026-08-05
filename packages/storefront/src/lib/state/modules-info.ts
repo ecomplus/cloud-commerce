@@ -81,11 +81,10 @@ if (!import.meta.env.SSR) {
   const fetchInfo = () => {
     const modulesToFetch: { modName: ModuleApiEndpoint, reqOptions?: any }[] = [];
     (['list_payments', 'calculate_shipping'] as const).forEach((modName) => {
-      if (!Object.keys(modulesInfo[modName]).length) {
-        modulesToFetch.push({ modName });
-      } else {
+      if (Object.keys(modulesInfo[modName]).length) {
         modulesInfoEmitter.emit(modName, modulesInfo[modName]);
       }
+      modulesToFetch.push({ modName });
     });
     if (Object.keys(utm).length || sessionCoupon) {
       const { apiContext } = globalThis.$storefront;
