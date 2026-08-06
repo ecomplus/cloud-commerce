@@ -45,8 +45,7 @@ const sendToAwin = async ({
     if (!params?.transaction_id) return;
     const voucher = params.coupon;
     const awinOrder: Record<string, any> = {
-      // Awin wants the customer-visible order number, not our internal _id
-      orderReference: params.order_number || params.transaction_id,
+      orderReference: String(params.order_number || params.transaction_id),
       channel: validChannels.has(channel) ? channel : 'aw',
       awc,
       voucher,
