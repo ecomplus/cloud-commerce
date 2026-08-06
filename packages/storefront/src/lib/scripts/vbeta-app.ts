@@ -31,12 +31,12 @@ import utm from '@@sf/scripts/session-utm';
 
 // https://help.awin.com/developers/docs/fall-back-conversion-pixel
 // Awin prioritizes one tracking method per order ref, no double-count with the S2S call
-const emitAwinFallbackPixel = (orderId: string, amount: number, coupon?: string) => {
+const emitAwinFallbackPixel = (orderRef: string, amount: number, coupon?: string) => {
   if (!window.AWIN_ADVERTISER_ID || !trackingIds.awc) return;
   const src = 'https://www.awin1.com/sread.img'
     + `?tt=ns&tv=2&merchant=${encodeURIComponent(window.AWIN_ADVERTISER_ID)}`
     + `&amount=${amount}&cr=${encodeURIComponent(window.ECOM_CURRENCY)}`
-    + `&ref=${encodeURIComponent(orderId)}`
+    + `&ref=${encodeURIComponent(orderRef)}`
     + `&parts=${encodeURIComponent(`DEFAULT:${amount}`)}`
     + `&vc=${encodeURIComponent(coupon || '')}`
     + `&ch=${encodeURIComponent(trackingIds.awin_channel || 'aw')}`
@@ -81,7 +81,11 @@ const watchAppRoutes = () => {
     };
 
     let isPurchaseSent = false;
-    const emitPurchase = (orderId: string, orderJson?: string) => {
+    const emitPurchase = (
+      orderId: string,
+      routeOrderNumber?: string | number,
+      orderJson?: string,
+    ) => {
       if (!isPurchaseSent) {
         if (localStorage.getItem('gtag.orderIdSent') !== orderId) {
           let order: Orders | undefined;
@@ -92,9 +96,13 @@ const watchAppRoutes = () => {
               //
             }
           }
-          const { amount } = (order || (window as any).storefrontApp) as {
+          const { amount, number: bodyOrderNumber } = (
+            order || (window as any).storefrontApp
+          ) as {
             amount?: Orders['amount'],
+            number?: Orders['number'],
           };
+          const orderNumber = bodyOrderNumber || Number(routeOrderNumber) || undefined;
           const params: Gtag.EventParams & PurchaseExtraParams = {
             transaction_id: orderId,
             value: fixMoneyValue(amount?.total || shoppingCart.subtotal || 0),
@@ -103,6 +111,9 @@ const watchAppRoutes = () => {
               ? order.extra_discount?.discount_coupon
               : getCouponApplied(),
           };
+          if (orderNumber) {
+            params.order_number = orderNumber;
+          }
           if (amount) {
             if (amount.freight !== undefined) {
               params.shipping = fixMoneyValue(amount.freight);
@@ -156,7 +167,11 @@ const watchAppRoutes = () => {
             params.shipping_delivery_days = days;
           }
           emitGtagEvent('purchase', params, paramsToHash);
-          emitAwinFallbackPixel(orderId, params.value as number, params.coupon);
+          emitAwinFallbackPixel(
+            params.order_number ? String(params.order_number) : orderId,
+            params.value as number,
+            params.coupon,
+          );
           localStorage.setItem('gtag.orderIdSent', orderId);
         }
         isPurchaseSent = true;
@@ -182,10 +197,10 @@ const watchAppRoutes = () => {
         case 'confirmation':
           clearTimeout(emitPurchaseTimer);
           if (params.json) {
-            emitPurchase(params.id, decodeURIComponent(params.json));
+            emitPurchase(params.id, params.number, decodeURIComponent(params.json));
           } else {
             emitPurchaseTimer = setTimeout(() => {
-              emitPurchase(params.id);
+              emitPurchase(params.id, params.number);
             }, 1500);
           }
           break;

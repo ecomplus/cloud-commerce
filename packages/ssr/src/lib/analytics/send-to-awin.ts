@@ -45,7 +45,7 @@ const sendToAwin = async ({
     if (!params?.transaction_id) return;
     const voucher = params.coupon;
     const awinOrder: Record<string, any> = {
-      orderReference: params.transaction_id,
+      orderReference: String(params.order_number || params.transaction_id),
       channel: validChannels.has(channel) ? channel : 'aw',
       awc,
       voucher,

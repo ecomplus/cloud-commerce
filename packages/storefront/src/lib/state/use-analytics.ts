@@ -67,6 +67,7 @@ export const GTAG_EVENT_TYPE = 'GtagEvent';
 
 export type PurchaseExtraParams = {
   buyer_id?: string;
+  order_number?: number;
   shipping_addr_province_code?: string;
   shipping_addr_country_code?: string;
   shipping_delivery_days?: number;
