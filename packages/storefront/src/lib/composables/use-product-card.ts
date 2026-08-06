@@ -5,6 +5,7 @@ import type {
   SearchItem,
   ResourceListResult,
 } from '@cloudcommerce/api/types';
+import type { ExtendedCartItem } from '@@sf/state/shopping-cart';
 import {
   ref,
   computed,
@@ -21,7 +22,11 @@ import {
   onPromotion as checkOnPromotion,
 } from '@ecomplus/utils';
 import { slugify } from '@@sf/sf-lib';
-import { addProductToCart } from '@@sf/state/shopping-cart';
+import {
+  addCartItem,
+  addProductToCart,
+  parseProduct,
+} from '@@sf/state/shopping-cart';
 import { emitGtagEvent, getGtagItem } from '@@sf/state/use-analytics';
 
 const idsToStockRefetch: string[] = [];
@@ -56,12 +61,118 @@ export const kitItemFields = [
   'name' as const,
   'slug' as const,
   'available' as const,
+  'visible' as const,
   'price' as const,
+  'base_price' as const,
   'quantity' as const,
+  'min_quantity' as const,
   'pictures.normal' as const,
+  'variations' as const,
 ];
 
 export type KitItems = ProductsList<typeof kitItemFields>;
+
+export type KitItem = KitItems[number];
+
+/**
+ * Variation selected for each `kit_composition` entry, by composition index.
+ * Entries with a fixed `variation_id` or without variations are ignored.
+ */
+export type KitVariationIds = Array<ResourceId | null | undefined>;
+
+type KitComposition = Exclude<Products['kit_composition'], undefined>;
+
+type CartKitComposition = Exclude<
+  Exclude<ExtendedCartItem['kit_product'], undefined>['composition'],
+  undefined
+>;
+
+const getKitItemStock = (kitItem: KitItem, variationId?: ResourceId | null) => {
+  const variation = variationId
+    ? kitItem.variations?.find(({ _id }) => _id === variationId)
+    : undefined;
+  const quantity = variation?.quantity ?? kitItem.quantity;
+  return typeof quantity === 'number' ? quantity : Infinity;
+};
+
+/**
+ * Matches a `kit_composition` entry to its (buyable) product and variation,
+ * `null` when the item can't be sold with the given selection.
+ */
+const matchKitItem = (
+  kitItems: KitItems,
+  composition: KitComposition[number],
+  selectedVariationId?: ResourceId | null,
+) => {
+  const kitItem = kitItems.find(({ _id }) => _id === composition._id);
+  if (!kitItem?.available || kitItem.visible === false) return null;
+  const variationId = composition.variation_id || selectedVariationId || undefined;
+  const variation = variationId
+    ? kitItem.variations?.find(({ _id }) => _id === variationId)
+    : undefined;
+  // Kit item with variations requires a selected (and valid) SKU
+  if (kitItem.variations?.length && !variation) return null;
+  return { kitItem, variationId, variation };
+};
+
+const sumToKitComposition = (
+  composition: CartKitComposition,
+  newItem: CartKitComposition[number],
+) => {
+  const currentItem = composition.find((item) => {
+    return item._id === newItem._id && item.variation_id === newItem.variation_id;
+  });
+  if (currentItem) {
+    currentItem.quantity = (currentItem.quantity || 0) + (newItem.quantity || 0);
+  } else {
+    composition.push(newItem);
+  }
+};
+
+/**
+ * Cart items (with `kit_product` set) for one kit pack, `null` when any item
+ * is unavailable, out of stock or missing its variation selection.
+ */
+const parseKitCartItems = (
+  kitProduct: { _id: ResourceId, name?: string, price: number },
+  kitComposition: KitComposition,
+  kitItems: KitItems,
+  quantityToAdd: number,
+  kitVariationIds?: KitVariationIds,
+) => {
+  let packQuantity = 0;
+  const composition: CartKitComposition = [];
+  /* The same product may be repeated on kit composition (with distinct
+  variations), items must be merged to a single cart item each. */
+  const cartItemsByKey: Record<string, ExtendedCartItem> = {};
+  for (let i = 0; i < kitComposition.length; i++) {
+    const matched = matchKitItem(kitItems, kitComposition[i], kitVariationIds?.[i]);
+    if (!matched) return null;
+    const { kitItem, variationId, variation } = matched;
+    const quantity = (kitComposition[i].quantity || 1) * quantityToAdd;
+    if (!checkInStock({ ...kitItem, ...variation, min_quantity: quantity })) {
+      return null;
+    }
+    packQuantity += quantity;
+    sumToKitComposition(composition, { _id: kitItem._id, variation_id: variationId, quantity });
+    const key = `${kitItem._id}:${variationId || ''}`;
+    if (cartItemsByKey[key]) {
+      cartItemsByKey[key].quantity += quantity;
+    } else {
+      cartItemsByKey[key] = parseProduct(kitItem, variationId, quantity);
+    }
+  }
+  return Object.keys(cartItemsByKey).map((key) => ({
+    ...cartItemsByKey[key],
+    kit_product: {
+      _id: kitProduct._id,
+      name: kitProduct.name,
+      price: kitProduct.price,
+      pack_quantity: packQuantity,
+      composition,
+    },
+  }));
+};
 
 export type Props = {
   product?: ProductItem & { __ssr?: boolean };
@@ -164,38 +275,60 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
   });
 
   const kitItems = ref<KitItems | null>(null);
-  const loadKitItems = async () => {
+  const isLoadingKitItems = ref(false);
+  let loadingKitItems: Promise<void> | null = null;
+  const loadKitItems = () => {
     const kitComposition = product.kit_composition;
-    if (kitComposition?.length) {
+    if (!kitComposition?.length) return Promise.resolve();
+    if (loadingKitItems) return loadingKitItems;
+    isLoadingKitItems.value = true;
+    loadingKitItems = (async () => {
+      const productIds: ResourceId[] = [];
+      kitComposition.forEach(({ _id }) => {
+        if (!productIds.includes(_id)) productIds.push(_id);
+      });
       const { data } = await api.get('products', {
-        params: { _id: kitComposition.map(({ _id }) => _id) },
+        params: { _id: productIds },
         fields: kitItemFields,
       });
       kitItems.value = data.result;
-      let maxKitQnt = product.quantity || 1;
-      for (let i = 0; i < kitItems.value.length; i++) {
-        const kitItem = kitItems.value[i];
-        if (!kitItem.quantity) {
+      /* Kit availability is bound to its least available item,
+      so `quantity` must be the lowest number of packs any item can fill. */
+      let maxKitQnt = Infinity;
+      for (let i = 0; i < kitComposition.length; i++) {
+        const { _id, quantity, variation_id: variationId } = kitComposition[i];
+        const kitItem = data.result.find((item) => item._id === _id);
+        if (!kitItem) {
           maxKitQnt = 0;
           break;
         }
-        const compositionQnt = kitComposition
-          .find(({ _id }) => _id === kitItem._id)?.quantity || 1;
-        const maxKitQntByItem = Math.floor(kitItem.quantity / compositionQnt);
-        if (maxKitQntByItem > maxKitQnt) {
+        const itemStock = getKitItemStock(kitItem, variationId);
+        const maxKitQntByItem = Math.floor(itemStock / (quantity || 1));
+        if (maxKitQntByItem < maxKitQnt) {
           maxKitQnt = maxKitQntByItem;
         }
       }
-      product.quantity = maxKitQnt;
-    }
+      if (maxKitQnt !== Infinity) {
+        product.quantity = typeof product.quantity === 'number'
+          ? Math.min(product.quantity, maxKitQnt)
+          : maxKitQnt;
+      }
+    })().catch((err) => {
+      loadingKitItems = null;
+      console.error(err);
+    }).finally(() => {
+      isLoadingKitItems.value = false;
+    });
+    return loadingKitItems;
   };
 
   const isLoadingToCart = ref(false);
   const isFailedToCart = ref(false);
   const loadToCart = async (
     quantityToAdd = 1,
-    { variationId }: {
+    { variationId, kitVariationIds }: {
       variationId?: ResourceId | null,
+      kitVariationIds?: KitVariationIds,
     } = {},
   ) => {
     isLoadingToCart.value = true;
@@ -206,47 +339,18 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       if (kitComposition?.length) {
         if (variationId) return [null];
         if (!kitItems.value) await loadKitItems();
-        if (kitItems.value?.length !== kitComposition.length) {
-          return [null];
-        }
-        for (let i = 0; i < kitComposition.length; i++) {
-          const { _id, quantity } = kitComposition[i];
-          const kitItem = kitItems.value.find((item) => item._id === _id);
-          if (
-            !kitItem?.available
-            || !checkInStock(kitItem)
-            || (quantity && kitItem.quantity! < quantity)
-          ) {
-            return [null];
-          }
-        }
-        let packQuantity = 0;
-        const cartKitComposition: Array<{ _id: ResourceId, quantity: number }> = [];
-        kitComposition.forEach(({ _id, quantity }) => {
-          const kitItemQuantity = (quantity || 1) * quantityToAdd;
-          packQuantity += kitItemQuantity;
-          cartKitComposition.push(({
-            _id,
-            quantity: kitItemQuantity,
-          }));
-        });
-        return kitItems.value.map((kitItem) => {
-          const { quantity } = cartKitComposition.find(({ _id }) => {
-            return _id === kitItem._id;
-          }) || {};
-          if (!quantity) return null;
-          const cartItem = addProductToCart(kitItem, undefined, quantity);
-          if (cartItem) {
-            cartItem.kit_product = {
-              _id: product._id,
-              name: product.name,
-              price: product.price,
-              pack_quantity: packQuantity,
-              composition: cartKitComposition,
-            };
-          }
-          return cartItem;
-        });
+        if (!kitItems.value?.length) return [null];
+        const kitCartItems = parseKitCartItems(
+          product,
+          kitComposition,
+          kitItems.value,
+          quantityToAdd,
+          kitVariationIds,
+        );
+        if (!kitCartItems) return [null];
+        /* `kit_product` is set before adding to cart, otherwise each new item
+        may be merged with a matching (standalone) item already on cart. */
+        return kitCartItems.map(addCartItem);
       }
       return [addProductToCart(product, variationId || undefined, quantityToAdd)];
     })();
@@ -268,6 +372,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     discountPercentage,
     hasVariations,
     kitItems,
+    isLoadingKitItems,
     loadKitItems,
     loadToCart,
     isLoadingToCart,
