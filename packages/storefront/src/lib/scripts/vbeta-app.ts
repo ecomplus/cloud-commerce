@@ -92,8 +92,11 @@ const watchAppRoutes = () => {
               //
             }
           }
-          const { amount } = (order || (window as any).storefrontApp) as {
+          const { amount, number: orderNumber } = (
+            order || (window as any).storefrontApp
+          ) as {
             amount?: Orders['amount'],
+            number?: Orders['number'],
           };
           const params: Gtag.EventParams & PurchaseExtraParams = {
             transaction_id: orderId,
@@ -103,6 +106,9 @@ const watchAppRoutes = () => {
               ? order.extra_discount?.discount_coupon
               : getCouponApplied(),
           };
+          if (orderNumber) {
+            params.order_number = orderNumber;
+          }
           if (amount) {
             if (amount.freight !== undefined) {
               params.shipping = fixMoneyValue(amount.freight);
@@ -156,7 +162,11 @@ const watchAppRoutes = () => {
             params.shipping_delivery_days = days;
           }
           emitGtagEvent('purchase', params, paramsToHash);
-          emitAwinFallbackPixel(orderId, params.value as number, params.coupon);
+          emitAwinFallbackPixel(
+            params.order_number ? String(params.order_number) : orderId,
+            params.value as number,
+            params.coupon,
+          );
           localStorage.setItem('gtag.orderIdSent', orderId);
         }
         isPurchaseSent = true;
