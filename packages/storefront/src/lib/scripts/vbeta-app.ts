@@ -81,7 +81,7 @@ const watchAppRoutes = () => {
     };
 
     let isPurchaseSent = false;
-    const emitPurchase = (orderId: string, orderJson?: string) => {
+    const emitPurchase = (orderId: string, routeOrderNumber?: string, orderJson?: string) => {
       if (!isPurchaseSent) {
         if (localStorage.getItem('gtag.orderIdSent') !== orderId) {
           let order: Orders | undefined;
@@ -92,12 +92,16 @@ const watchAppRoutes = () => {
               //
             }
           }
-          const { amount, number: orderNumber } = (
+          const { amount, number: bodyOrderNumber } = (
             order || (window as any).storefrontApp
           ) as {
             amount?: Orders['amount'],
             number?: Orders['number'],
           };
+          /* Order number is a route param (`/confirmation/:id?/:number?/:json?`)
+          since the first navigation, while the order body may take longer to
+          load — or never arrive, on the timed out fallback below. */
+          const orderNumber = bodyOrderNumber || Number(routeOrderNumber) || undefined;
           const params: Gtag.EventParams & PurchaseExtraParams = {
             transaction_id: orderId,
             value: fixMoneyValue(amount?.total || shoppingCart.subtotal || 0),
@@ -192,10 +196,10 @@ const watchAppRoutes = () => {
         case 'confirmation':
           clearTimeout(emitPurchaseTimer);
           if (params.json) {
-            emitPurchase(params.id, decodeURIComponent(params.json));
+            emitPurchase(params.id, params.number, decodeURIComponent(params.json));
           } else {
             emitPurchaseTimer = setTimeout(() => {
-              emitPurchase(params.id);
+              emitPurchase(params.id, params.number);
             }, 1500);
           }
           break;
