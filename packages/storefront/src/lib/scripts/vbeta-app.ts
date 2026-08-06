@@ -31,12 +31,12 @@ import utm from '@@sf/scripts/session-utm';
 
 // https://help.awin.com/developers/docs/fall-back-conversion-pixel
 // Awin prioritizes one tracking method per order ref, no double-count with the S2S call
-const emitAwinFallbackPixel = (orderId: string, amount: number, coupon?: string) => {
+const emitAwinFallbackPixel = (orderRef: string, amount: number, coupon?: string) => {
   if (!window.AWIN_ADVERTISER_ID || !trackingIds.awc) return;
   const src = 'https://www.awin1.com/sread.img'
     + `?tt=ns&tv=2&merchant=${encodeURIComponent(window.AWIN_ADVERTISER_ID)}`
     + `&amount=${amount}&cr=${encodeURIComponent(window.ECOM_CURRENCY)}`
-    + `&ref=${encodeURIComponent(orderId)}`
+    + `&ref=${encodeURIComponent(orderRef)}`
     + `&parts=${encodeURIComponent(`DEFAULT:${amount}`)}`
     + `&vc=${encodeURIComponent(coupon || '')}`
     + `&ch=${encodeURIComponent(trackingIds.awin_channel || 'aw')}`
@@ -81,7 +81,11 @@ const watchAppRoutes = () => {
     };
 
     let isPurchaseSent = false;
-    const emitPurchase = (orderId: string, routeOrderNumber?: string, orderJson?: string) => {
+    const emitPurchase = (
+      orderId: string,
+      routeOrderNumber?: string | number,
+      orderJson?: string,
+    ) => {
       if (!isPurchaseSent) {
         if (localStorage.getItem('gtag.orderIdSent') !== orderId) {
           let order: Orders | undefined;
@@ -98,9 +102,6 @@ const watchAppRoutes = () => {
             amount?: Orders['amount'],
             number?: Orders['number'],
           };
-          /* Order number is a route param (`/confirmation/:id?/:number?/:json?`)
-          since the first navigation, while the order body may take longer to
-          load — or never arrive, on the timed out fallback below. */
           const orderNumber = bodyOrderNumber || Number(routeOrderNumber) || undefined;
           const params: Gtag.EventParams & PurchaseExtraParams = {
             transaction_id: orderId,
