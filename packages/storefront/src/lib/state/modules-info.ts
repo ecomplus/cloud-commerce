@@ -33,8 +33,19 @@ const modulesInfo = reactive<{
     available_extra_discount?: ApplyDiscountResponse['available_extra_discount'],
   },
 }>(emptyInfo);
+const infoPreset: { [modName: string]: Record<string, any> } = {};
 loadingGlobalInfoPreset.then((modulesInfoPreset) => {
-  Object.assign(modulesInfo, modulesInfoPreset);
+  Object.keys(modulesInfoPreset).forEach((modName) => {
+    // Must copy, assigning the preset objects themselves would alias
+    // `window.$storefront.modulesInfoPreset` and empty it on refresh
+    infoPreset[modName] = { ...modulesInfoPreset[modName] };
+    Object.keys(infoPreset[modName]).forEach((field) => {
+      // Preset is the baseline only, persisted (API sourced) info wins
+      if (modulesInfo[modName][field] === undefined) {
+        modulesInfo[modName][field] = infoPreset[modName][field];
+      }
+    });
+  });
 });
 const modulesInfoEmitter = mitt();
 
@@ -119,9 +130,6 @@ if (!import.meta.env.SSR) {
       fetchModule(modName, reqOptions)
         .then(async (response) => {
           if (response.ok) {
-            Object.keys(modulesInfo[modName]).forEach((key) => {
-              delete modulesInfo[modName][key];
-            });
             const modInfo = {};
             const { result } = await response.json();
             if (Array.isArray(result)) {
@@ -183,7 +191,15 @@ if (!import.meta.env.SSR) {
                 }
               });
             }
-            Object.assign(modulesInfo[modName], modInfo);
+            // Keep preset fields the response didn't bring: an app returning
+            // error must not erase what's set on storefront settings
+            const nextInfo = { ...infoPreset[modName], ...modInfo };
+            Object.keys(modulesInfo[modName]).forEach((key) => {
+              if (nextInfo[key] === undefined) {
+                delete modulesInfo[modName][key];
+              }
+            });
+            Object.assign(modulesInfo[modName], nextInfo);
             sessionStorage.setItem(storageKey, JSON.stringify({
               ...modulesInfo,
               __timestamp: Date.now(),
