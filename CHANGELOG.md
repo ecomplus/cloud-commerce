@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.62.2](https://github.com/ecomplus/cloud-commerce/compare/v2.62.1...v2.62.2) (2026-08-08)
+
+
+### Bug Fixes
+
+* **analytics:** Get order number from route on slow confirmation loads ([79d22c1](https://github.com/ecomplus/cloud-commerce/commit/79d22c198af605166a313759c86bd6694ee16810))
+* **analytics:** Send Awin order reference as string, as the API expects ([4ab02f5](https://github.com/ecomplus/cloud-commerce/commit/4ab02f56b47e32e5695d49f8bb12e188975030ca))
+* **analytics:** Send customer-facing order number to Awin, not internal id ([7e527df](https://github.com/ecomplus/cloud-commerce/commit/7e527df2b9e9903476fd5d20d74f10900637e53e))
+* **storefront:** Fix loyalty points not showing at checkout when store has discount preset ([#805](https://github.com/ecomplus/cloud-commerce/issues/805)) ([47ba3e9](https://github.com/ecomplus/cloud-commerce/commit/47ba3e96d51043e87ce495fbee0d652a12381107))
+
 ## [2.62.1](https://github.com/ecomplus/cloud-commerce/compare/v2.62.0...v2.62.1) (2026-08-05)
 
 
