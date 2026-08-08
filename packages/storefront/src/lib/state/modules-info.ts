@@ -35,12 +35,11 @@ const modulesInfo = reactive<{
 }>(emptyInfo);
 const infoPreset: { [modName: string]: Record<string, any> } = {};
 loadingGlobalInfoPreset.then((modulesInfoPreset) => {
+  // Copied and gap filled: must not alias (and later empty)
+  // `window.$storefront.modulesInfoPreset`, nor override persisted info
   Object.keys(modulesInfoPreset).forEach((modName) => {
-    // Must copy, assigning the preset objects themselves would alias
-    // `window.$storefront.modulesInfoPreset` and empty it on refresh
     infoPreset[modName] = { ...modulesInfoPreset[modName] };
     Object.keys(infoPreset[modName]).forEach((field) => {
-      // Preset is the baseline only, persisted (API sourced) info wins
       if (modulesInfo[modName][field] === undefined) {
         modulesInfo[modName][field] = infoPreset[modName][field];
       }
@@ -74,12 +73,17 @@ export const fetchModule: FetchModule = (modName, reqOptions) => {
 
 if (!import.meta.env.SSR) {
   const storageKey = 'MODULES_INFO';
+  const fetchedModules = new Set<ModuleApiEndpoint>();
   const sessionJson = sessionStorage.getItem(storageKey);
   if (sessionJson) {
     try {
       const persistedValue = JSON.parse(sessionJson);
       if (persistedValue.__timestamp >= Date.now() - 1000 * 60 * 5) {
         delete persistedValue.__timestamp;
+        if (Array.isArray(persistedValue.__fetched)) {
+          persistedValue.__fetched.forEach((modName) => fetchedModules.add(modName));
+        }
+        delete persistedValue.__fetched;
         Object.assign(modulesInfo, persistedValue);
       } else {
         sessionStorage.removeItem(storageKey);
@@ -92,10 +96,18 @@ if (!import.meta.env.SSR) {
   const fetchInfo = () => {
     const modulesToFetch: { modName: ModuleApiEndpoint, reqOptions?: any }[] = [];
     (['list_payments', 'calculate_shipping'] as const).forEach((modName) => {
-      if (Object.keys(modulesInfo[modName]).length) {
+      const isInfoSet = Object.keys(modulesInfo[modName]).length > 0;
+      if (isInfoSet) {
         modulesInfoEmitter.emit(modName, modulesInfo[modName]);
       }
-      modulesToFetch.push({ modName });
+      // Preset covers `calculate_shipping` (single field), but `list_payments`
+      // may still miss `loyalty_points_programs` and others
+      const canSkipRequest = modName === 'calculate_shipping'
+        ? isInfoSet
+        : fetchedModules.has(modName);
+      if (!canSkipRequest) {
+        modulesToFetch.push({ modName });
+      }
     });
     if (Object.keys(utm).length || sessionCoupon) {
       const { apiContext } = globalThis.$storefront;
@@ -191,8 +203,7 @@ if (!import.meta.env.SSR) {
                 }
               });
             }
-            // Keep preset fields the response didn't bring: an app returning
-            // error must not erase what's set on storefront settings
+            // Preset must survive a response missing the field (app error)
             const nextInfo = { ...infoPreset[modName], ...modInfo };
             Object.keys(modulesInfo[modName]).forEach((key) => {
               if (nextInfo[key] === undefined) {
@@ -200,9 +211,13 @@ if (!import.meta.env.SSR) {
               }
             });
             Object.assign(modulesInfo[modName], nextInfo);
+            if (Object.keys(modInfo).length) {
+              fetchedModules.add(modName);
+            }
             sessionStorage.setItem(storageKey, JSON.stringify({
               ...modulesInfo,
               __timestamp: Date.now(),
+              __fetched: [...fetchedModules],
             }));
             modulesInfoEmitter.emit(modName, modulesInfo[modName]);
           }
