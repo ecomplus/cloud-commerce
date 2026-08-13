@@ -114,6 +114,8 @@ export const useProductDetails = (props: Props) => {
 
   const isSkuSelected = computed(() => {
     if (isKit.value) {
+      // Can't assert selections while kit items are still unknown/loading
+      if (!kitItems.value) return false;
       return kitComposition.value.every(({ isSelected }) => isSelected);
     }
     return Boolean(!product.variations?.length || variationId.value);
@@ -128,7 +130,8 @@ export const useProductDetails = (props: Props) => {
     return !hasSkuSelectionAlert.value;
   };
 
-  const addToCart = () => {
+  const addToCart = async () => {
+    if (isKit.value && !kitItems.value) await loadKitItems();
     if (!checkVariation()) return null;
     return loadToCart(quantity.value, {
       variationId: variationId.value,

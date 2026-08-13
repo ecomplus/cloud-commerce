@@ -65,10 +65,12 @@ const handleSelect = (index: number, ev: Event) => {
           >
             {{ $t.i19outOfStock }}
           </div>
+          <!-- Selector must be kept with the out of stock warn, so the
+          customer can switch to another variation when one runs out -->
           <slot
-            v-else-if="item.variations.length"
+            v-if="item.variations.length"
             name="variations"
-            v-bind="{ item, selectVariation }"
+            v-bind="{ item, selectVariation, hasSelectionAlert }"
           >
             <select
               class="mt-2 w-full rounded border border-base-200 bg-white

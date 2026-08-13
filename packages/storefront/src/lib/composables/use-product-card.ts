@@ -61,11 +61,9 @@ export const kitItemFields = [
   'name' as const,
   'slug' as const,
   'available' as const,
-  'visible' as const,
   'price' as const,
   'base_price' as const,
   'quantity' as const,
-  'min_quantity' as const,
   'pictures.normal' as const,
   'variations' as const,
 ];
@@ -105,7 +103,9 @@ const matchKitItem = (
   selectedVariationId?: ResourceId | null,
 ) => {
   const kitItem = kitItems.find(({ _id }) => _id === composition._id);
-  if (!kitItem?.available || kitItem.visible === false) return null;
+  /* Hidden (`visible: false`) items are still buyable within the kit,
+  they're commonly gifts/addons kept out of the catalog on purpose. */
+  if (!kitItem?.available) return null;
   const variationId = composition.variation_id || selectedVariationId || undefined;
   const variation = variationId
     ? kitItem.variations?.find(({ _id }) => _id === variationId)
@@ -149,11 +149,14 @@ const parseKitCartItems = (
     const matched = matchKitItem(kitItems, kitComposition[i], kitVariationIds?.[i]);
     if (!matched) return null;
     const { kitItem, variationId, variation } = matched;
-    const quantity = (kitComposition[i].quantity || 1) * quantityToAdd;
+    const quantityPerPack = kitComposition[i].quantity || 1;
+    const quantity = quantityPerPack * quantityToAdd;
     if (!checkInStock({ ...kitItem, ...variation, min_quantity: quantity })) {
       return null;
     }
-    packQuantity += quantity;
+    /* `pack_quantity` counts units on a single kit pack (not multiplied by
+    packs to add), it divides `kit_product.price` for the item unit price. */
+    packQuantity += quantityPerPack;
     sumToKitComposition(composition, { _id: kitItem._id, variation_id: variationId, quantity });
     const key = `${kitItem._id}:${variationId || ''}`;
     if (cartItemsByKey[key]) {
@@ -162,14 +165,14 @@ const parseKitCartItems = (
       cartItemsByKey[key] = parseProduct(kitItem, variationId, quantity);
     }
   }
-  return Object.keys(cartItemsByKey).map((key) => ({
-    ...cartItemsByKey[key],
+  return Object.values(cartItemsByKey).map((cartItem) => ({
+    ...cartItem,
     kit_product: {
       _id: kitProduct._id,
       name: kitProduct.name,
       price: kitProduct.price,
       pack_quantity: packQuantity,
-      composition,
+      composition: composition.map((item) => ({ ...item })),
     },
   }));
 };
