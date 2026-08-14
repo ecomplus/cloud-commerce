@@ -162,9 +162,9 @@ export const useProductDetails = (props: Props) => {
       }
       return items;
     }, [] as Array<Record<string, any>>);
-    if (kitShippedItems.length) {
-      shippedItems.splice(0, shippedItems.length, ...kitShippedItems);
-    }
+    /* Always replaced (even while still empty on load) so shipping is never
+    calculated with the kit product itself, which has no weight/dimensions. */
+    shippedItems.splice(0, shippedItems.length, ...kitShippedItems);
   }, { immediate: true });
 
   return {

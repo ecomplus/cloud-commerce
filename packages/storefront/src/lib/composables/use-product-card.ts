@@ -86,11 +86,21 @@ type CartKitComposition = Exclude<
 >;
 
 const getKitItemStock = (kitItem: KitItem, variationId?: ResourceId | null) => {
-  const variation = variationId
-    ? kitItem.variations?.find(({ _id }) => _id === variationId)
-    : undefined;
-  const quantity = variation?.quantity ?? kitItem.quantity;
-  return typeof quantity === 'number' ? quantity : Infinity;
+  if (variationId) {
+    const variation = kitItem.variations?.find(({ _id }) => _id === variationId);
+    const quantity = variation?.quantity ?? kitItem.quantity;
+    return typeof quantity === 'number' ? quantity : Infinity;
+  }
+  if (kitItem.variations?.length) {
+    /* Free variation: each pack takes all units from a single chosen variation,
+    so the ceiling is the best variation stock — the parent product `quantity`
+    aggregates (sums) all variations and would be optimistic. */
+    return kitItem.variations.reduce((maxQnt, { quantity }) => {
+      const variationQnt = typeof quantity === 'number' ? quantity : Infinity;
+      return variationQnt > maxQnt ? variationQnt : maxQnt;
+    }, 0);
+  }
+  return typeof kitItem.quantity === 'number' ? kitItem.quantity : Infinity;
 };
 
 /**
@@ -104,8 +114,9 @@ const matchKitItem = (
 ) => {
   const kitItem = kitItems.find(({ _id }) => _id === composition._id);
   /* Hidden (`visible: false`) items are still buyable within the kit,
-  they're commonly gifts/addons kept out of the catalog on purpose. */
-  if (!kitItem?.available) return null;
+  they're commonly gifts/addons kept out of the catalog on purpose.
+  Same `available === false` rule of `isInStock` on `useProductDetails`. */
+  if (!kitItem || kitItem.available === false) return null;
   const variationId = composition.variation_id || selectedVariationId || undefined;
   const variation = variationId
     ? kitItem.variations?.find(({ _id }) => _id === variationId)
@@ -317,9 +328,12 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
           : maxKitQnt;
       }
     })().catch((err) => {
-      loadingKitItems = null;
       console.error(err);
     }).finally(() => {
+      /* The memo only dedupes concurrent calls: cleared on settle so later
+      explicit calls refetch fresh kit items (and stocks) instead of keeping
+      the first load for the whole session. */
+      loadingKitItems = null;
       isLoadingKitItems.value = false;
     });
     return loadingKitItems;
