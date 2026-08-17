@@ -45,7 +45,7 @@
     "@commitlint/config-conventional": "^20.5.3",
     "@commitlint/rules": "^20.5.3",
     "@types/node": "^20.19.43",
-    "commit-and-tag-version": "^12.7.3",
+    "commit-and-tag-version": "^13.1.2",
     "dotenv": "^17.4.2",
     "eslint": "^8.57.1",
     "husky": "^9.1.7",
