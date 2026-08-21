@@ -2,7 +2,7 @@
   <section v-if="products.length" class="w-full py-4">
     <div class="ui-section">
       <div class="mx-auto mb-2 max-w-prose text-center">
-        <h3 class="text-2xl text-base-700 ui-text-brand">
+        <h3 class="ui-text-brand text-2xl text-base-700">
           {{ title }}
         </h3>
       </div>
@@ -21,7 +21,7 @@ import {
   type Props as UseCartRecommendationsProps,
   useCartRecommendations,
 } from '@@sf/composables/use-cart-recommendations';
-// Cada tema tem o seu card, então a vitrine sai com a identidade da loja
+// Each theme has its own card, so the showcase renders with the store identity
 import ProductCard from '~/components/ProductCard.vue';
 
 export type Props = UseCartRecommendationsProps & {

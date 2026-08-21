@@ -1,14 +1,14 @@
 import { createApp } from 'vue';
 import CartRecommendations from '@@sf/components/CartRecommendations.vue';
-// Entrypoint Vue do próprio tema, para a vitrine herdar os globais ($t, ALink, AImg…)
+// Theme own Vue entrypoint, so the showcase inherits globals ($t, ALink, AImg…)
 import createThemeApp from '~/pages/_vue';
 
 const CONTAINER_ID = 'cart-recommendations';
 
 /**
- * Monta a vitrine de recomendados logo abaixo do SPA legado em `/app/`.
- * O tema pode customizar por `window.propsCartRecommendations` ou desligar
- * atribuindo `false`, sem precisar tocar em nenhum arquivo da loja.
+ * Mounts the recommended products showcase right below the legacy SPA on `/app/`.
+ * Themes may customize it with `window.propsCartRecommendations` or disable it
+ * by assigning `false`, with no need to touch any store file.
  */
 const mountCartRecommendations = () => {
   if (document.getElementById(CONTAINER_ID)) return;
@@ -20,7 +20,7 @@ const mountCartRecommendations = () => {
   const props = (window as any).propsCartRecommendations;
   const app = createApp(CartRecommendations, {
     onRoutes: ['cart', 'checkout', 'confirmation'],
-    ...(typeof props === 'object' ? props : null),
+    ...(props && typeof props === 'object' && !Array.isArray(props) ? props : null),
   });
   createThemeApp(app);
   app.mount(container);

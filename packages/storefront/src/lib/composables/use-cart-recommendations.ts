@@ -50,8 +50,12 @@ export const fetchRecommendedIds = async (
   const cacheKey = `${productId}/${matchType}`;
   if (!graphsCache[cacheKey]) {
     const fetching = (async () => {
+      const storeId = globalThis.window?.ECOM_STORE_ID;
       const res = await fetch(`${GRAPHS_BASE_URI}/products/${productId}/${matchType}.json`, {
-        headers: { 'X-Store-ID': `${globalThis.window?.ECOM_STORE_ID}` },
+        headers: storeId ? { 'X-Store-ID': `${storeId}` } : undefined,
+        signal: typeof AbortSignal.timeout === 'function'
+          ? AbortSignal.timeout(5000)
+          : undefined,
       });
       if (!res.ok) {
         throw new Error(`Graphs ${matchType} for ${productId} failed with ${res.status}`);
@@ -83,6 +87,9 @@ let isWatchingLegacyCart = false;
 const watchLegacyCart = () => {
   if (isWatchingLegacyCart || import.meta.env.SSR) return;
   isWatchingLegacyCart = true;
+  // `window.ecomCart` can only exist within the legacy storefront-app document,
+  // skip polling for it on regular storefront pages
+  if (!document.getElementById('storefront-app')) return;
   let tries = 0;
   const tryWatch = () => {
     const { ecomCart } = globalThis.window as Record<string, any>;
@@ -150,6 +157,9 @@ const useCartRecommendations = (props: Props = {}) => {
     if (!_sourceIds.length) {
       productIds.value = [];
       products.value = [];
+      // May be true from an older still pending execution, which won't reset
+      // it on finish (see `execId` guards) since this exec took it over
+      isFetching.value = false;
       return;
     }
     isFetching.value = true;

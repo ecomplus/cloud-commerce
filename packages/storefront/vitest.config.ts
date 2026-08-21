@@ -7,6 +7,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export default defineConfig({
   resolve: {
     alias: [
+      { find: '@@i18n', replacement: '@cloudcommerce/i18n/src/pt_br.ts' },
       { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
     ],
   },

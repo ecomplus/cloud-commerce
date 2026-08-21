@@ -285,17 +285,21 @@ if (!import.meta.env.SSR) {
   }, {
     immediate: true,
   });
-  // Vitrine de recomendados no carrinho e checkout, substituindo a do SPA legado
-  // (que hoje nunca renderiza: filtrar por `_id` no `search/_els` retorna vazio).
-  // A loja desliga com `window.propsCartRecommendations = false`.
+  // Recommended products showcase on cart and checkout, replacing the legacy
+  // SPA one (which never renders today: `_id` filter on `search/_els` gets 0 hits).
+  // Stores turn it off with `window.propsCartRecommendations = false`.
   if ((window as any).propsCartRecommendations !== false) {
     (window as any).propsEcCheckout = {
       canRecommendItems: false,
       ...(window as any).propsEcCheckout,
     };
-    const style = document.createElement('style');
-    style.textContent = '#storefront-app .recommended-items{display:none}';
-    document.head.appendChild(style);
+    if ((window as any).propsEcCheckout.canRecommendItems === false) {
+      // Also hide the `<recommended-items>` hardcoded on legacy `TheCart.html`,
+      // but respect themes explicitly opting the legacy showcase back in
+      const style = document.createElement('style');
+      style.textContent = '#storefront-app .recommended-items{display:none}';
+      document.head.appendChild(style);
+    }
     const loadCartRecommendations = () => {
       const route = location.hash.replace(/^#\/?/, '').split(/[/?]/)[0];
       if (!['cart', 'checkout', 'confirmation'].includes(route)) return;
