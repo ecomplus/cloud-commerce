@@ -119,7 +119,7 @@ const getMailTempl = (typeOrStatus: MailMapKey) => {
       };
     case 'invoice_issued':
       return {
-        templ: 'invoice_issued',
+        templ: 'invoiceIssued',
         subject: {
           pt_br: 'Nota Fiscal do seu pedido',
           en_us: 'Invoice of your order',
