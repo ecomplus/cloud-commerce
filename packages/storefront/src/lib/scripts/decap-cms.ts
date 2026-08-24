@@ -32,6 +32,25 @@ const initCmsWithPreview = () => {
   }
 };
 
+const checkGitBackend = async (url: string, token: string) => {
+  try {
+    // Same auth scheme Decap uses, `token` keyword is not configurable
+    const res = await afetch(url, {
+      headers: { Authorization: `token ${token}` },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+};
+
+const showAuthError = (message: string) => {
+  const el = document.createElement('div');
+  el.style.cssText = 'padding:2rem;font:1rem/1.5 system-ui,sans-serif;max-width:40rem;margin:auto';
+  el.innerHTML = `<h1 style="font-size:1.25rem">CMS indisponível</h1><p>${message}</p>`;
+  document.body.replaceChildren(el);
+};
+
 const authAndInitCms = async (storeData: CmsStoreData) => {
   const {
     location,
@@ -60,7 +79,8 @@ const authAndInitCms = async (storeData: CmsStoreData) => {
   let repository: string | null = null;
   const searchParams = new URLSearchParams(location.search);
   const ssoToken = searchParams.get('sso_token') || searchParams.get('access_token');
-  if (!cmsConfig.backend?.base_url) {
+  const isManagedAuth = !cmsConfig.backend?.base_url;
+  if (isManagedAuth) {
     if (!token && !ssoToken && CMS_SSO_URL) {
       const url = new URL(CMS_SSO_URL);
       url.searchParams.set('sso_store_id', `${ECOM_STORE_ID}`);
@@ -120,13 +140,35 @@ const authAndInitCms = async (storeData: CmsStoreData) => {
         }
       }
       if (token) {
+        const isTokenValid = await checkGitBackend('https://api.github.com/user', token);
+        if (!isTokenValid) {
+          // Platform credential is dead, store own proxy may still be able to commit
+          token = null;
+        }
+      }
+      if (repository) {
+        cmsConfig.backend.repo = repository;
+      }
+      if (token) {
         delete cmsConfig.backend.api_root;
         cmsConfig.backend.name = 'github';
-        if (repository) {
-          cmsConfig.backend.repo = repository;
+      } else if (ssoToken && cmsConfig.backend.repo !== '_owner/_name') {
+        // Proxied by the store own `feeds` function with its `GITHUB_TOKEN`,
+        // probing the repo endpoint checks store auth, PAT and repo access at once
+        const apiRoot = `${location.origin}/_api`;
+        const probeUrl = `${apiRoot}/repos/${cmsConfig.backend.repo}`;
+        if (await checkGitBackend(probeUrl, ssoToken)) {
+          token = ssoToken;
+          cmsConfig.backend.api_root = apiRoot;
         }
       }
     }
+  }
+  if (!token && isManagedAuth) {
+    showAuthError('Não foi possível autenticar no repositório da loja. A credencial'
+      + ' do GitHub está expirada ou ausente, reconecte o repositório da loja ou'
+      + ' contate o suporte.');
+    return;
   }
   if (token) {
     // Ref.: https://github.com/decaporg/decap-cms/blob/e93c94f1ce707719dfb7750af82b17c38b461831/packages/decap-cms-lib-auth/src/netlify-auth.js#L46
