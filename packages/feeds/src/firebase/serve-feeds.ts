@@ -77,6 +77,13 @@ const fetching = new Promise((resolve, reject) => {
 });
 
 const serveFeeds = async (req: Request, res: Response) => {
+  if (req.path.includes('/repos/')
+    || req.path.includes('/search/')
+    || req.path.endsWith('/user')) {
+    // CMS Git proxy must not wait for nor depend on catalog fetching
+    await proxyGithubApi(req, res);
+    return;
+  }
   try {
     await fetching;
   } catch (err) {
@@ -114,10 +121,6 @@ const serveFeeds = async (req: Request, res: Response) => {
       res.redirect(302, '/sitemap-catalog.xml');
       break;
     default:
-      if (req.path.includes('/repos/')) {
-        await proxyGithubApi(req, res);
-        break;
-      }
       if (req.path.endsWith('/catalog.xml')) {
         await renderCatalog(req, res, products);
         break;

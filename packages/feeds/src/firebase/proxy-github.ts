@@ -5,6 +5,7 @@ import { logger } from '@cloudcommerce/firebase/lib/config';
 
 const proxyGithubApi = async (req: Request, res: Response) => {
   const { GITHUB_REPO, GITHUB_TOKEN } = process.env;
+  const isUserEndpoint = req.path.endsWith('/user');
   if (!GITHUB_REPO && req.path.includes('/repos/_/')) {
     res.status(403).send('Missing GitHub repository name');
     return;
@@ -24,7 +25,8 @@ const proxyGithubApi = async (req: Request, res: Response) => {
       res.sendStatus(406);
       return;
   }
-  const accessToken = req.get('Authorization')?.slice(7); // "Bearer ***"
+  // Decap CMS sends "token ***", other clients "Bearer ***"
+  const accessToken = req.get('Authorization')?.replace(/^(Bearer|token)\s+/i, '');
   if (!accessToken) {
     res.status(401).send('Access token is required on Authorization header');
     return;
@@ -33,6 +35,16 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     const { data: authUser } = await api.get('authentications/me', { accessToken });
     if (!authUser.edit_storefront) {
       res.status(401).send('Your auth user does not have permission to edit storefront');
+      return;
+    }
+    if (isUserEndpoint) {
+      // Git backends (Decap CMS) expect a GitHub-like user, authenticated store user is the author
+      res.send({
+        login: authUser.username,
+        name: authUser.name || authUser.username,
+        email: authUser.email,
+        avatar_url: null,
+      });
       return;
     }
   } catch (_err: any) {
@@ -46,10 +58,12 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     logger.error(error);
     return;
   }
+  // `req.url` keeps the query string, `req.path` does not (`?ref={branch}` and alike)
   const url = 'https://api.github.com'
-    + req.path
-      .replace(/^.+\/repos\//, '/repos/')
+    + (req.originalUrl || req.url)
+      .replace(/^.+?(?=\/(repos|search)\/)/, '')
       .replace('/repos/_/', `/repos/${GITHUB_REPO}/`);
+  const isRepoEndpoint = /\/repos\/[^/]+\/[^/]+$/.test(url.split('?')[0]);
   res.set('X-Proxy-URL', url);
   const headers = {
     Accept: 'application/vnd.github+json',
@@ -61,7 +75,8 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     if (typeof req.body === 'object') {
       body = JSON.stringify(req.body);
       headers['Content-Type'] = 'application/json';
-      headers['Content-Length'] = body.length.toString();
+      // Commit messages and content may be multibyte, `body.length` is not the byte count
+      headers['Content-Length'] = Buffer.byteLength(body).toString();
     } else {
       body = req.body;
     }
@@ -94,6 +109,10 @@ const proxyGithubApi = async (req: Request, res: Response) => {
         //
       }
       if (json !== undefined) {
+        if (isRepoEndpoint && response.ok && json && typeof json === 'object') {
+          // Write access is granted by store auth (`edit_storefront`), not by the token owner
+          json.permissions = { ...json.permissions, pull: true, push: true };
+        }
         res.send(json);
       } else {
         res.send(await response.text());
