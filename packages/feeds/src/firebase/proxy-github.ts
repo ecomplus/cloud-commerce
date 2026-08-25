@@ -15,6 +15,10 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     res.end();
     return;
   }
+  // Same security headers `serve-feeds` sets, proxy requests skip that path
+  res.set('Content-Security-Policy', "default-src 'self'");
+  res.set('X-Content-Type-Options', 'nosniff');
+  res.set('X-Frame-Options', 'DENY');
   // Authenticated content behind the CDN must never be cached
   res.set('Cache-Control', 'private, no-store');
   const isUserEndpoint = req.path.endsWith('/user');

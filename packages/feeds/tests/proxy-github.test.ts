@@ -102,6 +102,7 @@ describe('/user stub', () => {
     await proxyGithubApi(makeReq('/_api/user'), res);
     expect(res.body).toMatchObject({ login: 'marketing1', name: 'Marketing' });
     expect(res.headers['Cache-Control']).toBe('private, no-store');
+    expect(res.headers['X-Content-Type-Options']).toBe('nosniff');
     expect(ghFetch).not.toHaveBeenCalled();
   });
 });
