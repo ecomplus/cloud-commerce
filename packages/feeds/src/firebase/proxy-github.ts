@@ -5,6 +5,18 @@ import { logger } from '@cloudcommerce/firebase/lib/config';
 
 const proxyGithubApi = async (req: Request, res: Response) => {
   const { GITHUB_REPO, GITHUB_TOKEN } = process.env;
+  if (!process.env.FEEDS_DISABLE_CORS) {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', '*');
+    res.set('Access-Control-Max-Age', '600');
+    res.set('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+  }
+  if (req.method === 'OPTIONS') {
+    res.end();
+    return;
+  }
+  // Authenticated content behind the CDN must never be cached
+  res.set('Cache-Control', 'private, no-store');
   const isUserEndpoint = req.path.endsWith('/user');
   if (!GITHUB_REPO && req.path.includes('/repos/_/')) {
     res.status(403).send('Missing GitHub repository name');
@@ -43,7 +55,6 @@ const proxyGithubApi = async (req: Request, res: Response) => {
         login: authUser.username,
         name: authUser.name || authUser.username,
         email: authUser.email,
-        avatar_url: null,
       });
       return;
     }
@@ -63,7 +74,22 @@ const proxyGithubApi = async (req: Request, res: Response) => {
     + (req.originalUrl || req.url)
       .replace(/^.+?(?=\/(repos|search)\/)/, '')
       .replace('/repos/_/', `/repos/${GITHUB_REPO}/`);
-  const isRepoEndpoint = /\/repos\/[^/]+\/[^/]+$/.test(url.split('?')[0]);
+  const { pathname } = new URL(url);
+  let isPathAllowed = false;
+  if (pathname.startsWith('/repos/')) {
+    const [owner, repo, subresource] = pathname.slice('/repos/'.length).split('/');
+    // The PAT may reach more than the store repo, never proxy beyond it
+    const isRepoPinned = !GITHUB_REPO || `${owner}/${repo}` === GITHUB_REPO;
+    isPathAllowed = isRepoPinned && (!subresource
+      || ['git', 'contents', 'issues', 'branches', 'pulls', 'commits'].includes(subresource));
+  } else if (pathname === '/search/issues') {
+    isPathAllowed = !GITHUB_REPO || `${req.query.q || ''}`.includes(`repo:${GITHUB_REPO}`);
+  }
+  if (!isPathAllowed) {
+    res.status(403).send('Endpoint not allowed through this proxy');
+    return;
+  }
+  const isRepoEndpoint = /\/repos\/[^/]+\/[^/]+$/.test(pathname);
   res.set('X-Proxy-URL', url);
   const headers = {
     Accept: 'application/vnd.github+json',

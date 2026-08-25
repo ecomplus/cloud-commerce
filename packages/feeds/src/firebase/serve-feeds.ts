@@ -75,6 +75,8 @@ const fetchAllProducts = async () => {
 const fetching = new Promise((resolve, reject) => {
   fetchAllProducts().then(resolve).catch(reject);
 });
+// Git proxy requests skip awaiting `fetching`, its rejection must not go unhandled
+fetching.catch(() => null);
 
 const serveFeeds = async (req: Request, res: Response) => {
   if (req.path.includes('/repos/')
