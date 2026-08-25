@@ -37,10 +37,12 @@ const checkGitBackend = async (url: string, token: string) => {
     // Same auth scheme Decap uses, `token` keyword is not configurable
     const res = await afetch(url, {
       headers: { Authorization: `token ${token}` },
-    });
-    return res.ok;
+    }, 5000);
+    // Only an explicit auth failure invalidates the backend,
+    // transient errors must not kill a working session
+    return res.status !== 401 && res.status !== 403;
   } catch {
-    return false;
+    return true;
   }
 };
 
