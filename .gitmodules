@@ -16,3 +16,6 @@
 [submodule "ecomplus-stores/mundoquadri"]
 	path = ecomplus-stores/mundoquadri
 	url = git@github.com:mundoquadri/mundoquadri.git
+[submodule "ecomplus-stores/empreender"]
+	path = ecomplus-stores/empreender
+	url = git@github.com:ecom2empreender/empreender.git
