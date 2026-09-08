@@ -9,6 +9,7 @@ export type TrackingIds = {
   ttclid?: string,
   awc?: string,
   awin_channel?: string,
+  awin_testmode?: '1',
   client_id?: string,
   session_id?: string,
   ip6?: string,
@@ -64,6 +65,16 @@ export const getTrackingIds = (
     }
     trackingIds[key] = value;
   });
+  // The Awin conversion REST API has no test flag, every order it receives is
+  // real, so test transactions are marked on the session with
+  // `?awin_testmode=1`: the fallback pixel then fires with `testmode=1` and the
+  // server skips the S2S call, leaving the pixel as the only channel
+  if (url.searchParams.get('awin_testmode') === '1') {
+    sessionStorage.setItem('analytics_awin_testmode', '1');
+  }
+  if (sessionStorage.getItem('analytics_awin_testmode') === '1') {
+    trackingIds.awin_testmode = '1';
+  }
   const cookieNames = ['_fbp', 'AwinChannelCookie'];
   if (!trackingIds.fbc) cookieNames.push('_fbc');
   if (!trackingIds.g_client_id) cookieNames.push('_ga');

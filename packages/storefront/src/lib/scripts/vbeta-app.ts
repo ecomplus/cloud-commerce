@@ -40,7 +40,10 @@ const emitAwinFallbackPixel = (orderRef: string, amount: number, coupon?: string
     + `&parts=${encodeURIComponent(`DEFAULT:${amount}`)}`
     + `&vc=${encodeURIComponent(coupon || '')}`
     + `&ch=${encodeURIComponent(trackingIds.awin_channel || 'aw')}`
-    + '&testmode=0';
+    // Attributes the sale from the click id instead of Awin's own cookies,
+    // keeping the fallback deterministic when the S2S call doesn't arrive
+    + `&cks=${encodeURIComponent(trackingIds.awc)}`
+    + `&testmode=${trackingIds.awin_testmode === '1' ? '1' : '0'}`;
   const img = new Image(0, 0);
   img.src = src;
 };
@@ -170,10 +173,12 @@ const watchAppRoutes = () => {
           // With the S2S call active the pixel only fires when the client
           // has the customer-facing number AND the real order amounts: a
           // pixel with mismatched ref or amount could win Awin's dedup by
-          // reference over the accurate S2S conversion. Without S2S the
-          // pixel is the only channel, so it always fires falling back to
-          // the internal order ID and cart subtotal (legacy behavior)
+          // reference over the accurate S2S conversion. Without S2S -- either
+          // unset on the store or skipped on a test session -- the pixel is
+          // the only channel, so it always fires falling back to the internal
+          // order ID and cart subtotal (legacy behavior)
           const canEmitAwinPixel = !window.AWIN_S2S_ENABLED
+            || trackingIds.awin_testmode === '1'
             || (!!params.order_number && params.shipping !== undefined);
           if (canEmitAwinPixel) {
             // Awin expects the commissionable amount without freight and taxes
