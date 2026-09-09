@@ -16,6 +16,8 @@ minimumReleaseAgeExclude:
   - nodemailer@8.0.4 || 8.0.5 || 9.0.1
   # Renovate security update: vitest@3.2.6
   - vitest@3.2.6
+  # Renovate security update: csv-parse@7.0.2
+  - csv-parse@7.0.2
 packages:
   - 'packages/*'
   - 'packages/apps/*'
