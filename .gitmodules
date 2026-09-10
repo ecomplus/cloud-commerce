@@ -19,3 +19,6 @@
 [submodule "ecomplus-stores/empreender"]
 	path = ecomplus-stores/empreender
 	url = git@github.com:ecom2empreender/empreender.git
+[submodule "ecomplus-stores/oportodamusica"]
+	path = ecomplus-stores/oportodamusica
+	url = git@github.com:oportodamusica/oportodamusica.git
