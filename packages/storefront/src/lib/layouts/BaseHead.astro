@@ -207,20 +207,24 @@ if (apiContext.resource === 'products' && apiContext.doc) {
     sku: product.sku,
     description,
     name: getName(product),
-    offers: {
+  };
+  const productPrice = getPrice(product);
+  // Products without a (public) price must not advertise an offer to search engines
+  if (productPrice > 0) {
+    productJSONLd.offers = {
       '@type': 'Offer',
       url: canonicalUrl,
       availability: `${(checkInStock(product) ? 'In' : 'OutOf')}Stock`,
       priceCurrency: settings.currency,
-      price: getPrice(product),
+      price: productPrice,
       itemCondition: 'http://schema.org/'
         + `${(product.condition !== 'new' ? 'Used' : 'New')}Condition`,
       seller: {
         '@type': 'Organization',
         name: settings.name,
       },
-    },
-  };
+    };
+  }
   if (product.brands?.length) {
     productJSONLd.brand = {
       '@type': 'Brand',
