@@ -138,8 +138,10 @@ const run = async () => {
   });
   const $firebase = (cmd: string) => {
     $.verbose = true;
-    if (cmd === 'deploy' && !options.length) {
-      return $`firebase --project=${projectId} ${cmd} --force`;
+    if (cmd === 'deploy') {
+      // `--force` also on partial deploys (`--only functions:<codebase>`), otherwise
+      // the first deploy of a function with retry policy fails on CI (non-interactive)
+      return $`firebase --project=${projectId} ${cmd} ${options} --force`;
     }
     return $`firebase --project=${projectId} ${cmd} ${options}`;
   };
