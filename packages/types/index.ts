@@ -92,6 +92,8 @@ export type ApiEventName = 'orders-new'
   | 'carts-customerSet'
   | 'carts-delayed'
   | 'customers-new'
+  | 'customers-enabledSet'
+  | 'customers-staffSignatureSet'
   | 'applications-dataSet';
 
 export type AppEventsPayload = {
