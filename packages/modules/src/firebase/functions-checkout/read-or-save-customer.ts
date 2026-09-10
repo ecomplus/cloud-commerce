@@ -5,7 +5,14 @@ import api from '@cloudcommerce/api';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 
 type CustomerToSave = CheckoutCustomer & { addresses: Customers['addresses'] };
-const readOrSaveCustomer = async (customer: CustomerToSave) => {
+type ReadOrSaveOptions = {
+  /* When false (customers-only stores) unknown customers are not created and `null` is returned */
+  canCreate?: boolean,
+};
+const readOrSaveCustomer = async (
+  customer: CustomerToSave,
+  { canCreate = true }: ReadOrSaveOptions = {},
+): Promise<Customers | null> => {
   const customerEndpoint = customer._id?.length === 24
     ? `customers/${customer._id}` as `customers/${Customers['_id']}`
     : `customers/main_email:${customer.main_email}` as `customers/${string}:${string}`;
@@ -36,6 +43,9 @@ const readOrSaveCustomer = async (customer: CustomerToSave) => {
       (err as any).checkoutCode = `cantReadCustomer,${customerEndpoint}`;
       logger.error(err);
     }
+  }
+  if (!canCreate) {
+    return null;
   }
   const newCustomer = {
     display_name: customer.name.given_name || 'visitor',
