@@ -151,19 +151,31 @@ export const useProductDetails = (props: Props) => {
       shippedItems[0].quantity = quantity.value;
       return;
     }
+    /* Items priced with the kit price split by pack units, as on cart
+    (`kit_product.price / pack_quantity`), so the shipping subtotal (used on
+    free shipping rules) is the kit price, not the sum of standalone prices. */
+    const packQuantity = kitComposition.value.reduce((sum, item) => sum + item.quantity, 0);
+    const finalPrice = product.price / packQuantity;
     const kitShippedItems = kitComposition.value.reduce((items, item) => {
       if (item.product) {
         items.push({
           ...item.product,
           body_html: undefined,
+          final_price: finalPrice,
           variation_id: item.variationId || undefined,
           quantity: item.quantity * quantity.value,
         });
       }
       return items;
     }, [] as Array<Record<string, any>>);
-    /* Always replaced (even while still empty on load) so shipping is never
-    calculated with the kit product itself, which has no weight/dimensions. */
+    if (!kitShippedItems.length) {
+      /* Kit items not loaded (yet or failed): keep the kit product itself,
+      shipping can't be calculated with no items at all. */
+      if (shippedItems[0]?._id === product._id) {
+        shippedItems[0].quantity = quantity.value;
+      }
+      return;
+    }
     shippedItems.splice(0, shippedItems.length, ...kitShippedItems);
   }, { immediate: true });
 
