@@ -229,6 +229,16 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     })();
   }
 
+  /* Kit packs ceiling by its items stocks, kept apart to be reapplied
+  whenever the kit product `quantity` is (re)set, e.g. by fresh stocks. */
+  let kitMaxQuantity = Infinity;
+  const applyKitMaxQuantity = () => {
+    if (kitMaxQuantity === Infinity) return;
+    product.quantity = typeof product.quantity === 'number'
+      ? Math.min(product.quantity, kitMaxQuantity)
+      : kitMaxQuantity;
+  };
+
   if (shouldRefetchStock) {
     idsToStockRefetch.push(product._id);
     refetchStock();
@@ -236,6 +246,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
       const productStock = result.find(({ _id }) => _id === product._id);
       if (!productStock) return;
       Object.assign(product, productStock);
+      applyKitMaxQuantity();
       unwatchStocks();
     });
   }
@@ -322,11 +333,8 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
           maxKitQnt = maxKitQntByItem;
         }
       }
-      if (maxKitQnt !== Infinity) {
-        product.quantity = typeof product.quantity === 'number'
-          ? Math.min(product.quantity, maxKitQnt)
-          : maxKitQnt;
-      }
+      kitMaxQuantity = maxKitQnt;
+      applyKitMaxQuantity();
     })().catch((err) => {
       console.error(err);
     }).finally(() => {
