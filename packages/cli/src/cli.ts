@@ -100,6 +100,14 @@ const run = async () => {
             const matchIdx = mergedRewrites.findIndex((r) => r.function === userRewrite.function);
             if (matchIdx >= 0) {
               mergedRewrites[matchIdx] = { ...mergedRewrites[matchIdx], ...userRewrite };
+              return;
+            }
+            // Store rewrites must come before the SSR catch-all or they never match
+            const catchAllIdx = mergedRewrites.findIndex((r) => {
+              return typeof r.source === 'string' && r.source.startsWith('**');
+            });
+            if (catchAllIdx >= 0) {
+              mergedRewrites.splice(catchAllIdx, 0, userRewrite);
             } else {
               mergedRewrites.push(userRewrite);
             }
@@ -130,8 +138,10 @@ const run = async () => {
   });
   const $firebase = (cmd: string) => {
     $.verbose = true;
-    if (cmd === 'deploy' && !options.length) {
-      return $`firebase --project=${projectId} ${cmd} --force`;
+    if (cmd === 'deploy') {
+      // `--force` also on partial deploys (`--only functions:<codebase>`), otherwise
+      // the first deploy of a function with retry policy fails on CI (non-interactive)
+      return $`firebase --project=${projectId} ${cmd} ${options} --force`;
     }
     return $`firebase --project=${projectId} ${cmd} ${options}`;
   };

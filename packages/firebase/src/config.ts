@@ -1,4 +1,4 @@
-import type { ApiEventName, SettingsContent } from '@cloudcommerce/types';
+import type { ApiEventName, SettingsContent, CustomerSet } from '@cloudcommerce/types';
 import { join as joinPath } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import { AsyncLocalStorage } from 'node:async_hooks';
@@ -218,10 +218,27 @@ export type AntiFraudConfig = false | {
 
 export const checkoutRateLimitsCollection = 'checkoutRateLimits';
 
+/* Opt-in gates for stores that only sell to registered/approved customers (B2B, wholesale). */
+export type CheckoutGatesConfig = {
+  /* Reject checkout when the customer doesn't exist yet or `enabled !== true` */
+  customersOnly?: boolean;
+  /* Reject checkout when `customer.staff_signature !== true` (staff approval mark) */
+  requireStaffSignature?: boolean;
+  /* Reject checkout when items subtotal is lower than this value */
+  minSubtotal?: number;
+};
+
+export type PassportConfig = {
+  /* Fields merged into customers auto-created on first (social/email link) login */
+  newCustomer?: Partial<CustomerSet>;
+};
+
 export const config = _config as {
   get(): BaseConfig & typeof mergeConfig & {
     metafields: Record<string, any>;
     checkoutAntiFraud?: AntiFraudConfig;
+    checkout?: CheckoutGatesConfig;
+    passport?: PassportConfig;
   };
   // eslint-disable-next-line
   set(config: any): void;
