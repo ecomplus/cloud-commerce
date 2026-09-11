@@ -290,6 +290,13 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     if ((product as SearchItem).has_variations) return true;
     return Boolean(product.variations?.length);
   });
+  /* Kit product itself has no variations, but a SKU must still be chosen for
+  each composition item with variations not fixed by the kit. */
+  const isKitSkuRequired = computed(() => {
+    return Boolean(product.kit_composition?.some((item) => {
+      return item.has_variations && !item.variation_id;
+    }));
+  });
   emitGtagEvent(isProductPage ? 'view_item' : 'view_item_list', {
     value: isActive.value ? product.price : 0,
     items: [{
@@ -396,6 +403,7 @@ const useProductCard = <T extends ProductItem | undefined = undefined>(props: Pr
     isActive,
     discountPercentage,
     hasVariations,
+    isKitSkuRequired,
     kitItems,
     isLoadingKitItems,
     loadKitItems,
