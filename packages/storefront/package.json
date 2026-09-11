@@ -38,6 +38,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "prepare-monorepo": "bash scripts/prepare-monorepo.sh",
+    "test": "vitest run",
     "lint:fix": "eslint -c ../eslint/storefront.staged.eslintrc.cjs src/lib/**/*.{ts,vue,astro} --fix"
   },
   "dependencies": {
