@@ -95,7 +95,10 @@ export default async (modBody: AppModuleBody<'create_transaction'>) => {
       'externalReference': orderId,
       'description': `Pedido ${orderNumber} ${domain}`,
       'callback': domain
-        ? { 'successUrl': `https://${domain}/app/#/confirmation/${orderId}/` }
+        ? {
+          'successUrl': `https://${domain}/app/#/confirmation/${orderId}`
+            + (orderNumber ? `/${orderNumber}` : ''),
+        }
         : undefined,
     };
     if (paymentMethod.code === 'account_deposit') {

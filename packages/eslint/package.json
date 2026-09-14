@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/eslint",
   "type": "module",
-  "version": "2.62.2",
+  "version": "2.63.2",
   "description": "e-com.plus Cloud Commerce ESLint config",
   "main": "lib/index.js",
   "files": [
@@ -22,8 +22,8 @@
     "build": "echo '@ecomplus/eslint'"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.67.0",
-    "@typescript-eslint/parser": "^8.67.0",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-astro": "^1.7.0",

@@ -16,6 +16,7 @@ type ExecOptions = {
   eventMaxAgeMs?: number,
   memory?: '128MB' | '256MB' | '512MB' | '1GB',
   maxInstances?: number,
+  timeoutSeconds?: number,
 };
 
 const createPubSubFunction = (
@@ -28,6 +29,7 @@ const createPubSubFunction = (
     there is no hard guarantee but max instances 1 is a workaround:
     https://stackoverflow.com/questions/70780310/firebase-pubsub-trigger-with-message-ordering */
     maxInstances = 1,
+    timeoutSeconds,
   }: ExecOptions = {},
 ) => {
   const { httpsFunctionOptions: { region } } = config.get();
@@ -36,6 +38,7 @@ const createPubSubFunction = (
       failurePolicy: eventMaxAgeMs > 0,
       memory,
       maxInstances,
+      timeoutSeconds,
     })
     .pubsub.topic(pubSubTopic).onPublish((message, context) => {
       const eventAgeMs = Date.now() - Date.parse(context.timestamp);

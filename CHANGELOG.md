@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.63.2](https://github.com/ecomplus/cloud-commerce/compare/v2.63.1...v2.63.2) (2026-08-25)
+
+## [2.63.1](https://github.com/ecomplus/cloud-commerce/compare/v2.63.0...v2.63.1) (2026-08-25)
+
+## [2.63.0](https://github.com/ecomplus/cloud-commerce/compare/v2.62.2...v2.63.0) (2026-08-25)
+
+
+### Features
+
+* **apps:** Integração com Bling ERP na plataforma ([b494a6d](https://github.com/ecomplus/cloud-commerce/commit/b494a6dfe6a4acb81d6cc2ecfea0784eb950e6c0))
+
+
+### Bug Fixes
+
+* **analytics:** Ensure Awin gets customer-facing order number after payment redirects ([c8d911f](https://github.com/ecomplus/cloud-commerce/commit/c8d911f3b95d8e98d07238b317b3c4cd7bca1b33))
+* **analytics:** Keep Awin conversions accurate on payment returns and never fail existing orders ([cea8b1b](https://github.com/ecomplus/cloud-commerce/commit/cea8b1bb1a2308de01d4cbd6ebfd44de7e99c0a7))
+* **analytics:** Send Awin the same channel on pixel and server conversion ([77ae44b](https://github.com/ecomplus/cloud-commerce/commit/77ae44bafd519bc20055aee5db1430c33492a514))
+* **analytics:** Send order amount to Awin without freight and taxes ([2f59cb8](https://github.com/ecomplus/cloud-commerce/commit/2f59cb8165a4f0bccf97bc77a66ee8a2cd27dd7a))
+* **apps:** Registrar falhas de exportação automática no log do app Bling ([4fb2666](https://github.com/ecomplus/cloud-commerce/commit/4fb26664521935ca0206965ab8ac265defe58c6d))
+* **bling-erp:** Blindar callback contra documento de aplicação arbitrário ([83ee9e2](https://github.com/ecomplus/cloud-commerce/commit/83ee9e2124205d01c97b6d33f950cb7cb56d36ab))
+* **bling-erp:** Cancelar pedido devolvido e exigir token no callback ([c51443a](https://github.com/ecomplus/cloud-commerce/commit/c51443af9e016cbbbbef82d483055bf12845de5b))
+* **bling-erp:** Comparar estoque pelo saldo físico do depósito no Bling ([2dcaa6a](https://github.com/ecomplus/cloud-commerce/commit/2dcaa6a0dc05a63d21bcb9d5dd67ae6db0cd9826))
+* **bling-erp:** Corrigir estoque que só descia em loja com pedidos reservados ([a086efd](https://github.com/ecomplus/cloud-commerce/commit/a086efd10dd8af01290b7cf2c07d8e5602f81578))
+* **bling-erp:** Corrigir exportação de pedido com numeração própria no Bling ([80350f3](https://github.com/ecomplus/cloud-commerce/commit/80350f3d77ddc74ac446ef748560074b8a64ecec))
+* **bling-erp:** Exportar estoque com depósito extra vazio e acusar depósito mal configurado ([7c92a27](https://github.com/ecomplus/cloud-commerce/commit/7c92a274504efcaecfc5423f553ef3d8824d220a))
+* **bling-erp:** Exportar pedidos de eventos automáticos de qualquer origem ([c11dcea](https://github.com/ecomplus/cloud-commerce/commit/c11dcea47f556be21f169052d66a439f543647b7))
+* **bling-erp:** Impedir que escritas do próprio app voltem como evento ([3bd3c33](https://github.com/ecomplus/cloud-commerce/commit/3bd3c3376606ce5bd027e359837c71db6bb2361a))
+* **bling-erp:** Importar o rastreio completo enviado pelo callback do Bling ([c8caabd](https://github.com/ecomplus/cloud-commerce/commit/c8caabdea163127abc527e7288c238afc5b431a0))
+* **bling-erp:** Invalidar tokens ao trocar as credenciais do Bling ([b023212](https://github.com/ecomplus/cloud-commerce/commit/b02321244af84908fe815e288df6e1655e222099))
+* **bling-erp:** Manter upload de imagens funcionando em instância quente ([9bae005](https://github.com/ecomplus/cloud-commerce/commit/9bae0050ca5cd2f9802dc9afd0acea2576a04e4a))
+* **bling-erp:** Não desativar integração por corrida no refresh do token ([8db7b72](https://github.com/ecomplus/cloud-commerce/commit/8db7b72068943d35c5fdf9ab27bbf5c94a90c7b2))
+* **bling-erp:** Não descartar eventos e lotes de callback em execuções longas ([27b8dda](https://github.com/ecomplus/cloud-commerce/commit/27b8dda1aa5b0af062d6c0e6f216db40fd3731cb))
+* **bling-erp:** Não descartar itens da fila quando o limite diário do Bling estoura ([8572f4c](https://github.com/ecomplus/cloud-commerce/commit/8572f4ce3391863edcb954e0edf8785aad49c084))
+* **bling-erp:** Não gravar credenciais do Bling no log do app ([6414e88](https://github.com/ecomplus/cloud-commerce/commit/6414e88816583abc1e2a6ed0e720ef6d303a2497))
+* **bling-erp:** Não regravar metafields do produto a cada movimentação de estoque ([ead0d3f](https://github.com/ecomplus/cloud-commerce/commit/ead0d3fb33a629d96f00c1d242b49395379c80e7))
+* **bling-erp:** Não regredir status de pedido importado do Bling ([7738fee](https://github.com/ecomplus/cloud-commerce/commit/7738fee863d4c786fb06a0d7c0421e5cfc501b7b))
+* **bling-erp:** Não sobrescrever o produto no Bling em evento de quantidade ([82b95d0](https://github.com/ecomplus/cloud-commerce/commit/82b95d0d625d90b363b924aa00f96ecfce51b98b))
+* **bling-erp:** Não transformar pedido estornado em cancelado no retorno do Bling ([881404f](https://github.com/ecomplus/cloud-commerce/commit/881404f24fef7c93e24223cb65394798192daf53))
+* **bling-erp:** Não zerar o estoque da loja quando o Bling não devolve saldo ([f7825ed](https://github.com/ecomplus/cloud-commerce/commit/f7825edf83fb07b1ad6e88b35cf0ef72a4e47bf1))
+* **bling-erp:** Proteger releitura do token Bling contra falha do Firestore ([9ba6861](https://github.com/ecomplus/cloud-commerce/commit/9ba68612013179a62c67118a391f3468ebb5cd47))
+* **bling-erp:** Registrar pacote no workspace para destravar o release ([2db76aa](https://github.com/ecomplus/cloud-commerce/commit/2db76aa59549b9edd1ce7d4127091f610d3c0092))
+* **bling-erp:** Respeitar o limite de requisições do Bling em chamadas concorrentes ([975b03d](https://github.com/ecomplus/cloud-commerce/commit/975b03d1978de4c5777a4ceb70910c6513ef84c8))
+* **bling-erp:** Smoke test sem matar a integração da loja ([f4deea2](https://github.com/ecomplus/cloud-commerce/commit/f4deea2a21949f326af653f49e82f07dc59bb42f))
+* **bling-erp:** Só importar rastreio do corpo do callback com token validado ([1c9926c](https://github.com/ecomplus/cloud-commerce/commit/1c9926c18fee8f0677ccc8d0d14157f52e7cfbda))
+* **bling-erp:** Unificar base de estoque de import e export do Bling ([303a028](https://github.com/ecomplus/cloud-commerce/commit/303a028a0c86843fe331607ae6e4be15cf0404ca))
+* **bling-erp:** Voltar a notificar e-mails e demais apps em importações do Bling ([cc9ee50](https://github.com/ecomplus/cloud-commerce/commit/cc9ee50c1f3408638283c50f44286d029b9d7bc2))
+* **bling-erp:** Voltar callback Bling a exigir token só quando configurado ([eec45a1](https://github.com/ecomplus/cloud-commerce/commit/eec45a191c61389e3b74efaceb0ced78f73c17d8))
+* **deps:** update dependency vue to ^3.5.41 ([#806](https://github.com/ecomplus/cloud-commerce/issues/806)) ([5c9c5ab](https://github.com/ecomplus/cloud-commerce/commit/5c9c5abe70962a9c7bb12887d26d489b3de91a04))
+* **deps:** Update non-major dependencies ([#807](https://github.com/ecomplus/cloud-commerce/issues/807)) ([a30f82c](https://github.com/ecomplus/cloud-commerce/commit/a30f82c1c827c5e1b0cfa6b1ee406015d700cf6c))
+* **emails:** Correct invoice_issued mail template key to `invoiceIssued` ([#818](https://github.com/ecomplus/cloud-commerce/issues/818)) ([dd472a5](https://github.com/ecomplus/cloud-commerce/commit/dd472a528859af44f9e3021862ba57821aa1e38c))
+* **modules:** Don't multiply the checkout wait when reading the order is slow ([cd3ca7b](https://github.com/ecomplus/cloud-commerce/commit/cd3ca7b403c6d1dc0ff27942575058b7e257259a))
+* **modules:** Retry reading new order until its number is set on checkout ([38ae0ae](https://github.com/ecomplus/cloud-commerce/commit/38ae0aec3a94599c48b473dbc13cec3d4351cc6b))
+* **storefront:** Fix checkout blocked by censored profile cached on browser ([5f42250](https://github.com/ecomplus/cloud-commerce/commit/5f422509716e58439912f10d19c47c9acdde3045))
+* **storefront:** Keep customer name and unlock auth state when clearing censored session ([93826f6](https://github.com/ecomplus/cloud-commerce/commit/93826f6874fc50cfaff4522ed65aa26e463a7396)), closes [#808](https://github.com/ecomplus/cloud-commerce/issues/808)
+* **storefront:** Keep valid customer data when clearing a censored cached session ([20788ea](https://github.com/ecomplus/cloud-commerce/commit/20788eaa2a4afdb112c8aec967db098c09ac819f))
+* **storefront:** Make logout always clear the session and keep customer keys consistent ([5109cfe](https://github.com/ecomplus/cloud-commerce/commit/5109cfe36f0865f80e3b03315b29dcae690c6ea2)), closes [#808](https://github.com/ecomplus/cloud-commerce/issues/808)
+* **storefront:** Stop refetching the customer profile on every page load ([f93d478](https://github.com/ecomplus/cloud-commerce/commit/f93d478be04c568187de43ffbefd3936f7aa9d59))
+
 ## [2.62.2](https://github.com/ecomplus/cloud-commerce/compare/v2.62.1...v2.62.2) (2026-08-08)
 
 

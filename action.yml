@@ -56,6 +56,8 @@ inputs:
     description: 'Analytics: Awin API key'
   tinyerp-token:
     description: 'App: Tiny ERP API token'
+  blingerp-callback-token:
+    description: 'App: Random token (https://randomkeygen.com/) to validate Bling ERP callbacks'
   galaxpay-partner-id:
     description: 'App: Optional Galax Pay partner ID'
   galaxpay-partner-hash:
@@ -305,6 +307,7 @@ runs:
         AWIN_ADVERTISER_ID: ${{ inputs.awin-advertiser-id }}
         AWIN_API_KEY: ${{ inputs.awin-api-key }}
         TINYERP_TOKEN: ${{ inputs.tinyerp-token }}
+        BLINGERP_CALLBACK_TOKEN: ${{ inputs.blingerp-callback-token }}
         GALAXPAY_PARTNER_ID: ${{ inputs.galaxpay-partner-id }}
         GALAXPAY_PARTNER_HASH: ${{ inputs.galaxpay-partner-hash }}
         DATAFRETE_OPERATOR_TOKEN: ${{ inputs.datafrete-operator-token }}
@@ -363,6 +366,7 @@ runs:
         AWIN_ADVERTISER_ID=$AWIN_ADVERTISER_ID
         AWIN_API_KEY=$AWIN_API_KEY
         TINYERP_TOKEN=$TINYERP_TOKEN
+        BLINGERP_CALLBACK_TOKEN=$BLINGERP_CALLBACK_TOKEN
         GALAXPAY_PARTNER_ID=$GALAXPAY_PARTNER_ID
         GALAXPAY_PARTNER_HASH=$GALAXPAY_PARTNER_HASH
         DATAFRETE_OPERATOR_TOKEN=$DATAFRETE_OPERATOR_TOKEN

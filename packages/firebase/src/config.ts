@@ -145,6 +145,16 @@ export const configApps = {
       'applications-dataSet',
     ] as ApiEventName[],
   },
+  blingErp: {
+    appId: 102418,
+    events: [
+      'orders-anyStatusSet',
+      'products-new',
+      'products-priceSet',
+      'products-quantitySet',
+      'applications-dataSet',
+    ] as ApiEventName[],
+  },
   evendas: {
     appId: 109851,
     events: [

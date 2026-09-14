@@ -1,18 +1,19 @@
 import { fileURLToPath } from 'node:url';
-import { join as joinPath } from 'node:path';
 import { defineConfig } from 'vitest/config';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const resolvePath = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 
 export default defineConfig({
   resolve: {
-    alias: [
-      { find: '@@i18n', replacement: '@cloudcommerce/i18n/src/pt_br.ts' },
-      { find: '@@sf', replacement: joinPath(__dirname, 'src/lib') },
-    ],
+    // Same as `tsconfig.base.json` paths (and Astro `viteAlias`)
+    alias: {
+      '@@i18n': resolvePath('./node_modules/@cloudcommerce/i18n/src/pt_br.ts'),
+      '@@sf': resolvePath('./src/lib'),
+      '~': resolvePath('./src'),
+    },
   },
   test: {
-    environment: 'node',
     include: ['tests/**/*.test.ts'],
+    setupFiles: ['tests/setup.ts'],
   },
 });

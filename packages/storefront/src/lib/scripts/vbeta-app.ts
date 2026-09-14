@@ -167,11 +167,25 @@ const watchAppRoutes = () => {
             params.shipping_delivery_days = days;
           }
           emitGtagEvent('purchase', params, paramsToHash);
-          emitAwinFallbackPixel(
-            params.order_number ? String(params.order_number) : orderId,
-            params.value as number,
-            params.coupon,
-          );
+          // With the S2S call active the pixel only fires when the client
+          // has the customer-facing number AND the real order amounts: a
+          // pixel with mismatched ref or amount could win Awin's dedup by
+          // reference over the accurate S2S conversion. Without S2S the
+          // pixel is the only channel, so it always fires falling back to
+          // the internal order ID and cart subtotal (legacy behavior)
+          const canEmitAwinPixel = !window.AWIN_S2S_ENABLED
+            || (!!params.order_number && params.shipping !== undefined);
+          if (canEmitAwinPixel) {
+            // Awin expects the commissionable amount without freight and taxes
+            const awinAmount = Math.max(fixMoneyValue(
+              Number(params.value) - (Number(params.shipping) || 0) - (Number(params.tax) || 0),
+            ), 0);
+            emitAwinFallbackPixel(
+              params.order_number ? String(params.order_number) : orderId,
+              awinAmount,
+              params.coupon,
+            );
+          }
           localStorage.setItem('gtag.orderIdSent', orderId);
         }
         isPurchaseSent = true;

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/events",
   "type": "module",
-  "version": "2.62.2",
+  "version": "2.63.2",
   "description": "e-com.plus Cloud Commerce app events",
   "main": "lib/index.js",
   "exports": {
@@ -32,6 +32,7 @@
     "@cloudcommerce/app-affiliate-program": "workspace:*",
     "@cloudcommerce/app-appmax": "workspace:*",
     "@cloudcommerce/app-asaas": "workspace:*",
+    "@cloudcommerce/app-bling-erp": "workspace:*",
     "@cloudcommerce/app-braspag": "workspace:*",
     "@cloudcommerce/app-datafrete": "workspace:*",
     "@cloudcommerce/app-emails": "workspace:*",
@@ -62,6 +63,6 @@
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
-    "@firebase/app-types": "^0.9.5"
+    "@firebase/app-types": "^0.9.6"
   }
 }

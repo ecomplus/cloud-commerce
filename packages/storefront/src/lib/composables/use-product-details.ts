@@ -9,7 +9,8 @@ import {
   onMounted,
 } from 'vue';
 import { useUrlSearchParams } from '@vueuse/core';
-import { useProductCard } from '@@sf/composables/use-product-card';
+import { inStock as checkInStock } from '@ecomplus/utils';
+import { type KitItem, useProductCard } from '@@sf/composables/use-product-card';
 
 export type Props = Partial<SectionPreviewProps> & {
   product: Products;
@@ -17,12 +18,30 @@ export type Props = Partial<SectionPreviewProps> & {
   canUseUrlParams?: boolean;
 }
 
+export type KitCompositionItem = {
+  /** Index on product `kit_composition`, also the key for variation selections */
+  index: number;
+  productId: ResourceId;
+  /** Units of this item on each kit pack */
+  quantity: number;
+  /** Product body, `null` while kit items are still loading */
+  product: KitItem | null;
+  /** Selectable variations, empty when the kit fixes the variation itself */
+  variations: Exclude<Products['variations'], undefined>;
+  variationId: ResourceId | null;
+  isSelected: boolean;
+  isInStock: boolean;
+};
+
 export const useProductDetails = (props: Props) => {
   const { canUseUrlParams = true } = props;
   const {
     product,
     title,
     isActive,
+    kitItems,
+    isLoadingKitItems,
+    loadKitItems,
     loadToCart,
     isFailedToCart,
   } = useProductCard<Products>(props);
@@ -51,7 +70,54 @@ export const useProductDetails = (props: Props) => {
     });
   }
 
+  const isKit = computed(() => Boolean(product.kit_composition?.length));
+  const kitVariationIds = reactive<Array<ResourceId | null>>([]);
+  onMounted(() => {
+    if (isKit.value) loadKitItems();
+  });
+  const kitComposition = computed<KitCompositionItem[]>(() => {
+    if (!product.kit_composition?.length) return [];
+    return product.kit_composition.map((composition, index) => {
+      const { _id: productId, variation_id: fixedVariationId } = composition;
+      const kitItem = kitItems.value?.find(({ _id }) => _id === productId) || null;
+      const _variationId = fixedVariationId || kitVariationIds[index] || null;
+      const variation = _variationId
+        ? kitItem?.variations?.find(({ _id }) => _id === _variationId)
+        : undefined;
+      const variations = (!fixedVariationId && kitItem?.variations) || [];
+      const quantityPerKit = composition.quantity || 1;
+      return {
+        index,
+        productId,
+        quantity: quantityPerKit,
+        product: kitItem,
+        variations,
+        variationId: _variationId,
+        isSelected: Boolean(!variations.length || _variationId),
+        isInStock: !kitItem || (
+          kitItem.available !== false
+          && checkInStock({
+            ...kitItem,
+            ...variation,
+            min_quantity: quantityPerKit * quantity.value,
+          })
+        ),
+      };
+    });
+  });
+  const selectKitVariation = (index: number, _variationId: ResourceId | null) => {
+    kitVariationIds[index] = _variationId;
+    if (kitComposition.value.every(({ isSelected }) => isSelected)) {
+      hasSkuSelectionAlert.value = false;
+    }
+  };
+
   const isSkuSelected = computed(() => {
+    if (isKit.value) {
+      // Can't assert selections while kit items are still unknown/loading
+      if (!kitItems.value) return false;
+      return kitComposition.value.every(({ isSelected }) => isSelected);
+    }
     return Boolean(!product.variations?.length || variationId.value);
   });
   const checkVariation = (ev?: Event) => {
@@ -64,19 +130,54 @@ export const useProductDetails = (props: Props) => {
     return !hasSkuSelectionAlert.value;
   };
 
-  const addToCart = () => {
-    if (!checkVariation()) return;
-    loadToCart(quantity.value, { variationId: variationId.value });
+  const addToCart = async () => {
+    if (isKit.value && !kitItems.value) await loadKitItems();
+    if (!checkVariation()) return null;
+    return loadToCart(quantity.value, {
+      variationId: variationId.value,
+      kitVariationIds: isKit.value ? kitVariationIds : undefined,
+    });
   };
 
   const shippedItems = reactive([{
     ...product,
     body_html: undefined,
     quantity: 1,
-  }]);
-  watch(quantity, () => {
-    shippedItems[0].quantity = quantity.value;
-  });
+  }] as Array<Record<string, any>>);
+  /* Kits are shipped as their composition items, the kit product itself
+  usually has no weight/dimensions to calculate shipping with. */
+  watch([quantity, kitComposition], () => {
+    if (!isKit.value) {
+      shippedItems[0].quantity = quantity.value;
+      return;
+    }
+    /* Items priced with the kit price split by pack units, as on cart
+    (`kit_product.price / pack_quantity`), so the shipping subtotal (used on
+    free shipping rules) is the kit price, not the sum of standalone prices. */
+    const packQuantity = kitComposition.value.reduce((sum, item) => sum + item.quantity, 0);
+    const finalPrice = product.price / packQuantity;
+    const kitShippedItems = kitComposition.value.reduce((items, item) => {
+      if (item.product) {
+        items.push({
+          ...item.product,
+          body_html: undefined,
+          final_price: finalPrice,
+          variation_id: item.variationId || undefined,
+          quantity: item.quantity * quantity.value,
+        });
+      }
+      return items;
+    }, [] as Array<Record<string, any>>);
+    if (!kitShippedItems.length) {
+      /* Kit items not loaded (yet or failed): keep the kit product itself,
+      shipping can't be calculated with no items at all. */
+      if (shippedItems[0]?._id === product._id) {
+        shippedItems[0].quantity = quantity.value;
+      }
+      return;
+    }
+    shippedItems.splice(0, shippedItems.length, ...kitShippedItems);
+  }, { immediate: true });
 
   return {
     product,
@@ -90,6 +191,11 @@ export const useProductDetails = (props: Props) => {
     addToCart,
     isFailedToCart,
     shippedItems,
+    isKit,
+    isLoadingKitItems,
+    kitComposition,
+    kitVariationIds,
+    selectKitVariation,
   };
 };
 

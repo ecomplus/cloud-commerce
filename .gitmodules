@@ -13,3 +13,6 @@
 [submodule "ecomplus-stores/forjaestelar"]
 	path = ecomplus-stores/forjaestelar
 	url = git@github.com:doppelstore/forjaestelar.git
+[submodule "ecomplus-stores/mundoquadri"]
+	path = ecomplus-stores/mundoquadri
+	url = git@github.com:mundoquadri/mundoquadri.git

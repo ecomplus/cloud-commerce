@@ -76,7 +76,12 @@ export const getTrackingIds = (
         switch (cookieName) {
           case '_fbp': trackingIds.fbp = value; return;
           case '_fbc': trackingIds.fbc = value; return;
-          case 'AwinChannelCookie': trackingIds.awin_channel = value; return;
+          case 'AwinChannelCookie':
+            // Normalized at the source so the fallback pixel and the server
+            // side conversion send the exact same channel for one order
+            trackingIds.awin_channel = value
+              .toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20) || undefined;
+            return;
           default:
         }
         if (cookieName.startsWith('_ga')) {

@@ -1,7 +1,7 @@
 {
   "name": "cloudcommerce",
   "type": "module",
-  "version": "2.62.2",
+  "version": "2.63.2",
   "description": "Open fair-code headless commerce platform: API-first, microservices based, event driven and cloud native",
   "main": "packages/api/lib/index.js",
   "author": "E-Com Club Softwares para E-commerce <ti@e-com.club>",
@@ -52,11 +52,11 @@
     "lint-staged": "^16.4.0",
     "tailwindcss": "^3.4.19",
     "ts-node": "^10.9.2",
-    "turbo": "^2.10.9",
+    "turbo": "^2.10.12",
     "typescript": "~5.9.3",
     "uglify-js": "^3.19.3",
     "vite": "^5.4.21",
-    "vitest": "^2.1.9",
+    "vitest": "^3.2.7",
     "zx": "^8.8.5"
   },
   "pnpm": {

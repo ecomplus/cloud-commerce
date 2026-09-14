@@ -20,6 +20,9 @@
       "outputs": []
     },
     "test:apps": {
+      "dependsOn": [
+        "build"
+      ],
       "outputs": []
     }
   }

@@ -13,17 +13,56 @@ const newOrder = async (orderBody: OrderSet) => {
   try {
     const orderId = (await api.post('orders', orderBody)).data._id;
     return new Promise<{ order: Orders | null, err?: any }>((resolve) => {
-      setTimeout(async () => {
+      let attempts = 0;
+      let lastOrderRead: Orders | null = null;
+      const readFullOrder = async () => {
+        attempts += 1;
         try {
           const { data: order } = await api.get(`orders/${orderId}`, {
             headers: { 'x-primary-db': 'true' },
+            // Rereads are best-effort just for the order number, only the first
+            // read decides whether the checkout can go on, so it keeps the
+            // client defaults and the reread cost can't pile up on a slow API
+            ...(attempts > 1 ? { timeout: 1500, maxRetries: 0 } : null),
           });
+          lastOrderRead = order;
+          // The order number is set asynchronously and may not be ready yet,
+          // without it the storefront can't reference the order for the customer
+          if (!order.number && attempts <= 3) {
+            setTimeout(readFullOrder, 400 * attempts);
+            return;
+          }
+          if (!order.number) {
+            logger.warn(`Order ${orderId} number still unset after ${attempts} reads`, {
+              orderId,
+              attempts,
+            });
+          } else {
+            // Logged on every order to tell whether the rereads are the rule
+            // or the tail, the number of attempts must be tuned with data
+            logger.info(`Order ${orderId} number read on attempt ${attempts}`, {
+              orderId,
+              attempts,
+            });
+          }
           resolve({ order });
         } catch (err: any) {
+          // The order does exist, don't fail the checkout over a transient
+          // read error when a previous read already succeeded
+          if (lastOrderRead) {
+            logger.warn(`Failed rereading order ${orderId} on attempt ${attempts}`, {
+              orderId,
+              attempts,
+              err,
+            });
+            resolve({ order: lastOrderRead });
+            return;
+          }
           logger.error(err);
           resolve({ order: null, err });
         }
-      }, 400);
+      };
+      setTimeout(readFullOrder, 400);
     });
   } catch (err: any) {
     if (err.message === 'fetch failed') {

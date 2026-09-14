@@ -35,6 +35,7 @@ interface Window {
   GA_TRACKING_ID?: string;
   GOOGLE_ADS_ID?: string;
   AWIN_ADVERTISER_ID?: string;
+  AWIN_S2S_ENABLED?: boolean;
   CMS_CUSTOM_CONFIG?: Record<string, any>;
   CMS_SSO_URL?: string | null;
   CMS_REPO_BASE_DIR?: string;
