@@ -263,6 +263,25 @@ if (!import.meta.env.SSR) {
   (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
   const passportStorageKey = 'ecomPassportClient';
+  // app.js trusts any `auth.id` on the passport cookie (no token expiry check) and
+  // requests `/customers/:id` with it: a stale token gets 401, then `logout()`, and
+  // the buyer is left on the "complete your registration" form as a new customer.
+  // Level 3 is set only from a Cloud Commerce session, so when that session is not
+  // authenticated the cookie holds an expired or logged out token: drop it, app.js
+  // starts unidentified and gets the `login` event once the token is renewed.
+  const clearStalePassportCookie = () => {
+    const cookieValue = document.cookie.split('; ')
+      .find((cookie) => cookie.startsWith(`${passportStorageKey}=`))
+      ?.slice(passportStorageKey.length + 1);
+    if (!cookieValue) return;
+    try {
+      const { auth } = JSON.parse(decodeURIComponent(cookieValue));
+      if (auth?.level !== 3) return; // legacy e-mail + doc identification, keep it
+    } catch {
+      // malformed, drop it anyway
+    }
+    setCookie(passportStorageKey, '', -1);
+  };
   watch(isAuthenticated, async () => {
     const { ecomPassport } = window as Record<string, any>;
     if (isAuthenticated.value) {
@@ -281,8 +300,12 @@ if (!import.meta.env.SSR) {
       } else {
         setCookie(passportStorageKey, JSON.stringify(passportSession));
       }
-    } else if (ecomPassport?.checkLogin()) {
-      ecomPassport.logout();
+    } else if (ecomPassport) {
+      if (ecomPassport.checkLogin()) {
+        ecomPassport.logout();
+      }
+    } else {
+      clearStalePassportCookie();
     }
   }, {
     immediate: true,
