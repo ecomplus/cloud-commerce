@@ -38,7 +38,7 @@
     "csv-parse": "^7.0.2",
     "dotenv": "^17.4.2",
     "fast-xml-parser": "^5.11.1",
-    "image-size": "^2.0.2",
+    "image-size": "^2.0.4",
     "libsodium-wrappers": "0.7.15",
     "md5": "^2.3.0",
     "typescript": "~5.9.3",
