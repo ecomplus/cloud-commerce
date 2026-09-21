@@ -104,7 +104,7 @@ importers:
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.42(typescript@5.9.3))
+        version: 1.7.23(vue@3.5.43(typescript@5.9.3))
       micromark:
         specifier: ^4.0.2
         version: 4.0.2
@@ -181,7 +181,7 @@ importers:
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.42(typescript@5.9.3))
+        version: 1.7.23(vue@3.5.43(typescript@5.9.3))
       micromark:
         specifier: ^4.0.2
         version: 4.0.2
@@ -258,7 +258,7 @@ importers:
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.42(typescript@5.9.3))
+        version: 1.7.23(vue@3.5.43(typescript@5.9.3))
       micromark:
         specifier: ^4.0.2
         version: 4.0.2
@@ -329,7 +329,7 @@ importers:
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.42(typescript@5.9.3))
+        version: 1.7.23(vue@3.5.43(typescript@5.9.3))
       '@iconify-json/tabler':
         specifier: ^1.2.38
         version: 1.2.39
@@ -409,7 +409,7 @@ importers:
         version: link:../../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.42(typescript@5.9.3))
+        version: 1.7.23(vue@3.5.43(typescript@5.9.3))
       micromark:
         specifier: ^4.0.2
         version: 4.0.2
@@ -1833,7 +1833,7 @@ importers:
         version: link:../../../packages/ssr
       '@headlessui/vue':
         specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.42(typescript@5.9.3))
+        version: 1.7.23(vue@3.5.43(typescript@5.9.3))
       micromark:
         specifier: ^4.0.2
         version: 4.0.2
@@ -9463,10 +9463,10 @@ snapshots:
       protobufjs: 7.5.4
       yargs: 17.7.2
 
-  '@headlessui/vue@1.7.23(vue@3.5.42(typescript@5.9.3))':
+  '@headlessui/vue@1.7.23(vue@3.5.43(typescript@5.9.3))':
     dependencies:
-      '@tanstack/vue-virtual': 3.13.39(vue@3.5.42(typescript@5.9.3))
-      vue: 3.5.42(typescript@5.9.3)
+      '@tanstack/vue-virtual': 3.13.39(vue@3.5.43(typescript@5.9.3))
+      vue: 3.5.43(typescript@5.9.3)
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
@@ -10006,10 +10006,10 @@ snapshots:
 
   '@tanstack/virtual-core@3.17.11': {}
 
-  '@tanstack/vue-virtual@3.13.39(vue@3.5.42(typescript@5.9.3))':
+  '@tanstack/vue-virtual@3.13.39(vue@3.5.43(typescript@5.9.3))':
     dependencies:
       '@tanstack/virtual-core': 3.17.11
-      vue: 3.5.42(typescript@5.9.3)
+      vue: 3.5.43(typescript@5.9.3)
 
   '@tootallnate/once@2.0.0': {}
 
