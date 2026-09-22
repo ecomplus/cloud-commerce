@@ -263,6 +263,21 @@ if (!import.meta.env.SSR) {
   (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
   const passportStorageKey = 'ecomPassportClient';
+  // app.js doesn't check token expiry: a stale level 3 (Cloud Commerce) cookie
+  // would 401 and leave the buyer as a new customer, so start it unidentified
+  const clearStalePassportCookie = () => {
+    const cookieValue = document.cookie.split('; ')
+      .find((cookie) => cookie.startsWith(`${passportStorageKey}=`))
+      ?.slice(passportStorageKey.length + 1);
+    if (!cookieValue) return;
+    try {
+      const { auth } = JSON.parse(decodeURIComponent(cookieValue));
+      if (auth?.level !== 3) return; // legacy e-mail + doc identification, keep it
+    } catch {
+      // malformed, drop it anyway
+    }
+    setCookie(passportStorageKey, '', -1);
+  };
   watch(isAuthenticated, async () => {
     const { ecomPassport } = window as Record<string, any>;
     if (isAuthenticated.value) {
@@ -281,8 +296,12 @@ if (!import.meta.env.SSR) {
       } else {
         setCookie(passportStorageKey, JSON.stringify(passportSession));
       }
-    } else if (ecomPassport?.checkLogin()) {
-      ecomPassport.logout();
+    } else if (ecomPassport) {
+      if (ecomPassport.checkLogin()) {
+        ecomPassport.logout();
+      }
+    } else {
+      clearStalePassportCookie();
     }
   }, {
     immediate: true,
@@ -303,7 +322,7 @@ if (!import.meta.env.SSR) {
     const appScript = document.createElement('script');
     appScript.src = src
       || (window as any)._appScriptSrc
-      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.228/dist/lib/js/app.js';
+      || 'https://cdn.jsdelivr.net/npm/@ecomplus/storefront-app@2.0.0-beta.229/dist/lib/js/app.js';
     appScript.onload = () => {
       setTimeout(() => {
         watchAppRoutes();
