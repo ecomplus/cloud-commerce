@@ -263,12 +263,8 @@ if (!import.meta.env.SSR) {
   (window as any).ECOMCLIENT_API_MODULES = `${hostApiBaseUri}modules/`;
 
   const passportStorageKey = 'ecomPassportClient';
-  // app.js trusts any `auth.id` on the passport cookie (no token expiry check) and
-  // requests `/customers/:id` with it: a stale token gets 401, then `logout()`, and
-  // the buyer is left on the "complete your registration" form as a new customer.
-  // Level 3 is set only from a Cloud Commerce session, so when that session is not
-  // authenticated the cookie holds an expired or logged out token: drop it, app.js
-  // starts unidentified and gets the `login` event once the token is renewed.
+  // app.js doesn't check token expiry: a stale level 3 (Cloud Commerce) cookie
+  // would 401 and leave the buyer as a new customer, so start it unidentified
   const clearStalePassportCookie = () => {
     const cookieValue = document.cookie.split('; ')
       .find((cookie) => cookie.startsWith(`${passportStorageKey}=`))
