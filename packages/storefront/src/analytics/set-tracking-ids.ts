@@ -9,6 +9,7 @@ export type TrackingIds = {
   ttclid?: string,
   awc?: string,
   awin_channel?: string,
+  awin_testmode?: '1',
   client_id?: string,
   session_id?: string,
   ip6?: string,
@@ -64,6 +65,14 @@ export const getTrackingIds = (
     }
     trackingIds[key] = value;
   });
+  // `?awin_testmode=1` marks a test session: the fallback pixel fires with
+  // `testmode=1` and the server skips the S2S call (see SSR `send-to-awin.ts`)
+  if (url.searchParams.get('awin_testmode') === '1') {
+    sessionStorage.setItem('analytics_awin_testmode', '1');
+  }
+  if (sessionStorage.getItem('analytics_awin_testmode') === '1') {
+    trackingIds.awin_testmode = '1';
+  }
   const cookieNames = ['_fbp', 'AwinChannelCookie'];
   if (!trackingIds.fbc) cookieNames.push('_fbc');
   if (!trackingIds.g_client_id) cookieNames.push('_ga');
