@@ -65,10 +65,8 @@ export const getTrackingIds = (
     }
     trackingIds[key] = value;
   });
-  // The Awin conversion REST API has no test flag, every order it receives is
-  // real, so test transactions are marked on the session with
-  // `?awin_testmode=1`: the fallback pixel then fires with `testmode=1` and the
-  // server skips the S2S call, leaving the pixel as the only channel
+  // `?awin_testmode=1` marks a test session: the fallback pixel fires with
+  // `testmode=1` and the server skips the S2S call (see SSR `send-to-awin.ts`)
   if (url.searchParams.get('awin_testmode') === '1') {
     sessionStorage.setItem('analytics_awin_testmode', '1');
   }
