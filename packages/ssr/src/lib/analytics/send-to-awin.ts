@@ -69,14 +69,14 @@ const sendToAwin = async ({
   isTestmode?: boolean,
 }) => {
   if (!awinAxios || !awc) return;
+  const purchaseEvents = events.filter((ev) => ev.name === 'purchase');
+  if (!purchaseEvents.length) return;
   if (isTestmode) {
     // This API has no test flag, any order posted here counts as a real
     // conversion, so a test session must be left to the fallback pixel
     logger.info('Skipping Awin S2S conversion on test mode session');
     return;
   }
-  const purchaseEvents = events.filter((ev) => ev.name === 'purchase');
-  if (!purchaseEvents.length) return;
   const awinOrders: Array<Record<string, any>> = [];
   for (let i = 0; i < purchaseEvents.length; i++) {
     const { params } = purchaseEvents[i];
