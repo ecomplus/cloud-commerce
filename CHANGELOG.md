@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.63.3](https://github.com/ecomplus/cloud-commerce/compare/v2.63.2...v2.63.3) (2026-09-23)
+
+
+### Bug Fixes
+
+* **analytics:** Attribute Awin affiliate sales even when the server conversion fails ([#841](https://github.com/ecomplus/cloud-commerce/issues/841)) ([cb5efb2](https://github.com/ecomplus/cloud-commerce/commit/cb5efb2de09a429f4a797d50036362f8f6903c4e))
+* **deps:** update dependency nodemailer to v9 [security] ([4ad49b2](https://github.com/ecomplus/cloud-commerce/commit/4ad49b201e9102d5d1c7239a7bba1a72b88f4be8))
+* **deps:** Update non-major dependencies ([#826](https://github.com/ecomplus/cloud-commerce/issues/826)) ([a4e26a9](https://github.com/ecomplus/cloud-commerce/commit/a4e26a9fb534afb6c6c411ac8a377b2e74eb1d4e))
+* **deps:** Update non-major dependencies ([#833](https://github.com/ecomplus/cloud-commerce/issues/833)) ([8749ad4](https://github.com/ecomplus/cloud-commerce/commit/8749ad4657847ef976718a43ef2f10c6c523b3e5))
+* **deps:** Update non-major dependencies ([#838](https://github.com/ecomplus/cloud-commerce/issues/838)) ([d280f17](https://github.com/ecomplus/cloud-commerce/commit/d280f17d6a8b36eb627818db4d6902cbe1933141))
+* **deps:** Update non-major dependencies ([#844](https://github.com/ecomplus/cloud-commerce/issues/844)) ([5796ee3](https://github.com/ecomplus/cloud-commerce/commit/5796ee3d34fcbe7bf2e68608ca0a68a326a0646c))
+* **storefront:** Don't block kit purchase with hidden items and fix kit prices on cart ([59a5ef6](https://github.com/ecomplus/cloud-commerce/commit/59a5ef63c7f54e885dce38684f870172417ce0d3)), closes [#799](https://github.com/ecomplus/cloud-commerce/issues/799)
+* **storefront:** Don't oversell kits with free variation items and keep kit stocks fresh ([b0f41f4](https://github.com/ecomplus/cloud-commerce/commit/b0f41f4b42b7564b4c6346463a7ac5fbcbbf2772)), closes [#799](https://github.com/ecomplus/cloud-commerce/issues/799)
+* **storefront:** Keep kit stock limited by its items after the stock refresh ([dbb7266](https://github.com/ecomplus/cloud-commerce/commit/dbb7266ce2d0335b0ba05fabfd58c7e81a5bf44a))
+* **storefront:** Let product cards know when a kit needs item sizes picked ([bd47097](https://github.com/ecomplus/cloud-commerce/commit/bd47097bcc8080e3a6ab7958fd54d6293c2f71e4))
+* **storefront:** Quote kit shipping by the kit price and keep it when items fail to load ([a1bce93](https://github.com/ecomplus/cloud-commerce/commit/a1bce9342c518124848adcbd8bdd849defad7ce7))
+* **storefront:** Show kit contents and pick variations on product page ([e1076e4](https://github.com/ecomplus/cloud-commerce/commit/e1076e4fd8a06f5637cecf8b1fd6a6c6b07282ba))
+* **storefront:** Stop sending an expired login to the checkout app ([#842](https://github.com/ecomplus/cloud-commerce/issues/842)) ([80216e1](https://github.com/ecomplus/cloud-commerce/commit/80216e15c361984f3b6ef219e1249a3dcac23e59)), closes [#785](https://github.com/ecomplus/cloud-commerce/issues/785) [ecomplus/storefront#1314](https://github.com/ecomplus/storefront/issues/1314)
+* **storefront:** Update Vue to ^3.5.43 ([#843](https://github.com/ecomplus/cloud-commerce/issues/843)) ([650d969](https://github.com/ecomplus/cloud-commerce/commit/650d969d66fa6bd2dadc0bb42af375c8becf9d4e))
+
 ## [2.63.2](https://github.com/ecomplus/cloud-commerce/compare/v2.63.1...v2.63.2) (2026-08-25)
 
 ## [2.63.1](https://github.com/ecomplus/cloud-commerce/compare/v2.63.0...v2.63.1) (2026-08-25)
