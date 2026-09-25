@@ -517,9 +517,11 @@ export default async ({ params, application }) => {
   });
 
   const discountRules = getValidDiscountRules(config.discount_rules, params);
+  let isCouponFound = false;
   if (discountRules.length) {
     const { discountRule, discountMatchEnum } = matchDiscountRule(discountRules, params);
     if (discountRule) {
+      isCouponFound = discountMatchEnum === 'COUPON';
       const {
         valid: isValidByItems,
         items: filteredItems,
@@ -679,11 +681,36 @@ export default async ({ params, application }) => {
             };
           }
         }
+      } else if (isCouponFound && discountRule.discount.min_amount > checkAmount) {
+        // coupon exists but cart is still under the minimum amount
+        const missingAmount = ecomUtils.formatMoney(
+          discountRule.discount.min_amount - checkAmount,
+          params.currency_id,
+          params.lang,
+        );
+        response.invalid_coupon_message = params.lang === 'pt_br'
+          ? `Adicione mais ${missingAmount} ao carrinho para usar este cupom.`
+          : `Add ${missingAmount} more to the cart to use this coupon.`;
       }
     }
   }
 
   addFreebies();
+  if (params.discount_coupon && !isCouponFound) {
+    const couponCode = params.discount_coupon.toUpperCase();
+    const isFreebieCoupon = Array.isArray(config.freebies_rules)
+      && config.freebies_rules.some((rule) => {
+        return rule.freebie_coupon?.toUpperCase() === couponCode
+          && validateDateRange(rule)
+          && validateCustomerId(rule, params);
+      });
+    if (!isFreebieCoupon) {
+      // kit/freebie campaigns may still be applied, but not the typed coupon
+      response.invalid_coupon_message = params.lang === 'pt_br'
+        ? 'O cupom de desconto inserido é inválido.'
+        : 'Discount coupon entered is invalid.';
+    }
+  }
   // response with no error nor discount applied
   return respondSuccess();
 };
