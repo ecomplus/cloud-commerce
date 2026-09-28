@@ -324,7 +324,8 @@ if (!import.meta.env.SSR) {
     immediate: true,
   });
   // Recommended products showcase on cart and checkout, replacing the legacy
-  // SPA one (which never renders today: `_id` filter on `search/_els` gets 0 hits).
+  // SPA one to keep a single theme-styled showcase — the legacy one renders
+  // again since the `_els` `_id` filter fix (ecomplus/storefront#1306).
   // Stores turn it off with `window.propsCartRecommendations = false`.
   if ((window as any).propsCartRecommendations !== false) {
     (window as any).propsEcCheckout = {
