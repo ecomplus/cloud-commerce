@@ -86,6 +86,7 @@ export const sendAnalyticsEvents = async (
       events: gaEvents,
       awc: payload.awc,
       channel: payload.awin_channel,
+      isTestmode: payload.awin_testmode === '1',
     }));
   }
   if (metaEvents) {

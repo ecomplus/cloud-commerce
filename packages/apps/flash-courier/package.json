@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-flash-courier",
   "type": "module",
-  "version": "2.63.2",
+  "version": "2.63.3",
   "description": "e-com.plus Cloud Commerce app to integrate Flash Courier",
   "main": "lib/index.js",
   "exports": {
@@ -32,7 +32,7 @@
     "@cloudcommerce/api": "workspace:*",
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.20.0",
-    "firebase-functions": "^7.3.2"
+    "firebase-functions": "^7.4.0"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*"

@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/cli",
   "type": "module",
-  "version": "2.63.2",
+  "version": "2.63.3",
   "description": "e-com.plus Cloud Commerce CLI tools",
   "bin": {
     "cloudcommerce": "./bin/run.mjs"
@@ -38,7 +38,7 @@
     "csv-parse": "^7.0.2",
     "dotenv": "^17.4.2",
     "fast-xml-parser": "^5.11.1",
-    "image-size": "^2.0.2",
+    "image-size": "^2.0.4",
     "libsodium-wrappers": "0.7.15",
     "md5": "^2.3.0",
     "typescript": "~5.9.3",
