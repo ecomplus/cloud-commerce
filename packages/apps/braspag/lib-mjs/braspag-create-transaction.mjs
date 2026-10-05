@@ -3,6 +3,11 @@ import { getFirestore } from 'firebase-admin/firestore';
 import createAxios from './lib/braspag/create-axios.mjs';
 import { parseStatus } from './lib/braspag/parse-utils.mjs';
 import bodyToBraspag from './lib/braspag/payload-to-transaction.mjs';
+import {
+  get3dsOptions,
+  parse3dsResult,
+  to3dsCustomFields,
+} from './lib/braspag/3ds/policy.mjs';
 import addInstallments from './lib/payments/add-installments.mjs';
 
 const createTransaction = async ({ params, application }) => {
@@ -85,6 +90,18 @@ const createTransaction = async ({ params, application }) => {
         };
       }
 
+      // 3DS result on the order, so the merchant doesn't check it by hand
+      try {
+        const hashCard = JSON.parse(Buffer.from(params.credit_card.hash, 'base64'));
+        if (get3dsOptions(appData).hasCredentials || hashCard.status3ds) {
+          transaction.custom_fields = to3dsCustomFields(
+            parse3dsResult(hashCard.out3ds, hashCard.status3ds),
+          );
+        }
+      } catch (err) {
+        logger.warn('Cannot parse 3DS result from card hash', { err });
+      }
+
       if (appData.installments) {
         const installmentsNumber = params.installments_number || 1;
         // list all installment options
@@ -159,6 +176,14 @@ const createTransaction = async ({ params, application }) => {
     if (docSOP) {
       // delete docSop can only be used once
       await docSOP.delete().catch(logger.error);
+    }
+    if (error.name === 'Required3dsError') {
+      logger.info(`3DS required, refused ${orderId}`, { result: error.result });
+      return {
+        status: 409,
+        error: 'BRASPAG_3DS_REQUIRED',
+        message: error.message,
+      };
     }
     // try to debug request error
     const errCode = 'BRASPAG_TRANSACTION_ERR';

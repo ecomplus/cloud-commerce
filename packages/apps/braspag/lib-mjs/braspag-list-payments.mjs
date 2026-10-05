@@ -3,6 +3,8 @@ import { join as joinPath } from 'node:path';
 import url from 'node:url';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import TokenSOPBraspag from './lib/braspag/sop/get-access-token.mjs';
+import get3dsToken from './lib/braspag/3ds/get-3ds-token.mjs';
+import { get3dsOptions } from './lib/braspag/3ds/policy.mjs';
 import addInstallments from './lib/payments/add-installments.mjs';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -55,6 +57,34 @@ const listPayments = async ({ params, application }) => {
       }
     } catch (error) {
       logger.error(error);
+    }
+  }
+
+  // 3DS: token fetched before listing, the forEach below is not awaited
+  const options3ds = get3dsOptions(appData);
+  let token3ds;
+  if (accessTokenSOP && options3ds.hasCredentials) {
+    const config3ds = appData.braspag_3ds;
+    try {
+      token3ds = await get3dsToken({
+        clientId: config3ds.client_id,
+        clientSecret: config3ds.client_secret,
+        establishmentCode: config3ds.establishment_code,
+        merchantName: config3ds.merchant_name,
+        mcc: config3ds.mcc,
+        isSandbox,
+      });
+    } catch (error) {
+      logger.warn('Cannot get 3DS token', { error });
+    }
+  }
+  if (options3ds.isRequired && !token3ds?.accessToken) {
+    // Required 3DS: with no authentication available, no credit card at all
+    // (Pix and banking billet keep working)
+    const i = listPaymentMethod.indexOf('credit_card');
+    if (i > -1) {
+      logger.warn('Credit card unlisted: 3DS required but unavailable');
+      listPaymentMethod.splice(i, 1);
     }
   }
 
@@ -168,9 +198,17 @@ const listPayments = async ({ params, application }) => {
             : 'https://transaction.cieloecommerce.cielo.com.br';
         }
 
+        let onload3ds = '';
+        if (token3ds?.accessToken) {
+          onload3ds = `window._braspag3dsToken="${token3ds.accessToken}";`
+            + `window._braspag3dsIsSandbox=${token3ds.isSandbox};`
+            + `window._braspag3dsRequired=${options3ds.isRequired};`
+            + `window._braspag3dsTimeout=${options3ds.timeoutMs};`;
+        }
         gateway.js_client = {
           script_uri: `${baseScriptUri}/post/scripts/silentorderpost-1.0.min.js`,
-          onload_expression: `window._braspagAccessToken="${accessTokenSOP}";`
+          onload_expression: onload3ds
+            + `window._braspagAccessToken="${accessTokenSOP}";`
             + `window._braspagIsSandbox=${isSandbox};`
             + `window._braspagFingerprintApp="${fingerprintApp}";`
             + fs.readFileSync(joinPath(__dirname, '../assets/braspag-onload-expression.min.js'), 'utf8'),
