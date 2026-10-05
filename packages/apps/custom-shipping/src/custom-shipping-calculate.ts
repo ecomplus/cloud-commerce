@@ -72,6 +72,7 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
       && !rule.disable_free_shipping_from
       && !(rule.excedent_weight_cost > 0)
       && !(rule.amount_tax > 0)
+      && !(rule.min_price > 0)
     ) {
       if (!originZip && rule.from && rule.from.zip) {
         originZip = rule.from.zip;
@@ -224,6 +225,10 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
         if (typeof rule.amount_tax === 'number' && !Number.isNaN(rule.amount_tax)) {
           rule.total_price += ((rule.amount_tax * amount) / 100);
         }
+        // Floor for percentage or weight based rules, e.g. "X% of cart, at least R$ Y"
+        if (rule.min_price > 0 && rule.total_price < rule.min_price) {
+          rule.total_price = rule.min_price;
+        }
         const currentShippingRule = _shippingRulesByCode[serviceCode];
         if (!currentShippingRule || currentShippingRule.total_price > rule.total_price) {
           _shippingRulesByCode[serviceCode] = rule;
@@ -243,6 +248,7 @@ export const calculateShipping = async (modBody: AppModuleBody<'calculate_shippi
           delete rule.max_cubic_weight;
           delete rule.excedent_weight_cost;
           delete rule.amount_tax;
+          delete rule.min_price;
           delete rule.label;
 
           // also try to find corresponding service object from config
