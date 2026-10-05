@@ -1,4 +1,10 @@
 import { parseAddress, parsePaymentType } from './parse-utils.mjs';
+import {
+  get3dsOptions,
+  parse3dsResult,
+  toExternalAuthentication,
+  Required3dsError,
+} from './3ds/policy.mjs';
 
 const parseFraudAnalysis = (appData, params, Address, fingerPrintId) => {
   const { amount, buyer, items } = params;
@@ -102,17 +108,33 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
     Object.assign(body.Customer, { DeliveryAddress: Address });
 
     const fraudAnalysis = parseFraudAnalysis(appData, params, Address, hashCard.fingerPrintId);
-    Object.assign(
-      body.Payment,
-      {
-        Installments: installmentsNumber,
-        CreditCard: {
-          PaymentToken: hashCard.token,
-        },
+    const options3ds = get3dsOptions(appData);
+    const result3ds = parse3dsResult(hashCard.out3ds, hashCard.status3ds);
+    if (options3ds.isRequired && !result3ds.isAuthenticated) {
+      // Required 3DS: never send a card transaction without authentication
+      throw new Required3dsError(result3ds);
+    }
+    Object.assign(body.Payment, {
+      Installments: installmentsNumber,
+      CreditCard: {
+        PaymentToken: hashCard.token,
+      },
+    });
+    if (result3ds.isAuthenticated) {
+      Object.assign(body.Payment, {
+        Authenticate: true,
+        ExternalAuthentication: toExternalAuthentication(hashCard.out3ds),
+      });
+    }
+    if (result3ds.isAuthenticated && !options3ds.hasFraudAnalysis) {
+      // Authenticated, liability shifted to the issuer: capture right away
+      body.Payment.Capture = true;
+    } else {
+      Object.assign(body.Payment, {
         Capture: !fraudAnalysis.CaptureOnLowRisk,
         FraudAnalysis: fraudAnalysis,
-      },
-    );
+      });
+    }
   } else if (methodPayment === 'account_deposit') {
     if (isCielo) {
       delete body.Payment.Provider;
