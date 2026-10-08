@@ -34,10 +34,10 @@
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
-    "@fastify/deepmerge": "^3.2.1",
-    "csv-parse": "^7.0.2",
+    "@fastify/deepmerge": "^3.2.2",
+    "csv-parse": "^7.0.3",
     "dotenv": "^17.4.2",
-    "fast-xml-parser": "^5.11.1",
+    "fast-xml-parser": "^5.11.2",
     "image-size": "^2.0.4",
     "libsodium-wrappers": "0.7.15",
     "md5": "^2.3.0",
