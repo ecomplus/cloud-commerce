@@ -218,7 +218,9 @@ export type AntiFraudConfig = false | {
 
 export const checkoutRateLimitsCollection = 'checkoutRateLimits';
 
-/* Opt-in gates for stores that only sell to registered/approved customers (B2B, wholesale). */
+/* Opt-in gates for stores that only sell to registered/approved customers (B2B, wholesale).
+Use `customersOnly` together with `passport.newCustomer: { enabled: false }`, otherwise
+customers auto-created on first login get `enabled: true` (Store API default) and pass the gate. */
 export type CheckoutGatesConfig = {
   /* Reject checkout when the customer doesn't exist yet or `enabled !== true` */
   customersOnly?: boolean;
