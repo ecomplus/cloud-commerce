@@ -11,10 +11,7 @@ import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
 import readOrSaveCustomer from './functions-checkout/read-or-save-customer';
-import {
-  getCustomerGateError,
-  getSubtotalGateError,
-} from './functions-checkout/customer-gates';
+import { getSubtotalGateError } from './functions-checkout/customer-gates';
 import requestModule from './functions-checkout/request-to-module';
 import {
   sendError,
@@ -80,28 +77,12 @@ export default async (req: Request, res: Response) => {
   ) {
     return sendError(res, 403, 'CKT803', 'Chato');
   }
-  const checkoutGates = config.get().checkout;
   const savedCustomer = await readOrSaveCustomer({
     ...customer,
     addresses: !shippingAddr.line_address?.includes('***')
       ? [shippingAddr]
       : undefined,
-  }, {
-    canCreate: !checkoutGates?.customersOnly,
   });
-  const customerGateError = getCustomerGateError(checkoutGates, savedCustomer);
-  if (customerGateError) {
-    return sendError(
-      res,
-      customerGateError.status,
-      customerGateError.code,
-      customerGateError.message,
-      customerGateError.userMessage,
-    );
-  }
-  if (!savedCustomer) {
-    return sendError(res, 403, 'CKT804', 'Checkout is restricted to registered customers');
-  }
   if (savedCustomer.enabled === false) {
     return sendError(res, 403, 'CKT802', 'Customer is disabled from placing new orders');
   }
@@ -196,7 +177,7 @@ export default async (req: Request, res: Response) => {
   if (subtotal <= 0 && items.length < countCheckoutItems) {
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
   }
-  const subtotalGateError = getSubtotalGateError(checkoutGates, subtotal);
+  const subtotalGateError = getSubtotalGateError(config.get().checkout, subtotal);
   if (subtotalGateError) {
     return sendError(
       res,

@@ -4,6 +4,8 @@ import { schemas } from '../index';
 import handleModule from './handle-module';
 import checkout from './checkout';
 import antiFraudRateLimit from './antifraud-rate-limit';
+import checkoutCustomerGuard, { hasCustomerGates } from './checkout-customer-guard';
+import { sendError } from './functions-checkout/checkout-utils';
 
 export default async (req: Request, res: Response) => {
   const { method } = req;
@@ -40,7 +42,7 @@ export default async (req: Request, res: Response) => {
             message: 'GET is acceptable only to JSON schema, at /@checkout/schema',
           });
       }
-      const { checkoutAntiFraud } = config.get();
+      const { checkoutAntiFraud, checkout: checkoutGates } = config.get();
       if (checkoutAntiFraud !== false) {
         let blocked = false;
         try {
@@ -56,6 +58,18 @@ export default async (req: Request, res: Response) => {
             error_code: 'CKT429',
             message: 'Too many checkout attempts. Try again later.',
           });
+        }
+      }
+      if (hasCustomerGates(checkoutGates)) {
+        const gateError = await checkoutCustomerGuard(req, checkoutGates);
+        if (gateError) {
+          return sendError(
+            res,
+            gateError.status,
+            gateError.code,
+            gateError.message,
+            gateError.userMessage,
+          );
         }
       }
 
