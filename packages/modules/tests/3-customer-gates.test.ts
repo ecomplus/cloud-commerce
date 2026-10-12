@@ -18,8 +18,8 @@ describe('Checkout customer gates (customers-only stores)', () => {
   });
 
   test('customersOnly requires enabled === true', () => {
-    expect(getCustomerGateError({ customersOnly: true }, { enabled: false })?.code).toBe('CKT804');
-    expect(getCustomerGateError({ customersOnly: true }, {})?.code).toBe('CKT804');
+    expect(getCustomerGateError({ customersOnly: true }, { enabled: false })?.code).toBe('CKT802');
+    expect(getCustomerGateError({ customersOnly: true }, {})?.code).toBe('CKT802');
     expect(getCustomerGateError({ customersOnly: true }, { enabled: true })).toBeNull();
   });
 

@@ -28,10 +28,11 @@ export const getCustomerGateError = (
       };
     }
     if (savedCustomer.enabled !== true) {
+      // Same code as the default `enabled === false` check on checkout
       return {
         status: 403,
-        code: 'CKT804',
-        message: 'Customer is not enabled to place orders',
+        code: 'CKT802',
+        message: 'Customer is disabled from placing new orders',
         userMessage: {
           en_us: 'Your account is not yet enabled to place orders',
           pt_br: 'Seu cadastro ainda não está liberado para compras',
