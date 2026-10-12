@@ -199,7 +199,11 @@ const inlineJSONLdWebsite = JSON.stringify({
   },
 });
 let inlineJSONLdOffer: string | undefined;
-if (apiContext.resource === 'products' && apiContext.doc) {
+if (
+  apiContext.resource === 'products' && apiContext.doc
+  // Product snippets require `offers` (or reviews), skip products without a public price
+  && getPrice(apiContext.doc) > 0
+) {
   const product = apiContext.doc;
   const productJSONLd: Record<string, any> = {
     '@context': 'http://schema.org',

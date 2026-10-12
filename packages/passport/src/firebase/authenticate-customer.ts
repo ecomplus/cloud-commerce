@@ -4,6 +4,8 @@ import { getAuth } from 'firebase-admin/auth';
 import { logger } from 'firebase-functions/v1';
 import api from '@cloudcommerce/api';
 import getEnv from '@cloudcommerce/firebase/lib/env';
+import config from '@cloudcommerce/firebase/lib/config';
+import getNewCustomerBody from './new-customer';
 
 export const findCustomerByEmail = async (
   email: string,
@@ -110,15 +112,21 @@ export const authenticateWithFirebase = async (firebaseAuthToken: string) => {
       if (foundCustomer) {
         return getCustomerToken(foundCustomer);
       }
-      const { data: newCustomer } = await api.post('customers', {
-        display_name: name || '',
-        main_email: email,
-        emails: [{
-          address: email,
-          verified: isEmailVerified,
-        }],
+      const newCustomerDefaults = config.get().passport?.newCustomer;
+      const newCustomerBody = getNewCustomerBody(
+        { name, email, email_verified: isEmailVerified },
+        newCustomerDefaults,
+      );
+      const { data: newCustomer } = await api.post('customers', newCustomerBody);
+      if (!newCustomerDefaults) {
+        return generateAccessToken(newCustomer._id);
+      }
+      // Respect `login`/`enabled` defaults (may be restricted by store config)
+      return getCustomerToken({
+        _id: newCustomer._id,
+        login: newCustomerBody.login,
+        enabled: newCustomerBody.enabled,
       });
-      return generateAccessToken(newCustomer._id);
     }
     // TODO: Find customer by phone number, generate token if found, otherwise unauthorize
   }
