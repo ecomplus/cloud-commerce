@@ -695,8 +695,9 @@ export default async ({ params, application }) => {
           params.lang,
         );
         couponMinAmountMessage = params.lang === 'pt_br'
-          ? `Adicione mais ${missingAmount} ao carrinho para usar este cupom.`
-          : `Add ${missingAmount} more to the cart to use this coupon.`;
+          // same text of the checkout (DiscountApplier) for the minimum amount alert
+          ? `Adicione mais ${missingAmount} ao carrinho para ganhar o desconto.`
+          : `Add more ${missingAmount} to cart to get the discount.`;
       }
     }
   }

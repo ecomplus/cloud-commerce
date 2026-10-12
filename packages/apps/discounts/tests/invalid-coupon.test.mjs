@@ -85,7 +85,7 @@ describe('Cupom digitado com campanha de kit ativa', () => {
     assert.strictEqual(response.discount_rule.extra_discount.value, 60);
     assert.strictEqual(
       response.invalid_coupon_message?.replace(/\s/g, ' '),
-      'Adicione mais R$ 220,00 ao carrinho para usar este cupom.',
+      'Adicione mais R$ 220,00 ao carrinho para ganhar o desconto.',
     );
   });
 
