@@ -110,3 +110,72 @@ describe('Cupom digitado com campanha de kit ativa', () => {
     assert.strictEqual(response.invalid_coupon_message, undefined);
   });
 });
+
+const runWith = (application, discountCoupon, extraParams = {}) => applyDiscount({
+  params: {
+    lang: 'pt_br',
+    currency_id: 'BRL',
+    amount: { subtotal: 280, total: 280, discount: 0 },
+    items,
+    discount_coupon: discountCoupon,
+    ...extraParams,
+  },
+  application,
+});
+
+describe('Cupom de brinde não aplicável com campanha de kit ativa', () => {
+  const getFreebieApplication = (freebieRule) => {
+    const application = getApplication();
+    application.data.freebies_rules = [{
+      label: 'brinde',
+      freebie_coupon: 'BRINDE',
+      product_ids: ['683748d6f3c4f8399c499b51'],
+      ...freebieRule,
+    }];
+    return application;
+  };
+
+  test('abaixo do subtotal mínimo do brinde avisa que o cupom é inválido', async () => {
+    const response = await runWith(getFreebieApplication({ min_subtotal: 1000 }), 'brinde');
+    assert.strictEqual(response.discount_rule.extra_discount.value, 60);
+    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+  });
+
+  test('brinde de outro domínio avisa que o cupom é inválido', async () => {
+    const response = await runWith(
+      getFreebieApplication({ domain: 'outra.loja.com' }),
+      'brinde',
+      { domain: 'loja.com' },
+    );
+    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+  });
+
+  test('brinde que exige produto fora do carrinho avisa que o cupom é inválido', async () => {
+    const response = await runWith(
+      getFreebieApplication({ check_product_ids: ['0000000000000000000000ff'] }),
+      'brinde',
+    );
+    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+  });
+});
+
+describe('Cupom digitado sem campanha ativa (comportamento anterior)', () => {
+  const getNoCampaignApplication = () => {
+    const application = getApplication();
+    delete application.data.product_kit_discounts;
+    return application;
+  };
+
+  test('cupom inexistente não traz mensagem do app', async () => {
+    const response = await runWith(getNoCampaignApplication(), 'testealeatorio');
+    assert.strictEqual(response.discount_rule, undefined);
+    assert.strictEqual(response.invalid_coupon_message, undefined);
+  });
+
+  test('cupom abaixo do mínimo mantém só o desconto disponível', async () => {
+    const response = await runWith(getNoCampaignApplication(), 'MINIMO500');
+    assert.strictEqual(response.discount_rule, undefined);
+    assert.strictEqual(response.invalid_coupon_message, undefined);
+    assert.strictEqual(response.available_extra_discount.min_amount, 500);
+  });
+});
