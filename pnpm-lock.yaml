@@ -888,10 +888,10 @@ importers:
   packages/eslint:
     dependencies:
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.71.0
+        specifier: ^8.71.1
         version: 8.71.1(@typescript-eslint/parser@8.71.1(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
       '@typescript-eslint/parser':
-        specifier: ^8.71.0
+        specifier: ^8.71.1
         version: 8.71.1(eslint@8.57.1)(typescript@5.9.3)
       eslint:
         specifier: ^8.57.1
