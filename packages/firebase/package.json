@@ -33,7 +33,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/firebase#readme",
   "scripts": {
-    "build": "bash ../../scripts/build-lib.sh"
+    "build": "bash ../../scripts/build-lib.sh",
+    "test": "vitest run"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
