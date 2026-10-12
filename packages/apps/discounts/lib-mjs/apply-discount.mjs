@@ -230,7 +230,8 @@ export default async ({ params, application }) => {
 
           if (bestRule) {
             // provide freebie products \o/
-            response.freebie_product_ids = bestRule.product_ids;
+            // copy, cumulative rules below must not change the rule itself between previews
+            response.freebie_product_ids = [...bestRule.product_ids];
             previewFreebieRules.push(bestRule);
             if (discountValue) {
               if (bestRule.cumulative_freebie === true) {

@@ -179,3 +179,32 @@ describe('Cupom digitado sem campanha ativa (comportamento anterior)', () => {
     assert.strictEqual(response.available_extra_discount.min_amount, 500);
   });
 });
+
+describe('Cupom de brinde cumulativo com campanha de kit ativa', () => {
+  test('brinde do cupom somado ao brinde aberto não é tratado como inválido', async () => {
+    const freebieIds = ['f00000000000000000000001', 'f00000000000000000000002'];
+    const application = getApplication();
+    application.data.freebies_rules = [{
+      label: 'brinde aberto',
+      product_ids: [freebieIds[0]],
+      cumulative_freebie: true,
+    }, {
+      label: 'brinde cupom',
+      freebie_coupon: 'BRINDE2',
+      product_ids: [freebieIds[1]],
+      cumulative_freebie: true,
+    }];
+    const response = await runWith(application, 'brinde2', {
+      items: [...items, {
+        product_id: freebieIds[0],
+        sku: 'BRINDE-1',
+        name: 'Brinde',
+        quantity: 1,
+        price: 50,
+      }],
+    });
+    assert.deepStrictEqual(response.freebie_product_ids, freebieIds);
+    assert.strictEqual(response.invalid_coupon_message, undefined);
+    assert.deepStrictEqual(application.data.freebies_rules[0].product_ids, [freebieIds[0]]);
+  });
+});
