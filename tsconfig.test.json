@@ -7,5 +7,6 @@
     "packages/*/tests/**/*.ts"
   ],
   "exclude": [
+    "packages/storefront/tests/**"
   ]
 }
