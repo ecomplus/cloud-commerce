@@ -112,17 +112,21 @@ export const authenticateWithFirebase = async (firebaseAuthToken: string) => {
       if (foundCustomer) {
         return getCustomerToken(foundCustomer);
       }
+      const newCustomerDefaults = config.get().passport?.newCustomer;
       const newCustomerBody = getNewCustomerBody(
         { name, email, email_verified: isEmailVerified },
-        config.get().passport?.newCustomer,
+        newCustomerDefaults,
       );
       const { data: newCustomer } = await api.post('customers', newCustomerBody);
+      if (!newCustomerDefaults) {
+        return generateAccessToken(newCustomer._id);
+      }
       // Respect `login`/`enabled` defaults (may be restricted by store config)
       return getCustomerToken({
         _id: newCustomer._id,
         login: newCustomerBody.login,
         enabled: newCustomerBody.enabled,
-      } as Parameters<typeof getCustomerToken>[0]);
+      });
     }
     // TODO: Find customer by phone number, generate token if found, otherwise unauthorize
   }
