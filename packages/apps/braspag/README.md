@@ -15,6 +15,11 @@ checkout app script. `lib-mjs/lib/braspag/js-client.mjs` builds the expression
 and checks the limit: over it, 3DS is dropped when optional, or the credit card
 is unlisted when 3DS is required. Pix and billet are never affected.
 
+Before a release the pinned version doesn't have the new card client on npm.
+To test unreleased code on a store, set `BRASPAG_CARD_CLIENT_URI` to the file
+served from GitHub, e.g.
+`https://cdn.jsdelivr.net/gh/ecomplus/cloud-commerce@<commit>/packages/apps/braspag/assets/braspag-card-client.js`.
+
 ## 3DS (Cielo MPI)
 
 Credit card authentication with the Cielo 3DS script (MPI V2), configured on

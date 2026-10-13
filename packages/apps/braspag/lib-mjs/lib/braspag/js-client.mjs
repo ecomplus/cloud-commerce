@@ -16,9 +16,13 @@ const { version } = JSON.parse(fs.readFileSync(joinPath(packageDir, 'package.jso
 /**
  * Card client published with this package (`assets/` is in `files`), pinned
  * to the running version so browser and server code always match.
+ * `BRASPAG_CARD_CLIENT_URI` replaces it to test unreleased code, e.g.
+ * `https://cdn.jsdelivr.net/gh/ecomplus/cloud-commerce@<commit>/packages/apps/braspag/assets/braspag-card-client.js`.
  */
-export const CARD_CLIENT_URI = 'https://cdn.jsdelivr.net/npm/'
-  + `@cloudcommerce/app-braspag@${version}/assets/braspag-card-client.min.js`;
+export const CARD_CLIENT_URI = process.env.BRASPAG_CARD_CLIENT_URI || (
+  'https://cdn.jsdelivr.net/npm/'
+  + `@cloudcommerce/app-braspag@${version}/assets/braspag-card-client.min.js`
+);
 
 let loaderScript;
 const readLoaderScript = () => {
