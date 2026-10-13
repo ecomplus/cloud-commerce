@@ -1,6 +1,7 @@
 const parseCountry = (countryCode) => {
   const code = countryCode ? String(countryCode).toUpperCase() : 'BR';
-  // Braspag uses ISO 3166 alpha-3, e-com.plus addresses alpha-2
+  // e-com.plus addresses use alpha-2, Braspag has always received Brazil as alpha-3 'BRA'
+  // (the default when missing), other countries are sent as received
   return code === 'BR' ? 'BRA' : code;
 };
 

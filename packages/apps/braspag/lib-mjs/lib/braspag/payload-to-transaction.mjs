@@ -84,7 +84,7 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
     }
 
     if (buyer.phone) {
-      let phone = buyer.phone.country_code ? `+${buyer.phonecountry_code}` : '+55';
+      let phone = buyer.phone.country_code ? `+${buyer.phone.country_code}` : '+55';
       phone += parsePhone(buyer.phone.number);
       Object.assign(body.Customer, { Phone: phone });
     }
