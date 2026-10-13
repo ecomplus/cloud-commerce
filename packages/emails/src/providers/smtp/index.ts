@@ -5,6 +5,7 @@ import type {
   TemplateData,
   Template,
 } from '../../../types/index';
+import type { Transporter } from 'nodemailer';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import nodemailer from 'nodemailer';
 import axios from 'axios';
@@ -30,7 +31,7 @@ const parseEmailAddrs = <OneOnly extends boolean = false>(
 
 let smtpConfig: SmtpConfig | undefined;
 
-let transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo> | undefined;
+let transporter: Transporter<SMTPTransport.SentMessageInfo> | undefined;
 
 const setConfigSmtp = (config: SmtpConfig) => {
   smtpConfig = config;
