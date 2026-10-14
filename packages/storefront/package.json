@@ -36,6 +36,7 @@
     "build:static": "BUILD_OUTPUT=static astro build",
     "build": "bash scripts/build-prod.sh",
     "preview": "astro preview",
+    "test": "vitest run",
     "astro": "astro",
     "prepare-monorepo": "bash scripts/prepare-monorepo.sh",
     "test": "vitest run",
@@ -74,6 +75,7 @@
   "devDependencies": {
     "@cloudcommerce/eslint": "workspace:*",
     "@cloudcommerce/types": "workspace:*",
-    "@types/react": "^18.3.31"
+    "@types/react": "^18.3.31",
+    "jsdom": "^25.0.1"
   }
 }
