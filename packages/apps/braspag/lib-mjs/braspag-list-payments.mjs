@@ -1,11 +1,9 @@
-import fs from 'node:fs';
-import { join as joinPath } from 'node:path';
-import url from 'node:url';
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import TokenSOPBraspag from './lib/braspag/sop/get-access-token.mjs';
+import get3dsToken from './lib/braspag/3ds/get-3ds-token.mjs';
+import { get3dsOptions } from './lib/braspag/3ds/policy.mjs';
+import { fitOnloadExpression, ONLOAD_EXPRESSION_MAX_LENGTH } from './lib/braspag/js-client.mjs';
 import addInstallments from './lib/payments/add-installments.mjs';
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const listPayments = async ({ params, application }) => {
   const appData = {
@@ -55,6 +53,34 @@ const listPayments = async ({ params, application }) => {
       }
     } catch (error) {
       logger.error(error);
+    }
+  }
+
+  // 3DS: token fetched before listing, the forEach below is not awaited
+  const options3ds = get3dsOptions(appData);
+  let token3ds;
+  if (accessTokenSOP && options3ds.hasCredentials) {
+    const config3ds = appData.braspag_3ds;
+    try {
+      token3ds = await get3dsToken({
+        clientId: config3ds.client_id,
+        clientSecret: config3ds.client_secret,
+        establishmentCode: config3ds.establishment_code,
+        merchantName: config3ds.merchant_name,
+        mcc: config3ds.mcc,
+        isSandbox,
+      });
+    } catch (error) {
+      logger.warn('Cannot get 3DS token', { error });
+    }
+  }
+  if (options3ds.isRequired && !token3ds?.accessToken) {
+    // Required 3DS: with no authentication available, no credit card at all
+    // (Pix and banking billet keep working)
+    const i = listPaymentMethod.indexOf('credit_card');
+    if (i > -1) {
+      logger.warn('Credit card unlisted: 3DS required but unavailable');
+      listPaymentMethod.splice(i, 1);
     }
   }
 
@@ -168,12 +194,33 @@ const listPayments = async ({ params, application }) => {
             : 'https://transaction.cieloecommerce.cielo.com.br';
         }
 
+        const { expression, has3ds } = fitOnloadExpression({
+          vars: {
+            _braspagAccessToken: accessTokenSOP,
+            _braspagIsSandbox: isSandbox,
+            _braspagFingerprintApp: fingerprintApp,
+          },
+          vars3ds: token3ds?.accessToken && {
+            _braspag3dsToken: token3ds.accessToken,
+            _braspag3dsIsSandbox: token3ds.isSandbox,
+            _braspag3dsRequired: options3ds.isRequired,
+            _braspag3dsTimeout: options3ds.timeoutMs,
+          },
+          isRequired3ds: options3ds.isRequired,
+        });
+        if (!expression || (token3ds?.accessToken && !has3ds)) {
+          logger.error(`Braspag card script over ${ONLOAD_EXPRESSION_MAX_LENGTH} characters`, {
+            has3ds,
+            isListed: Boolean(expression),
+          });
+        }
+        if (!expression) {
+          // Credit card unlisted, Pix and billet keep working
+          return;
+        }
         gateway.js_client = {
           script_uri: `${baseScriptUri}/post/scripts/silentorderpost-1.0.min.js`,
-          onload_expression: `window._braspagAccessToken="${accessTokenSOP}";`
-            + `window._braspagIsSandbox=${isSandbox};`
-            + `window._braspagFingerprintApp="${fingerprintApp}";`
-            + fs.readFileSync(joinPath(__dirname, '../assets/braspag-onload-expression.min.js'), 'utf8'),
+          onload_expression: expression,
           cc_hash: {
             function: '_braspagHashCard',
             is_promise: true,
