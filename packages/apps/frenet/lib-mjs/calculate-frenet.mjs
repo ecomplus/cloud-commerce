@@ -1,21 +1,30 @@
 import axios from 'axios';
+import api from '@cloudcommerce/api';
 import { logger } from '@cloudcommerce/firebase/lib/config';
+import { parseVolumes, buildShippingItems } from './volumes.mjs';
 
-const getDimension = (side, item) => {
-  if (item.dimensions && item.dimensions[side]) {
-    const { value, unit } = item.dimensions[side];
-    switch (unit) {
-      case 'm':
-        return value * 100;
-      case 'dm':
-        return value * 10;
-      case 'cm':
-        return value;
-      default:
-        return 10;
+/*
+ * Volumes (boxes) of each product in the cart, from the `shipping/volumes`
+ * hidden metafield. One request per distinct product, in parallel; a failed
+ * request just falls back to the product weight and dimensions.
+ */
+const fetchVolumes = async (items) => {
+  const volumesByProductId = {};
+  const productIds = [...new Set(items.map(({ product_id: id }) => id).filter(Boolean))];
+  await Promise.all(productIds.map(async (productId) => {
+    try {
+      const { data } = await api.get(`products/${productId}`, {
+        fields: ['hidden_metafields'],
+      });
+      const volumes = parseVolumes(data.hidden_metafields);
+      if (volumes) {
+        volumesByProductId[productId] = volumes;
+      }
+    } catch (err) {
+      logger.warn(`Cannot get volumes of product ${productId}`, { err });
     }
-  }
-  return 10;
+  }));
+  return volumesByProductId;
 };
 
 export default async ({ params, application }) => {
@@ -53,34 +62,15 @@ export default async ({ params, application }) => {
 
   // calculate
   const startedAt = Date.now();
+  const volumesByProductId = await fetchVolumes(items);
   const getSchemaFrenet = () => {
     try {
-      const schema = {
+      return {
         SellerCEP: config.from.zip.replace('-', ''),
         RecipientCEP: to.zip.replace('-', ''),
         ShipmentInvoiceValue: subtotal,
-        ShippingItemArray: [],
+        ShippingItemArray: buildShippingItems(items, volumesByProductId),
       };
-      items.forEach((item) => {
-        const { weight, quantity, sku } = item;
-        const calculeWeight = () => {
-          if (weight) {
-            return (weight.unit && weight.unit === 'g')
-              ? (weight.value / 1000)
-              : weight.value;
-          }
-          return undefined;
-        };
-        schema.ShippingItemArray.push({
-          Weight: calculeWeight(),
-          Length: getDimension('length', item),
-          Height: getDimension('height', item),
-          Width: getDimension('width', item),
-          Quantity: quantity,
-          SKU: sku,
-        });
-      });
-      return schema;
     } catch (error) {
       const err = new Error('Error with the body sent by the module');
       err.name = 'ParseFrenetSchemaError';
@@ -96,7 +86,7 @@ export default async ({ params, application }) => {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
-        token: process.env.FRENET_TOKEN,
+        'token': process.env.FRENET_TOKEN,
       },
       data: schema,
       timeout: (params.is_checkout_confirmation ? 19000 : 10000),
