@@ -1,10 +1,7 @@
-/* eslint-disable import/no-relative-packages */
 import assert from 'node:assert';
 import test, { describe } from 'node:test';
 import listPayments from '../lib/paghiper-list-payments.js';
 import parseDueDate from '../lib/functions-lib/due-date.js';
-
-process.env.PAGHIPER_API_KEY = process.env.PAGHIPER_API_KEY || 'apk_test';
 
 const list = (data, total) => listPayments({
   application: { data, hidden_data: {} },

@@ -23,7 +23,7 @@
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/custom-shipping#readme",
   "scripts": {
     "build": "bash ../../../scripts/build-lib.sh",
-    "test": "node --test tests/"
+    "test": "node --test tests/ && bash scripts/tests-unit.sh"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
