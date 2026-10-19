@@ -6,6 +6,7 @@ import type {
 import type { PagHiperApp } from '../types/config-app';
 import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import createAxios from './functions-lib/create-axios';
+import parseDueDate from './functions-lib/due-date';
 
 type ItemsPagHiper = {
   description: string,
@@ -191,6 +192,11 @@ export default async (appData: AppModuleBody) => {
           break;
         }
       }
+      const validThru = parseDueDate(createRequest.due_date);
+      if (validThru) {
+        // Checkout shows the Pix countdown from `valid_thru`
+        transaction.account_deposit = { valid_thru: validThru };
+      }
       transaction.notes = `<img src="${pixCode.qrcode_image_url}" `
         + 'style="display:block;max-width:100%;margin:0 auto" />';
     } else {
@@ -200,8 +206,9 @@ export default async (appData: AppModuleBody) => {
         code: bankSlip.digitable_line,
         link: bankSlip.url_slip_pdf,
       };
-      if (createRequest.due_date) {
-        transaction.banking_billet.valid_thru = new Date(createRequest.due_date).toISOString();
+      const validThru = parseDueDate(createRequest.due_date);
+      if (validThru) {
+        transaction.banking_billet.valid_thru = validThru;
       }
     }
 
