@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/discounts#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

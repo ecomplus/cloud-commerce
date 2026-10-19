@@ -56,28 +56,33 @@ const getApplication = () => ({
   },
 });
 
-const run = (discountCoupon) => applyDiscount({
+const runWith = (application, discountCoupon, extraParams = {}) => applyDiscount({
   params: {
     lang: 'pt_br',
     currency_id: 'BRL',
     amount: { subtotal: 280, total: 280, discount: 0 },
     items,
     discount_coupon: discountCoupon,
+    ...extraParams,
   },
-  application: getApplication(),
+  application,
 });
+
+const run = (discountCoupon) => runWith(getApplication(), discountCoupon);
+
+const invalidCouponMessage = 'O cupom de desconto inserido é inválido.';
 
 describe('Cupom digitado com campanha de kit ativa', () => {
   test('cupom inexistente mantém o kit e avisa que o cupom é inválido', async () => {
     const response = await run('testealeatorio');
     assert.deepStrictEqual(response.discount_rule.extra_discount, { value: 60, flags: ['KIT-1'] });
-    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+    assert.strictEqual(response.invalid_coupon_message, invalidCouponMessage);
   });
 
   test('cupom vencido é tratado como inválido', async () => {
     const response = await run('VENCIDO');
     assert.strictEqual(response.discount_rule.extra_discount.value, 60);
-    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+    assert.strictEqual(response.invalid_coupon_message, invalidCouponMessage);
   });
 
   test('cupom abaixo do valor mínimo informa quanto falta', async () => {
@@ -111,18 +116,6 @@ describe('Cupom digitado com campanha de kit ativa', () => {
   });
 });
 
-const runWith = (application, discountCoupon, extraParams = {}) => applyDiscount({
-  params: {
-    lang: 'pt_br',
-    currency_id: 'BRL',
-    amount: { subtotal: 280, total: 280, discount: 0 },
-    items,
-    discount_coupon: discountCoupon,
-    ...extraParams,
-  },
-  application,
-});
-
 describe('Cupom de brinde não aplicável com campanha de kit ativa', () => {
   const getFreebieApplication = (freebieRule) => {
     const application = getApplication();
@@ -138,7 +131,7 @@ describe('Cupom de brinde não aplicável com campanha de kit ativa', () => {
   test('abaixo do subtotal mínimo do brinde avisa que o cupom é inválido', async () => {
     const response = await runWith(getFreebieApplication({ min_subtotal: 1000 }), 'brinde');
     assert.strictEqual(response.discount_rule.extra_discount.value, 60);
-    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+    assert.strictEqual(response.invalid_coupon_message, invalidCouponMessage);
   });
 
   test('brinde de outro domínio avisa que o cupom é inválido', async () => {
@@ -147,7 +140,7 @@ describe('Cupom de brinde não aplicável com campanha de kit ativa', () => {
       'brinde',
       { domain: 'loja.com' },
     );
-    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+    assert.strictEqual(response.invalid_coupon_message, invalidCouponMessage);
   });
 
   test('brinde que exige produto fora do carrinho avisa que o cupom é inválido', async () => {
@@ -155,7 +148,7 @@ describe('Cupom de brinde não aplicável com campanha de kit ativa', () => {
       getFreebieApplication({ check_product_ids: ['0000000000000000000000ff'] }),
       'brinde',
     );
-    assert.strictEqual(response.invalid_coupon_message, 'O cupom de desconto inserido é inválido.');
+    assert.strictEqual(response.invalid_coupon_message, invalidCouponMessage);
   });
 });
 
