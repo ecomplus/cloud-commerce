@@ -61,8 +61,9 @@ export default async ({ params, application }) => {
   }
 
   // calculate
-  const startedAt = Date.now();
   const volumesByProductId = await fetchVolumes(items);
+  // Frenet response time only, without the products request
+  const startedAt = Date.now();
   const getSchemaFrenet = () => {
     try {
       return {
