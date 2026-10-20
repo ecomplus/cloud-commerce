@@ -68,7 +68,8 @@ if (argv.publish) {
       const batch = storesDirs.slice(i, i + 2);
       await Promise.all(batch.map((storeDir) => within(async () => {
         $.cwd = storeDir;
-        await $`git pull`;
+        // Explicit branch, submodules may be on a detached HEAD
+        await $`git pull origin main`;
         for (let iii = 0; iii < functions.length; iii++) {
           const codebase = functions[iii];
           $.cwd = `${storeDir}/functions/${codebase}`;
@@ -92,7 +93,7 @@ if (argv.publish) {
           await $`git add package* functions/*/package*`;
           await $`git commit -m 'Update to v${version}' \
             -m 'https://github.com/ecomplus/cloud-commerce/releases/tag/v${version}'`;
-          await $`git push`;
+          await $`git push origin HEAD:main`;
         } catch {
           //
         }

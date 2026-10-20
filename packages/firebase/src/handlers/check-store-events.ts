@@ -5,12 +5,13 @@ import type {
   AppEventsPayload,
   EventsResult,
 } from '@cloudcommerce/types';
-import type { ApiConfig, ApiError } from '@cloudcommerce/api';
+import type { ApiError } from '@cloudcommerce/api';
 import { getFirestore } from 'firebase-admin/firestore';
 import { PubSub } from '@google-cloud/pubsub';
 import api from '@cloudcommerce/api';
 import config, { logger } from '../config';
 import { EVENT_SKIP_FLAG, GET_PUBSUB_TOPIC } from '../const';
+import parseEventName from './parse-event-name';
 
 declare global {
   // eslint-disable-next-line
@@ -21,64 +22,6 @@ declare global {
     ) => Promise<EventsResult<`events/${T}`>['result']>
   );
 }
-
-const parseEventName = (
-  evName: ApiEventName,
-  baseApiEventsFilter: Record<string, string>,
-) => {
-  const [resource, actionName] = evName.split('-');
-  const params: ApiConfig['params'] = { ...baseApiEventsFilter };
-  const bodySet: { [key: string]: any } = {};
-  if (actionName === 'new' || actionName === 'delayed') {
-    params.action = 'create';
-  } else {
-    switch (resource) {
-      case 'orders':
-        switch (actionName) {
-          case 'paid':
-            bodySet['financial_status.current'] = 'paid';
-            break;
-          case 'readyForShipping':
-            bodySet['fulfillment_status.current'] = 'ready_for_shipping';
-            break;
-          case 'shipped':
-          case 'delivered':
-            bodySet['fulfillment_status.current'] = actionName;
-            break;
-          case 'cancelled':
-            bodySet.status = 'cancelled';
-            break;
-          default: // anyStatusSet
-            params.modified_fields = [
-              'financial_status',
-              'fulfillment_status',
-              'status',
-            ];
-        }
-        break;
-      case 'products':
-        params.modified_fields = actionName === 'priceSet'
-          ? ['price', 'variations.price']
-          : ['quantity']; // quantitySet
-        break;
-      case 'carts':
-        params.modified_fields = ['customers']; // customerSet
-        break;
-      case 'applications':
-        params.modified_fields = ['data', 'hidden_data']; // dataSet
-        break;
-      default:
-    }
-  }
-  Object.keys(bodySet).forEach((field) => {
-    params[`body.${field}`] = bodySet[field];
-  });
-  return { resource, params, actionName } as {
-    resource: Resource,
-    params: Exclude<ApiConfig['params'], undefined | string>,
-    actionName: string
-  };
-};
 
 const pubSubClient = new PubSub();
 const tryPubSubPublish = async (
