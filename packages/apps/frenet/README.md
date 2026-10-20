@@ -15,5 +15,3 @@ The quote then sends one package per volume (times the item quantity) instead
 of one package with the product weight and dimensions. Products without the
 metafield keep the previous behavior. Boxes are never summed into a single
 package, which would distort the cubic weight.
-
-Unit tests: `node --test tests-unit/`.
