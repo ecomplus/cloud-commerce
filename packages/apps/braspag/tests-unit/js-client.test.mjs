@@ -29,10 +29,11 @@ const vars3ds = (tokenLength, isRequired = true) => ({
 });
 
 describe('Card script on checkout', () => {
-  test('card client pinned to the package version on jsDelivr', () => {
+  test('card client pinned to the package major version on jsDelivr', () => {
+    const major = version.split('.')[0];
     assert.strictEqual(
       CARD_CLIENT_URI,
-      `https://cdn.jsdelivr.net/npm/@cloudcommerce/app-braspag@${version}/assets/braspag-card-client.min.js`,
+      `https://cdn.jsdelivr.net/npm/@cloudcommerce/app-braspag@${major}/assets/braspag-card-client.min.js`,
     );
   });
 
@@ -46,13 +47,17 @@ describe('Card script on checkout', () => {
     assert.ok(expression.endsWith(loader));
   });
 
-  test('optional 3DS over the limit: card listed without 3DS', () => {
+  test('optional 3DS over the limit: card listed without 3DS, stale vars reset', () => {
     const { expression, has3ds } = fitOnloadExpression({
       vars, vars3ds: vars3ds(3000, false), isRequired3ds: false, loader,
     });
     assert.strictEqual(has3ds, false);
     assert.ok(expression.length <= ONLOAD_EXPRESSION_MAX_LENGTH);
-    assert.ok(!expression.includes('_braspag3dsToken'));
+    assert.ok(!expression.includes('t'.repeat(100)));
+    // A previous response with 3DS may have set the `window` vars already:
+    // the card client must not try the 3DS with a stale token
+    assert.ok(expression.includes('window._braspag3dsToken=null;'));
+    assert.ok(expression.includes('window._braspag3dsRequired=null;'));
   });
 
   test('required 3DS over the limit: card unlisted, never an invalid response', () => {

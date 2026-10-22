@@ -42,37 +42,46 @@ const listPayments = async ({ params, application }) => {
   const isCielo = process.env.BRASPAG_API_TYPE === 'cielo';
   const isSandbox = appData.credit_card?.provider === 'Simulado';
 
-  let accessTokenSOP;
+  // SOP and 3DS tokens are fetched in parallel before listing (the forEach
+  // below is not awaited): a slow MPI must not sum with the SOP time, Pix and
+  // billet wait for this response on every requote
+  const options3ds = get3dsOptions(appData);
+  let sopTokenPromise = null;
   if (process.env.BRASPAG_CLIENT_ID) {
     const getTokenSOPBraspag = new TokenSOPBraspag(isSandbox);
-    try {
-      await getTokenSOPBraspag.preparing;
-      accessTokenSOP = await getTokenSOPBraspag.accessToken;
-      if (accessTokenSOP) {
-        listPaymentMethod.push('credit_card');
-      }
-    } catch (error) {
-      logger.error(error);
-    }
+    sopTokenPromise = getTokenSOPBraspag.preparing
+      .then(() => getTokenSOPBraspag.accessToken);
   }
-
-  // 3DS: token fetched before listing, the forEach below is not awaited
-  const options3ds = get3dsOptions(appData);
-  let token3ds;
-  if (accessTokenSOP && options3ds.hasCredentials) {
+  let token3dsPromise = null;
+  if (options3ds.hasCredentials) {
     const config3ds = appData.braspag_3ds;
-    try {
-      token3ds = await get3dsToken({
-        clientId: config3ds.client_id,
-        clientSecret: config3ds.client_secret,
-        establishmentCode: config3ds.establishment_code,
-        merchantName: config3ds.merchant_name,
-        mcc: config3ds.mcc,
-        isSandbox,
-      });
-    } catch (error) {
-      logger.warn('Cannot get 3DS token', { error });
+    token3dsPromise = get3dsToken({
+      clientId: config3ds.client_id,
+      clientSecret: config3ds.client_secret,
+      establishmentCode: config3ds.establishment_code,
+      merchantName: config3ds.merchant_name,
+      mcc: config3ds.mcc,
+      isSandbox,
+    });
+  }
+  const [sopResult, token3dsResult] = await Promise.allSettled([
+    sopTokenPromise,
+    token3dsPromise,
+  ]);
+  let accessTokenSOP;
+  if (sopResult.status === 'fulfilled') {
+    accessTokenSOP = sopResult.value;
+    if (accessTokenSOP) {
+      listPaymentMethod.push('credit_card');
     }
+  } else {
+    logger.error(sopResult.reason);
+  }
+  let token3ds;
+  if (token3dsResult.status === 'fulfilled') {
+    token3ds = token3dsResult.value || undefined;
+  } else {
+    logger.warn('Cannot get 3DS token', { error: token3dsResult.reason });
   }
   if (options3ds.isRequired && !token3ds?.accessToken) {
     // Required 3DS: with no authentication available, no credit card at all

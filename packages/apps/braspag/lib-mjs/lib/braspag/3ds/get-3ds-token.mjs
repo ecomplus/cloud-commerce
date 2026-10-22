@@ -1,3 +1,4 @@
+import { logger } from '@cloudcommerce/firebase/lib/config';
 import { getFirestore } from 'firebase-admin/firestore';
 import axios from 'axios';
 
@@ -35,19 +36,23 @@ const get3dsToken = async ({
     MCC: mcc,
   }, {
     auth: { username: clientId, password: clientSecret },
-    timeout: 7000,
+    // `list_payments` awaits this token: a slow MPI must not hold the whole
+    // response (with optional 3DS a timeout just means "no 3DS")
+    timeout: 4000,
   });
   if (!data?.access_token) {
     const err = new Error('Cannot generate 3DS token');
     err.data = data;
     throw err;
   }
-  await documentRef.set({
+  // A cache write failure must not discard the token just generated (with
+  // required 3DS it would unlist the card over a passing Firestore error)
+  documentRef.set({
     accessToken: data.access_token,
     // Renew a minute earlier to not hand out a token about to expire
     expiresAt: Date.now() + Math.max((Number(data.expires_in) || 120) - 60, 30) * 1000,
     isSandbox,
-  });
+  }).catch(logger.error);
   return { accessToken: data.access_token, isSandbox };
 };
 

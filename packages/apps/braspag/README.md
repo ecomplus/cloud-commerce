@@ -9,11 +9,17 @@ Order Post and 3DS, `assets/braspag-card-client.js`) is about 5800 characters
 minified and the 3DS token alone about 1200, so the expression only sets the
 `window` variables and runs a small loader (`assets/braspag-onload-expression.js`).
 
-The loader gets the card client from jsDelivr, pinned to the running package
+The loader gets the card client from jsDelivr, pinned to the package major
 version (`assets/` is published to npm), with unpkg as fallback, same as the
-checkout app script. `lib-mjs/lib/braspag/js-client.mjs` builds the expression
-and checks the limit: over it, 3DS is dropped when optional, or the credit card
-is unlisted when 3DS is required. Pix and billet are never affected.
+checkout app script. The major pin makes a card client fix reach every store
+without waiting for each one to update the app, and in turn makes the script a
+contract: within a major, the `window` variables (`_braspag*`) and the card
+hash format (`token`, `fingerPrintId`, `status3ds`, `out3ds`) must stay
+compatible with previous versions (see the header of
+`assets/braspag-card-client.js`). `lib-mjs/lib/braspag/js-client.mjs` builds
+the expression and checks the limit: over it, 3DS is dropped when optional, or
+the credit card is unlisted when 3DS is required. Pix and billet are never
+affected.
 
 Before a release the pinned version doesn't have the new card client on npm.
 To test unreleased code on a store, set `BRASPAG_CARD_CLIENT_URI` to the file

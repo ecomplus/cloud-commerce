@@ -8,6 +8,15 @@
  *
  * Tokens are read from `window` when the card is sent: list payments may run
  * again on checkout with fresh ones.
+ *
+ * BROWSER/SERVER CONTRACT: the loader pins this file to the package MAJOR
+ * version on the CDN, so a store on an old patch runs the newest script of
+ * the same major. Within a major, keep backward compatible:
+ * - the `window` variables read here (`_braspagAccessToken`,
+ *   `_braspagIsSandbox`, `_braspagFingerprintApp`, `_braspag3dsToken`,
+ *   `_braspag3dsIsSandbox`, `_braspag3dsRequired`, `_braspag3dsTimeout`);
+ * - the base64 hash sent to the server: `token`, `fingerPrintId`,
+ *   `status3ds`, `out3ds`.
  */
 (function braspagCardClient() {
   const fingerprintApp = window._braspagFingerprintApp || 'seu_app';
@@ -41,13 +50,43 @@
 
   injectClearSaleScript(fingerprintApp);
 
+  // Buyer IP for the 3DS device data, fetched once on load: fetching it on
+  // the pay click would delay every attempt, and an ipify outage would mean
+  // refusal by timeout with required 3DS
+  let ip64Promise;
+  const getIp64 = () => {
+    if (!ip64Promise) {
+      const signal = typeof AbortSignal !== 'undefined' && AbortSignal.timeout
+        ? AbortSignal.timeout(4000)
+        : undefined;
+      ip64Promise = fetch('https://api64.ipify.org/', { signal })
+        .then((response) => (response.ok ? response.text() : undefined))
+        .catch(() => undefined);
+    }
+    return ip64Promise;
+  };
+  if (window._braspag3dsToken) getIp64();
+
   /*
    * 3DS authentication with the Cielo MPI script (V2), ported from the legacy
    * app (hosting/card-client.js). Resolves `{ status, data }` and never
    * rejects: the required 3DS policy is decided on `_braspagCardClient`.
    */
+  // Keep in sync with `REFUSAL_MESSAGE` on `lib-mjs/lib/braspag/3ds/policy.mjs`
   const refusal3dsMessage = 'O banco não autenticou esta compra no cartão (3DS). '
     + 'Tente novamente ou pague com Pix ou boleto.';
+
+  // Keep in sync with `parse3dsResult` on `lib-mjs/lib/braspag/3ds/policy.mjs`:
+  // ECI with liability shift (Visa/Elo/Amex 05/06, Mastercard 02/01), CAVV
+  // and ReferenceId required
+  const authenticatedEci = ['01', '02', '05', '06'];
+  const is3dsAuthenticated = (out3ds) => {
+    if (!out3ds || typeof out3ds !== 'object') return false;
+    const eci = out3ds.Eci === undefined || out3ds.Eci === null
+      ? ''
+      : String(out3ds.Eci).padStart(2, '0');
+    return Boolean(out3ds.Cavv && out3ds.ReferenceId && authenticatedEci.indexOf(eci) > -1);
+  };
   const load3ds = (cardClient) => new Promise((resolve) => {
     let isDone = false;
     const done = (status, data) => {
@@ -73,13 +112,7 @@
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-`
           + `${String(d.getDate()).padStart(2, '0')}`;
       };
-      let ip64;
-      try {
-        const ipResponse = await fetch('https://api64.ipify.org/');
-        if (ipResponse.ok) ip64 = await ipResponse.text();
-      } catch {
-        //
-      }
+      const ip64 = await getIp64();
       // https://docs.cielo.com.br/gateway/docs/2-mapeando-as-classes
       const fields = {
         bpmpi_auth: true,
@@ -212,6 +245,12 @@
     <input type="text" class="bp-sop-cardholdername" value="${cardClient.name}" style="display: none;">
     `;
 
+    // The SOP script reads the first matching input it finds: a leftover form
+    // from a previous attempt would tokenize the old card while the 3DS
+    // authenticates the new one
+    const previousSopForm = document.getElementById('formBraspag');
+    if (previousSopForm) previousSopForm.remove();
+
     const newForm = document.createElement('form');
     newForm.setAttribute('id', 'formBraspag');
     newForm.innerHTML = elementsForm;
@@ -232,10 +271,8 @@
               reject(error);
             };
             if (!window._braspag3dsToken) {
-              if (is3dsRequired) {
-                refuse();
-                return;
-              }
+              // Without a 3DS token the server either unlisted the card (3DS
+              // required) or listed it without 3DS: just send the hash
               sendHash();
               return;
             }
@@ -243,9 +280,14 @@
             delete card3ds.cvc;
             load3ds(card3ds).then(({ status, data: out3ds }) => {
               data.status3ds = status;
-              if (status === 'authenticated' && out3ds && typeof out3ds === 'object') {
+              if (out3ds && typeof out3ds === 'object') {
                 data.out3ds = out3ds;
-              } else if (is3dsRequired) {
+              }
+              // Same criteria as the server (`parse3dsResult`): refusing here
+              // shows the `userMsg` toast, while a 409 on create transaction
+              // is a generic payment error for the buyer
+              if (is3dsRequired
+                && !(status === 'authenticated' && is3dsAuthenticated(out3ds))) {
                 refuse();
                 return;
               }

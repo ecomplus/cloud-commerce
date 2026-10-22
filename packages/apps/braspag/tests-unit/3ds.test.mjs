@@ -51,6 +51,11 @@ describe('3DS policy', () => {
     const noReference = { ...authenticated, ReferenceId: null };
     assert.strictEqual(parse3dsResult(noReference).isAuthenticated, false);
     assert.strictEqual(parse3dsResult(undefined, 'timeout').status, 'timeout');
+    // MPI reported authenticated but without liability shift: never
+    // labeled "autenticado" on the order
+    const notShifted = parse3dsResult({ ...authenticated, Eci: '07' }, 'authenticated');
+    assert.strictEqual(notShifted.isAuthenticated, false);
+    assert.strictEqual(notShifted.status, 'error');
   });
 
   test('timeout is configurable, bigger when 3DS is required, within 30 s and 15 min', () => {
@@ -86,7 +91,7 @@ describe('Card transaction with 3DS', () => {
   });
 
   test('authenticated card goes with external authentication and capture', () => {
-    const body = parseToTransaction(
+    const { body, result3ds } = parseToTransaction(
       appData({ required: true }),
       'o1',
       params({ out3ds: { ...authenticated, Extra: 'x' }, status3ds: 'authenticated' }),
@@ -98,10 +103,13 @@ describe('Card transaction with 3DS', () => {
     });
     assert.strictEqual(body.Payment.Capture, true);
     assert.strictEqual(body.Payment.FraudAnalysis, undefined);
+    // Returned along so create transaction doesn't parse the 3DS again
+    assert.strictEqual(result3ds.isAuthenticated, true);
+    assert.strictEqual(result3ds.eci, '05');
   });
 
   test('fraud analysis can be kept on authenticated cards', () => {
-    const body = parseToTransaction(
+    const { body } = parseToTransaction(
       appData({ required: true, fraud_analysis: true }),
       'o1',
       params({ out3ds: authenticated, status3ds: 'authenticated' }),
@@ -112,7 +120,7 @@ describe('Card transaction with 3DS', () => {
   });
 
   test('optional 3DS keeps legacy behavior: unauthenticated goes with fraud analysis', () => {
-    const body = parseToTransaction(appData({}), 'o1', params({ status3ds: 'failure' }), 'credit_card');
+    const { body } = parseToTransaction(appData({}), 'o1', params({ status3ds: 'failure' }), 'credit_card');
     assert.strictEqual(body.Payment.Authenticate, undefined);
     assert.ok(body.Payment.FraudAnalysis);
   });

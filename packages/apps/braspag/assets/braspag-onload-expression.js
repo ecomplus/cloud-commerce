@@ -2,8 +2,9 @@
  * `js_client.onload_expression`, after the `window` variables set by list
  * payments. Modules API caps the expression at 3000 characters and the 3DS
  * token alone takes ~1200, so it only loads the card client
- * (`braspag-card-client.js`) from jsDelivr, pinned to this package version,
- * with unpkg as fallback (same as the checkout app script).
+ * (`braspag-card-client.js`) from jsDelivr, pinned to this package MAJOR
+ * version so card client fixes reach the stores without an app update, with
+ * unpkg as fallback (same as the checkout app script).
  *
  * `_braspagHashCard` is defined right away: the checkout may ask for the card
  * hash before the card client finishes loading.

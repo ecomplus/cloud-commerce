@@ -12,6 +12,7 @@
  */
 export const AUTHENTICATED_ECI = ['01', '02', '05', '06'];
 
+// Keep in sync with `refusal3dsMessage` on `assets/braspag-card-client.js`
 export const REFUSAL_MESSAGE = 'O banco não autenticou esta compra no cartão (3DS). '
   + 'Tente novamente ou pague com Pix ou boleto.';
 
@@ -61,9 +62,17 @@ export const parse3dsResult = (out3ds, status3ds) => {
     && out3ds.ReferenceId
     && AUTHENTICATED_ECI.includes(eci),
   );
+  let status = status3ds || 'error';
+  if (isAuthenticated) {
+    status = 'authenticated';
+  } else if (status === 'authenticated') {
+    // The MPI reported authenticated, but without liability shift (e.g. ECI
+    // 07) or missing CAVV/ReferenceId: never label it "autenticado"
+    status = 'error';
+  }
   return {
     isAuthenticated,
-    status: isAuthenticated ? 'authenticated' : (status3ds || 'error'),
+    status,
     eci,
     version: out3ds.Version ? String(out3ds.Version) : '',
     referenceId: out3ds.ReferenceId ? String(out3ds.ReferenceId) : '',
