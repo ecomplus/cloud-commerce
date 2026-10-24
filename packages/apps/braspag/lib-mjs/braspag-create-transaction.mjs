@@ -3,6 +3,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import createAxios from './lib/braspag/create-axios.mjs';
 import { parseStatus } from './lib/braspag/parse-utils.mjs';
 import bodyToBraspag from './lib/braspag/payload-to-transaction.mjs';
+import { get3dsOptions, to3dsCustomFields } from './lib/braspag/3ds/policy.mjs';
 import addInstallments from './lib/payments/add-installments.mjs';
 
 const createTransaction = async ({ params, application }) => {
@@ -50,7 +51,7 @@ const createTransaction = async ({ params, application }) => {
   try {
     const appName = process.env.BRASPAG_API_TYPE;
     const appAxios = createAxios(false, isSimulated);
-    const body = bodyToBraspag(appData, orderId, params, methodPayment);
+    const { body, result3ds, status3ds } = bodyToBraspag(appData, orderId, params, methodPayment);
     logger.info(`>> body ${appName} ${orderId}`, { body });
     const { data } = await appAxios.post('/sales', body, { timeout });
     logger.info(`>> data ${appName} ${orderId}`, { data });
@@ -83,6 +84,11 @@ const createTransaction = async ({ params, application }) => {
         transaction.credit_card = {
           company: payment.CreditCard?.Brand,
         };
+      }
+
+      // 3DS result on the order, so the merchant doesn't check it by hand
+      if (result3ds && (get3dsOptions(appData).hasCredentials || status3ds)) {
+        transaction.custom_fields = to3dsCustomFields(result3ds);
       }
 
       if (appData.installments) {
@@ -159,6 +165,14 @@ const createTransaction = async ({ params, application }) => {
     if (docSOP) {
       // delete docSop can only be used once
       await docSOP.delete().catch(logger.error);
+    }
+    if (error.name === 'Required3dsError') {
+      logger.info(`3DS required, refused ${orderId}`, { result: error.result });
+      return {
+        status: 409,
+        error: 'BRASPAG_3DS_REQUIRED',
+        message: error.message,
+      };
     }
     // try to debug request error
     const errCode = 'BRASPAG_TRANSACTION_ERR';

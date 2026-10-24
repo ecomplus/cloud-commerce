@@ -1,4 +1,10 @@
 import { parseAddress, parsePaymentType } from './parse-utils.mjs';
+import {
+  get3dsOptions,
+  parse3dsResult,
+  toExternalAuthentication,
+  Required3dsError,
+} from './3ds/policy.mjs';
 
 const parseFraudAnalysis = (appData, params, Address, fingerPrintId) => {
   const { amount, buyer, items } = params;
@@ -54,6 +60,8 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
   const isCielo = process.env.BRASPAG_API_TYPE === 'cielo';
   const { amount, buyer, to } = params;
   const methodConfig = appData[methodPayment];
+  let result3ds;
+  let status3ds;
 
   const Address = to && to.street ? parseAddress(to) : parseAddress(params.billing_address);
   const body = {
@@ -102,17 +110,34 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
     Object.assign(body.Customer, { DeliveryAddress: Address });
 
     const fraudAnalysis = parseFraudAnalysis(appData, params, Address, hashCard.fingerPrintId);
-    Object.assign(
-      body.Payment,
-      {
-        Installments: installmentsNumber,
-        CreditCard: {
-          PaymentToken: hashCard.token,
-        },
+    const options3ds = get3dsOptions(appData);
+    status3ds = hashCard.status3ds;
+    result3ds = parse3dsResult(hashCard.out3ds, status3ds);
+    if (options3ds.isRequired && !result3ds.isAuthenticated) {
+      // Required 3DS: never send a card transaction without authentication
+      throw new Required3dsError(result3ds);
+    }
+    Object.assign(body.Payment, {
+      Installments: installmentsNumber,
+      CreditCard: {
+        PaymentToken: hashCard.token,
+      },
+    });
+    if (result3ds.isAuthenticated) {
+      Object.assign(body.Payment, {
+        Authenticate: true,
+        ExternalAuthentication: toExternalAuthentication(hashCard.out3ds),
+      });
+    }
+    if (result3ds.isAuthenticated && !options3ds.hasFraudAnalysis) {
+      // Authenticated, liability shifted to the issuer: capture right away
+      body.Payment.Capture = true;
+    } else {
+      Object.assign(body.Payment, {
         Capture: !fraudAnalysis.CaptureOnLowRisk,
         FraudAnalysis: fraudAnalysis,
-      },
-    );
+      });
+    }
   } else if (methodPayment === 'account_deposit') {
     if (isCielo) {
       delete body.Payment.Provider;
@@ -121,7 +146,10 @@ const parseToTransaction = (appData, orderId, params, methodPayment) => {
     Object.assign(body.Payment, { QrCodeExpiration: 86400 });
   }
 
-  return body;
+  // `result3ds` goes along so create transaction doesn't decode the hash and
+  // parse the 3DS again: what is sent to Cielo and what is shown on the order
+  // always come from the same parse
+  return { body, result3ds, status3ds };
 };
 
 export default parseToTransaction;

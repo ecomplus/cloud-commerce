@@ -25,7 +25,7 @@ describe('Customer address sent to Braspag', () => {
   });
 
   test('billet for a customer paying with a saved address', () => {
-    const body = parseToTransaction({ banking_billet: { provider: 'Simulado' } }, 'order-1', {
+    const { body } = parseToTransaction({ banking_billet: { provider: 'Simulado' } }, 'order-1', {
       amount: { total: 2999 },
       buyer: { fullname: 'Fulano de Tal', doc_number: '12345678909', registry_type: 'p' },
       to: { ...address, country_code: 'BR' },
@@ -36,7 +36,7 @@ describe('Customer address sent to Braspag', () => {
   });
 
   test('billing address restored by checkout when there is no shipping address', () => {
-    const body = parseToTransaction({ banking_billet: { provider: 'Simulado' } }, 'order-1', {
+    const { body } = parseToTransaction({ banking_billet: { provider: 'Simulado' } }, 'order-1', {
       amount: { total: 2999 },
       buyer: { fullname: 'Fulano de Tal', doc_number: '12345678909', registry_type: 'p' },
       billing_address: { ...address, country_code: 'BR' },
@@ -58,7 +58,7 @@ describe('Customer phone sent to Braspag', () => {
     to: address,
     items: [],
     credit_card: { hash: cardHash },
-  }, 'credit_card');
+  }, 'credit_card').body;
 
   test('saved phone with country code, restored by checkout on masked customers', () => {
     const body = payCard({ country_code: 55, number: '31999998888' });
