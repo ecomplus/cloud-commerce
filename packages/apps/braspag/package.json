@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-braspag",
   "type": "module",
-  "version": "2.63.3",
+  "version": "2.64.0",
   "description": "e-com.plus Cloud Commerce app to integrate Braspag",
   "main": "lib/braspag.js",
   "exports": {
@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/braspag#readme",
   "scripts": {
-    "build": "bash scripts/build.sh"
+    "build": "bash scripts/build.sh",
+    "test": "node --test tests-unit/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",
@@ -35,7 +36,7 @@
     "axios": "^1.20.0",
     "firebase-admin": "^13.10.0",
     "firebase-functions": "^7.4.0",
-    "qs": "^6.16.0"
+    "qs": "^6.16.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",

@@ -150,7 +150,10 @@ export default async ({ params, application }) => {
     });
   };
 
+  // freebie rules selected on the last preview, to check if the typed coupon is a freebie one
+  let previewFreebieRules = [];
   const getFreebiesPreview = () => {
+    previewFreebieRules = [];
     if (params.items && params.items.length) {
       // gift products (freebies) campaings
       if (Array.isArray(config.freebies_rules)) {
@@ -227,7 +230,9 @@ export default async ({ params, application }) => {
 
           if (bestRule) {
             // provide freebie products \o/
-            response.freebie_product_ids = bestRule.product_ids;
+            // copy, cumulative rules below must not change the rule itself between previews
+            response.freebie_product_ids = [...bestRule.product_ids];
+            previewFreebieRules.push(bestRule);
             if (discountValue) {
               if (bestRule.cumulative_freebie === true) {
                 cumulativeRules.forEach(({ rule, value }) => {
@@ -239,6 +244,7 @@ export default async ({ params, application }) => {
                     }
                   }
                   discountValue += value;
+                  previewFreebieRules.push(rule);
                   rule.product_ids.forEach((productId) => {
                     response.freebie_product_ids.push(productId);
                   });
@@ -517,9 +523,12 @@ export default async ({ params, application }) => {
   });
 
   const discountRules = getValidDiscountRules(config.discount_rules, params);
+  let isCouponFound = false;
+  let couponMinAmountMessage;
   if (discountRules.length) {
     const { discountRule, discountMatchEnum } = matchDiscountRule(discountRules, params);
     if (discountRule) {
+      isCouponFound = discountMatchEnum === 'COUPON';
       const {
         valid: isValidByItems,
         items: filteredItems,
@@ -679,11 +688,42 @@ export default async ({ params, application }) => {
             };
           }
         }
+      } else if (isCouponFound && discountRule.discount.min_amount > checkAmount) {
+        // coupon exists but cart is still under the minimum amount
+        const missingAmount = ecomUtils.formatMoney(
+          discountRule.discount.min_amount - checkAmount,
+          params.currency_id,
+          params.lang,
+        );
+        couponMinAmountMessage = params.lang === 'pt_br'
+          // same text of the checkout (DiscountApplier) for the minimum amount alert
+          ? `Adicione mais ${missingAmount} ao carrinho para ganhar o desconto.`
+          : `Add more ${missingAmount} to cart to get the discount.`;
       }
     }
   }
 
   addFreebies();
+  // Only when a campaign (kit, freebies) discount is applied anyway, the checkout would
+  // take the typed coupon as accepted. Without campaign it already shows the coupon as
+  // invalid, and another discount app may have accepted it.
+  if (params.discount_coupon && response.discount_rule?.extra_discount?.value) {
+    if (isCouponFound) {
+      if (couponMinAmountMessage) {
+        response.invalid_coupon_message = couponMinAmountMessage;
+      }
+    } else {
+      const couponCode = params.discount_coupon.toUpperCase();
+      const isFreebieCoupon = previewFreebieRules.some((rule) => {
+        return rule.freebie_coupon?.toUpperCase() === couponCode;
+      });
+      if (!isFreebieCoupon) {
+        response.invalid_coupon_message = params.lang === 'pt_br'
+          ? 'O cupom de desconto inserido é inválido.'
+          : 'Discount coupon entered is invalid.';
+      }
+    }
+  }
   // response with no error nor discount applied
   return respondSuccess();
 };

@@ -60,10 +60,12 @@ export default async (data: AppModuleBody) => {
 
   listPaymentMethods.forEach((paymentMethod) => {
     const isPix = paymentMethod === 'account_deposit';
-    const minAmount = configApp.min_amount || isPix ? 3 : 0;
+    // Configured minimum applies to both methods, Pix has a R$ 3 floor on PagHiper
+    const minAmount = Math.max(configApp.min_amount || 0, isPix ? 3 : 0);
     const methodConfig = isPix ? configApp.pix : configApp;
 
-    const methodEnable = isPix ? configApp?.pix?.enable : configApp?.pix?.disable_billet;
+    // Banking billet is listed unless explicitly disabled on Pix options
+    const methodEnable = isPix ? configApp?.pix?.enable : !configApp?.pix?.disable_billet;
 
     // Workaround for showcase
     const validateAmount = amount.total ? (amount.total >= minAmount) : true;

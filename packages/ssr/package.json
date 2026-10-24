@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/ssr",
   "type": "module",
-  "version": "2.63.3",
+  "version": "2.64.0",
   "description": "e-com.plus Cloud Commerce storefront SSR",
   "main": "lib/index.js",
   "exports": {
@@ -46,7 +46,7 @@
     "html-minifier": "^4.0.0",
     "mitt": "^3.0.1",
     "mrmime": "^2.0.1",
-    "vue": "^3.5.43",
+    "vue": "^3.5.44",
     "yaml": "^2.9.1"
   },
   "devDependencies": {

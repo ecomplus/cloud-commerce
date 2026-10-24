@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.64.0](https://github.com/ecomplus/cloud-commerce/compare/v2.63.3...v2.64.0) (2026-10-19)
+
+
+### Features
+
+* **custom-shipping:** Allow minimum shipping price on percentage and weight rules ([71f9069](https://github.com/ecomplus/cloud-commerce/commit/71f9069f5f06b66f126967ec1ff557f36e6133ad))
+* **firebase:** Add customer approval events and customers-only store config ([49f35b8](https://github.com/ecomplus/cloud-commerce/commit/49f35b83e75bed0218af6e964c8a839d7823f314))
+* **modules:** Add opt-in checkout gates for customers-only stores ([5deb03c](https://github.com/ecomplus/cloud-commerce/commit/5deb03c6151cf28f75f8f07db4a0e687381f1c47))
+* **passport:** Let store config create customers not yet enabled to buy ([a3f92fc](https://github.com/ecomplus/cloud-commerce/commit/a3f92fc9388a07ffbf9a26d8a04fbb225ad6bb37))
+
+
+### Bug Fixes
+
+* **braspag:** Let customers pay with a saved address ([d7b91aa](https://github.com/ecomplus/cloud-commerce/commit/d7b91aa7891784fb25674d6184c821ead596bdce))
+* **braspag:** Send the saved customer phone with the right country code ([2f4df15](https://github.com/ecomplus/cloud-commerce/commit/2f4df1503f94c356ab4e41414ac17e8b23a16402))
+* **cli:** Force partial deploys too ([6d01bb3](https://github.com/ecomplus/cloud-commerce/commit/6d01bb35b23af6905b0e0adf65c7cd43afb90cfb))
+* **cli:** Keep store hosting rewrites before the SSR catch-all ([3a7af29](https://github.com/ecomplus/cloud-commerce/commit/3a7af29f70f96a00206f03252897a0e387406f2e))
+* **deps:** update dependency nodemailer to v10 [security] ([#851](https://github.com/ecomplus/cloud-commerce/issues/851)) ([a23437f](https://github.com/ecomplus/cloud-commerce/commit/a23437f4afd133cea9b0725895ee667608bf6b2f))
+* **deps:** Update non-major dependencies ([#852](https://github.com/ecomplus/cloud-commerce/issues/852)) ([53d4457](https://github.com/ecomplus/cloud-commerce/commit/53d4457793d6b37fde913d08fc1e8594cd0b3e19))
+* **deps:** update non-major dependencies to ^8.71.1 ([#857](https://github.com/ecomplus/cloud-commerce/issues/857)) ([5b74492](https://github.com/ecomplus/cloud-commerce/commit/5b74492e5d3ac09695d00c65bfae2e5ce7cb2c3b))
+* **discounts:** Don't take cumulative freebie coupons as invalid when a kit is active ([c68d0fe](https://github.com/ecomplus/cloud-commerce/commit/c68d0fe23cbb493b924a46c33e8eff5cdb31705a))
+* **discounts:** Stop reporting invalid coupons as applied while a campaign is active ([7834f74](https://github.com/ecomplus/cloud-commerce/commit/7834f7497d345d75d0890939a5c6767bb1d7ce88))
+* **discounts:** Use the checkout wording for the coupon minimum amount alert ([9816d6c](https://github.com/ecomplus/cloud-commerce/commit/9816d6c66f0c4c39448a335c438e723c893bdf0b))
+* **discounts:** Warn on freebie coupons that don't apply and keep stores without campaigns unchanged ([7d4f231](https://github.com/ecomplus/cloud-commerce/commit/7d4f231e90671fab7d980e56d63e2729a83e1b05))
+* **modules:** Answer customers not yet enabled with the existing disabled customer code ([80699a7](https://github.com/ecomplus/cloud-commerce/commit/80699a7711f602f765af7e775d854b29898537ed))
+* **modules:** Ask customers-only shoppers to retry when registration can't be checked ([0cba8d6](https://github.com/ecomplus/cloud-commerce/commit/0cba8d6b95f9842f8760240cab4950cb09a909cb))
+* **paghiper:** Show banking billet unless disabled and respect minimum amount on Pix and billet ([8d677f8](https://github.com/ecomplus/cloud-commerce/commit/8d677f80f083697765f99ab76481e07d65954ae9))
+* **passport:** Keep first login unchanged for stores without new customer defaults ([ebf02f6](https://github.com/ecomplus/cloud-commerce/commit/ebf02f66ff55fc51481f8bcdadb4549f3f9cec56))
+* **storefront:** Omit JSON-LD offer for products without price ([d82bc0a](https://github.com/ecomplus/cloud-commerce/commit/d82bc0a375a722399645bc329509763e52684953))
+* **storefront:** Show customer-only store messages at checkout instead of a payment error ([f375a12](https://github.com/ecomplus/cloud-commerce/commit/f375a12e7d2bc7d3171b63744d9d3a507264e9c0)), closes [ecomplus/storefront#1324](https://github.com/ecomplus/storefront/issues/1324) [#837](https://github.com/ecomplus/cloud-commerce/issues/837)
+* **storefront:** Skip product rich snippet for products without public price ([e52b84e](https://github.com/ecomplus/cloud-commerce/commit/e52b84ec5e8c6b2b730c48fbefe63e7f2705802c))
+
 ## [2.63.3](https://github.com/ecomplus/cloud-commerce/compare/v2.63.2...v2.63.3) (2026-09-23)
 
 

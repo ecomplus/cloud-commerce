@@ -1,9 +1,16 @@
+const parseCountry = (countryCode) => {
+  const code = countryCode ? String(countryCode).toUpperCase() : 'BR';
+  // e-com.plus addresses use alpha-2, Braspag has always received Brazil as alpha-3 'BRA'
+  // (the default when missing), other countries are sent as received
+  return code === 'BR' ? 'BRA' : code;
+};
+
 export const parseAddress = (to) => ({
   City: to.city,
   State: to.province_code,
-  Country: to.country_code ? to.country_code.toUpperCaseCase() : 'BRA',
+  Country: parseCountry(to.country_code),
   ZipCode: to.zip.replace(/\D/g, '').padStart(8, '0'),
-  Number: `${String(to.number) || 's/n'}`,
+  Number: to.number ? String(to.number) : 's/n',
   street: `${to.street}`,
   District: `${to.borough}`,
   Complement: (to.complement || '').substring(0, 20),

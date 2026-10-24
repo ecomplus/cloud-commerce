@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/firebase",
   "type": "module",
-  "version": "2.63.3",
+  "version": "2.64.0",
   "description": "e-com.plus Cloud Commerce on Firebase",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -33,7 +33,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/firebase#readme",
   "scripts": {
-    "build": "bash ../../scripts/build-lib.sh"
+    "build": "bash ../../scripts/build-lib.sh",
+    "test": "vitest run"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

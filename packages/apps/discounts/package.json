@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-discounts",
   "type": "module",
-  "version": "2.63.3",
+  "version": "2.64.0",
   "description": "e-com.plus Cloud Commerce app for complex discount rules",
   "main": "lib/discounts.js",
   "files": [
@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/ecomplus/cloud-commerce/tree/main/packages/apps/discounts#readme",
   "scripts": {
-    "build": "bash ../../../scripts/build-lib.sh"
+    "build": "bash ../../../scripts/build-lib.sh",
+    "test": "node --test tests/"
   },
   "dependencies": {
     "@cloudcommerce/api": "workspace:*",

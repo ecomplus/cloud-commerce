@@ -6,11 +6,12 @@ import type {
   Payment,
 } from '../types/index';
 import { fullName as getFullname } from '@ecomplus/utils';
-import { logger } from '@cloudcommerce/firebase/lib/config';
+import config, { logger } from '@cloudcommerce/firebase/lib/config';
 import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
 import readOrSaveCustomer from './functions-checkout/read-or-save-customer';
+import { getSubtotalGateError } from './functions-checkout/customer-gates';
 import requestModule from './functions-checkout/request-to-module';
 import {
   sendError,
@@ -175,6 +176,16 @@ export default async (req: Request, res: Response) => {
   );
   if (subtotal <= 0 && items.length < countCheckoutItems) {
     return sendError(res, 400, 'CKT801', 'Cannot handle checkout, any valid cart item');
+  }
+  const subtotalGateError = getSubtotalGateError(config.get().checkout, subtotal);
+  if (subtotalGateError) {
+    return sendError(
+      res,
+      subtotalGateError.status,
+      subtotalGateError.code,
+      subtotalGateError.message,
+      subtotalGateError.userMessage,
+    );
   }
   amount.subtotal = subtotal;
   body.subtotal = subtotal;
