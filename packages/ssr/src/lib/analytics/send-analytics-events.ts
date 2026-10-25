@@ -53,7 +53,7 @@ export const sendAnalyticsEvents = async (
         storingEvents.push(storing);
       }
       const productId = productView?.params?.items?.[0]?.object_id;
-      if (typeof productId === 'string' && /[0-9a-f]{24}/.test(productId)) {
+      if (typeof productId === 'string' && /^[0-9a-f]{24}$/.test(productId)) {
         const storing = db.doc(`ssrProductViews/${productId}`)
           .set({ countUnsaved: FieldValue.increment(1) }, { merge: true });
         storingEvents.push(storing);
