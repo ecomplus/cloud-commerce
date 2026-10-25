@@ -282,6 +282,9 @@ const maskSecrets = (value: any, depth = 0): any => {
     }
     return err;
   }
+  if (Array.isArray(value)) {
+    return value.map((item) => maskSecrets(item, depth + 1));
+  }
   const proto = Object.getPrototypeOf(value);
   // Plain objects only, Axios config may have no prototype
   if (proto !== Object.prototype && proto !== null) return value;
@@ -295,8 +298,14 @@ const maskSecrets = (value: any, depth = 0): any => {
 };
 
 const log = (level: 'info' | 'warn' | 'error', _msg: any, _d?: Record<string, any>) => {
-  const msg = maskSecrets(_msg);
-  let d = maskSecrets(_d);
+  let msg = _msg;
+  let d = _d;
+  try {
+    msg = maskSecrets(_msg);
+    d = maskSecrets(_d);
+  } catch {
+    // Unexpected object (e.g. throwing getter), log as received
+  }
   const execId = asyncLocalStorage.getStore()?.execId;
   if (execId) {
     if (d) {
