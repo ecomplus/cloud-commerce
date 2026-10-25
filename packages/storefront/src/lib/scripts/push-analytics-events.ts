@@ -164,7 +164,7 @@ const startAnalytics = () => {
     const ttqEvents = await parseGtagToTtq(evMessage);
     ttqEvents.forEach((ttqEvent: { name: string | null, params?: any }) => {
       if (!ttqEvent.name) return;
-      sendServerEvent({ type: 'ttk', sent: hasTtq, ...(ttqEvent as any) });
+      sendServerEvent({ type: 'ttq', sent: hasTtq, ...(ttqEvent as any) });
       if (hasTtq) {
         if (ttqEvent.name === 'PageView') {
           if (TTQ_AUTO_PAGEVIEW) return;

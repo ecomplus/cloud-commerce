@@ -15,6 +15,10 @@ const sendCartEmails = async () => {
   const daysDelay = parseInt(appData.is_abandoned_after_days, 10) || 1;
   const d = new Date();
   d.setDate(d.getDate() - daysDelay);
+  // Carts left for longer than a week after the delay are too old to recover,
+  // also keeps a backlog of unflagged carts from being emailed all at once
+  const minDate = new Date(d);
+  minDate.setDate(minDate.getDate() - 7);
   const {
     data: { result: abandonedCarts },
   } = await api.get('carts', {
@@ -23,8 +27,10 @@ const sendCartEmails = async () => {
       'available': true,
       'flags': 'open-checkout',
       'updated_at<': d.toISOString(),
+      'updated_at>': minDate.toISOString(),
     },
-    fields: ['_id', 'flags', 'completed', 'customers'] as const,
+    // Items and subtotal are listed on the abandoned cart email template
+    fields: ['_id', 'flags', 'completed', 'customers', 'items', 'subtotal'] as const,
     sort: ['-updated_at'],
     limit: 200,
   });

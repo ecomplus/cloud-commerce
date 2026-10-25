@@ -23,7 +23,14 @@ const saveViews = async () => {
         doc.ref.delete();
       } catch (_err: any) {
         const err = _err as ApiError;
-        if (err.statusCode === 404) {
+        const { statusCode } = err;
+        // 4xx won't ever succeed (e.g. product deleted, or a malformed ID from
+        // bots), drop the doc instead of stopping every following exec on it;
+        // auth errors and rate limit keep the views to retry after a fix
+        if (
+          statusCode && statusCode >= 400 && statusCode < 500
+          && ![401, 403, 429].includes(statusCode)
+        ) {
           doc.ref.delete();
           logger.warn(err);
         } else {
