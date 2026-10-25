@@ -12,7 +12,8 @@ const getConfig = async () => {
       `applications?app_id=${config.get().apps.frenet.appId}&fields=hidden_data`,
     )).data.result;
 
-    return app[0].hidden_data;
+    // App not installed on this store, nothing to track
+    return app[0]?.hidden_data || null;
   } catch (err) {
     logger.error(err);
     return null;
@@ -50,8 +51,9 @@ const handleTrackingCodes = async () => {
       // no config for store bye
       resolve(null);
     } else {
-      // eslint-disable-next-line consistent-return
-      codes.forEach(async (code) => {
+      // Wait for every code before finishing, the function may be stopped
+      // right after resolving
+      await Promise.allSettled(codes.map(async (code) => {
         const serviceCode = String(code.serviceCode).startsWith('FR')
           ? String(code.serviceCode.replace(/^FR/, '')).trim()
           : code.serviceCode;
@@ -144,9 +146,8 @@ const handleTrackingCodes = async () => {
             }
           }
         }
-
-        resolve(null);
-      });
+      }));
+      resolve(null);
     }
   });
 

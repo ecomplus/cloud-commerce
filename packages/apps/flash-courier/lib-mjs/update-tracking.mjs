@@ -12,6 +12,11 @@ export default () => {
         'applications?limit=1&fields=hidden_data,data'
           + `&app_id=${config.get().apps.flashCourier.appId}`,
       )).data.result;
+      // App not installed on this store, nothing to track
+      if (!app[0]) {
+        resolve(null);
+        return;
+      }
 
       appData = {
         ...app[0].data,
