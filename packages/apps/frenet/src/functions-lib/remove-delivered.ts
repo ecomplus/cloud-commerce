@@ -8,18 +8,22 @@ const removeDeliveredToFirestore = async () => {
     try {
       const codes: TrackingDoc[] = await db.getAllDelivered() as TrackingDoc[];
       if (codes.length > 0) {
-        codes.forEach(async (code) => {
+        await Promise.all(codes.map(async (code) => {
           try {
             await db.remove(code.trackingCode, code.serviceCode);
             logger.info('> (App Frenet) Code removed, delivered status', code);
           } catch (err) {
             logger.error(err);
           }
-        });
-        resolve(null);
+        }));
       }
-    } catch (err) {
-      reject(err);
+      resolve(null);
+    } catch (err: any) {
+      if (err.name === 'NoTrackingCodesForUpdate') {
+        resolve(null);
+      } else {
+        reject(err);
+      }
     }
   });
 

@@ -21,7 +21,7 @@ const getConfig = async () => {
 };
 
 const diffInDays = (
-  createdAt: string,
+  createdAt: Date,
 ) => {
   const today = new Date();
   const created = new Date(createdAt);
@@ -45,6 +45,17 @@ const handleTrackingCodes = async () => {
         reject(err);
       }
       resolve(null);
+    }
+
+    if (codes) {
+      // Skip old codes instead of notifying customers about outdated orders,
+      // they are removed by the daily cleanup
+      const deadline = db.getDeadline().getTime();
+      const total = codes.length;
+      codes = codes.filter(({ createdAt }) => createdAt && createdAt.getTime() > deadline);
+      if (codes.length < total) {
+        logger.info(`> (App Frenet) Skipping ${total - codes.length} tracking codes older than deadline`);
+      }
     }
 
     if (!appConfig || !appConfig.frenet_access_token || !codes) {

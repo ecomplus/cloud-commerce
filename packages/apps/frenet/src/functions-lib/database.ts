@@ -47,20 +47,21 @@ const get = async (
     });
 });
 
-const clear = async () => new Promise((resolve) => {
-  const deadline = new Date();
-  deadline.setMonth(deadline.getMonth() - 2);
+// Codes older than this are no longer tracked and get removed
+const maxAgeDays = 60;
 
-  getFirestore().collection(firestoreColl)
-    .where('createdAt', '<=', deadline)
-    .get()
-    .then((docsRef) => {
-      docsRef.docs.forEach((doc) => {
-        doc.ref.delete();
-      });
-      resolve(true);
-    });
-});
+const getDeadline = () => {
+  const deadline = new Date();
+  deadline.setDate(deadline.getDate() - maxAgeDays);
+  return deadline;
+};
+
+const clear = async () => {
+  const docsRef = await getFirestore().collection(firestoreColl)
+    .where('createdAt', '<=', getDeadline())
+    .get();
+  await Promise.all(docsRef.docs.map((doc) => doc.ref.delete()));
+};
 
 const remove = async (
   trackingCode: string,
@@ -81,13 +82,13 @@ const remove = async (
 });
 
 const update = async (
-  trackingStatus: string,
+  trackingStatus: string | number,
   trackingCode: string,
 ) => new Promise((resolve) => {
   const documentRef = getFirestore().doc(`${firestoreColl}/${trackingCode}`);
   if (documentRef) {
     documentRef.set({
-      trackingStatus,
+      trackingStatus: String(trackingStatus),
       updateAt: new Date().toISOString(),
     }, { merge: true })
       .then(() => resolve(true));
@@ -96,7 +97,7 @@ const update = async (
 
 const getAll = () => new Promise((resolve, reject) => {
   getFirestore().collection(firestoreColl)
-    .where('trackingStatus', '!=', '9')
+    .where('trackingStatus', 'not-in', ['9', 9])
     .get()
     .then((docsRef) => {
       if (docsRef.size > 0) {
@@ -104,7 +105,7 @@ const getAll = () => new Promise((resolve, reject) => {
         docsRef.forEach((documentSnapshot) => {
           if (documentSnapshot && documentSnapshot.exists) {
             const data = documentSnapshot.data();
-            list.push({ ...data, createAt: data.toDate() });
+            list.push({ ...data, createdAt: data.createdAt?.toDate() });
           }
         });
         resolve(list);
@@ -118,7 +119,7 @@ const getAll = () => new Promise((resolve, reject) => {
 
 const getAllDelivered = () => new Promise((resolve, reject) => {
   getFirestore().collection(firestoreColl)
-    .where('trackingStatus', '==', '9')
+    .where('trackingStatus', 'in', ['9', 9])
     .get()
     .then((docsRef) => {
       if (docsRef.size > 0) {
@@ -126,7 +127,7 @@ const getAllDelivered = () => new Promise((resolve, reject) => {
         docsRef.forEach((documentSnapshot) => {
           if (documentSnapshot && documentSnapshot.exists) {
             const data = documentSnapshot.data();
-            list.push({ ...data, createAt: data.toDate() });
+            list.push({ ...data, createdAt: data.createdAt?.toDate() });
           }
         });
         resolve(list);
@@ -139,6 +140,7 @@ const getAllDelivered = () => new Promise((resolve, reject) => {
 });
 
 const db = {
+  getDeadline,
   save,
   get,
   clear,
@@ -155,6 +157,6 @@ export type TrackingDoc = {
   trackingStatus: string,
   trackingCode: string,
   serviceCode: string,
-  createdAt: string,
+  createdAt: Date,
   updateAt?: string
 }
