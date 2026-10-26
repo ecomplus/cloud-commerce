@@ -41,7 +41,7 @@ type CachedRequestInit = RequestInit & {
   timeout?: number,
 };
 const runtimeCache: Record<string, CacheValue | undefined> = {};
-const runtimeFetchings: Record<string, Promise<Response> | undefined> = {};
+const runtimeFetchings: Record<string, Promise<any> | undefined> = {};
 
 // Also declared at `storefront/server.d.ts`
 export const fetchAndCache = async (
@@ -61,7 +61,7 @@ export const fetchAndCache = async (
     return runtimeCache[key].data;
   }
   const docRef = getFirestore().doc(`ssrFetchCache/${key}`);
-  const runFetch = async () => {
+  const doFetch = async () => {
     let abortController: AbortController | undefined;
     let timer: NodeJS.Timeout | undefined;
     if (timeout) {
@@ -71,12 +71,17 @@ export const fetchAndCache = async (
       }, timeout);
       reqInit.signal = abortController.signal;
     }
-    const fetching = runtimeFetchings[key] || fetch(url, reqInit);
-    runtimeFetchings[key] = fetching;
-    const response = await fetching;
-    delete runtimeFetchings[key];
-    if (timer) {
-      clearTimeout(timer);
+    let response: Response;
+    try {
+      response = await fetch(url, reqInit);
+    } catch (err: any) {
+      // Network error or aborted by timeout
+      err.url = url;
+      throw err;
+    } finally {
+      if (timer) {
+        clearTimeout(timer);
+      }
     }
     const error = (err: any) => {
       err.url = url;
@@ -104,6 +109,18 @@ export const fetchAndCache = async (
       }
     }
     return error(new Error(`Failed fetching ${url}`));
+  };
+  // Concurrent calls share the parsed data, a response body can be read only once,
+  // and a failed fetch must not stay cached for the next calls
+  const runFetch = () => {
+    let fetching = runtimeFetchings[key];
+    if (!fetching) {
+      fetching = doFetch().finally(() => {
+        delete runtimeFetchings[key];
+      });
+      runtimeFetchings[key] = fetching;
+    }
+    return fetching;
   };
   const docSnap = await docRef.get();
   if (docSnap.exists) {

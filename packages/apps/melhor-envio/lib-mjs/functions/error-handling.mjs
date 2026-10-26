@@ -1,4 +1,4 @@
-import * as logger from 'firebase-functions/logger';
+import { logger } from '@cloudcommerce/firebase/lib/config';
 
 const ignoreError = (response) => {
   // check response status code
@@ -53,8 +53,8 @@ export default (err) => {
       }
       // debug unexpected response
       error.configJSON = {
-        originalRequest: JSON.stringify(err.config),
-        logRequest: JSON.stringify(config),
+        originalRequest: JSON.stringify({ ...err.config, headers: undefined }),
+        logRequest: JSON.stringify({ ...config, headers: undefined }),
       };
       logger.error(error);
     }

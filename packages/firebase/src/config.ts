@@ -250,7 +250,62 @@ export default config;
 
 export const asyncLocalStorage = new AsyncLocalStorage<{ execId: string }>();
 
-const log = (level: 'info' | 'warn' | 'error', msg: any, d?: Record<string, any>) => {
+const secretHeaderRegex = /^(authorization|access-token|x-access-token|x-api-key|api-key|token|cookie)$/i;
+
+const maskHeaders = (headers: any) => {
+  if (!headers || typeof headers !== 'object') return headers;
+  const masked = { ...(typeof headers.toJSON === 'function' ? headers.toJSON() : headers) };
+  Object.keys(masked).forEach((name) => {
+    if (secretHeaderRegex.test(name)) masked[name] = '***';
+  });
+  return masked;
+};
+
+// Keep credentials sent on request headers (e.g. Axios error config) out of logs
+const maskSecrets = (value: any, depth = 0): any => {
+  if (!value || typeof value !== 'object' || depth > 3) return value;
+  if (value.isAxiosError) {
+    const err = Object.create(
+      Object.getPrototypeOf(value),
+      Object.getOwnPropertyDescriptors(value),
+    );
+    // Raw HTTP request has the headers on a plain string
+    delete err.request;
+    if (err.config) err.config = { ...err.config, headers: maskHeaders(err.config.headers) };
+    if (err.response) {
+      const {
+        status, statusText, headers, data,
+      } = err.response;
+      err.response = {
+        status, statusText, headers, data,
+      };
+    }
+    return err;
+  }
+  if (Array.isArray(value)) {
+    return value.map((item) => maskSecrets(item, depth + 1));
+  }
+  const proto = Object.getPrototypeOf(value);
+  // Plain objects only, Axios config may have no prototype
+  if (proto !== Object.prototype && proto !== null) return value;
+  const masked: Record<string, any> = {};
+  Object.keys(value).forEach((key) => {
+    masked[key] = key === 'headers'
+      ? maskHeaders(value[key])
+      : maskSecrets(value[key], depth + 1);
+  });
+  return masked;
+};
+
+const log = (level: 'info' | 'warn' | 'error', _msg: any, _d?: Record<string, any>) => {
+  let msg = _msg;
+  let d = _d;
+  try {
+    msg = maskSecrets(_msg);
+    d = maskSecrets(_d);
+  } catch {
+    // Unexpected object (e.g. throwing getter), log as received
+  }
   const execId = asyncLocalStorage.getStore()?.execId;
   if (execId) {
     if (d) {

@@ -12,7 +12,8 @@ const getConfig = async () => {
       `applications?app_id=${config.get().apps.melhorEnvio.appId}&fields=hidden_data`,
     )).data.result;
 
-    return app[0].hidden_data;
+    // App not installed on this store, nothing to track
+    return app[0]?.hidden_data || null;
   } catch (err) {
     logger.error(err);
     return null;
