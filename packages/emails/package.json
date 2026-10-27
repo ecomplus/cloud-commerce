@@ -30,7 +30,7 @@
     "@cloudcommerce/firebase": "workspace:*",
     "axios": "^1.20.0",
     "ejs": "^3.1.10",
-    "nodemailer": "^10.1.2"
+    "nodemailer": "^10.2.1"
   },
   "devDependencies": {
     "@cloudcommerce/types": "workspace:*",
