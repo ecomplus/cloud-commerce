@@ -48,8 +48,7 @@ const handleTrackingCodes = async () => {
     }
 
     if (codes) {
-      // Skip old codes instead of notifying customers about outdated orders,
-      // they are removed by the daily cleanup
+      // Don't notify customers of old orders, old codes are removed by `db.clear`
       const deadline = db.getDeadline().getTime();
       const total = codes.length;
       codes = codes.filter(({ createdAt }) => createdAt && createdAt.getTime() > deadline);

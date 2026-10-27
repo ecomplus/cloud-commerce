@@ -47,7 +47,6 @@ const get = async (
     });
 });
 
-// Codes older than this are no longer tracked and get removed
 const maxAgeDays = 60;
 
 const getDeadline = () => {
