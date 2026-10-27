@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.65.0](https://github.com/ecomplus/cloud-commerce/compare/v2.64.0...v2.65.0) (2026-10-27)
+
+
+### Features
+
+* **braspag:** Require 3DS on credit card purchases and show the result on the order ([3e2cabf](https://github.com/ecomplus/cloud-commerce/commit/3e2cabf228f611a593ac822c6c07299bd51b6c8d))
+
+
+### Bug Fixes
+
+* **apps:** Update all pending Frenet tracking codes, skip tracking without the app ([48f8a73](https://github.com/ecomplus/cloud-commerce/commit/48f8a73d68bfad0aa67c991be6cac7c9e9885cda))
+* **braspag:** Allow testing the card script on stores before a release ([479445d](https://github.com/ecomplus/cloud-commerce/commit/479445d6ac2ed3e14d7aed156270e87beae362c7))
+* **braspag:** Keep card, Pix and billet on checkout when 3DS is enabled ([5b967bc](https://github.com/ecomplus/cloud-commerce/commit/5b967bce815deab59d783a0787b908dabecc7408))
+* **braspag:** Stop retries paying with the previous card and speed up checkout with 3DS ([aa259e0](https://github.com/ecomplus/cloud-commerce/commit/aa259e0dcb83eab45e7878bb93c40252ea79f3a2)), closes [#855](https://github.com/ecomplus/cloud-commerce/issues/855)
+* **emails:** Send abandoned cart recovery emails again ([647969a](https://github.com/ecomplus/cloud-commerce/commit/647969a08b924bd5d8545619ff51d6c8da45e642))
+* **firebase:** Mask tokens inside logged lists and never fail a log call on masking ([400bc03](https://github.com/ecomplus/cloud-commerce/commit/400bc03b5a43374823036afff5173c1b7c7998f4))
+* **frenet:** Don't email customers about tracking events older than a week ([d2d3999](https://github.com/ecomplus/cloud-commerce/commit/d2d399954e3ae8d6c9eea5f925418fc1d288dbe4))
+* **frenet:** Keep Frenet tracking cron from hanging on large or failing runs ([d7cf1fe](https://github.com/ecomplus/cloud-commerce/commit/d7cf1fe9393662b14fc8022d5fc8c3802a48c1f4))
+* **frenet:** Update order delivery status from Frenet tracking again ([c1b1483](https://github.com/ecomplus/cloud-commerce/commit/c1b148369d1628a1453c0b00bb1488d942631470))
+* Keep API tokens out of the function logs ([ec18fe5](https://github.com/ecomplus/cloud-commerce/commit/ec18fe55e937ac6870ea8cc374250cd9620a91f7))
+* **release:** Update stores even when their submodules are on a detached HEAD ([f6984a9](https://github.com/ecomplus/cloud-commerce/commit/f6984a9a7989e57e86945088af71916748c27aa3))
+* **ssr:** Keep fetched data on product pages under concurrent requests and after timeouts ([683814f](https://github.com/ecomplus/cloud-commerce/commit/683814f5da1c16fe962a461181655a1f57ee6119))
+* **ssr:** Keep pending product views when the store API credentials are rejected ([a35c554](https://github.com/ecomplus/cloud-commerce/commit/a35c5545e9ac8b333be1430a1c3590429ff2bcd0))
+* **ssr:** Keep product views counting when bots send malformed product IDs ([d872667](https://github.com/ecomplus/cloud-commerce/commit/d872667ca83df409febdfef7a8cc781a9cc459b7))
+* **storefront:** Send TikTok events to the Events API from the server ([76fa8b0](https://github.com/ecomplus/cloud-commerce/commit/76fa8b0c3e5419391116a8b57b6d69374a332622))
+* **storefront:** Update Vue to ^3.5.44 ([#860](https://github.com/ecomplus/cloud-commerce/issues/860)) ([6458b77](https://github.com/ecomplus/cloud-commerce/commit/6458b77f148ad18645ca657f75dac8087d43f8f5))
+
 ## [2.64.0](https://github.com/ecomplus/cloud-commerce/compare/v2.63.3...v2.64.0) (2026-10-19)
 
 
