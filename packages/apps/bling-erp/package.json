@@ -1,7 +1,7 @@
 {
   "name": "@cloudcommerce/app-bling-erp",
   "type": "module",
-  "version": "2.64.0",
+  "version": "2.65.0",
   "description": "e-com.plus Cloud Commerce app for Bling ERP",
   "main": "lib/bling-erp.js",
   "files": [
