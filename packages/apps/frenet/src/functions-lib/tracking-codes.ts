@@ -48,7 +48,7 @@ const handleTrackingCodes = async () => {
     }
 
     if (codes) {
-      // Don't notify customers of old orders, old codes are removed by `db.clear`
+      // Don't notify customers of old orders
       const deadline = db.getDeadline().getTime();
       const total = codes.length;
       codes = codes.filter(({ createdAt }) => createdAt && createdAt.getTime() > deadline);
@@ -61,9 +61,7 @@ const handleTrackingCodes = async () => {
       // no config for store bye
       resolve(null);
     } else {
-      // Wait for every code before finishing, the function may be stopped
-      // right after resolving
-      await Promise.allSettled(codes.map(async (code) => {
+      const handleCode = async (code: TrackingDoc) => {
         const serviceCode = String(code.serviceCode).startsWith('FR')
           ? String(code.serviceCode.replace(/^FR/, '')).trim()
           : code.serviceCode;
@@ -156,12 +154,21 @@ const handleTrackingCodes = async () => {
             }
           }
         }
-      }));
+      };
+      // Limit concurrent requests to Frenet and Store API
+      for (let i = 0; i < codes.length; i += 10) {
+        // eslint-disable-next-line no-await-in-loop
+        await Promise.allSettled(codes.slice(i, i + 10).map(handleCode));
+      }
       resolve(null);
     }
   });
 
   if (appConfig && appConfig.frenet_access_token) {
+    await db.clear().catch((err) => {
+      logger.error('> (App Frenet) Error removing old tracking codes => ', err);
+    });
+
     await checkTrackingCodes.catch((err) => {
       logger.error('> (App Frenet) Error => ', err);
     });
@@ -169,12 +176,6 @@ const handleTrackingCodes = async () => {
     await removeDeliveredToFirestore().catch((err) => {
       logger.error('> (App Frenet) Error removing Delivered to Firestore => ', err);
     });
-
-    if (new Date().getHours() === 23) {
-      await db.clear().catch((err) => {
-        logger.error('> (App Frenet) Error removing old tracking codes => ', err);
-      });
-    }
   }
 };
 
