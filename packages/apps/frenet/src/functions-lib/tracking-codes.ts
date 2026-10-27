@@ -127,11 +127,14 @@ const handleTrackingCodes = async () => {
 
             if (trackingEvent && parseInt(code.trackingStatus, 10) !== trackingEvent.status) {
               try {
+                // Don't email customers about events from long ago
+                const isOldEvent = diffInDays(trackingEvent.date) > 7;
                 await updateOrderfulfilllment(
                   code.orderId,
                   code.trackingCode,
                   trackingEvent.status,
                   trackingEvent.date,
+                  isOldEvent,
                 );
 
                 await db.update(trackingEvent.status, code.trackingCode);

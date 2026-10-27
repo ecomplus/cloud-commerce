@@ -22,6 +22,7 @@ const updateFulfillments = async (
   trackingCode: string,
   eventType: number,
   eventDate: Date,
+  skipNotification?: boolean,
 ) => {
   let notes;
   const status = parseStatus(eventType);
@@ -33,6 +34,9 @@ const updateFulfillments = async (
       'app-frenet',
     ],
   } as any; // TODO: incompatible type=> amount;
+  if (skipNotification) {
+    bodyFulfillments.customer_notified = true;
+  }
 
   if (eventType === 2) {
     notes = 'Entrega está atrasada.';
