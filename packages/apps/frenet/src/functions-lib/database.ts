@@ -19,7 +19,10 @@ const save = (
       serviceCode,
       createdAt: new Date(),
     }).then(() => resolve(true))
-      .catch(logger.error);
+      .catch((err) => {
+        logger.error(err);
+        resolve(false);
+      });
   }
 });
 
@@ -47,98 +50,73 @@ const get = async (
     });
 });
 
-const clear = async () => new Promise((resolve) => {
-  const deadline = new Date();
-  deadline.setMonth(deadline.getMonth() - 2);
+const maxAgeDays = 60;
 
-  getFirestore().collection(firestoreColl)
-    .where('createdAt', '<=', deadline)
-    .get()
-    .then((docsRef) => {
-      docsRef.docs.forEach((doc) => {
-        doc.ref.delete();
-      });
-      resolve(true);
-    });
-});
+const getDeadline = () => {
+  const deadline = new Date();
+  deadline.setDate(deadline.getDate() - maxAgeDays);
+  return deadline;
+};
+
+const clear = async () => {
+  const docsRef = await getFirestore().collection(firestoreColl)
+    .where('createdAt', '<=', getDeadline())
+    .get();
+  const bulkWriter = getFirestore().bulkWriter();
+  docsRef.docs.forEach((doc) => {
+    bulkWriter.delete(doc.ref);
+  });
+  await bulkWriter.close();
+};
 
 const remove = async (
   trackingCode: string,
   serviceCode: string,
-) => new Promise((resolve) => {
-  getFirestore().doc(`${firestoreColl}/${trackingCode}`)
-    .get()
-    .then(async (documentSnapshot) => {
-      if (documentSnapshot && documentSnapshot.exists) {
-        const data = documentSnapshot.data();
-        if (data && data.serviceCode === serviceCode) {
-          await documentSnapshot.ref.delete();
-          resolve(true);
-        }
-      }
-      resolve(false);
-    });
-});
+) => {
+  const documentSnapshot = await getFirestore().doc(`${firestoreColl}/${trackingCode}`).get();
+  if (documentSnapshot.exists && documentSnapshot.data()?.serviceCode === serviceCode) {
+    await documentSnapshot.ref.delete();
+    return true;
+  }
+  return false;
+};
 
 const update = async (
-  trackingStatus: string,
+  trackingStatus: string | number,
   trackingCode: string,
-) => new Promise((resolve) => {
-  const documentRef = getFirestore().doc(`${firestoreColl}/${trackingCode}`);
-  if (documentRef) {
-    documentRef.set({
-      trackingStatus,
-      updateAt: new Date().toISOString(),
-    }, { merge: true })
-      .then(() => resolve(true));
+) => {
+  await getFirestore().doc(`${firestoreColl}/${trackingCode}`).set({
+    trackingStatus: String(trackingStatus),
+    updateAt: new Date().toISOString(),
+  }, { merge: true });
+  return true;
+};
+
+const listByStatus = async (
+  operator: 'in' | 'not-in',
+) => {
+  const docsRef = await getFirestore().collection(firestoreColl)
+    .where('trackingStatus', operator, ['9', 9])
+    .get();
+  if (!docsRef.size) {
+    const err = new Error('Tracking code not found for any store :)');
+    err.name = 'NoTrackingCodesForUpdate';
+    throw err;
   }
-});
+  const list: { [x: string]: any }[] = [];
+  docsRef.forEach((documentSnapshot) => {
+    const data = documentSnapshot.data();
+    list.push({ ...data, createdAt: data.createdAt?.toDate?.() });
+  });
+  return list;
+};
 
-const getAll = () => new Promise((resolve, reject) => {
-  getFirestore().collection(firestoreColl)
-    .where('trackingStatus', '!=', '9')
-    .get()
-    .then((docsRef) => {
-      if (docsRef.size > 0) {
-        const list: { [x: string]: any }[] = [];
-        docsRef.forEach((documentSnapshot) => {
-          if (documentSnapshot && documentSnapshot.exists) {
-            const data = documentSnapshot.data();
-            list.push({ ...data, createAt: data.toDate() });
-          }
-        });
-        resolve(list);
-      } else {
-        const err = new Error('Tracking code not found for any store :)');
-        err.name = 'NoTrackingCodesForUpdate';
-        reject(err);
-      }
-    });
-});
+const getAll = () => listByStatus('not-in');
 
-const getAllDelivered = () => new Promise((resolve, reject) => {
-  getFirestore().collection(firestoreColl)
-    .where('trackingStatus', '==', '9')
-    .get()
-    .then((docsRef) => {
-      if (docsRef.size > 0) {
-        const list: { [x: string]: any }[] = [];
-        docsRef.forEach((documentSnapshot) => {
-          if (documentSnapshot && documentSnapshot.exists) {
-            const data = documentSnapshot.data();
-            list.push({ ...data, createAt: data.toDate() });
-          }
-        });
-        resolve(list);
-      } else {
-        const err = new Error('Tracking code not found for any store :)');
-        err.name = 'NoTrackingCodesForUpdate';
-        reject(err);
-      }
-    });
-});
+const getAllDelivered = () => listByStatus('in');
 
 const db = {
+  getDeadline,
   save,
   get,
   clear,
@@ -155,6 +133,6 @@ export type TrackingDoc = {
   trackingStatus: string,
   trackingCode: string,
   serviceCode: string,
-  createdAt: string,
+  createdAt: Date,
   updateAt?: string
 }

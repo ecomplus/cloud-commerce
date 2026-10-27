@@ -9,7 +9,9 @@ import handleApiEvent from './functions-lib/events-to-frenet';
 const { httpsFunctionOptions: { region } } = config.get();
 
 export const frenet = {
-  cronTrackingCodes: functions.region(region).pubsub
+  cronTrackingCodes: functions.region(region)
+    .runWith({ timeoutSeconds: 540 })
+    .pubsub
     .schedule(process.env.CRONTAB_FRENET_TRACKING_CODES || '19 * * * *')
     .onRun(() => {
       return handleTrackingCodes();
