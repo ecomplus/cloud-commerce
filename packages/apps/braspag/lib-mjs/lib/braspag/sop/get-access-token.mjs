@@ -1,5 +1,4 @@
 import { logger } from '@cloudcommerce/firebase/lib/config';
-import { getFirestore } from 'firebase-admin/firestore';
 import axios from 'axios';
 import OAuth2AdminBraspag from '../admin/get-auth.mjs';
 
@@ -39,53 +38,17 @@ const auth = async (isSandbox) => new Promise((resolve, reject) => {
   request();
 });
 
+/**
+ * A SOP access token tokenizes a single card, so every `list_payments` gets a
+ * new one (the OAuth token behind it stays cached on `admin/get-auth.mjs`).
+ * Shared through a cache, the token was already used by another buyer or a
+ * previous attempt, and the SOP API answers 500 without CORS headers.
+ */
 export default function getAccessToken(isSandbox = false) {
   const { BRASPAG_CLIENT_ID: clientId } = process.env;
-  const self = this;
-  const documentRef = getFirestore().doc(`braspagAdmin/sop_${clientId}`);
-
-  this.preparing = new Promise((resolve, reject) => {
-    const authenticate = (accessToken) => {
-      self.accessToken = accessToken;
-      resolve(self);
-    };
-
-    const handleAuth = () => {
-      logger.info(`> Braspag SOP ${clientId} ${isSandbox ? 'SandBox' : ''}`);
-      auth(isSandbox)
-        .then((data) => {
-          logger.info('> Braspag SOP Token Update');
-          authenticate(data.accessToken);
-          const expiresInToString = new Date(data.expiresIn).toISOString();
-          if (documentRef) {
-            documentRef.set({
-              accessToken: data.accessToken,
-              expiresIn: Date.now() + (2 * 60 * 1000),
-              // ...data,
-              expiresInToString,
-              updated_at: new Date().toISOString(),
-              isSandbox,
-            })
-              .catch(logger.error);
-          }
-        })
-        .catch(reject);
-    };
-
-    if (documentRef) {
-      documentRef.get()
-        .then((documentSnapshot) => {
-          if (documentSnapshot.exists
-            && Date.now() < documentSnapshot.get('expiresIn')
-          ) {
-            authenticate(documentSnapshot.get('accessToken'));
-          } else {
-            handleAuth();
-          }
-        })
-        .catch(logger.error);
-    } else {
-      handleAuth();
-    }
+  logger.info(`> Braspag SOP ${clientId} ${isSandbox ? 'SandBox' : ''}`);
+  this.preparing = auth(isSandbox).then((data) => {
+    this.accessToken = data.accessToken;
+    return this;
   });
 }

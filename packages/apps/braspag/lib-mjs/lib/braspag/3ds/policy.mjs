@@ -12,9 +12,11 @@
  */
 export const AUTHENTICATED_ECI = ['01', '02', '05', '06'];
 
-// Keep in sync with `refusal3dsMessage` on `assets/braspag-card-client.js`
+// Keep in sync with `refusal3dsMessage` on `assets/braspag-card-client.js`.
+// The card was already sent with this page's SOP token, which is single use:
+// trying again needs a reload
 export const REFUSAL_MESSAGE = 'O banco não autenticou esta compra no cartão (3DS). '
-  + 'Tente novamente ou pague com Pix ou boleto.';
+  + 'Recarregue a página para tentar de novo, ou pague com Pix ou boleto.';
 
 /**
  * Status set by the browser script (`status3ds` on the card hash).
