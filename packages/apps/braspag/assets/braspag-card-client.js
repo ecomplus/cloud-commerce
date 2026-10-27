@@ -144,10 +144,14 @@
         bpmpi_cardexpirationmonth: cardClient.month.toString(),
         bpmpi_cardexpirationyear: `20${cardClient.year.toString()}`,
         bpmpi_default_card: true,
-        bpmpi_billto_customerid: docNumber.length >= 11 && docNumber.length <= 14
+        // CPF or CNPJ
+        bpmpi_billto_customerid: docNumber.length === 11 || docNumber.length === 14
           ? docNumber
           : undefined,
-        bpmpi_merchant_newcustomer: customer.orders?.length > 1,
+        // New to the store: no previous orders (left out when unknown)
+        bpmpi_merchant_newcustomer: Array.isArray(customer.orders)
+          ? customer.orders.length === 0
+          : undefined,
         bpmpi_billto_contactname: name,
         bpmpi_billto_name: name,
         // Country code, area code and number, e.g. 5511999999999
