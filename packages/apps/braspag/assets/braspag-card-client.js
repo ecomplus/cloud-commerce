@@ -238,8 +238,8 @@
     injectClearSaleScript(fingerprintApp, fingerPrintId);
 
     const elementsForm = `
-    <input type="text" class="bp-sop-cardtype" value="creditCard" style="display: none;>
-    <input type="text" class="bp-sop-cardcvvc" value="${cardClient.cvc}" style="display: none;">
+    <input type="text" class="bp-sop-cardtype" value="creditCard" style="display: none;">
+    <input type="text" class="bp-sop-cardcvv" value="${cardClient.cvc}" style="display: none;">
     <input type="text" class="bp-sop-cardnumber" value="${cardClient.number}" style="display: none;">
     <input type="text" class="bp-sop-cardexpirationdate" value="${cardClient.month.toString()}/20${cardClient.year.toString()}" style="display: none;">
     <input type="text" class="bp-sop-cardholdername" value="${cardClient.name}" style="display: none;">
