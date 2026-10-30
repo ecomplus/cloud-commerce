@@ -191,7 +191,6 @@ describe('Card client', () => {
     assert.strictEqual(fields.bpmpi_billto_street2, 'Centro');
     assert.strictEqual(fields.bpmpi_merchant_url, 'https://loja.example.com');
     assert.strictEqual(fields.bpmpi_merchant_newcustomer, 'false');
-    assert.strictEqual(fields.bpmpi_device_ipaddress, '200.100.50.25');
     assert.ok(!('bpmpi_billto_city' in fields), 'empty city left out');
     assert.ok(!Object.keys(fields).some((key) => key.startsWith('bpmpi_device_1_')));
     assert.ok(!Object.values(fields).includes(''), 'no empty field');

@@ -37,7 +37,8 @@ The card goes from the browser straight to the SOP API, which answers a
   sets `provider: 'cielo'` when that script is on the page.
 - **Single-use token:** each SOP access token tokenizes one card; reused, the
   API answers 500 without CORS headers. Every `list_payments` gets a new token
-  (no cache), and a second attempt on the same page asks the buyer to reload.
+  (no cache), except on the checkout confirmation, where the card was already
+  tokenized. A second attempt on the same page asks the buyer to reload.
 
 ## 3DS (Cielo MPI)
 

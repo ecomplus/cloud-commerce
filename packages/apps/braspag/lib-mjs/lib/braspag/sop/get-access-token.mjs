@@ -23,8 +23,6 @@ const createAccessToken = async (isSandbox) => {
 /**
  * A SOP access token tokenizes a single card, so every `list_payments` gets a
  * new one (the OAuth token behind it stays cached on `admin/get-auth.mjs`).
- * Shared through a cache, the token was already used by another buyer or a
- * previous attempt, and the SOP API answers 500 without CORS headers.
  */
 export default function getAccessToken(isSandbox = false) {
   const { BRASPAG_CLIENT_ID: clientId } = process.env;

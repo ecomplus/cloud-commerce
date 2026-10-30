@@ -144,11 +144,10 @@
         bpmpi_cardexpirationmonth: cardClient.month.toString(),
         bpmpi_cardexpirationyear: `20${cardClient.year.toString()}`,
         bpmpi_default_card: true,
-        // CPF or CNPJ
         bpmpi_billto_customerid: docNumber.length === 11 || docNumber.length === 14
           ? docNumber
           : undefined,
-        // New to the store: no previous orders (left out when unknown)
+        // New to the store: no previous orders
         bpmpi_merchant_newcustomer: Array.isArray(customer.orders)
           ? customer.orders.length === 0
           : undefined,
@@ -157,7 +156,6 @@
         // Country code, area code and number, e.g. 5511999999999
         bpmpi_billto_phonenumber: /^\d{12,15}$/.test(phoneNumber) ? phoneNumber : undefined,
         bpmpi_billto_email: customer.main_email,
-        // Street and number, then complement and borough
         bpmpi_billto_street1: [address.street || address.line_address, address.number]
           .filter(Boolean).join(', ').slice(0, 60),
         bpmpi_billto_street2: [address.complement, address.borough]
@@ -267,8 +265,7 @@
    * The SOP script posts the card to Braspag unless `provider` is `cielo`,
    * and Braspag answers 500 to Cielo merchants. The server loads the Cielo
    * SOP script only for Cielo in production (`is_cielo`), so that script is
-   * the signal: no new `window` variable, which also fixes stores still on
-   * the onload expression of previous releases.
+   * the signal, with no new `window` variable.
    */
   const getSopProvider = () => (document.querySelector(
     'script[src^="https://transaction.cieloecommerce.cielo.com.br/"]',

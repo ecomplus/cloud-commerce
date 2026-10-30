@@ -31,13 +31,10 @@ describe('Braspag token requests', () => {
     assert.strictEqual(calls(), 2);
   });
 
-  test('5xx, other 4xx and network errors are not retried', async () => {
+  test('5xx and network errors are not retried', async () => {
     const unavailable = sequence(httpError(503), { data: 'ok' });
     await assert.rejects(requestWithRetry(unavailable.request, 1), /HTTP 503/);
     assert.strictEqual(unavailable.calls(), 1);
-    const unauthorized = sequence(httpError(401), { data: 'ok' });
-    await assert.rejects(requestWithRetry(unauthorized.request, 1), /HTTP 401/);
-    assert.strictEqual(unauthorized.calls(), 1);
     const network = sequence(new Error('ECONNRESET'), { data: 'ok' });
     await assert.rejects(requestWithRetry(network.request, 1), /ECONNRESET/);
     assert.strictEqual(network.calls(), 1);

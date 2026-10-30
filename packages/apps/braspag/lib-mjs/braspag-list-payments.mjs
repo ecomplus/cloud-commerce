@@ -46,8 +46,11 @@ const listPayments = async ({ params, application }) => {
   // below is not awaited): a slow MPI must not sum with the SOP time, Pix and
   // billet wait for this response on every requote
   const options3ds = get3dsOptions(appData);
+  // The checkout confirmation only matches the listed gateway (discount,
+  // label): the card was already tokenized with the token from the quote
+  const isConfirmation = Boolean(params.is_checkout_confirmation);
   let sopTokenPromise = null;
-  if (process.env.BRASPAG_CLIENT_ID) {
+  if (process.env.BRASPAG_CLIENT_ID && !isConfirmation) {
     const getTokenSOPBraspag = new TokenSOPBraspag(isSandbox);
     sopTokenPromise = getTokenSOPBraspag.preparing
       .then(() => getTokenSOPBraspag.accessToken);
@@ -71,11 +74,11 @@ const listPayments = async ({ params, application }) => {
   let accessTokenSOP;
   if (sopResult.status === 'fulfilled') {
     accessTokenSOP = sopResult.value;
-    if (accessTokenSOP) {
-      listPaymentMethod.push('credit_card');
-    }
   } else {
     logger.error(sopResult.reason);
+  }
+  if (accessTokenSOP || (isConfirmation && process.env.BRASPAG_CLIENT_ID)) {
+    listPaymentMethod.push('credit_card');
   }
   let token3ds;
   if (token3dsResult.status === 'fulfilled') {
