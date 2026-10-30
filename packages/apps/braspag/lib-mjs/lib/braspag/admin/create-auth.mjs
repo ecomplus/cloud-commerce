@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import requestWithRetry from '../request-with-retry.mjs';
+import requestWithRetry, { TOKEN_TIMEOUT } from '../request-with-retry.mjs';
 
 const createAuth = async (hashLogin, isSandbox) => {
   const headers = {
@@ -16,7 +16,10 @@ const createAuth = async (hashLogin, isSandbox) => {
 
   const uri = `https://auth${isSandbox ? 'sandbox' : ''}.braspag.com.br/oauth2/token`;
   const body = qs.stringify({ grant_type: 'client_credentials' });
-  const { data } = await requestWithRetry(() => axios.post(uri, body, { headers }));
+  const { data } = await requestWithRetry(() => axios.post(uri, body, {
+    headers,
+    timeout: TOKEN_TIMEOUT,
+  }));
   return data;
 };
 

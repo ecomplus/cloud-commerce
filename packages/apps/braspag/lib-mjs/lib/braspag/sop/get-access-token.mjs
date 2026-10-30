@@ -1,7 +1,7 @@
 import { logger } from '@cloudcommerce/firebase/lib/config';
 import axios from 'axios';
 import OAuth2AdminBraspag from '../admin/get-auth.mjs';
-import requestWithRetry from '../request-with-retry.mjs';
+import requestWithRetry, { TOKEN_TIMEOUT } from '../request-with-retry.mjs';
 
 const createAccessToken = async (isSandbox) => {
   const oAuth2AdminBraspag = new OAuth2AdminBraspag(isSandbox);
@@ -13,7 +13,10 @@ const createAccessToken = async (isSandbox) => {
     'Authorization': `Bearer ${oAuth2AdminBraspag.accessToken}`,
     'content-type': 'application/json',
   };
-  const { data } = await requestWithRetry(() => axios.post(urlAuthSOP, {}, { headers }));
+  const { data } = await requestWithRetry(() => axios.post(urlAuthSOP, {}, {
+    headers,
+    timeout: TOKEN_TIMEOUT,
+  }));
   return data.AccessToken;
 };
 
@@ -25,7 +28,7 @@ const createAccessToken = async (isSandbox) => {
  */
 export default function getAccessToken(isSandbox = false) {
   const { BRASPAG_CLIENT_ID: clientId } = process.env;
-  logger.info(`> Braspag SOP ${clientId} ${isSandbox ? 'SandBox' : ''}`);
+  logger.debug(`> Braspag SOP ${clientId} ${isSandbox ? 'SandBox' : ''}`);
   this.preparing = createAccessToken(isSandbox).then((accessToken) => {
     this.accessToken = accessToken;
     return this;
