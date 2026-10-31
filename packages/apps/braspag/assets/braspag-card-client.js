@@ -74,7 +74,9 @@
    */
   // Keep in sync with `REFUSAL_MESSAGE` on `lib-mjs/lib/braspag/3ds/policy.mjs`
   const refusal3dsMessage = 'O banco não autenticou esta compra no cartão (3DS). '
-    + 'Tente novamente ou pague com Pix ou boleto.';
+    + 'Recarregue a página para tentar de novo, ou pague com Pix ou boleto.';
+
+  const onlyDigits = (value) => (value == null ? '' : String(value).replace(/\D/g, ''));
 
   // Keep in sync with `parse3dsResult` on `lib-mjs/lib/braspag/3ds/policy.mjs`:
   // ECI with liability shift (Visa/Elo/Amex 05/06, Mastercard 02/01), CAVV
@@ -105,7 +107,9 @@
       const form3ds = document.createElement('form');
       form3ds.id = 'braspag3ds';
       form3ds.style.display = 'none';
-      const shippingAddress = customer.addresses?.[0] || {};
+      const address = customer.addresses?.find((addr) => addr.default)
+        || customer.addresses?.[0]
+        || {};
       const formatDate = (date) => {
         if (!date) return undefined;
         const d = typeof date === 'string' ? new Date(date) : date;
@@ -113,7 +117,20 @@
           + `${String(d.getDate()).padStart(2, '0')}`;
       };
       const ip64 = await getIp64();
-      // https://docs.cielo.com.br/gateway/docs/2-mapeando-as-classes
+      const name = (customer.fullname || cardClient.name || '').slice(0, 120);
+      const docNumber = onlyDigits(customer.doc_number);
+      const phone = customer.phones?.[0];
+      let phoneNumber = onlyDigits(phone?.number);
+      if (phoneNumber.length === 10 || phoneNumber.length === 11) {
+        phoneNumber = `${phone.country_code || 55}${phoneNumber}`;
+      }
+      const zip = onlyDigits(address.zip);
+      /*
+       * https://docs.cielo.com.br/gateway/docs/2-mapeando-as-classes
+       * In production the MPI refuses the whole authentication with 102
+       * "Invalid field value" when a field is out of format, and an empty
+       * field counts: values that don't fit are left out (`undefined`)
+       */
       const fields = {
         bpmpi_auth: true,
         bpmpi_auth_notifyonly: false,
@@ -127,25 +144,36 @@
         bpmpi_cardexpirationmonth: cardClient.month.toString(),
         bpmpi_cardexpirationyear: `20${cardClient.year.toString()}`,
         bpmpi_default_card: true,
-        bpmpi_billto_customerid: customer.doc_number,
-        bpmpi_merchant_newcustomer: customer.orders?.length > 1,
-        bpmpi_billto_contactname: customer.fullname || cardClient.name,
-        bpmpi_billto_name: customer.fullname || cardClient.name,
-        bpmpi_billto_phonenumber: customer.phones?.[0]?.number,
+        bpmpi_billto_customerid: docNumber.length === 11 || docNumber.length === 14
+          ? docNumber
+          : undefined,
+        // New to the store: no previous orders
+        bpmpi_merchant_newcustomer: Array.isArray(customer.orders)
+          ? customer.orders.length === 0
+          : undefined,
+        bpmpi_billto_contactname: name,
+        bpmpi_billto_name: name,
+        // Country code, area code and number, e.g. 5511999999999
+        bpmpi_billto_phonenumber: /^\d{12,15}$/.test(phoneNumber) ? phoneNumber : undefined,
         bpmpi_billto_email: customer.main_email,
-        bpmpi_billto_street1: shippingAddress.street || shippingAddress.line_address,
-        bpmpi_billto_street2: shippingAddress.number,
-        bpmpi_billto_city: shippingAddress.city,
-        bpmpi_billto_state: shippingAddress.province_code,
-        bpmpi_billto_country: shippingAddress.country_code || 'BR',
-        bpmpi_billto_zipcode: shippingAddress.zip,
+        bpmpi_billto_street1: [address.street || address.line_address, address.number]
+          .filter(Boolean).join(', ').slice(0, 60),
+        bpmpi_billto_street2: [address.complement, address.borough]
+          .filter(Boolean).join(' - ').slice(0, 60),
+        bpmpi_billto_city: address.city,
+        bpmpi_billto_state: address.province_code,
+        bpmpi_billto_country: address.country_code || 'BR',
+        bpmpi_billto_zipcode: zip.length === 8 ? zip : undefined,
         bpmpi_shipto_sameasbillto: true,
         bpmpi_device_ipaddress: ip64,
-        bpmpi_device_1_fingerprint: cardClient.fingerPrintId,
-        bpmpi_device_1_provider: 'clearsale',
+        // No `bpmpi_device_1_*`: the ClearSale session ID is for the antifraud,
+        // and the 3DS device providers are only cardinal, inauth and threatmetrix
         bpmpi_device_channel: 'Browser',
         bpmpi_transaction_mode: 'S',
-        bpmpi_merchant_url: settings.domain && `https://${settings.domain}`,
+        // `storefront.settings` is empty on the v3 checkout (/app/)
+        bpmpi_merchant_url: settings.domain
+          ? `https://${settings.domain}`
+          : window.location.origin,
         bpmpi_order_recurrence: false,
         bpmpi_order_productcode: 'PHY',
         bpmpi_order_marketingoptin: customer.accepts_marketing,
@@ -165,10 +193,12 @@
         fields[`bpmpi_cart_${nItems}_unitprice`] = Math.round(price * 100);
       });
       Object.keys(fields).forEach((className) => {
+        const value = fields[className];
+        if (value === undefined || value === null || value === '') return;
         const input = document.createElement('input');
         input.type = 'hidden';
         input.className = className;
-        input.value = fields[className] == null ? '' : fields[className];
+        input.value = value;
         form3ds.appendChild(input);
       });
       document.body.appendChild(form3ds);
@@ -231,19 +261,32 @@
     check();
   });
 
+  /*
+   * The SOP script posts the card to Braspag unless `provider` is `cielo`,
+   * and Braspag answers 500 to Cielo merchants. The server loads the Cielo
+   * SOP script only for Cielo in production (`is_cielo`), so that script is
+   * the signal, with no new `window` variable.
+   */
+  const getSopProvider = () => (document.querySelector(
+    'script[src^="https://transaction.cieloecommerce.cielo.com.br/"]',
+  ) ? 'cielo' : 'braspag');
+
+  // A SOP access token tokenizes a single card: reused, the SOP API answers 500
+  // without CORS headers. A new one only comes with a new `list_payments`,
+  // which the checkout requests on reload
+  const usedAccessTokens = [];
+  const reloadMessage = 'Recarregue a página para tentar de novo, ou pague com Pix ou boleto.';
+
   const hashCard = (cardClient, fingerPrintId) => {
     const isSandbox = window._braspagIsSandbox;
     const accessToken = window._braspagAccessToken;
+    if (usedAccessTokens.indexOf(accessToken) > -1) {
+      const error = new Error('Braspag SOP access token already used');
+      error.userMsg = ` ${reloadMessage}`;
+      return Promise.reject(error);
+    }
     console.log('Session ID captured:', fingerPrintId);
     injectClearSaleScript(fingerprintApp, fingerPrintId);
-
-    const elementsForm = `
-    <input type="text" class="bp-sop-cardtype" value="creditCard" style="display: none;">
-    <input type="text" class="bp-sop-cardcvv" value="${cardClient.cvc}" style="display: none;">
-    <input type="text" class="bp-sop-cardnumber" value="${cardClient.number}" style="display: none;">
-    <input type="text" class="bp-sop-cardexpirationdate" value="${cardClient.month.toString()}/20${cardClient.year.toString()}" style="display: none;">
-    <input type="text" class="bp-sop-cardholdername" value="${cardClient.name}" style="display: none;">
-    `;
 
     // The SOP script reads the first matching input it finds: a leftover form
     // from a previous attempt would tokenize the old card while the 3DS
@@ -253,13 +296,27 @@
 
     const newForm = document.createElement('form');
     newForm.setAttribute('id', 'formBraspag');
-    newForm.innerHTML = elementsForm;
+    const sopFields = {
+      'bp-sop-cardtype': 'creditCard',
+      'bp-sop-cardnumber': cardClient.number,
+      'bp-sop-cardexpirationdate': `${cardClient.month.toString()}/20${cardClient.year.toString()}`,
+      'bp-sop-cardholdername': cardClient.name,
+      'bp-sop-cardcvv': cardClient.cvc,
+    };
+    Object.keys(sopFields).forEach((className) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.className = className;
+      input.value = sopFields[className] == null ? '' : sopFields[className];
+      newForm.appendChild(input);
+    });
     document.body.appendChild(newForm);
 
     return new Promise((resolve, reject) => {
       const options = {
         accessToken,
         onSuccess(response) {
+          usedAccessTokens.push(accessToken);
           if (response.PaymentToken) {
             const data = { token: response.PaymentToken, fingerPrintId };
             const sendHash = () => resolve(window.btoa(JSON.stringify(data)));
@@ -276,7 +333,7 @@
               sendHash();
               return;
             }
-            const card3ds = { ...cardClient, fingerPrintId };
+            const card3ds = { ...cardClient };
             delete card3ds.cvc;
             load3ds(card3ds).then(({ status, data: out3ds }) => {
               data.status3ds = status;
@@ -299,12 +356,18 @@
           }
         },
         onError(response) {
-          reject(response);
+          // The request reached the API (`onInvalid` doesn't): token spent
+          usedAccessTokens.push(accessToken);
+          const error = new Error(`Braspag SOP error ${response?.Code}`);
+          error.response = response;
+          error.userMsg = ` ${reloadMessage}`;
+          reject(error);
         },
         onInvalid(validationResults) {
           reject(validationResults);
         },
         environment: isSandbox ? 'sandbox' : 'production',
+        provider: getSopProvider(),
         language: 'PT',
         enableBinQuery: false,
         enableVerifyCard: true,

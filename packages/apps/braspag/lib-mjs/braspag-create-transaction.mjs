@@ -32,7 +32,6 @@ const createTransaction = async ({ params, application }) => {
   const transaction = { amount: amount.total };
   const timeout = 28000;
   const db = getFirestore();
-  const docSOP = db.doc(`braspagAdmin/sop_${process.env.BRASPAG_CLIENT_ID}`);
   const orderId = params.order_id;
   if (appData.merchant_id) {
     process.env.BRASPAG_MERCHANT_ID = appData.merchant_id;
@@ -70,11 +69,6 @@ const createTransaction = async ({ params, application }) => {
     const status = parseStatus[payment.Status];
 
     if (methodPayment === 'credit_card') {
-      // delete docSop can only be used once
-      if (docSOP) {
-        await docSOP.delete()
-          .catch(logger.error);
-      }
       intermediator.transaction_id = payment.PaymentId;
       intermediator.transaction_reference = payment.ProofOfSale;
       intermediator.transaction_code = payment.AcquirerTransactionId;
@@ -162,10 +156,6 @@ const createTransaction = async ({ params, application }) => {
       transaction,
     };
   } catch (error) {
-    if (docSOP) {
-      // delete docSop can only be used once
-      await docSOP.delete().catch(logger.error);
-    }
     if (error.name === 'Required3dsError') {
       logger.info(`3DS required, refused ${orderId}`, { result: error.result });
       return {
