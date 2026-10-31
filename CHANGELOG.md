@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.65.1](https://github.com/ecomplus/cloud-commerce/compare/v2.65.0...v2.65.1) (2026-10-31)
+
+
+### Bug Fixes
+
+* **braspag:** Keep Pix and boleto on checkout when Braspag token requests hang ([8f09f9a](https://github.com/ecomplus/cloud-commerce/commit/8f09f9abde972ef642c8b6cf5f3f54389fd3020b))
+* **braspag:** Keep the card discount on orders when Braspag tokens fail at checkout ([e93a6d6](https://github.com/ecomplus/cloud-commerce/commit/e93a6d6b25ccbcb421adb5f378f6a51cb95593cf))
+* **braspag:** Keep the credit card on checkout when Braspag rate limits token requests ([c9324fc](https://github.com/ecomplus/cloud-commerce/commit/c9324fc46543491aed495a5c10d02e0a476a7e4b))
+* **braspag:** Let Cielo merchants pay by credit card with 3DS in production ([077f906](https://github.com/ecomplus/cloud-commerce/commit/077f906dd796698d8b8d03f68faec97cd0b8e71f))
+* **braspag:** Send the card security code to the bank on card payments ([161a85f](https://github.com/ecomplus/cloud-commerce/commit/161a85fbdd263ba6f44e5423a677c4ad1912f2cc))
+* **braspag:** Tell the bank correctly whether the card buyer is new to the store ([fbbe11d](https://github.com/ecomplus/cloud-commerce/commit/fbbe11d9c004d0e3e66bb8bce5ff3299a378dfc1))
+* **deps:** Update non-major dependencies ([#864](https://github.com/ecomplus/cloud-commerce/issues/864)) ([abccbdc](https://github.com/ecomplus/cloud-commerce/commit/abccbdcf2ba26a4230cb8a327351681ffe26e440))
+
 ## [2.65.0](https://github.com/ecomplus/cloud-commerce/compare/v2.64.0...v2.65.0) (2026-10-27)
 
 
