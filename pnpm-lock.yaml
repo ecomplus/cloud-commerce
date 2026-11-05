@@ -869,8 +869,8 @@ importers:
         specifier: ^1.21.0
         version: 1.21.0
       ejs:
-        specifier: ^3.1.10
-        version: 3.1.10
+        specifier: ^7.0.2
+        version: 7.0.2
       nodemailer:
         specifier: ^10.3.1
         version: 10.3.1
@@ -4416,6 +4416,11 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
+  ejs@7.0.2:
+    resolution: {integrity: sha512-LcDSEP6Oclb9sTiSyG0MpG0RuKvLDRxCOOt+2sIk+kdk1rMkFU8SRnT0qaNt5zvU0LOV1YXXOvIoZL/sKwabvw==}
+    engines: {node: '>=0.12.18'}
+    hasBin: true
+
   electron-to-chromium@1.5.102:
     resolution: {integrity: sha512-eHhqaja8tE/FNpIiBrvBjFV/SSKpyWHLvxuR9dPTdo+3V9ppdLmFB7ZZQ98qNovcngPLYIz0oOBF9P0FfZef5Q==}
 
@@ -7714,8 +7719,8 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  ws@8.22.0:
-    resolution: {integrity: sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg==}
+  ws@8.22.1:
+    resolution: {integrity: sha512-oyL6OPYme/CmiFvNuGzeoxCJ4nOrZE2O1FwM9MWM1AsGri6nLXB2pg+lNA8aLeXMSav0J6eIVS1j6vUPzUtK9g==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -11101,6 +11106,8 @@ snapshots:
     dependencies:
       jake: 10.9.2
 
+  ejs@7.0.2: {}
+
   electron-to-chromium@1.5.102: {}
 
   emoji-regex-xs@1.0.0: {}
@@ -12573,7 +12580,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.22.0
+      ws: 8.22.1
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -15263,7 +15270,7 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  ws@8.22.0:
+  ws@8.22.1:
     optional: true
 
   xml-name-validator@4.0.0: {}
