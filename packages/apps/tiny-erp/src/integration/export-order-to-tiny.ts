@@ -1,10 +1,14 @@
 import type { Orders } from '@cloudcommerce/types';
 import { logger } from '@cloudcommerce/firebase/lib/config';
+import { tryLockExport, unlockExport } from '@cloudcommerce/firebase/lib/helpers/export-lock';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
 import parseStatusToTiny from './parsers/status-to-tiny';
 import parseTinyStatus from './parsers/status-from-tiny';
 import parseOrder from './parsers/order-to-tiny';
+
+const EXPORT_LOCKS_COLLECTION = 'tinyExportedOrders';
+const CONCURRENT_EXPORT_WAIT_MS = 5000;
 
 export default async (apiDoc, queueEntry, appData, canCreateNew) => {
   const orderId = queueEntry.nextId;
@@ -52,39 +56,38 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
     logger.info(`${orderId} skipped with last fulfillment status from Tiny`);
     return null;
   }
-  logger.info(`${orderId} searching order ${order.number}`);
-
-  let tinyData: { pedidos?: any };
-  try {
-    tinyData = await postTiny('/pedidos.pesquisa.php', {
-      numeroEcommerce: String(order.number),
-    });
-  } catch (err: any) {
-    const status = err.response && err.response.status;
-    if (status === 404) {
-      tinyData = {};
-    } else {
-      logger.info(`${orderId} search on tiny ends with status ${status}`);
-      if (!status) {
-        logger.error(err);
+  const searchTinyOrder = async () => {
+    logger.info(`${orderId} searching order ${order.number}`);
+    let tinyData: { pedidos?: any };
+    try {
+      tinyData = await postTiny('/pedidos.pesquisa.php', {
+        numeroEcommerce: String(order.number),
+      });
+    } catch (err: any) {
+      const status = err.response && err.response.status;
+      if (status === 404) {
+        tinyData = {};
+      } else {
+        logger.info(`${orderId} search on tiny ends with status ${status}`);
+        if (!status) {
+          logger.error(err);
+        }
+        throw err;
       }
-      throw err;
     }
-  }
-  const { pedidos } = tinyData;
-  let originalTinyOrder: undefined | Record<string, any>;
-  if (Array.isArray(pedidos)) {
-    originalTinyOrder = pedidos
+    const { pedidos } = tinyData;
+    if (!Array.isArray(pedidos)) return undefined;
+    const foundEntry = pedidos
       .sort((a: { pedido: Record<string, any> }, b: { pedido: Record<string, any> }) => {
         return a.pedido.id < b.pedido.id ? 1 : -1;
       })
       .find(({ pedido }) => {
         return order.number === Number(pedido.numero_ecommerce);
       });
-    if (originalTinyOrder) {
-      originalTinyOrder = originalTinyOrder.pedido;
-    }
-  }
+    return foundEntry?.pedido as undefined | Record<string, any>;
+  };
+
+  let originalTinyOrder = await searchTinyOrder();
 
   if (!originalTinyOrder) {
     if (!canCreateNew) {
@@ -113,24 +116,45 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
           break;
       }
     }
-    const tinyOrder = await parseOrder(order, appData);
-    try {
-      logger.info(`Posting ${orderId}`, { tinyOrder });
-    } catch {
-      logger.info(`Posting ${orderId} (stringify failed)`);
-    }
-    return postTiny('/pedido.incluir.php', {
-      pedido: {
-        pedido: tinyOrder,
-      },
-    }).then((response) => {
+    if (!(await tryLockExport(EXPORT_LOCKS_COLLECTION, orderId))) {
+      /* Another execution is creating this same order on Tiny right now: the
+      search above cannot see it yet, so creating it here would duplicate it. */
+      logger.info(`${orderId} waiting concurrent export to Tiny`);
+      await new Promise((resolve) => {
+        setTimeout(resolve, CONCURRENT_EXPORT_WAIT_MS);
+      });
+      originalTinyOrder = await searchTinyOrder();
+      if (!originalTinyOrder) {
+        logger.warn(`${orderId} skipped while another execution exports it`);
+        return null;
+      }
+      /* Falls through to the status update with the order the winner created. */
+    } else {
+      const tinyOrder = await parseOrder(order, appData);
+      try {
+        logger.info(`Posting ${orderId}`, { tinyOrder });
+      } catch {
+        logger.info(`Posting ${orderId} (stringify failed)`);
+      }
+      let response: Record<string, any>;
+      try {
+        response = await postTiny('/pedido.incluir.php', {
+          pedido: {
+            pedido: tinyOrder,
+          },
+        });
+      } catch (err) {
+        /* Nothing was created, so the lock must not block the next attempt. */
+        await unlockExport(EXPORT_LOCKS_COLLECTION, orderId);
+        throw err;
+      }
       logger.info(`Created ${orderId} on Tiny`, { response });
       const tinyErpOnNewOrder = global.$tinyErpOnNewOrder;
       if (tinyErpOnNewOrder && typeof tinyErpOnNewOrder === 'function') {
         return tinyErpOnNewOrder({ response, order, postTiny });
       }
       return response;
-    });
+    }
   }
 
   if (originalTinyOrder) {
