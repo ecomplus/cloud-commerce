@@ -3,6 +3,7 @@ import { URLSearchParams } from 'url';
 import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
 import { logger } from '@cloudcommerce/firebase/lib/config';
+import { tryLockExport, unlockExport } from '@cloudcommerce/firebase/lib/helpers/export-lock';
 import { createBlingClient } from '../bling-auth/client';
 import parseOrder from './parsers/order-to-bling';
 import parseStatusToBling from './parsers/status-to-bling';
@@ -10,6 +11,9 @@ import getCustomerBling from './helpers/get-customer-bling';
 import getProductsBling from './helpers/get-products-bling';
 import { getPaymentBling } from './helpers/payment-method';
 import getStatusBling from './helpers/get-status-bling';
+
+const EXPORT_LOCKS_COLLECTION = 'blingExportedOrders';
+const CONCURRENT_EXPORT_WAIT_MS = 5000;
 
 /*
 `canCreateNew` is a tri-state:
@@ -127,6 +131,7 @@ const exportOrderToBling = async (
   } else if (data) {
     blingSavedOrder = data;
   }
+  let hasExportLock = false;
 
   if (blingSavedOrder) {
     blingOrderId = blingSavedOrder.id;
@@ -146,6 +151,22 @@ const exportOrderToBling = async (
       blingOrderNumber = (hasFoundByNumber || appData.random_order_number === true)
         ? String(Math.floor(Math.random() * (99999999 - 10000000)) + 10000000)
         : String(order.number);
+    }
+
+    /* Creating is not idempotent: the same order gets one event at checkout and
+    another on payment, and two executions can run them at the same time. Both
+    searched Bling before either wrote, so without this lock both create. */
+    if (!blingOrderId) {
+      hasExportLock = await tryLockExport(EXPORT_LOCKS_COLLECTION, orderId);
+      if (!hasExportLock) {
+        logger.info(`${orderId} waiting concurrent export to Bling`);
+        await new Promise((resolve) => {
+          setTimeout(resolve, CONCURRENT_EXPORT_WAIT_MS);
+        });
+        /* Starts over to find the order the winning execution created and go
+        on to the status update; `canCreateNew: false` can never create. */
+        return exportOrderToBling(apiDoc, queueEntry, appData, false);
+      }
     }
 
     const customerIdBling = await getCustomerBling(bling, appData, order);
@@ -204,6 +225,10 @@ const exportOrderToBling = async (
         await api.patch(`orders/${order._id}`, { metafields } as any).catch(logger.error);
       }
     } catch (err: any) {
+      if (hasExportLock) {
+        /* Nothing was created, so the lock must not block the next attempt. */
+        await unlockExport(EXPORT_LOCKS_COLLECTION, orderId);
+      }
       if (err.response) {
         logger.warn(`Failed exporting order ${order._id}`, {
           blingOrder,
