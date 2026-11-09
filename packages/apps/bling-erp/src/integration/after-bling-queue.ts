@@ -10,6 +10,18 @@ export default async (
   payload: any,
 ) => {
   const isError = payload instanceof Error;
+  if (isError && (payload as any).isConcurrentExport) {
+    /* Outra execução segura o lock de exportação deste pedido por tempo demais.
+    Rejeitar faz o evento ser reentregue (`failurePolicy`) também na exportação
+    automática (fora da fila), e a nova tentativa acha o pedido exportado ou assume
+    o lock, em vez de terminar como falso sucesso sem nada no Bling. */
+    logger.warn(payload.message);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(payload);
+      }, 2000);
+    });
+  }
   const isImportation = !!queueEntry.action?.endsWith('importation');
   const isQueued = !queueEntry.isNotQueued;
   const logs = appData.logs || [];
