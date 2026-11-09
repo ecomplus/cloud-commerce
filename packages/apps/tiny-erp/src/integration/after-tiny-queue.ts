@@ -9,6 +9,18 @@ export default async (
   payload: any,
 ) => {
   const isError = payload instanceof Error;
+  if (isError && (payload as any).isConcurrentExport) {
+    /* Another execution holds the export lock of this order for too long. Rejecting
+    gets the event redelivered (`failurePolicy`) even for automatic exports (not
+    queued), and the retry finds the order exported or takes over the lock, instead
+    of ending as a false success with nothing sent to Tiny. */
+    logger.warn(payload.message);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(payload);
+      }, 2000);
+    });
+  }
   const isImportation = !!queueEntry.action?.endsWith('importation');
   const isQueued = !queueEntry.isNotQueued;
   const logs = appData.logs || [];
