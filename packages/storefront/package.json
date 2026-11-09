@@ -67,7 +67,7 @@
     "@unocss/astro": "^66.12.0",
     "unocss": "^66.12.0",
     "unplugin-auto-import": "^19.3.0",
-    "vue": "^3.5.44",
+    "vue": "^3.5.45",
     "wade": "0.3.3",
     "yaml": "^2.9.1"
   },
