@@ -1,14 +1,24 @@
 import type { Orders } from '@cloudcommerce/types';
 import { logger } from '@cloudcommerce/firebase/lib/config';
-import { tryLockExport, unlockExport } from '@cloudcommerce/firebase/lib/helpers/export-lock';
+import { acquireExportLock } from '@cloudcommerce/firebase/lib/helpers/export-lock';
 import api from '@cloudcommerce/api';
 import postTiny from './post-tiny-erp';
 import parseStatusToTiny from './parsers/status-to-tiny';
 import parseTinyStatus from './parsers/status-from-tiny';
 import parseOrder from './parsers/order-to-tiny';
 
-const EXPORT_LOCKS_COLLECTION = 'tinyExportedOrders';
-const CONCURRENT_EXPORT_WAIT_MS = 5000;
+const EXPORT_LOCKS_COLLECTION = 'tinyErpExportLocks';
+/* Longer than anything holding the lock can live: the events function times out
+in 60s, and the cron holds it for a single order (the POST times out in 30s). */
+const EXPORT_LOCK_STALE_MS = 1000 * 60 * 2;
+const CONCURRENT_EXPORT_WAIT_MS = 20000;
+
+/* `pedido.incluir.php` returns the created order in `registros.registro` */
+const getCreatedTinyId = (response: Record<string, any>) => {
+  const { registros } = response;
+  const registro = (Array.isArray(registros) ? registros[0] : registros)?.registro;
+  return registro?.id as string | number | undefined;
+};
 
 export default async (apiDoc, queueEntry, appData, canCreateNew) => {
   const orderId = queueEntry.nextId;
@@ -116,39 +126,46 @@ export default async (apiDoc, queueEntry, appData, canCreateNew) => {
           break;
       }
     }
-    if (!(await tryLockExport(EXPORT_LOCKS_COLLECTION, orderId))) {
-      /* Another execution is creating this same order on Tiny right now: the
-      search above cannot see it yet, so creating it here would duplicate it. */
-      logger.info(`${orderId} waiting concurrent export to Tiny`);
-      await new Promise((resolve) => {
-        setTimeout(resolve, CONCURRENT_EXPORT_WAIT_MS);
-      });
-      originalTinyOrder = await searchTinyOrder();
+    const exportLock = await acquireExportLock(EXPORT_LOCKS_COLLECTION, orderId, {
+      staleLockMs: EXPORT_LOCK_STALE_MS,
+      maxWaitMs: queueEntry.concurrentExportWaitMs ?? CONCURRENT_EXPORT_WAIT_MS,
+    });
+    if (!exportLock.isLocked) {
+      /* Created by a concurrent execution while this one waited, the search above
+      could not see it: falls through to the status update on that order. */
+      const { exported } = exportLock;
+      originalTinyOrder = exported.id
+        ? { id: exported.id, situacao: exported.situacao }
+        : await searchTinyOrder();
       if (!originalTinyOrder) {
-        logger.warn(`${orderId} skipped while another execution exports it`);
+        logger.warn(`${orderId} exported by a concurrent execution but not found`);
         return null;
       }
-      /* Falls through to the status update with the order the winner created. */
     } else {
-      const tinyOrder = await parseOrder(order, appData);
-      try {
-        logger.info(`Posting ${orderId}`, { tinyOrder });
-      } catch {
-        logger.info(`Posting ${orderId} (stringify failed)`);
-      }
+      let tinyOrder: Record<string, any>;
       let response: Record<string, any>;
       try {
+        tinyOrder = await parseOrder(order, appData);
+        try {
+          logger.info(`Posting ${orderId}`, { tinyOrder });
+        } catch {
+          logger.info(`Posting ${orderId} (stringify failed)`);
+        }
+        exportLock.setSending();
         response = await postTiny('/pedido.incluir.php', {
           pedido: {
             pedido: tinyOrder,
           },
         });
       } catch (err) {
-        /* Nothing was created, so the lock must not block the next attempt. */
-        await unlockExport(EXPORT_LOCKS_COLLECTION, orderId);
+        await exportLock.fail(err);
         throw err;
       }
       logger.info(`Created ${orderId} on Tiny`, { response });
+      await exportLock.complete({
+        id: getCreatedTinyId(response),
+        situacao: tinyOrder.situacao,
+      });
       const tinyErpOnNewOrder = global.$tinyErpOnNewOrder;
       if (tinyErpOnNewOrder && typeof tinyErpOnNewOrder === 'function') {
         return tinyErpOnNewOrder({ response, order, postTiny });

@@ -3,7 +3,10 @@ import { URLSearchParams } from 'url';
 import ecomUtils from '@ecomplus/utils';
 import api from '@cloudcommerce/api';
 import { logger } from '@cloudcommerce/firebase/lib/config';
-import { tryLockExport, unlockExport } from '@cloudcommerce/firebase/lib/helpers/export-lock';
+import {
+  type ExportLock,
+  acquireExportLock,
+} from '@cloudcommerce/firebase/lib/helpers/export-lock';
 import { createBlingClient } from '../bling-auth/client';
 import parseOrder from './parsers/order-to-bling';
 import parseStatusToBling from './parsers/status-to-bling';
@@ -12,8 +15,13 @@ import getProductsBling from './helpers/get-products-bling';
 import { getPaymentBling } from './helpers/payment-method';
 import getStatusBling from './helpers/get-status-bling';
 
-const EXPORT_LOCKS_COLLECTION = 'blingExportedOrders';
-const CONCURRENT_EXPORT_WAIT_MS = 5000;
+const EXPORT_LOCKS_COLLECTION = 'blingExportLocks';
+/* Maior que o timeout de 300s do `onStoreEvent`: uma execução lenta, mas viva, não
+pode ter o lock tomado no meio da criação. */
+const EXPORT_LOCK_STALE_MS = 1000 * 60 * 6;
+/* Depois de pegar o lock o vencedor ainda busca contato, forma de pagamento e
+produtos antes do POST, com o client limitado a ~1 req/s. */
+const CONCURRENT_EXPORT_WAIT_MS = 1000 * 60;
 
 /*
 `canCreateNew` is a tri-state:
@@ -131,7 +139,6 @@ const exportOrderToBling = async (
   } else if (data) {
     blingSavedOrder = data;
   }
-  let hasExportLock = false;
 
   if (blingSavedOrder) {
     blingOrderId = blingSavedOrder.id;
@@ -153,89 +160,108 @@ const exportOrderToBling = async (
         : String(order.number);
     }
 
-    /* Creating is not idempotent: the same order gets one event at checkout and
-    another on payment, and two executions can run them at the same time. Both
-    searched Bling before either wrote, so without this lock both create. */
+    /* Criar não é idempotente: o mesmo pedido recebe um evento no checkout e outro
+    no pagamento, e as duas execuções podem rodar ao mesmo tempo. As duas buscaram
+    no Bling antes de qualquer uma gravar, então sem o lock as duas criam. */
+    let exportLock: ExportLock | undefined;
+    let isExportedConcurrently = false;
     if (!blingOrderId) {
-      hasExportLock = await tryLockExport(EXPORT_LOCKS_COLLECTION, orderId);
-      if (!hasExportLock) {
-        logger.info(`${orderId} waiting concurrent export to Bling`);
-        await new Promise((resolve) => {
-          setTimeout(resolve, CONCURRENT_EXPORT_WAIT_MS);
-        });
-        /* Starts over to find the order the winning execution created and go
-        on to the status update; `canCreateNew: false` can never create. */
-        return exportOrderToBling(apiDoc, queueEntry, appData, false);
+      const lockResult = await acquireExportLock(EXPORT_LOCKS_COLLECTION, orderId, {
+        staleLockMs: EXPORT_LOCK_STALE_MS,
+        maxWaitMs: CONCURRENT_EXPORT_WAIT_MS,
+      });
+      if (lockResult.isLocked) {
+        exportLock = lockResult;
+      } else {
+        /* Criado por outra execução enquanto esta esperava. O id vem do lock porque
+        a busca acima não acha pedido com número aleatório nem com o `apiDoc`
+        lido antes de o vencedor gravar os metafields. */
+        isExportedConcurrently = true;
+        blingOrderId = lockResult.exported.id;
+        logger.info(`${orderId} exported by a concurrent execution`, { blingOrderId });
       }
     }
 
-    const customerIdBling = await getCustomerBling(bling, appData, order);
-    if (!customerIdBling) {
-      throw new Error('Bling Customer not found');
-    }
-    /* Buscado só quando o pedido vai ser criado/atualizado de fato: mudança de
-    status de pedido já exportado não usa forma de pagamento nem itens. */
-    const paymentTypeId = transaction
-      ? await getPaymentBling(bling, transaction, appData.parse_payment, order.payment_method_label)
-      : null;
-    const itemsBling = await getProductsBling(bling, order);
-    const blingOrder = parseOrder(
-      order,
-      blingOrderNumber,
-      blingStore,
-      appData,
-      customerIdBling,
-      paymentTypeId,
-      itemsBling,
-      blingSavedOrder,
-    );
-    const endpoint = `/pedidos/vendas${blingOrderId ? `/${blingOrderId}` : ''}`;
-    const method = blingOrderId ? 'put' : 'post';
-    logger.info(`[${method}]: ${endpoint} for ${order._id}`, { blingOrder, blingStatuses });
-    try {
-      const { data: { data: savedData } } = await bling[method](endpoint, blingOrder);
-      logger.info(`Bling order ${method === 'put' ? 'upd' : 'cre'}ated successfully`);
-      if (savedData?.id) {
-        blingSavedOrder = blingOrder;
-        blingOrderId = savedData.id;
-        if (metafieldId) {
-          metafieldId.value = String(blingOrderId);
-        } else {
-          metafields.push({
-            _id: ecomUtils.randomObjectId(),
-            namespace: 'bling',
-            field: 'bling:id',
-            value: String(blingOrderId),
+    if (!isExportedConcurrently) {
+      let blingOrder: Record<string, any> | undefined;
+      try {
+        const customerIdBling = await getCustomerBling(bling, appData, order);
+        if (!customerIdBling) {
+          throw new Error('Bling Customer not found');
+        }
+        /* Buscado só quando o pedido vai ser criado/atualizado de fato: mudança de
+        status de pedido já exportado não usa forma de pagamento nem itens. */
+        const paymentTypeId = transaction
+          ? await getPaymentBling(
+            bling,
+            transaction,
+            appData.parse_payment,
+            order.payment_method_label,
+          )
+          : null;
+        const itemsBling = await getProductsBling(bling, order);
+        blingOrder = parseOrder(
+          order,
+          blingOrderNumber,
+          blingStore,
+          appData,
+          customerIdBling,
+          paymentTypeId,
+          itemsBling,
+          blingSavedOrder,
+        );
+        const endpoint = `/pedidos/vendas${blingOrderId ? `/${blingOrderId}` : ''}`;
+        const method = blingOrderId ? 'put' : 'post';
+        logger.info(`[${method}]: ${endpoint} for ${order._id}`, { blingOrder, blingStatuses });
+        exportLock?.setSending();
+        const { data: { data: savedData } } = await bling[method](endpoint, blingOrder);
+        logger.info(`Bling order ${method === 'put' ? 'upd' : 'cre'}ated successfully`);
+        if (savedData?.id) {
+          blingSavedOrder = blingOrder;
+          blingOrderId = savedData.id;
+          if (metafieldId) {
+            metafieldId.value = String(blingOrderId);
+          } else {
+            metafields.push({
+              _id: ecomUtils.randomObjectId(),
+              namespace: 'bling',
+              field: 'bling:id',
+              value: String(blingOrderId),
+            });
+          }
+          /* Guardado para a busca por número funcionar quando o número do Bling
+          não é o da loja (`random_order_number` ou colisão de numeração). */
+          if (
+            blingOrderNumber
+            && !appData.disable_order_number
+            && !metafields.some(({ field }) => field === 'bling:numero')
+          ) {
+            metafields.push({
+              _id: ecomUtils.randomObjectId(),
+              namespace: 'bling',
+              field: 'bling:numero',
+              value: String(blingOrderNumber),
+            });
+          }
+          await api.patch(`orders/${order._id}`, { metafields } as any).catch(logger.error);
+        }
+      } catch (err: any) {
+        /* O lock é liberado para a próxima tentativa quando o pedido certamente não
+        foi criado: falha antes do POST (contato, forma de pagamento, produtos) ou
+        erro respondido pelo Bling. Sem resposta (timeout) o pedido pode ter sido
+        criado, e o lock fica até expirar. */
+        await exportLock?.fail(err);
+        if (err.response) {
+          logger.warn(`Failed exporting order ${order._id}`, {
+            blingOrder,
+            response: err.response.data,
           });
         }
-        /* Guardado para a busca por número funcionar quando o número do Bling
-        não é o da loja (`random_order_number` ou colisão de numeração). */
-        if (
-          blingOrderNumber
-          && !appData.disable_order_number
-          && !metafields.some(({ field }) => field === 'bling:numero')
-        ) {
-          metafields.push({
-            _id: ecomUtils.randomObjectId(),
-            namespace: 'bling',
-            field: 'bling:numero',
-            value: String(blingOrderNumber),
-          });
-        }
-        await api.patch(`orders/${order._id}`, { metafields } as any).catch(logger.error);
+        throw err;
       }
-    } catch (err: any) {
-      if (hasExportLock) {
-        /* Nothing was created, so the lock must not block the next attempt. */
-        await unlockExport(EXPORT_LOCKS_COLLECTION, orderId);
+      if (exportLock && blingOrderId) {
+        await exportLock.complete({ id: blingOrderId, numero: blingOrderNumber });
       }
-      if (err.response) {
-        logger.warn(`Failed exporting order ${order._id}`, {
-          blingOrder,
-          response: err.response.data,
-        });
-      }
-      throw err;
     }
   }
 

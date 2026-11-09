@@ -15,7 +15,10 @@ export const tinyerp = {
   onStoreEvent: createAppEventsFunction(
     'tinyErp',
     handleApiEvent,
-    { memory: '512MB' },
+    /* With the default max age (60s), an order event redelivered after waiting on a
+    concurrent export (`ConcurrentExportError`) would be dropped before an abandoned
+    export lock gets stale (2 min) and can be taken over. */
+    { memory: '512MB', eventMaxAgeMs: 1000 * 60 * 10 },
   ),
 
   webhook: functions
