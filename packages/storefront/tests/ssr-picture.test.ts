@@ -3,6 +3,7 @@ import {
   test,
   expect,
   vi,
+  afterEach,
 } from 'vitest';
 import { useSSRPicture } from '~/images/use-ssr-picture';
 
@@ -15,9 +16,13 @@ const builtPicture = {
 };
 
 describe('SSR <picture> attributes', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   test('renders the original file when the image size is unknown', async () => {
     // e.g. a new upload on CMS preview, not listed on the deployed images manifest
-    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const getPicture = vi.fn(async () => {
       throw new Error('`aspectRatio` must be provided for remote images');
     });
@@ -29,6 +34,7 @@ describe('SSR <picture> attributes', () => {
       getPicture,
     });
     expect(getPicture).not.toHaveBeenCalled();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('/img/uploads/new-banner.jpg'));
     expect(sources).toEqual([]);
     expect(imgAttrs?.src).toBe('/img/uploads/new-banner.jpg');
     expect(imgAttrs?.alt).toBe('New banner');
