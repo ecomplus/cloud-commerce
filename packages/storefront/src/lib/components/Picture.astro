@@ -83,8 +83,11 @@ const {
   }),
   assetsPrefix: Astro.locals.assetsPrefix,
 });
-if (imgAttrs?.src) {
-  imgAttrs.src += versionSuffix;
+if (imgAttrs?.src && versionSuffix) {
+  // Original file fallback (unknown image size) has no query string yet
+  imgAttrs.src += imgAttrs.src.includes('?')
+    ? versionSuffix
+    : versionSuffix.replace('&', '?');
 }
 ---
 

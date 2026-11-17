@@ -209,16 +209,27 @@ const useSSRPicture = async (params: UsePictureParams) => {
     sizes = `${(widths[0] / 2)}px`;
   }
 
-  const { image, sources } = await getPicture({
-    src,
-    widths,
-    formats,
-    aspectRatio,
-    fit,
-    background,
-    position,
-    alt,
-  });
+  let image: GetPictureResult['image'];
+  let sources: GetPictureResult['sources'];
+  if (aspectRatio) {
+    ({ image, sources } = await getPicture({
+      src,
+      widths,
+      formats,
+      aspectRatio,
+      fit,
+      background,
+      position,
+      alt,
+    }));
+  } else {
+    // Unknown image size, e.g. a new CMS upload not deployed yet (CMS preview).
+    // `getPicture` would throw in the middle of the SSR stream and hang the response,
+    // so render the original file instead
+    console.warn(`Could not get size of image ${src}, rendering original file`);
+    image = { src };
+    sources = [];
+  }
   delete image.width;
   delete image.height;
   if (import.meta.env.PROD && assetsPrefix && image.src?.charAt(0) === '/') {
