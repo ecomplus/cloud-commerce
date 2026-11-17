@@ -63,7 +63,9 @@ export const sendWaitingOrders = async () => {
       const order = orders[i] as Orders;
       if (!order.number) continue;
       try {
-        const queueEntry = { nextId: order._id };
+        /* An order locked by a concurrent export is left to it (and to the next
+        run) instead of holding the sequential loop while it finishes. */
+        const queueEntry = { nextId: order._id, concurrentExportWaitMs: 0 };
         // eslint-disable-next-line no-await-in-loop
         const result = await exportOrderToTiny(order, queueEntry, appData, true);
         if (result && typeof result === 'object' && 'registros' in result) {
@@ -72,13 +74,18 @@ export const sendWaitingOrders = async () => {
           skippedCount += 1;
         }
       } catch (error: any) {
-        const err = new Error(`Failed sending order ${order.number} to Tiny`);
-        logger.error(err, {
-          orderId: order._id,
-          orderNumber: order.number,
-          request: error.config,
-          response: error.response?.data,
-        });
+        if (error.isConcurrentExport) {
+          logger.info(`Order ${order.number} skipped while exported concurrently`);
+          skippedCount += 1;
+        } else {
+          const err = new Error(`Failed sending order ${order.number} to Tiny`);
+          logger.error(err, {
+            orderId: order._id,
+            orderNumber: order.number,
+            request: error.config,
+            response: error.response?.data,
+          });
+        }
       }
       // Rate limit: 150ms between requests
       // eslint-disable-next-line no-await-in-loop
