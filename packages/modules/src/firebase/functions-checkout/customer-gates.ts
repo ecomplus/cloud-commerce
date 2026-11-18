@@ -54,6 +54,37 @@ export const getCustomerGateError = (
   return null;
 };
 
+type BuyerRegistry = {
+  registry_type?: string,
+  doc_number?: string,
+} | null | undefined;
+
+const isCompanyBuyer = (buyer: BuyerRegistry) => {
+  if (!buyer) return false;
+  if (buyer.registry_type === 'j') return true;
+  // Brazilian CNPJ, catches companies sent with `registry_type: 'p'`
+  return typeof buyer.doc_number === 'string'
+    && buyer.doc_number.replace(/\D/g, '').length === 14;
+};
+
+/* Gate for stores that sell to individuals only (no CNPJ).
+Receives the checkout customer and every transaction buyer, any company rejects. */
+export const getCompanyGateError = (
+  gates: CheckoutGatesConfig | undefined,
+  buyers: BuyerRegistry[],
+): CheckoutGateError | null => {
+  if (!gates?.personsOnly || !buyers.some(isCompanyBuyer)) return null;
+  return {
+    status: 403,
+    code: 'CKT807',
+    message: 'Checkout is restricted to individuals, company buyers are not allowed',
+    userMessage: {
+      en_us: 'This store sells to individuals only, purchases with company registration are not allowed',
+      pt_br: 'Esta loja vende somente para pessoa física (CPF), compras com CNPJ não são permitidas',
+    },
+  };
+};
+
 export const getSubtotalGateError = (
   gates: CheckoutGatesConfig | undefined,
   subtotal: number,

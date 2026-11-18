@@ -11,7 +11,10 @@ import { checkoutSchema } from '../index';
 import { ajv, sendRequestError } from './ajv';
 import fixItems from './functions-checkout/fix-items';
 import readOrSaveCustomer from './functions-checkout/read-or-save-customer';
-import { getSubtotalGateError } from './functions-checkout/customer-gates';
+import {
+  getCompanyGateError,
+  getSubtotalGateError,
+} from './functions-checkout/customer-gates';
 import requestModule from './functions-checkout/request-to-module';
 import {
   sendError,
@@ -76,6 +79,21 @@ export default async (req: Request, res: Response) => {
     || Object.values(shippingAddr).some(testXss)
   ) {
     return sendError(res, 403, 'CKT803', 'Chato');
+  }
+  // Before saving the customer, transaction buyers always carry registry type and document
+  const companyGateError = getCompanyGateError(config.get().checkout, [
+    customer,
+    ...(Array.isArray(body.transaction) ? body.transaction : [body.transaction])
+      .map((transaction) => transaction?.buyer),
+  ]);
+  if (companyGateError) {
+    return sendError(
+      res,
+      companyGateError.status,
+      companyGateError.code,
+      companyGateError.message,
+      companyGateError.userMessage,
+    );
   }
   const savedCustomer = await readOrSaveCustomer({
     ...customer,

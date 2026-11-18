@@ -228,6 +228,8 @@ export type CheckoutGatesConfig = {
   requireStaffSignature?: boolean;
   /* Reject checkout when items subtotal is lower than this value */
   minSubtotal?: number;
+  /* Reject checkout from companies: buyer with `registry_type: 'j'` or a CNPJ (14 digits) */
+  personsOnly?: boolean;
 };
 
 export type PassportConfig = {
