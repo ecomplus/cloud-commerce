@@ -1,50 +1,9 @@
 ---
-import { join as joinPath } from 'node:path';
-import { readFileSync } from 'node:fs';
-import { getBuiltPicture } from './get-built-picture';
+import { getBuiltPictureOrOriginal } from './get-built-picture';
+import { getOriginalImageSize } from './get-original-image-size';
 import { type PictureProps, useSSRPicture } from './use-ssr-picture';
 
 export type Props = PictureProps;
-
-const { STOREFRONT_BASE_DIR } = process.env;
-const baseDir = STOREFRONT_BASE_DIR || process.cwd();
-type OriginalImage = { filepath: string, width: number, height: number };
-const originalImages: OriginalImage[] = [];
-const manifestFilepath = joinPath(baseDir, 'dist/server/images.src.csv');
-readFileSync(manifestFilepath, 'utf-8').split(/\n/).forEach((line) => {
-  const cols = line.split(',');
-  const height = Number(cols.pop());
-  const width = Number(cols.pop());
-  const filepath = cols.join(',').replace(/"/g, '');
-  originalImages.push({
-    filepath,
-    width,
-    height,
-  });
-});
-
-const tryImageSize = async (src: string) => {
-  let dimensions: { width?: number, height?: number } = {};
-  if (typeof src === 'string' && src.startsWith('/')) {
-    const originalImage = originalImages.find(({ filepath }) => {
-      return new RegExp(`^/${filepath}\\??.*`).test(src);
-    });
-    if (originalImage) {
-      const { width, height } = originalImage;
-      dimensions = { width, height };
-    }
-  }
-  if (Number.isNaN(dimensions.height)) {
-    if (dimensions.width) {
-      dimensions.height = dimensions.width;
-    }
-  } else if (Number.isNaN(dimensions.width)) {
-    if (dimensions.height) {
-      dimensions.width = dimensions.height;
-    }
-  }
-  return dimensions;
-};
 
 const {
   sizes,
@@ -54,8 +13,8 @@ const {
   imgAttrs,
 } = await useSSRPicture({
   ...Astro.props,
-  tryImageSize,
-  getPicture: getBuiltPicture,
+  tryImageSize: getOriginalImageSize,
+  getPicture: getBuiltPictureOrOriginal,
   assetsPrefix: Astro.locals.assetsPrefix,
 });
 ---
