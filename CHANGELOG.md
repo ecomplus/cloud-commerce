@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.65.2](https://github.com/ecomplus/cloud-commerce/compare/v2.65.1...v2.65.2) (2026-11-23)
+
+
+### Bug Fixes
+
+* **apps:** Keep Tiny and Bling orders from getting lost when two exports run at once ([cbd6995](https://github.com/ecomplus/cloud-commerce/commit/cbd69954facf910d854188b850789320e9d217eb))
+* **apps:** Stop duplicating orders exported to Tiny and Bling ERP ([aa93532](https://github.com/ecomplus/cloud-commerce/commit/aa93532d115c593f1717f0c6eb09c2c68f97c3ac))
+* **deps:** update dependency vue to ^3.5.45 ([b6177fc](https://github.com/ecomplus/cloud-commerce/commit/b6177fc191012e9905a4037b3f6b440d432a7153))
+* **deps:** update dependency vue to ^3.5.46 ([cea4d0e](https://github.com/ecomplus/cloud-commerce/commit/cea4d0e0823104209fe455bfdb5f313d49a31cf1))
+* **deps:** update non-major dependencies ([fa4b51b](https://github.com/ecomplus/cloud-commerce/commit/fa4b51b94d8643f2ec9c041fa62cbe30fc3b9d5a))
+* **deps:** update non-major dependencies ([d6c7fbe](https://github.com/ecomplus/cloud-commerce/commit/d6c7fbeffe73fbd1f32cfc50a747baeecce02db3))
+* **deps:** update non-major dependencies ([58875a7](https://github.com/ecomplus/cloud-commerce/commit/58875a735971f29c34883bc520f30aaa64561616))
+* **storefront:** Keep CMS preview working when a new image isn't deployed yet ([50dc7e9](https://github.com/ecomplus/cloud-commerce/commit/50dc7e91c135875748a1f469cc1fe7761c3fbe8d))
+
 ## [2.65.1](https://github.com/ecomplus/cloud-commerce/compare/v2.65.0...v2.65.1) (2026-10-31)
 
 
