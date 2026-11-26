@@ -169,6 +169,17 @@ export default async ({ params, application }) => {
           const cumulativeRules = [];
           let bestRule;
           let discountValue = 0;
+          // storefront and checkout flag the gift items, so paid units of the same product
+          // can be told apart; carts without any flag keep the older lookup by product id
+          const hasFreebieFlags = params.items.some((item) => item.flags?.includes('freebie'));
+          const findFreebieItem = (productId) => {
+            if (hasFreebieFlags) {
+              return params.items.find((item) => {
+                return productId === item.product_id && item.flags?.includes('freebie');
+              });
+            }
+            return params.items.find((item) => productId === item.product_id);
+          };
           for (let i = 0; i < validFreebiesRules.length; i++) {
             const rule = validFreebiesRules[i];
             let subtotal = 0;
@@ -197,11 +208,11 @@ export default async ({ params, application }) => {
             let value = 0;
             let fixedSubtotal = subtotal;
             rule.product_ids.forEach((productId) => {
-              const item = params.items.find((_item) => productId === _item.product_id);
+              const item = findFreebieItem(productId);
               if (item) {
                 const price = ecomUtils.price(item);
                 value += price;
-                if (subtotalItems.find((_item) => productId === _item.product_id)) {
+                if (subtotalItems.includes(item)) {
                   fixedSubtotal -= price;
                 }
               }
