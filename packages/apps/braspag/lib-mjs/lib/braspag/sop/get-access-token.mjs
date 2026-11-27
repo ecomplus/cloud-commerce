@@ -26,7 +26,7 @@ const createAccessToken = async (isSandbox) => {
  */
 export default function getAccessToken(isSandbox = false) {
   const { BRASPAG_CLIENT_ID: clientId } = process.env;
-  logger.debug(`> Braspag SOP ${clientId} ${isSandbox ? 'SandBox' : ''}`);
+  logger.info(`> Braspag SOP ${clientId} ${isSandbox ? 'SandBox' : ''}`);
   this.preparing = createAccessToken(isSandbox).then((accessToken) => {
     this.accessToken = accessToken;
     return this;
